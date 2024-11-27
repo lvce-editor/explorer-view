@@ -1,22 +1,15 @@
 import * as Assert from '../Assert/Assert.ts'
-import * as Command from '../Command/Command.js'
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as ErrorHandling from '../ErrorHandling/ErrorHandling.js'
-import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.js'
+import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import * as Focus from '../Focus/Focus.js'
-import * as FocusKey from '../FocusKey/FocusKey.js'
+import { focusIndex } from '../FocusIndex/FocusIndex.ts'
+import { getChildDirents, getIndexFromPosition, getParentEndIndex, getParentStartIndex } from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileExtension from '../GetFileExtension/GetFileExtension.js'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
-import * as MouseEventType from '../MouseEventType/MouseEventType.js'
-import * as OpenFolder from '../OpenFolder/OpenFolder.js'
-import * as RendererWorkerCommandType from '../RendererWorkerCommandType/RendererWorkerCommandType.js'
+import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
+import * as OpenFolder from '../OpenFolder/OpenFolder.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
-import * as Viewlet from '../Viewlet/Viewlet.js' // TODO should not import viewlet manager -> avoid cyclic dependency
-import * as Workspace from '../Workspace/Workspace.js'
-import { focusIndex } from './ViewletExplorerFocusIndex.js'
-import { getChildDirents, getIndexFromPosition, getParentEndIndex, getParentStartIndex } from './ViewletExplorerShared.js'
 // TODO viewlet should only have create and refresh functions
 // every thing else can be in a separate module <viewlet>.lazy.js
 // and  <viewlet>.ipc.js
