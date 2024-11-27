@@ -349,7 +349,7 @@ export const handleArrowRight = async (state: any): Promise<any> => {
   }
 }
 
-const focusParentFolder = (state: any) => {
+const focusParentFolder = (state: any): any => {
   const parentStartIndex = getParentStartIndex(state.items, state.focusedIndex)
   if (parentStartIndex === -1) {
     return state
