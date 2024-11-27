@@ -9,4 +9,9 @@ export const commandMap = {
   'Explorer.getVisibleItems': GetVisibleExplorerItems.getVisibleExplorerItems,
   'Explorer.handleClick': HandleClick.handleClick,
   'Explorer.handleClickAt': HandleClick.handleClickAt,
+  'Explorer.handleBlur': HandleClick.handleBlur,
+  'Explorer.handleArrowLeft': HandleClick.handleArrowLeft,
+  'Explorer.handleArrowRight': HandleClick.handleArrowRight,
+  'Explorer.renameDirent': HandleClick.renameDirent,
+  'Explorer.removeDirent': HandleClick.removeDirent,
 }
