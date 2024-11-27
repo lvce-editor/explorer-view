@@ -1,4 +1,4 @@
-const RE_CHARACTERS = /^[a-zA-Z\.\-]+$/
+const RE_CHARACTERS = /^[a-zA-Z.-]+$/
 
 export const compareString = (a: string, b: string): number => {
   return a.localeCompare(b)
