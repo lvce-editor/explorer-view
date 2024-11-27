@@ -314,7 +314,7 @@ export const handleClickCurrentButKeepFocus = (state: any) => {
 
 // export const handleBlur=()=>{}
 
-const handleClickSymLink = async (state: any, dirent, index) => {
+const handleClickSymLink = async (state: any, dirent: any, index: any): any => {
   const realPath = await FileSystem.getRealPath(dirent.path)
   const type = await FileSystem.stat(realPath)
   switch (type) {
