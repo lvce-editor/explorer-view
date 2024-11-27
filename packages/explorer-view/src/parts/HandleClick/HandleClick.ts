@@ -28,7 +28,7 @@ const updateIcons = (state: any): any => {
   }
 }
 
-export const handleIconThemeChange = (state: any) => {
+export const handleIconThemeChange = (state: any): any => {
   return updateIcons(state)
 }
 
@@ -315,7 +315,7 @@ const handleClickSymLink = async (state: any, dirent: any, index: any): Promise<
   }
 }
 
-const handleArrowRightDirectoryExpanded = (state: any, dirent: any) => {
+const handleArrowRightDirectoryExpanded = (state: any, dirent: any): any => {
   const { items, focusedIndex } = state
   if (focusedIndex === items.length - 1) {
     return state
@@ -357,7 +357,7 @@ const focusParentFolder = (state: any): any => {
   return focusIndex(state, parentStartIndex)
 }
 
-export const handleArrowLeft = (state: any) => {
+export const handleArrowLeft = (state: any): any => {
   const { items, focusedIndex } = state
   if (focusedIndex === -1) {
     return state
