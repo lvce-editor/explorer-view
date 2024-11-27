@@ -2,7 +2,7 @@ export const remove = async (diren: any): Promise<void> => {}
 
 export const writeFile = async () => {}
 
-export const readDirWithFileTypes = async () => {}
+export const readDirWithFileTypes = async (uri: string): Promise<any> => {}
 
 export const getPathSeparator = async () => {}
 

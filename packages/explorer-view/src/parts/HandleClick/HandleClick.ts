@@ -178,7 +178,7 @@ export const copyPath = async (state: any) => {
 // TODO much shared logic with newFolder
 
 const handleClickFile = async (state: any, dirent: any, index: any, keepFocus = false) => {
-  await Command.execute(/* Main.openAbsolutePath */ 'Main.openUri', /* absolutePath */ dirent.path, /* focus */ !keepFocus)
+  // await Command.execute(/* Main.openAbsolutePath */ 'Main.openUri', /* absolutePath */ dirent.path, /* focus */ !keepFocus)
   return {
     ...state,
     focusedIndex: index,
