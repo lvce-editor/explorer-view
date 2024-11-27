@@ -302,7 +302,7 @@ export const openContainingFolder = async (state: any) => {
   return state
 }
 
-const newDirent = async (state, editingType) => {
+const newDirent = async (state: any, editingType) => {
   Focus.setFocus(FocusKey.ExplorerEditBox)
   // TODO do it like vscode, select position between folders and files
   const { focusedIndex, items } = state
@@ -349,7 +349,7 @@ export const newFolder = (state: any) => {
   return newDirent(state, ExplorerEditingType.CreateFolder)
 }
 
-const handleClickFile = async (state, dirent, index, keepFocus = false) => {
+const handleClickFile = async (state: any, dirent, index, keepFocus = false) => {
   await Command.execute(/* Main.openAbsolutePath */ 'Main.openUri', /* absolutePath */ dirent.path, /* focus */ !keepFocus)
   return {
     ...state,
@@ -358,7 +358,7 @@ const handleClickFile = async (state, dirent, index, keepFocus = false) => {
   }
 }
 
-const handleClickDirectory = async (state, dirent, index, keepFocus) => {
+const handleClickDirectory = async (state: any, dirent, index, keepFocus) => {
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
   const dirents = await getChildDirents(state.pathSeparator, dirent)
@@ -493,7 +493,7 @@ export const scrollUp = () => {}
 export const scrollDown = () => {}
 // export const handleBlur=()=>{}
 
-const handleClickSymLink = async (state, dirent, index) => {
+const handleClickSymLink = async (state: any, dirent, index) => {
   const realPath = await FileSystem.getRealPath(dirent.path)
   const type = await FileSystem.stat(realPath)
   switch (type) {
@@ -564,7 +564,7 @@ export const handleArrowLeft = (state: any) => {
   }
 }
 
-export const handleUpload = async (state, dirents) => {
+export const handleUpload = async (state: any, dirents) => {
   const { root, pathSeparator } = state
   for (const dirent of dirents) {
     // TODO switch
