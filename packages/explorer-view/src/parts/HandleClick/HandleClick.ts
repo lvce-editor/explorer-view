@@ -256,7 +256,7 @@ const handleClickDirectoryExpanded = (state, dirent, index, keepFocus) => {
   }
 }
 
-const getClickFn = (direntType) => {
+const getClickFn = (direntType: any): any => {
   switch (direntType) {
     case DirentType.File:
     case DirentType.SymLinkFile:
