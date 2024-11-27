@@ -20,5 +20,5 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true
   },
-  "include": ["packages/explorer-view/src", "packages/explorer-view/test"]
+  "include": ["src", "test"]
 }
