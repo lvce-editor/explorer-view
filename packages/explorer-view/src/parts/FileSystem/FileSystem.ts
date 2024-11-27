@@ -1,4 +1,4 @@
-export const readFile = async (uri, encoding = EncodingType.Utf8) => {}
+export const readFile = async (uri, encoding) => {}
 
 export const readJson = async (uri, encoding) => {}
 
