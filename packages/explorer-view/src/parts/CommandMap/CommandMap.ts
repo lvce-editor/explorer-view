@@ -14,4 +14,10 @@ export const commandMap = {
   'Explorer.handleArrowRight': HandleClick.handleArrowRight,
   'Explorer.renameDirent': HandleClick.renameDirent,
   'Explorer.removeDirent': HandleClick.removeDirent,
+  'Explorer.cancelEdit': HandleClick.cancelEdit,
+  'Explorer.copyPath': HandleClick.copyPath,
+  'Explorer.copyRelativePath': HandleClick.copyRelativePath,
+  'Explorer.handleClickCurrentButKeepFocus': HandleClick.handleClickCurrentButKeepFocus,
+  'Explorer.handleWheel': HandleClick.handleWheel,
+  'Explorer.handleIconThemeChange': HandleClick.handleIconThemeChange,
 }
