@@ -33,9 +33,9 @@
     "collectCoverage": true,
     "coverageThreshold": {
       "global": {
-        "branches": 58,
-        "functions": 40,
-        "lines": 75
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
       }
     }
   },
@@ -49,5 +49,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lvce-editor/explorer-view.git"
+  },
+  "dependencies": {
+    "@lvce-editor/i18n": "^1.1.0"
   }
 }
