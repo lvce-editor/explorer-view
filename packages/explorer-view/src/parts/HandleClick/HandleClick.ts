@@ -66,7 +66,7 @@ const setDeltaY = (state, deltaY) => {
   }
 }
 
-export const handleWheel = (state, deltaMode, deltaY) => {
+export const handleWheel = (state: any, deltaMode: any, deltaY: any): any => {
   return setDeltaY(state, state.deltaY + deltaY)
 }
 

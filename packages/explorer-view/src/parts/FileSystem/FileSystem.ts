@@ -1,4 +1,4 @@
-export const remove = async () => {}
+export const remove = async (diren: any): Promise<void> => {}
 
 export const writeFile = async () => {}
 
