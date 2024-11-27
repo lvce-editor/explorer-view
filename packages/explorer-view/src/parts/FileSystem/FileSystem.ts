@@ -1,6 +1,6 @@
 export const remove = async (diren: any): Promise<void> => {}
 
-export const writeFile = async () => {}
+export const writeFile = async (): Promise<void> => {}
 
 export const readDirWithFileTypes = async (uri: string): Promise<any> => {}
 

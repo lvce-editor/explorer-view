@@ -15,17 +15,17 @@ import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
 // TODO instead of root string, there should be a root dirent
 
-const getPathSeparator = (root: any) => {
+const getPathSeparator = (root: any): any => {
   return FileSystem.getPathSeparator(root)
 }
 
 // @ts-ignore
-const isExpandedDirectory = (dirent) => {
+const isExpandedDirectory = (dirent: any): boolean => {
   return dirent.type === DirentType.DirectoryExpanded
 }
 
 // @ts-ignore
-const getPath = (dirent) => {
+const getPath = (dirent): any => {
   return dirent.path
 }
 

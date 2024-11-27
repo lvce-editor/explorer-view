@@ -26,11 +26,11 @@ const getPath = (dirent) => {
   return dirent.path
 }
 
-const updateIcon = (dirent: any) => {
+const updateIcon = (dirent: any): any => {
   return { ...dirent, icon: IconTheme.getIcon(dirent) }
 }
 
-const updateIcons = (state: any) => {
+const updateIcons = (state: any): any => {
   const newDirents = state.items.map(updateIcon)
   return {
     ...state,
