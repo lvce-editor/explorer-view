@@ -9,15 +9,15 @@ const sharedProcessUrl = pathToFileURL(sharedProcessPath).toString()
 
 const sharedProcess = await import(sharedProcessUrl)
 
-process.env.PATH_PREFIX = '/text-search-worker'
+process.env.PATH_PREFIX = '/explorer-view'
 const { commitHash } = await sharedProcess.exportStatic({
   root,
   extensionPath: '',
 })
 
 await cp(
-  join(root, '.tmp', 'dist', 'dist', 'textSearchWorkerMain.js'),
-  join(root, 'dist', commitHash, 'packages', 'text-search-worker', 'dist', 'textSearchWorkerMain.js'),
+  join(root, '.tmp', 'dist', 'dist', 'explorerViewWorkerMain.js'),
+  join(root, 'dist', commitHash, 'packages', 'explorer-view-worker', 'dist', 'explorerViewWorkerMain.js'),
 )
 
 await cp(join(root, 'dist'), join(root, '.tmp', 'static'), { recursive: true })
