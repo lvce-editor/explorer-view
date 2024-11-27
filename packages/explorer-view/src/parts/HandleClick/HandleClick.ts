@@ -216,7 +216,7 @@ const handleClickDirectory = async (state: any, dirent: any, index: any, keepFoc
   }
 }
 
-const handleClickDirectoryExpanding = (state, dirent, index, keepFocus) => {
+const handleClickDirectoryExpanding = (state: any, dirent: any, index: any, keepFocus: boolean): any => {
   dirent.type = DirentType.Directory
   dirent.icon = IconTheme.getIcon(dirent)
   return {
@@ -226,7 +226,7 @@ const handleClickDirectoryExpanding = (state, dirent, index, keepFocus) => {
   }
 }
 
-const handleClickDirectoryExpanded = (state, dirent, index, keepFocus) => {
+const handleClickDirectoryExpanded = (state: any, dirent: any, index: any, keepFocus: boolean): any => {
   const { minLineY, maxLineY, itemHeight } = state
   dirent.type = DirentType.Directory
   dirent.icon = IconTheme.getIcon(dirent)
