@@ -133,7 +133,7 @@ export const renameDirent = (state: any) => {
 
 // TODO use posInSet and setSize properties to compute more effectively
 
-export const cancelEdit = (state: any) => {
+export const cancelEdit = (state: any): any => {
   const { editingIndex } = state
   return {
     ...state,
@@ -145,7 +145,7 @@ export const cancelEdit = (state: any) => {
   }
 }
 
-export const copyRelativePath = async (state: any) => {
+export const copyRelativePath = async (state: any): Promise<any> => {
   const dirent = getFocusedDirent(state)
   // @ts-ignore
   const relativePath = dirent.path.slice(1)
@@ -155,7 +155,7 @@ export const copyRelativePath = async (state: any) => {
   return state
 }
 
-export const copyPath = async (state: any) => {
+export const copyPath = async (state: any): Promise<any> => {
   const dirent = getFocusedDirent(state)
   // TODO windows paths
   // TODO handle error
