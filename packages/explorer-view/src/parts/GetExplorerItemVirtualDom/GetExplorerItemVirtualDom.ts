@@ -55,7 +55,7 @@ const getItemVirtualDomFile = (item: any): any => {
     // @ts-ignore
     dom[0].id = 'TreeItemActive'
     // @ts-ignore
-    dom[0].className + ' ' + ClassNames.TreeItemActive
+    dom[0].className += ' ' + ClassNames.TreeItemActive
   }
   return dom
 }
