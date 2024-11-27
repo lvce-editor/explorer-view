@@ -64,7 +64,7 @@ const getFocusedDirent = (state: any) => {
 }
 
 // TODO support multiselection and removing multiple dirents
-export const removeDirent = async (state: any) => {
+export const removeDirent = async (state: any): Promise<any> => {
   if (state.focusedIndex < 0) {
     return state
   }
@@ -274,7 +274,7 @@ const getClickFn = (direntType: any): any => {
   }
 }
 
-export const handleClick = (state: any, index: any, keepFocus = false) => {
+export const handleClick = (state: any, index: any, keepFocus = false): any => {
   const { items, minLineY } = state
   if (index === -1) {
     return focusIndex(state, -1)
@@ -298,7 +298,7 @@ export const handleClickAt = (state: any, button: any, x: any, y: any): any => {
   return handleClick(state, index)
 }
 
-export const handleClickCurrentButKeepFocus = (state: any) => {
+export const handleClickCurrentButKeepFocus = (state: any): any => {
   return handleClick(state, state.focusedIndex - state.minLineY, /* keepFocus */ true)
 }
 
