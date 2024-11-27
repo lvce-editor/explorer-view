@@ -860,7 +860,7 @@ const orderDirents = (dirents) => {
   return ordered
 }
 
-const scrollInto = (index, minLineY, maxLineY) => {
+const scrollInto = (index: number, minLineY: number, maxLineY: number): any => {
   const diff = maxLineY - minLineY
   const smallerHalf = Math.floor(diff / 2)
   const largerHalf = diff - smallerHalf
@@ -883,7 +883,7 @@ const scrollInto = (index, minLineY, maxLineY) => {
 }
 
 // TODO maybe just insert items into explorer and refresh whole explorer
-const revealItemHidden = async (state, uri) => {
+const revealItemHidden = async (state: any, uri: string): Promise<any> => {
   const { root, pathSeparator, items, minLineY, maxLineY } = state
   const pathParts = getPathParts(root, uri, pathSeparator)
   if (pathParts.length === 0) {
