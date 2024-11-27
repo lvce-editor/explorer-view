@@ -607,18 +607,14 @@ const isImage = (dirent) => {
   return IMAGE_EXTENSIONS.has(fileExtension)
 }
 
-export const handleMouseEnter = async (state, index) => {
+export const handleMouseEnter = async (state: any, index: number): Promise<any> => {
   const { items } = state
   const dirent = items[index]
   if (!isImage(dirent)) {
     // TODO preload content maybe when it is a long hover
     return state
   }
-  const { top, itemHeight, x, root } = state
-  const uri = `${root}${dirent.path}`
-  const newTop = top + index * itemHeight
-  const right = x
-  await Command.execute(/* ImagePreview.show */ 9081, /* uri */ uri, /* top */ newTop, /* right */ right)
+  return state
 }
 
 // TODO what happens when mouse leave and anther mouse enter event occur?
@@ -645,7 +641,7 @@ export const handleCopy = async (state: any) => {
 
 export const hasFunctionalResize = true
 
-export const resize = (state, dimensions) => {
+export const resize = (state: any, dimensions: any) => {
   const { minLineY, itemHeight } = state
   const maxLineY = minLineY + Math.round(dimensions.height / itemHeight)
   return {
@@ -690,11 +686,11 @@ export const expandAll = async (state: any) => {
   }
 }
 
-const isTopLevel = (dirent) => {
+const isTopLevel = (dirent: any) => {
   return dirent.depth === 1
 }
 
-const toCollapsedDirent = (dirent) => {
+const toCollapsedDirent = (dirent: any) => {
   if (dirent.type === DirentType.DirectoryExpanded) {
     return {
       ...dirent,
