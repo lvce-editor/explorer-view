@@ -183,11 +183,11 @@ const handleClickFile = async (state: any, dirent, index, keepFocus = false) => 
   }
 }
 
-const handleClickDirectory = async (state: any, dirent, index, keepFocus) => {
+const handleClickDirectory = async (state: any, dirent: any, index: any, keepFocus: boolean): Promise<any> => {
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
   const dirents = await getChildDirents(state.pathSeparator, dirent)
-  const state2 = Viewlet.getState('Explorer')
+  const state2 = {} as any
   if (!state2) {
     return state
   }
