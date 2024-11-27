@@ -8,4 +8,4 @@ export const getPathSeparator = async () => {}
 
 export const getRealPath = async () => {}
 
-export const stat = async () => {}
+export const stat = async (): Promise<any> => {}

@@ -175,36 +175,6 @@ export const copyPath = async (state: any) => {
   return state
 }
 
-const getContaingingFolder = (root, dirents, focusedIndex) => {
-  if (focusedIndex < 0) {
-    return root
-  }
-  const dirent = dirents[focusedIndex]
-  const direntPath = dirent.path
-  const direntParentPath = direntPath.slice(0, -(dirent.name.length + 1))
-  const path = `${direntParentPath}`
-  return path
-}
-
-const newDirent = async (state: any, editingType) => {
-  Focus.setFocus(FocusKey.ExplorerEditBox)
-  // TODO do it like vscode, select position between folders and files
-  const { focusedIndex, items } = state
-  if (focusedIndex >= 0) {
-    const dirent = items[focusedIndex]
-    if (dirent.type === DirentType.Directory) {
-      // TODO handle error
-      await handleClickDirectory(state, dirent, focusIndex)
-    }
-  }
-  return {
-    ...state,
-    editingIndex: focusedIndex,
-    editingType,
-    editingValue: '',
-  }
-}
-
 // TODO much shared logic with newFolder
 
 const handleClickFile = async (state: any, dirent, index, keepFocus = false) => {
@@ -378,6 +348,7 @@ export const handleArrowRight = async (state: any) => {
       return state
     case DirentType.Directory:
     case DirentType.SymLinkFolder:
+      // @ts-ignore
       return handleClickDirectory(state, dirent, focusedIndex)
     case DirentType.DirectoryExpanded:
       return handleArrowRightDirectoryExpanded(state, dirent)
@@ -408,6 +379,7 @@ export const handleArrowLeft = (state: any) => {
     case DirentType.SymLinkFile:
       return focusParentFolder(state)
     case DirentType.DirectoryExpanded:
+      // @ts-ignore
       return handleClickDirectoryExpanded(state, dirent, focusedIndex)
     default:
       // TODO handle expanding directory and cancel file system call to read child dirents
@@ -415,36 +387,8 @@ export const handleArrowLeft = (state: any) => {
   }
 }
 
-const cancelRequest = () => {}
-
-const IMAGE_EXTENSIONS = new Set(['.png', '.jpeg', '.jpg', '.gif', '.svg', '.ico'])
-
-const isImage = (dirent) => {
-  // TODO explorer state must be updated when changing folder
-  // This is just a workaround
-  if (!dirent) {
-    return false
-  }
-  const fileExtension = GetFileExtension.getFileExtension(dirent.path)
-  return IMAGE_EXTENSIONS.has(fileExtension)
-}
-
 // TODO what happens when mouse leave and anther mouse enter event occur?
 // should update preview instead of closing and reopening
-
-const isTopLevel = (dirent: any) => {
-  return dirent.depth === 1
-}
-
-const toCollapsedDirent = (dirent: any) => {
-  if (dirent.type === DirentType.DirectoryExpanded) {
-    return {
-      ...dirent,
-      type: DirentType.Directory,
-    }
-  }
-  return dirent
-}
 
 export const handleBlur = (state: any) => {
   // TODO when blur event occurs because of context menu, focused index should stay the same
@@ -459,200 +403,7 @@ export const handleBlur = (state: any) => {
   }
 }
 
-const getIndex = (dirents: any, uri: any) => {
-  for (let i = 0; i < dirents.length; i++) {
-    const dirent = dirents[i]
-    if (dirent.path === uri) {
-      return i
-    }
-  }
-  return -1
-}
-
-const getPathParts = (root: any, uri: any, pathSeparator: any) => {
-  const parts = []
-  let index = root.length - 1
-  let depth = 0
-  while ((index = uri.indexOf('/', index + 1)) !== -1) {
-    const partUri = uri.slice(0, index)
-    parts.push({
-      path: partUri,
-      depth: depth++,
-      root,
-      pathSeparator,
-    })
-  }
-  return parts
-}
-
-const getPathPartsToReveal = (root: any, pathParts: any, dirents: any): any => {
-  for (let i = 0; i < pathParts.length; i++) {
-    const pathPart = pathParts[i]
-    const index = getIndex(dirents, pathPart.uri)
-    if (index === -1) {
-      continue
-    }
-    return pathParts.slice(i)
-  }
-  return pathParts
-}
-
-const getPathPartChildren = (pathPart: any): any => {
-  const children = getChildDirents(pathPart.pathSeparator, pathPart)
-  return children
-}
-
-const mergeVisibleWithHiddenItems = (visibleItems: any, hiddenItems: any): any => {
-  const merged = [...hiddenItems]
-  const seen = Object.create(null)
-  const unique = []
-  for (const item of merged) {
-    if (seen[item.path]) {
-      continue
-    }
-    seen[item.path] = true
-    unique.push(item)
-  }
-  // @ts-ignore
-  const ordered = []
-
-  // depth one
-  //   let depth=1
-  //   while(true){
-  //     for(const item of unique){
-  //       if(item.depth===depth){
-  //         ordered.push(item)
-  //       }
-  //     }
-  // break
-  //   }
-  // const getChildren = (path) => {
-  //   const children = []
-  //   for (const item of unique) {
-  //     if (item.path.startsWith(path) && item.path !== path) {
-  //       ordered.push(item)
-  //     }
-  //   }
-  //   return children
-  // }
-  // for (const item of unique) {
-  //   for (const potentialChild of unique) {
-  //     if (
-  //       potentialChild.path.startsWith(item.path) &&
-  //       potentialChild.path !== item.path
-  //     ) {
-  //       ordered.push(potentialChild)
-  //     }
-  //   }
-  // }
-  // const refreshedRoots = Object.create(null)
-  // for (const hiddenItem of hiddenItems) {
-  //   const parent = hiddenItem.path.slice(0, hiddenItem.path.lastIndexOf('/'))
-  //   refreshedRoots[parent] = true
-  // }
-  // const mergedDirents = []
-  // for(const v)
-  // for (const visibleItem of visibleItems) {
-  //   if (visibleItem.path === hiddenItemRoot) {
-  //     // TODO update aria posinset and aria setsize
-  //     mergedDirents.push(...hiddenItems)
-  //   } else {
-  //     for (const hiddenItem of hiddenItems) {
-  //       if (hiddenItem.path === visibleItem.path) {
-  //         continue
-  //       }
-  //     }
-  //     mergedDirents.push(visibleItem)
-  //   }
-  // }
-
-  return unique
-}
-
-const orderDirents = (dirents: any): any => {
-  if (dirents.length === 0) {
-    return dirents
-  }
-  // const parentMap = Object.create(null)
-  // for(const dirent of dirents){
-  //   const parentPath = dirent.slice(0, dirent.lastIndexOf('/'))
-  //   parentMap[parentPath]||=[]
-  //   parentMap[parentPath].push(dirent)
-  // }
-  const withDeepChildren = (parent: any): any => {
-    const children = []
-    for (const dirent of dirents) {
-      if (dirent.depth === parent.depth + 1 && dirent.path.startsWith(parent.path)) {
-        children.push(dirent, ...withDeepChildren(dirent))
-      }
-    }
-    return [parent, ...children]
-  }
-  const topLevelDirents = dirents.filter(isTopLevel)
-  const ordered = topLevelDirents.flatMap(withDeepChildren)
-  return ordered
-}
-
-const scrollInto = (index: number, minLineY: number, maxLineY: number): any => {
-  const diff = maxLineY - minLineY
-  const smallerHalf = Math.floor(diff / 2)
-  const largerHalf = diff - smallerHalf
-  if (index < minLineY) {
-    return {
-      newMinLineY: index - smallerHalf,
-      newMaxLineY: index + largerHalf,
-    }
-  }
-  if (index >= maxLineY) {
-    return {
-      newMinLineY: index - smallerHalf,
-      newMaxLineY: index + largerHalf,
-    }
-  }
-  return {
-    newMinLineY: minLineY,
-    newMaxLineY: maxLineY,
-  }
-}
-
 // TODO maybe just insert items into explorer and refresh whole explorer
-const revealItemHidden = async (state: any, uri: string): Promise<any> => {
-  const { root, pathSeparator, items, minLineY, maxLineY } = state
-  const pathParts = getPathParts(root, uri, pathSeparator)
-  if (pathParts.length === 0) {
-    return state
-  }
-  const pathPartsToReveal = getPathPartsToReveal(root, pathParts, items)
-  const pathPartsChildren = await Promise.all(pathPartsToReveal.map(getPathPartChildren))
-  const pathPartsChildrenFlat = pathPartsChildren.flat(1)
-  const orderedPathParts = orderDirents(pathPartsChildrenFlat)
-  const mergedDirents = mergeVisibleWithHiddenItems(items, orderedPathParts)
-  const index = getIndex(mergedDirents, uri)
-  if (index === -1) {
-    throw new Error(`File not found in explorer ${uri}`)
-  }
-  const { newMinLineY, newMaxLineY } = scrollInto(index, minLineY, maxLineY)
-  return {
-    ...state,
-    items: mergedDirents,
-    focused: true,
-    focusedIndex: index,
-    minLineY: newMinLineY,
-    maxLineY: newMaxLineY,
-  }
-}
-
-const revealItemVisible = (state: any, index: number): any => {
-  const { minLineY, maxLineY } = state
-  const { newMinLineY, newMaxLineY } = scrollInto(index, minLineY, maxLineY)
-  return {
-    ...state,
-    focused: true,
-    focusedIndex: index,
-    minLineY: newMinLineY,
-    maxLineY: newMaxLineY,
-  }
-}
 
 export const handleClickOpenFolder = async (state: any): Promise<any> => {
   await OpenFolder.openFolder()
