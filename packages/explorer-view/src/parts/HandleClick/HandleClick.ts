@@ -119,7 +119,7 @@ export const removeDirent = async (state: any) => {
   }
 }
 
-export const renameDirent = (state: any) => {
+export const renameDirent = (state: any): any => {
   const { focusedIndex, items } = state
   const item = items[focusedIndex]
   // Focus.setFocus(FocusKey.ExplorerEditBox)
@@ -167,7 +167,7 @@ export const copyPath = async (state: any): Promise<any> => {
 
 // TODO much shared logic with newFolder
 
-const handleClickFile = async (state: any, dirent: any, index: any, keepFocus = false) => {
+const handleClickFile = async (state: any, dirent: any, index: any, keepFocus = false): Promise<any> => {
   // await Command.execute(/* Main.openAbsolutePath */ 'Main.openUri', /* absolutePath */ dirent.path, /* focus */ !keepFocus)
   return {
     ...state,
