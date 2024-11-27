@@ -752,7 +752,7 @@ const getPathParts = (root, uri, pathSeparator) => {
   return parts
 }
 
-const getPathPartsToReveal = (root, pathParts, dirents) => {
+const getPathPartsToReveal = (root: any, pathParts: any, dirents: any): any => {
   for (let i = 0; i < pathParts.length; i++) {
     const pathPart = pathParts[i]
     const index = getIndex(dirents, pathPart.uri)
@@ -764,12 +764,12 @@ const getPathPartsToReveal = (root, pathParts, dirents) => {
   return pathParts
 }
 
-const getPathPartChildren = (pathPart) => {
+const getPathPartChildren = (pathPart: any): any => {
   const children = getChildDirents(pathPart.pathSeparator, pathPart)
   return children
 }
 
-const mergeVisibleWithHiddenItems = (visibleItems, hiddenItems) => {
+const mergeVisibleWithHiddenItems = (visibleItems: any, hiddenItems: any): any => {
   const merged = [...hiddenItems]
   const seen = Object.create(null)
   const unique = []
