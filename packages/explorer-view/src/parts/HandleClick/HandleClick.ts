@@ -16,16 +16,6 @@ import * as OpenFolder from '../OpenFolder/OpenFolder.ts'
 
 // TODO instead of root string, there should be a root dirent
 
-// @ts-ignore
-const isExpandedDirectory = (dirent) => {
-  return dirent.type === DirentType.DirectoryExpanded
-}
-
-// @ts-ignore
-const getPath = (dirent) => {
-  return dirent.path
-}
-
 const updateIcon = (dirent: any): any => {
   return { ...dirent, icon: IconTheme.getIcon(dirent) }
 }

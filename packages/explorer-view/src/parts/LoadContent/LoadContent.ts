@@ -89,7 +89,7 @@ const createDirents = (root: any, expandedDirentPaths: any, expandedDirentChildr
   return dirents
 }
 
-const getSavedExpandedPaths = (savedState: any, root: any) => {
+const getSavedExpandedPaths = (savedState: any, root: any): any => {
   if (savedState && savedState.root !== root) {
     return []
   }
