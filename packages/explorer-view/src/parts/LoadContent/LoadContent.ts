@@ -75,7 +75,7 @@ const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pa
   return dirents
 }
 
-const createDirents = (root: any, expandedDirentPaths: any, expandedDirentChildren: any, excluded: any, pathSeparator: any) => {
+const createDirents = (root: any, expandedDirentPaths: any, expandedDirentChildren: any, excluded: any, pathSeparator: any): any => {
   const dirents = []
   const map = Object.create(null)
   for (let i = 0; i < expandedDirentPaths.length; i++) {
@@ -118,7 +118,7 @@ const restoreExpandedState = async (savedState: any, root: any, pathSeparator: a
   return dirents
 }
 
-const getExcluded = () => {
+const getExcluded = (): any => {
   const excludedObject = {}
   const excluded = []
   for (const [key, value] of Object.entries(excludedObject)) {
@@ -129,11 +129,11 @@ const getExcluded = () => {
   return excluded
 }
 
-const getSavedRoot = (savedState: any, workspacePath: any) => {
+const getSavedRoot = (savedState: any, workspacePath: any): any => {
   return workspacePath
 }
 
-export const loadContent = async (state: any, savedState: any) => {
+export const loadContent = async (state: any, savedState: any): Promise<any> => {
   const root = getSavedRoot(savedState, '')
   // TODO path separator could be restored from saved state
   const pathSeparator = await getPathSeparator(root) // TODO only load path separator once
