@@ -2,7 +2,7 @@ import * as KeyCode from '../KeyCode/KeyCode.ts'
 import * as KeyModifier from '../KeyModifier/KeyModifier.ts'
 import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
 
-export const getKeyBindings = () => {
+export const getKeyBindings = (): readonly any[] => {
   return [
     {
       key: KeyCode.RightArrow,
