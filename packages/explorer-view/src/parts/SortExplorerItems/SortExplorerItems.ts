@@ -18,7 +18,7 @@ const compareDirentName = (direntA: any, direntB: any): number => {
   return Compare.compareStringNumeric(direntA.name, direntB.name)
 }
 
-export const compareDirent = (direntA: any, direntB: any): number => {
+const compareDirent = (direntA: any, direntB: any): number => {
   return compareDirentType(direntA, direntB) || compareDirentName(direntA, direntB)
 }
 
