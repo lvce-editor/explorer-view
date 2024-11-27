@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import * as I18NString from '../src/parts/I18NString/I18NString.js'
+import * as I18NString from '../src/parts/I18NString/I18NString.ts'
 
 test('i18nString - only key', () => {
   expect(I18NString.i18nString('key')).toBe('key')
