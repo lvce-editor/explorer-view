@@ -726,7 +726,7 @@ export const handleBlur = (state: any) => {
   }
 }
 
-const getIndex = (dirents, uri) => {
+const getIndex = (dirents: any, uri: any) => {
   for (let i = 0; i < dirents.length; i++) {
     const dirent = dirents[i]
     if (dirent.path === uri) {
@@ -736,7 +736,7 @@ const getIndex = (dirents, uri) => {
   return -1
 }
 
-const getPathParts = (root, uri, pathSeparator) => {
+const getPathParts = (root: any, uri: any, pathSeparator: any) => {
   const parts = []
   let index = root.length - 1
   let depth = 0
