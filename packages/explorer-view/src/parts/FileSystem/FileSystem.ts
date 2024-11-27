@@ -1,5 +1,3 @@
-import * as EncodingType from '../EncodingType/EncodingType.js'
-
 export const readFile = async (uri, encoding = EncodingType.Utf8) => {}
 
 export const readJson = async (uri, encoding) => {}
@@ -10,7 +8,7 @@ export const rename = async (oldUri, newUri) => {}
 
 export const mkdir = async (uri) => {}
 
-export const writeFile = async (uri, content, encoding = EncodingType.Utf8) => {}
+export const writeFile = async (uri, content, encoding) => {}
 
 export const createFile = (uri) => {}
 
