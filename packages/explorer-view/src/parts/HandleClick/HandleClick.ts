@@ -326,7 +326,7 @@ const handleArrowRightDirectoryExpanded = (state: any, dirent: any) => {
   }
 }
 
-export const handleArrowRight = async (state: any) => {
+export const handleArrowRight = async (state: any): Promise<any> => {
   const { items, focusedIndex } = state
   if (focusedIndex === -1) {
     return state
@@ -380,7 +380,7 @@ export const handleArrowLeft = (state: any) => {
 // TODO what happens when mouse leave and anther mouse enter event occur?
 // should update preview instead of closing and reopening
 
-export const handleBlur = (state: any) => {
+export const handleBlur = (state: any): any => {
   // TODO when blur event occurs because of context menu, focused index should stay the same
   // but focus outline should be removed
   const { editingType } = state
