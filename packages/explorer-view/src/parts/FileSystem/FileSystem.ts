@@ -4,7 +4,7 @@ export const writeFile = async () => {}
 
 export const readDirWithFileTypes = async (uri: string): Promise<any> => {}
 
-export const getPathSeparator = async () => {}
+export const getPathSeparator = async (root: string): Promise<any> => {}
 
 export const getRealPath = async (path: any): Promise<any> => {}
 

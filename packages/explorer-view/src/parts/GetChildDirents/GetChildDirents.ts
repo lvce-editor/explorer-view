@@ -100,7 +100,7 @@ export const getChildDirentsRaw = async (uri: string): Promise<any> => {
   return rawDirents
 }
 
-export const getChildDirents = async (pathSeparator: string, parentDirent: any, excluded = []): any => {
+export const getChildDirents = async (pathSeparator: string, parentDirent: any, excluded = []): Promise<any> => {
   Assert.string(pathSeparator)
   Assert.object(parentDirent)
   // TODO use event/actor based code instead, this is impossible to cancel right now
