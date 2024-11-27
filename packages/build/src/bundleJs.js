@@ -1,18 +1,21 @@
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import { babel } from '@rollup/plugin-babel'
 import pluginTypeScript from '@babel/preset-typescript'
+import { babel } from '@rollup/plugin-babel'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import { join } from 'path'
+import { rollup } from 'rollup'
+import { root } from './root.js'
 
 /**
  * @type {import('rollup').RollupOptions}
  */
 const options = {
-  input: 'src/explorerViewWorkerMain.ts',
+  input: join(root, 'packages/explorer-view/src/explorerViewWorkerMain.ts'),
   preserveEntrySignatures: 'strict',
   treeshake: {
     propertyReadSideEffects: false,
   },
   output: {
-    file: 'dist/dist/explorerViewWorkerMain.js',
+    file: join(root, '.tmp/dist/dist/explorerViewWorkerMain.js'),
     format: 'es',
     freeze: false,
     generatedCode: {
@@ -30,4 +33,8 @@ const options = {
   ],
 }
 
-export default options
+export const bundleJs = async () => {
+  const input = await rollup(options)
+  // @ts-ignore
+  await input.write(options.output)
+}
