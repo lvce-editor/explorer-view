@@ -114,34 +114,3 @@ export const getChildDirents = async (pathSeparator: string, parentDirent: any, 
   const displayDirents = ToDisplayDirents.toDisplayDirents(pathSeparator, rawDirents, parentDirent, excluded)
   return displayDirents
 }
-
-export const mergeDirents = (oldDirents: any, newDirents: any): any => {
-  const merged = []
-  let oldIndex = 0
-  for (const newDirent of newDirents) {
-    merged.push(newDirent)
-    for (let i = oldIndex; i < oldDirents.length; i++) {
-      if (oldDirents[i].path === newDirent.path) {
-        // TOOD copy children of old dirent
-        oldIndex = i
-        break
-      }
-    }
-  }
-  return merged
-}
-
-export const getTopLevelDirents = (root: string, pathSeparator: string, excluded: any): any => {
-  if (!root) {
-    return []
-  }
-  return getChildDirents(
-    pathSeparator,
-    {
-      depth: 0,
-      path: root,
-      type: DirentType.Directory,
-    },
-    excluded,
-  )
-}
