@@ -57,7 +57,7 @@ export const handleWheel = (state: any, deltaMode: any, deltaY: any): any => {
   return setDeltaY(state, state.deltaY + deltaY)
 }
 
-const getFocusedDirent = (state: any) => {
+const getFocusedDirent = (state: any): any => {
   const { focusedIndex, minLineY, items } = state
   const dirent = items[focusedIndex + minLineY]
   return dirent
