@@ -5,7 +5,7 @@ import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
-export const getIndexFromPosition = (state, eventX, eventY) => {
+export const getIndexFromPosition = (state: any, eventX: number, eventY: number): any => {
   const { y, itemHeight, items } = state
   const index = Math.floor((eventY - y) / itemHeight)
   if (index < 0) {
@@ -17,10 +17,10 @@ export const getIndexFromPosition = (state, eventX, eventY) => {
   return index
 }
 
-const toDisplayDirents = (pathSeparator, rawDirents, parentDirent, excluded) => {
+const toDisplayDirents = (pathSeparator: string, rawDirents: any, parentDirent: any, excluded: any): any => {
   SortExplorerItems.sortExplorerItems(rawDirents)
   // TODO figure out whether this uses too much memory (name,path -> redundant, depth could be computed on demand)
-  const toDisplayDirent = (rawDirent, index) => {
+  const toDisplayDirent = (rawDirent: any, index: any): any => {
     const path = [parentDirent.path, rawDirent.name].join(pathSeparator)
     return {
       name: rawDirent.name,
