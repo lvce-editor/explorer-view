@@ -5,7 +5,7 @@ import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
-export const getExplorerWelcomeVirtualDom = (isWide: boolean) => {
+export const getExplorerWelcomeVirtualDom = (isWide: boolean): any[] => {
   return [
     {
       type: VirtualDomElements.Div,
