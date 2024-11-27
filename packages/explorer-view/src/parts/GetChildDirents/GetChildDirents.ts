@@ -54,7 +54,7 @@ const getSymlinkType = (type: any): any => {
 }
 // TODO maybe resolving of symbolic links should happen in shared process?
 // so that there is less code and less work in the frontend
-const resolveSymbolicLink = async (uri: string, rawDirent: any): any => {
+const resolveSymbolicLink = async (uri: string, rawDirent: any): Promise<any> => {
   try {
     // TODO support windows paths
     const absolutePath = uri + '/' + rawDirent.name
