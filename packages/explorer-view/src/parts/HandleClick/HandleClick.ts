@@ -281,7 +281,7 @@ const getClickFn = (direntType) => {
   }
 }
 
-export const handleClick = (state, index, keepFocus = false) => {
+export const handleClick = (state: any, index: any, keepFocus = false) => {
   const { items, minLineY } = state
   if (index === -1) {
     return focusIndex(state, -1)
@@ -296,7 +296,7 @@ export const handleClick = (state, index, keepFocus = false) => {
   return clickFn(state, dirent, actualIndex, keepFocus)
 }
 
-export const handleClickAt = (state, button, x, y) => {
+export const handleClickAt = (state: any, button: any, x: any, y: any): any => {
   if (button !== MouseEventType.LeftClick) {
     return state
   }
@@ -311,7 +311,7 @@ export const handleClickCurrentButKeepFocus = (state: any) => {
 
 // export const handleBlur=()=>{}
 
-const handleClickSymLink = async (state: any, dirent: any, index: any): any => {
+const handleClickSymLink = async (state: any, dirent: any, index: any): Promise<any> => {
   const realPath = await FileSystem.getRealPath(dirent.path)
   const type = await FileSystem.stat(realPath)
   switch (type) {
@@ -322,7 +322,7 @@ const handleClickSymLink = async (state: any, dirent: any, index: any): any => {
   }
 }
 
-const handleArrowRightDirectoryExpanded = (state, dirent) => {
+const handleArrowRightDirectoryExpanded = (state: any, dirent: any) => {
   const { items, focusedIndex } = state
   if (focusedIndex === items.length - 1) {
     return state
