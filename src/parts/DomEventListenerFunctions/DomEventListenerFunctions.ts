@@ -1,0 +1,6 @@
+export const HandleContextMenu = 'handleContextMenu'
+export const HandleInput = 'handleInput'
+export const HandlePointerDown = 'handlePointerDown'
+export const HandleTableClick = 'handleTableClick'
+export const HandleTableDoubleClick = 'handleTableDoubleClick'
+export const HandleWheel = 'handleWheel'
