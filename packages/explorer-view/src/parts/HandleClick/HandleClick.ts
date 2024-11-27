@@ -909,7 +909,7 @@ const revealItemHidden = async (state, uri) => {
   }
 }
 
-const revealItemVisible = (state, index) => {
+const revealItemVisible = (state: any, index: number): any => {
   const { minLineY, maxLineY } = state
   const { newMinLineY, newMaxLineY } = scrollInto(index, minLineY, maxLineY)
   return {
@@ -921,7 +921,7 @@ const revealItemVisible = (state, index) => {
   }
 }
 
-export const revealItem = async (state, uri) => {
+export const revealItem = async (state: any, uri: string): Promise<any> => {
   Assert.object(state)
   Assert.string(uri)
   const { items } = state
