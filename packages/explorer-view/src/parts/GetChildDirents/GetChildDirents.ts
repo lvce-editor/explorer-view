@@ -77,7 +77,7 @@ const resolveSymbolicLink = async (uri: string, rawDirent: any): Promise<any> =>
   }
 }
 
-const resolveSymbolicLinks = async (uri: string, rawDirents: any): any => {
+const resolveSymbolicLinks = async (uri: string, rawDirents: any): Promise<any> => {
   const promises = []
   for (const rawDirent of rawDirents) {
     if (isSymbolicLink(rawDirent)) {
