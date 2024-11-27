@@ -44,13 +44,11 @@
     "@lvce-editor/rpc": "^1.4.0",
     "@lvce-editor/verror": "^1.6.0",
     "jest": "^29.7.0",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.5",
+    "@lvce-editor/i18n": "^1.1.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lvce-editor/explorer-view.git"
-  },
-  "dependencies": {
-    "@lvce-editor/i18n": "^1.1.0"
   }
 }
