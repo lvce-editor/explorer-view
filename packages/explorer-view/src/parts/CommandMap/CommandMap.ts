@@ -16,6 +16,7 @@ export const commandMap = {
   'Explorer.handleClick': HandleClick.handleClick,
   'Explorer.handleClickAt': HandleClick.handleClickAt,
   'Explorer.handleClickCurrentButKeepFocus': HandleClick.handleClickCurrentButKeepFocus,
+  'Explorer.handleClickOpenFolder': HandleClick.handleClickOpenFolder,
   'Explorer.handleIconThemeChange': HandleClick.handleIconThemeChange,
   'Explorer.handleWheel': HandleClick.handleWheel,
   'Explorer.removeDirent': HandleClick.removeDirent,

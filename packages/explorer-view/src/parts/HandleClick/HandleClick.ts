@@ -932,7 +932,7 @@ export const revealItem = async (state: any, uri: string): Promise<any> => {
   return revealItemVisible(state, index)
 }
 
-export const handleClickOpenFolder = async (state) => {
+export const handleClickOpenFolder = async (state: any): Promise<any> => {
   await OpenFolder.openFolder()
   return state
 }
