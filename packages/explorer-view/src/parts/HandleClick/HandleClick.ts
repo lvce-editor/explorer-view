@@ -26,7 +26,7 @@ const getPath = (dirent) => {
   return dirent.path
 }
 
-const updateIcon = (dirent) => {
+const updateIcon = (dirent: any) => {
   return { ...dirent, icon: IconTheme.getIcon(dirent) }
 }
 
@@ -43,7 +43,7 @@ export const handleIconThemeChange = (state: any) => {
 }
 
 // TODO rename dirents to items, then can use virtual list component directly
-const setDeltaY = (state, deltaY) => {
+const setDeltaY = (state: any, deltaY: any): any => {
   const { itemHeight, height, items } = state
   if (deltaY < 0) {
     deltaY = 0
@@ -132,7 +132,7 @@ export const removeDirent = async (state: any) => {
 export const renameDirent = (state: any) => {
   const { focusedIndex, items } = state
   const item = items[focusedIndex]
-  Focus.setFocus(FocusKey.ExplorerEditBox)
+  // Focus.setFocus(FocusKey.ExplorerEditBox)
   return {
     ...state,
     editingIndex: focusedIndex,
@@ -157,9 +157,11 @@ export const cancelEdit = (state: any) => {
 
 export const copyRelativePath = async (state: any) => {
   const dirent = getFocusedDirent(state)
+  // @ts-ignore
   const relativePath = dirent.path.slice(1)
   // TODO handle error
-  await Command.execute(RendererWorkerCommandType.ClipBoardWriteText, /* text */ relativePath)
+
+  // await Command.execute(RendererWorkerCommandType.ClipBoardWriteText, /* text */ relativePath)
   return state
 }
 
@@ -167,14 +169,15 @@ export const copyPath = async (state: any) => {
   const dirent = getFocusedDirent(state)
   // TODO windows paths
   // TODO handle error
+  // @ts-ignore
   const path = dirent.path
-  await Command.execute(RendererWorkerCommandType.ClipBoardWriteText, /* text */ path)
+  // await Command.execute(RendererWorkerCommandType.ClipBoardWriteText, /* text */ path)
   return state
 }
 
 // TODO much shared logic with newFolder
 
-const handleClickFile = async (state: any, dirent, index, keepFocus = false) => {
+const handleClickFile = async (state: any, dirent: any, index: any, keepFocus = false) => {
   await Command.execute(/* Main.openAbsolutePath */ 'Main.openUri', /* absolutePath */ dirent.path, /* focus */ !keepFocus)
   return {
     ...state,
