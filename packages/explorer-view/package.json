@@ -51,6 +51,6 @@
     "url": "git+https://github.com/lvce-editor/explorer-view.git"
   },
   "dependencies": {
-    "@lvce-editor/i18n": "^1.0.0"
+    "@lvce-editor/i18n": "^1.1.0"
   }
 }
