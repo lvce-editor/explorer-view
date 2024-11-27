@@ -836,7 +836,7 @@ const mergeVisibleWithHiddenItems = (visibleItems, hiddenItems) => {
   return unique
 }
 
-const orderDirents = (dirents) => {
+const orderDirents = (dirents: any): any => {
   if (dirents.length === 0) {
     return dirents
   }
@@ -846,7 +846,7 @@ const orderDirents = (dirents) => {
   //   parentMap[parentPath]||=[]
   //   parentMap[parentPath].push(dirent)
   // }
-  const withDeepChildren = (parent) => {
+  const withDeepChildren = (parent: any): any => {
     const children = []
     for (const dirent of dirents) {
       if (dirent.depth === parent.depth + 1 && dirent.path.startsWith(parent.path)) {
