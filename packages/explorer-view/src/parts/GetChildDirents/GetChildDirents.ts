@@ -2,8 +2,7 @@ import * as Assert from '../Assert/Assert.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as ErrorCodes from '../ErrorCodes/ErrorCodes.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
-import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
+import * as ToDisplayDirents from '../ToDisplayDirents/ToDisplayDirents.ts'
 
 export const getIndexFromPosition = (state: any, eventX: number, eventY: number): any => {
   const { y, itemHeight, items } = state
@@ -17,34 +16,7 @@ export const getIndexFromPosition = (state: any, eventX: number, eventY: number)
   return index
 }
 
-const toDisplayDirents = (pathSeparator: string, rawDirents: any, parentDirent: any, excluded: any): any => {
-  SortExplorerItems.sortExplorerItems(rawDirents)
-  // TODO figure out whether this uses too much memory (name,path -> redundant, depth could be computed on demand)
-  const toDisplayDirent = (rawDirent: any, index: any): any => {
-    const path = [parentDirent.path, rawDirent.name].join(pathSeparator)
-    return {
-      name: rawDirent.name,
-      posInSet: index + 1,
-      setSize: rawDirents.length,
-      depth: parentDirent.depth + 1,
-      type: rawDirent.type,
-      path, // TODO storing absolute path might be too costly, could also store relative path here
-      icon: IconTheme.getIcon(rawDirent),
-    }
-  }
-  const result = []
-  let i = 0
-  for (const rawDirent of rawDirents) {
-    if (excluded.includes(rawDirent.name)) {
-      continue
-    }
-    result.push(toDisplayDirent(rawDirent, i))
-    i++
-  }
-  return result
-}
-
-export const getParentStartIndex = (dirents, index) => {
+export const getParentStartIndex = (dirents: any, index: any): any => {
   const dirent = dirents[index]
   let startIndex = index - 1
   while (startIndex >= 0 && dirents[startIndex].depth >= dirent.depth) {
@@ -53,7 +25,7 @@ export const getParentStartIndex = (dirents, index) => {
   return startIndex
 }
 
-export const getParentEndIndex = (dirents, index) => {
+export const getParentEndIndex = (dirents: any, index: any): any => {
   const dirent = dirents[index]
   let endIndex = index + 1
   while (endIndex < dirents.length && dirents[endIndex].depth > dirent.depth) {
@@ -139,7 +111,7 @@ export const getChildDirents = async (pathSeparator: string, parentDirent: any, 
   // and more performant
   const uri = parentDirent.path
   const rawDirents = await getChildDirentsRaw(uri)
-  const displayDirents = toDisplayDirents(pathSeparator, rawDirents, parentDirent, excluded)
+  const displayDirents = ToDisplayDirents.toDisplayDirents(pathSeparator, rawDirents, parentDirent, excluded)
   return displayDirents
 }
 
