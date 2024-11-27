@@ -10,7 +10,7 @@ import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
 const useChevrons = false
 
-const getItemVirtualDomFile = (item) => {
+const getItemVirtualDomFile = (item: any): any => {
   const { posInSet, setSize, icon, name, path, depth, isFocused, isEditing } = item
 
   const dom = []
@@ -60,7 +60,7 @@ const getItemVirtualDomFile = (item) => {
   return dom
 }
 
-const getItemVirtualDomFolder = (item) => {
+const getItemVirtualDomFolder = (item: any): any => {
   const { posInSet, setSize, icon, name, path, depth, type, isFocused } = item
   let ariaExpanded = ''
   let chevron
@@ -121,7 +121,7 @@ const getItemVirtualDomFolder = (item) => {
   return dom
 }
 
-export const getExplorerItemVirtualDom = (item) => {
+export const getExplorerItemVirtualDom = (item: any): any => {
   const { type } = item
   switch (type) {
     case DirentType.Directory:
