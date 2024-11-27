@@ -1,7 +1,7 @@
 import * as Compare from '../Compare/Compare.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 
-export const getIndexFromPosition = (state: any, eventX: number, eventY: number) => {
+export const getIndexFromPosition = (state: any, eventX: number, eventY: number): number => {
   const { y, itemHeight, items } = state
   const index = Math.floor((eventY - y) / itemHeight)
   if (index < 0) {
