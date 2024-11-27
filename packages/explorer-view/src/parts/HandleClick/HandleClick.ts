@@ -635,8 +635,9 @@ export const handleCopy = async (state: any) => {
   }
   const absolutePath = dirent.path
   // TODO handle copy error gracefully
+  // @ts-ignore
   const files = [absolutePath]
-  await Command.execute(/* ClipBoard.writeNativeFiles */ 243, /* type */ 'copy', /* files */ files)
+  // await Command.execute(/* ClipBoard.writeNativeFiles */ 243, /* type */ 'copy', /* files */ files)
 }
 
 export const hasFunctionalResize = true
