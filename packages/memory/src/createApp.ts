@@ -5,7 +5,7 @@ export const createApp = (textSearchWorkerPath: string, root: string) => {
   const app = express()
 
   // Serve worker file
-  app.get('/dist/textSearchWorkerMain.js', (req, res) => {
+  app.get('/dist/explorerViewWorkerMain.js', (req, res) => {
     res.sendFile(textSearchWorkerPath)
   })
 
