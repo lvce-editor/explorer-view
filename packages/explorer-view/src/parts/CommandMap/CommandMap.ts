@@ -1,4 +1,9 @@
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
+import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
+import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
+import * as FocusLast from '../FocusLast/FocusLast.ts'
+import * as FocusNext from '../FocusNext/FocusNext.ts'
+import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
@@ -10,6 +15,11 @@ export const commandMap = {
   'Explorer.copyPath': HandleClick.copyPath,
   'Explorer.copyRelativePath': HandleClick.copyRelativePath,
   'Explorer.expandAll': ExpandAll.expandAll,
+  'Explorer.focusFirst': FocusFirst.focusFirst,
+  'Explorer.focusIndex': FocusIndex.focusIndex,
+  'Explorer.focusLast': FocusLast.focusLast,
+  'Explorer.focusNext': FocusNext.focusNext,
+  'Explorer.focusPrevious': FocusPrevious.focusPrevious,
   'Explorer.getKeyBindings': GetKeyBindings.getKeyBindings,
   'Explorer.getVirtualDom': GetExplorerVirtualDom.getExplorerVirtualDom,
   'Explorer.getVisibleItems': GetVisibleExplorerItems.getVisibleExplorerItems,
