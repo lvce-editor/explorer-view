@@ -8,10 +8,11 @@ import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirt
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
-import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
+import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
+import * as SaveState from '../SaveState/SaveState.ts'
 
 export const commandMap = {
   'Explorer.cancelEdit': HandleClick.cancelEdit,
@@ -41,4 +42,5 @@ export const commandMap = {
   'Explorer.removeDirent': HandleClick.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
   'Explorer.restoreState': RestoreState.restoreState,
+  'Explorer.saveState': SaveState.saveState,
 }
