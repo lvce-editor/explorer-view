@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ViewletExplorerFocusIndex from '../src/parts/FocusIndex/FocusIndex.ts'
 
 test('focusIndex - scroll up', () => {
