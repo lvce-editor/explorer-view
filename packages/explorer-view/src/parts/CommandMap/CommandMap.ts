@@ -11,6 +11,7 @@ import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
+import * as RestoreState from '../RestoreState/RestoreState.ts'
 
 export const commandMap = {
   'Explorer.cancelEdit': HandleClick.cancelEdit,
@@ -39,4 +40,5 @@ export const commandMap = {
   'Explorer.loadContent': LoadContent.loadContent,
   'Explorer.removeDirent': HandleClick.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
+  'Explorer.restoreState': RestoreState.restoreState,
 }
