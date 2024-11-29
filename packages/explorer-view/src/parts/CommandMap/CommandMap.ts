@@ -11,6 +11,7 @@ import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
+import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 
@@ -39,6 +40,7 @@ export const commandMap = {
   'Explorer.handlePointerDown': HandlePointerDown.handlePointerDown,
   'Explorer.handleWheel': HandleClick.handleWheel,
   'Explorer.loadContent': LoadContent.loadContent,
+  'Explorer.openContainingFolder': OpenContainingFolder.openContainingFolder,
   'Explorer.removeDirent': HandleClick.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
   'Explorer.restoreState': RestoreState.restoreState,
