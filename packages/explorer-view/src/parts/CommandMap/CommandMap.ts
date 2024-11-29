@@ -9,6 +9,7 @@ import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
+import * as SaveState from '../SaveState/SaveState.ts'
 
 export const commandMap = {
   'Explorer.cancelEdit': HandleClick.cancelEdit,
@@ -35,4 +36,5 @@ export const commandMap = {
   'Explorer.loadContent': LoadContent.loadContent,
   'Explorer.removeDirent': HandleClick.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
+  'Explorer.saveState': SaveState.saveState,
 }
