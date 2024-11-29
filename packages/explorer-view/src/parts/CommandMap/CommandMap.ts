@@ -1,3 +1,4 @@
+import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
@@ -10,15 +11,19 @@ import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleE
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
+import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
+import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
+import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 
 export const commandMap = {
+  'Explorer.acceptEdit': AcceptEdit.acceptEdit,
   'Explorer.cancelEdit': HandleClick.cancelEdit,
-  'Explorer.copyPath': HandleClick.copyPath,
-  'Explorer.copyRelativePath': HandleClick.copyRelativePath,
+  'Explorer.copyPath': CopyPath.copyPath,
+  'Explorer.copyRelativePath': CopyRelativePath.copyRelativePath,
   'Explorer.expandAll': ExpandAll.expandAll,
   'Explorer.focusFirst': FocusFirst.focusFirst,
   'Explorer.focusIndex': FocusIndex.focusIndex,
@@ -41,6 +46,7 @@ export const commandMap = {
   'Explorer.handlePointerDown': HandlePointerDown.handlePointerDown,
   'Explorer.handleWheel': HandleClick.handleWheel,
   'Explorer.loadContent': LoadContent.loadContent,
+  'Explorer.openContainingFolder': OpenContainingFolder.openContainingFolder,
   'Explorer.removeDirent': HandleClick.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
   'Explorer.restoreState': RestoreState.restoreState,
