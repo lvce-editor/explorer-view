@@ -8,6 +8,7 @@ import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirt
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
+import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 
 export const commandMap = {
@@ -30,6 +31,7 @@ export const commandMap = {
   'Explorer.handleClickAt': HandleClick.handleClickAt,
   'Explorer.handleClickCurrentButKeepFocus': HandleClick.handleClickCurrentButKeepFocus,
   'Explorer.handleClickOpenFolder': HandleClick.handleClickOpenFolder,
+  'Explorer.handleContextMenu': HandleContextMenu.handleContextMenu,
   'Explorer.handleIconThemeChange': HandleClick.handleIconThemeChange,
   'Explorer.handleWheel': HandleClick.handleWheel,
   'Explorer.loadContent': LoadContent.loadContent,
