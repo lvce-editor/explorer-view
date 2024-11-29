@@ -1,3 +1,4 @@
+import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
@@ -6,14 +7,15 @@ import * as FocusNext from '../FocusNext/FocusNext.ts'
 import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
-import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
-import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
+import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
+import * as RestoreState from '../RestoreState/RestoreState.ts'
 
 export const commandMap = {
+  'Explorer.acceptEdit': AcceptEdit.acceptEdit,
   'Explorer.cancelEdit': HandleClick.cancelEdit,
   'Explorer.copyPath': HandleClick.copyPath,
   'Explorer.copyRelativePath': HandleClick.copyRelativePath,
@@ -40,5 +42,5 @@ export const commandMap = {
   'Explorer.loadContent': LoadContent.loadContent,
   'Explorer.removeDirent': HandleClick.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
-  'Explorer.acceptEdit': AcceptEdit.acceptEdit,
+  'Explorer.restoreState': RestoreState.restoreState,
 }
