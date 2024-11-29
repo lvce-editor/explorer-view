@@ -1,3 +1,4 @@
+import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
@@ -18,6 +19,7 @@ import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 
 export const commandMap = {
+  'Explorer.acceptEdit': AcceptEdit.acceptEdit,
   'Explorer.cancelEdit': HandleClick.cancelEdit,
   'Explorer.copyPath': CopyPath.copyPath,
   'Explorer.copyRelativePath': CopyRelativePath.copyRelativePath,
