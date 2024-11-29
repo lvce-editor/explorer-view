@@ -1,7 +1,7 @@
 import * as Assert from '../Assert/Assert.ts'
-import * as ContextMenu from '../ContextMenu/ContextMenu.js'
+import * as ContextMenu from '../ContextMenu/ContextMenu.ts'
 import { getIndexFromPosition } from '../GetChildDirents/GetChildDirents.ts'
-import * as MenuEntryId from '../MenuEntryId/MenuEntryId.js'
+import * as MenuEntryId from '../MenuEntryId/MenuEntryId.ts'
 
 export const handleContextMenuMouseAt = async (state: any, x: number, y: number): Promise<any> => {
   Assert.number(x)

@@ -1,4 +1,4 @@
-import * as MouseEventType from '../MouseEventType/MouseEventType.js'
+import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 import * as ViewletExplorerHandleContextMenuKeyBoard from '../HandleContextMenuKeyboard/HandleContextMenuKeyboard.ts'
 import * as ViewletExplorerHandleContextMenuMouseAt from '../HandleContextMenuMouseAt/HandleContextMenuMouseAt.ts'
 

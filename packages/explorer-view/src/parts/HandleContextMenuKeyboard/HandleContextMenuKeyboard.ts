@@ -1,5 +1,5 @@
-import * as ContextMenu from '../ContextMenu/ContextMenu.js'
-import * as MenuEntryId from '../MenuEntryId/MenuEntryId.js'
+import * as ContextMenu from '../ContextMenu/ContextMenu.ts'
+import * as MenuEntryId from '../MenuEntryId/MenuEntryId.ts'
 
 export const handleContextMenuKeyboard = async (state: any): Promise<any> => {
   const { focusedIndex, x, y, minLineY, itemHeight } = state
