@@ -29,6 +29,7 @@ export const computeExplorerRenamedDirent = (dirents: any, index: number, newNam
       posInSet = dirent.posInSet
       // dirent.posInSet++
     } else {
+      // ignore
     }
   }
   startIndex++
