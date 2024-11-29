@@ -5,6 +5,7 @@ import { focusIndex } from '../FocusIndex/FocusIndex.ts'
 import { getChildDirents, getIndexFromPosition, getParentEndIndex, getParentStartIndex } from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
+import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 import * as OpenFolder from '../OpenFolder/OpenFolder.ts'
 // TODO viewlet should only have create and refresh functions
@@ -57,18 +58,12 @@ export const handleWheel = (state: any, deltaMode: any, deltaY: any): any => {
   return setDeltaY(state, state.deltaY + deltaY)
 }
 
-const getFocusedDirent = (state: any): any => {
-  const { focusedIndex, minLineY, items } = state
-  const dirent = items[focusedIndex + minLineY]
-  return dirent
-}
-
 // TODO support multiselection and removing multiple dirents
 export const removeDirent = async (state: any): Promise<any> => {
   if (state.focusedIndex < 0) {
     return state
   }
-  const dirent = getFocusedDirent(state)
+  const dirent = GetFocusedDirent.getFocusedDirent(state)
   const absolutePath = dirent.path
   try {
     // TODO handle error
@@ -143,26 +138,6 @@ export const cancelEdit = (state: any): any => {
     editingValue: '',
     editingType: ExplorerEditingType.None,
   }
-}
-
-export const copyRelativePath = async (state: any): Promise<any> => {
-  const dirent = getFocusedDirent(state)
-  // @ts-ignore
-  const relativePath = dirent.path.slice(1)
-  // TODO handle error
-
-  // await Command.execute(RendererWorkerCommandType.ClipBoardWriteText, /* text */ relativePath)
-  return state
-}
-
-export const copyPath = async (state: any): Promise<any> => {
-  const dirent = getFocusedDirent(state)
-  // TODO windows paths
-  // TODO handle error
-  // @ts-ignore
-  const path = dirent.path
-  // await Command.execute(RendererWorkerCommandType.ClipBoardWriteText, /* text */ path)
-  return state
 }
 
 // TODO much shared logic with newFolder

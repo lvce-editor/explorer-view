@@ -9,15 +9,17 @@ import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
+import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
+import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 
 export const commandMap = {
   'Explorer.cancelEdit': HandleClick.cancelEdit,
-  'Explorer.copyPath': HandleClick.copyPath,
-  'Explorer.copyRelativePath': HandleClick.copyRelativePath,
+  'Explorer.copyPath': CopyPath.copyPath,
+  'Explorer.copyRelativePath': CopyRelativePath.copyRelativePath,
   'Explorer.expandAll': ExpandAll.expandAll,
   'Explorer.focusFirst': FocusFirst.focusFirst,
   'Explorer.focusIndex': FocusIndex.focusIndex,
