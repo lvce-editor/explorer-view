@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ViewletExplorerFocusNext from '../src/parts/FocusNext/FocusNext.ts'
 
 test('focusNext', () => {

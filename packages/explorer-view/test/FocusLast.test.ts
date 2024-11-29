@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import * as ViewletExplorer from '../src/parts/Create/Create.ts'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ViewletExplorerFocusLast from '../src/parts/FocusLast/FocusLast.ts'
 
 test('focusLast', () => {
