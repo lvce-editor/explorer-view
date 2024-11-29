@@ -12,6 +12,7 @@ import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
+import * as RestoreState from '../RestoreState/RestoreState.ts'
 
 export const commandMap = {
   'Explorer.cancelEdit': HandleClick.cancelEdit,
@@ -41,4 +42,5 @@ export const commandMap = {
   'Explorer.removeDirent': HandleClick.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
   'Explorer.saveState': SaveState.saveState,
+  'Explorer.restoreState': RestoreState.restoreState,
 }
