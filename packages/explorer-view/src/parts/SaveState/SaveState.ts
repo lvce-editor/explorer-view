@@ -1,4 +1,4 @@
-import * as DirentType from '../DirentType/DirentType.js'
+import * as DirentType from '../DirentType/DirentType.ts'
 
 const isExpandedDirectory = (dirent: any): boolean => {
   return dirent.type === DirentType.DirectoryExpanded
