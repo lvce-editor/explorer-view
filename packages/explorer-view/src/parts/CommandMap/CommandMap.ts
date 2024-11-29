@@ -6,6 +6,7 @@ import * as FocusNext from '../FocusNext/FocusNext.ts'
 import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
+import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
@@ -35,4 +36,5 @@ export const commandMap = {
   'Explorer.loadContent': LoadContent.loadContent,
   'Explorer.removeDirent': HandleClick.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
+  'Explorer.acceptEdit': AcceptEdit.acceptEdit,
 }
