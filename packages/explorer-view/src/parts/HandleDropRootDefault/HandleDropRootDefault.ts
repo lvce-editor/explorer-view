@@ -1,11 +1,11 @@
 import * as UploadFileSystemHandles from '../UploadFileSystemHandles/UploadFileSystemHandles.js'
-import { getChildDirents } from './ViewletExplorerShared.js'
+import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 
-const mergeDirents = (oldDirents, newDirents) => {
+const mergeDirents = (oldDirents: any, newDirents: any) => {
   return newDirents
 }
 
-const getMergedDirents = async (root, pathSeparator, dirents) => {
+const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): any => {
   const childDirents = await getChildDirents(pathSeparator, {
     path: root,
     depth: 0,
@@ -14,7 +14,7 @@ const getMergedDirents = async (root, pathSeparator, dirents) => {
   return mergedDirents
 }
 
-export const handleDrop = async (state, files) => {
+export const handleDrop = async (state: any, files: any): Promise<any> => {
   const { root, pathSeparator, items } = state
   const handled = await UploadFileSystemHandles.uploadFileSystemHandles(root, pathSeparator, files)
   if (handled) {
