@@ -2,7 +2,7 @@ import * as DirentType from '../DirentType/DirentType.js'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.js'
 import { getChildDirents, getParentEndIndex } from './ViewletExplorerShared.js'
 
-const makeExpanded = (dirent) => {
+const makeExpanded = (dirent: any): any => {
   if (dirent.type === DirentType.Directory) {
     return {
       ...dirent,
@@ -12,7 +12,7 @@ const makeExpanded = (dirent) => {
   return dirent
 }
 
-export const expandRecursively = async (state) => {
+export const expandRecursively = async (state: any): Promise<any> => {
   const { items, focusedIndex, pathSeparator, root, height, itemHeight, minLineY } = state
   const dirent =
     focusedIndex < 0
@@ -26,7 +26,7 @@ export const expandRecursively = async (state) => {
     return state
   }
   // TODO this is very inefficient
-  const getChildDirentsRecursively = async (dirent) => {
+  const getChildDirentsRecursively = async (dirent: any): Promise<any> => {
     switch (dirent.type) {
       case DirentType.File:
         return [dirent]
