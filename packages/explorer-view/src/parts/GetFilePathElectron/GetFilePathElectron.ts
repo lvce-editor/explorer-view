@@ -1,5 +1,5 @@
-import * as RendererProcess from '../RendererProcess/RendererProcess.js'
+import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 
-export const getFilePathElectron = async (file) => {
-  return RendererProcess.invoke('GetFilePathElectron.getFilePathElectron', file)
+export const getFilePathElectron = async (file: any): Promise<string> => {
+  return ParentRpc.invoke('GetFilePathElectron.getFilePathElectron', file)
 }
