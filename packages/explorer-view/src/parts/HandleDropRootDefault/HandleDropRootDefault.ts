@@ -1,4 +1,4 @@
-import * as UploadFileSystemHandles from '../UploadFileSystemHandles/UploadFileSystemHandles.js'
+import * as UploadFileSystemHandles from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 
 const mergeDirents = (oldDirents: any, newDirents: any): any => {

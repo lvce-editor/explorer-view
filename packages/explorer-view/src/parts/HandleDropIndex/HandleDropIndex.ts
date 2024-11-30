@@ -1,5 +1,5 @@
-import * as DirentType from '../DirentType/DirentType.js'
-import * as FileSystem from '../FileSystem/FileSystem.js'
+import * as DirentType from '../DirentType/DirentType.ts'
+import * as FileSystem from '../FileSystem/FileSystem.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { getParentStartIndex } from '../GetParentStartIndex/GetParentStartIndex.ts'
 import { handleDropRoot } from '../HandleDropRoot/HandleDropRoot.ts'

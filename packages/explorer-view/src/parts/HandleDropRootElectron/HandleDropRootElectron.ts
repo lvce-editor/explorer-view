@@ -1,7 +1,7 @@
-import * as FileSystem from '../FileSystem/FileSystem.js'
+import * as FileSystem from '../FileSystem/FileSystem.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
-import * as GetFilePathElectron from '../GetFilePathElectron/GetFilePathElectron.js'
-import * as Path from '../Path/Path.js'
+import * as GetFilePathElectron from '../GetFilePathElectron/GetFilePathElectron.ts'
+import * as Path from '../Path/Path.ts'
 
 const mergeDirents = (oldDirents: any, newDirents: any): any => {
   return newDirents
