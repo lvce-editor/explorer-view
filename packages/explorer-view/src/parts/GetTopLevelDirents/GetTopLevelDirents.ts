@@ -1,4 +1,4 @@
-import * as DirentType from '../DirentType/DirentType.js'
+import * as DirentType from '../DirentType/DirentType.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 
 export const getTopLevelDirents = (root: string, pathSeparator: string, excluded: any[]): any => {
