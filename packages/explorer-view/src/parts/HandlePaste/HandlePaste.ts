@@ -4,7 +4,7 @@ import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.js'
 import * as Path from '../Path/Path.js'
 import { getBaseName } from '../Path/Path.js'
 import * as Viewlet from '../Viewlet/Viewlet.js' // TODO should not import viewlet manager -> avoid cyclic dependency
-import { updateRoot } from './ViewletExplorerUpdateRoot.js'
+import { updateRoot } from '../UpdateRoot/UpdateRoot.ts'
 
 const handlePasteNone = (state, nativeFiles) => {
   console.info('[ViewletExplorer/handlePaste] no paths detected')
