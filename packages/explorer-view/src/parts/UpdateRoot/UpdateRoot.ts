@@ -1,13 +1,13 @@
 import * as Viewlet from '../Viewlet/Viewlet.js'
-import { getTopLevelDirents, mergeDirents } from '../GetChildDirents/GetChildDirents.ts'
+import { getTopLevelDirents } from '../GetTopLevelDirents/GetTopLevelDirents.ts'
 
 // TODO add lots of tests for this
 export const updateRoot = async (state1: any): Promise<any> => {
-  const state1 = Viewlet.getState('Explorer')
   if (state1.disposed) {
     return state1
   }
   // const file = nativeFiles.files[0]
+  // @ts-ignore
   const topLevelDirents = await getTopLevelDirents(state1.root, state1.pathSeparator)
   const state2 = Viewlet.getState('Explorer')
   // TODO what if root changes while reading directories?
