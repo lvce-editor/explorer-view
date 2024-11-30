@@ -1,4 +1,6 @@
 import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
+import * as CopyPath from '../CopyPath/CopyPath.ts'
+import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
@@ -10,12 +12,11 @@ import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
-import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
+import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
-import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 
 export const commandMap = {
@@ -40,6 +41,7 @@ export const commandMap = {
   'Explorer.handleClickCurrentButKeepFocus': HandleClick.handleClickCurrentButKeepFocus,
   'Explorer.handleClickOpenFolder': HandleClick.handleClickOpenFolder,
   'Explorer.handleContextMenu': HandleContextMenu.handleContextMenu,
+  'Explorer.handleDrop': HandleDrop.handleDrop,
   'Explorer.handleIconThemeChange': HandleClick.handleIconThemeChange,
   'Explorer.handlePointerDown': HandlePointerDown.handlePointerDown,
   'Explorer.handleWheel': HandleClick.handleWheel,
