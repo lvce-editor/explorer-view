@@ -5,7 +5,7 @@ const mergeDirents = (oldDirents: any, newDirents: any) => {
   return newDirents
 }
 
-const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): any => {
+const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Promise<any> => {
   const childDirents = await getChildDirents(pathSeparator, {
     path: root,
     depth: 0,

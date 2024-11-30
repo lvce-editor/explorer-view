@@ -1,16 +1,11 @@
-import * as Platform from '../Platform/Platform.js'
-import * as PlatformType from '../PlatformType/PlatformType.js'
-
-const getModule = () => {
-  switch (Platform.platform) {
-    case PlatformType.Electron:
-      return import('./ViewletExplorerHandleDropRootElectron.js')
-    default:
-      return import('./ViewletExplorerHandleDropRootDefault.js')
+const getModule = (isElectron: boolean): any => {
+  if (isElectron) {
+    return import('../HandleDropRootElectron/HandleDropRootElectron.ts')
   }
+  return import('../HandleDropRootDefault/HandleDropRootDefault.ts')
 }
 
-export const handleDropRoot = async (state, files) => {
-  const module = await getModule()
+export const handleDropRoot = async (state: any, files: any): Promise<any> => {
+  const module = await getModule(state.isElectron)
   return module.handleDrop(state, files)
 }
