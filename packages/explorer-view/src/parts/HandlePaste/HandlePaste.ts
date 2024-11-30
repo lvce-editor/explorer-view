@@ -3,15 +3,15 @@ import * as FileSystem from '../FileSystem/FileSystem.js'
 import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.js'
 import * as Path from '../Path/Path.js'
 import { getBaseName } from '../Path/Path.js'
-import * as Viewlet from '../Viewlet/Viewlet.js' // TODO should not import viewlet manager -> avoid cyclic dependency
 import { updateRoot } from '../UpdateRoot/UpdateRoot.ts'
+import * as Viewlet from '../Viewlet/Viewlet.js' // TODO should not import viewlet manager -> avoid cyclic dependency
 
-const handlePasteNone = (state, nativeFiles) => {
+const handlePasteNone = (state: any, nativeFiles: any): any => {
   console.info('[ViewletExplorer/handlePaste] no paths detected')
   return state
 }
 
-const handlePasteCopy = async (state, nativeFiles) => {
+const handlePasteCopy = async (state: any, nativeFiles: any): Promise<any> => {
   // TODO handle pasting files into nested folder
   // TODO handle pasting files into symlink
   // TODO handle pasting files into broken symlink
@@ -26,7 +26,7 @@ const handlePasteCopy = async (state, nativeFiles) => {
     return
   }
   // TODO only update folder at which level it changed
-  return updateRoot()
+  return updateRoot(state)
 }
 
 const handlePasteCut = async (state, nativeFiles) => {
