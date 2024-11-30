@@ -1,6 +1,8 @@
 import * as DirentType from '../DirentType/DirentType.js'
 import * as FileSystem from '../FileSystem/FileSystem.js'
+import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { getParentStartIndex } from '../GetParentStartIndex/GetParentStartIndex.ts'
+import { handleDropRoot } from '../HandleDropRoot/HandleDropRoot.ts'
 
 const getEndIndex = (items: any[], index: number, dirent: any): number => {
   for (let i = index + 1; i < items.length; i++) {
@@ -21,7 +23,8 @@ const getMergedDirents = (items: any, index: number, dirent: any, childDirents: 
 const handleDropIntoFolder = async (state: any, dirent: any, index: number, files: any): Promise<any> => {
   const { pathSeparator, items } = state
   for (const file of files) {
-    const baseName = Workspace.pathBaseName(file)
+    // TODO path basename
+    const baseName = file
     const to = dirent.path + pathSeparator + baseName
     await FileSystem.copy(file, to)
   }
@@ -41,6 +44,7 @@ const handleDropIntoFile = (state: any, dirent: any, index: number, files: any):
   if (parentIndex === -1) {
     return handleDropRoot(state, files)
   }
+  // @ts-ignore
   return handleDropIndex(parentIndex)
 }
 
