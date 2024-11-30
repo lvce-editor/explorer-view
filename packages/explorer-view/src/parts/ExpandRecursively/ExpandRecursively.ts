@@ -1,6 +1,6 @@
-import * as DirentType from '../DirentType/DirentType.js'
+import * as DirentType from '../DirentType/DirentType.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
-import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.js'
+import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import { getParentEndIndex } from '../GetParentEndIndex/GetParentEndIndex.ts'
 
 const makeExpanded = (dirent: any): any => {
