@@ -1,8 +1,11 @@
+import * as HandleDropRootElectron from '../HandleDropRootElectron/HandleDropRootElectron.ts'
+import * as HandleDropRootDefault from '../HandleDropRootDefault/HandleDropRootDefault.ts'
+
 const getModule = (isElectron: boolean): any => {
   if (isElectron) {
-    return import('../HandleDropRootElectron/HandleDropRootElectron.ts')
+    return HandleDropRootElectron
   }
-  return import('../HandleDropRootDefault/HandleDropRootDefault.ts')
+  return HandleDropRootDefault
 }
 
 export const handleDropRoot = async (state: any, files: any): Promise<any> => {
