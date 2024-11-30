@@ -1,7 +1,7 @@
-import { getIndexFromPosition } from '../GetChildDirents/GetChildDirents.ts'
+import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPosition.ts'
+import { handleDropIndex } from '../HandleDropIndex/HandleDropIndex.ts'
 import { handleDropRoot } from '../HandleDropRoot/HandleDropRoot.ts'
 import { VError } from '../VError/VError.ts'
-import { handleDropIndex } from './ViewletExplorerHandleDropIndex.js'
 
 export const handleDrop = async (state: any, x: number, y: number, files: any): Promise<any> => {
   try {
