@@ -2,6 +2,7 @@ import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
+import * as ExpandRecursively from '../ExpandRecursively/ExpandRecursively.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as FocusLast from '../FocusLast/FocusLast.ts'
@@ -25,6 +26,7 @@ export const commandMap = {
   'Explorer.copyPath': CopyPath.copyPath,
   'Explorer.copyRelativePath': CopyRelativePath.copyRelativePath,
   'Explorer.expandAll': ExpandAll.expandAll,
+  'Explorer.expandRecursively': ExpandRecursively.expandRecursively,
   'Explorer.focusFirst': FocusFirst.focusFirst,
   'Explorer.focusIndex': FocusIndex.focusIndex,
   'Explorer.focusLast': FocusLast.focusLast,
