@@ -1,6 +1,7 @@
 import * as DirentType from '../DirentType/DirentType.js'
+import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.js'
-import { getChildDirents, getParentEndIndex } from './ViewletExplorerShared.js'
+import { getParentEndIndex } from '../GetParentEndIndex/GetParentEndIndex.ts'
 
 const makeExpanded = (dirent: any): any => {
   if (dirent.type === DirentType.Directory) {
