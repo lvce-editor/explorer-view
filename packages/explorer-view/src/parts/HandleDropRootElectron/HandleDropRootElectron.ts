@@ -1,14 +1,14 @@
 import * as FileSystem from '../FileSystem/FileSystem.js'
+import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import * as GetFilePathElectron from '../GetFilePathElectron/GetFilePathElectron.js'
 import * as Path from '../Path/Path.js'
-import { getChildDirents } from './ViewletExplorerShared.js'
 
-const mergeDirents = (oldDirents, newDirents) => {
+const mergeDirents = (oldDirents: any, newDirents: any): any => {
   return newDirents
 }
 
 // TODO copy files in parallel
-const copyFilesElectron = async (root, pathSeparator, files) => {
+const copyFilesElectron = async (root: any, pathSeparator: any, files: any): Promise<any> => {
   for (const file of files) {
     const from = await GetFilePathElectron.getFilePathElectron(file)
     // const from = file.path
@@ -17,7 +17,7 @@ const copyFilesElectron = async (root, pathSeparator, files) => {
   }
 }
 
-const getMergedDirents = async (root, pathSeparator, dirents) => {
+const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Promise<any> => {
   const childDirents = await getChildDirents(pathSeparator, {
     path: root,
     depth: 0,
@@ -26,7 +26,7 @@ const getMergedDirents = async (root, pathSeparator, dirents) => {
   return mergedDirents
 }
 
-export const handleDrop = async (state, files) => {
+export const handleDrop = async (state: any, files: any): Promise<any> => {
   const { root, pathSeparator, items } = state
   await copyFilesElectron(root, pathSeparator, files)
   const mergedDirents = await getMergedDirents(root, pathSeparator, items)
