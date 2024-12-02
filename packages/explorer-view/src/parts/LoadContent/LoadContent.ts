@@ -1,7 +1,7 @@
 import * as Character from '../Character/Character.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import { getChildDirentsRaw } from '../GetChildDirents/GetChildDirents.ts'
+import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as PromiseStatus from '../PromiseStatus/PromiseStatus.ts'
@@ -110,7 +110,7 @@ const restoreExpandedState = async (savedState: any, root: any, pathSeparator: a
     return []
   }
   const expandedDirentPaths = [root, ...expandedPaths]
-  const expandedDirentChildren = await Promise.allSettled(expandedDirentPaths.map(getChildDirentsRaw))
+  const expandedDirentChildren = await Promise.allSettled(expandedDirentPaths.map(GetChildDirents.getChildDirentsRaw))
   if (expandedDirentChildren[0].status === PromiseStatus.Rejected) {
     throw expandedDirentChildren[0].reason
   }
