@@ -3,13 +3,11 @@ import * as RevealItemHidden from '../RevealItemHidden/RevealItemHidden.ts'
 import * as RevealItemVisible from '../RevealItemVisible/RevealItemVisible.ts'
 import * as GetIndex from '../GetIndex/GetIndex.ts'
 
-
-
-export const revealItem = async (state:any, uri:string):Promise<any>  => {
+export const revealItem = async (state: any, uri: string): Promise<any> => {
   Assert.object(state)
   Assert.string(uri)
   const { items } = state
-  const index = GetIndex. getIndex(items, uri)
+  const index = GetIndex.getIndex(items, uri)
   if (index === -1) {
     return RevealItemHidden.revealItemHidden(state, uri)
   }

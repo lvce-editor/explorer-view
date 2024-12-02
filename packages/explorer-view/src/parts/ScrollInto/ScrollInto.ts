@@ -1,4 +1,4 @@
-export const scrollInto = (index:number, minLineY:number, maxLineY:number):any => {
+export const scrollInto = (index: number, minLineY: number, maxLineY: number): any => {
   const diff = maxLineY - minLineY
   const smallerHalf = Math.floor(diff / 2)
   const largerHalf = diff - smallerHalf
