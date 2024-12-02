@@ -1,4 +1,4 @@
-const isTopLevel = (dirent: any): any => {
+const isTopLevel = (dirent: any): boolean => {
   return dirent.depth === 1
 }
 
