@@ -1,41 +1,8 @@
 import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
-import * as FileSystem from '../FileSystem/FileSystem.ts'
+import * as HandlePasteCopy from '../HandlePasteCopy/HandlePasteCopy.ts'
+import * as HandlePasteCut from '../HandlePasteCut/HandlePasteCut.ts'
+import * as HandlePasteNone from '../HandlePasteNone/HandlePasteNone.ts'
 import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.ts'
-import * as Path from '../Path/Path.ts'
-import { getBaseName } from '../Path/Path.ts'
-import { updateRoot } from '../UpdateRoot/UpdateRoot.ts'
-import * as Viewlet from '../Viewlet/Viewlet.ts' // TODO should not import viewlet manager -> avoid cyclic dependency
-
-const handlePasteNone = (state: any, nativeFiles: any): any => {
-  console.info('[ViewletExplorer/handlePaste] no paths detected')
-  return state
-}
-
-const handlePasteCopy = async (state: any, nativeFiles: any): Promise<any> => {
-  // TODO handle pasting files into nested folder
-  // TODO handle pasting files into symlink
-  // TODO handle pasting files into broken symlink
-  // TODO handle pasting files into hardlink
-  // TODO what if folder is big and it takes a long time
-  for (const source of nativeFiles.files) {
-    const target = Path.join(state.pathSeperator, state.root, getBaseName(state.pathSeparator, source))
-    await FileSystem.copy(source, target)
-  }
-  const stateNow = Viewlet.getState('Explorer')
-  if (stateNow.disposed) {
-    return
-  }
-  // TODO only update folder at which level it changed
-  return updateRoot(state)
-}
-
-const handlePasteCut = async (state, nativeFiles) => {
-  for (const source of nativeFiles.files) {
-    const target = `${state.root}${state.pathSeparator}${getBaseName(state.pathSeparator, source)}`
-    await FileSystem.rename(source, target)
-  }
-  return state
-}
 
 export const handlePaste = async (state: any): Promise<any> => {
   const nativeFiles = await ClipBoard.readNativeFiles()
@@ -53,11 +20,11 @@ export const handlePaste = async (state: any): Promise<any> => {
   // TODO handle error gracefully when copy fails
   switch (nativeFiles.type) {
     case NativeFileTypes.None:
-      return handlePasteNone(state, nativeFiles)
+      return HandlePasteNone.handlePasteNone(state, nativeFiles)
     case NativeFileTypes.Copy:
-      return handlePasteCopy(state, nativeFiles)
+      return HandlePasteCopy.handlePasteCopy(state, nativeFiles)
     case NativeFileTypes.Cut:
-      return handlePasteCut(state, nativeFiles)
+      return HandlePasteCut.handlePasteCut(state, nativeFiles)
     default:
       throw new Error(`unexpected native paste type: ${nativeFiles.type}`)
   }
