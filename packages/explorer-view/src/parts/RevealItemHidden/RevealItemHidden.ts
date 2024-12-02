@@ -1,11 +1,8 @@
-import * as Command from '../Command/Command.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
+import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
-import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
-import { getChildDirents } from './ViewletExplorerShared.ts'
 // TODO viewlet should only have create and refresh functions
 // every thing else can be in a separate module <viewlet>.lazy.js
 // and  <viewlet>.ipc.js
@@ -23,52 +20,6 @@ const isExpandedDirectory = (dirent) => {
 // @ts-ignore
 const getPath = (dirent) => {
   return dirent.path
-}
-
-const getSavedChildDirents = (map, path, depth, excluded, pathSeparator) => {
-  const children = map[path]
-  if (!children) {
-    return []
-  }
-  const dirents = []
-  SortExplorerItems.sortExplorerItems(children)
-  const visible = []
-  const displayRoot = path.endsWith(pathSeparator) ? path : path + pathSeparator
-  for (const child of children) {
-    if (excluded.includes(child.name)) {
-      continue
-    }
-    visible.push(child)
-  }
-  const visibleLength = visible.length
-  for (let i = 0; i < visibleLength; i++) {
-    const child = visible[i]
-    const { name, type } = child
-    const childPath = displayRoot + name
-    if ((child.type === DirentType.Directory || child.type === DirentType.SymLinkFolder) && childPath in map) {
-      dirents.push({
-        depth,
-        posInSet: i + 1,
-        setSize: visibleLength,
-        icon: IconTheme.getFolderIcon({ name }),
-        name,
-        path: childPath,
-        type: DirentType.DirectoryExpanded,
-      })
-      dirents.push(...getSavedChildDirents(map, childPath, depth + 1, excluded, pathSeparator))
-    } else {
-      dirents.push({
-        depth,
-        posInSet: i + 1,
-        setSize: visibleLength,
-        icon: IconTheme.getIcon({ type, name }),
-        name,
-        path: childPath,
-        type,
-      })
-    }
-  }
-  return dirents
 }
 
 // TODO rename dirents to items, then can use virtual list component directly
