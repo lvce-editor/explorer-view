@@ -1,7 +1,7 @@
 import * as DirentType from '../DirentType/DirentType.ts'
-import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
+import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
-import { getParentEndIndex } from '../GetParentEndIndex/GetParentEndIndex.ts'
+import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 
 const makeExpanded = (dirent: any): any => {
   if (dirent.type === DirentType.Directory) {
@@ -34,7 +34,7 @@ export const expandRecursively = async (state: any): Promise<any> => {
       case DirentType.Directory:
       case DirentType.DirectoryExpanding:
       case DirentType.DirectoryExpanded:
-        const childDirents = await getChildDirents(pathSeparator, dirent)
+        const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent)
         const all = [makeExpanded(dirent)]
         for (const childDirent of childDirents) {
           const childAll = await getChildDirentsRecursively(childDirent)
@@ -51,7 +51,7 @@ export const expandRecursively = async (state: any): Promise<any> => {
   const childDirents = await getChildDirentsRecursively(dirent)
   const startIndex = focusedIndex
   if (focusedIndex >= 0) {
-    const endIndex = getParentEndIndex(items, focusedIndex)
+    const endIndex = GetParentEndIndex.getParentEndIndex(items, focusedIndex)
     const newDirents = [...items.slice(0, startIndex), ...childDirents, ...items.slice(endIndex)]
     const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newDirents.length)
     return {
