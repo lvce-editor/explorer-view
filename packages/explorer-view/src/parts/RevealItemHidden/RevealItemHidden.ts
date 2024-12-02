@@ -2,6 +2,7 @@ import * as Command from '../Command/Command.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
+import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 import { getChildDirents } from './ViewletExplorerShared.ts'
@@ -82,10 +83,6 @@ const getSavedChildDirents = (map, path, depth, excluded, pathSeparator) => {
 
 // TODO what happens when mouse leave and anther mouse enter event occur?
 // should update preview instead of closing and reopening
-
-const isTopLevel = (dirent) => {
-  return dirent.depth === 1
-}
 
 const getIndex = (dirents, uri) => {
   for (let i = 0; i < dirents.length; i++) {
@@ -179,30 +176,6 @@ const mergeVisibleWithHiddenItems = (visibleItems, hiddenItems) => {
   // }
 
   return unique
-}
-
-const orderDirents = (dirents) => {
-  if (dirents.length === 0) {
-    return dirents
-  }
-  // const parentMap = Object.create(null)
-  // for(const dirent of dirents){
-  //   const parentPath = dirent.slice(0, dirent.lastIndexOf('/'))
-  //   parentMap[parentPath]||=[]
-  //   parentMap[parentPath].push(dirent)
-  // }
-  const withDeepChildren = (parent) => {
-    const children = []
-    for (const dirent of dirents) {
-      if (dirent.depth === parent.depth + 1 && dirent.path.startsWith(parent.path)) {
-        children.push(dirent, ...withDeepChildren(dirent))
-      }
-    }
-    return [parent, ...children]
-  }
-  const topLevelDirents = dirents.filter(isTopLevel)
-  const ordered = topLevelDirents.flatMap(withDeepChildren)
-  return ordered
 }
 
 // TODO maybe just insert items into explorer and refresh whole explorer
