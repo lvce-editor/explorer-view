@@ -1,8 +1,8 @@
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
-import { getParentStartIndex } from '../GetParentStartIndex/GetParentStartIndex.ts'
-import { handleDropRoot } from '../HandleDropRoot/HandleDropRoot.ts'
+import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
+import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
+import * as HandleDropRoot from '../HandleDropRoot/HandleDropRoot.ts'
 
 const getEndIndex = (items: any[], index: number, dirent: any): number => {
   for (let i = index + 1; i < items.length; i++) {
@@ -28,7 +28,7 @@ const handleDropIntoFolder = async (state: any, dirent: any, index: number, file
     const to = dirent.path + pathSeparator + baseName
     await FileSystem.copy(file, to)
   }
-  const childDirents = await getChildDirents(pathSeparator, dirent)
+  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent)
   const mergedDirents = getMergedDirents(items, index, dirent, childDirents)
   // TODO update maxlineY
   return {
@@ -40,9 +40,9 @@ const handleDropIntoFolder = async (state: any, dirent: any, index: number, file
 
 const handleDropIntoFile = (state: any, dirent: any, index: number, files: any): any => {
   const { items } = state
-  const parentIndex = getParentStartIndex(items, index)
+  const parentIndex = GetParentStartIndex.getParentStartIndex(items, index)
   if (parentIndex === -1) {
-    return handleDropRoot(state, files)
+    return HandleDropRoot.handleDropRoot(state, files)
   }
   // @ts-ignore
   return handleDropIndex(parentIndex)
