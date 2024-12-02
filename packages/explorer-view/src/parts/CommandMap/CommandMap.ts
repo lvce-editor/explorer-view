@@ -15,10 +15,12 @@ import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleE
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
+import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
+import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 
 export const commandMap = {
@@ -47,6 +49,7 @@ export const commandMap = {
   'Explorer.handleContextMenu': HandleContextMenu.handleContextMenu,
   'Explorer.handleDrop': HandleDrop.handleDrop,
   'Explorer.handleIconThemeChange': HandleClick.handleIconThemeChange,
+  'Explorer.handlePaste': HandlePaste.handlePaste,
   'Explorer.handlePointerDown': HandlePointerDown.handlePointerDown,
   'Explorer.handleWheel': HandleClick.handleWheel,
   'Explorer.loadContent': LoadContent.loadContent,
@@ -54,5 +57,6 @@ export const commandMap = {
   'Explorer.removeDirent': HandleClick.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
   'Explorer.restoreState': RestoreState.restoreState,
+  'Explorer.revealItem': RevealItem.revealItem,
   'Explorer.saveState': SaveState.saveState,
 }
