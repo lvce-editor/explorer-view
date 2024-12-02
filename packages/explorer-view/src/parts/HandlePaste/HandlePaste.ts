@@ -1,10 +1,10 @@
-import * as ClipBoard from '../ClipBoard/ClipBoard.js'
-import * as FileSystem from '../FileSystem/FileSystem.js'
-import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.js'
-import * as Path from '../Path/Path.js'
-import { getBaseName } from '../Path/Path.js'
+import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
+import * as FileSystem from '../FileSystem/FileSystem.ts'
+import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.ts'
+import * as Path from '../Path/Path.ts'
+import { getBaseName } from '../Path/Path.ts'
 import { updateRoot } from '../UpdateRoot/UpdateRoot.ts'
-import * as Viewlet from '../Viewlet/Viewlet.js' // TODO should not import viewlet manager -> avoid cyclic dependency
+import * as Viewlet from '../Viewlet/Viewlet.ts' // TODO should not import viewlet manager -> avoid cyclic dependency
 
 const handlePasteNone = (state: any, nativeFiles: any): any => {
   console.info('[ViewletExplorer/handlePaste] no paths detected')

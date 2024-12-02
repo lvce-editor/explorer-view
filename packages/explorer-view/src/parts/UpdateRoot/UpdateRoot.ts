@@ -1,4 +1,4 @@
-import * as Viewlet from '../Viewlet/Viewlet.js'
+import * as Viewlet from '../Viewlet/Viewlet.ts'
 import { getTopLevelDirents } from '../GetTopLevelDirents/GetTopLevelDirents.ts'
 
 // TODO add lots of tests for this
