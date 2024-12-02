@@ -3,6 +3,7 @@ import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import { focusIndex } from '../FocusIndex/FocusIndex.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
+import * as GetClickFn from '../GetClickFn/GetClickFn.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPosition.ts'
@@ -184,16 +185,6 @@ const handleClickDirectory = async (state: any, dirent: any, index: any, keepFoc
   }
 }
 
-const handleClickDirectoryExpanding = (state: any, dirent: any, index: any, keepFocus: boolean): any => {
-  dirent.type = DirentType.Directory
-  dirent.icon = IconTheme.getIcon(dirent)
-  return {
-    ...state,
-    focusedIndex: index,
-    focused: keepFocus,
-  }
-}
-
 const handleClickDirectoryExpanded = (state: any, dirent: any, index: any, keepFocus: boolean): any => {
   const { minLineY, maxLineY, itemHeight } = state
   dirent.type = DirentType.Directory
@@ -227,31 +218,6 @@ const handleClickDirectoryExpanded = (state: any, dirent: any, index: any, keepF
   }
 }
 
-const getClickFn = (direntType: any): any => {
-  switch (direntType) {
-    case DirentType.File:
-    case DirentType.SymLinkFile:
-      return handleClickFile
-    case DirentType.Directory:
-    case DirentType.SymLinkFolder:
-      return handleClickDirectory
-    case DirentType.DirectoryExpanding:
-      return handleClickDirectoryExpanding
-    case DirentType.DirectoryExpanded:
-      return handleClickDirectoryExpanded
-    case DirentType.Symlink:
-      return handleClickSymLink
-    case DirentType.CharacterDevice:
-      throw new Error('Cannot open character device files')
-    case DirentType.BlockDevice:
-      throw new Error('Cannot open block device files')
-    case DirentType.Socket:
-      throw new Error('Cannot open socket files')
-    default:
-      throw new Error(`unsupported dirent type ${direntType}`)
-  }
-}
-
 export const handleClick = (state: any, index: any, keepFocus = false): any => {
   const { items, minLineY } = state
   if (index === -1) {
@@ -263,7 +229,7 @@ export const handleClick = (state: any, index: any, keepFocus = false): any => {
     console.warn(`[explorer] dirent at index ${actualIndex} not found`, state)
     return state
   }
-  const clickFn = getClickFn(dirent.type)
+  const clickFn = GetClickFn.getClickFn(dirent.type)
   return clickFn(state, dirent, actualIndex, keepFocus)
 }
 
