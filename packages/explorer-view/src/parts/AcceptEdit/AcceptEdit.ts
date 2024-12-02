@@ -6,17 +6,6 @@ import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as Path from '../Path/Path.ts'
 
-export const renameDirent = (state: any): any => {
-  const { focusedIndex, items } = state
-  const item = items[focusedIndex]
-  return {
-    ...state,
-    editingIndex: focusedIndex,
-    editingType: ExplorerEditingType.Rename,
-    editingValue: item.name,
-  }
-}
-
 const getParentFolder = (dirents: any, index: number, root: string): string => {
   if (index < 0) {
     return root
@@ -100,7 +89,7 @@ const acceptCreate = async (state: any, newDirentType: any, createFn: any): Prom
   }
 }
 
-export const acceptRename = async (state: any): Promise<any> => {
+const acceptRename = async (state: any): Promise<any> => {
   const { editingIndex, editingValue, items, pathSeparator } = state
   const renamedDirent = items[editingIndex]
   try {
