@@ -13,3 +13,5 @@ export const createFile = async (uri: string): Promise<any> => {}
 export const mkdir = async (uri: string): Promise<any> => {}
 
 export const rename = async (oldUri: string, newUri: string): Promise<any> => {}
+
+export const copy = async (oldUri: string, newUri: string): Promise<any> => {}
