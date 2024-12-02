@@ -1,5 +1,6 @@
 import * as DirentType from '../DirentType/DirentType.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
+import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
@@ -11,16 +12,6 @@ import { scrollInto } from '../ScrollInto/ScrollInto.ts'
 // TODO recycle viewlets (maybe)
 
 // TODO instead of root string, there should be a root dirent
-
-// @ts-ignore
-const isExpandedDirectory = (dirent) => {
-  return dirent.type === DirentType.DirectoryExpanded
-}
-
-// @ts-ignore
-const getPath = (dirent) => {
-  return dirent.path
-}
 
 // TODO rename dirents to items, then can use virtual list component directly
 
@@ -35,17 +26,7 @@ const getPath = (dirent) => {
 // TODO what happens when mouse leave and anther mouse enter event occur?
 // should update preview instead of closing and reopening
 
-const getIndex = (dirents, uri) => {
-  for (let i = 0; i < dirents.length; i++) {
-    const dirent = dirents[i]
-    if (dirent.path === uri) {
-      return i
-    }
-  }
-  return -1
-}
-
-const getPathPartsToReveal = (root, pathParts, dirents) => {
+const getPathPartsToReveal = (root: any, pathParts: any, dirents: any): any => {
   for (let i = 0; i < pathParts.length; i++) {
     const pathPart = pathParts[i]
     const index = getIndex(dirents, pathPart.uri)
@@ -57,12 +38,12 @@ const getPathPartsToReveal = (root, pathParts, dirents) => {
   return pathParts
 }
 
-const getPathPartChildren = (pathPart) => {
+const getPathPartChildren = (pathPart: any): any => {
   const children = getChildDirents(pathPart.pathSeparator, pathPart)
   return children
 }
 
-const mergeVisibleWithHiddenItems = (visibleItems, hiddenItems) => {
+const mergeVisibleWithHiddenItems = (visibleItems: any, hiddenItems: any): any => {
   const merged = [...hiddenItems]
   const seen = Object.create(null)
   const unique = []
