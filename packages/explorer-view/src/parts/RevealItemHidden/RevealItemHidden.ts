@@ -30,7 +30,7 @@ import { getChildDirents, getChildDirentsRaw, getIndexFromPosition, getParentEnd
 
 // TODO instead of root string, there should be a root dirent
 
-export const create = (id, uri, x, y, width, height, args, parentUid) => {
+const create = (id, uri, x, y, width, height, args, parentUid) => {
   Assert.number(id)
   return {
     uid: id,
@@ -177,7 +177,7 @@ const getSavedRoot = (savedState, workspacePath) => {
   return workspacePath
 }
 
-export const loadContent = async (state, savedState) => {
+const loadContent = async (state, savedState) => {
   const root = getSavedRoot(savedState, Workspace.state.workspacePath)
   // TODO path separator could be restored from saved state
   const pathSeparator = await getPathSeparator(root) // TODO only load path separator once
@@ -209,7 +209,7 @@ const updateIcon = (dirent) => {
   return { ...dirent, icon: IconTheme.getIcon(dirent) }
 }
 
-export const updateIcons = (state) => {
+const updateIcons = (state) => {
   const newDirents = state.items.map(updateIcon)
   return {
     ...state,
@@ -217,23 +217,23 @@ export const updateIcons = (state) => {
   }
 }
 
-export const handleLanguagesChanged = (state) => {
+const handleLanguagesChanged = (state) => {
   return updateIcons(state)
 }
 
-export const handleWorkspaceChange = async (state) => {
+const handleWorkspaceChange = async (state) => {
   const newRoot = Workspace.state.workspacePath
   const state1 = { ...state, root: newRoot }
   const newState = await loadContent(state1)
   return newState
 }
 
-export const handleIconThemeChange = (state) => {
+const handleIconThemeChange = (state) => {
   return updateIcons(state)
 }
 
 // TODO rename dirents to items, then can use virtual list component directly
-export const setDeltaY = (state, deltaY) => {
+const setDeltaY = (state, deltaY) => {
   const { itemHeight, height, items } = state
   if (deltaY < 0) {
     deltaY = 0
@@ -253,18 +253,18 @@ export const setDeltaY = (state, deltaY) => {
   }
 }
 
-export const handleWheel = (state, deltaMode, deltaY) => {
+const handleWheel = (state, deltaMode, deltaY) => {
   return setDeltaY(state, state.deltaY + deltaY)
 }
 
-export const getFocusedDirent = (state) => {
+const getFocusedDirent = (state) => {
   const { focusedIndex, minLineY, items } = state
   const dirent = items[focusedIndex + minLineY]
   return dirent
 }
 
 // TODO support multiselection and removing multiple dirents
-export const removeDirent = async (state) => {
+const removeDirent = async (state) => {
   if (state.focusedIndex < 0) {
     return state
   }
@@ -319,7 +319,7 @@ export const removeDirent = async (state) => {
   }
 }
 
-export const renameDirent = (state) => {
+const renameDirent = (state) => {
   const { focusedIndex, items } = state
   const item = items[focusedIndex]
   Focus.setFocus(FocusKey.ExplorerEditBox)
@@ -335,7 +335,7 @@ export const renameDirent = (state) => {
 /**
  * @internal
  */
-export const computeRenamedDirent = (dirents, index, newName) => {
+const computeRenamedDirent = (dirents, index, newName) => {
   let startIndex = index
   let innerEndIndex = index + 1
   let insertIndex = -1
@@ -431,7 +431,7 @@ export const computeRenamedDirent = (dirents, index, newName) => {
   return { newDirents, focusedIndex: insertIndex }
 }
 
-export const cancelEdit = (state) => {
+const cancelEdit = (state) => {
   const { editingIndex } = state
   return {
     ...state,
@@ -443,7 +443,7 @@ export const cancelEdit = (state) => {
   }
 }
 
-export const copyRelativePath = async (state) => {
+const copyRelativePath = async (state) => {
   const dirent = getFocusedDirent(state)
   const relativePath = dirent.path.slice(1)
   // TODO handle error
@@ -451,7 +451,7 @@ export const copyRelativePath = async (state) => {
   return state
 }
 
-export const copyPath = async (state) => {
+const copyPath = async (state) => {
   const dirent = getFocusedDirent(state)
   // TODO windows paths
   // TODO handle error
@@ -471,7 +471,7 @@ const getContaingingFolder = (root, dirents, focusedIndex, pathSeparator) => {
   return path
 }
 
-export const openContainingFolder = async (state) => {
+const openContainingFolder = async (state) => {
   const { focusedIndex, root, items, pathSeparator } = state
   const path = getContaingingFolder(root, items, focusedIndex, pathSeparator)
   await Command.execute('OpenNativeFolder.openNativeFolder', /* path */ path)
@@ -498,11 +498,11 @@ const newDirent = async (state, editingType) => {
 }
 
 // TODO much shared logic with newFolder
-export const newFile = (state) => {
+const newFile = (state) => {
   return newDirent(state, ExplorerEditingType.CreateFile)
 }
 
-export const updateEditingValue = (state, value) => {
+const updateEditingValue = (state, value) => {
   const editingIcon = IconTheme.getFileIcon({ name: value })
   return {
     ...state,
@@ -511,17 +511,17 @@ export const updateEditingValue = (state, value) => {
   }
 }
 
-export const handleFocus = (state) => {
+const handleFocus = (state) => {
   Focus.setFocus(FocusKey.Explorer)
   return state
 }
 
-export const refresh = (state) => {
+const refresh = (state) => {
   console.log('TODO refresh explorer')
   return state
 }
 
-export const newFolder = (state) => {
+const newFolder = (state) => {
   return newDirent(state, ExplorerEditingType.CreateFolder)
 }
 
@@ -632,7 +632,7 @@ const getClickFn = (direntType) => {
   }
 }
 
-export const handleClick = (state, index, keepFocus = false) => {
+const handleClick = (state, index, keepFocus = false) => {
   const { items, minLineY } = state
   if (index === -1) {
     return focusIndex(state, -1)
@@ -647,7 +647,7 @@ export const handleClick = (state, index, keepFocus = false) => {
   return clickFn(state, dirent, actualIndex, keepFocus)
 }
 
-export const handleClickAt = (state, button, x, y) => {
+const handleClickAt = (state, button, x, y) => {
   if (button !== MouseEventType.LeftClick) {
     return state
   }
@@ -656,17 +656,17 @@ export const handleClickAt = (state, button, x, y) => {
   return handleClick(state, index)
 }
 
-export const handleClickCurrent = (state) => {
+const handleClickCurrent = (state) => {
   return handleClick(state, state.focusedIndex - state.minLineY)
 }
 
-export const handleClickCurrentButKeepFocus = (state) => {
+const handleClickCurrentButKeepFocus = (state) => {
   return handleClick(state, state.focusedIndex - state.minLineY, /* keepFocus */ true)
 }
 
-export const scrollUp = () => {}
+const scrollUp = () => {}
 
-export const scrollDown = () => {}
+const scrollDown = () => {}
 // export const handleBlur=()=>{}
 
 const handleClickSymLink = async (state, dirent, index) => {
@@ -691,7 +691,7 @@ const handleArrowRightDirectoryExpanded = (state, dirent) => {
   }
 }
 
-export const handleArrowRight = async (state) => {
+const handleArrowRight = async (state) => {
   const { items, focusedIndex } = state
   if (focusedIndex === -1) {
     return state
@@ -721,7 +721,7 @@ const focusParentFolder = (state) => {
   return focusIndex(state, parentStartIndex)
 }
 
-export const handleArrowLeft = (state) => {
+const handleArrowLeft = (state) => {
   const { items, focusedIndex } = state
   if (focusedIndex === -1) {
     return state
@@ -740,7 +740,7 @@ export const handleArrowLeft = (state) => {
   }
 }
 
-export const handleUpload = async (state, dirents) => {
+const handleUpload = async (state, dirents) => {
   const { root, pathSeparator } = state
   for (const dirent of dirents) {
     // TODO switch
@@ -758,7 +758,7 @@ export const handleUpload = async (state, dirents) => {
 
 const cancelRequest = (state) => {}
 
-export const dispose = (state) => {
+const dispose = (state) => {
   if (!state.pendingRequests) {
     return
   }
@@ -783,7 +783,7 @@ const isImage = (dirent) => {
   return IMAGE_EXTENSIONS.has(fileExtension)
 }
 
-export const handleMouseEnter = async (state, index) => {
+const handleMouseEnter = async (state, index) => {
   const { items } = state
   const dirent = items[index]
   if (!isImage(dirent)) {
@@ -800,12 +800,12 @@ export const handleMouseEnter = async (state, index) => {
 // TODO what happens when mouse leave and anther mouse enter event occur?
 // should update preview instead of closing and reopening
 
-export const handleMouseLeave = async (state) => {
+const handleMouseLeave = async (state) => {
   // await Command.execute(/* ImagePreview.hide */ 9082)
   return state
 }
 
-export const handleCopy = async (state) => {
+const handleCopy = async (state) => {
   // TODO handle multiple files
   // TODO if not file is selected, what happens?
   const dirent = getFocusedDirent(state)
@@ -819,9 +819,9 @@ export const handleCopy = async (state) => {
   await Command.execute(/* ClipBoard.writeNativeFiles */ 243, /* type */ 'copy', /* files */ files)
 }
 
-export const hasFunctionalResize = true
+const hasFunctionalResize = true
 
-export const resize = (state, dimensions) => {
+const resize = (state, dimensions) => {
   const { minLineY, itemHeight } = state
   const maxLineY = minLineY + Math.round(dimensions.height / itemHeight)
   return {
@@ -831,7 +831,7 @@ export const resize = (state, dimensions) => {
   }
 }
 
-export const expandAll = async (state) => {
+const expandAll = async (state) => {
   const { items, focusedIndex, pathSeparator, minLineY, height, itemHeight } = state
   if (focusedIndex === -1) {
     return state
@@ -880,7 +880,7 @@ const toCollapsedDirent = (dirent) => {
   return dirent
 }
 
-export const collapseAll = (state) => {
+const collapseAll = (state) => {
   const { items } = state
   const newDirents = items.filter(isTopLevel).map(toCollapsedDirent)
   return {
@@ -889,7 +889,7 @@ export const collapseAll = (state) => {
   }
 }
 
-export const handleBlur = (state) => {
+const handleBlur = (state) => {
   // TODO when blur event occurs because of context menu, focused index should stay the same
   // but focus outline should be removed
   const { editingType } = state
