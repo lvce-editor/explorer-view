@@ -1,5 +1,5 @@
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
+import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetFilePathElectron from '../GetFilePathElectron/GetFilePathElectron.ts'
 import * as Path from '../Path/Path.ts'
 
@@ -18,7 +18,7 @@ const copyFilesElectron = async (root: any, pathSeparator: any, files: any): Pro
 }
 
 const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Promise<any> => {
-  const childDirents = await getChildDirents(pathSeparator, {
+  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, {
     path: root,
     depth: 0,
   })
