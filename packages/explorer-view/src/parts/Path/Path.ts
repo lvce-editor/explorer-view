@@ -5,3 +5,11 @@ export const dirname = (pathSeparator: string, path: string): string => {
   }
   return path.slice(0, index)
 }
+
+export const join = (pathSeparator: string, ...parts: string[]): string => {
+  return parts.join(pathSeparator)
+}
+
+export const getBaseName = (pathSeparator: string, path: string): string => {
+  return path.slice(path.lastIndexOf(pathSeparator) + 1)
+}
