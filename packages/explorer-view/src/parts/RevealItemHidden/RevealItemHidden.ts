@@ -1,30 +1,8 @@
-import * as DirentType from '../DirentType/DirentType.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
-// TODO viewlet should only have create and refresh functions
-// every thing else can be in a separate module <viewlet>.lazy.js
-// and  <viewlet>.ipc.js
-
-// viewlet: creating | refreshing | done | disposed
-// TODO recycle viewlets (maybe)
-
-// TODO instead of root string, there should be a root dirent
-
-// TODO rename dirents to items, then can use virtual list component directly
-
-// TODO support multiselection and removing multiple dirents
-
-// TODO use posInSet and setSize properties to compute more effectively
-
-// TODO much shared logic with newFolder
-
-// export const handleBlur=()=>{}
-
-// TODO what happens when mouse leave and anther mouse enter event occur?
-// should update preview instead of closing and reopening
 
 const getPathPartsToReveal = (root: any, pathParts: any, dirents: any): any => {
   for (let i = 0; i < pathParts.length; i++) {
