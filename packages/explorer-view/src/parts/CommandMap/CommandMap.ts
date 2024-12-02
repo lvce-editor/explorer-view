@@ -12,6 +12,7 @@ import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirt
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetMenuEntries from '../GetMenuEntries/GetMenuEntries.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
+import * as HandleBlur from '../HandleBlur/HandleBlur.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
@@ -41,7 +42,7 @@ export const commandMap = {
   'Explorer.getVisibleItems': GetVisibleExplorerItems.getVisibleExplorerItems,
   'Explorer.handleArrowLeft': HandleClick.handleArrowLeft,
   'Explorer.handleArrowRight': HandleClick.handleArrowRight,
-  'Explorer.handleBlur': HandleClick.handleBlur,
+  'Explorer.handleBlur': HandleBlur.handleBlur,
   'Explorer.handleClick': HandleClick.handleClick,
   'Explorer.handleClickAt': HandleClick.handleClickAt,
   'Explorer.handleClickCurrentButKeepFocus': HandleClick.handleClickCurrentButKeepFocus,
