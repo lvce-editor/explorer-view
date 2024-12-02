@@ -27,7 +27,7 @@ jest.unstable_mockModule('../src/parts/FileSystem/FileSystem.js', () => {
     mkdir: jest.fn(() => {
       throw new Error('not implemented')
     }),
-    getPathSeparator: () => {
+    getPathSeparator: (): string => {
       return '/'
     },
     getRealPath: jest.fn(() => {
