@@ -1,4 +1,4 @@
-import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.js'
+import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 
 export const handleBlur = (state: any): any => {
   // TODO when blur event occurs because of context menu, focused index should stay the same
