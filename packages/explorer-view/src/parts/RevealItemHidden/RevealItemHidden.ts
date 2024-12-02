@@ -1,6 +1,8 @@
 import * as Command from '../Command/Command.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
+import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
+import { scrollInto } from '../ScrollInto/ScrollInto.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 import { getChildDirents } from './ViewletExplorerShared.ts'
 // TODO viewlet should only have create and refresh functions
@@ -76,15 +78,6 @@ const getSavedChildDirents = (map, path, depth, excluded, pathSeparator) => {
 
 // TODO much shared logic with newFolder
 
-const handleClickFile = async (state, dirent, index, keepFocus = false) => {
-  await Command.execute(/* Main.openAbsolutePath */ 'Main.openUri', /* absolutePath */ dirent.path, /* focus */ !keepFocus)
-  return {
-    ...state,
-    focusedIndex: index,
-    focused: keepFocus,
-  }
-}
-
 // export const handleBlur=()=>{}
 
 // TODO what happens when mouse leave and anther mouse enter event occur?
@@ -102,22 +95,6 @@ const getIndex = (dirents, uri) => {
     }
   }
   return -1
-}
-
-const getPathParts = (root, uri, pathSeparator) => {
-  const parts = []
-  let index = root.length - 1
-  let depth = 0
-  while ((index = uri.indexOf('/', index + 1)) !== -1) {
-    const partUri = uri.slice(0, index)
-    parts.push({
-      path: partUri,
-      depth: depth++,
-      root,
-      pathSeparator,
-    })
-  }
-  return parts
 }
 
 const getPathPartsToReveal = (root, pathParts, dirents) => {
