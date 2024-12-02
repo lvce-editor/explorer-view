@@ -1,14 +1,14 @@
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import { focusIndex } from '../FocusIndex/FocusIndex.ts'
-import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
+import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
+import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetClickFn from '../GetClickFn/GetClickFn.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
-import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPosition.ts'
-import { getParentEndIndex } from '../GetParentEndIndex/GetParentEndIndex.ts'
-import { getParentStartIndex } from '../GetParentStartIndex/GetParentStartIndex.ts'
+import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosition.ts'
+import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
+import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 import * as OpenFolder from '../OpenFolder/OpenFolder.ts'
@@ -158,7 +158,7 @@ const handleClickFile = async (state: any, dirent: any, index: any, keepFocus = 
 const handleClickDirectory = async (state: any, dirent: any, index: any, keepFocus: boolean): Promise<any> => {
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
-  const dirents = await getChildDirents(state.pathSeparator, dirent)
+  const dirents = await GetChildDirents.getChildDirents(state.pathSeparator, dirent)
   const state2 = {} as any
   if (!state2) {
     return state
@@ -189,7 +189,7 @@ const handleClickDirectoryExpanded = (state: any, dirent: any, index: any, keepF
   const { minLineY, maxLineY, itemHeight } = state
   dirent.type = DirentType.Directory
   dirent.icon = IconTheme.getIcon(dirent)
-  const endIndex = getParentEndIndex(state.items, index)
+  const endIndex = GetParentEndIndex.getParentEndIndex(state.items, index)
   const removeCount = endIndex - index - 1
   // TODO race conditions and side effects are everywhere
   const newDirents = [...state.items]
@@ -221,7 +221,7 @@ const handleClickDirectoryExpanded = (state: any, dirent: any, index: any, keepF
 export const handleClick = (state: any, index: any, keepFocus = false): any => {
   const { items, minLineY } = state
   if (index === -1) {
-    return focusIndex(state, -1)
+    return FocusIndex.focusIndex(state, -1)
   }
   const actualIndex = index + minLineY
   const dirent = items[actualIndex]
@@ -238,7 +238,7 @@ export const handleClickAt = (state: any, button: any, x: any, y: any): any => {
     return state
   }
 
-  const index = getIndexFromPosition(state, x, y)
+  const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
   return handleClick(state, index)
 }
 
@@ -266,7 +266,7 @@ const handleArrowRightDirectoryExpanded = (state: any, dirent: any): any => {
   }
   const nextDirent = items[focusedIndex + 1]
   if (nextDirent.depth === dirent.depth + 1) {
-    return focusIndex(state, focusedIndex + 1)
+    return FocusIndex.focusIndex(state, focusedIndex + 1)
   }
 }
 
@@ -294,11 +294,11 @@ export const handleArrowRight = async (state: any): Promise<any> => {
 }
 
 const focusParentFolder = (state: any): any => {
-  const parentStartIndex = getParentStartIndex(state.items, state.focusedIndex)
+  const parentStartIndex = GetParentStartIndex.getParentStartIndex(state.items, state.focusedIndex)
   if (parentStartIndex === -1) {
     return state
   }
-  return focusIndex(state, parentStartIndex)
+  return FocusIndex.focusIndex(state, parentStartIndex)
 }
 
 export const handleArrowLeft = (state: any): any => {
