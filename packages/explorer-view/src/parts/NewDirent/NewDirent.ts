@@ -3,8 +3,9 @@ import * as FocusKey from '../FocusKey/FocusKey.ts'
 import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
 import * as Focus from '../Focus/Focus.ts'
 
-export const newDirent = async (state: any, editingType: any) => {
-  Focus.setFocus(FocusKey.ExplorerEditBox)
+export const newDirent = async (state: any, editingType: any): Promise<any> => {
+  // TODO make focus functional instead of side effect
+  await Focus.setFocus(FocusKey.ExplorerEditBox)
   // TODO do it like vscode, select position between folders and files
   const { focusedIndex, items } = state
   if (focusedIndex >= 0) {
