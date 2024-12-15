@@ -1,8 +1,9 @@
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
+import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 
-export const handleClickDirectoryExpanded = (state: any, dirent: any, index: any, keepFocus: boolean): any => {
+export const handleClickDirectoryExpanded = async (state: any, dirent: any, index: any, keepFocus: boolean): Promise<Promise<any>> => {
   const { minLineY, maxLineY, itemHeight } = state
   dirent.type = DirentType.Directory
   dirent.icon = IconTheme.getIcon(dirent)
@@ -17,9 +18,12 @@ export const handleClickDirectoryExpanded = (state: any, dirent: any, index: any
     const newMaxLineY = Math.min(maxLineY, newTotal)
     const newMinLineY = newMaxLineY - visibleItems
     const deltaY = newMinLineY * itemHeight
+    const parts = newDirents.slice(minLineY, maxLineY)
+    const icons = await GetFileIcons.getFileIcons(parts)
     return {
       ...state,
       items: newDirents,
+      icons,
       focusedIndex: index,
       focused: keepFocus,
       minLineY: newMinLineY,
@@ -27,9 +31,12 @@ export const handleClickDirectoryExpanded = (state: any, dirent: any, index: any
       deltaY,
     }
   }
+  const parts = newDirents.slice(state.minLineY, state.maxLineY)
+  const icons = await GetFileIcons.getFileIcons(parts)
   return {
     ...state,
     items: newDirents,
+    icons,
     focusedIndex: index,
     focused: keepFocus,
   }
