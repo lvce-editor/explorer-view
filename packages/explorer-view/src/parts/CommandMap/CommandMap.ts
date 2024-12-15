@@ -1,5 +1,6 @@
 import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as CancelEdit from '../CancelEdit/CancelEdit.ts'
+import * as CollapseAll from '../CollapseAll/CollapseAll.ts'
 import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
@@ -31,6 +32,7 @@ import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 
 export const commandMap = {
   'Explorer.acceptEdit': AcceptEdit.acceptEdit,
+  'Explorer.collapseAll': CollapseAll.collapseAll,
   'Explorer.cancelEdit': CancelEdit.cancelEdit,
   'Explorer.copyPath': CopyPath.copyPath,
   'Explorer.copyRelativePath': CopyRelativePath.copyRelativePath,
