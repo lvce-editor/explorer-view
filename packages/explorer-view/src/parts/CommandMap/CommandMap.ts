@@ -1,4 +1,5 @@
 import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
+import * as CancelEdit from '../CancelEdit/CancelEdit.ts'
 import * as CollapseAll from '../CollapseAll/CollapseAll.ts'
 import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
@@ -21,14 +22,16 @@ import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
+import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
+import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 
 export const commandMap = {
   'Explorer.acceptEdit': AcceptEdit.acceptEdit,
-  'Explorer.cancelEdit': HandleClick.cancelEdit,
   'Explorer.collapseAll': CollapseAll.collapseAll,
+  'Explorer.cancelEdit': CancelEdit.cancelEdit,
   'Explorer.copyPath': CopyPath.copyPath,
   'Explorer.copyRelativePath': CopyRelativePath.copyRelativePath,
   'Explorer.expandAll': ExpandAll.expandAll,
@@ -57,9 +60,10 @@ export const commandMap = {
   'Explorer.handleWheel': HandleClick.handleWheel,
   'Explorer.loadContent': LoadContent.loadContent,
   'Explorer.openContainingFolder': OpenContainingFolder.openContainingFolder,
-  'Explorer.removeDirent': HandleClick.removeDirent,
+  'Explorer.removeDirent': RemoveDirent.removeDirent,
   'Explorer.renameDirent': HandleClick.renameDirent,
   'Explorer.restoreState': RestoreState.restoreState,
   'Explorer.revealItem': RevealItem.revealItem,
   'Explorer.saveState': SaveState.saveState,
+  'Explorer.setDeltaY': SetDeltaY.setDeltaY,
 }

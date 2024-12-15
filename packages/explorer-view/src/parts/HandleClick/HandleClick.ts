@@ -5,7 +5,6 @@ import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetClickFn from '../GetClickFn/GetClickFn.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
-import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
@@ -62,62 +61,6 @@ export const handleWheel = (state: any, deltaMode: any, deltaY: any): any => {
   return setDeltaY(state, state.deltaY + deltaY)
 }
 
-// TODO support multiselection and removing multiple dirents
-export const removeDirent = async (state: any): Promise<any> => {
-  if (state.focusedIndex < 0) {
-    return state
-  }
-  const dirent = GetFocusedDirent.getFocusedDirent(state)
-  const absolutePath = dirent.path
-  try {
-    // TODO handle error
-    await FileSystem.remove(absolutePath)
-  } catch (error) {
-    // TODO vscode shows error as alert (no stacktrace) and retry button
-    // maybe should show alert as well, but where to put stacktrace?
-    // on web should probably show notification (dialog)
-    // ErrorHandling.handleError(error)
-    // await ErrorHandling.showErrorDialog(error)
-    return
-  }
-  // TODO avoid state mutation
-  const newVersion = ++state.version
-  // TODO race condition
-  // const newState = await loadContent(state:any)
-  if (state.version !== newVersion || state.disposed) {
-    return state
-  }
-  // TODO is it possible to make this more functional instead of mutating state?
-  // maybe every function returns a new state?
-  const index = state.items.indexOf(dirent)
-  let deleteEnd = index + 1
-
-  for (; deleteEnd < state.items.length; deleteEnd++) {
-    if (state.items[deleteEnd].depth <= dirent.depth) {
-      break
-    }
-  }
-  const deleteCount = deleteEnd - index
-  const newDirents = [...state.items]
-  newDirents.splice(index, deleteCount)
-  let indexToFocus = -1
-
-  if (newDirents.length === 0) {
-    indexToFocus = -1
-  } else if (index < state.focusedIndex) {
-    indexToFocus = state.focusedIndex - 1
-  } else if (index === state.focusedIndex) {
-    indexToFocus = Math.max(state.focusedIndex - 1, 0)
-  } else {
-    indexToFocus = Math.max(state.focusedIndex - 1, 0)
-  }
-  return {
-    ...state,
-    items: newDirents,
-    focusedIndex: indexToFocus,
-  }
-}
-
 export const renameDirent = (state: any): any => {
   const { focusedIndex, items } = state
   const item = items[focusedIndex]
@@ -131,18 +74,6 @@ export const renameDirent = (state: any): any => {
 }
 
 // TODO use posInSet and setSize properties to compute more effectively
-
-export const cancelEdit = (state: any): any => {
-  const { editingIndex } = state
-  return {
-    ...state,
-    focusedIndex: editingIndex,
-    focused: true,
-    editingIndex: -1,
-    editingValue: '',
-    editingType: ExplorerEditingType.None,
-  }
-}
 
 // TODO much shared logic with newFolder
 
@@ -159,7 +90,7 @@ const handleClickDirectory = async (state: any, dirent: any, index: any, keepFoc
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
   const dirents = await GetChildDirents.getChildDirents(state.pathSeparator, dirent)
-  const state2 = {} as any
+  const state2 = state
   if (!state2) {
     return state
   }
