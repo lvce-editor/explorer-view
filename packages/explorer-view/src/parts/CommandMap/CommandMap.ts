@@ -33,6 +33,7 @@ import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
 import * as RenderActions from '../RenderActions/RenderActions.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
+import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
@@ -84,4 +85,5 @@ export const commandMap = {
   'Explorer.saveState': SaveState.saveState,
   'Explorer.setDeltaY': SetDeltaY.setDeltaY,
   'Explorer.updateEditingValue': UpdateEditingValue.updateEditingValue,
+  'Explorer.updateIcons': UpdateIcons.updateIcons,
 }
