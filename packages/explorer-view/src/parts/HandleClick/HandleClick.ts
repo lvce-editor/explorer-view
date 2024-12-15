@@ -1,11 +1,10 @@
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
-import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetClickFn from '../GetClickFn/GetClickFn.ts'
-import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
+import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
@@ -69,36 +68,6 @@ const handleClickFile = async (state: any, dirent: any, index: any, keepFocus = 
     ...state,
     focusedIndex: index,
     focused: keepFocus,
-  }
-}
-
-const handleClickDirectory = async (state: any, dirent: any, index: any, keepFocus: boolean): Promise<any> => {
-  dirent.type = DirentType.DirectoryExpanding
-  // TODO handle error
-  const dirents = await GetChildDirents.getChildDirents(state.pathSeparator, dirent)
-  const state2 = state
-  if (!state2) {
-    return state
-  }
-  // TODO use Viewlet.getState here and check if it exists
-  const newIndex = state2.items.indexOf(dirent)
-  // TODO if viewlet is disposed or root has changed, return
-  if (newIndex === -1) {
-    return state
-  }
-  const newDirents = [...state2.items]
-  newDirents.splice(newIndex + 1, 0, ...dirents)
-  dirent.type = DirentType.DirectoryExpanded
-  dirent.icon = IconTheme.getIcon(dirent)
-  const { height, itemHeight, minLineY } = state2
-  // TODO when focused index has changed while expanding, don't update it
-  const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newDirents.length)
-  return {
-    ...state,
-    items: newDirents,
-    focusedIndex: newIndex,
-    focused: keepFocus,
-    maxLineY,
   }
 }
 
@@ -200,7 +169,7 @@ export const handleArrowRight = async (state: any): Promise<any> => {
     case DirentType.Directory:
     case DirentType.SymLinkFolder:
       // @ts-ignore
-      return handleClickDirectory(state, dirent, focusedIndex)
+      return HandleClickDirectory.handleClickDirectory(state, dirent, focusedIndex)
     case DirentType.DirectoryExpanded:
       return handleArrowRightDirectoryExpanded(state, dirent)
     case DirentType.Symlink:
