@@ -24,6 +24,10 @@ export const createFile = async (uri: string): Promise<any> => {
   return ParentRpc.invoke('FileSystem.createFile', uri)
 }
 
+export const writeFile = async (uri: string, content: string): Promise<any> => {
+  return ParentRpc.invoke('FileSystem.writeFile', uri, content)
+}
+
 export const mkdir = async (uri: string): Promise<any> => {
   return ParentRpc.invoke('FileSystem.mkdir', uri)
 }
