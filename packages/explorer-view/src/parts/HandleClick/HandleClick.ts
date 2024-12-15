@@ -4,8 +4,8 @@ import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as GetClickFn from '../GetClickFn/GetClickFn.ts'
 import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
-import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
+import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 // TODO viewlet should only have create and refresh functions
@@ -16,22 +16,6 @@ import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 // TODO recycle viewlets (maybe)
 
 // TODO instead of root string, there should be a root dirent
-
-const updateIcon = (dirent: any): any => {
-  return { ...dirent, icon: IconTheme.getIcon(dirent) }
-}
-
-const updateIcons = (state: any): any => {
-  const newDirents = state.items.map(updateIcon)
-  return {
-    ...state,
-    items: newDirents,
-  }
-}
-
-export const handleIconThemeChange = (state: any): any => {
-  return updateIcons(state)
-}
 
 // TODO rename dirents to items, then can use virtual list component directly
 const setDeltaY = (state: any, deltaY: any): any => {

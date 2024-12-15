@@ -21,6 +21,7 @@ import * as HandleClickOpenFolder from '../HandleClickOpenFolder/HandleClickOpen
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
+import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconThemeChange.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
@@ -33,11 +34,11 @@ import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
 import * as RenderActions from '../RenderActions/RenderActions.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
-import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
+import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 
 export const commandMap = {
   'Explorer.acceptEdit': AcceptEdit.acceptEdit,
@@ -67,7 +68,7 @@ export const commandMap = {
   'Explorer.handleContextMenu': HandleContextMenu.handleContextMenu,
   'Explorer.handleCopy': HandleCopy.handleCopy,
   'Explorer.handleDrop': HandleDrop.handleDrop,
-  'Explorer.handleIconThemeChange': HandleClick.handleIconThemeChange,
+  'Explorer.handleIconThemeChange': HandleIconThemeChange.handleIconThemeChange,
   'Explorer.handlePaste': HandlePaste.handlePaste,
   'Explorer.handlePointerDown': HandlePointerDown.handlePointerDown,
   'Explorer.handleUpload': HandleUpload.handleUpload,
