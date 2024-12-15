@@ -1,8 +1,9 @@
-import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
-import * as GetPasteHandler from '../GetPasteHandler/GetPasteHandler.ts'
+import * as HandlePasteCopy from '../HandlePasteCopy/HandlePasteCopy.ts'
+import * as HandlePasteCut from '../HandlePasteCut/HandlePasteCut.ts'
+import * as HandlePasteNone from '../HandlePasteNone/HandlePasteNone.ts'
+import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.ts'
 
-export const handlePaste = async (state: any): Promise<any> => {
-  const nativeFiles = await ClipBoard.readNativeFiles()
+export const getPasteHandler = (type: any): any => {
   // TODO detect cut/paste event, not sure if that is possible
   // TODO check that pasted folder is not a parent folder of opened folder
   // TODO support pasting multiple paths
@@ -15,6 +16,14 @@ export const handlePaste = async (state: any): Promise<any> => {
   // TODO but what if a file is currently selected? Then maybe the parent folder
   // TODO but will it work if the folder is a symlink?
   // TODO handle error gracefully when copy fails
-  const fn = GetPasteHandler.getPasteHandler(nativeFiles.type)
-  return fn(state, nativeFiles)
+  switch (type) {
+    case NativeFileTypes.None:
+      return HandlePasteNone.handlePasteNone
+    case NativeFileTypes.Copy:
+      return HandlePasteCopy.handlePasteCopy
+    case NativeFileTypes.Cut:
+      return HandlePasteCut.handlePasteCut
+    default:
+      throw new Error(`unexpected native paste type: ${type}`)
+  }
 }
