@@ -25,6 +25,7 @@ import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as NewFile from '../NewFile/NewFile.ts'
+import * as NewFolder from '../NewFolder/NewFolder.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
@@ -68,6 +69,7 @@ export const commandMap = {
   'Explorer.handleWheel': HandleClick.handleWheel,
   'Explorer.loadContent': LoadContent.loadContent,
   'Explorer.newFile': NewFile.newFile,
+  'Explorer.newFolder': NewFolder.newFolder,
   'Explorer.openContainingFolder': OpenContainingFolder.openContainingFolder,
   'Explorer.removeDirent': RemoveDirent.removeDirent,
   'Explorer.renameDirent': RenameDirent.renameDirent,
