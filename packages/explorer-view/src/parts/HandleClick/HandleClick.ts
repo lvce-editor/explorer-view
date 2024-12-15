@@ -1,5 +1,4 @@
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
@@ -58,18 +57,6 @@ const setDeltaY = (state: any, deltaY: any): any => {
 
 export const handleWheel = (state: any, deltaMode: any, deltaY: any): any => {
   return setDeltaY(state, state.deltaY + deltaY)
-}
-
-export const renameDirent = (state: any): any => {
-  const { focusedIndex, items } = state
-  const item = items[focusedIndex]
-  // Focus.setFocus(FocusKey.ExplorerEditBox)
-  return {
-    ...state,
-    editingIndex: focusedIndex,
-    editingType: ExplorerEditingType.Rename,
-    editingValue: item.name,
-  }
 }
 
 // TODO use posInSet and setSize properties to compute more effectively
