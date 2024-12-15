@@ -24,6 +24,7 @@ import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
+import * as HandleWorkspaceChange from '../HandleWorkspaceChange/HandleWorkspaceChange.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as NewFile from '../NewFile/NewFile.ts'
 import * as NewFolder from '../NewFolder/NewFolder.ts'
@@ -70,6 +71,7 @@ export const commandMap = {
   'Explorer.handlePointerDown': HandlePointerDown.handlePointerDown,
   'Explorer.handleUpload': HandleUpload.handleUpload,
   'Explorer.handleWheel': HandleClick.handleWheel,
+  'Explorer.handleWorkspaceChange': HandleWorkspaceChange.handleWorkspaceChange,
   'Explorer.loadContent': LoadContent.loadContent,
   'Explorer.newFile': NewFile.newFile,
   'Explorer.newFolder': NewFolder.newFolder,
