@@ -10,7 +10,6 @@ import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
-import * as OpenFolder from '../OpenFolder/OpenFolder.ts'
 // TODO viewlet should only have create and refresh functions
 // every thing else can be in a separate module <viewlet>.lazy.js
 // and  <viewlet>.ipc.js
@@ -256,8 +255,3 @@ export const handleArrowLeft = (state: any): any => {
 // should update preview instead of closing and reopening
 
 // TODO maybe just insert items into explorer and refresh whole explorer
-
-export const handleClickOpenFolder = async (state: any): Promise<any> => {
-  await OpenFolder.openFolder()
-  return state
-}
