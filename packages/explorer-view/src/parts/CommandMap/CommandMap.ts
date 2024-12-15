@@ -23,6 +23,7 @@ import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFol
 import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
+import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 
 export const commandMap = {
   'Explorer.acceptEdit': AcceptEdit.acceptEdit,
@@ -60,4 +61,5 @@ export const commandMap = {
   'Explorer.restoreState': RestoreState.restoreState,
   'Explorer.revealItem': RevealItem.revealItem,
   'Explorer.saveState': SaveState.saveState,
+  'Explorer.setDeltaY': SetDeltaY.setDeltaY,
 }
