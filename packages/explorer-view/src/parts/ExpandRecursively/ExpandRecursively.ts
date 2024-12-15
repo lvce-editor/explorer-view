@@ -2,16 +2,7 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
-
-const makeExpanded = (dirent: any): any => {
-  if (dirent.type === DirentType.Directory) {
-    return {
-      ...dirent,
-      type: DirentType.DirectoryExpanded,
-    }
-  }
-  return dirent
-}
+import * as MakeExpanded from '../MakeExpanded/MakeExpanded.ts'
 
 export const expandRecursively = async (state: any): Promise<any> => {
   const { items, focusedIndex, pathSeparator, root, height, itemHeight, minLineY } = state
@@ -35,7 +26,7 @@ export const expandRecursively = async (state: any): Promise<any> => {
       case DirentType.DirectoryExpanding:
       case DirentType.DirectoryExpanded:
         const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent)
-        const all = [makeExpanded(dirent)]
+        const all = [MakeExpanded.makeExpanded(dirent)]
         for (const childDirent of childDirents) {
           const childAll = await getChildDirentsRecursively(childDirent)
           all.push(...childAll)
