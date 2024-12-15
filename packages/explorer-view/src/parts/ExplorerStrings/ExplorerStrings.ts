@@ -1,28 +1,5 @@
 import * as I18nString from '../I18NString/I18NString.ts'
-
-/**
- * @enum {string}
- */
-const UiStrings = {
-  NewFile: 'New File...',
-  NewFolder: 'New Folder...',
-  OpenContainingFolder: 'Open Containing Folder',
-  OpenInIntegratedTerminal: 'Open in integrated Terminal',
-  Cut: 'Cut',
-  Copy: 'Copy',
-  Paste: 'Paste',
-  CopyPath: 'Copy Path',
-  CopyRelativePath: 'Copy Relative Path',
-  Rename: 'Rename',
-  Delete: 'Delete',
-  RefreshExplorer: 'Refresh Explorer',
-  CollapseAllFoldersInExplorer: 'Collapse All Folders in Explorer',
-  Explorer: 'Explorer',
-  FilesExplorer: 'Files Explorer',
-  YouHaveNotYetOpenedAFolder: 'You have not yet opened a folder',
-  OpenFolder: 'Open folder',
-  NoFolderOpen: 'No Folder Open',
-}
+import * as UiStrings from '../UiStrings/UiStrings.ts'
 
 export const newFile = (): string => {
   return I18nString.i18nString(UiStrings.NewFile)
