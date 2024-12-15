@@ -132,18 +132,6 @@ export const renameDirent = (state: any): any => {
 
 // TODO use posInSet and setSize properties to compute more effectively
 
-export const cancelEdit = (state: any): any => {
-  const { editingIndex } = state
-  return {
-    ...state,
-    focusedIndex: editingIndex,
-    focused: true,
-    editingIndex: -1,
-    editingValue: '',
-    editingType: ExplorerEditingType.None,
-  }
-}
-
 // TODO much shared logic with newFolder
 
 const handleClickFile = async (state: any, dirent: any, index: any, keepFocus = false): Promise<any> => {
