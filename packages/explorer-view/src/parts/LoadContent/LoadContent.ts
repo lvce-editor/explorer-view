@@ -3,10 +3,11 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
+import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as PromiseStatus from '../PromiseStatus/PromiseStatus.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
-import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 // TODO viewlet should only have create and refresh functions
 // every thing else can be in a separate module <viewlet>.lazy.js
 // and  <viewlet>.ipc.js
@@ -151,11 +152,12 @@ export const loadContent = async (state: any, savedState: any): Promise<any> => 
     deltaY = savedState.deltaY
   }
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, restoredDirents.length)
-
+  const icons = await GetFileIcons.getFileIcons(restoredDirents)
   return {
     ...state,
     root,
     items: restoredDirents,
+    icons,
     minLineY,
     deltaY,
     maxLineY,

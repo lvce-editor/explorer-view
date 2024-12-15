@@ -1,11 +1,15 @@
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as DirentType from '../DirentType/DirentType.ts'
 
-const getFileIcon = (file: string): Promise<string> => {
-  return Rpc.invoke('IconTheme.getFileIcon', { name: file })
+const getFileIcon = (dirent: any): Promise<string> => {
+  if (dirent.type === DirentType.File) {
+    return Rpc.invoke('IconTheme.getFileIcon', { name: dirent.name })
+  }
+  return Rpc.invoke('IconTheme.getFileIcon', { name: dirent.name })
 }
 
-export const getFileIcons = async (fileNames: readonly string[]): Promise<readonly string[]> => {
-  const promises = fileNames.map(getFileIcon)
+export const getFileIcons = async (dirents: readonly any[]): Promise<readonly string[]> => {
+  const promises = dirents.map(getFileIcon)
   const icons = await Promise.all(promises)
   return icons
 }
