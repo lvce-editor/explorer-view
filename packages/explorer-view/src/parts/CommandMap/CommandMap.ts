@@ -25,6 +25,7 @@ import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFol
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
+import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 
@@ -56,6 +57,7 @@ export const commandMap = {
   'Explorer.handleIconThemeChange': HandleClick.handleIconThemeChange,
   'Explorer.handlePaste': HandlePaste.handlePaste,
   'Explorer.handlePointerDown': HandlePointerDown.handlePointerDown,
+  'Explorer.handleUpload': HandleUpload.handleUpload,
   'Explorer.handleWheel': HandleClick.handleWheel,
   'Explorer.loadContent': LoadContent.loadContent,
   'Explorer.openContainingFolder': OpenContainingFolder.openContainingFolder,
