@@ -13,8 +13,7 @@ export const getRemoteUrl = (path) => {
 
 const nodeModulesPath = join(root, 'packages', 'server', 'node_modules')
 
-const serverPath = join(nodeModulesPath, '@lvce-editor', 'server')
-const serverStaticPath = join(nodeModulesPath, '@lvce-editor', 'server', 'static')
+const serverStaticPath = join(nodeModulesPath, '@lvce-editor', 'static-server', 'static')
 
 const RE_COMMIT_HASH = /^[a-z\d]+$/
 const isCommitHash = (dirent) => {
@@ -24,7 +23,7 @@ const isCommitHash = (dirent) => {
 const dirents = await readdir(serverStaticPath)
 const commitHash = dirents.find(isCommitHash) || ''
 // @ts-ignore
-const rendererWorkerMainPath = join(serverPath, 'static', commitHash, 'packages', 'renderer-worker', 'dist', 'rendererWorkerMain.js')
+const rendererWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'renderer-worker', 'dist', 'rendererWorkerMain.js')
 
 // const content = await readFile(rendererWorkerMainPath, 'utf-8')
 // const remoteUrl = getRemoteUrl(textSearchWorkerPath)
