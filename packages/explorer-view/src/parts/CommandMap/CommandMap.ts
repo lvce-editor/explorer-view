@@ -14,6 +14,7 @@ import * as GetMenuEntries from '../GetMenuEntries/GetMenuEntries.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as HandleBlur from '../HandleBlur/HandleBlur.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
+import * as HandleClickOpenFolder from '../HandleClickOpenFolder/HandleClickOpenFolder.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
@@ -47,7 +48,7 @@ export const commandMap = {
   'Explorer.handleClick': HandleClick.handleClick,
   'Explorer.handleClickAt': HandleClick.handleClickAt,
   'Explorer.handleClickCurrentButKeepFocus': HandleClick.handleClickCurrentButKeepFocus,
-  'Explorer.handleClickOpenFolder': HandleClick.handleClickOpenFolder,
+  'Explorer.handleClickOpenFolder': HandleClickOpenFolder.handleClickOpenFolder,
   'Explorer.handleContextMenu': HandleContextMenu.handleContextMenu,
   'Explorer.handleDrop': HandleDrop.handleDrop,
   'Explorer.handleIconThemeChange': HandleClick.handleIconThemeChange,
