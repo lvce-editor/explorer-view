@@ -23,6 +23,7 @@ import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
+import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
@@ -33,8 +34,8 @@ import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 
 export const commandMap = {
   'Explorer.acceptEdit': AcceptEdit.acceptEdit,
-  'Explorer.collapseAll': CollapseAll.collapseAll,
   'Explorer.cancelEdit': CancelEdit.cancelEdit,
+  'Explorer.collapseAll': CollapseAll.collapseAll,
   'Explorer.copyPath': CopyPath.copyPath,
   'Explorer.copyRelativePath': CopyRelativePath.copyRelativePath,
   'Explorer.expandAll': ExpandAll.expandAll,
@@ -56,6 +57,7 @@ export const commandMap = {
   'Explorer.handleClickCurrentButKeepFocus': HandleClick.handleClickCurrentButKeepFocus,
   'Explorer.handleClickOpenFolder': HandleClickOpenFolder.handleClickOpenFolder,
   'Explorer.handleContextMenu': HandleContextMenu.handleContextMenu,
+  'Explorer.handleCopy': HandleCopy.handleCopy,
   'Explorer.handleDrop': HandleDrop.handleDrop,
   'Explorer.handleIconThemeChange': HandleClick.handleIconThemeChange,
   'Explorer.handlePaste': HandlePaste.handlePaste,
