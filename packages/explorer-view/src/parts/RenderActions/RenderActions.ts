@@ -1,4 +1,4 @@
-import * as GetActionsVirtualDom from '../GetActionsVirtualDom/GetActionsVirtualDom.js'
+import * as GetActionsVirtualDom from '../GetActionsVirtualDom/GetActionsVirtualDom.ts'
 import * as ViewletExplorerActions from '../GetActions/GetActions.ts'
 
 export const renderActions = (state: any): any => {
