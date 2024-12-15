@@ -21,20 +21,21 @@ import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
+import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
-import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
+import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 
 export const commandMap = {
   'Explorer.acceptEdit': AcceptEdit.acceptEdit,
-  'Explorer.collapseAll': CollapseAll.collapseAll,
   'Explorer.cancelEdit': CancelEdit.cancelEdit,
+  'Explorer.collapseAll': CollapseAll.collapseAll,
   'Explorer.copyPath': CopyPath.copyPath,
   'Explorer.copyRelativePath': CopyRelativePath.copyRelativePath,
   'Explorer.expandAll': ExpandAll.expandAll,
@@ -70,4 +71,5 @@ export const commandMap = {
   'Explorer.revealItem': RevealItem.revealItem,
   'Explorer.saveState': SaveState.saveState,
   'Explorer.setDeltaY': SetDeltaY.setDeltaY,
+  'Explorer.updateEditingValue': UpdateEditingValue.updateEditingValue,
 }
