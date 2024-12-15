@@ -159,7 +159,7 @@ const handleClickDirectory = async (state: any, dirent: any, index: any, keepFoc
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
   const dirents = await GetChildDirents.getChildDirents(state.pathSeparator, dirent)
-  const state2 = {} as any
+  const state2 = state
   if (!state2) {
     return state
   }
