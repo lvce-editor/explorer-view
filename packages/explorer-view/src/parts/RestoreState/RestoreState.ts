@@ -1,6 +1,4 @@
-const getSavedRoot = (savedState: any, workspacePath: string): string => {
-  return workspacePath
-}
+import * as GetSavedRoot from '../GetSavedRoot/GetSavedRoot.ts'
 
 export const restoreState = (savedState: any): any => {
   if (!savedState) {
@@ -9,7 +7,7 @@ export const restoreState = (savedState: any): any => {
       deltaY: 0,
     }
   }
-  const root = getSavedRoot(savedState, savedState.workspacePath || '')
+  const root = GetSavedRoot.getSavedRoot(savedState, savedState.workspacePath || '')
   let minLineY = 0
   if (savedState && typeof savedState.minLineY === 'number') {
     minLineY = savedState.minLineY
