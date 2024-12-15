@@ -6,6 +6,7 @@ import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as PromiseStatus from '../PromiseStatus/PromiseStatus.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
+import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 // TODO viewlet should only have create and refresh functions
 // every thing else can be in a separate module <viewlet>.lazy.js
 // and  <viewlet>.ipc.js
@@ -134,7 +135,8 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 }
 
 export const loadContent = async (state: any, savedState: any): Promise<any> => {
-  const root = getSavedRoot(savedState, '')
+  const workspacePath = await GetWorkspacePath.getWorkspacePath()
+  const root = getSavedRoot(savedState, workspacePath)
   // TODO path separator could be restored from saved state
   const pathSeparator = await getPathSeparator(root) // TODO only load path separator once
   const excluded = getExcluded()
