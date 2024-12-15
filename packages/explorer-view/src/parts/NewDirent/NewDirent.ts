@@ -13,7 +13,7 @@ export const newDirent = async (state: any, editingType: any): Promise<any> => {
     if (dirent.type === DirentType.Directory) {
       // TODO handle error
       // @ts-ignore
-      await HandleClickDirectory.handleCLickDirectory(state, dirent, focusedIndex)
+      await HandleClickDirectory.handleClickDirectory(state, dirent, focusedIndex)
     }
   }
   return {
