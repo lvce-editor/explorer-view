@@ -1,5 +1,5 @@
 import * as Assert from '../Assert/Assert.ts'
-import * as DirentType from '../DirentType/DirentType.js'
+import * as DirentType from '../DirentType/DirentType.ts'
 import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 
 const isEqual = (a: any, b: any): boolean => {

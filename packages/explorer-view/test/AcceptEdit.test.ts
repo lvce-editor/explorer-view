@@ -1,5 +1,5 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.js'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.js'
 
