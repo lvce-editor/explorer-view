@@ -1,5 +1,6 @@
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
+import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 
 // TODO support multiselection and removing multiple dirents
 export const removeDirent = async (state: any): Promise<any> => {
@@ -50,9 +51,13 @@ export const removeDirent = async (state: any): Promise<any> => {
   } else {
     indexToFocus = Math.max(state.focusedIndex - 1, 0)
   }
+  const visible = newDirents.slice(state.minLineY, state.maxLineY)
+  const icons = await GetFileIcons.getFileIcons(visible)
+  console.log({ icons })
   return {
     ...state,
     items: newDirents,
+    icons,
     focusedIndex: indexToFocus,
   }
 }
