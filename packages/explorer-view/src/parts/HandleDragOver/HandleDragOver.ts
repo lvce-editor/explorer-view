@@ -29,7 +29,7 @@ const canBeDroppedInto = (dirent: any): boolean => {
   }
 }
 
-const getNewDropTargets = (state: any, x: number, y: number) => {
+const getNewDropTargets = (state: any, x: number, y: number): readonly any[] => {
   const { items } = state
   const index = getIndexFromPosition(state, x, y)
   if (index === -1) {
