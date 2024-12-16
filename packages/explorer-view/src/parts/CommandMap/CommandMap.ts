@@ -31,6 +31,7 @@ import * as NewFile from '../NewFile/NewFile.ts'
 import * as NewFolder from '../NewFolder/NewFolder.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
+import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
 import * as RenderActions from '../RenderActions/RenderActions.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
@@ -67,6 +68,7 @@ export const commandMap = {
   'Explorer.handleClickOpenFolder': HandleClickOpenFolder.handleClickOpenFolder,
   'Explorer.handleContextMenu': HandleContextMenu.handleContextMenu,
   'Explorer.handleCopy': HandleCopy.handleCopy,
+  'Explorer.handleDragOver': HandleDragOver.handleDragOver,
   'Explorer.handleDrop': HandleDrop.handleDrop,
   'Explorer.handleIconThemeChange': HandleIconThemeChange.handleIconThemeChange,
   'Explorer.handlePaste': HandlePaste.handlePaste,
