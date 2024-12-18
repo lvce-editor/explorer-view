@@ -1,5 +1,4 @@
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
 
 export const getVisibleExplorerItems = (
   items: readonly any[],
@@ -9,23 +8,25 @@ export const getVisibleExplorerItems = (
   editingIndex: number,
   editingType: number,
   editingValue: string,
+  icons: readonly any[],
 ): readonly any[] => {
   const visible = []
+  let iconIndex = 0
   for (let i = minLineY; i < Math.min(maxLineY, items.length); i++) {
     const item = items[i]
+    const icon = icons[iconIndex++]
     if (i === editingIndex) {
       visible.push({
         ...item,
         isFocused: i === focusedIndex,
         isEditing: true,
-        icon: IconTheme.getFileIcon({
-          name: editingValue,
-        }),
+        icon,
       })
     } else {
       visible.push({
         ...item,
         isFocused: i === focusedIndex,
+        icon,
       })
     }
   }

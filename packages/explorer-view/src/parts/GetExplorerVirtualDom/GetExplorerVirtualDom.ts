@@ -7,7 +7,7 @@ import * as GetExplorerWelcomeVirtualDom from '../GetExplorerWelcomeVirtualDom/G
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
-export const getExplorerVirtualDom = (visibleItems: any[], focusedIndex: number, root: string, isWide: boolean): any => {
+export const getExplorerVirtualDom = (visibleItems: readonly any[], focusedIndex: number, root: string, isWide: boolean): any => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
   }
