@@ -6,7 +6,7 @@ export const hasFunctionalRender = true
 export const hasFunctionalRootRender = true
 
 const renderItems = {
-  isEqual(oldState: any, newState: any) {
+  isEqual(oldState: any, newState: any): any {
     return (
       JSON.stringify(oldState.items) === JSON.stringify(newState.items) &&
       oldState.minLineY === newState.minLineY &&
@@ -18,7 +18,7 @@ const renderItems = {
       oldState.width === newState.width
     )
   },
-  apply(oldState: any, newState: any) {
+  apply(oldState: any, newState: any): any {
     const visibleDirents = GetVisibleExplorerItems.getVisibleExplorerItems(
       newState.items,
       newState.minLineY,
@@ -56,10 +56,10 @@ const renderItems = {
 // }
 
 const renderEditingIndex = {
-  isEqual(oldState: any, newState: any) {
+  isEqual(oldState: any, newState: any): any {
     return oldState.editingIndex === newState.editingIndex && oldState.editingType === newState.editingType
   },
-  apply(oldState: any, newState: any) {
+  apply(oldState: any, newState: any): any {
     // @ts-ignore
     const { editingIndex, editingType, editingValue } = newState
     return ['focusInput', 'ExplorerInput']
