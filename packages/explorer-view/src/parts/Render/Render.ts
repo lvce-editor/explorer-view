@@ -1,10 +1,6 @@
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
-export const hasFunctionalRender = true
-
-export const hasFunctionalRootRender = true
-
 const renderItems = {
   isEqual(oldState: any, newState: any): any {
     return (
@@ -66,7 +62,7 @@ const renderEditingIndex = {
   },
 }
 
-export const render = [renderItems, renderEditingIndex]
+const render = [renderItems, renderEditingIndex]
 
 export const doRender = (oldState: any, newState: any): any => {
   const commands = []
