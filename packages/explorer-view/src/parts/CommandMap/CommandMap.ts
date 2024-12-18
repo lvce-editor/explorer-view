@@ -20,6 +20,7 @@ import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleClickOpenFolder from '../HandleClickOpenFolder/HandleClickOpenFolder.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
+import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
 import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconThemeChange.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
@@ -31,8 +32,8 @@ import * as NewFile from '../NewFile/NewFile.ts'
 import * as NewFolder from '../NewFolder/NewFolder.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
-import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
+import * as Render from '../Render/Render.ts'
 import * as RenderActions from '../RenderActions/RenderActions.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
@@ -82,6 +83,7 @@ export const commandMap = {
   'Explorer.openContainingFolder': OpenContainingFolder.openContainingFolder,
   'Explorer.removeDirent': RemoveDirent.removeDirent,
   'Explorer.renameDirent': RenameDirent.renameDirent,
+  'Explorer.render': Render.doRender,
   'Explorer.renderActions': RenderActions.renderActions,
   'Explorer.restoreState': RestoreState.restoreState,
   'Explorer.revealItem': RevealItem.revealItem,
