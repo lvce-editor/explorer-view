@@ -1,5 +1,5 @@
-import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.js'
-import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.js'
+import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
+import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
 export const hasFunctionalRender = true
 
