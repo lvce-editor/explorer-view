@@ -1,7 +1,7 @@
 import * as DirentType from '../DirentType/DirentType.ts'
+import * as Focus from '../Focus/Focus.ts'
 import * as FocusKey from '../FocusKey/FocusKey.ts'
 import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
-import * as Focus from '../Focus/Focus.ts'
 
 export const newDirent = async (state: any, editingType: any): Promise<any> => {
   // TODO make focus functional instead of side effect

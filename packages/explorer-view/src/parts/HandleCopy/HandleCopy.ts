@@ -1,5 +1,5 @@
-import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
+import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 
 export const handleCopy = async (state: any): Promise<any> => {
   // TODO handle multiple files

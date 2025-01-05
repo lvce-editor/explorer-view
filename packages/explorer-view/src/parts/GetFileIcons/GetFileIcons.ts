@@ -1,5 +1,5 @@
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
+import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 const getFileIcon = (dirent: any): Promise<string> => {
   if (dirent.type === DirentType.File) {

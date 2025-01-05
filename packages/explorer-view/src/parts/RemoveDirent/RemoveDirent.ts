@@ -1,6 +1,6 @@
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 
 // TODO support multiselection and removing multiple dirents
 export const removeDirent = async (state: any): Promise<any> => {
