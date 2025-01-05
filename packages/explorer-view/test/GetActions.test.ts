@@ -1,8 +1,8 @@
 import { expect, test } from '@jest/globals'
 import * as ActionType from '../src/parts/ActionType/ActionType.ts'
+import * as ViewletExplorerStrings from '../src/parts/ExplorerStrings/ExplorerStrings.ts'
 import * as GetActions from '../src/parts/GetActions/GetActions.ts'
 import * as MaskIcon from '../src/parts/MaskIcon/MaskIcon.ts'
-import * as ViewletExplorerStrings from '../src/parts/ExplorerStrings/ExplorerStrings.ts'
 
 test('getActions - with root', () => {
   expect(GetActions.getActions('/test-root')).toEqual([
