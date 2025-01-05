@@ -1,7 +1,7 @@
 import * as Assert from '../Assert/Assert.ts'
+import * as GetIndex from '../GetIndex/GetIndex.ts'
 import * as RevealItemHidden from '../RevealItemHidden/RevealItemHidden.ts'
 import * as RevealItemVisible from '../RevealItemVisible/RevealItemVisible.ts'
-import * as GetIndex from '../GetIndex/GetIndex.ts'
 
 export const revealItem = async (state: any, uri: string): Promise<any> => {
   Assert.object(state)
