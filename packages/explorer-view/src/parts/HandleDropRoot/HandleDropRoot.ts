@@ -1,5 +1,5 @@
-import * as HandleDropRootElectron from '../HandleDropRootElectron/HandleDropRootElectron.ts'
 import * as HandleDropRootDefault from '../HandleDropRootDefault/HandleDropRootDefault.ts'
+import * as HandleDropRootElectron from '../HandleDropRootElectron/HandleDropRootElectron.ts'
 
 const getModule = (isElectron: boolean): any => {
   if (isElectron) {

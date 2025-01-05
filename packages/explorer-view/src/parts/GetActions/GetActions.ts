@@ -1,7 +1,7 @@
-import * as ActionType from '../ActionType/ActionType.ts'
-import * as MaskIcon from '../MaskIcon/MaskIcon.ts'
-import * as ViewletExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import type { ViewletAction } from '../ViewletAction/ViewletAction.ts'
+import * as ActionType from '../ActionType/ActionType.ts'
+import * as ViewletExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
+import * as MaskIcon from '../MaskIcon/MaskIcon.ts'
 
 export const getActions = (root: string): readonly ViewletAction[] => {
   if (!root) {

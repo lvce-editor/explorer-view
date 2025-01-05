@@ -1,6 +1,6 @@
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 
 export const handleClickDirectoryExpanded = async (state: any, dirent: any, index: any, keepFocus: boolean): Promise<Promise<any>> => {
