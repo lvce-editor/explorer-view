@@ -1,8 +1,8 @@
 import { expect, test } from '@jest/globals'
 import * as AriaRoles from '../src/parts/AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
-import * as VirtualDomElements from '../src/parts/VirtualDomElements/VirtualDomElements.ts'
 import * as GetFileIconVirtualDom from '../src/parts/GetFileIconVirtualDom/GetFileIconVirtualDom.ts'
+import * as VirtualDomElements from '../src/parts/VirtualDomElements/VirtualDomElements.ts'
 
 test('getFileIconVirtualDom - with icon path', () => {
   expect(GetFileIconVirtualDom.getFileIconVirtualDom('/icons/file.svg')).toEqual({
