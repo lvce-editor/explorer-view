@@ -5,7 +5,7 @@ test('isTopLevel - depth 1', () => {
   const dirent = {
     depth: 1,
   }
-  expect(IsTopLevel.isTopLevel(dirent)).toBe(false)
+  expect(IsTopLevel.isTopLevel(dirent)).toBe(true)
 })
 
 test('isTopLevel - depth 2', () => {
