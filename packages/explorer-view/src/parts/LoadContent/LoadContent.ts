@@ -136,6 +136,7 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 }
 
 export const loadContent = async (state: any, savedState: any): Promise<any> => {
+  const useChevrons = true
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
   // TODO path separator could be restored from saved state
@@ -163,5 +164,6 @@ export const loadContent = async (state: any, savedState: any): Promise<any> => 
     maxLineY,
     pathSeparator,
     excluded,
+    useChevrons,
   }
 }

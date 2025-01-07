@@ -15,7 +15,6 @@ const renderItems = {
     )
   },
   apply(oldState: any, newState: any): any {
-    const useChevrons = false
     const visibleDirents = GetVisibleExplorerItems.getVisibleExplorerItems(
       newState.items,
       newState.minLineY,
@@ -25,7 +24,7 @@ const renderItems = {
       newState.editingType,
       newState.editingValue,
       newState.icons,
-      useChevrons,
+      newState.useChevrons,
     )
     const isWide = newState.width > 450
     const dom = GetExplorerVirtualDom.getExplorerVirtualDom(visibleDirents, newState.focusedIndex, newState.root, isWide)
