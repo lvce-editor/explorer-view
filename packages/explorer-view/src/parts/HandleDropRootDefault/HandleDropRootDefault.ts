@@ -1,3 +1,4 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import * as UploadFileSystemHandles from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
@@ -14,7 +15,7 @@ const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Pr
   return mergedDirents
 }
 
-export const handleDrop = async (state: any, files: any): Promise<any> => {
+export const handleDrop = async (state: ExplorerState, files: any): Promise<ExplorerState> => {
   const { root, pathSeparator, items } = state
   const handled = await UploadFileSystemHandles.uploadFileSystemHandles(root, pathSeparator, files)
   if (handled) {

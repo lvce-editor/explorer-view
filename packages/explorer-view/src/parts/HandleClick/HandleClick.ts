@@ -1,3 +1,4 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
@@ -18,7 +19,7 @@ import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 // TODO instead of root string, there should be a root dirent
 
 // TODO rename dirents to items, then can use virtual list component directly
-const setDeltaY = (state: any, deltaY: any): any => {
+const setDeltaY = (state: ExplorerState, deltaY: number): ExplorerState => {
   const { itemHeight, height, items } = state
   if (deltaY < 0) {
     deltaY = 0
@@ -38,7 +39,7 @@ const setDeltaY = (state: any, deltaY: any): any => {
   }
 }
 
-export const handleWheel = (state: any, deltaMode: any, deltaY: any): any => {
+export const handleWheel = (state: ExplorerState, deltaMode: any, deltaY: any): any => {
   return setDeltaY(state, state.deltaY + deltaY)
 }
 
@@ -46,7 +47,7 @@ export const handleWheel = (state: any, deltaMode: any, deltaY: any): any => {
 
 // TODO much shared logic with newFolder
 
-const handleClickFile = async (state: any, dirent: any, index: any, keepFocus = false): Promise<any> => {
+const handleClickFile = async (state: ExplorerState, dirent: any, index: any, keepFocus = false): Promise<any> => {
   // await Command.execute(/* Main.openAbsolutePath */ 'Main.openUri', /* absolutePath */ dirent.path, /* focus */ !keepFocus)
   return {
     ...state,
@@ -163,7 +164,7 @@ export const handleArrowRight = async (state: any): Promise<any> => {
   }
 }
 
-const focusParentFolder = (state: any): any => {
+const focusParentFolder = (state: ExplorerState): ExplorerState => {
   const parentStartIndex = GetParentStartIndex.getParentStartIndex(state.items, state.focusedIndex)
   if (parentStartIndex === -1) {
     return state
@@ -171,7 +172,7 @@ const focusParentFolder = (state: any): any => {
   return FocusIndex.focusIndex(state, parentStartIndex)
 }
 
-export const handleArrowLeft = (state: any): any => {
+export const handleArrowLeft = (state: ExplorerState): ExplorerState => {
   const { items, focusedIndex } = state
   if (focusedIndex === -1) {
     return state

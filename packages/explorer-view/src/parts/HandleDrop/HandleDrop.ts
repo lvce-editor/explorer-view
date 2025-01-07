@@ -1,9 +1,10 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import * as HandleDropIndex from '../HandleDropIndex/HandleDropIndex.ts'
 import * as HandleDropRoot from '../HandleDropRoot/HandleDropRoot.ts'
 import { VError } from '../VError/VError.ts'
 
-export const handleDrop = async (state: any, x: number, y: number, files: any): Promise<any> => {
+export const handleDrop = async (state: ExplorerState, x: number, y: number, files: any): Promise<ExplorerState> => {
   try {
     const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
     switch (index) {

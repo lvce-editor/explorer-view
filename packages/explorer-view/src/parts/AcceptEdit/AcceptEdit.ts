@@ -1,3 +1,4 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import * as ComputeExplorerRenamedDirent from '../ComputeExplorerRenamedDirent/ComputeExplorerRenamedDirent.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
@@ -13,7 +14,7 @@ const getParentFolder = (dirents: any, index: number, root: string): string => {
   return dirents[index].path
 }
 
-const acceptCreate = async (state: any, newDirentType: any, createFn: any): Promise<any> => {
+const acceptCreate = async (state: ExplorerState, newDirentType: any, createFn: any): Promise<ExplorerState> => {
   const { focusedIndex, editingValue } = state
   const newFileName = editingValue
   if (!newFileName) {
@@ -67,15 +68,21 @@ const acceptCreate = async (state: any, newDirentType: any, createFn: any): Prom
       deltaPosInSet = 1 - 1
       break
     } else {
+      // @ts-ignore
       posInSet = dirent.posInSet + 1
+      // @ts-ignore
       setSize = dirent.setSize + 1
+      // @ts-ignore
       insertIndex = i
     }
+    // @ts-ignore
     dirent.setSize++
+    // @ts-ignore
     dirent.posInSet += deltaPosInSet
   }
   newDirent.setSize = setSize
   newDirent.posInSet = posInSet
+  // @ts-ignore
   items.splice(insertIndex + 1, 0, newDirent)
   const newDirents = [...items]
   const newMaxlineY = Math.max(state.maxLineY, newDirents.length)
@@ -89,7 +96,7 @@ const acceptCreate = async (state: any, newDirentType: any, createFn: any): Prom
   }
 }
 
-const acceptRename = async (state: any): Promise<any> => {
+const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   const { editingIndex, editingValue, items, pathSeparator } = state
   const renamedDirent = items[editingIndex]
   try {
@@ -105,6 +112,7 @@ const acceptRename = async (state: any): Promise<any> => {
   }
   const { newDirents, focusedIndex } = ComputeExplorerRenamedDirent.computeExplorerRenamedDirent(items, editingIndex, editingValue)
   //  TODO move focused index
+  // @ts-ignore
   state.items = newDirents
   return {
     ...state,
