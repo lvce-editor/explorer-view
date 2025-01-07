@@ -1,3 +1,5 @@
+import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
+import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
@@ -7,11 +9,17 @@ import * as GetExplorerWelcomeVirtualDom from '../GetExplorerWelcomeVirtualDom/G
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
-export const getExplorerVirtualDom = (visibleItems: readonly any[], focusedIndex: number, root: string, isWide: boolean): any => {
+export const getExplorerVirtualDom = (
+  visibleItems: readonly VisibleExplorerItem[],
+  focusedIndex: number,
+  root: string,
+  isWide: boolean,
+): readonly VirtualDomNode[] => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
   }
-  const dom = []
+  // TODO
+  const dom: VirtualDomNode[] = []
   dom.push({
     type: VirtualDomElements.Div,
     className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),

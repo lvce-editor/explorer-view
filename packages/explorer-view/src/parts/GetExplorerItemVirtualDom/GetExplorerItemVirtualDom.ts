@@ -1,3 +1,4 @@
+import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
@@ -11,7 +12,7 @@ import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
 const useChevrons = false
 
-const getItemVirtualDomFile = (item: VisibleExplorerItem): any => {
+const getItemVirtualDomFile = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
   const { posInSet, setSize, icon, name, path, depth, isFocused, isEditing } = item
 
   const dom = []
