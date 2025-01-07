@@ -24,4 +24,6 @@ export interface ExplorerState {
   readonly editingValue: string
   readonly editingType: number
   readonly editingIcon: string
+  readonly icons: readonly string[]
+  readonly useChevrons: boolean
 }
