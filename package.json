@@ -27,8 +27,8 @@
     "lerna": "^8.1.9",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.19.0",
-    "eslint-plugin-perfectionist": "^4.4.0"
+    "typescript-eslint": "^8.19.1",
+    "eslint-plugin-perfectionist": "^4.6.0"
   },
   "prettier": {
     "semi": false,
