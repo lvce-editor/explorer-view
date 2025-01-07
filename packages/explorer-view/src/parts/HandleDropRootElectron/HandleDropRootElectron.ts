@@ -1,4 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetFilePathElectron from '../GetFilePathElectron/GetFilePathElectron.ts'
@@ -27,7 +28,7 @@ const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Pr
   return mergedDirents
 }
 
-export const handleDrop = async (state: any, files: any): Promise<any> => {
+export const handleDrop = async (state: ExplorerState, files: any): Promise<ExplorerState> => {
   const { root, pathSeparator, items } = state
   await copyFilesElectron(root, pathSeparator, files)
   const mergedDirents = await getMergedDirents(root, pathSeparator, items)

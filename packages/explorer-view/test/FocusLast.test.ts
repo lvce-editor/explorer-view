@@ -30,7 +30,7 @@ test('focusLast', () => {
         type: DirentType.File,
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusLast.focusLast(state)).toMatchObject({
     focusedIndex: 1,
   })
@@ -73,6 +73,6 @@ test('focusLast - focus already at last', () => {
         type: DirentType.File,
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusLast.focusLast(state)).toBe(state)
 })

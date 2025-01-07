@@ -1,11 +1,13 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+
 export interface ExplorerState {
   readonly uid: number
   readonly parentUid: number
   readonly root: string
-  readonly items: readonly any[]
-  readonly focusedIndex: -1
+  readonly items: readonly ExplorerItem[]
+  readonly focusedIndex: number
   readonly focused: boolean
-  readonly hoverIndex: -1
+  readonly hoverIndex: number
   readonly x: number
   readonly y: number
   readonly width: number

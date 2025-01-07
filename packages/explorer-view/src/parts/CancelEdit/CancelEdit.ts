@@ -1,6 +1,7 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 
-export const cancelEdit = (state: any): any => {
+export const cancelEdit = (state: ExplorerState): ExplorerState => {
   const { editingIndex } = state
   return {
     ...state,

@@ -1,4 +1,6 @@
-export const focusIndex = (state: any, index: number): any => {
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+
+export const focusIndex = (state: ExplorerState, index: number): ExplorerState => {
   const { minLineY, maxLineY } = state
   if (index < minLineY) {
     if (index < 0) {

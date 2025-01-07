@@ -1,9 +1,10 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 
-export const handleClickDirectoryExpanded = async (state: any, dirent: any, index: any, keepFocus: boolean): Promise<Promise<any>> => {
+export const handleClickDirectoryExpanded = async (state: ExplorerState, dirent: any, index: any, keepFocus: boolean): Promise<Promise<any>> => {
   const { minLineY, maxLineY, itemHeight } = state
   dirent.type = DirentType.Directory
   dirent.icon = IconTheme.getIcon(dirent)
