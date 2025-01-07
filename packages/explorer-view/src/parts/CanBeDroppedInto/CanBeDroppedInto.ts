@@ -1,6 +1,7 @@
 import * as DirentType from '../DirentType/DirentType.ts'
+import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
-export const canBeDroppedInto = (dirent: any): boolean => {
+export const canBeDroppedInto = (dirent: ExplorerItem): boolean => {
   if (!dirent) {
     return false
   }
