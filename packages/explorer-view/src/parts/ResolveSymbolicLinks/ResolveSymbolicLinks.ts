@@ -29,7 +29,7 @@ const resolveSymbolicLink = async (uri: string, rawDirent: any): Promise<any> =>
   }
 }
 
-export const resolveSymbolicLinks = async (uri: string, rawDirents: any): Promise<any> => {
+export const resolveSymbolicLinks = async (uri: string, rawDirents: readonly any[]): Promise<any> => {
   const promises = []
   for (const rawDirent of rawDirents) {
     if (IsSymbolicLink.isSymbolicLink(rawDirent)) {
