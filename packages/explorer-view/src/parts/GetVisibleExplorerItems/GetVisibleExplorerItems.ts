@@ -1,3 +1,4 @@
+import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 
 export const getVisibleExplorerItems = (
@@ -8,9 +9,9 @@ export const getVisibleExplorerItems = (
   editingIndex: number,
   editingType: number,
   editingValue: string,
-  icons: readonly any[],
-): readonly any[] => {
-  const visible = []
+  icons: readonly string[],
+): readonly VisibleExplorerItem[] => {
+  const visible: VisibleExplorerItem[] = []
   let iconIndex = 0
   for (let i = minLineY; i < Math.min(maxLineY, items.length); i++) {
     const item = items[i]

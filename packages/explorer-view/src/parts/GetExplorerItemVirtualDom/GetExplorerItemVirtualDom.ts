@@ -1,3 +1,4 @@
+import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
@@ -10,7 +11,7 @@ import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
 const useChevrons = false
 
-const getItemVirtualDomFile = (item: any): any => {
+const getItemVirtualDomFile = (item: VisibleExplorerItem): any => {
   const { posInSet, setSize, icon, name, path, depth, isFocused, isEditing } = item
 
   const dom = []
