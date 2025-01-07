@@ -1,10 +1,11 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
 
-const getPathPartsToReveal = (root: any, pathParts: any, dirents: any): any => {
+const getPathPartsToReveal = (root: any, pathParts: any, dirents: readonly ExplorerItem[]): any => {
   for (let i = 0; i < pathParts.length; i++) {
     const pathPart = pathParts[i]
     const index = getIndex(dirents, pathPart.uri)
