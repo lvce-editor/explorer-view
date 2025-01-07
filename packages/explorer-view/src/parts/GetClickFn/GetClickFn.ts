@@ -1,6 +1,5 @@
 import type { ClickHandler } from '../ClickHandler/ClickHandler.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
 import * as HandleClickDirectoryExpanded from '../HandleClickDirectoryExpanded/HandleClickDirectoryExpanded.ts'
 import * as HandleClickDirectoryExpanding from '../HandleClickDirectoryExpanding/HandleClickDirectoryExpanding.ts'

@@ -4,7 +4,7 @@ export const writeText = async (text: string): Promise<void> => {
   await ParentRpc.invoke('ClipBoard.writeText', /* text */ text)
 }
 
-export const readNativeFiles = async (): Promise<readonly string[]> => {
+export const readNativeFiles = async (): Promise<any> => {
   return ParentRpc.invoke('ClipBoard.readNativeFiles')
 }
 
