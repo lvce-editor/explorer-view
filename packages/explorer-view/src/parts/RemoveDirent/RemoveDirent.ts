@@ -1,9 +1,10 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 
 // TODO support multiselection and removing multiple dirents
-export const removeDirent = async (state: any): Promise<any> => {
+export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
   if (state.focusedIndex < 0) {
     return state
   }
@@ -18,12 +19,14 @@ export const removeDirent = async (state: any): Promise<any> => {
     // on web should probably show notification (dialog)
     // ErrorHandling.handleError(error)
     // await ErrorHandling.showErrorDialog(error)
-    return
+    return state
   }
   // TODO avoid state mutation
+  // @ts-ignore
   const newVersion = ++state.version
   // TODO race condition
   // const newState = await loadContent(state:any)
+  // @ts-ignore
   if (state.version !== newVersion || state.disposed) {
     return state
   }
@@ -57,6 +60,7 @@ export const removeDirent = async (state: any): Promise<any> => {
   return {
     ...state,
     items: newDirents,
+    // @ts-ignore
     icons,
     focusedIndex: indexToFocus,
   }

@@ -1,6 +1,7 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as ScrollInto from '../ScrollInto/ScrollInto.ts'
 
-export const revealItemVisible = (state: any, index: number): any => {
+export const revealItemVisible = (state: ExplorerState, index: number): ExplorerState => {
   const { minLineY, maxLineY } = state
   const { newMinLineY, newMaxLineY } = ScrollInto.scrollInto(index, minLineY, maxLineY)
   return {

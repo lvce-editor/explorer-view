@@ -47,7 +47,7 @@ export const handleWheel = (state: ExplorerState, deltaMode: any, deltaY: any): 
 
 // TODO much shared logic with newFolder
 
-const handleClickFile = async (state: ExplorerState, dirent: any, index: any, keepFocus = false): Promise<any> => {
+const handleClickFile = async (state: ExplorerState, dirent: any, index: number, keepFocus = false): Promise<any> => {
   // await Command.execute(/* Main.openAbsolutePath */ 'Main.openUri', /* absolutePath */ dirent.path, /* focus */ !keepFocus)
   return {
     ...state,
@@ -56,7 +56,7 @@ const handleClickFile = async (state: ExplorerState, dirent: any, index: any, ke
   }
 }
 
-const handleClickDirectoryExpanded = (state: any, dirent: any, index: any, keepFocus: boolean): any => {
+const handleClickDirectoryExpanded = (state: ExplorerState, dirent: any, index: number, keepFocus: boolean): any => {
   const { minLineY, maxLineY, itemHeight } = state
   dirent.type = DirentType.Directory
   dirent.icon = IconTheme.getIcon(dirent)

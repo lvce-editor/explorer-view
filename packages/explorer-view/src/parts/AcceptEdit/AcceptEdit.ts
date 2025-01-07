@@ -1,3 +1,4 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import * as ComputeExplorerRenamedDirent from '../ComputeExplorerRenamedDirent/ComputeExplorerRenamedDirent.ts'
@@ -7,7 +8,7 @@ import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as Path from '../Path/Path.ts'
 
-const getParentFolder = (dirents: any, index: number, root: string): string => {
+const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: string): string => {
   if (index < 0) {
     return root
   }
@@ -125,7 +126,7 @@ const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   }
 }
 
-export const acceptEdit = (state: any): Promise<any> => {
+export const acceptEdit = async (state: ExplorerState): Promise<ExplorerState> => {
   const { editingType } = state
   switch (editingType) {
     case ExplorerEditingType.CreateFile:

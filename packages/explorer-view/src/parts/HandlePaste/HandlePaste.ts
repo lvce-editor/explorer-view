@@ -1,7 +1,8 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
 import * as GetPasteHandler from '../GetPasteHandler/GetPasteHandler.ts'
 
-export const handlePaste = async (state: any): Promise<any> => {
+export const handlePaste = async (state: ExplorerState): Promise<ExplorerState> => {
   const nativeFiles = await ClipBoard.readNativeFiles()
   // TODO detect cut/paste event, not sure if that is possible
   // TODO check that pasted folder is not a parent folder of opened folder

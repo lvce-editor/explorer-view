@@ -1,4 +1,6 @@
-export const setDeltaY = (state: any, deltaY: number): any => {
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+
+export const setDeltaY = (state: ExplorerState, deltaY: number): ExplorerState => {
   const { itemHeight, height, items } = state
   if (deltaY < 0) {
     deltaY = 0

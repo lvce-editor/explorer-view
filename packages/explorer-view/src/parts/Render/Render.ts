@@ -1,8 +1,9 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
 const renderItems = {
-  isEqual(oldState: any, newState: any): any {
+  isEqual(oldState: ExplorerState, newState: ExplorerState): any {
     return (
       JSON.stringify(oldState.items) === JSON.stringify(newState.items) &&
       oldState.minLineY === newState.minLineY &&
@@ -14,7 +15,7 @@ const renderItems = {
       oldState.width === newState.width
     )
   },
-  apply(oldState: any, newState: any): any {
+  apply(oldState: ExplorerState, newState: ExplorerState): any {
     const visibleDirents = GetVisibleExplorerItems.getVisibleExplorerItems(
       newState.items,
       newState.minLineY,
@@ -23,7 +24,9 @@ const renderItems = {
       newState.editingIndex,
       newState.editingType,
       newState.editingValue,
+      // @ts-ignore
       newState.icons,
+      // @ts-ignore
       newState.useChevrons,
     )
     const isWide = newState.width > 450
@@ -53,10 +56,10 @@ const renderItems = {
 // }
 
 const renderEditingIndex = {
-  isEqual(oldState: any, newState: any): any {
+  isEqual(oldState: ExplorerState, newState: ExplorerState): any {
     return oldState.editingIndex === newState.editingIndex && oldState.editingType === newState.editingType
   },
-  apply(oldState: any, newState: any): any {
+  apply(oldState: ExplorerState, newState: ExplorerState): any {
     // @ts-ignore
     const { editingIndex, editingType, editingValue } = newState
     return ['focusInput', 'ExplorerInput']
@@ -65,7 +68,7 @@ const renderEditingIndex = {
 
 const render = [renderItems, renderEditingIndex]
 
-export const doRender = (oldState: any, newState: any): any => {
+export const doRender = (oldState: ExplorerState, newState: ExplorerState): any => {
   const commands = []
   for (const fn of render) {
     if (!fn.isEqual(oldState, newState)) {
