@@ -89,7 +89,7 @@ const handleClickDirectoryExpanded = (state: ExplorerState, dirent: any, index: 
   }
 }
 
-export const handleClick = (state: any, index: any, keepFocus = false): any => {
+export const handleClick = async (state: ExplorerState, index: number, keepFocus = false): Promise<ExplorerState> => {
   const { items, minLineY } = state
   if (index === -1) {
     return FocusIndex.focusIndex(state, -1)
@@ -104,7 +104,7 @@ export const handleClick = (state: any, index: any, keepFocus = false): any => {
   return clickFn(state, dirent, actualIndex, keepFocus)
 }
 
-export const handleClickAt = (state: any, button: any, x: any, y: any): any => {
+export const handleClickAt = (state: ExplorerState, button: number, x: number, y: number): any => {
   if (button !== MouseEventType.LeftClick) {
     return state
   }
@@ -113,13 +113,13 @@ export const handleClickAt = (state: any, button: any, x: any, y: any): any => {
   return handleClick(state, index)
 }
 
-export const handleClickCurrentButKeepFocus = (state: any): any => {
+export const handleClickCurrentButKeepFocus = (state: ExplorerState): Promise<ExplorerState> => {
   return handleClick(state, state.focusedIndex - state.minLineY, /* keepFocus */ true)
 }
 
 // export const handleBlur=()=>{}
 
-const handleClickSymLink = async (state: any, dirent: any, index: any): Promise<any> => {
+const handleClickSymLink = async (state: ExplorerState, dirent: any, index: number): Promise<ExplorerState> => {
   const realPath = await FileSystem.getRealPath(dirent.path)
   const type = await FileSystem.stat(realPath)
   switch (type) {
@@ -130,7 +130,7 @@ const handleClickSymLink = async (state: any, dirent: any, index: any): Promise<
   }
 }
 
-const handleArrowRightDirectoryExpanded = (state: any, dirent: any): any => {
+const handleArrowRightDirectoryExpanded = (state: ExplorerState, dirent: any): ExplorerState => {
   const { items, focusedIndex } = state
   if (focusedIndex === items.length - 1) {
     return state
@@ -139,9 +139,10 @@ const handleArrowRightDirectoryExpanded = (state: any, dirent: any): any => {
   if (nextDirent.depth === dirent.depth + 1) {
     return FocusIndex.focusIndex(state, focusedIndex + 1)
   }
+  return state
 }
 
-export const handleArrowRight = async (state: any): Promise<any> => {
+export const handleArrowRight = async (state: ExplorerState): Promise<ExplorerState> => {
   const { items, focusedIndex } = state
   if (focusedIndex === -1) {
     return state

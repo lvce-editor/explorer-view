@@ -1,3 +1,4 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as ViewletExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as MenuEntrySeparator from '../MenuEntrySeparator/MenuEntrySeparator.ts'
@@ -100,7 +101,7 @@ const ALL_ENTRIES = [
 // TODO there are two possible ways of getting the focused dirent of explorer
 // 1. directly access state of explorer (bad because it directly accesses state of another component)
 // 2. expose getFocusedDirent method in explorer (bad because explorer code should not know about for menuEntriesExplorer, which needs that method)
-const getFocusedDirent = (explorerState: any): any => {
+const getFocusedDirent = (explorerState: ExplorerState): any => {
   if (!explorerState || explorerState.focusedIndex < 0) {
     return undefined
   }
@@ -146,7 +147,7 @@ const getMenuEntriesRoot = (): any => {
   ]
 }
 
-export const getMenuEntries = (state: any): any => {
+export const getMenuEntries = (state: ExplorerState): any => {
   const focusedDirent = getFocusedDirent(state)
   if (!focusedDirent) {
     return getMenuEntriesRoot()

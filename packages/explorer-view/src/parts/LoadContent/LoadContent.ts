@@ -1,3 +1,4 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as Character from '../Character/Character.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
@@ -135,7 +136,7 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
   return workspacePath
 }
 
-export const loadContent = async (state: any, savedState: any): Promise<any> => {
+export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
   const useChevrons = true
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
