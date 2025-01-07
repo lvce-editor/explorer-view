@@ -3,8 +3,9 @@ import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetActionVirtualDom from '../GetActionVirtualDom/GetActionVirtualDom.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
+import { ViewletAction } from '../ViewletAction/ViewletAction.ts'
 
-export const getActionsVirtualDom = (actions: any): readonly VirtualDomNode[] => {
+export const getActionsVirtualDom = (actions: readonly ViewletAction[]): readonly VirtualDomNode[] => {
   return [
     {
       type: VirtualDomElements.Div,

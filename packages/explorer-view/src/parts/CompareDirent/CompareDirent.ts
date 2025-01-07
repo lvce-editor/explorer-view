@@ -2,7 +2,7 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as Compare from '../Compare/Compare.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 
-const priorityMapFoldersFirst: any = {
+const priorityMapFoldersFirst: Record<number, number> = {
   [DirentType.Directory]: 1,
   [DirentType.SymLinkFolder]: 1,
   [DirentType.File]: 0,
@@ -11,7 +11,7 @@ const priorityMapFoldersFirst: any = {
   [DirentType.Socket]: 0,
 }
 
-const compareDirentType = (direntA: ExplorerItem, direntB: ExplorerItem): any => {
+const compareDirentType = (direntA: ExplorerItem, direntB: ExplorerItem): number => {
   return priorityMapFoldersFirst[direntB.type] - priorityMapFoldersFirst[direntA.type]
 }
 
