@@ -21,7 +21,7 @@ import * as HandleClickSymlink from '../HandleClickSymlink/HandleClickSymlink.ts
 
 // TODO much shared logic with newFolder
 
-export const getClickFn = (direntType: any): any => {
+export const getClickFn = (direntType: number): any => {
   switch (direntType) {
     case DirentType.File:
     case DirentType.SymLinkFile:
