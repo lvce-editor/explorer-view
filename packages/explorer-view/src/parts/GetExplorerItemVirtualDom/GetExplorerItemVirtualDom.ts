@@ -1,9 +1,10 @@
 import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
+import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetVirtualDomFile from '../GetVirtualDomFile/GetVirtualDomFile.ts'
 import * as GetVirtualDomFolder from '../GetVirtualDomFolder/GetVirtualDomFolder.ts'
 
-export const getExplorerItemVirtualDom = (item: any): readonly VirtualDomNode[] => {
+export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
   const { type } = item
   switch (type) {
     case DirentType.Directory:

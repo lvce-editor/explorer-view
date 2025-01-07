@@ -1,6 +1,6 @@
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 
-export const getIndexFromPosition = (state: ExplorerState, eventX: number, eventY: number): any => {
+export const getIndexFromPosition = (state: ExplorerState, eventX: number, eventY: number): number => {
   const { y, itemHeight, items } = state
   const index = Math.floor((eventY - y) / itemHeight)
   if (index < 0) {

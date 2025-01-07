@@ -8,6 +8,6 @@ export const readNativeFiles = async (): Promise<any> => {
   return ParentRpc.invoke('ClipBoard.readNativeFiles')
 }
 
-export const writeNativeFiles = async (type: string, files: any): Promise<any> => {
+export const writeNativeFiles = async (type: string, files: readonly string[]): Promise<void> => {
   return ParentRpc.invoke('ClipBoard.writeNativeFiles', type, files)
 }

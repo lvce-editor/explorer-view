@@ -1,9 +1,10 @@
+import type { ViewletAction } from '../ViewletAction/ViewletAction.ts'
 import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetIconVirtualDom from '../GetIconVirtualDom/GetIconVirtualDom.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
-export const getActionButtonVirtualDom = (action: any): readonly VirtualDomNode[] => {
+export const getActionButtonVirtualDom = (action: ViewletAction): readonly VirtualDomNode[] => {
   const { id, icon, command } = action
   return [
     {
@@ -13,6 +14,6 @@ export const getActionButtonVirtualDom = (action: any): readonly VirtualDomNode[
       'data-command': command,
       childCount: 1,
     },
-    GetIconVirtualDom.getIconVirtualDom(icon),
+    GetIconVirtualDom.getIconVirtualDom(icon || ''),
   ]
 }
