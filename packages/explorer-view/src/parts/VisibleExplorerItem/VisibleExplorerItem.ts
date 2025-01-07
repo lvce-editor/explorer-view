@@ -8,4 +8,5 @@ export interface VisibleExplorerItem {
   readonly posInSet: number
   readonly setSize: number
   readonly type: number
+  readonly useChevrons: boolean
 }

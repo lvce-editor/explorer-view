@@ -10,6 +10,7 @@ export const getVisibleExplorerItems = (
   editingType: number,
   editingValue: string,
   icons: readonly string[],
+  useChevrons: boolean,
 ): readonly VisibleExplorerItem[] => {
   const visible: VisibleExplorerItem[] = []
   let iconIndex = 0
@@ -22,12 +23,14 @@ export const getVisibleExplorerItems = (
         isFocused: i === focusedIndex,
         isEditing: true,
         icon,
+        useChevrons,
       })
     } else {
       visible.push({
         ...item,
         isFocused: i === focusedIndex,
         icon,
+        useChevrons,
       })
     }
   }
@@ -42,6 +45,7 @@ export const getVisibleExplorerItems = (
       path: '/test/new',
       type: 2,
       isEditing: true,
+      useChevrons,
     })
   }
   return visible
