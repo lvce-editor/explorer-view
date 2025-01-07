@@ -1,6 +1,7 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 
-export const handleUpload = async (state: any, dirents: readonly any[]): Promise<any> => {
+export const handleUpload = async (state: ExplorerState, dirents: readonly any[]): Promise<any> => {
   const { root, pathSeparator } = state
   for (const dirent of dirents) {
     // TODO switch

@@ -1,4 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
@@ -90,7 +91,7 @@ const mergeVisibleWithHiddenItems = (visibleItems: any, hiddenItems: any): any =
 }
 
 // TODO maybe just insert items into explorer and refresh whole explorer
-export const revealItemHidden = async (state: any, uri: string): Promise<any> => {
+export const revealItemHidden = async (state: ExplorerState, uri: string): Promise<ExplorerState> => {
   const { root, pathSeparator, items, minLineY, maxLineY } = state
   const pathParts = getPathParts(root, uri, pathSeparator)
   if (pathParts.length === 0) {
