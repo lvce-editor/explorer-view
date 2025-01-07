@@ -29,7 +29,7 @@ test('focusFirst', () => {
         type: DirentType.File,
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusFirst.focusFirst(state)).toMatchObject({
     focusedIndex: 0,
   })
@@ -43,7 +43,7 @@ test('focusFirst - no dirents', () => {
     height: 600,
     deltaY: 0,
     items: [],
-  }
+  } as any
   expect(ViewletExplorerFocusFirst.focusFirst(state)).toBe(state)
 })
 
@@ -74,6 +74,6 @@ test('focusFirst - focus already at first', () => {
         type: DirentType.File,
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusFirst.focusFirst(state)).toBe(state)
 })

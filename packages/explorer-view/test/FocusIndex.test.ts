@@ -31,7 +31,7 @@ test('focusIndex - scroll up', () => {
         type: DirentType.File,
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusIndex.focusIndex(state, 0)).toMatchObject({
     focusedIndex: 0,
     minLineY: 0,
@@ -68,7 +68,7 @@ test('focusIndex - scroll down', () => {
         type: DirentType.File,
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusIndex.focusIndex(state, 1)).toMatchObject({
     focusedIndex: 1,
     minLineY: 1,
@@ -105,7 +105,7 @@ test('focusIndex - focus container', () => {
         type: DirentType.File,
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusIndex.focusIndex(state, -1)).toMatchObject({
     focusedIndex: -1,
     minLineY: 0,

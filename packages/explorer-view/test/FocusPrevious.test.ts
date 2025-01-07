@@ -26,7 +26,7 @@ test('focusPrevious', () => {
         path: '/test-folder',
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusPrevious.focusPrevious(state)).toMatchObject({
     focusedIndex: 0,
   })
@@ -56,7 +56,7 @@ test('focusPrevious - at start', () => {
         path: '/test-folder',
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusPrevious.focusPrevious(state)).toMatchObject({
     focusedIndex: 0,
   })
@@ -86,7 +86,7 @@ test('focusPrevious - when no focus', () => {
         path: '/test-folder',
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusPrevious.focusPrevious(state)).toMatchObject({
     focusedIndex: 2,
   })
@@ -100,7 +100,7 @@ test('focusPrevious - when no focus and no dirents', () => {
     height: 600,
     deltaY: 0,
     items: [],
-  }
+  } as any
   expect(ViewletExplorerFocusPrevious.focusPrevious(state)).toMatchObject({
     focusedIndex: -1,
   })

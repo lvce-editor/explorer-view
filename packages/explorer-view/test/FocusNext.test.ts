@@ -26,7 +26,7 @@ test('focusNext', () => {
         path: '/test-folder',
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusNext.focusNext(state)).toMatchObject({
     focusedIndex: 1,
   })
@@ -56,7 +56,7 @@ test('focusNext - when no focus', () => {
         path: '/test-folder',
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusNext.focusNext(state)).toMatchObject({
     focusedIndex: 0,
   })
@@ -86,7 +86,7 @@ test('focusNext - at end', () => {
         path: '/test-folder',
       },
     ],
-  }
+  } as any
   expect(ViewletExplorerFocusNext.focusNext(state)).toMatchObject({
     focusedIndex: 2,
   })
