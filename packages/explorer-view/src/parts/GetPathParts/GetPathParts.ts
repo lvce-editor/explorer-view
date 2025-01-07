@@ -1,5 +1,5 @@
-export const getPathParts = (root: string, uri: string, pathSeparator: string): any[] => {
-  const parts = []
+export const getPathParts = (root: string, uri: string, pathSeparator: string): readonly any[] => {
+  const parts: any[] = []
   let index = root.length - 1
   let depth = 0
   while ((index = uri.indexOf('/', index + 1)) !== -1) {
