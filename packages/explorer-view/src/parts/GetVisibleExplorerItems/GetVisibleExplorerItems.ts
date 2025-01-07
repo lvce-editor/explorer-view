@@ -1,5 +1,6 @@
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
+import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
 
 export const getVisibleExplorerItems = (
   items: readonly any[],
@@ -17,6 +18,7 @@ export const getVisibleExplorerItems = (
   for (let i = minLineY; i < Math.min(maxLineY, items.length); i++) {
     const item = items[i]
     const icon = icons[iconIndex++]
+    const indent = GetTreeItemIndent.getTreeItemIndent(item.depth)
     if (i === editingIndex) {
       visible.push({
         ...item,
@@ -24,6 +26,7 @@ export const getVisibleExplorerItems = (
         isEditing: true,
         icon,
         useChevrons,
+        indent,
       })
     } else {
       visible.push({
@@ -31,6 +34,7 @@ export const getVisibleExplorerItems = (
         isFocused: i === focusedIndex,
         icon,
         useChevrons,
+        indent,
       })
     }
   }
@@ -46,6 +50,7 @@ export const getVisibleExplorerItems = (
       type: 2,
       isEditing: true,
       useChevrons,
+      indent: '',
     })
   }
   return visible
