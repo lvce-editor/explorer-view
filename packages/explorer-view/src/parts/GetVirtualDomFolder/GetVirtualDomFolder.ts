@@ -5,12 +5,11 @@ import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChevronVirtualDom from '../GetChevronVirtualDom/GetChevronVirtualDom.ts'
 import * as GetFileIconVirtualDom from '../GetFileIconVirtualDom/GetFileIconVirtualDom.ts'
-import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
 export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { posInSet, setSize, icon, name, path, depth, type, isFocused, useChevrons } = item
+  const { posInSet, setSize, icon, name, path, depth, type, isFocused, useChevrons, indent } = item
   let ariaExpanded = ''
   let chevron
   switch (type) {
@@ -44,7 +43,7 @@ export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly Vir
     ariaSetSize: setSize,
     ariaLevel: depth,
     childCount: 2,
-    paddingLeft: GetTreeItemIndent.getTreeItemIndent(depth),
+    paddingLeft: indent,
     ariaLabel: name,
     ariaExpanded,
     ariaDescription: '',
