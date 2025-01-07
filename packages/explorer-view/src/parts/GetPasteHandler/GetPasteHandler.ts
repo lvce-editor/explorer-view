@@ -1,8 +1,8 @@
+import type { PasteHandler } from '../PasteHandler/PasteHandler.ts'
 import * as HandlePasteCopy from '../HandlePasteCopy/HandlePasteCopy.ts'
 import * as HandlePasteCut from '../HandlePasteCut/HandlePasteCut.ts'
 import * as HandlePasteNone from '../HandlePasteNone/HandlePasteNone.ts'
 import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.ts'
-import { PasteHandler } from '../PasteHandler/PasteHandler.ts'
 
 export const getPasteHandler = (type: string): PasteHandler => {
   // TODO detect cut/paste event, not sure if that is possible

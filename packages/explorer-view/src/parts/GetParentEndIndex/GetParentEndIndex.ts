@@ -1,4 +1,4 @@
-import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 export const getParentEndIndex = (dirents: readonly ExplorerItem[], index: number): number => {
   const dirent = dirents[index]
