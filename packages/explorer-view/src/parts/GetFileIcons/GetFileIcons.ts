@@ -1,5 +1,5 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 const getFileIcon = (dirent: ExplorerItem): Promise<string> => {

@@ -1,6 +1,6 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as Compare from '../Compare/Compare.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 const priorityMapFoldersFirst: any = {
   [DirentType.Directory]: 1,
