@@ -1,3 +1,5 @@
+import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
+import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
@@ -7,10 +9,8 @@ import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
-const useChevrons = false
-
-export const getItemVirtualDomFolder = (item: any): any => {
-  const { posInSet, setSize, icon, name, path, depth, type, isFocused } = item
+export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
+  const { posInSet, setSize, icon, name, path, depth, type, isFocused, useChevrons } = item
   let ariaExpanded = ''
   let chevron
   switch (type) {
@@ -32,7 +32,7 @@ export const getItemVirtualDomFolder = (item: any): any => {
     default:
       break
   }
-  const dom = []
+  const dom: VirtualDomNode[] = []
 
   dom.push({
     type: VirtualDomElements.Div,
@@ -51,7 +51,9 @@ export const getItemVirtualDomFolder = (item: any): any => {
   })
 
   if (useChevrons) {
+    // @ts-ignore
     dom[0].childCount++
+    // @ts-ignore
     dom.push(chevron)
   }
   dom.push(

@@ -11,7 +11,8 @@ import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 export const getItemVirtualDomFile = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
   const { posInSet, setSize, icon, name, path, depth, isFocused, isEditing } = item
 
-  const dom = []
+  // TODO avoid mutation
+  const dom: VirtualDomNode[] = []
 
   dom.push(
     {
