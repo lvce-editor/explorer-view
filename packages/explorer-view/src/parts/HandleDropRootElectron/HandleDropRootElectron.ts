@@ -1,9 +1,10 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetFilePathElectron from '../GetFilePathElectron/GetFilePathElectron.ts'
 import * as Path from '../Path/Path.ts'
 
-const mergeDirents = (oldDirents: any, newDirents: any): any => {
+const mergeDirents = (oldDirents: readonly ExplorerItem[], newDirents: readonly ExplorerItem[]): any => {
   return newDirents
 }
 

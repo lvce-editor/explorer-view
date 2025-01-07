@@ -52,7 +52,7 @@ export const computeExplorerRenamedDirent = (dirents: any, index: number, newNam
     if (dirent.depth < depth) {
       break
     }
-    if (insertIndex === -1 && CompareDirent.compareDirent(dirent, newDirent === -1)) {
+    if (insertIndex === -1 && CompareDirent.compareDirent(dirent, newDirent) === -1) {
       for (; endIndex < dirents.length; endIndex++) {
         // @ts-ignore
         const childDirent = dirents[endIndex]

@@ -1,6 +1,6 @@
 import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 
-export const remove = async (dirent: any): Promise<void> => {
+export const remove = async (dirent: string): Promise<void> => {
   return ParentRpc.invoke('FileSystem.remove', dirent)
 }
 
@@ -8,11 +8,11 @@ export const readDirWithFileTypes = async (uri: string): Promise<readonly any[]>
   return ParentRpc.invoke('FileSystem.readDirWithFileTypes', uri)
 }
 
-export const getPathSeparator = async (root: string): Promise<any> => {
+export const getPathSeparator = async (root: string): Promise<string> => {
   return ParentRpc.invoke('FileSystem.getPathSeparator', root)
 }
 
-export const getRealPath = async (path: string): Promise<any> => {
+export const getRealPath = async (path: string): Promise<string> => {
   return ParentRpc.invoke('FileSystem.getRealPath', path)
 }
 
@@ -20,7 +20,7 @@ export const stat = async (dirent: string): Promise<any> => {
   return ParentRpc.invoke('FileSystem.stat', dirent)
 }
 
-export const createFile = async (uri: string): Promise<any> => {
+export const createFile = async (uri: string): Promise<void> => {
   return ParentRpc.invoke('FileSystem.createFile', uri)
 }
 

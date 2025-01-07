@@ -1,3 +1,4 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as Compare from '../Compare/Compare.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 
@@ -10,14 +11,14 @@ const priorityMapFoldersFirst: any = {
   [DirentType.Socket]: 0,
 }
 
-const compareDirentType = (direntA: any, direntB: any): any => {
+const compareDirentType = (direntA: ExplorerItem, direntB: ExplorerItem): any => {
   return priorityMapFoldersFirst[direntB.type] - priorityMapFoldersFirst[direntA.type]
 }
 
-const compareDirentName = (direntA: any, direntB: any): number => {
+const compareDirentName = (direntA: ExplorerItem, direntB: ExplorerItem): number => {
   return Compare.compareStringNumeric(direntA.name, direntB.name)
 }
 
-export const compareDirent = (direntA: any, direntB: any): number => {
+export const compareDirent = (direntA: ExplorerItem, direntB: ExplorerItem): number => {
   return compareDirentType(direntA, direntB) || compareDirentName(direntA, direntB)
 }

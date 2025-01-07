@@ -1,6 +1,6 @@
 import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 
-const getContaingingFolder = (root: string, dirents:readonly any[], focusedIndex: number, pathSeparator: string): string => {
+const getContaingingFolder = (root: string, dirents: readonly any[], focusedIndex: number, pathSeparator: string): string => {
   if (focusedIndex < 0) {
     return root
   }
