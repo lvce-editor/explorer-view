@@ -39,6 +39,7 @@ import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
+import * as Terminate from '../Terminate/Terminate.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 
@@ -89,6 +90,7 @@ export const commandMap = {
   'Explorer.revealItem': RevealItem.revealItem,
   'Explorer.saveState': SaveState.saveState,
   'Explorer.setDeltaY': SetDeltaY.setDeltaY,
+  'Explorer.terminate': Terminate.terminate,
   'Explorer.updateEditingValue': UpdateEditingValue.updateEditingValue,
   'Explorer.updateIcons': UpdateIcons.updateIcons,
 }
