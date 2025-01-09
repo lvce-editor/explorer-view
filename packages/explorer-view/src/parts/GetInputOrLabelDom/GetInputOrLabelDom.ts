@@ -4,6 +4,12 @@ import * as InputName from '../InputName/InputName.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
+const label: VirtualDomNode = {
+  type: VirtualDomElements.Div,
+  className: ClassNames.Label,
+  childCount: 1,
+}
+
 export const getInputOrLabelDom = (isEditing: boolean, name: string): readonly VirtualDomNode[] => {
   if (isEditing) {
     return [
@@ -17,12 +23,5 @@ export const getInputOrLabelDom = (isEditing: boolean, name: string): readonly V
       },
     ]
   }
-  return [
-    {
-      type: VirtualDomElements.Div,
-      className: ClassNames.Label,
-      childCount: 1,
-    },
-    text(name),
-  ]
+  return [label, text(name)]
 }
