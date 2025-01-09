@@ -10,4 +10,6 @@ export interface VisibleExplorerItem {
   readonly type: number
   readonly useChevrons: boolean
   readonly indent: string // TODO maybe use a classname for indent instead of inline styles
+  readonly expanded: number
+  readonly chevron: number
 }
