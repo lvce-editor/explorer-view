@@ -49,6 +49,8 @@ export const getVisibleExplorerItems = (
     const item = items[i]
     const icon = icons[iconIndex++]
     const indent = GetTreeItemIndent.getTreeItemIndent(item.depth)
+    const isFocused = i === focusedIndex
+    const id = isFocused ? 'TreeItemActive' : undefined
     visible.push({
       ...item,
       isFocused: i === focusedIndex,
@@ -58,6 +60,7 @@ export const getVisibleExplorerItems = (
       indent,
       expanded: getExpandedType(item.type),
       chevron: getChevronType(item.type, useChevrons),
+      id,
     })
   }
   if (editingType !== ExplorerEditingType.None && editingIndex === -1) {
@@ -75,6 +78,7 @@ export const getVisibleExplorerItems = (
       indent: '',
       expanded: 0,
       chevron: 0,
+      id: undefined,
     })
   }
   return visible

@@ -7,7 +7,7 @@ import * as InputName from '../InputName/InputName.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
-const getInputOrLabelDom = (isEditing: boolean): readonly VirtualDomNode[] => {
+const getInputOrLabelDom = (isEditing: boolean, name: string): readonly VirtualDomNode[] => {
   if (isEditing) {
     return [
       {
@@ -31,13 +31,11 @@ const getInputOrLabelDom = (isEditing: boolean): readonly VirtualDomNode[] => {
 }
 
 export const getItemVirtualDomFile = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { posInSet, setSize, icon, name, path, depth, isFocused, isEditing, indent } = item
+  const { posInSet, setSize, icon, name, path, depth, isFocused, isEditing, indent, id } = item
 
-  let id = undefined
   let className = ClassNames.TreeItem
   // TODO avoid branch
   if (isFocused) {
-    id = 'TreeItemActive'
     className += ' ' + ClassNames.TreeItemActive
   }
 
@@ -58,7 +56,7 @@ export const getItemVirtualDomFile = (item: VisibleExplorerItem): readonly Virtu
       id,
     },
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
-    ...getInputOrLabelDom(isEditing),
+    ...getInputOrLabelDom(isEditing, name),
   ]
 
   return dom
