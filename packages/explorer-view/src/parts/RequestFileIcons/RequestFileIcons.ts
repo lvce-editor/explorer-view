@@ -1,5 +1,5 @@
+import type { IconRequest } from '../IconRequest/IconRequest.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import { IconRequest } from '../IconRequest/IconRequest.ts'
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 export const requestFileIcons = async (requests: readonly IconRequest[]): Promise<readonly string[]> => {
