@@ -18,23 +18,23 @@ export const getExplorerVirtualDom = (
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
   }
-  // TODO
-  const dom: VirtualDomNode[] = []
-  dom.push({
-    type: VirtualDomElements.Div,
-    className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
-    tabIndex: 0,
-    role: AriaRoles.Tree,
-    ariaLabel: ExplorerStrings.filesExplorer(),
-    childCount: visibleItems.length,
-    ariaActiveDescendant: focusedIndex >= 0 ? 'TreeItemActive' : undefined,
-    onFocus: DomEventListenerFunctions.HandleFocus,
-    onBlur: DomEventListenerFunctions.HandleBlur,
-    onContextMenu: DomEventListenerFunctions.HandleContextMenu,
-    onPointerDown: DomEventListenerFunctions.HandlePointerDown,
-    onWheel: DomEventListenerFunctions.HandleWheel,
-    onClick: DomEventListenerFunctions.HandleClick,
-  })
-  dom.push(...visibleItems.flatMap(GetExplorerItemVirtualDom.getExplorerItemVirtualDom))
+  const dom: readonly VirtualDomNode[] = [
+    {
+      type: VirtualDomElements.Div,
+      className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
+      tabIndex: 0,
+      role: AriaRoles.Tree,
+      ariaLabel: ExplorerStrings.filesExplorer(),
+      childCount: visibleItems.length,
+      ariaActiveDescendant: focusedIndex >= 0 ? 'TreeItemActive' : undefined,
+      onFocus: DomEventListenerFunctions.HandleFocus,
+      onBlur: DomEventListenerFunctions.HandleBlur,
+      onContextMenu: DomEventListenerFunctions.HandleContextMenu,
+      onPointerDown: DomEventListenerFunctions.HandlePointerDown,
+      onWheel: DomEventListenerFunctions.HandleWheel,
+      onClick: DomEventListenerFunctions.HandleClick,
+    },
+    ...visibleItems.flatMap(GetExplorerItemVirtualDom.getExplorerItemVirtualDom),
+  ]
   return dom
 }
