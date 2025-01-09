@@ -38,7 +38,6 @@ export const getVisibleExplorerItems = (
       isEditing: i === editingIndex,
       icon,
       indent,
-      expanded,
       ariaExpanded,
       chevron,
       id,
