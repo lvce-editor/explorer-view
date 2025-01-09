@@ -1,6 +1,36 @@
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
+import * as ChevronType from '../ChevronType/ChevronType.ts'
+import * as DirentType from '../DirentType/DirentType.ts'
+import * as ExpandedType from '../ExpandedType/ExpandedType.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
+
+const getExpandedType = (type: number): number => {
+  switch (type) {
+    case DirentType.Directory:
+      return ExpandedType.Collapsed
+    case DirentType.DirectoryExpanding:
+    case DirentType.DirectoryExpanded:
+      return ExpandedType.Expanded
+    default:
+      return ExpandedType.None
+  }
+}
+
+const getChevronType = (type: number, useChevrons: boolean): number => {
+  if (!useChevrons) {
+    return ChevronType.None
+  }
+  switch (type) {
+    case DirentType.Directory:
+      return ChevronType.Right
+    case DirentType.DirectoryExpanded:
+    case DirentType.DirectoryExpanding:
+      return ChevronType.Down
+    default:
+      return ChevronType.None
+  }
+}
 
 export const getVisibleExplorerItems = (
   items: readonly any[],
@@ -19,24 +49,16 @@ export const getVisibleExplorerItems = (
     const item = items[i]
     const icon = icons[iconIndex++]
     const indent = GetTreeItemIndent.getTreeItemIndent(item.depth)
-    if (i === editingIndex) {
-      visible.push({
-        ...item,
-        isFocused: i === focusedIndex,
-        isEditing: true,
-        icon,
-        useChevrons,
-        indent,
-      })
-    } else {
-      visible.push({
-        ...item,
-        isFocused: i === focusedIndex,
-        icon,
-        useChevrons,
-        indent,
-      })
-    }
+    visible.push({
+      ...item,
+      isFocused: i === focusedIndex,
+      isEditing: i === editingIndex,
+      icon,
+      useChevrons,
+      indent,
+      expanded: getExpandedType(item.type),
+      chevron: getChevronType(item.type, useChevrons),
+    })
   }
   if (editingType !== ExplorerEditingType.None && editingIndex === -1) {
     visible.push({
@@ -51,6 +73,8 @@ export const getVisibleExplorerItems = (
       isEditing: true,
       useChevrons,
       indent: '',
+      expanded: 0,
+      chevron: 0,
     })
   }
   return visible

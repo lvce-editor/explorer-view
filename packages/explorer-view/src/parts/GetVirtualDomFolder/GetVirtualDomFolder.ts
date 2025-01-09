@@ -2,35 +2,23 @@ import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
-import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChevronVirtualDom from '../GetChevronVirtualDom/GetChevronVirtualDom.ts'
 import * as GetFileIconVirtualDom from '../GetFileIconVirtualDom/GetFileIconVirtualDom.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
+const chevronDomNodes: readonly (readonly VirtualDomNode[])[] = [
+  [],
+  [GetChevronVirtualDom.getChevronRightVirtualDom()],
+  [GetChevronVirtualDom.getChevronDownVirtualDom()],
+]
+
+const ariaExpandedValues: (string | undefined)[] = [undefined, 'true', 'false']
+
 export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { posInSet, setSize, icon, name, path, depth, type, isFocused, useChevrons, indent } = item
-  let ariaExpanded = ''
-  let chevron
-  switch (type) {
-    // TODO decide on directory vs folder
-    case DirentType.Directory:
-      ariaExpanded = 'false'
-      chevron = GetChevronVirtualDom.getChevronRightVirtualDom()
-      break
-    case DirentType.DirectoryExpanding:
-      ariaExpanded = 'true' // TODO tree should be aria-busy then
-      chevron = GetChevronVirtualDom.getChevronRightVirtualDom()
-      break
-    case DirentType.DirectoryExpanded:
-      ariaExpanded = 'true'
-      chevron = GetChevronVirtualDom.getChevronDownVirtualDom()
-      break
-    case DirentType.File:
-      break
-    default:
-      break
-  }
+  const { posInSet, setSize, icon, name, path, depth, isFocused, useChevrons, indent, chevron, expanded } = item
+  const chevronDom = chevronDomNodes[chevron]
+  const ariaExpanded = ariaExpandedValues[expanded]
   const dom: VirtualDomNode[] = []
 
   dom.push({
@@ -52,8 +40,7 @@ export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly Vir
   if (useChevrons) {
     // @ts-ignore
     dom[0].childCount++
-    // @ts-ignore
-    dom.push(chevron)
+    dom.push(...chevronDom)
   }
   dom.push(
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
