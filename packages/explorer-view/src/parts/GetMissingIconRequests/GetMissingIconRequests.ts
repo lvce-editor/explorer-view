@@ -6,8 +6,7 @@ export const getMissingIconRequests = (dirents: readonly ExplorerItem[], fileIco
   const missingRequests: IconRequest[] = []
 
   for (const dirent of dirents) {
-    const cacheKey = `${dirent.type}:${dirent.name}`
-    if (!(cacheKey in fileIconCache)) {
+    if (!(dirent.path in fileIconCache)) {
       missingRequests.push({
         type: dirent.type,
         name: dirent.name,
