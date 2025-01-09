@@ -11,6 +11,7 @@ export const getMissingIconRequests = (dirents: readonly ExplorerItem[], fileIco
       missingRequests.push({
         type: dirent.type,
         name: dirent.name,
+        path: dirent.path,
       })
     }
   }
