@@ -55,6 +55,7 @@ export const getItemVirtualDomFile = (item: VisibleExplorerItem): readonly Virtu
       paddingLeft: indent,
       ariaLabel: name,
       ariaDescription: '',
+      id,
     },
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
     ...getInputOrLabelDom(isEditing),

@@ -39,6 +39,7 @@ export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly Vir
       ariaLabel: name,
       ariaExpanded,
       ariaDescription: '',
+      id,
     },
     ...chevronDom,
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
