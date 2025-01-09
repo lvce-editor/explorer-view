@@ -16,16 +16,9 @@ const chevronDomNodes: readonly (readonly VirtualDomNode[])[] = [
 const ariaExpandedValues: (string | undefined)[] = [undefined, 'true', 'false']
 
 export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { posInSet, setSize, icon, name, path, depth, indent, chevron, expanded, id, isFocused } = item
+  const { posInSet, setSize, icon, name, path, depth, indent, chevron, expanded, id, className } = item
   const chevronDom = chevronDomNodes[chevron]
   const ariaExpanded = ariaExpandedValues[expanded]
-
-  let className = ClassNames.TreeItem
-  // TODO avoid branch
-  if (isFocused) {
-    className += ' ' + ClassNames.TreeItemActive
-  }
-
   const dom: readonly VirtualDomNode[] = [
     {
       type: VirtualDomElements.Div,

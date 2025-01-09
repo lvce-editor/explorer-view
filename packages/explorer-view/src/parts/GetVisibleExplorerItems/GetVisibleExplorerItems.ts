@@ -1,4 +1,5 @@
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as GetChevronType from '../GetChevronType/GetChevronType.ts'
 import * as GetExpandedType from '../GetExpandedType/GetExpandedType.ts'
@@ -23,6 +24,8 @@ export const getVisibleExplorerItems = (
     const indent = GetTreeItemIndent.getTreeItemIndent(item.depth)
     const isFocused = i === focusedIndex
     const id = isFocused ? 'TreeItemActive' : undefined
+    const className = isFocused ? ClassNames.TreeItem + ' ' + ClassNames.TreeItemActive : ClassNames.TreeItem
+
     visible.push({
       ...item,
       isFocused: i === focusedIndex,
@@ -33,6 +36,7 @@ export const getVisibleExplorerItems = (
       expanded: GetExpandedType.getExpandedType(item.type),
       chevron: GetChevronType.getChevronType(item.type, useChevrons),
       id,
+      className,
     })
   }
   if (editingType !== ExplorerEditingType.None && editingIndex === -1) {
@@ -51,6 +55,7 @@ export const getVisibleExplorerItems = (
       expanded: 0,
       chevron: 0,
       id: undefined,
+      className: ClassNames.TreeItem,
     })
   }
   return visible

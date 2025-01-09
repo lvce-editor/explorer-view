@@ -31,19 +31,13 @@ const getInputOrLabelDom = (isEditing: boolean, name: string): readonly VirtualD
 }
 
 export const getItemVirtualDomFile = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { posInSet, setSize, icon, name, path, depth, isFocused, isEditing, indent, id } = item
-
-  let className = ClassNames.TreeItem
-  // TODO avoid branch
-  if (isFocused) {
-    className += ' ' + ClassNames.TreeItemActive
-  }
+  const { posInSet, setSize, icon, name, path, depth, isEditing, indent, id, className } = item
 
   const dom: readonly VirtualDomNode[] = [
     {
       type: VirtualDomElements.Div,
       role: AriaRoles.TreeItem,
-      className: ClassNames.TreeItem,
+      className,
       draggable: true,
       title: path,
       ariaPosInSet: posInSet,
