@@ -16,33 +16,34 @@ const chevronDomNodes: readonly (readonly VirtualDomNode[])[] = [
 const ariaExpandedValues: (string | undefined)[] = [undefined, 'true', 'false']
 
 export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { posInSet, setSize, icon, name, path, depth, isFocused, useChevrons, indent, chevron, expanded } = item
+  const { posInSet, setSize, icon, name, path, depth, indent, chevron, expanded, id, isFocused } = item
   const chevronDom = chevronDomNodes[chevron]
   const ariaExpanded = ariaExpandedValues[expanded]
-  const dom: VirtualDomNode[] = []
 
-  dom.push({
-    type: VirtualDomElements.Div,
-    role: AriaRoles.TreeItem,
-    className: ClassNames.TreeItem,
-    draggable: true,
-    title: path,
-    ariaPosInSet: posInSet,
-    ariaSetSize: setSize,
-    ariaLevel: depth,
-    childCount: 2,
-    paddingLeft: indent,
-    ariaLabel: name,
-    ariaExpanded,
-    ariaDescription: '',
-  })
-
-  if (useChevrons) {
-    // @ts-ignore
-    dom[0].childCount++
-    dom.push(...chevronDom)
+  let className = ClassNames.TreeItem
+  // TODO avoid branch
+  if (isFocused) {
+    className += ' ' + ClassNames.TreeItemActive
   }
-  dom.push(
+
+  const dom: readonly VirtualDomNode[] = [
+    {
+      type: VirtualDomElements.Div,
+      role: AriaRoles.TreeItem,
+      className,
+      draggable: true,
+      title: path,
+      ariaPosInSet: posInSet,
+      ariaSetSize: setSize,
+      ariaLevel: depth,
+      childCount: 2 + chevronDom.length,
+      paddingLeft: indent,
+      ariaLabel: name,
+      ariaExpanded,
+      ariaDescription: '',
+      id,
+    },
+    ...chevronDom,
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
     {
       type: VirtualDomElements.Div,
@@ -50,10 +51,6 @@ export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly Vir
       childCount: 1,
     },
     text(name),
-  )
-  if (isFocused) {
-    // @ts-ignore
-    dom[0].id = 'TreeItemActive'
-  }
+  ]
   return dom
 }

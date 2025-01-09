@@ -7,13 +7,39 @@ import * as InputName from '../InputName/InputName.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
+const getInputOrLabelDom = (isEditing: boolean, name: string): readonly VirtualDomNode[] => {
+  if (isEditing) {
+    return [
+      {
+        type: VirtualDomElements.Input,
+        className: ClassNames.InputBox,
+        id: 'ExplorerInput',
+        onInput: 'handleEditingInput',
+        childCount: 0,
+        name: InputName.ExplorerInput,
+      },
+    ]
+  }
+  return [
+    {
+      type: VirtualDomElements.Div,
+      className: ClassNames.Label,
+      childCount: 1,
+    },
+    text(name),
+  ]
+}
+
 export const getItemVirtualDomFile = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { posInSet, setSize, icon, name, path, depth, isFocused, isEditing, indent } = item
+  const { posInSet, setSize, icon, name, path, depth, isFocused, isEditing, indent, id } = item
 
-  // TODO avoid mutation
-  const dom: VirtualDomNode[] = []
+  let className = ClassNames.TreeItem
+  // TODO avoid branch
+  if (isFocused) {
+    className += ' ' + ClassNames.TreeItemActive
+  }
 
-  dom.push(
+  const dom: readonly VirtualDomNode[] = [
     {
       type: VirtualDomElements.Div,
       role: AriaRoles.TreeItem,
@@ -27,33 +53,11 @@ export const getItemVirtualDomFile = (item: VisibleExplorerItem): readonly Virtu
       paddingLeft: indent,
       ariaLabel: name,
       ariaDescription: '',
+      id,
     },
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
-  )
-  if (isEditing) {
-    dom.push({
-      type: VirtualDomElements.Input,
-      className: ClassNames.InputBox,
-      id: 'ExplorerInput',
-      onInput: 'handleEditingInput',
-      childCount: 0,
-      name: InputName.ExplorerInput,
-    })
-  } else {
-    dom.push(
-      {
-        type: VirtualDomElements.Div,
-        className: ClassNames.Label,
-        childCount: 1,
-      },
-      text(name),
-    )
-  }
-  if (isFocused) {
-    // @ts-ignore
-    dom[0].id = 'TreeItemActive'
-    // @ts-ignore
-    dom[0].className += ' ' + ClassNames.TreeItemActive
-  }
+    ...getInputOrLabelDom(isEditing, name),
+  ]
+
   return dom
 }
