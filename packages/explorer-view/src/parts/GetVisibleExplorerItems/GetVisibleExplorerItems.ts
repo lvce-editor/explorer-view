@@ -28,10 +28,8 @@ export const getVisibleExplorerItems = (
 
     visible.push({
       ...item,
-      isFocused: i === focusedIndex,
       isEditing: i === editingIndex,
       icon,
-      useChevrons,
       indent,
       expanded: GetExpandedType.getExpandedType(item.type),
       chevron: GetChevronType.getChevronType(item.type, useChevrons),
@@ -45,12 +43,9 @@ export const getVisibleExplorerItems = (
       posInSet: 1,
       setSize: 1,
       icon: '',
-      isFocused: false,
       name: 'new',
       path: '/test/new',
-      type: 2,
       isEditing: true,
-      useChevrons,
       indent: '',
       expanded: 0,
       chevron: 0,
