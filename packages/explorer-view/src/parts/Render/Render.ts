@@ -24,9 +24,7 @@ const renderItems = {
       newState.editingIndex,
       newState.editingType,
       newState.editingValue,
-      // @ts-ignore
       newState.icons,
-      // @ts-ignore
       newState.useChevrons,
     )
     const isWide = newState.width > 450
