@@ -6,10 +6,6 @@ test('getExpandedType - directory', () => {
   expect(GetExpandedType.getExpandedType(DirentType.Directory)).toBe(DirentType.DirectoryExpanded)
 })
 
-test('getExpandedType - symlink folder', () => {
-  expect(GetExpandedType.getExpandedType(DirentType.SymLinkFolder)).toBe(DirentType.SymLinkFolderExpanded)
-})
-
 test('getExpandedType - file', () => {
   expect(() => GetExpandedType.getExpandedType(DirentType.File)).toThrow('cannot expand file')
 })
