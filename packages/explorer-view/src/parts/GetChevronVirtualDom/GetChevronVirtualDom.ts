@@ -1,19 +1,13 @@
 import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
-import * as ClassNames from '../ClassNames/ClassNames.ts'
-import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
+import * as ChevronDownVirtualDom from '../ChevronDownVirtualDom/ChevronDownVirtualDom.ts'
+import * as ChevronRightVirtualDom from '../ChevronRightVirtualDom/ChevronRightVirtualDom.ts'
 
-export const getChevronDownVirtualDom = (): VirtualDomNode => {
-  return {
-    type: VirtualDomElements.Div,
-    className: `${ClassNames.Chevron} MaskIconChevronDown`,
-    childCount: 0,
-  }
-}
+const chevronDomNodes: readonly (readonly VirtualDomNode[])[] = [
+  [],
+  [ChevronRightVirtualDom.chevronRightVirtualDom],
+  [ChevronDownVirtualDom.chevronDownVirtualDom],
+]
 
-export const getChevronRightVirtualDom = (): VirtualDomNode => {
-  return {
-    type: VirtualDomElements.Div,
-    className: `${ClassNames.Chevron} MaskIconChevronRight`,
-    childCount: 0,
-  }
+export const getChevronVirtualDom = (chevronType: number): readonly VirtualDomNode[] => {
+  return chevronDomNodes[chevronType]
 }

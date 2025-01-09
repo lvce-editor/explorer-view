@@ -1,5 +1,4 @@
 export interface VisibleExplorerItem {
-  readonly isFocused: boolean
   readonly isEditing: boolean
   readonly icon: string
   readonly depth: number
@@ -7,8 +6,6 @@ export interface VisibleExplorerItem {
   readonly path: string
   readonly posInSet: number
   readonly setSize: number
-  readonly type: number
-  readonly useChevrons: boolean
   readonly indent: string // TODO maybe use a classname for indent instead of inline styles
   readonly expanded: number
   readonly chevron: number
