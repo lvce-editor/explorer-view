@@ -1,5 +1,7 @@
-export const getPathParts = (root: string, uri: string, pathSeparator: string): readonly any[] => {
-  const parts: any[] = []
+import type { PathPart } from '../PathPart/PathPart.ts'
+
+export const getPathParts = (root: string, uri: string, pathSeparator: string): readonly PathPart[] => {
+  const parts: PathPart[] = []
   let index = root.length - 1
   let depth = 0
   while ((index = uri.indexOf('/', index + 1)) !== -1) {
