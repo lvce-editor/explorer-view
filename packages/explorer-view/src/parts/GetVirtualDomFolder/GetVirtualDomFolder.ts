@@ -6,12 +6,9 @@ import * as GetFileIconVirtualDom from '../GetFileIconVirtualDom/GetFileIconVirt
 import * as GetInputOrLabelDom from '../GetInputOrLabelDom/GetInputOrLabelDom.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
-const ariaExpandedValues: (string | undefined)[] = [undefined, 'true', 'false']
-
 export const getItemVirtualDomFolder = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { posInSet, setSize, icon, name, path, depth, indent, chevron, expanded, id, className, isEditing } = item
+  const { posInSet, setSize, icon, name, path, depth, indent, chevron, id, className, isEditing, ariaExpanded } = item
   const chevronDom = GetChevronVirtualDom.getChevronVirtualDom(chevron)
-  const ariaExpanded = ariaExpandedValues[expanded]
   const dom: readonly VirtualDomNode[] = [
     {
       type: VirtualDomElements.Div,

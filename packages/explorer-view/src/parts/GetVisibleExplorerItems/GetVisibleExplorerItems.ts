@@ -5,6 +5,8 @@ import * as GetChevronType from '../GetChevronType/GetChevronType.ts'
 import * as GetExpandedType from '../GetExpandedType/GetExpandedType.ts'
 import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
 
+const ariaExpandedValues: (string | undefined)[] = [undefined, 'true', 'false']
+
 export const getVisibleExplorerItems = (
   items: readonly any[],
   minLineY: number,
@@ -25,13 +27,16 @@ export const getVisibleExplorerItems = (
     const isFocused = i === focusedIndex
     const id = isFocused ? 'TreeItemActive' : undefined
     const className = isFocused ? ClassNames.TreeItem + ' ' + ClassNames.TreeItemActive : ClassNames.TreeItem
+    const expanded = GetExpandedType.getExpandedType(item.type)
+    const ariaExpanded = ariaExpandedValues[expanded]
 
     visible.push({
       ...item,
       isEditing: i === editingIndex,
       icon,
       indent,
-      expanded: GetExpandedType.getExpandedType(item.type),
+      expanded,
+      ariaExpanded,
       chevron: GetChevronType.getChevronType(item.type, useChevrons),
       id,
       className,
@@ -47,7 +52,7 @@ export const getVisibleExplorerItems = (
       path: '/test/new',
       isEditing: true,
       indent: '',
-      expanded: 0,
+      ariaExpanded: undefined,
       chevron: 0,
       id: undefined,
       className: ClassNames.TreeItem,
