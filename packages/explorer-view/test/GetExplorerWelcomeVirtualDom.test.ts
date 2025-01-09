@@ -1,64 +1,43 @@
 import { expect, test } from '@jest/globals'
-import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
-import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import * as ExplorerStrings from '../src/parts/ExplorerStrings/ExplorerStrings.ts'
 import * as GetExplorerWelcomeVirtualDom from '../src/parts/GetExplorerWelcomeVirtualDom/GetExplorerWelcomeVirtualDom.ts'
-import * as VirtualDomElements from '../src/parts/VirtualDomElements/VirtualDomElements.ts'
 
 test('getExplorerWelcomeVirtualDom - wide', () => {
-  expect(GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(true)).toEqual([
-    {
-      type: VirtualDomElements.Div,
-      className: `${ClassNames.Viewlet} ${ClassNames.Explorer}`,
-      tabIndex: 0,
-      childCount: 1,
-    },
-    {
-      type: VirtualDomElements.Div,
-      className: ClassNames.Welcome,
-      childCount: 2,
-    },
-    {
-      type: VirtualDomElements.P,
-      className: ClassNames.WelcomeMessage,
-      childCount: 1,
-    },
-    ExplorerStrings.youHaveNotYetOpenedAFolder(),
-    {
-      type: VirtualDomElements.Button,
-      className: `${ClassNames.Button} ${ClassNames.ButtonPrimary} ButtonWide`,
-      childCount: 1,
-      onClick: DomEventListenerFunctions.handleClickOpenFolder,
-    },
-    ExplorerStrings.openFolder(),
-  ])
+  expect(GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(true)).toEqual([])
 })
 
 test('getExplorerWelcomeVirtualDom - narrow', () => {
   expect(GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(false)).toEqual([
     {
-      type: VirtualDomElements.Div,
-      className: `${ClassNames.Viewlet} ${ClassNames.Explorer}`,
+      childCount: 1,
+      className: 'Viewlet Explorer',
       tabIndex: 0,
-      childCount: 1,
+      type: 4,
     },
     {
-      type: VirtualDomElements.Div,
-      className: ClassNames.Welcome,
       childCount: 2,
+      className: 'Welcome',
+      type: 4,
     },
     {
-      type: VirtualDomElements.P,
-      className: ClassNames.WelcomeMessage,
       childCount: 1,
+      className: 'WelcomeMessage',
+      type: 50,
     },
-    ExplorerStrings.youHaveNotYetOpenedAFolder(),
     {
-      type: VirtualDomElements.Button,
-      className: `${ClassNames.Button} ${ClassNames.ButtonPrimary} ButtonNarrow`,
-      childCount: 1,
-      onClick: DomEventListenerFunctions.handleClickOpenFolder,
+      childCount: 0,
+      text: 'You have not yet opened a folder',
+      type: 12,
     },
-    ExplorerStrings.openFolder(),
+    {
+      childCount: 1,
+      className: 'Button ButtonPrimary ButtonNarrow',
+      onClick: 'handleClickOpenFolder',
+      type: 1,
+    },
+    {
+      childCount: 0,
+      text: 'Open folder',
+      type: 12,
+    },
   ])
 })
