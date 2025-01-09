@@ -13,4 +13,5 @@ export interface VisibleExplorerItem {
   readonly expanded: number
   readonly chevron: number
   readonly id: string | undefined
+  readonly className: string
 }
