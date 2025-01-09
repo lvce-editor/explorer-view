@@ -7,6 +7,7 @@ import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
+import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 import * as PromiseStatus from '../PromiseStatus/PromiseStatus.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 // TODO viewlet should only have create and refresh functions
@@ -137,7 +138,8 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
-  const useChevrons = false
+  const useChevronsRaw = await ParentRpc.invoke('Preferences.get', 'explorer.useChevrons')
+  const useChevrons = Boolean(useChevronsRaw)
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
   // TODO path separator could be restored from saved state
