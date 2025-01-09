@@ -27,7 +27,11 @@ export const getExplorerWelcomeVirtualDom = (isWide: boolean): readonly VirtualD
     text(ExplorerStrings.youHaveNotYetOpenedAFolder()),
     {
       type: VirtualDomElements.Button,
-      className: MergeClassNames.mergeClassNames(ClassNames.Button, ClassNames.ButtonPrimary, isWide ? 'ButtonWide' : 'ButtonNarrow'),
+      className: MergeClassNames.mergeClassNames(
+        ClassNames.Button,
+        ClassNames.ButtonPrimary,
+        isWide ? ClassNames.ButtonWide : ClassNames.ButtonNarrow,
+      ),
       childCount: 1,
       onClick: DomEventListenerFunctions.handleClickOpenFolder,
     },
