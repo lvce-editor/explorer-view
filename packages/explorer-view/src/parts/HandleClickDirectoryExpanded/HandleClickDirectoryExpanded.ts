@@ -20,11 +20,12 @@ export const handleClickDirectoryExpanded = async (state: ExplorerState, dirent:
     const newMinLineY = newMaxLineY - visibleItems
     const deltaY = newMinLineY * itemHeight
     const parts = newDirents.slice(minLineY, maxLineY)
-    const icons = await GetFileIcons.getFileIcons(parts)
+    const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, state.fileIconCache)
     return {
       ...state,
       items: newDirents,
       icons,
+      fileIconCache: newFileIconCache,
       focusedIndex: index,
       focused: keepFocus,
       minLineY: newMinLineY,
@@ -33,11 +34,12 @@ export const handleClickDirectoryExpanded = async (state: ExplorerState, dirent:
     }
   }
   const parts = newDirents.slice(state.minLineY, state.maxLineY)
-  const icons = await GetFileIcons.getFileIcons(parts)
+  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, state.fileIconCache)
   return {
     ...state,
     items: newDirents,
     icons,
+    fileIconCache: newFileIconCache,
     focusedIndex: index,
     focused: keepFocus,
   }

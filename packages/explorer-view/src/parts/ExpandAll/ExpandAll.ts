@@ -2,6 +2,7 @@ import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
+import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 
 export const expandAll = async (state: ExplorerState): Promise<ExplorerState> => {
   const { items, focusedIndex, pathSeparator, minLineY, height, itemHeight } = state
@@ -33,9 +34,13 @@ export const expandAll = async (state: ExplorerState): Promise<ExplorerState> =>
     }
   }
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newDirents.length)
+  const visible = newDirents.slice(minLineY, maxLineY)
+  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, state.fileIconCache)
   return {
     ...state,
     items: newDirents,
+    icons,
+    fileIconCache: newFileIconCache,
     maxLineY,
   }
 }

@@ -55,13 +55,12 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
     indexToFocus = Math.max(state.focusedIndex - 1, 0)
   }
   const visible = newDirents.slice(state.minLineY, state.maxLineY)
-  const icons = await GetFileIcons.getFileIcons(visible)
-  console.log({ icons })
+  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, state.fileIconCache)
   return {
     ...state,
     items: newDirents,
-    // @ts-ignore
     icons,
+    fileIconCache: newFileIconCache,
     focusedIndex: indexToFocus,
   }
 }
