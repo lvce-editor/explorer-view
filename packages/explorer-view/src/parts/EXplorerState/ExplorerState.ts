@@ -1,4 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { FileIconCache } from '../FileIconCache/FileIconCache.ts'
 
 export interface ExplorerState {
   readonly uid: number
@@ -26,4 +27,5 @@ export interface ExplorerState {
   readonly editingIcon: string
   readonly icons: readonly string[]
   readonly useChevrons: boolean
+  readonly fileIconCache: FileIconCache
 }
