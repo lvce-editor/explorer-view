@@ -4,6 +4,6 @@ import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts
 
 export const chevronRightVirtualDom: VirtualDomNode = {
   type: VirtualDomElements.Div,
-  className: `${ClassNames.Chevron} MaskIconChevronRight`,
+  className: `${ClassNames.Chevron} ${ClassNames.MaskIconChevronRight}`,
   childCount: 0,
 }
