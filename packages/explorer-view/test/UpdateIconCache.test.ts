@@ -1,8 +1,8 @@
 import { test, expect } from '@jest/globals'
-import * as UpdateIconCache from '../src/parts/UpdateIconCache/UpdateIconCache.ts'
+import type { FileIconCache } from '../src/parts/FileIconCache/FileIconCache.ts'
+import type { IconRequest } from '../src/parts/IconRequest/IconRequest.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
-import { IconRequest } from '../src/parts/IconRequest/IconRequest.ts'
-import { FileIconCache } from '../src/parts/FileIconCache/FileIconCache.ts'
+import * as UpdateIconCache from '../src/parts/UpdateIconCache/UpdateIconCache.ts'
 
 test('updateIconCache - empty requests', () => {
   const cache: FileIconCache = {}
