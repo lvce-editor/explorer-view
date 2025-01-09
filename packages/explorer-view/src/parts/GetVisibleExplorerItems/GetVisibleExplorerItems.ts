@@ -1,36 +1,8 @@
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
-import * as ChevronType from '../ChevronType/ChevronType.ts'
-import * as DirentType from '../DirentType/DirentType.ts'
-import * as ExpandedType from '../ExpandedType/ExpandedType.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
+import * as GetChevronType from '../GetChevronType/GetChevronType.ts'
+import * as GetExpandedType from '../GetExpandedType/GetExpandedType.ts'
 import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
-
-const getExpandedType = (type: number): number => {
-  switch (type) {
-    case DirentType.Directory:
-      return ExpandedType.Collapsed
-    case DirentType.DirectoryExpanding:
-    case DirentType.DirectoryExpanded:
-      return ExpandedType.Expanded
-    default:
-      return ExpandedType.None
-  }
-}
-
-const getChevronType = (type: number, useChevrons: boolean): number => {
-  if (!useChevrons) {
-    return ChevronType.None
-  }
-  switch (type) {
-    case DirentType.Directory:
-      return ChevronType.Right
-    case DirentType.DirectoryExpanded:
-    case DirentType.DirectoryExpanding:
-      return ChevronType.Down
-    default:
-      return ChevronType.None
-  }
-}
 
 export const getVisibleExplorerItems = (
   items: readonly any[],
@@ -58,8 +30,8 @@ export const getVisibleExplorerItems = (
       icon,
       useChevrons,
       indent,
-      expanded: getExpandedType(item.type),
-      chevron: getChevronType(item.type, useChevrons),
+      expanded: GetExpandedType.getExpandedType(item.type),
+      chevron: GetChevronType.getChevronType(item.type, useChevrons),
       id,
     })
   }
