@@ -1,5 +1,4 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
-import * as Listen from '../src/parts/Listen/Listen.ts'
 
 jest.unstable_mockModule('@lvce-editor/rpc', () => {
   return {
@@ -13,6 +12,7 @@ jest.unstable_mockModule('@lvce-editor/rpc', () => {
   }
 })
 
+const Listen = await import('../src/parts/Listen/Listen.ts')
 const rpc = await import('@lvce-editor/rpc')
 
 beforeEach(() => {
