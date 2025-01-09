@@ -1,9 +1,9 @@
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
+import * as ChevronType from '../ChevronType/ChevronType.ts'
+import * as DirentType from '../DirentType/DirentType.ts'
+import * as ExpandedType from '../ExpandedType/ExpandedType.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
-import * as ExpandedType from '../ExpandedType/ExpandedType.ts'
-import * as DirentType from '../DirentType/DirentType.ts'
-import * as ChevronType from '../ChevronType/ChevronType.ts'
 
 const getExpandedType = (type: number): number => {
   switch (type) {
