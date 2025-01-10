@@ -1,8 +1,9 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
-import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
+import * as OpenUri from '../OpenUri/OpenUri.ts'
 
-export const handleClickFile = async (state: ExplorerState, dirent: any, index: number, keepFocus = false): Promise<ExplorerState> => {
-  await ParentRpc.invoke(/* Main.openAbsolutePath */ 'Main.openUri', /* absolutePath */ dirent.path, /* focus */ !keepFocus)
+export const handleClickFile = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus = false): Promise<ExplorerState> => {
+  await OpenUri.openUri(dirent.path, !keepFocus)
   return {
     ...state,
     focusedIndex: index,
