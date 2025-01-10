@@ -22,6 +22,7 @@ import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
 import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
+import * as HandleFocus from '../HandleFocus/HandleFocus.ts'
 import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconThemeChange.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
@@ -72,6 +73,7 @@ export const commandMap = {
   'Explorer.handleCopy': HandleCopy.handleCopy,
   'Explorer.handleDragOver': HandleDragOver.handleDragOver,
   'Explorer.handleDrop': HandleDrop.handleDrop,
+  'Explorer.handleFocus': HandleFocus.handleFocus,
   'Explorer.handleIconThemeChange': HandleIconThemeChange.handleIconThemeChange,
   'Explorer.handlePaste': HandlePaste.handlePaste,
   'Explorer.handlePointerDown': HandlePointerDown.handlePointerDown,
