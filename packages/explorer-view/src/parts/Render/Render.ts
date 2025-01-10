@@ -12,7 +12,8 @@ const renderItems = {
       oldState.editingIndex === newState.editingIndex &&
       oldState.editingType === newState.editingType &&
       oldState.editingValue === newState.editingValue &&
-      oldState.width === newState.width
+      oldState.width === newState.width &&
+      oldState.focused === newState.focused
     )
   },
   apply(oldState: ExplorerState, newState: ExplorerState): any {
@@ -28,16 +29,17 @@ const renderItems = {
       newState.useChevrons,
     )
     const isWide = newState.width > 450
-    const dom = GetExplorerVirtualDom.getExplorerVirtualDom(visibleDirents, newState.focusedIndex, newState.root, isWide)
+    const dom = GetExplorerVirtualDom.getExplorerVirtualDom(visibleDirents, newState.focusedIndex, newState.root, isWide, newState.focused)
     return ['Viewlet.setDom2', dom]
   },
 }
 
-// const renderFocusedIndex = {
-//   isEqual(oldState:any, newState:any) {
+// TODO add virtual dom diffing so that focus is not lost when updating dom
+// const renderFocus = {
+//   isEqual(oldState: any, newState: any) {
 //     return oldState.focusedIndex === newState.focusedIndex && oldState.focused === newState.focused && oldState.minLineY === newState.minLineY
 //   },
-//   apply(oldState:any, newState:any) {
+//   apply(oldState: any, newState: any) {
 //     const oldFocusedIndex = oldState.focusedIndex - oldState.minLineY
 //     const newFocusedIndex = newState.focusedIndex - newState.minLineY
 //     return [/* method */ 'setFocusedIndex', /* oldindex */ oldFocusedIndex, /* newIndex */ newFocusedIndex, /* focused */ newState.focused]

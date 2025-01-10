@@ -14,14 +14,16 @@ export const getExplorerVirtualDom = (
   focusedIndex: number,
   root: string,
   isWide: boolean,
+  focused: boolean,
 ): readonly VirtualDomNode[] => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
   }
+  const extraClass = focused && focusedIndex === -1 ? ClassNames.FocusOutline : ''
   const dom: readonly VirtualDomNode[] = [
     {
       type: VirtualDomElements.Div,
-      className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
+      className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer, extraClass),
       tabIndex: 0,
       role: AriaRoles.Tree,
       ariaLabel: ExplorerStrings.filesExplorer(),
