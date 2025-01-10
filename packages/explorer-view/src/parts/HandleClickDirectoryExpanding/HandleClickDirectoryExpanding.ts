@@ -9,7 +9,9 @@ export const handleClickDirectoryExpanding = async (
   index: number,
   keepFocus: boolean,
 ): Promise<ExplorerState> => {
+  // @ts-ignore
   dirent.type = DirentType.Directory
+  // @ts-ignore
   dirent.icon = IconTheme.getIcon(dirent)
   return {
     ...state,
