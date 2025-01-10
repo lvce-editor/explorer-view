@@ -1,12 +1,20 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 
-export const handleClickDirectoryExpanded = async (state: ExplorerState, dirent: any, index: any, keepFocus: boolean): Promise<ExplorerState> => {
+export const handleClickDirectoryExpanded = async (
+  state: ExplorerState,
+  dirent: ExplorerItem,
+  index: number,
+  keepFocus: boolean,
+): Promise<ExplorerState> => {
   const { minLineY, maxLineY, itemHeight, fileIconCache } = state
+  // @ts-ignore
   dirent.type = DirentType.Directory
+  // @ts-ignore
   dirent.icon = IconTheme.getIcon(dirent)
   const endIndex = GetParentEndIndex.getParentEndIndex(state.items, index)
   const removeCount = endIndex - index - 1
