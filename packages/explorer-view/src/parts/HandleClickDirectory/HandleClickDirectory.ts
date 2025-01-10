@@ -1,3 +1,4 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
@@ -5,7 +6,8 @@ import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 
-export const handleClickDirectory = async (state: ExplorerState, dirent: any, index: any, keepFocus: boolean): Promise<ExplorerState> => {
+export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: any, keepFocus: boolean): Promise<ExplorerState> => {
+  // @ts-ignore
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
   const dirents = await GetChildDirents.getChildDirents(state.pathSeparator, dirent)
@@ -21,7 +23,9 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: any, in
   }
   const newDirents = [...state2.items]
   newDirents.splice(newIndex + 1, 0, ...dirents)
+  // @ts-ignore
   dirent.type = DirentType.DirectoryExpanded
+  // @ts-ignore
   dirent.icon = IconTheme.getIcon(dirent)
   const { height, itemHeight, minLineY } = state2
   // TODO when focused index has changed while expanding, don't update it
