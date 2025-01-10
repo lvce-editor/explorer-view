@@ -5,7 +5,7 @@ import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
 
 export const handleClickDirectoryExpanded = async (state: ExplorerState, dirent: any, index: any, keepFocus: boolean): Promise<ExplorerState> => {
-  const { minLineY, maxLineY, itemHeight } = state
+  const { minLineY, maxLineY, itemHeight, fileIconCache } = state
   dirent.type = DirentType.Directory
   dirent.icon = IconTheme.getIcon(dirent)
   const endIndex = GetParentEndIndex.getParentEndIndex(state.items, index)
@@ -20,7 +20,7 @@ export const handleClickDirectoryExpanded = async (state: ExplorerState, dirent:
     const newMinLineY = newMaxLineY - visibleItems
     const deltaY = newMinLineY * itemHeight
     const parts = newDirents.slice(minLineY, maxLineY)
-    const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, state.fileIconCache)
+    const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, fileIconCache)
     return {
       ...state,
       items: newDirents,
@@ -34,7 +34,7 @@ export const handleClickDirectoryExpanded = async (state: ExplorerState, dirent:
     }
   }
   const parts = newDirents.slice(state.minLineY, state.maxLineY)
-  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, state.fileIconCache)
+  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, fileIconCache)
   return {
     ...state,
     items: newDirents,
