@@ -8,10 +8,10 @@ import * as IconTheme from '../IconTheme/IconTheme.ts'
 export const handleClickDirectoryExpanded = async (
   state: ExplorerState,
   dirent: ExplorerItem,
-  index: any,
+  index: number,
   keepFocus: boolean,
 ): Promise<ExplorerState> => {
-  const { minLineY, maxLineY, itemHeight } = state
+  const { minLineY, maxLineY, itemHeight, fileIconCache } = state
   // @ts-ignore
   dirent.type = DirentType.Directory
   // @ts-ignore
@@ -28,7 +28,7 @@ export const handleClickDirectoryExpanded = async (
     const newMinLineY = newMaxLineY - visibleItems
     const deltaY = newMinLineY * itemHeight
     const parts = newDirents.slice(minLineY, maxLineY)
-    const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, state.fileIconCache)
+    const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, fileIconCache)
     return {
       ...state,
       items: newDirents,
@@ -42,7 +42,7 @@ export const handleClickDirectoryExpanded = async (
     }
   }
   const parts = newDirents.slice(state.minLineY, state.maxLineY)
-  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, state.fileIconCache)
+  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, fileIconCache)
   return {
     ...state,
     items: newDirents,
