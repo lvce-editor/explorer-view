@@ -6,7 +6,7 @@ export const copyPath = async (state: ExplorerState): Promise<ExplorerState> => 
   // TODO windows paths
   // TODO handle error
   // @ts-ignore
-  const path = dirent.path
+  const { path } = dirent
   // await Command.execute(RendererWorkerCommandType.ClipBoardWriteText, /* text */ path)
   return state
 }

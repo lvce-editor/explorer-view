@@ -14,7 +14,7 @@ export const computeExplorerRenamedDirent = (dirents: any, index: number, newNam
     path: oldDirent.path.slice(0, -oldDirent.name.length) + newName,
     icon: IconTheme.getFileIcon({ name: newName }),
   }
-  const depth = newDirent.depth
+  const { depth } = newDirent
   // TODO
   for (; startIndex >= 0; startIndex--) {
     const dirent = dirents[startIndex]

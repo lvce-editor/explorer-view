@@ -10,7 +10,7 @@ export const expandAll = async (state: ExplorerState): Promise<ExplorerState> =>
     return state
   }
   const dirent = items[focusedIndex]
-  const depth = dirent.depth
+  const { depth } = dirent
   const newDirents = [...items]
   // TODO fetch child dirents in parallel
   for (const dirent of newDirents) {
