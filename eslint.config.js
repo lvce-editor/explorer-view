@@ -1,41 +1,12 @@
-import eslint from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import perfectionist from 'eslint-plugin-perfectionist'
+import * as config from '@lvce-editor/eslint-config'
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  tseslint.configs.strictTypeChecked,
+export default [
+  ...config.default,
   {
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
+    ignores: ['packages/explorer-view/src/explorerViewWorkerMain.ts'],
   },
   {
-    ignores: [
-      'dist',
-      '.tmp',
-      '**/build/**',
-      '**/coverage/**',
-      '**/server/**',
-      '**/e2e/**',
-      '**/memory/**',
-      'scripts',
-      'rollup.config.js',
-      'eslint.config.js',
-      'packages/explorer-view/src/explorerViewWorkerMain.ts',
-    ],
-  },
-  {
-    rules: {
-      '@typescript-eslint/explicit-function-return-type': 'error',
-      '@typescript-eslint/consistent-type-exports': 'error',
-      '@typescript-eslint/consistent-type-imports': 'error',
-    },
-  },
-  {
+    files: ['**/*.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
@@ -51,21 +22,9 @@ export default tseslint.config(
       '@typescript-eslint/no-unnecessary-condition': 'off',
       '@typescript-eslint/require-await': 'off',
       '@typescript-eslint/no-dynamic-delete': 'off',
+      '@typescript-eslint/prefer-readonly-parameter-types': 'off',
+      'prefer-destructuring': 'off',
+      'no-console': 'off',
     },
   },
-  {
-    plugins: {
-      perfectionist,
-    },
-    rules: {
-      'perfectionist/sort-imports': [
-        'error',
-        {
-          type: 'natural',
-          order: 'asc',
-          newlinesBetween: 'never',
-        },
-      ],
-    },
-  },
-)
+]
