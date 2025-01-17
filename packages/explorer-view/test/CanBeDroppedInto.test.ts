@@ -37,7 +37,7 @@ test('canBeDroppedInto - file', () => {
 test('canBeDroppedInto - unknown type', () => {
   expect(
     CanBeDroppedInto.canBeDroppedInto({
-      type: 999999,
+      type: 999_999,
     } as any),
   ).toBe(false)
 })

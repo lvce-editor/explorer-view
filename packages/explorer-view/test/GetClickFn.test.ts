@@ -48,5 +48,5 @@ test('getClickFn - socket', () => {
 })
 
 test('getClickFn - unknown type', () => {
-  expect(() => GetClickFn.getClickFn(999999)).toThrow('unsupported dirent type 999999')
+  expect(() => GetClickFn.getClickFn(999_999)).toThrow('unsupported dirent type 999999')
 })

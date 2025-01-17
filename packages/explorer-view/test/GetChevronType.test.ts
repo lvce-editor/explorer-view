@@ -28,5 +28,5 @@ test('getChevronType - symlink file', () => {
 })
 
 test('getChevronType - unknown type', () => {
-  expect(GetChevronType.getChevronType(999999, true)).toBe(ChevronType.None)
+  expect(GetChevronType.getChevronType(999_999, true)).toBe(ChevronType.None)
 })

@@ -24,5 +24,5 @@ test('getExpandedType - symlink file', () => {
 })
 
 test('getExpandedType - unknown type', () => {
-  expect(GetExpandedType.getExpandedType(999999)).toBe(ExpandedType.None)
+  expect(GetExpandedType.getExpandedType(999_999)).toBe(ExpandedType.None)
 })
