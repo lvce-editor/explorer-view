@@ -1,9 +1,11 @@
+import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
+import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 import * as Height from '../Height/Height.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 
 export const create = (id: number, uri: string, x: number, y: number, width: number, height: number, args: any, parentUid: any): any => {
-  return {
+  const state: ExplorerState = {
     uid: id,
     parentUid,
     root: '',
@@ -28,5 +30,9 @@ export const create = (id: number, uri: string, x: number, y: number, width: num
     editingType: ExplorerEditingType.None,
     editingIcon: '',
     fileIconCache: Object.create(null),
+    useChevrons: false,
+    icons: [],
   }
+  ExplorerStates.set(state.uid, state, state)
+  return state
 }
