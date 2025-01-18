@@ -13,7 +13,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   try {
     // TODO handle error
     await FileSystem.remove(absolutePath)
-  } catch (error) {
+  } catch {
     // TODO vscode shows error as alert (no stacktrace) and retry button
     // maybe should show alert as well, but where to put stacktrace?
     // on web should probably show notification (dialog)

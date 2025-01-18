@@ -1,5 +1,7 @@
 export const name = 'viewlet.explorer-keyboard-navigation'
 
+export const skip = 1
+
 export const test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()

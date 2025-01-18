@@ -29,7 +29,7 @@ const acceptCreate = async (state: ExplorerState, newDirentType: number, createF
   // TODO better handle error
   try {
     await createFn(absolutePath)
-  } catch (error) {
+  } catch {
     // TODO display error
     return state
   }
@@ -106,7 +106,7 @@ const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
     const oldParentPath = Path.dirname(pathSeparator, oldAbsolutePath)
     const newAbsolutePath = [oldParentPath, editingValue].join(pathSeparator)
     await FileSystem.rename(oldAbsolutePath, newAbsolutePath)
-  } catch (error) {
+  } catch {
     // TODO
     // await ErrorHandling.showErrorDialog(error)
     return state
