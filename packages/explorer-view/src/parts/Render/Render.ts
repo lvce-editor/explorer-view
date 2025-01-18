@@ -6,7 +6,7 @@ import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleE
 const renderItems = {
   isEqual(oldState: ExplorerState, newState: ExplorerState): any {
     return (
-      JSON.stringify(oldState.items) === JSON.stringify(newState.items) &&
+      oldState.items === newState.items &&
       oldState.minLineY === newState.minLineY &&
       oldState.maxLineY === newState.maxLineY &&
       oldState.focusedIndex === newState.focusedIndex &&
