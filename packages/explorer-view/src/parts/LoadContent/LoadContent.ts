@@ -1,14 +1,12 @@
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
-import * as Character from '../Character/Character.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as GetSettings from '../GetSettings/GetSettings.ts'
 import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 import * as IconTheme from '../IconTheme/IconTheme.ts'
-import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
-import * as PromiseStatus from '../PromiseStatus/PromiseStatus.ts'
+import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 // TODO viewlet should only have create and refresh functions
 // every thing else can be in a separate module <viewlet>.lazy.js
@@ -21,16 +19,6 @@ import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
 const getPathSeparator = (root: any): any => {
   return FileSystem.getPathSeparator(root)
-}
-
-// @ts-ignore
-const isExpandedDirectory = (dirent: any): boolean => {
-  return dirent.type === DirentType.DirectoryExpanded
-}
-
-// @ts-ignore
-const getPath = (dirent): any => {
-  return dirent.path
 }
 
 const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pathSeparator: any): any => {
@@ -79,49 +67,6 @@ const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pa
   return dirents
 }
 
-const createDirents = (root: any, expandedDirentPaths: any, expandedDirentChildren: any, excluded: any, pathSeparator: any): any => {
-  const dirents = []
-  const map = Object.create(null)
-  for (let i = 0; i < expandedDirentPaths.length; i++) {
-    const path = expandedDirentPaths[i]
-    const children = expandedDirentChildren[i]
-    if (children.status === PromiseStatus.Fulfilled) {
-      map[path] = children.value
-    }
-  }
-  dirents.push(...getSavedChildDirents(map, root, 1, excluded, pathSeparator))
-  return dirents
-}
-
-const getSavedExpandedPaths = (savedState: any, root: any): any => {
-  if (savedState && savedState.root !== root) {
-    return []
-  }
-  if (savedState && savedState.expandedPaths && Array.isArray(savedState.expandedPaths)) {
-    return savedState.expandedPaths
-  }
-  return []
-}
-
-const restoreExpandedState = async (savedState: any, root: any, pathSeparator: any, excluded: any): Promise<any> => {
-  // TODO read all opened folders in parallel
-  // ignore ENOENT errors
-  // ignore ENOTDIR errors
-  // merge all dirents
-  // restore scroll location
-  const expandedPaths = getSavedExpandedPaths(savedState, root)
-  if (root === Character.EmptyString) {
-    return []
-  }
-  const expandedDirentPaths = [root, ...expandedPaths]
-  const expandedDirentChildren = await Promise.allSettled(expandedDirentPaths.map(GetChildDirents.getChildDirentsRaw))
-  if (expandedDirentChildren[0].status === PromiseStatus.Rejected) {
-    throw expandedDirentChildren[0].reason
-  }
-  const dirents = createDirents(root, expandedDirentPaths, expandedDirentChildren, excluded, pathSeparator)
-  return dirents
-}
-
 const getExcluded = (): any => {
   const excludedObject = {}
   const excluded = []
@@ -138,14 +83,13 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
-  const useChevronsRaw = await ParentRpc.invoke('Preferences.get', 'explorer.useChevrons')
-  const useChevrons = Boolean(useChevronsRaw)
+  const { useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
   // TODO path separator could be restored from saved state
   const pathSeparator = await getPathSeparator(root) // TODO only load path separator once
   const excluded = getExcluded()
-  const restoredDirents = await restoreExpandedState(savedState, root, pathSeparator, excluded)
+  const restoredDirents = await RestoreExpandedState.restoreExpandedState(savedState, root, pathSeparator, excluded)
   const { itemHeight, height } = state
   let minLineY = 0
   if (savedState && typeof savedState.minLineY === 'number') {
