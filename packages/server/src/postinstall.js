@@ -1,4 +1,4 @@
-import { readFile, readdir, writeFile } from 'node:fs/promises'
+import { cp, readFile, readdir, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
@@ -30,6 +30,7 @@ const explorerWorkerPath = join(root, '.tmp/dist/dist/explorerViewWorkerMain.js'
 
 const remoteUrl = getRemoteUrl(explorerWorkerPath)
 if (!content.includes('// const textSearchWorkerUrl = ')) {
+  await cp(rendererWorkerMainPath, rendererWorkerMainPath + '.original')
   const occurrence = `const explorerWorkerUrl = \`\${assetDir}/packages/explorer-worker/dist/explorerViewWorkerMain.js\``
   const replacement = `// const explorerWorkerUrl = \`\${assetDir}/packages/explorer-worker/dist/explorerViewWorkerMain.js\`
   const explorerWorkerUrl = \`${remoteUrl}\``

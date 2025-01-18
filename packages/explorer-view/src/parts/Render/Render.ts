@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
@@ -68,7 +69,20 @@ const renderEditingIndex = {
 
 const render = [renderItems, renderEditingIndex]
 
-export const doRender = (oldState: ExplorerState, newState: ExplorerState): any => {
+export const doRender = (uid: number, _: any): any => {
+  if (typeof uid === 'number') {
+    const { oldState, newState } = ExplorerStates.get(uid)
+    const commands = []
+    for (const fn of render) {
+      if (!fn.isEqual(oldState, newState)) {
+        commands.push(fn.apply(oldState, newState))
+      }
+    }
+    return commands
+  }
+  // deprecated
+  const oldState = uid
+  const newState = _
   const commands = []
   for (const fn of render) {
     if (!fn.isEqual(oldState, newState)) {
