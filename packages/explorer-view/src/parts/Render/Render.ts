@@ -1,7 +1,7 @@
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
-import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 
 const renderItems = {
   isEqual(oldState: ExplorerState, newState: ExplorerState): any {
