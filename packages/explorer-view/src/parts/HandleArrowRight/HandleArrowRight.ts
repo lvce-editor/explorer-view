@@ -1,7 +1,7 @@
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
 import * as HandleArrowRightDirectoryExpanded from '../HandleArrowRightDirectoryExpanded/HandleArrowRightDirectoryExpanded.ts'
+import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
 import * as HandleClickSymlink from '../HandleClickSymlink/HandleClickSymlink.ts'
 
 export const handleArrowRight = async (state: ExplorerState): Promise<ExplorerState> => {
