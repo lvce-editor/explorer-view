@@ -1,10 +1,12 @@
 // TODO test might be flaky https://github.com/lvce-editor/lvce-editor/runs/7490211933?check_suite_focus=true
 
+import type { Test } from '@lvce-editor/test-with-playwright'
+
 export const name = 'viewlet.explorer-create-file'
 
 export const skip = true
 
-export const test = async ({ FileSystem, Workspace, Explorer, ContextMenu, Locator, expect }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, ContextMenu, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -15,7 +17,7 @@ export const test = async ({ FileSystem, Workspace, Explorer, ContextMenu, Locat
 
   // act
   await Explorer.focusIndex(-1)
-  await Explorer.openContextMenu()
+  await Explorer.openContextMenu(-1)
   await ContextMenu.selectItem('New File...')
   // assert
   const inputBox = Locator('input')

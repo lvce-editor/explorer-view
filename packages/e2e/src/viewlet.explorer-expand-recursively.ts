@@ -1,8 +1,10 @@
 // TODO maybe merge this test with the other explorer test, less end to end tests will run faster
 
+import type { Test } from '@lvce-editor/test-with-playwright'
+
 export const name = 'viewlet.explorer-expand-recursively'
 
-export const test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a/b`)

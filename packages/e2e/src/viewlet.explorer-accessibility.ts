@@ -1,3 +1,4 @@
+import type { Test } from '@lvce-editor/test-with-playwright'
 // manual accessibility tests
 
 // explorer
@@ -14,7 +15,7 @@ export const skip = true
 
 export const name = 'viewlet.explorer-accessibility'
 
-export const test = async ({ FileSystem, Workspace, Main, Locator, expect }) => {
+export const test: Test = async ({ FileSystem, Workspace, Main, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/languages`)
