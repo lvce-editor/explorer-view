@@ -1,6 +1,8 @@
 import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
+import * as HandleArrowRightDirectoryExpanded from '../HandleArrowRightDirectoryExpanded/HandleArrowRightDirectoryExpanded.ts'
+import * as HandleClickSymlink from '../HandleClickSymlink/HandleClickSymlink.ts'
 
 export const handleArrowRight = async (state: ExplorerState): Promise<ExplorerState> => {
   const { items, focusedIndex } = state
@@ -17,9 +19,9 @@ export const handleArrowRight = async (state: ExplorerState): Promise<ExplorerSt
       // @ts-ignore
       return HandleClickDirectory.handleClickDirectory(state, dirent, focusedIndex)
     case DirentType.DirectoryExpanded:
-      return handleArrowRightDirectoryExpanded(state, dirent)
+      return HandleArrowRightDirectoryExpanded.handleArrowRightDirectoryExpanded(state, dirent)
     case DirentType.Symlink:
-      return handleClickSymLink(state, dirent, focusedIndex)
+      return HandleClickSymlink.handleClickSymLink(state, dirent, focusedIndex)
     default:
       throw new Error(`unsupported file type ${dirent.type}`)
   }
