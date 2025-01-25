@@ -16,8 +16,12 @@ import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirt
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetMenuEntries from '../GetMenuEntries/GetMenuEntries.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
+import * as HandleArrowLeft from '../HandleArrowLeft/HandleArrowLeft.ts'
+import * as HandleArrowRight from '../HandleArrowRight/HandleArrowRight.ts'
 import * as HandleBlur from '../HandleBlur/HandleBlur.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
+import * as HandleClickAt from '../HandleClickAt/HandleClickAt.ts'
+import * as HandleClickCurrentButKeepFocus from '../HandleClickCurrentButKeepFocus/HandleClickCurrentButKeepFocus.ts'
 import * as HandleClickOpenFolder from '../HandleClickOpenFolder/HandleClickOpenFolder.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
@@ -28,6 +32,7 @@ import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconTheme
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
+import * as HandleWheel from '../HandleWheel/HandleWheel.ts'
 import * as HandleWorkspaceChange from '../HandleWorkspaceChange/HandleWorkspaceChange.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as NewFile from '../NewFile/NewFile.ts'
@@ -64,12 +69,12 @@ export const commandMap = {
   'Explorer.getMenuEntries': WrapCommand.wrapCommand(GetMenuEntries.getMenuEntries),
   'Explorer.getVirtualDom': WrapCommand.wrapCommand(GetExplorerVirtualDom.getExplorerVirtualDom),
   'Explorer.getVisibleItems': WrapCommand.wrapCommand(GetVisibleExplorerItems.getVisibleExplorerItems),
-  'Explorer.handleArrowLeft': WrapCommand.wrapCommand(HandleClick.handleArrowLeft),
-  'Explorer.handleArrowRight': WrapCommand.wrapCommand(HandleClick.handleArrowRight),
+  'Explorer.handleArrowLeft': WrapCommand.wrapCommand(HandleArrowLeft.handleArrowLeft),
+  'Explorer.handleArrowRight': WrapCommand.wrapCommand(HandleArrowRight.handleArrowRight),
   'Explorer.handleBlur': WrapCommand.wrapCommand(HandleBlur.handleBlur),
   'Explorer.handleClick': WrapCommand.wrapCommand(HandleClick.handleClick),
-  'Explorer.handleClickAt': WrapCommand.wrapCommand(HandleClick.handleClickAt),
-  'Explorer.handleClickCurrentButKeepFocus': WrapCommand.wrapCommand(HandleClick.handleClickCurrentButKeepFocus),
+  'Explorer.handleClickAt': WrapCommand.wrapCommand(HandleClickAt.handleClickAt),
+  'Explorer.handleClickCurrentButKeepFocus': WrapCommand.wrapCommand(HandleClickCurrentButKeepFocus.handleClickCurrentButKeepFocus),
   'Explorer.handleClickOpenFolder': WrapCommand.wrapCommand(HandleClickOpenFolder.handleClickOpenFolder),
   'Explorer.handleContextMenu': WrapCommand.wrapCommand(HandleContextMenu.handleContextMenu),
   'Explorer.handleCopy': WrapCommand.wrapCommand(HandleCopy.handleCopy),
@@ -80,7 +85,7 @@ export const commandMap = {
   'Explorer.handlePaste': WrapCommand.wrapCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapCommand(HandlePointerDown.handlePointerDown),
   'Explorer.handleUpload': WrapCommand.wrapCommand(HandleUpload.handleUpload),
-  'Explorer.handleWheel': WrapCommand.wrapCommand(HandleClick.handleWheel),
+  'Explorer.handleWheel': WrapCommand.wrapCommand(HandleWheel.handleWheel),
   'Explorer.handleWorkspaceChange': WrapCommand.wrapCommand(HandleWorkspaceChange.handleWorkspaceChange),
   'Explorer.loadContent': WrapCommand.wrapCommand(LoadContent.loadContent),
   'Explorer.newFile': WrapCommand.wrapCommand(NewFile.newFile),

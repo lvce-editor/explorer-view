@@ -2,7 +2,6 @@
   "name": "@lvce-editor/explorer-view",
   "version": "0.0.0-dev",
   "description": "Explorer Worker",
-  "keywords": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lvce-editor/explorer-view.git"
