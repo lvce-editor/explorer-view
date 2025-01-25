@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ContextMenu from '../ContextMenu/ContextMenu.ts'
 import * as MenuEntryId from '../MenuEntryId/MenuEntryId.ts'
 

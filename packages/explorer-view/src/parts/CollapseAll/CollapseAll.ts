@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as IsTopLevel from '../IsTopLevel/IsTopLevel.ts'
 import * as ToCollapsedDirent from '../ToCollapsedDirent/ToCollapsedDirent.ts'
 

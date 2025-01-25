@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 
 const getContaingingFolder = (root: string, dirents: readonly any[], focusedIndex: number, pathSeparator: string): string => {

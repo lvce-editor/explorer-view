@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as UpdateIcon from '../UpdateIcon/UpdateIcon.ts'
 
 export const updateIcons = (state: ExplorerState): ExplorerState => {

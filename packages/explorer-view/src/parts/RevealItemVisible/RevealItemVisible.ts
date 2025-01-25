@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ScrollInto from '../ScrollInto/ScrollInto.ts'
 
 export const revealItemVisible = (state: ExplorerState, index: number): ExplorerState => {

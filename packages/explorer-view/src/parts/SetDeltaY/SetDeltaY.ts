@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
 export const setDeltaY = (state: ExplorerState, deltaY: number): ExplorerState => {
   const { itemHeight, height, items } = state
