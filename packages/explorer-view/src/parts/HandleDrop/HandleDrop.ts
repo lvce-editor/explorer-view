@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import * as HandleDropIndex from '../HandleDropIndex/HandleDropIndex.ts'
 import * as HandleDropRoot from '../HandleDropRoot/HandleDropRoot.ts'

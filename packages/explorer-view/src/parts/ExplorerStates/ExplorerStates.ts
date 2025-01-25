@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
 const states = Object.create(null)
 

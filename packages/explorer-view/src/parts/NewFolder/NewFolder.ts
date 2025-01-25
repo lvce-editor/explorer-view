@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as NewDirent from '../NewDirent/NewDirent.ts'
 

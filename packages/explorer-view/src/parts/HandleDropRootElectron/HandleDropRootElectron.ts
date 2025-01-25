@@ -1,5 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetFilePathElectron from '../GetFilePathElectron/GetFilePathElectron.ts'

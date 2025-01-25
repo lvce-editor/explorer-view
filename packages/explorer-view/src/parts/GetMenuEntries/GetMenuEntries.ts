@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as ViewletExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as MenuEntrySeparator from '../MenuEntrySeparator/MenuEntrySeparator.ts'

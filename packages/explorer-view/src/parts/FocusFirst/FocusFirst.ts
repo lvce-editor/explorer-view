@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { focusIndex } from '../FocusIndex/FocusIndex.ts'
 
 export const focusFirst = (state: ExplorerState): ExplorerState => {

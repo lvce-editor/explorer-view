@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as Assert from '../Assert/Assert.ts'
 import * as ContextMenu from '../ContextMenu/ContextMenu.ts'
 import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPosition.ts'

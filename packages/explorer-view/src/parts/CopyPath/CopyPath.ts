@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 
 export const copyPath = async (state: ExplorerState): Promise<ExplorerState> => {

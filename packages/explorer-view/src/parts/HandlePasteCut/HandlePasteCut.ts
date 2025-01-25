@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import { getBaseName } from '../Path/Path.ts'
 
