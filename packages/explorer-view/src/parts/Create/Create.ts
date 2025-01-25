@@ -4,6 +4,7 @@ import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 import * as Height from '../Height/Height.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 
+// TODO parentUid might ot be needed
 export const create = (id: number, uri: string, x: number, y: number, width: number, height: number, args: any, parentUid: any): any => {
   const state: ExplorerState = {
     uid: id,
