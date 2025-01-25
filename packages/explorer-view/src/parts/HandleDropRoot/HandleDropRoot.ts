@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as HandleDropRootDefault from '../HandleDropRootDefault/HandleDropRootDefault.ts'
 import * as HandleDropRootElectron from '../HandleDropRootElectron/HandleDropRootElectron.ts'
 

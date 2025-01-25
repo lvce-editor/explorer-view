@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as HandleArrowRightDirectoryExpanded from '../HandleArrowRightDirectoryExpanded/HandleArrowRightDirectoryExpanded.ts'
 import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'

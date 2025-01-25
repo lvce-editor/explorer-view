@@ -1,5 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import * as ComputeExplorerRenamedDirent from '../ComputeExplorerRenamedDirent/ComputeExplorerRenamedDirent.ts'
 import * as DirentType from '../DirentType/DirentType.ts'

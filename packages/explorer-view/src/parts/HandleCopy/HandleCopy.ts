@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
 import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 

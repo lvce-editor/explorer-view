@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as Focus from '../Focus/Focus.ts'
 import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
 

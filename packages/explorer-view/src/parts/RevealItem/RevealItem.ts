@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as Assert from '../Assert/Assert.ts'
 import * as GetIndex from '../GetIndex/GetIndex.ts'
 import * as RevealItemHidden from '../RevealItemHidden/RevealItemHidden.ts'

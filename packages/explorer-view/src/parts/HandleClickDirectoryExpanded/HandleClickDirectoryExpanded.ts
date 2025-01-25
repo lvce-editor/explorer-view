@@ -1,5 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'

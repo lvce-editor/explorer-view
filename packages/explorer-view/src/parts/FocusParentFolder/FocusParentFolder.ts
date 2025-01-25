@@ -1,4 +1,4 @@
-import type { ExplorerState } from '../EXplorerState/ExplorerState.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 
