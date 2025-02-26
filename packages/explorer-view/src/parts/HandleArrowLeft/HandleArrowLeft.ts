@@ -1,8 +1,9 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FocusParentFolder from '../FocusParentFolder/FocusParentFolder.ts'
+import * as HandleClickDirectoryExpanded from '../HandleClickDirectoryExpanded/HandleClickDirectoryExpanded.ts'
 
-export const handleArrowLeft = (state: ExplorerState): ExplorerState => {
+export const handleArrowLeft = (state: ExplorerState): ExplorerState | Promise<ExplorerState> => {
   const { items, focusedIndex } = state
   if (focusedIndex === -1) {
     return state
@@ -14,8 +15,7 @@ export const handleArrowLeft = (state: ExplorerState): ExplorerState => {
     case DirentType.SymLinkFile:
       return FocusParentFolder.focusParentFolder(state)
     case DirentType.DirectoryExpanded:
-      // @ts-ignore
-      return handleClickDirectoryExpanded(state, dirent, focusedIndex)
+      return HandleClickDirectoryExpanded.handleClickDirectoryExpanded(state, dirent, focusedIndex, true)
     default:
       // TODO handle expanding directory and cancel file system call to read child dirents
       return state
