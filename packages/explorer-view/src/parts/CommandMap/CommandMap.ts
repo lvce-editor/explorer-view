@@ -43,6 +43,7 @@ import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
 import * as Render from '../Render/Render.ts'
 import * as RenderActions from '../RenderActions/RenderActions.ts'
+import * as RenderEventListeners from '../RenderEventListeners/RenderEventListeners.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
@@ -107,4 +108,5 @@ export const commandMap = {
   'Explorer.render': Render.doRender,
   'Explorer.renderActions': RenderActions.renderActions,
   'Explorer.saveState': SaveState.saveState,
+  'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
 }

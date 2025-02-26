@@ -1,6 +1,6 @@
 export const HandleBlur = 'handleBlur'
 export const HandleClick = 'handleClick'
-export const handleClickOpenFolder = 'handleClickOpenFolder'
+export const HandleClickOpenFolder = 'handleClickOpenFolder'
 export const HandleContextMenu = 'handleContextMenu'
 export const HandleEditingInput = 'handleEditingInput'
 export const HandleFocus = 'handleFocus'
