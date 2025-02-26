@@ -33,7 +33,7 @@ export const getExplorerWelcomeVirtualDom = (isWide: boolean): readonly VirtualD
         isWide ? ClassNames.ButtonWide : ClassNames.ButtonNarrow,
       ),
       childCount: 1,
-      onClick: DomEventListenerFunctions.handleClickOpenFolder,
+      onClick: DomEventListenerFunctions.HandleClickOpenFolder,
     },
     text(ExplorerStrings.openFolder()),
   ]
