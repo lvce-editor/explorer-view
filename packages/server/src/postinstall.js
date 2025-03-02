@@ -29,10 +29,10 @@ const content = await readFile(rendererWorkerMainPath, 'utf-8')
 const explorerWorkerPath = join(root, '.tmp/dist/dist/explorerViewWorkerMain.js')
 
 const remoteUrl = getRemoteUrl(explorerWorkerPath)
-if (!content.includes('// const textSearchWorkerUrl = ')) {
+if (!content.includes('// const explorerWorkerUrl = ')) {
   await cp(rendererWorkerMainPath, rendererWorkerMainPath + '.original')
-  const occurrence = `const explorerWorkerUrl = \`\${assetDir}/packages/explorer-worker/dist/explorerViewWorkerMain.js\``
-  const replacement = `// const explorerWorkerUrl = \`\${assetDir}/packages/explorer-worker/dist/explorerViewWorkerMain.js\`
+  const occurrence = `const explorerWorkerUrl = \`\${assetDir}/packages/explorer-view/dist/explorerViewWorkerMain.js\``
+  const replacement = `// const explorerWorkerUrl = \`\${assetDir}/packages/explorer-view/dist/explorerViewWorkerMain.js\`
   const explorerWorkerUrl = \`${remoteUrl}\``
 
   const newContent = content.replace(occurrence, replacement)
