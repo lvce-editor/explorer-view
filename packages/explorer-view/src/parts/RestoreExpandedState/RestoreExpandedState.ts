@@ -1,7 +1,6 @@
 import * as Character from '../Character/Character.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as PromiseStatus from '../PromiseStatus/PromiseStatus.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
@@ -30,7 +29,7 @@ const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pa
         depth,
         posInSet: i + 1,
         setSize: visibleLength,
-        icon: IconTheme.getFolderIcon({ name }),
+        icon: '',
         name,
         path: childPath,
         type: DirentType.DirectoryExpanded,
@@ -41,7 +40,7 @@ const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pa
         depth,
         posInSet: i + 1,
         setSize: visibleLength,
-        icon: IconTheme.getIcon({ type, name }),
+        icon: '',
         name,
         path: childPath,
         type,

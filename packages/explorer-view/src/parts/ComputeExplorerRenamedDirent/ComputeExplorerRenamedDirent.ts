@@ -1,5 +1,4 @@
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
 
 // TODO use posInSet and setSize properties to compute more effectively
 export const computeExplorerRenamedDirent = (dirents: any, index: number, newName: string): any => {
@@ -12,7 +11,7 @@ export const computeExplorerRenamedDirent = (dirents: any, index: number, newNam
     ...oldDirent,
     name: newName,
     path: oldDirent.path.slice(0, -oldDirent.name.length) + newName,
-    icon: IconTheme.getFileIcon({ name: newName }),
+    icon: '',
   }
   const { depth } = newDirent
   // TODO

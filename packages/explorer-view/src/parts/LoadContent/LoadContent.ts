@@ -5,7 +5,6 @@ import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetSettings from '../GetSettings/GetSettings.ts'
 import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 // TODO viewlet should only have create and refresh functions
@@ -46,7 +45,7 @@ const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pa
         depth,
         posInSet: i + 1,
         setSize: visibleLength,
-        icon: IconTheme.getFolderIcon({ name }),
+        icon: '',
         name,
         path: childPath,
         type: DirentType.DirectoryExpanded,
@@ -57,7 +56,7 @@ const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pa
         depth,
         posInSet: i + 1,
         setSize: visibleLength,
-        icon: IconTheme.getIcon({ type, name }),
+        icon: '',
         name,
         path: childPath,
         type,
