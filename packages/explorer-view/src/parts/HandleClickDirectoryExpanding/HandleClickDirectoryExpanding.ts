@@ -1,7 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
 
 export const handleClickDirectoryExpanding = async (
   state: ExplorerState,
@@ -12,7 +11,7 @@ export const handleClickDirectoryExpanding = async (
   // @ts-ignore
   dirent.type = DirentType.Directory
   // @ts-ignore
-  dirent.icon = IconTheme.getIcon(dirent)
+  dirent.icon = ''
   return {
     ...state,
     focusedIndex: index,

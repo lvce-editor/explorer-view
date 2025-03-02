@@ -3,7 +3,6 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
 
 export const handleClickDirectoryExpanded = async (
   state: ExplorerState,
@@ -15,7 +14,7 @@ export const handleClickDirectoryExpanded = async (
   // @ts-ignore
   dirent.type = DirentType.Directory
   // @ts-ignore
-  dirent.icon = IconTheme.getIcon(dirent)
+  dirent.icon = ''
   const endIndex = GetParentEndIndex.getParentEndIndex(state.items, index)
   const removeCount = endIndex - index - 1
   // TODO race conditions and side effects are everywhere

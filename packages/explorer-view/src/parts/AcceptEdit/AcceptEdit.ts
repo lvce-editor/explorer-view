@@ -5,7 +5,6 @@ import * as ComputeExplorerRenamedDirent from '../ComputeExplorerRenamedDirent/C
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as Path from '../Path/Path.ts'
 
 const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: string): string => {
@@ -50,7 +49,7 @@ const acceptCreate = async (state: ExplorerState, newDirentType: number, createF
     type: newDirentType,
     icon: '',
   }
-  newDirent.icon = IconTheme.getIcon(newDirent)
+  newDirent.icon = ''
   let insertIndex = state.focusedIndex
   let deltaPosInSet = 0
   let posInSet = 1

@@ -1,5 +1,4 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-import * as IconTheme from '../IconTheme/IconTheme.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
 export const toDisplayDirents = (pathSeparator: string, rawDirents: any, parentDirent: any, excluded: any): readonly ExplorerItem[] => {
@@ -14,7 +13,7 @@ export const toDisplayDirents = (pathSeparator: string, rawDirents: any, parentD
       depth: parentDirent.depth + 1,
       type: rawDirent.type,
       path, // TODO storing absolute path might be too costly, could also store relative path here
-      icon: IconTheme.getIcon(rawDirent),
+      icon: '',
     }
   }
   const result = []
