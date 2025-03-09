@@ -9,6 +9,13 @@ import * as GetExplorerWelcomeVirtualDom from '../GetExplorerWelcomeVirtualDom/G
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
+const getActiveDescendant = (focusedIndex: number): string | undefined => {
+  if (focusedIndex >= 0) {
+    return 'TreeItemActive'
+  }
+  return undefined
+}
+
 export const getExplorerVirtualDom = (
   visibleItems: readonly VisibleExplorerItem[],
   focusedIndex: number,
@@ -28,7 +35,7 @@ export const getExplorerVirtualDom = (
       role: AriaRoles.Tree,
       ariaLabel: ExplorerStrings.filesExplorer(),
       childCount: visibleItems.length,
-      ariaActiveDescendant: focusedIndex >= 0 ? 'TreeItemActive' : undefined,
+      ariaActiveDescendant: getActiveDescendant(focusedIndex),
       onFocus: DomEventListenerFunctions.HandleFocus,
       onBlur: DomEventListenerFunctions.HandleBlur,
       onContextMenu: DomEventListenerFunctions.HandleContextMenu,
