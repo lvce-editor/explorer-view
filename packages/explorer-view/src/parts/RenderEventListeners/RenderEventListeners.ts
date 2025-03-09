@@ -17,7 +17,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenersFunctions.HandleClick,
-      params: ['handleClick', 'event.button', 'event.clientX', 'event.clientY'],
+      params: ['handleClickAt', 'event.button', 'event.clientX', 'event.clientY'],
       preventDefault: true,
     },
     {
