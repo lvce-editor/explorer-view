@@ -19,30 +19,30 @@ test('renderEventListeners', () => {
     },
     {
       name: DomEventListenersFunctions.HandleClick,
-      params: ['event.button', 'event.clientX', 'event.clientY'],
+      params: ['handleClick', 'event.button', 'event.clientX', 'event.clientY'],
       preventDefault: true,
     },
     {
       name: DomEventListenersFunctions.HandleClickOpenFolder,
-      params: [],
+      params: ['handleClickOpenFolder'],
       preventDefault: true,
     },
     {
       name: DomEventListenersFunctions.HandlePointerDown,
-      params: ['event.button', 'event.clientX', 'event.clientY'],
+      params: ['handlePointerDown', 'event.button', 'event.clientX', 'event.clientY'],
       preventDefault: true,
     },
     {
       name: DomEventListenersFunctions.HandleEditingInput,
-      params: ['event.target.value'],
+      params: ['handleEditingInput', 'event.target.value'],
     },
     {
       name: DomEventListenersFunctions.HandleContextMenu,
-      params: ['event.button', 'event.clientX', 'event.clientY'],
+      params: ['handleContextMenu', 'event.button', 'event.clientX', 'event.clientY'],
     },
     {
       name: DomEventListenersFunctions.HandleWheel,
-      params: ['event.deltaMode', 'event.deltaY'],
+      params: ['handleWheel', 'event.deltaMode', 'event.deltaY'],
       passive: true,
     },
   ])
