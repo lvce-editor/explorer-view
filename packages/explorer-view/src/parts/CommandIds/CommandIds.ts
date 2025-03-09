@@ -52,6 +52,7 @@ export const commandIds = [
   'scrollDown',
   'scrollUp',
   'setDeltaY',
+  'renderEventListeners',
   'updateEditingValue',
   'updateIcons',
 ]
