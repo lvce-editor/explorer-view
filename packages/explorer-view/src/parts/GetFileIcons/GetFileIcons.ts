@@ -15,7 +15,8 @@ export const getFileIcons = async (
   const missingRequests = GetMissingIconRequests.getMissingIconRequests(dirents, fileIconCache)
   const newIcons = await RequestFileIcons.requestFileIcons(missingRequests)
   const newFileIconCache = UpdateIconCache.updateIconCache(fileIconCache, missingRequests, newIcons)
-  const icons = GetFileIconsCached.getIconsCached(dirents, newFileIconCache)
+  const paths = dirents.map((dirent) => dirent.path)
+  const icons = GetFileIconsCached.getIconsCached(paths, newFileIconCache)
   return {
     icons,
     newFileIconCache,
