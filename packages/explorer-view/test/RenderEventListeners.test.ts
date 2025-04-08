@@ -6,15 +6,15 @@ test('renderEventListeners', () => {
   const eventListeners = RenderEventListeners.renderEventListeners()
   expect(eventListeners).toEqual([
     {
-      name: DomEventListenersFunctions.HandleBlur,
+      name: DomEventListenersFunctions.HandleListBlur,
       params: ['handleBlur'],
     },
     {
-      name: DomEventListenersFunctions.HandleFocus,
+      name: DomEventListenersFunctions.HandleListFocus,
       params: ['handleFocus', 'event.isTrusted', 'event.target.className'],
     },
     {
-      name: DomEventListenersFunctions.HandleBlur,
+      name: DomEventListenersFunctions.HandleListBlur,
       params: ['handleBlur'],
     },
     {
