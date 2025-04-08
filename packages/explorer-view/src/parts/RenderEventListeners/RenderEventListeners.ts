@@ -4,15 +4,15 @@ import * as DomEventListenersFunctions from '../DomEventListenerFunctions/DomEve
 export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
-      name: DomEventListenersFunctions.HandleBlur,
+      name: DomEventListenersFunctions.HandleListBlur,
       params: ['handleBlur'],
     },
     {
-      name: DomEventListenersFunctions.HandleFocus,
+      name: DomEventListenersFunctions.HandleListFocus,
       params: ['handleFocus', 'event.isTrusted', 'event.target.className'],
     },
     {
-      name: DomEventListenersFunctions.HandleBlur,
+      name: DomEventListenersFunctions.HandleListBlur,
       params: ['handleBlur'],
     },
     {
