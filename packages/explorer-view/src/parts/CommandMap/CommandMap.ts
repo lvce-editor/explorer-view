@@ -111,7 +111,7 @@ export const commandMap = {
   'Explorer.create': Create.create,
   'Explorer.diff2': Diff2.diff2,
   'Explorer.render2': Render2.render2,
-  'Explorer.renderActions2': Render2.render2,
+  'Explorer.renderActions2': RenderActions2.renderActions,
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
   'Explorer.saveState': SaveState.saveState,
 
