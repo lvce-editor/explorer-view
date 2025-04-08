@@ -5,7 +5,10 @@ export const applyRender = (oldState: ExplorerState, newState: ExplorerState, di
   const commands = []
   for (const item of diffResult) {
     const fn = GetRenderer.getRenderer(item)
-    commands.push(fn(oldState, newState))
+    const result = fn(oldState, newState)
+    if (result.length > 0) {
+      commands.push(result)
+    }
   }
   return commands
 }
