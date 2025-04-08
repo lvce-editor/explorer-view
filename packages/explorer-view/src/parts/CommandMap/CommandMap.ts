@@ -4,6 +4,7 @@ import * as CollapseAll from '../CollapseAll/CollapseAll.ts'
 import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
 import * as Create from '../Create/Create.ts'
+import * as Diff2 from '../Diff2/Diff2.ts'
 import * as Diff from '../Diff/Diff.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as ExpandRecursively from '../ExpandRecursively/ExpandRecursively.ts'
@@ -42,6 +43,7 @@ import * as NewFolder from '../NewFolder/NewFolder.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
+import * as Render2 from '../Render2/Render2.ts'
 import * as Render from '../Render/Render.ts'
 import * as RenderActions from '../RenderActions/RenderActions.ts'
 import * as RenderEventListeners from '../RenderEventListeners/RenderEventListeners.ts'
@@ -104,11 +106,16 @@ export const commandMap = {
   'Explorer.updateEditingValue': WrapCommand.wrapCommand(UpdateEditingValue.updateEditingValue),
   'Explorer.updateIcons': WrapCommand.wrapCommand(UpdateIcons.updateIcons),
 
+  'Explorer.render2': Render2.render2,
+
   // not wrapped
   'Explorer.create': Create.create,
-  'Explorer.render': Render.doRender,
   'Explorer.renderActions': RenderActions.renderActions,
   'Explorer.saveState': SaveState.saveState,
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
+  'Explorer.diff2': Diff2.diff2,
+
+  // deprecated
+  'Explorer.render': Render.doRender,
   'Explorer.diff': Diff.diff,
 }
