@@ -5,7 +5,6 @@ import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
 import * as Create from '../Create/Create.ts'
 import * as Diff2 from '../Diff2/Diff2.ts'
-import * as Diff from '../Diff/Diff.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as ExpandRecursively from '../ExpandRecursively/ExpandRecursively.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
@@ -13,12 +12,9 @@ import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as FocusLast from '../FocusLast/FocusLast.ts'
 import * as FocusNext from '../FocusNext/FocusNext.ts'
 import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
-import * as GetActions from '../GetActions/GetActions.ts'
 import * as GetCommandIds from '../GetCommandIds/GetCommandIds.ts'
-import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetMenuEntries from '../GetMenuEntries/GetMenuEntries.ts'
-import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as HandleArrowLeft from '../HandleArrowLeft/HandleArrowLeft.ts'
 import * as HandleArrowRight from '../HandleArrowRight/HandleArrowRight.ts'
 import * as HandleBlur from '../HandleBlur/HandleBlur.ts'
@@ -44,9 +40,7 @@ import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFol
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
 import * as Render2 from '../Render2/Render2.ts'
-import * as Render from '../Render/Render.ts'
 import * as RenderActions2 from '../RenderActions2/RenderActions2.ts'
-import * as RenderActions from '../RenderActions/RenderActions.ts'
 import * as RenderEventListeners from '../RenderEventListeners/RenderEventListeners.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
@@ -111,12 +105,4 @@ export const commandMap = {
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
   'Explorer.saveState': SaveState.saveState,
   'Explorer.terminate': Terminate.terminate,
-
-  // deprecated
-  'Explorer.getVirtualDom': GetExplorerVirtualDom.getExplorerVirtualDom,
-  'Explorer.getVisibleItems': GetVisibleExplorerItems.getVisibleExplorerItems,
-  'Explorer.getActions': GetActions.getActions,
-  'Explorer.renderActions': RenderActions.renderActions,
-  'Explorer.render': Render.doRender,
-  'Explorer.diff': Diff.diff,
 }
