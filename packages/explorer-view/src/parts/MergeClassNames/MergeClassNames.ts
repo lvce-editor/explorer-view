@@ -1,3 +1,1 @@
-export const mergeClassNames = (...classNames: string[]): string => {
-  return classNames.filter(Boolean).join(' ')
-}
+export { mergeClassNames } from '@lvce-editor/virtual-dom-worker'
