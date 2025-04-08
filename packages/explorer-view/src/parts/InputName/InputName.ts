@@ -1,1 +1,1 @@
-export const ExplorerInput = 'ExploreerInput'
+export const ExplorerInput = 'ExplorerInput'
