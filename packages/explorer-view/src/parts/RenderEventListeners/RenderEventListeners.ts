@@ -37,6 +37,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     {
       name: DomEventListenersFunctions.HandleContextMenu,
       params: ['handleContextMenu', 'event.button', 'event.clientX', 'event.clientY'],
+      preventDefault: true,
     },
     {
       name: DomEventListenersFunctions.HandleWheel,
