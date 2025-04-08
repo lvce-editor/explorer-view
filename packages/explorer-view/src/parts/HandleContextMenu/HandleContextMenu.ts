@@ -1,13 +1,8 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as ViewletExplorerHandleContextMenuKeyBoard from '../HandleContextMenuKeyboard/HandleContextMenuKeyboard.ts'
-import * as ViewletExplorerHandleContextMenuMouseAt from '../HandleContextMenuMouseAt/HandleContextMenuMouseAt.ts'
-import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
+import * as GetContextMenuHandler from '../GetContextMenuHandler/GetContextMenuHandler.ts'
 
-export const handleContextMenu = (state: ExplorerState, button: number, x: number, y: number): Promise<ExplorerState> => {
-  switch (button) {
-    case MouseEventType.Keyboard:
-      return ViewletExplorerHandleContextMenuKeyBoard.handleContextMenuKeyboard(state)
-    default:
-      return ViewletExplorerHandleContextMenuMouseAt.handleContextMenuMouseAt(state, x, y)
-  }
+export const handleContextMenu = async (state: ExplorerState, button: number, x: number, y: number): Promise<ExplorerState> => {
+  const fn = GetContextMenuHandler.getContextMenuHandler(button)
+  const newState = await fn(state, x, y)
+  return newState
 }
