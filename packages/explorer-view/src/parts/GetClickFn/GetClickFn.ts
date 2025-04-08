@@ -1,5 +1,6 @@
 import type { ClickHandler } from '../ClickHandler/ClickHandler.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
+import { ExplorerError } from '../ExplorerError/ExplorerError.ts'
 import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
 import * as HandleClickDirectoryExpanded from '../HandleClickDirectoryExpanded/HandleClickDirectoryExpanded.ts'
 import * as HandleClickDirectoryExpanding from '../HandleClickDirectoryExpanding/HandleClickDirectoryExpanding.ts'
@@ -37,12 +38,12 @@ export const getClickFn = (direntType: number): ClickHandler => {
     case DirentType.Symlink:
       return HandleClickSymlink.handleClickSymLink
     case DirentType.CharacterDevice:
-      throw new Error('Cannot open character device files')
+      throw new ExplorerError('Cannot open character device files')
     case DirentType.BlockDevice:
-      throw new Error('Cannot open block device files')
+      throw new ExplorerError('Cannot open block device files')
     case DirentType.Socket:
-      throw new Error('Cannot open socket files')
+      throw new ExplorerError('Cannot open socket files')
     default:
-      throw new Error(`unsupported dirent type ${direntType}`)
+      throw new ExplorerError(`unsupported dirent type ${direntType}`)
   }
 }
