@@ -45,6 +45,7 @@ import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
 import * as Render2 from '../Render2/Render2.ts'
 import * as Render from '../Render/Render.ts'
+import * as RenderActions2 from '../RenderActions2/RenderActions2.ts'
 import * as RenderActions from '../RenderActions/RenderActions.ts'
 import * as RenderEventListeners from '../RenderEventListeners/RenderEventListeners.ts'
 import * as RestoreState from '../RestoreState/RestoreState.ts'
@@ -106,16 +107,16 @@ export const commandMap = {
   'Explorer.updateEditingValue': WrapCommand.wrapCommand(UpdateEditingValue.updateEditingValue),
   'Explorer.updateIcons': WrapCommand.wrapCommand(UpdateIcons.updateIcons),
 
-  'Explorer.render2': Render2.render2,
-
   // not wrapped
   'Explorer.create': Create.create,
-  'Explorer.renderActions': RenderActions.renderActions,
-  'Explorer.saveState': SaveState.saveState,
-  'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
   'Explorer.diff2': Diff2.diff2,
+  'Explorer.render2': Render2.render2,
+  'Explorer.renderActions2': RenderActions2.renderActions,
+  'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
+  'Explorer.saveState': SaveState.saveState,
 
   // deprecated
+  'Explorer.renderActions': RenderActions.renderActions,
   'Explorer.render': Render.doRender,
   'Explorer.diff': Diff.diff,
 }
