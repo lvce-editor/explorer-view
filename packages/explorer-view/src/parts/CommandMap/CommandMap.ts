@@ -43,6 +43,7 @@ import * as NewFolder from '../NewFolder/NewFolder.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
+import * as Render2 from '../Render2/Render2.ts'
 import * as Render from '../Render/Render.ts'
 import * as RenderActions from '../RenderActions/RenderActions.ts'
 import * as RenderEventListeners from '../RenderEventListeners/RenderEventListeners.ts'
@@ -104,6 +105,8 @@ export const commandMap = {
   'Explorer.terminate': WrapCommand.wrapCommand(Terminate.terminate),
   'Explorer.updateEditingValue': WrapCommand.wrapCommand(UpdateEditingValue.updateEditingValue),
   'Explorer.updateIcons': WrapCommand.wrapCommand(UpdateIcons.updateIcons),
+
+  'Explorer.render2': Render2.render2,
 
   // not wrapped
   'Explorer.create': Create.create,
