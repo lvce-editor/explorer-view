@@ -1,16 +1,23 @@
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 
-export const wrapCommand = (fn: any): any => {
+export interface WrappedFn {
+  (uid: number, ...args: readonly any[]): Promise<void>
+}
+
+interface Fn {
+  (state: ExplorerState, ...args: readonly any[]): ExplorerState | Promise<ExplorerState>
+}
+
+export const wrapCommand = (fn: Fn): WrappedFn => {
   const wrapped = async (uid: number, ...args: readonly any[]): Promise<void> => {
-    if (typeof uid === 'number') {
-      const { newState } = ExplorerStates.get(uid)
-      const newerState = await fn(newState, ...args)
-      ExplorerStates.set(uid, newState, newerState)
-    } else {
-      // deprecated
-      const newerState = await fn(uid, ...args)
-      return newerState
+    const { newState } = ExplorerStates.get(uid)
+    const newerState = await fn(newState, ...args)
+    if (newState === newerState) {
+      return
     }
+    const latest = ExplorerStates.get(uid)
+    ExplorerStates.set(uid, latest.oldState, newerState)
   }
   return wrapped
 }
