@@ -2,12 +2,12 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
 export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pathSeparator: any): readonly any[] => {
-  const children = map[path]
+  let children = map[path]
   if (!children) {
     return []
   }
   const dirents = []
-  SortExplorerItems.sortExplorerItems(children)
+  children = SortExplorerItems.sortExplorerItems(children)
   const visible = []
   const displayRoot = path.endsWith(pathSeparator) ? path : path + pathSeparator
   for (const child of children) {
