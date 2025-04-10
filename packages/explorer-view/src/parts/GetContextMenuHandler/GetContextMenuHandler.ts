@@ -3,7 +3,7 @@ import * as ViewletExplorerHandleContextMenuKeyBoard from '../HandleContextMenuK
 import * as ViewletExplorerHandleContextMenuMouseAt from '../HandleContextMenuMouseAt/HandleContextMenuMouseAt.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 
-export interface ContextMenuHandler {
+interface ContextMenuHandler {
   (state: ExplorerState, x: number, y: number): Promise<ExplorerState>
 }
 
