@@ -1,3 +1,4 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
@@ -5,7 +6,7 @@ import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 import * as HandleDropRoot from '../HandleDropRoot/HandleDropRoot.ts'
 
-const getEndIndex = (items: readonly any[], index: number, dirent: any): number => {
+const getEndIndex = (items: readonly ExplorerItem[], index: number, dirent: ExplorerItem): number => {
   for (let i = index + 1; i < items.length; i++) {
     if (items[i].depth === dirent.depth) {
       return i
@@ -14,14 +15,19 @@ const getEndIndex = (items: readonly any[], index: number, dirent: any): number 
   return items.length
 }
 
-const getMergedDirents = (items: readonly any[], index: number, dirent: any, childDirents: readonly any[]): readonly any[] => {
+const getMergedDirents = (
+  items: readonly ExplorerItem[],
+  index: number,
+  dirent: ExplorerItem,
+  childDirents: readonly ExplorerItem[],
+): readonly ExplorerItem[] => {
   const startIndex = index
   const endIndex = getEndIndex(items, index, dirent)
   const mergedDirents = [...items.slice(0, startIndex), { ...dirent, type: DirentType.DirectoryExpanded }, ...childDirents, ...items.slice(endIndex)]
   return mergedDirents
 }
 
-const handleDropIntoFolder = async (state: ExplorerState, dirent: any, index: number, files: readonly any[]): Promise<ExplorerState> => {
+const handleDropIntoFolder = async (state: ExplorerState, dirent: ExplorerItem, index: number, files: readonly any[]): Promise<ExplorerState> => {
   const { pathSeparator, items } = state
   for (const file of files) {
     // TODO path basename
@@ -39,7 +45,7 @@ const handleDropIntoFolder = async (state: ExplorerState, dirent: any, index: nu
   }
 }
 
-const handleDropIntoFile = (state: ExplorerState, dirent: any, index: number, files: readonly any[]): Promise<ExplorerState> => {
+const handleDropIntoFile = (state: ExplorerState, dirent: ExplorerItem, index: number, files: readonly any[]): Promise<ExplorerState> => {
   const { items } = state
   const parentIndex = GetParentStartIndex.getParentStartIndex(items, index)
   if (parentIndex === -1) {
