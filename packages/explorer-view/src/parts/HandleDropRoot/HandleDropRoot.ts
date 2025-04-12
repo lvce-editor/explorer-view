@@ -15,6 +15,6 @@ const getModule = (isElectron: boolean): DropHandler => {
 
 export const handleDropRoot = async (state: ExplorerState, files: readonly any[]): Promise<ExplorerState> => {
   // @ts-ignore
-  const fn = await getModule(state.isElectron)
+  const fn = getModule(state.isElectron)
   return fn(state, files)
 }
