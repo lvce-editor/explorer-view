@@ -14,7 +14,7 @@ export const create = (
   height: number,
   args: any,
   parentUid: any,
-  platform: number,
+  platform: number = 0,
 ): any => {
   const state: ExplorerState = {
     uid: id,
