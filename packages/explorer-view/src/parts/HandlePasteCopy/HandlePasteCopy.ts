@@ -4,7 +4,7 @@ import * as Path from '../Path/Path.ts'
 import { getBaseName } from '../Path/Path.ts'
 import { updateRoot } from '../UpdateRoot/UpdateRoot.ts'
 
-export const handlePasteCopy = async (state: ExplorerState, nativeFiles: any): Promise<any> => {
+export const handlePasteCopy = async (state: ExplorerState, nativeFiles: any): Promise<ExplorerState> => {
   // TODO handle pasting files into nested folder
   // TODO handle pasting files into symlink
   // TODO handle pasting files into broken symlink
