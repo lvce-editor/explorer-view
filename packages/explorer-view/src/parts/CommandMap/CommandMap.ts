@@ -89,7 +89,7 @@ export const commandMap = {
   'Explorer.openContainingFolder': WrapCommand.wrapCommand(OpenContainingFolder.openContainingFolder),
   'Explorer.removeDirent': WrapCommand.wrapCommand(RemoveDirent.removeDirent),
   'Explorer.renameDirent': WrapCommand.wrapCommand(RenameDirent.renameDirent),
-  'Explorer.restoreState': WrapCommand.wrapCommand(RestoreState.restoreState),
+  'Explorer.restoreState': RestoreState.restoreState,
   'Explorer.revealItem': WrapCommand.wrapCommand(RevealItem.revealItem),
   'Explorer.setDeltaY': WrapCommand.wrapCommand(SetDeltaY.setDeltaY),
   'Explorer.updateEditingValue': WrapCommand.wrapCommand(UpdateEditingValue.updateEditingValue),
