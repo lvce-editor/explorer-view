@@ -1,6 +1,6 @@
 import * as DirentType from '../DirentType/DirentType.ts'
 
-export const getSymlinkType = (type: any): any => {
+export const getSymlinkType = (type: number): number => {
   switch (type) {
     case DirentType.File:
       return DirentType.SymLinkFile
