@@ -2,7 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CanBeDroppedInto from '../CanBeDroppedInto/CanBeDroppedInto.ts'
 import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 
-export const getNewDropTargets = (state: ExplorerState, x: number, y: number): readonly any[] => {
+export const getNewDropTargets = (state: ExplorerState, x: number, y: number): readonly number[] => {
   const { items } = state
   const index = getIndexFromPosition(state, x, y)
   if (index === -1) {
