@@ -1,4 +1,8 @@
-export const uploadFileSystemHandles = async (root: string, pathSeparator: string, fileSystemHandles: FileList): Promise<boolean> => {
+export const uploadFileSystemHandles = async (
+  root: string,
+  pathSeparator: string,
+  fileSystemHandles: readonly FileSystemHandle[],
+): Promise<boolean> => {
   // console.log({ fileSystemHandles })
   // @ts-ignore
   const files: readonly FileSystemHandle[] = [...fileSystemHandles]
