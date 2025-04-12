@@ -26,8 +26,6 @@ export default [
       'prefer-destructuring': 'off',
       'no-console': 'off',
       'unicorn/no-for-loop': 'off',
-
-      '@typescript-eslint/explicit-function-return-type': 'off',
     },
   },
 ]
