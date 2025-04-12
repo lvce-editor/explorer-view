@@ -5,7 +5,7 @@ import * as HandleDropRoot from '../HandleDropRoot/HandleDropRoot.ts'
 import { VError } from '../VError/VError.ts'
 
 interface DropHandler {
-  (state: ExplorerState, files: any, index: number): Promise<ExplorerState>
+  (state: ExplorerState, files: FileList, index: number): Promise<ExplorerState>
 }
 
 const getDropHandler = (index: number): DropHandler => {
@@ -17,7 +17,7 @@ const getDropHandler = (index: number): DropHandler => {
   }
 }
 
-export const handleDrop = async (state: ExplorerState, x: number, y: number, files: any): Promise<ExplorerState> => {
+export const handleDrop = async (state: ExplorerState, x: number, y: number, files: FileList): Promise<ExplorerState> => {
   try {
     const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
     const fn = getDropHandler(index)
