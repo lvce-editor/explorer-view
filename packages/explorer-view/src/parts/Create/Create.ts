@@ -5,7 +5,17 @@ import * as Height from '../Height/Height.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 
 // TODO parentUid might ot be needed
-export const create = (id: number, uri: string, x: number, y: number, width: number, height: number, args: any, parentUid: any): any => {
+export const create = (
+  id: number,
+  uri: string,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  args: any,
+  parentUid: any,
+  platform: number = 0,
+): any => {
   const state: ExplorerState = {
     uid: id,
     parentUid,
@@ -33,6 +43,7 @@ export const create = (id: number, uri: string, x: number, y: number, width: num
     fileIconCache: Object.create(null),
     useChevrons: false,
     icons: [],
+    platform,
   }
   ExplorerStates.set(state.uid, state, state)
   return state
