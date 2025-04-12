@@ -5,17 +5,17 @@ import { isFileHandle } from '../IsFileHandle/IsFileHandle.ts'
 export const createUploadTree = async (root: string, fileHandles: readonly FileSystemHandle[]): Promise<any> => {
   const uploadTree = Object.create(null)
   for (const fileHandle of fileHandles) {
-    const path = `${root}/${fileHandle.name}`
+    const name = fileHandle.name
     if (isDirectoryHandle(fileHandle)) {
       // @ts-ignore
       const values = fileHandle.values()
       const children = await Arrays.fromAsync(values)
-      const childTree = await createUploadTree(path, children)
-      uploadTree[path] = childTree
+      const childTree = await createUploadTree(name, children)
+      uploadTree[name] = childTree
     } else if (isFileHandle(fileHandle)) {
       const file = await fileHandle.getFile()
       const text = await file.text()
-      uploadTree[path] = text
+      uploadTree[name] = text
     }
   }
   return uploadTree
