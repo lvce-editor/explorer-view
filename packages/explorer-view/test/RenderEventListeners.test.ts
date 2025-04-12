@@ -53,7 +53,7 @@ test('renderEventListeners', () => {
     },
     {
       name: DomEventListenersFunctions.HandleDrop,
-      params: ['handleDrop', 'event.clientX', 'event.clientY', 'event.files'],
+      params: ['handleDrop', 'event.clientX', 'event.clientY', 'event.dataTransfer.files'],
       preventDefault: true,
     },
   ])
