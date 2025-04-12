@@ -6,7 +6,7 @@ import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
 
-const getPathPartsToReveal = (root: any, pathParts: any, dirents: readonly ExplorerItem[]): any => {
+const getPathPartsToReveal = (root: any, pathParts: readonly any[], dirents: readonly ExplorerItem[]): any => {
   for (let i = 0; i < pathParts.length; i++) {
     const pathPart = pathParts[i]
     const index = getIndex(dirents, pathPart.uri)
@@ -18,12 +18,12 @@ const getPathPartsToReveal = (root: any, pathParts: any, dirents: readonly Explo
   return pathParts
 }
 
-const getPathPartChildren = (pathPart: any): any => {
-  const children = getChildDirents(pathPart.pathSeparator, pathPart)
+const getPathPartChildren = async (pathPart: any): Promise<readonly any[]> => {
+  const children = await getChildDirents(pathPart.pathSeparator, pathPart)
   return children
 }
 
-const mergeVisibleWithHiddenItems = (visibleItems: any, hiddenItems: any): any => {
+const mergeVisibleWithHiddenItems = (visibleItems: readonly any[], hiddenItems: readonly any[]): readonly any[] => {
   const merged = [...hiddenItems]
   const seen = Object.create(null)
   const unique = []

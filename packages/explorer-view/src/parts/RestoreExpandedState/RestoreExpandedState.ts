@@ -3,7 +3,13 @@ import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import { getSavedChildDirents } from '../GetSavedChildDirents/GetSavedChildDirents.ts'
 import * as PromiseStatus from '../PromiseStatus/PromiseStatus.ts'
 
-const createDirents = (root: any, expandedDirentPaths: any, expandedDirentChildren: any, excluded: any, pathSeparator: any): any => {
+const createDirents = (
+  root: string,
+  expandedDirentPaths: readonly string[],
+  expandedDirentChildren: any,
+  excluded: readonly string[],
+  pathSeparator: string,
+): readonly any[] => {
   const dirents = []
   const map = Object.create(null)
   for (let i = 0; i < expandedDirentPaths.length; i++) {
@@ -17,7 +23,7 @@ const createDirents = (root: any, expandedDirentPaths: any, expandedDirentChildr
   return dirents
 }
 
-const getSavedExpandedPaths = (savedState: any, root: any): any => {
+const getSavedExpandedPaths = (savedState: any, root: string): any => {
   if (savedState && savedState.root !== root) {
     return []
   }

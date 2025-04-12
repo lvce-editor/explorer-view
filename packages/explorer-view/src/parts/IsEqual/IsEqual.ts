@@ -1,4 +1,4 @@
-export const isEqual = (a: any, b: any): boolean => {
+export const isEqual = (a: readonly any[], b: readonly any[]): boolean => {
   if (a.length !== b.length) {
     return false
   }
