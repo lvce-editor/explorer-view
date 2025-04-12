@@ -1,11 +1,6 @@
-import type { FileOperation } from '../GetFileOperations/GetFileOperations.ts'
 import { applyFileOperations } from '../ApplyFileOperations/ApplyFileOperations.ts'
+import { getFileOperationsElectron } from '../GetFileOperationsElectron/GetFileOperationsElectron.ts'
 import { getFilePaths } from '../GetFilePaths/GetFilePaths.ts'
-
-const getOperations = (root: string, paths: readonly string[]): readonly FileOperation[] => {
-  // TODO
-  return []
-}
 
 // TODO copy files in parallel
 export const copyFilesElectron = async (
@@ -15,6 +10,6 @@ export const copyFilesElectron = async (
   files: readonly File[],
 ): Promise<void> => {
   const paths = await getFilePaths(files)
-  const operations = getOperations(root, paths)
+  const operations = await getFileOperationsElectron(root, paths, fileHandles)
   await applyFileOperations(operations)
 }
