@@ -1,4 +1,4 @@
-import type { FileOperation } from '../GetFileOperations/GetFileOperations.ts'
+import type { FileOperation } from '../FileOperation/FileOperation.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 
 const applyOperation = (operation: FileOperation): Promise<void> => {
