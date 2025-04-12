@@ -1,6 +1,6 @@
 import type { Rpc } from '@lvce-editor/rpc'
 import { test, expect, jest } from '@jest/globals'
-import type { FileOperation } from '../src/parts/GetFileOperations/GetFileOperations.ts'
+import type { FileOperation } from '../src/parts/FileOperation/FileOperation.ts'
 import { applyFileOperations } from '../src/parts/ApplyFileOperations/ApplyFileOperations.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
