@@ -16,9 +16,9 @@ const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Pr
   return mergedDirents
 }
 
-export const handleDrop = async (state: ExplorerState, files: readonly FileSystemHandle[]): Promise<ExplorerState> => {
+export const handleDrop = async (state: ExplorerState, fileHandles: readonly FileSystemHandle[], files: readonly File[]): Promise<ExplorerState> => {
   const { root, pathSeparator, items } = state
-  await copyFilesElectron(root, pathSeparator, files)
+  await copyFilesElectron(root, pathSeparator, fileHandles)
   const mergedDirents = await getMergedDirents(root, pathSeparator, items)
   return {
     ...state,

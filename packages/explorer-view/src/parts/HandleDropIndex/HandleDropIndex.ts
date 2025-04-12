@@ -31,11 +31,12 @@ const handleDropIntoFolder = async (
   state: ExplorerState,
   dirent: ExplorerItem,
   index: number,
-  files: readonly FileSystemHandle[],
+  fileHandles: readonly FileSystemHandle[],
+  files: readonly File[],
 ): Promise<ExplorerState> => {
   const { pathSeparator, items } = state
   // @ts-ignore
-  for (const file of files) {
+  for (const file of fileHandles) {
     // TODO path basename
     const baseName = file.name
     const to = dirent.path + pathSeparator + baseName
@@ -56,18 +57,24 @@ const handleDropIntoFile = (
   state: ExplorerState,
   dirent: ExplorerItem,
   index: number,
-  files: readonly FileSystemHandle[],
+  fileHandles: readonly FileSystemHandle[],
+  files: readonly File[],
 ): Promise<ExplorerState> => {
   const { items } = state
   const parentIndex = GetParentStartIndex.getParentStartIndex(items, index)
   if (parentIndex === -1) {
-    return HandleDropRoot.handleDropRoot(state, files)
+    return HandleDropRoot.handleDropRoot(state, fileHandles, files)
   }
   // @ts-ignore
   return handleDropIndex(parentIndex)
 }
 
-export const handleDropIndex = async (state: ExplorerState, files: readonly FileSystemHandle[], index: number): Promise<ExplorerState> => {
+export const handleDropIndex = async (
+  state: ExplorerState,
+  fileHandles: readonly FileSystemHandle[],
+  files: readonly File[],
+  index: number,
+): Promise<ExplorerState> => {
   const { items } = state
   const dirent = items[index]
   // TODO if it is a file, drop into the folder of the file
@@ -76,9 +83,9 @@ export const handleDropIndex = async (state: ExplorerState, files: readonly File
   switch (dirent.type) {
     case DirentType.Directory:
     case DirentType.DirectoryExpanded:
-      return handleDropIntoFolder(state, dirent, index, files)
+      return handleDropIntoFolder(state, dirent, index, fileHandles, files)
     case DirentType.File:
-      return handleDropIntoFile(state, dirent, index, files)
+      return handleDropIntoFile(state, dirent, index, fileHandles, files)
     default:
       return state
   }
