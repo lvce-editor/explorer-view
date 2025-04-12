@@ -1,22 +1,10 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as FileSystem from '../FileSystem/FileSystem.ts'
+import { copyFilesElectron } from '../CopyFilesElectron/CopyFilesElectron.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
-import * as GetFilePathElectron from '../GetFilePathElectron/GetFilePathElectron.ts'
-import * as Path from '../Path/Path.ts'
 
 const mergeDirents = (oldDirents: readonly ExplorerItem[], newDirents: readonly ExplorerItem[]): any => {
   return newDirents
-}
-
-// TODO copy files in parallel
-const copyFilesElectron = async (root: any, pathSeparator: any, files: any): Promise<any> => {
-  for (const file of files) {
-    const from = await GetFilePathElectron.getFilePathElectron(file)
-    // const from = file.path
-    const to = Path.join(pathSeparator, root, file.name)
-    await FileSystem.copy(from, to)
-  }
 }
 
 const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Promise<any> => {
