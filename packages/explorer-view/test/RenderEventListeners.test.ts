@@ -50,5 +50,10 @@ test('renderEventListeners', () => {
       name: DomEventListenersFunctions.HandleDragOver,
       params: ['handleDragOver', 'event.clientX', 'event.clientY'],
     },
+    {
+      name: DomEventListenersFunctions.HandleDrop,
+      params: ['handleDragOver', 'event.clientX', 'event.clientY', 'event.files'],
+      preventDefault: true,
+    },
   ])
 })
