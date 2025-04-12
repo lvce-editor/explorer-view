@@ -1,4 +1,5 @@
 import { getChildHandles } from '../GetChildHandles/GetChildHandles.ts'
+import { getFileHandleText } from '../GetFileHandleText/GetFileHandleText.ts'
 import { isDirectoryHandle } from '../IsDirectoryHandle/IsDirectoryHandle.ts'
 import { isFileHandle } from '../IsFileHandle/IsFileHandle.ts'
 
@@ -11,8 +12,7 @@ export const createUploadTree = async (root: string, fileHandles: readonly FileS
       const childTree = await createUploadTree(path, children)
       uploadTree[path] = childTree
     } else if (isFileHandle(fileHandle)) {
-      const file = await fileHandle.getFile()
-      const text = await file.text()
+      const text = await getFileHandleText(fileHandle)
       uploadTree[path] = text
     }
   }
