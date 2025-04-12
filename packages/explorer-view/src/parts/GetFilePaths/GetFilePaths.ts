@@ -6,7 +6,6 @@ const getFilepath = async (fileHandle: FileSystemHandle): Promise<string> => {
     const file = await fileHandle.getFile()
     return GetFilePathElectron.getFilePathElectron(file)
   }
-  console.log({ fileHandle })
   return ''
 }
 
