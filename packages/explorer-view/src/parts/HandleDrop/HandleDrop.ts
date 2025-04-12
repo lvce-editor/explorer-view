@@ -9,10 +9,11 @@ export const handleDrop = async (
   x: number,
   y: number,
   fileIds: readonly number[],
-  files: readonly File[],
+  fileList: FileList,
 ): Promise<ExplorerState> => {
   try {
-    console.log({ files2: files })
+    // @ts-ignore
+    const files = [...fileList]
     const fileHandles = await getFileHandles(fileIds)
     const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
     const fn = getDropHandler(index)
