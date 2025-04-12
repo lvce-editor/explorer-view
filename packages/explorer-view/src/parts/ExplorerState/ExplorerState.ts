@@ -28,4 +28,5 @@ export interface ExplorerState {
   readonly icons: readonly string[]
   readonly useChevrons: boolean
   readonly fileIconCache: FileIconCache
+  readonly platform: number
 }
