@@ -3,6 +3,7 @@ import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as GetChevronType from '../GetChevronType/GetChevronType.ts'
 import * as GetExpandedType from '../GetExpandedType/GetExpandedType.ts'
+import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
 import * as GetTreeItemIndentWithChevron from '../GetTreeItemIndentWithChevron/GetTreeItemIndentWithChevron.ts'
 
@@ -30,7 +31,7 @@ export const getVisibleExplorerItems = (
     const indent = indentFn(item.depth, chevron)
     const isFocused = i === focusedIndex
     const id = isFocused ? 'TreeItemActive' : undefined
-    const className = isFocused ? ClassNames.TreeItem + ' ' + ClassNames.TreeItemActive : ClassNames.TreeItem
+    const className = isFocused ? MergeClassNames.mergeClassNames(ClassNames.TreeItem, ClassNames.TreeItemActive) : ClassNames.TreeItem
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]
 
