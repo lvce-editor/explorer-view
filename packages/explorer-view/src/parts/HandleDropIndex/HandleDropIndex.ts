@@ -27,8 +27,9 @@ const getMergedDirents = (
   return mergedDirents
 }
 
-const handleDropIntoFolder = async (state: ExplorerState, dirent: ExplorerItem, index: number, files: readonly any[]): Promise<ExplorerState> => {
+const handleDropIntoFolder = async (state: ExplorerState, dirent: ExplorerItem, index: number, files: FileList): Promise<ExplorerState> => {
   const { pathSeparator, items } = state
+  // @ts-ignore
   for (const file of files) {
     // TODO path basename
     const baseName = file
@@ -45,7 +46,7 @@ const handleDropIntoFolder = async (state: ExplorerState, dirent: ExplorerItem, 
   }
 }
 
-const handleDropIntoFile = (state: ExplorerState, dirent: ExplorerItem, index: number, files: readonly any[]): Promise<ExplorerState> => {
+const handleDropIntoFile = (state: ExplorerState, dirent: ExplorerItem, index: number, files: FileList): Promise<ExplorerState> => {
   const { items } = state
   const parentIndex = GetParentStartIndex.getParentStartIndex(items, index)
   if (parentIndex === -1) {
@@ -55,7 +56,7 @@ const handleDropIntoFile = (state: ExplorerState, dirent: ExplorerItem, index: n
   return handleDropIndex(parentIndex)
 }
 
-export const handleDropIndex = async (state: ExplorerState, index: number, files: readonly any[]): Promise<ExplorerState> => {
+export const handleDropIndex = async (state: ExplorerState, index: number, files: FileList): Promise<ExplorerState> => {
   const { items } = state
   const dirent = items[index]
   // TODO if it is a file, drop into the folder of the file
