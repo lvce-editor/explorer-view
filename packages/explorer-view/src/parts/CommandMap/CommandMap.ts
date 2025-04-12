@@ -25,6 +25,7 @@ import * as HandleClickCurrentButKeepFocus from '../HandleClickCurrentButKeepFoc
 import * as HandleClickOpenFolder from '../HandleClickOpenFolder/HandleClickOpenFolder.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
+import * as HandleDragLeave from '../HandleDragLeave/HandleDragLeave.ts'
 import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
 import * as HandleFocus from '../HandleFocus/HandleFocus.ts'
@@ -76,6 +77,7 @@ export const commandMap = {
   'Explorer.handleClickOpenFolder': WrapCommand.wrapCommand(HandleClickOpenFolder.handleClickOpenFolder),
   'Explorer.handleContextMenu': WrapCommand.wrapCommand(HandleContextMenu.handleContextMenu),
   'Explorer.handleCopy': WrapCommand.wrapCommand(HandleCopy.handleCopy),
+  'Explorer.handleDragLeave': WrapCommand.wrapCommand(HandleDragLeave.handleDragLeave),
   'Explorer.handleDragOver': WrapCommand.wrapCommand(HandleDragOver.handleDragOver),
   'Explorer.handleDrop': WrapCommand.wrapCommand(HandleDrop.handleDrop),
   'Explorer.handleFocus': WrapCommand.wrapCommand(HandleFocus.handleFocus),
