@@ -1,8 +1,4 @@
-export interface FileOperation {
-  readonly type: 'createFile' | 'createFolder'
-  readonly text: string
-  readonly path: string
-}
+import type { FileOperation } from '../FileOperation/FileOperation.ts'
 
 export const getFileOperations = (root: string, uploadTree: any): readonly FileOperation[] => {
   const operations: FileOperation[] = []
