@@ -14,7 +14,7 @@ const getEndIndex = (items: readonly any[], index: number, dirent: any): number 
   return items.length
 }
 
-const getMergedDirents = (items: readonly any[], index: number, dirent: any, childDirents: readonly any[]): any => {
+const getMergedDirents = (items: readonly any[], index: number, dirent: any, childDirents: readonly any[]): readonly any[] => {
   const startIndex = index
   const endIndex = getEndIndex(items, index, dirent)
   const mergedDirents = [...items.slice(0, startIndex), { ...dirent, type: DirentType.DirectoryExpanded }, ...childDirents, ...items.slice(endIndex)]

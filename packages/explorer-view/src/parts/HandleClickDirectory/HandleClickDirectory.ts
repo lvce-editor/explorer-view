@@ -5,7 +5,7 @@ import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 
-export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: any, keepFocus: boolean): Promise<ExplorerState> => {
+export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus: boolean): Promise<ExplorerState> => {
   // @ts-ignore
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
