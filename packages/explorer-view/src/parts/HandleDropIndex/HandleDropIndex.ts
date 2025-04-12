@@ -39,6 +39,7 @@ const handleDropIntoFolder = async (
     // TODO path basename
     const baseName = file
     const to = dirent.path + pathSeparator + baseName
+    // @ts-ignore
     await FileSystem.copy(file, to)
   }
   const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent)
