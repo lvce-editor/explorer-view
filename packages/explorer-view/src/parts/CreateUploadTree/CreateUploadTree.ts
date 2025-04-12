@@ -1,6 +1,5 @@
-import * as Arrays from '../Arrays/Arrays.ts'
-import { getFileHandleText } from '../GetFileHandleText/GetFileHandleText.ts'
 import { getChildHandles } from '../GetChildHandles/GetChildHandles.ts'
+import { getFileHandleText } from '../GetFileHandleText/GetFileHandleText.ts'
 import { isDirectoryHandle } from '../IsDirectoryHandle/IsDirectoryHandle.ts'
 import { isFileHandle } from '../IsFileHandle/IsFileHandle.ts'
 
