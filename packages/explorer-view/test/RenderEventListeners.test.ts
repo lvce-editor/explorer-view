@@ -46,5 +46,9 @@ test('renderEventListeners', () => {
       params: ['handleWheel', 'event.deltaMode', 'event.deltaY'],
       passive: true,
     },
+    {
+      name: DomEventListenersFunctions.HandleDragOver,
+      params: ['handleDragOver', 'event.clientX', 'event.clientY'],
+    },
   ])
 })
