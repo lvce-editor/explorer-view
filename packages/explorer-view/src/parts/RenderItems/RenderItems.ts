@@ -15,6 +15,13 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     newState.useChevrons,
   )
   const isWide = newState.width > 450
-  const dom = GetExplorerVirtualDom.getExplorerVirtualDom(visibleDirents, newState.focusedIndex, newState.root, isWide, newState.focused)
+  const dom = GetExplorerVirtualDom.getExplorerVirtualDom(
+    visibleDirents,
+    newState.focusedIndex,
+    newState.root,
+    isWide,
+    newState.focused,
+    newState.dropTargets,
+  )
   return ['Viewlet.setDom2', dom]
 }
