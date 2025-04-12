@@ -27,13 +27,19 @@ const getMergedDirents = (
   return mergedDirents
 }
 
-const handleDropIntoFolder = async (state: ExplorerState, dirent: ExplorerItem, index: number, files: FileList): Promise<ExplorerState> => {
+const handleDropIntoFolder = async (
+  state: ExplorerState,
+  dirent: ExplorerItem,
+  index: number,
+  files: readonly FileSystemHandle[],
+): Promise<ExplorerState> => {
   const { pathSeparator, items } = state
   // @ts-ignore
   for (const file of files) {
     // TODO path basename
-    const baseName = file
+    const baseName = file.name
     const to = dirent.path + pathSeparator + baseName
+    // @ts-ignore
     await FileSystem.copy(file, to)
   }
   const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent)
@@ -46,7 +52,12 @@ const handleDropIntoFolder = async (state: ExplorerState, dirent: ExplorerItem, 
   }
 }
 
-const handleDropIntoFile = (state: ExplorerState, dirent: ExplorerItem, index: number, files: FileList): Promise<ExplorerState> => {
+const handleDropIntoFile = (
+  state: ExplorerState,
+  dirent: ExplorerItem,
+  index: number,
+  files: readonly FileSystemHandle[],
+): Promise<ExplorerState> => {
   const { items } = state
   const parentIndex = GetParentStartIndex.getParentStartIndex(items, index)
   if (parentIndex === -1) {
@@ -56,7 +67,7 @@ const handleDropIntoFile = (state: ExplorerState, dirent: ExplorerItem, index: n
   return handleDropIndex(parentIndex)
 }
 
-export const handleDropIndex = async (state: ExplorerState, files: FileList, index: number): Promise<ExplorerState> => {
+export const handleDropIndex = async (state: ExplorerState, files: readonly FileSystemHandle[], index: number): Promise<ExplorerState> => {
   const { items } = state
   const dirent = items[index]
   // TODO if it is a file, drop into the folder of the file
