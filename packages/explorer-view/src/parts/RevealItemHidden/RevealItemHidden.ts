@@ -6,7 +6,7 @@ import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
 
-const getPathPartsToReveal = (root: any, pathParts: readonly any[], dirents: readonly ExplorerItem[]): any => {
+const getPathPartsToReveal = (root: string, pathParts: readonly any[], dirents: readonly ExplorerItem[]): readonly any[] => {
   for (let i = 0; i < pathParts.length; i++) {
     const pathPart = pathParts[i]
     const index = getIndex(dirents, pathPart.uri)
