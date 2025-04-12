@@ -1,4 +1,4 @@
-export const uploadFileSystemHandles = async (root: string, pathSeparator: string, fileSystemHandles: FileList): Promise<void> => {
+export const uploadFileSystemHandles = async (root: string, pathSeparator: string, fileSystemHandles: FileList): Promise<boolean> => {
   // console.log({ fileSystemHandles })
   // @ts-ignore
   const files: readonly FileSystemHandle[] = [...fileSystemHandles]
@@ -10,6 +10,8 @@ export const uploadFileSystemHandles = async (root: string, pathSeparator: strin
     //   name: file.name,
     //   // text: await file.text(),
     // })
+    if (file) {
+    }
   }
   // console.log({ files })
 
@@ -18,4 +20,5 @@ export const uploadFileSystemHandles = async (root: string, pathSeparator: strin
   // 2. else, walk all files and folders recursively and upload all of them (if there are many, show a progress bar)
 
   // TODO send file system operations to renderer worker
+  return true
 }
