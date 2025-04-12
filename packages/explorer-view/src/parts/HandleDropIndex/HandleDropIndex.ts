@@ -55,7 +55,7 @@ const handleDropIntoFile = (state: ExplorerState, dirent: ExplorerItem, index: n
   return handleDropIndex(parentIndex)
 }
 
-export const handleDropIndex = async (state: ExplorerState, index: number, files: readonly any[]): Promise<ExplorerState> => {
+export const handleDropIndex = async (state: ExplorerState, files: readonly any[], index: number): Promise<ExplorerState> => {
   const { items } = state
   const dirent = items[index]
   // TODO if it is a file, drop into the folder of the file
