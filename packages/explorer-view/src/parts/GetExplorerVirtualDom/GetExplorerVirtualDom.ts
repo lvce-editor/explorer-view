@@ -47,6 +47,7 @@ export const getExplorerVirtualDom = (
       onBlur: DomEventListenerFunctions.HandleListBlur,
       onClick: DomEventListenerFunctions.HandleClick,
       onContextMenu: DomEventListenerFunctions.HandleContextMenu,
+      onDragLeave: DomEventListenerFunctions.HandleDragLeave,
       onDragOver: DomEventListenerFunctions.HandleDragOver,
       onDrop: DomEventListenerFunctions.HandleDrop,
       onFocus: DomEventListenerFunctions.HandleListFocus,
