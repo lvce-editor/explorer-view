@@ -42,6 +42,7 @@ export const getExplorerVirtualDom = (
       onPointerDown: DomEventListenerFunctions.HandlePointerDown,
       onWheel: DomEventListenerFunctions.HandleWheel,
       onClick: DomEventListenerFunctions.HandleClick,
+      onDragOver: DomEventListenerFunctions.HandleDragOver,
     },
     ...visibleItems.flatMap(GetExplorerItemVirtualDom.getExplorerItemVirtualDom),
   ]
