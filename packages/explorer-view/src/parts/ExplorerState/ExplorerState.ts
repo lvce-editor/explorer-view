@@ -20,7 +20,7 @@ export interface ExplorerState {
   readonly version: number
   readonly editingIndex: number
   readonly itemHeight: number
-  readonly dropTargets: readonly any[]
+  readonly dropTargets: readonly number[]
   readonly excluded: readonly any[]
   readonly editingValue: string
   readonly editingType: number
