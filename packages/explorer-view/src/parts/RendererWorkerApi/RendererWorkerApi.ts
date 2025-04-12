@@ -14,8 +14,8 @@ export interface RendererWorkerApi {
   readonly 'FileSystem.stat': (root: string) => Promise<any>
   readonly 'FileSystem.writeFile': (uri: string, content: string) => Promise<void>
   readonly 'FileSystemHandle.getFileHandles': (fileIds: readonly number[]) => Promise<readonly FileSystemHandle[]>
+  readonly 'FileSystemHandle.getFilePathElectron': (file: File) => Promise<string>
   readonly 'Focus.setFocus': (focusId: number) => Promise<void>
-  readonly 'GetFilePathElectron.getFilePathElectron': (file: File) => Promise<string>
   readonly 'IconTheme.getFileIcon': (options: { readonly name: string }) => Promise<string>
   readonly 'IconTheme.getFolderIcon': (options: { readonly name: string }) => Promise<string>
   readonly 'Main.openUri': (uri: string, focus: boolean) => Promise<string>
