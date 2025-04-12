@@ -1,5 +1,4 @@
 import type { RestoredState } from '../RestoredState/RestoredState.ts'
-import * as GetSavedRoot from '../GetSavedRoot/GetSavedRoot.ts'
 
 const getSavedMinLineY = (savedState: unknown): number => {
   if (savedState && typeof savedState === 'object' && 'minLineY' in savedState && typeof savedState.minLineY === 'number') {
