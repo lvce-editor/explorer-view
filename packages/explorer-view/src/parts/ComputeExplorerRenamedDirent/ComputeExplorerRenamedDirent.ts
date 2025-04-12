@@ -1,7 +1,12 @@
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 
+interface RenamedDirentResult {
+  readonly newDirents: readonly any[]
+  readonly focusedIndex: number
+}
+
 // TODO use posInSet and setSize properties to compute more effectively
-export const computeExplorerRenamedDirent = (dirents: any, index: number, newName: string): any => {
+export const computeExplorerRenamedDirent = (dirents: readonly any[], index: number, newName: string): RenamedDirentResult => {
   let startIndex = index
   let innerEndIndex = index + 1
   let insertIndex = -1

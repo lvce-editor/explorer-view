@@ -14,7 +14,11 @@ const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: 
   return dirents[index].path
 }
 
-const acceptCreate = async (state: ExplorerState, newDirentType: number, createFn: any): Promise<ExplorerState> => {
+interface Create {
+  (path: string): Promise<void>
+}
+
+const acceptCreate = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<ExplorerState> => {
   const { focusedIndex, editingValue } = state
   const newFileName = editingValue
   if (!newFileName) {
