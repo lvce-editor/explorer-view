@@ -1,5 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
+import * as Refresh from '../Refresh/Refresh.ts'
 import * as UploadFileSystemHandles from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
 const mergeDirents = (oldDirents: readonly any[], newDirents: readonly any[]): readonly any[] => {
@@ -19,7 +20,8 @@ export const handleDrop = async (state: ExplorerState, files: readonly FileSyste
   const { root, pathSeparator, items } = state
   const handled = await UploadFileSystemHandles.uploadFileSystemHandles(root, pathSeparator, files)
   if (handled) {
-    return state
+    const updated = await Refresh.refresh(state)
+    return updated
   }
   const mergedDirents = await getMergedDirents(root, pathSeparator, items)
   return {

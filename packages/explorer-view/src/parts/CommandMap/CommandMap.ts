@@ -38,6 +38,7 @@ import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as NewFile from '../NewFile/NewFile.ts'
 import * as NewFolder from '../NewFolder/NewFolder.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
+import * as Refresh from '../Refresh/Refresh.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
 import * as Render2 from '../Render2/Render2.ts'
@@ -88,6 +89,7 @@ export const commandMap = {
   'Explorer.newFile': WrapCommand.wrapCommand(NewFile.newFile),
   'Explorer.newFolder': WrapCommand.wrapCommand(NewFolder.newFolder),
   'Explorer.openContainingFolder': WrapCommand.wrapCommand(OpenContainingFolder.openContainingFolder),
+  'Explorer.refresh': WrapCommand.wrapCommand(Refresh.refresh),
   'Explorer.removeDirent': WrapCommand.wrapCommand(RemoveDirent.removeDirent),
   'Explorer.renameDirent': WrapCommand.wrapCommand(RenameDirent.renameDirent),
   'Explorer.restoreState': RestoreState.restoreState,
