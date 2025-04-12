@@ -34,6 +34,7 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
+  const { fileIconCache } = state
   const { useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
@@ -51,7 +52,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     deltaY = savedState.deltaY
   }
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, restoredDirents.length)
-  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(restoredDirents, Object.create(null))
+  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(restoredDirents, fileIconCache)
   return {
     ...state,
     root,
