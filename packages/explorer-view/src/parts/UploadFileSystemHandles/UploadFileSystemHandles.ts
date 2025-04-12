@@ -1,4 +1,6 @@
+import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 import { createUploadTree } from '../CreateUploadTree/CreateUploadTree.ts'
+import * as GetFileOperations from '../GetFileOperations/GetFileOperations.ts'
 
 export const uploadFileSystemHandles = async (
   root: string,
@@ -6,7 +8,8 @@ export const uploadFileSystemHandles = async (
   fileSystemHandles: readonly FileSystemHandle[],
 ): Promise<boolean> => {
   const uploadTree = await createUploadTree(root, fileSystemHandles)
-  console.log({ uploadTree })
+  const fileOperations = GetFileOperations.getFileOperations(root, uploadTree)
+  await ApplyFileOperations.applyFileOperations(fileOperations)
 
   // TODO
   // 1. in electron, use webutils.getPathForFile to see if a path is available
