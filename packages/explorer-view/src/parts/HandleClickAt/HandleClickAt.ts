@@ -3,7 +3,7 @@ import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosit
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 
-export const handleClickAt = (state: ExplorerState, button: number, x: number, y: number): any => {
+export const handleClickAt = (state: ExplorerState, button: number, x: number, y: number): ExplorerState | Promise<ExplorerState> => {
   if (button !== MouseEventType.LeftClick) {
     return state
   }
