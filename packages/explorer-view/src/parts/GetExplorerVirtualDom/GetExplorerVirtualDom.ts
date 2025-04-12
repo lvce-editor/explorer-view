@@ -18,8 +18,8 @@ const getActiveDescendant = (focusedIndex: number): string | undefined => {
 }
 
 const getClassName = (focused: boolean, focusedIndex: number, dropTarget: readonly number[]): string => {
-  const extraClass1 = focused && focusedIndex === -1 ? ClassNames.FocusOutline : ''
-  const extraClass2 = dropTarget === dropTargetFull ? 'ExplorerDropTarget' : ''
+  const extraClass1 = focused && focusedIndex === -1 ? ClassNames.FocusOutline : ClassNames.Empty
+  const extraClass2 = dropTarget === dropTargetFull ? ClassNames.ExplorerDropTarget : ClassNames.Empty
   const className = MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer, extraClass1, extraClass2)
   return className
 }
