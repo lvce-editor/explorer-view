@@ -3,6 +3,7 @@ export const uploadFileSystemHandles = async (root: string, pathSeparator: strin
   // @ts-ignore
   const files: readonly FileSystemHandle[] = [...fileSystemHandles]
 
+  // @ts-ignore
   for (const file of files) {
     // console.log({
     //   file,
@@ -10,8 +11,6 @@ export const uploadFileSystemHandles = async (root: string, pathSeparator: strin
     //   name: file.name,
     //   // text: await file.text(),
     // })
-    if (file) {
-    }
   }
   // console.log({ files })
 
