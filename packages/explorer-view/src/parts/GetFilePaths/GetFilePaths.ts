@@ -1,8 +1,12 @@
 import * as GetFilePathElectron from '../GetFilePathElectron/GetFilePathElectron.ts'
+import { isFileHandle } from '../IsFileHandle/IsFileHandle.ts'
 
-const getFilepath = (file: FileSystemHandle): Promise<string> => {
-  // @ts-ignore
-  return GetFilePathElectron.getFilePathElectron(file)
+const getFilepath = async (fileHandle: FileSystemHandle): Promise<string> => {
+  if (isFileHandle(fileHandle)) {
+    const file = await fileHandle.getFile()
+    return GetFilePathElectron.getFilePathElectron(file)
+  }
+  return ''
 }
 
 export const getFilePaths = async (files: readonly FileSystemHandle[]): Promise<readonly string[]> => {
