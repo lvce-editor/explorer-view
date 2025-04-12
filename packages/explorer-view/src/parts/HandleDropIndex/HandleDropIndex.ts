@@ -5,7 +5,7 @@ import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 import * as HandleDropRoot from '../HandleDropRoot/HandleDropRoot.ts'
 
-const getEndIndex = (items: any[], index: number, dirent: any): number => {
+const getEndIndex = (items: readonly any[], index: number, dirent: any): number => {
   for (let i = index + 1; i < items.length; i++) {
     if (items[i].depth === dirent.depth) {
       return i
@@ -14,14 +14,14 @@ const getEndIndex = (items: any[], index: number, dirent: any): number => {
   return items.length
 }
 
-const getMergedDirents = (items: any, index: number, dirent: any, childDirents: any): any => {
+const getMergedDirents = (items: readonly any[], index: number, dirent: any, childDirents: readonly any[]): any => {
   const startIndex = index
   const endIndex = getEndIndex(items, index, dirent)
   const mergedDirents = [...items.slice(0, startIndex), { ...dirent, type: DirentType.DirectoryExpanded }, ...childDirents, ...items.slice(endIndex)]
   return mergedDirents
 }
 
-const handleDropIntoFolder = async (state: ExplorerState, dirent: any, index: number, files: any): Promise<ExplorerState> => {
+const handleDropIntoFolder = async (state: ExplorerState, dirent: any, index: number, files: readonly any[]): Promise<ExplorerState> => {
   const { pathSeparator, items } = state
   for (const file of files) {
     // TODO path basename
@@ -39,7 +39,7 @@ const handleDropIntoFolder = async (state: ExplorerState, dirent: any, index: nu
   }
 }
 
-const handleDropIntoFile = (state: ExplorerState, dirent: any, index: number, files: any): Promise<ExplorerState> => {
+const handleDropIntoFile = (state: ExplorerState, dirent: any, index: number, files: readonly any[]): Promise<ExplorerState> => {
   const { items } = state
   const parentIndex = GetParentStartIndex.getParentStartIndex(items, index)
   if (parentIndex === -1) {
@@ -49,7 +49,7 @@ const handleDropIntoFile = (state: ExplorerState, dirent: any, index: number, fi
   return handleDropIndex(parentIndex)
 }
 
-export const handleDropIndex = async (state: ExplorerState, index: number, files: any): Promise<ExplorerState> => {
+export const handleDropIndex = async (state: ExplorerState, index: number, files: readonly any[]): Promise<ExplorerState> => {
   const { items } = state
   const dirent = items[index]
   // TODO if it is a file, drop into the folder of the file
