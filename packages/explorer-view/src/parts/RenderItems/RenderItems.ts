@@ -13,6 +13,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     newState.editingValue,
     newState.icons,
     newState.useChevrons,
+    newState.dropTargets,
   )
   const isWide = newState.width > 450
   const dom = GetExplorerVirtualDom.getExplorerVirtualDom(visibleDirents, newState.focusedIndex, newState.root, isWide, newState.focused)
