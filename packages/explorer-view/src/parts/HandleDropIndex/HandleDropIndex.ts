@@ -5,7 +5,7 @@ import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 import * as HandleDropRoot from '../HandleDropRoot/HandleDropRoot.ts'
 
-const getEndIndex = (items: any[], index: number, dirent: any): number => {
+const getEndIndex = (items: readonly any[], index: number, dirent: any): number => {
   for (let i = index + 1; i < items.length; i++) {
     if (items[i].depth === dirent.depth) {
       return i
@@ -14,7 +14,7 @@ const getEndIndex = (items: any[], index: number, dirent: any): number => {
   return items.length
 }
 
-const getMergedDirents = (items: any, index: number, dirent: any, childDirents: any): any => {
+const getMergedDirents = (items: readonly any[], index: number, dirent: any, childDirents: readonly any[]): readonly any[] => {
   const startIndex = index
   const endIndex = getEndIndex(items, index, dirent)
   const mergedDirents = [...items.slice(0, startIndex), { ...dirent, type: DirentType.DirectoryExpanded }, ...childDirents, ...items.slice(endIndex)]
