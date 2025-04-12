@@ -21,7 +21,10 @@ export const handleDrop = async (state: ExplorerState, files: readonly FileSyste
   const handled = await UploadFileSystemHandles.uploadFileSystemHandles(root, pathSeparator, files)
   if (handled) {
     const updated = await Refresh.refresh(state)
-    return updated
+    return {
+      ...updated,
+      dropTargets: [],
+    }
   }
   const mergedDirents = await getMergedDirents(root, pathSeparator, items)
   return {
