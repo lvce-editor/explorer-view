@@ -18,6 +18,7 @@ export const getVisibleExplorerItems = (
   editingValue: string,
   icons: readonly string[],
   useChevrons: boolean,
+  dropTargets: readonly number[],
 ): readonly VisibleExplorerItem[] => {
   const visible: VisibleExplorerItem[] = []
   const indentFn = useChevrons ? GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron : GetTreeItemIndent.getTreeItemIndent
