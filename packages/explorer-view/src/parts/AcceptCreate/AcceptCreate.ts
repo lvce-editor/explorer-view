@@ -10,7 +10,7 @@ const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: 
   return dirents[index].path
 }
 
-interface Create {
+export interface Create {
   (path: string): Promise<void>
 }
 
