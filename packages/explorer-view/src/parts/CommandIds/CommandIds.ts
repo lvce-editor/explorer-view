@@ -25,7 +25,7 @@ export const commandIds = [
   'handleClickCurrentButKeepFocus',
   'handleClickOpenFolder',
   'handleContextMenu',
-  'handleContextMenuKeyBoard',
+  'handleContextMenuKeyboard',
   'handleCopy',
   'handleDragLeave',
   'handleDragOver',

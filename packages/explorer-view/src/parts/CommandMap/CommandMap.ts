@@ -79,7 +79,7 @@ export const commandMap = {
   'Explorer.handleClickCurrentButKeepFocus': WrapCommand.wrapCommand(HandleClickCurrentButKeepFocus.handleClickCurrentButKeepFocus),
   'Explorer.handleClickOpenFolder': WrapCommand.wrapCommand(HandleClickOpenFolder.handleClickOpenFolder),
   'Explorer.handleContextMenu': WrapCommand.wrapCommand(HandleContextMenu.handleContextMenu),
-  'Explorer.handleContextMenuKeyBoard': WrapCommand.wrapCommand(HandleContextMenuKeyboard.handleContextMenuKeyboard),
+  'Explorer.handleContextMenuKeyboard': WrapCommand.wrapCommand(HandleContextMenuKeyboard.handleContextMenuKeyboard),
   'Explorer.handleCopy': WrapCommand.wrapCommand(HandleCopy.handleCopy),
   'Explorer.handleDragLeave': WrapCommand.wrapCommand(HandleDragLeave.handleDragLeave),
   'Explorer.handleDragOver': WrapCommand.wrapCommand(HandleDragOver.handleDragOver),
