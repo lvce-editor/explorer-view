@@ -44,6 +44,7 @@ export const create = (
     useChevrons: false,
     icons: [],
     platform,
+    focus: 0,
   }
   ExplorerStates.set(state.uid, state, state)
   return state
