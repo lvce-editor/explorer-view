@@ -11,7 +11,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 // windows narrator says: "sample folder, two of five, collapsed, selected, heading level 1" ❌
 // orca says: "sample-folder, collapsed"
 
-export const skip = true
+// export const skip = true
 
 export const name = 'viewlet.explorer-accessibility'
 
