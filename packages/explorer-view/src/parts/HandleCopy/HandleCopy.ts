@@ -7,7 +7,7 @@ export const handleCopy = async (state: ExplorerState): Promise<ExplorerState> =
   // TODO if not file is selected, what happens?
   const dirent = GetFocusedDirent.getFocusedDirent(state)
   if (!dirent) {
-    console.info('[ViewletExplorer/handleCopy] no dirent selected')
+    console.error('[ViewletExplorer/handleCopy] no dirent selected')
     return state
   }
   const absolutePath = dirent.path

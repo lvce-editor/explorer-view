@@ -24,7 +24,6 @@ export default [
       '@typescript-eslint/no-dynamic-delete': 'off',
       '@typescript-eslint/prefer-readonly-parameter-types': 'off',
       'prefer-destructuring': 'off',
-      'no-console': 'off',
       'unicorn/no-for-loop': 'off',
     },
   },
