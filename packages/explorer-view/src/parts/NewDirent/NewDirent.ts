@@ -1,6 +1,7 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as Focus from '../Focus/Focus.ts'
+import * as FocusId from '../FocusId/FocusId.ts'
 import * as FocusKey from '../FocusKey/FocusKey.ts'
 import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirectory.ts'
 
@@ -22,5 +23,6 @@ export const newDirent = async (state: ExplorerState, editingType: number): Prom
     editingIndex: focusedIndex,
     editingType,
     editingValue: '',
+    focus: FocusId.Input,
   }
 }
