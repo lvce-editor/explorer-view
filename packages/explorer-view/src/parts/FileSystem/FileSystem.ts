@@ -21,7 +21,7 @@ export const stat = async (dirent: string): Promise<any> => {
 }
 
 export const createFile = async (uri: string): Promise<void> => {
-  return ParentRpc.invoke('FileSystem.createFile', uri)
+  return ParentRpc.invoke('FileSystem.writeFile', uri, '')
 }
 
 export const writeFile = async (uri: string, content: string): Promise<void> => {
