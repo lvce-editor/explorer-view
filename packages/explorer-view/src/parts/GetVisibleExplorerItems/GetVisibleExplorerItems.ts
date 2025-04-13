@@ -17,6 +17,7 @@ export const getVisibleExplorerItems = (
   editingIndex: number,
   editingType: number,
   editingValue: string,
+  editingErrorMessage: string,
   icons: readonly string[],
   useChevrons: boolean,
   dropTargets: readonly number[],
@@ -38,6 +39,7 @@ export const getVisibleExplorerItems = (
     visible.push({
       ...item,
       isEditing: i === editingIndex,
+      hasEditingError: i === editingIndex && Boolean(editingErrorMessage),
       icon,
       indent,
       ariaExpanded,
@@ -55,6 +57,7 @@ export const getVisibleExplorerItems = (
       name: 'new',
       path: '/test/new',
       isEditing: true,
+      hasEditingError: Boolean(editingErrorMessage),
       indent: '',
       ariaExpanded: undefined,
       chevron: 0,

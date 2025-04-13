@@ -73,6 +73,6 @@ export const noFolderOpen = (): string => {
   return I18nString.i18nString(UiStrings.NoFolderOpen)
 }
 
-export const fileOrFolderNameMustBeProvider = (): string => {
+export const fileOrFolderNameMustBeProvided = (): string => {
   return I18nString.i18nString(UiStrings.FileOrFolderNameMustBeProvider)
 }

@@ -11,6 +11,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     newState.editingIndex,
     newState.editingType,
     newState.editingValue,
+    newState.editingErrorMessage,
     newState.icons,
     newState.useChevrons,
     newState.dropTargets,

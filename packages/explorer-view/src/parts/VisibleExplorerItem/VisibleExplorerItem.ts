@@ -1,5 +1,6 @@
 export interface VisibleExplorerItem {
   readonly isEditing: boolean
+  readonly hasEditingError: boolean
   readonly icon: string
   readonly depth: number
   readonly name: string
