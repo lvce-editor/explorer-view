@@ -7,7 +7,7 @@ import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const mockRpc: Rpc = {
   send: jest.fn(),
-  invoke: jest.fn((method: string, ...args: any[]) => {
+  invoke: jest.fn((method: string, ...args: readonly any[]) => {
     if (method === 'FileSystem.mkdir') {
       return Promise.resolve()
     }
