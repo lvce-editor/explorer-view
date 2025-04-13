@@ -1,3 +1,4 @@
+import { VError } from '@lvce-editor/verror'
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
@@ -28,7 +29,8 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
   // TODO better handle error
   try {
     await createFn(absolutePath)
-  } catch {
+  } catch (error) {
+    console.error(new VError(error, `Failed to create file`))
     // TODO display error
     return state
   }
