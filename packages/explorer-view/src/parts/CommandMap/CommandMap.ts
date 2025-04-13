@@ -28,6 +28,7 @@ import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
 import * as HandleDragLeave from '../HandleDragLeave/HandleDragLeave.ts'
 import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
+import * as HandleClickCurrent from '../HandleClickCurrent/HandleClickCurrent.ts'
 import * as HandleFocus from '../HandleFocus/HandleFocus.ts'
 import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconThemeChange.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
@@ -73,6 +74,7 @@ export const commandMap = {
   'Explorer.handleBlur': WrapCommand.wrapCommand(HandleBlur.handleBlur),
   'Explorer.handleClick': WrapCommand.wrapCommand(HandleClick.handleClick),
   'Explorer.handleClickAt': WrapCommand.wrapCommand(HandleClickAt.handleClickAt),
+  'Explorer.handleClickCurrent': WrapCommand.wrapCommand(HandleClickCurrent.handleClickCurrent),
   'Explorer.handleClickCurrentButKeepFocus': WrapCommand.wrapCommand(HandleClickCurrentButKeepFocus.handleClickCurrentButKeepFocus),
   'Explorer.handleClickOpenFolder': WrapCommand.wrapCommand(HandleClickOpenFolder.handleClickOpenFolder),
   'Explorer.handleContextMenu': WrapCommand.wrapCommand(HandleContextMenu.handleContextMenu),
