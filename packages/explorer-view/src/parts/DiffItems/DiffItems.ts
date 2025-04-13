@@ -12,6 +12,7 @@ export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boole
     oldState.editingIndex === newState.editingIndex &&
     oldState.editingType === newState.editingType &&
     oldState.editingValue === newState.editingValue &&
+    oldState.editingErrorMessage === newState.editingErrorMessage &&
     oldState.width === newState.width &&
     oldState.focused === newState.focused &&
     oldState.dropTargets === newState.dropTargets
