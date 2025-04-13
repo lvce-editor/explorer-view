@@ -8,7 +8,7 @@ export const getFileOperationsElectron = async (
   const operations: FileOperation[] = []
   for (let i = 0; i < paths.length; i++) {
     const fileHandle = fileHandles[i]
-    const name = fileHandle.name
+    const { name } = fileHandle
     const path = paths[i]
     operations.push({
       type: 'copy',

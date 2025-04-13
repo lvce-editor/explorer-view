@@ -7,7 +7,7 @@ import * as IsExpandedDirectory from '../IsExpandedDirectory/IsExpandedDirectory
 export const saveState = (uid: number): SavedState => {
   Assert.number(uid)
   const value = ExplorerStates.get(uid)
-  const newState = value.newState
+  const { newState } = value
   const { items, root, deltaY, minLineY, maxLineY } = newState
   const expandedPaths = items.filter(IsExpandedDirectory.isExpandedDirectory).map(GetPath.getPath)
   return {

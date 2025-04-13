@@ -5,7 +5,7 @@ import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const mockRpc = {
-  invoke(method: string, ...params: any[]) {
+  invoke(method: string, ...params: readonly any[]) {
     switch (method) {
       case 'IconTheme.getFileIcon':
         return `file-icon-${params[0].name}`

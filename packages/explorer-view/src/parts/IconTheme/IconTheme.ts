@@ -1,7 +1,7 @@
 /**
  * @deprecated
  */
-export const getFileIcon = ({ name }: { name: string }): string => {
+export const getFileIcon = ({ name }: { readonly name: string }): string => {
   console.warn('do not use')
   return ''
 }
