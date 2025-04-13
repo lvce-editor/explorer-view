@@ -3,6 +3,7 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
+import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 
 const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: string): string => {
   if (index < 0) {
@@ -22,7 +23,11 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
     // TODO show error message that file name must not be empty
     // below input box
     // await ErrorHandling.showErrorDialog(new Error('file name must not be empty'))
-    return state
+    const editingErrorMessage = ExplorerStrings.fileOrFolderNameMustBeProvided()
+    return {
+      ...state,
+      editingErrorMessage,
+    }
   }
   const parentFolder = getParentFolder(state.items, focusedIndex, state.root)
   const absolutePath = [parentFolder, newFileName].join(state.pathSeparator)
