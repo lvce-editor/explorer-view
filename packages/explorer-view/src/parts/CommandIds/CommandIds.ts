@@ -1,4 +1,5 @@
 export const commandIds = [
+  'getMenuEntries2',
   'acceptEdit',
   'cancelEdit',
   'collapseAll',
