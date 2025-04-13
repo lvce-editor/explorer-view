@@ -34,7 +34,7 @@ test('renderEventListeners', () => {
     },
     {
       name: DomEventListenersFunctions.HandleEditingInput,
-      params: ['handleEditingInput', 'event.target.value'],
+      params: ['updateEditingValue', 'event.target.value'],
     },
     {
       name: DomEventListenersFunctions.HandleContextMenu,
