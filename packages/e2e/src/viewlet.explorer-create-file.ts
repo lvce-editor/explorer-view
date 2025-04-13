@@ -4,8 +4,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file'
 
-export const skip = true
-
 export const test: Test = async ({ FileSystem, Workspace, Explorer, ContextMenu, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -16,9 +14,8 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, ContextMenu,
   await Workspace.setPath(tmpDir)
 
   // act
-  await Explorer.focusIndex(-1)
-  await Explorer.openContextMenu(-1)
-  await ContextMenu.selectItem('New File...')
+  await Explorer.newFile()
+
   // assert
   const inputBox = Locator('input')
   await expect(inputBox).toBeVisible()
