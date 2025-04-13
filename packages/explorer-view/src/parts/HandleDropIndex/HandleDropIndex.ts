@@ -33,6 +33,7 @@ const handleDropIntoFolder = async (
   index: number,
   fileHandles: readonly FileSystemHandle[],
   files: readonly File[],
+  paths: readonly string[],
 ): Promise<ExplorerState> => {
   const { pathSeparator, items } = state
   // @ts-ignore
@@ -59,11 +60,12 @@ const handleDropIntoFile = (
   index: number,
   fileHandles: readonly FileSystemHandle[],
   files: readonly File[],
+  paths: readonly string[],
 ): Promise<ExplorerState> => {
   const { items } = state
   const parentIndex = GetParentStartIndex.getParentStartIndex(items, index)
   if (parentIndex === -1) {
-    return HandleDropRoot.handleDropRoot(state, fileHandles, files)
+    return HandleDropRoot.handleDropRoot(state, fileHandles, files, paths)
   }
   // @ts-ignore
   return handleDropIndex(parentIndex)
@@ -73,6 +75,7 @@ export const handleDropIndex = async (
   state: ExplorerState,
   fileHandles: readonly FileSystemHandle[],
   files: readonly File[],
+  paths: readonly string[],
   index: number,
 ): Promise<ExplorerState> => {
   const { items } = state
@@ -83,9 +86,9 @@ export const handleDropIndex = async (
   switch (dirent.type) {
     case DirentType.Directory:
     case DirentType.DirectoryExpanded:
-      return handleDropIntoFolder(state, dirent, index, fileHandles, files)
+      return handleDropIntoFolder(state, dirent, index, fileHandles, files, paths)
     case DirentType.File:
-      return handleDropIntoFile(state, dirent, index, fileHandles, files)
+      return handleDropIntoFile(state, dirent, index, fileHandles, files, paths)
     default:
       return state
   }
