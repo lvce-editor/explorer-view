@@ -4,6 +4,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
+import * as FocusId from '../FocusId/FocusId.ts'
 
 const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: string): string => {
   if (index < 0) {
@@ -100,5 +101,6 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
     focusedIndex: insertIndex + 1,
     editingType: ExplorerEditingType.None,
     maxLineY: newMaxlineY,
+    focus: FocusId.List,
   }
 }

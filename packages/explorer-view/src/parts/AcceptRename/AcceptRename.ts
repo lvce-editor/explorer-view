@@ -2,6 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ComputeExplorerRenamedDirent from '../ComputeExplorerRenamedDirent/ComputeExplorerRenamedDirent.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
+import * as FocusId from '../FocusId/FocusId.ts'
 import * as Path from '../Path/Path.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
@@ -30,5 +31,6 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     editingIcon: '',
     focusedIndex,
     focused: true,
+    focus: FocusId.List,
   }
 }
