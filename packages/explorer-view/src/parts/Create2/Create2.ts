@@ -45,6 +45,7 @@ export const create2 = (
     icons: [],
     platform,
     focus: 0,
+    editingErrorMessage: '',
   }
   ExplorerStates.set(uid, state, state)
 }
