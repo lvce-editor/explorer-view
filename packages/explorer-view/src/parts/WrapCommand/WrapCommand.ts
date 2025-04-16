@@ -1,13 +1,5 @@
-import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import type { Fn, WrappedFn } from '../WrappedCommand/WrappedCommand.ts'
 import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
-
-export interface WrappedFn {
-  (uid: number, ...args: readonly any[]): Promise<void>
-}
-
-interface Fn {
-  (state: ExplorerState, ...args: readonly any[]): ExplorerState | Promise<ExplorerState>
-}
 
 export const wrapCommand = (fn: Fn): WrappedFn => {
   const wrapped = async (uid: number, ...args: readonly any[]): Promise<void> => {
