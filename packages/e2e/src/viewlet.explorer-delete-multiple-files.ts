@@ -1,10 +1,10 @@
-import type { Test } from '@lvce-editor/test-with-playwright'
+import { type Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-delete-multiple-files'
 
-export const skip = true
+export const skip = 1
 
-export const test: Test = async ({ FileSystem, Workspace, expect, KeyBoard, Locator }) => {
+export const test: Test = async ({ Explorer, FileSystem, Workspace, expect, KeyBoard, Locator }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -19,7 +19,7 @@ export const test: Test = async ({ FileSystem, Workspace, expect, KeyBoard, Loca
   const file3 = explorer.locator('text=file3.txt')
 
   // act
-  await explorer.click()
+  await Explorer.focus()
 
   // assert
   await expect(explorer).toHaveClass('FocusOutline')
