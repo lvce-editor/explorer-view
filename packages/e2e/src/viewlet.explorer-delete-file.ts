@@ -1,9 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-// TODO maybe call removeDirent function directly instead of opening context menu
 export const name = 'viewlet.explorer-delete-file'
-
-export const skip = true
 
 export const test: Test = async ({ FileSystem, Workspace, Explorer, ContextMenu, Locator, expect }) => {
   // arrange
@@ -14,11 +11,10 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, ContextMenu,
   await Workspace.setPath(tmpDir)
 
   // act
-  await Explorer.focusIndex(0)
-  await Explorer.openContextMenu(-1)
+  await Explorer.focusFirst()
+  await Explorer.removeDirent()
 
   // assert
-  await ContextMenu.selectItem('Delete')
   const file1 = Locator('text=file1.txt')
   await expect(file1).toBeHidden()
 }
