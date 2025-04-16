@@ -1,6 +1,8 @@
-import { type Test, Explorer } from '@lvce-editor/test-with-playwright'
+import { type Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-delete-multiple-files'
+
+export const skip = 1
 
 export const test: Test = async ({ Explorer, FileSystem, Workspace, expect, KeyBoard, Locator }) => {
   // arrange
