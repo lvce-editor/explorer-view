@@ -3,6 +3,7 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-error-no-name-provided'
+
 export const skip = true
 
 export const test: Test = async ({ FileSystem, Workspace, Explorer, ContextMenu, expect, Locator, KeyBoard }) => {
@@ -23,6 +24,9 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, ContextMenu,
 
   // act
   await Explorer.acceptEdit()
+
+  // assert
+  await expect(inputBox).toHaveClass('InputValidationError')
 
   // TODO there should be an error message below the input box
   const dialog = Locator('#Dialog')
