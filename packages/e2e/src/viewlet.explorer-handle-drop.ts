@@ -17,7 +17,8 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Con
   })
   const file = await fileHandle.getFile()
   const fileList = [file]
+  const id = await Command.execute('FileSystemHandle.addFileHandle')
   // act
 
-  await Command.execute('Explorer.handleDrop', 0, 0, [fileHandle], fileList)
+  await Command.execute('Explorer.handleDrop', 0, 0, [id], fileList)
 }
