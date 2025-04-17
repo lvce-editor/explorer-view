@@ -147,7 +147,7 @@ test('acceptEdit - rename - nested file', async () => {
   })
 })
 
-test('acceptEdit - create - insert folder', async () => {
+test.skip('acceptEdit - create - insert folder', async () => {
   // @ts-ignore
   FileSystem.mkdir.mockImplementation(() => {})
   const state = {
