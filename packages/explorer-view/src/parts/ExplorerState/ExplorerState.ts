@@ -31,4 +31,5 @@ export interface ExplorerState {
   readonly fileIconCache: FileIconCache
   readonly platform: number
   readonly focus: number
+  readonly inputSource: number
 }

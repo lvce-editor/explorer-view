@@ -46,6 +46,7 @@ export const create = (
     platform,
     focus: 0,
     editingErrorMessage: '',
+    inputSource: 0,
   }
   ExplorerStates.set(state.uid, state, state)
   return state
