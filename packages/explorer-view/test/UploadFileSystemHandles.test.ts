@@ -39,7 +39,7 @@ test('uploadFileSystemHandles - creates correct file operations', async () => {
   const fileHandles = [
     new MockFileHandle('file', 'test.txt', 'test content'),
     new MockFileHandle('directory', 'test-dir', undefined, [new MockFileHandle('file', 'nested.txt', 'nested content')]),
-  ] as unknown as FileSystemHandle[]
+  ]
 
   const uploadTree = await createUploadTree(root, fileHandles)
   const fileOperations = getFileOperations(root, uploadTree)
@@ -65,10 +65,8 @@ test('uploadFileSystemHandles - creates correct file operations', async () => {
 
 test('uploadFileSystemHandles - handles empty file handles', async () => {
   const root = 'test-root'
-  const fileHandles = [] as FileSystemHandle[]
-
+  const fileHandles: readonly FileSystemHandle[] = []
   const uploadTree = await createUploadTree(root, fileHandles)
   const fileOperations = getFileOperations(root, uploadTree)
-
   expect(fileOperations).toEqual([])
 })
