@@ -54,7 +54,6 @@ test('uploadFileSystemHandles - creates correct file operations', async () => {
 
 test('uploadFileSystemHandles - handles empty file handles', async () => {
   const root = 'test-root'
-  const pathSeparator = '/'
   const fileHandles = [] as FileSystemHandle[]
 
   const uploadTree = await createUploadTree(root, fileHandles)
