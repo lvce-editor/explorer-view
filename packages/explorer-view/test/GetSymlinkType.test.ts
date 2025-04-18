@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
-import { getSymlinkType } from '../src/parts/GetSymlinkType/GetSymlinkType.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { getSymlinkType } from '../src/parts/GetSymlinkType/GetSymlinkType.ts'
 
 test('getSymlinkType - File', () => {
   expect(getSymlinkType(DirentType.File)).toBe(DirentType.SymLinkFile)
