@@ -1,7 +1,4 @@
-interface ScrollIntoResult {
-  readonly newMinLineY: number
-  readonly newMaxLineY: number
-}
+import type { ScrollIntoResult } from '../ScrollIntoResult/ScrollIntoResult.ts'
 
 export const scrollInto = (index: number, minLineY: number, maxLineY: number): ScrollIntoResult => {
   const diff = maxLineY - minLineY
