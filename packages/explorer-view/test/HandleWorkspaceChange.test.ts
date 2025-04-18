@@ -1,9 +1,9 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
+import { MockRpc } from '@lvce-editor/rpc'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleWorkspaceChange } from '../src/parts/HandleWorkspaceChange/HandleWorkspaceChange.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
-import { MockRpc } from '@lvce-editor/rpc'
 
 const invoke = (method: string): any => {
   if (method === 'Workspace.getPath') {
