@@ -28,6 +28,7 @@ const parentNode: VirtualDomNode = {
   type: VirtualDomElements.Div,
   childCount: 1,
   className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
+  role: 'none',
 }
 
 export const getExplorerVirtualDom = (
