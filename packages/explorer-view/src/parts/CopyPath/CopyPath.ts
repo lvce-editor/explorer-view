@@ -3,6 +3,9 @@ import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 
 export const copyPath = async (state: ExplorerState): Promise<ExplorerState> => {
   const dirent = GetFocusedDirent.getFocusedDirent(state)
+  if (!dirent) {
+    return state
+  }
   // TODO windows paths
   // TODO handle error
   // @ts-ignore

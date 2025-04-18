@@ -9,6 +9,9 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
     return state
   }
   const dirent = GetFocusedDirent.getFocusedDirent(state)
+  if (!dirent) {
+    return state
+  }
   const absolutePath = dirent.path
   try {
     // TODO handle error
