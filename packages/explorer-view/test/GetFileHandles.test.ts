@@ -14,7 +14,7 @@ test('getFileHandles', async () => {
 
   const mockRpc: Rpc = {
     invoke: async () => mockFiles,
-    send: async () => {},
+    send: () => {},
     invokeAndTransfer: async () => mockFiles,
     dispose: async () => {},
   }
