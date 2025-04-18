@@ -3,10 +3,28 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleWorkspaceChange } from '../src/parts/HandleWorkspaceChange/HandleWorkspaceChange.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+import { MockRpc } from '@lvce-editor/rpc'
 
-const mockRpc = {
-  invoke: jest.fn(),
-} as any
+const invoke = (method: string): any => {
+  if (method === 'Workspace.getPath') {
+    return '/new/path'
+  }
+  if (method === 'FileSystem.readDirWithFileTypes') {
+    return []
+  }
+  if (method === 'FileSystem.getPathSeparator') {
+    return '/'
+  }
+  if (method === 'Preferences.get') {
+    return false
+  }
+  throw new Error(`unexpected method ${method}`)
+}
+
+const mockRpc = await MockRpc.create({
+  invoke,
+  commandMap: {},
+})
 
 beforeEach(() => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
@@ -14,21 +32,6 @@ beforeEach(() => {
 })
 
 test('handleWorkspaceChange updates state with new workspace path', async () => {
-  mockRpc.invoke.mockImplementation((method: string) => {
-    if (method === 'Workspace.getPath') {
-      return '/new/path'
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
-      return []
-    }
-    if (method === 'FileSystem.getPathSeparator') {
-      return '/'
-    }
-    if (method === 'Preferences.get') {
-      return false
-    }
-    throw new Error(`unexpected method ${method}`)
-  })
   const state = createDefaultState()
   const result = await handleWorkspaceChange(state)
   expect(result.root).toBe('/new/path')
