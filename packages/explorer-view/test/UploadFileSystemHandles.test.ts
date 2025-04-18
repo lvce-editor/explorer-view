@@ -13,14 +13,14 @@ class MockFileHandle implements FileSystemHandle {
     this.name = name
 
     if (kind === 'file' && content) {
-      this.getFile = async () => ({
-        text: async () => content,
+      this.getFile = async (): Promise<{ text: () => Promise<string> }> => ({
+        text: async (): Promise<string> => content,
       })
     }
 
     if (kind === 'directory' && children) {
-      this.values = () => ({
-        [Symbol.asyncIterator]: async function* () {
+      this.values = (): { [Symbol.asyncIterator]: () => AsyncGenerator<MockFileHandle> } => ({
+        [Symbol.asyncIterator]: async function* (): AsyncGenerator<MockFileHandle> {
           for (const child of children) {
             yield child
           }
