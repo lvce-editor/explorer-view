@@ -2,32 +2,43 @@ import { expect, test } from '@jest/globals'
 import { createUploadTree } from '../src/parts/CreateUploadTree/CreateUploadTree.ts'
 import { getFileOperations } from '../src/parts/GetFileOperations/GetFileOperations.ts'
 
-test('uploadFileSystemHandles - creates correct file operations', async () => {
-  const root = 'test-root'
-  // Create mock file system handles
-  const fileHandles = [
-    {
-      kind: 'file',
-      name: 'test.txt',
-      getFile: async () => ({
-        text: async () => 'test content',
-      }),
-    },
-    {
-      kind: 'directory',
-      name: 'test-dir',
-      values: () => ({
+class MockFileHandle implements FileSystemHandle {
+  kind: 'file' | 'directory'
+  name: string
+  getFile?: () => Promise<{ text: () => Promise<string> }>
+  values?: () => { [Symbol.asyncIterator]: () => AsyncGenerator<MockFileHandle> }
+
+  constructor(kind: 'file' | 'directory', name: string, content?: string, children?: MockFileHandle[]) {
+    this.kind = kind
+    this.name = name
+
+    if (kind === 'file' && content) {
+      this.getFile = async () => ({
+        text: async () => content,
+      })
+    }
+
+    if (kind === 'directory' && children) {
+      this.values = () => ({
         [Symbol.asyncIterator]: async function* () {
-          yield {
-            kind: 'file',
-            name: 'nested.txt',
-            getFile: async () => ({
-              text: async () => 'nested content',
-            }),
+          for (const child of children) {
+            yield child
           }
         },
-      }),
-    },
+      })
+    }
+  }
+
+  async isSameEntry(other: FileSystemHandle): Promise<boolean> {
+    return this === other
+  }
+}
+
+test('uploadFileSystemHandles - creates correct file operations', async () => {
+  const root = 'test-root'
+  const fileHandles = [
+    new MockFileHandle('file', 'test.txt', 'test content'),
+    new MockFileHandle('directory', 'test-dir', undefined, [new MockFileHandle('file', 'nested.txt', 'nested content')]),
   ] as unknown as FileSystemHandle[]
 
   const uploadTree = await createUploadTree(root, fileHandles)
