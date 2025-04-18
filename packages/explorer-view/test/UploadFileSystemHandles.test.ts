@@ -1,13 +1,9 @@
-import { test, expect } from '@jest/globals'
-import { uploadFileSystemHandles } from '../src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts'
+import { expect, test } from '@jest/globals'
 import { createUploadTree } from '../src/parts/CreateUploadTree/CreateUploadTree.ts'
 import { getFileOperations } from '../src/parts/GetFileOperations/GetFileOperations.ts'
-import { applyFileOperations } from '../src/parts/ApplyFileOperations/ApplyFileOperations.ts'
 
 test('uploadFileSystemHandles - creates correct file operations', async () => {
   const root = 'test-root'
-  const pathSeparator = '/'
-
   // Create mock file system handles
   const fileHandles = [
     {
