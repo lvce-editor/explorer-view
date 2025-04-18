@@ -15,7 +15,7 @@ beforeEach(() => {
 
 test('handleWorkspaceChange updates state with new workspace path', async () => {
   mockRpc.invoke.mockImplementation((method: string) => {
-    if (method === 'getWorkspacePath') {
+    if (method === 'Workspace.getPath') {
       return '/new/path'
     }
     if (method === 'FileSystem.readDirWithFileTypes') {
