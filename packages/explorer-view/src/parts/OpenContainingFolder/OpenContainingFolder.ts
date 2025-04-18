@@ -1,20 +1,10 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
+import { getContainingFolder } from '../GetContainingFolder/GetContainingFolder.ts'
+import { openNativeFolder } from '../OpenNativeFolder/OpenNativeFolder.ts'
 
-const getContaingingFolder = (root: string, dirents: readonly any[], focusedIndex: number, pathSeparator: string): string => {
-  if (focusedIndex < 0) {
-    return root
-  }
-  const dirent = dirents[focusedIndex]
-  const direntPath = dirent.path
-  const direntParentPath = direntPath.slice(0, -(dirent.name.length + 1))
-  const path = `${direntParentPath}`
-  return path
-}
-
-export const openContainingFolder = async (state: ExplorerState): Promise<any> => {
+export const openContainingFolder = async (state: ExplorerState): Promise<ExplorerState> => {
   const { focusedIndex, root, items, pathSeparator } = state
-  const path = getContaingingFolder(root, items, focusedIndex, pathSeparator)
-  await ParentRpc.invoke('OpenNativeFolder.openNativeFolder', /* path */ path)
+  const path = getContainingFolder(root, items, focusedIndex, pathSeparator)
+  await openNativeFolder(path)
   return state
 }
