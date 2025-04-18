@@ -21,6 +21,12 @@ test('handleWorkspaceChange updates state with new workspace path', async () => 
     if (method === 'FileSystem.readDirWithFileTypes') {
       return []
     }
+    if (method === 'FileSystem.getPathSeparator') {
+      return '/'
+    }
+    if (method === 'Preferences.get') {
+      return false
+    }
     throw new Error(`unexpected method ${method}`)
   })
   const state = createDefaultState()
