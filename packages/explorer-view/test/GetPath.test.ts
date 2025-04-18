@@ -6,7 +6,7 @@ test('getPath - file dirent', () => {
     name: 'test.txt',
     path: '/test/test.txt',
     type: 1,
-  }
+  } as any
   expect(GetPath.getPath(dirent)).toBe('/test/test.txt')
 })
 
@@ -15,7 +15,7 @@ test('getPath - directory dirent', () => {
     name: 'folder',
     path: '/test/folder',
     type: 2,
-  }
+  } as any
   expect(GetPath.getPath(dirent)).toBe('/test/folder')
 })
 
@@ -24,6 +24,6 @@ test('getPath - nested path', () => {
     name: 'file.js',
     path: '/test/folder/subfolder/file.js',
     type: 1,
-  }
+  } as any
   expect(GetPath.getPath(dirent)).toBe('/test/folder/subfolder/file.js')
 })
