@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as FocusId from '../FocusId/FocusId.ts'
 import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 
@@ -9,6 +10,7 @@ export const handlePointerDown = (state: ExplorerState, button: number, x: numbe
       ...state,
       focused: true,
       focusedIndex: -1,
+      focus: FocusId.List,
     }
   }
   return state
