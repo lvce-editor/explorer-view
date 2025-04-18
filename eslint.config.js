@@ -27,4 +27,10 @@ export default [
       'unicorn/no-for-loop': 'off',
     },
   },
+  {
+    files: ['**/*.test.ts'],
+    rules: {
+      '@typescript-eslint/unbound-method': 'off',
+    },
+  },
 ]
