@@ -1,11 +1,7 @@
-import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import type { ContextMenuHandler } from '../ContextMenuHandler/ContextMenuHandler.ts'
 import * as ViewletExplorerHandleContextMenuKeyBoard from '../HandleContextMenuKeyboard/HandleContextMenuKeyboard.ts'
 import * as ViewletExplorerHandleContextMenuMouseAt from '../HandleContextMenuMouseAt/HandleContextMenuMouseAt.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
-
-interface ContextMenuHandler {
-  (state: ExplorerState, x: number, y: number): Promise<ExplorerState>
-}
 
 export const getContextMenuHandler = (button: number): ContextMenuHandler => {
   switch (button) {
