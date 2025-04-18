@@ -1,8 +1,8 @@
+import type { Rpc } from '@lvce-editor/rpc'
 import { test, expect } from '@jest/globals'
 import { getFileHandles } from '../src/parts/GetFileHandles/GetFileHandles.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
-import { Rpc } from '@lvce-editor/rpc'
 
 class MockFileHandle {
   constructor(public name: string) {}
