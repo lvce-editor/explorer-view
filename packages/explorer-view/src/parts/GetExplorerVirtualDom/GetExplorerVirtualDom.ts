@@ -20,8 +20,15 @@ const getActiveDescendant = (focusedIndex: number): string | undefined => {
 const getClassName = (focused: boolean, focusedIndex: number, dropTarget: readonly number[]): string => {
   const extraClass1 = focused && focusedIndex === -1 ? ClassNames.FocusOutline : ClassNames.Empty
   const extraClass2 = dropTarget === dropTargetFull ? ClassNames.ExplorerDropTarget : ClassNames.Empty
-  const className = MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer, extraClass1, extraClass2)
+  const className = MergeClassNames.mergeClassNames(ClassNames.ListItems, extraClass1, extraClass2)
   return className
+}
+
+const parentNode: VirtualDomNode = {
+  type: VirtualDomElements.Div,
+  childCount: 1,
+  className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
+  role: 'none',
 }
 
 export const getExplorerVirtualDom = (
@@ -36,6 +43,7 @@ export const getExplorerVirtualDom = (
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
   }
   const dom: readonly VirtualDomNode[] = [
+    parentNode,
     {
       type: VirtualDomElements.Div,
       className: getClassName(focused, focusedIndex, dropTargets),

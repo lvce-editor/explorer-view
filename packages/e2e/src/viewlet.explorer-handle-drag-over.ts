@@ -14,6 +14,6 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Loc
   await Command.execute('Explorer.handleDragOver', 5000, 5000)
 
   // assert
-  const explorer = Locator('.Explorer')
+  const explorer = Locator('.Explorer .ListItems')
   await expect(explorer).toHaveClass('DropTarget')
 }
