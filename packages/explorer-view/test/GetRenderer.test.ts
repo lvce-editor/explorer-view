@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
-import { getRenderer } from '../src/parts/GetRenderer/GetRenderer.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
+import { getRenderer } from '../src/parts/GetRenderer/GetRenderer.ts'
 import * as RenderEditingIndex from '../src/parts/RenderEditingIndex/RenderEditingIndex.ts'
 import * as RenderFocus from '../src/parts/RenderFocus/RenderFocus.ts'
 import * as RenderItems from '../src/parts/RenderItems/RenderItems.ts'
