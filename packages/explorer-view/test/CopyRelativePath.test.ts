@@ -1,9 +1,9 @@
 import { expect, test } from '@jest/globals'
+import { MockRpc } from '@lvce-editor/rpc'
 import { copyRelativePath } from '../src/parts/CopyRelativePath/CopyRelativePath.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as rpcregistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
-import { MockRpc } from '@lvce-editor/rpc'
 
 test('copyRelativePath - copies relative path of focused dirent', async (): Promise<void> => {
   const state = createDefaultState()
