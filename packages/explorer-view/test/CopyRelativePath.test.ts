@@ -3,8 +3,9 @@ import { copyRelativePath } from '../src/parts/CopyRelativePath/CopyRelativePath
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as rpcregistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+import { MockRpc } from '@lvce-editor/rpc'
 
-test('copyRelativePath - copies relative path of focused dirent', async () => {
+test('copyRelativePath - copies relative path of focused dirent', async (): Promise<void> => {
   const state = createDefaultState()
   const mockState = {
     ...state,
@@ -16,34 +17,30 @@ test('copyRelativePath - copies relative path of focused dirent', async () => {
   }
 
   let clipboardText = ''
-  const mockRpc = {
-    invoke: async (method: string, ...args: any[]) => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: async (method: string, ...args: any[]): Promise<void> => {
       if (method === 'ClipBoard.writeText') {
         clipboardText = args[0]
       }
     },
-    send: () => {},
-    invokeAndTransfer: async () => {},
-    dispose: async () => {},
-  }
+  })
   rpcregistry.set(RpcId.RendererWorker, mockRpc)
   await copyRelativePath(mockState)
   expect(clipboardText).toBe('')
 })
 
-test('copyRelativePath - returns state when no focused dirent', async () => {
+test('copyRelativePath - returns state when no focused dirent', async (): Promise<void> => {
   const state = createDefaultState()
   let clipboardCalled = false
-  const mockRpc = {
-    invoke: async (method: string) => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: async (method: string): Promise<void> => {
       if (method === 'ClipBoard.writeText') {
         clipboardCalled = true
       }
     },
-    send: () => {},
-    invokeAndTransfer: async () => {},
-    dispose: async () => {},
-  }
+  })
   rpcregistry.set(RpcId.RendererWorker, mockRpc)
   const result = await copyRelativePath(state)
   expect(result).toBe(state)
