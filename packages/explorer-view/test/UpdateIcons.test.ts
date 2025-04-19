@@ -1,19 +1,21 @@
-import { test, expect } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import * as CreateDefaultState from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 import * as UpdateIcons from '../src/parts/UpdateIcons/UpdateIcons.ts'
+import { MockRpc } from '@lvce-editor/rpc'
 
-const mockRpc = {
-  invoke: async () => {
+const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
+  if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
     return ['icon1', 'icon2']
-  },
-  send: () => {},
-  invokeAndTransfer: async () => {
-    return ['icon1', 'icon2']
-  },
-  dispose: async () => {},
+  }
+  throw new Error(`Unexpected method: ${method}`)
 }
+
+const mockRpc = await MockRpc.create({
+  invoke,
+  commandMap: {},
+})
 
 test('updateIcons - should update icons for visible items', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
