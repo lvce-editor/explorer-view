@@ -1,8 +1,8 @@
 import { test, expect } from '@jest/globals'
-import * as Render2 from '../src/parts/Render2/Render2.ts'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as Render2 from '../src/parts/Render2/Render2.ts'
 
 test('render2 - basic', () => {
   const uid = 1
