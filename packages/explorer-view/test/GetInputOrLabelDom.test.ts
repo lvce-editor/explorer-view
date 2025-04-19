@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
+import { Label, InputBox, InputValidationError } from '../src/parts/ClassNames/ClassNames.ts'
 import { getInputOrLabelDom } from '../src/parts/GetInputOrLabelDom/GetInputOrLabelDom.ts'
 import { Div, Input } from '../src/parts/VirtualDomElements/VirtualDomElements.ts'
-import { Label, InputBox, InputValidationError } from '../src/parts/ClassNames/ClassNames.ts'
 
 test('getInputOrLabelDom - editing state', () => {
   const result = getInputOrLabelDom(true, false, 'test')
