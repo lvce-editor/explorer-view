@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-handle-drop'
 
-export const skip = 1
-
 export const test: Test = async ({ Command, FileSystem, Workspace, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
