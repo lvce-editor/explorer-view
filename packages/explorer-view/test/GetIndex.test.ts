@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
-import { getIndex } from '../src/parts/GetIndex/GetIndex.ts'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import { getIndex } from '../src/parts/GetIndex/GetIndex.ts'
 
 test('getIndex - finds item', () => {
   const items: readonly ExplorerItem[] = [
