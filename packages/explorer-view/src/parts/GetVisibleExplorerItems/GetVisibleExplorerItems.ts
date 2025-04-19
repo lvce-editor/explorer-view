@@ -1,3 +1,4 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
@@ -10,7 +11,7 @@ import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 const ariaExpandedValues: (string | undefined)[] = [undefined, 'true', 'false']
 
 export const getVisibleExplorerItems = (
-  items: readonly any[],
+  items: readonly ExplorerItem[],
   minLineY: number,
   maxLineY: number,
   focusedIndex: number,
@@ -36,6 +37,7 @@ export const getVisibleExplorerItems = (
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]
 
+    // @ts-ignore
     visible.push({
       ...item,
       isEditing: i === editingIndex,
