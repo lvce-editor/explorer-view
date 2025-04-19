@@ -3,27 +3,16 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
+import { getPathPartsToReveal } from '../GetPathPartsToReveal/GetPathPartsToReveal.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
-
-const getPathPartsToReveal = (root: string, pathParts: readonly any[], dirents: readonly ExplorerItem[]): readonly any[] => {
-  for (let i = 0; i < pathParts.length; i++) {
-    const pathPart = pathParts[i]
-    const index = getIndex(dirents, pathPart.uri)
-    if (index === -1) {
-      continue
-    }
-    return pathParts.slice(i)
-  }
-  return pathParts
-}
 
 const getPathPartChildren = async (pathPart: any): Promise<readonly any[]> => {
   const children = await getChildDirents(pathPart.pathSeparator, pathPart)
   return children
 }
 
-const mergeVisibleWithHiddenItems = (visibleItems: readonly any[], hiddenItems: readonly any[]): readonly any[] => {
+const mergeVisibleWithHiddenItems = (visibleItems: readonly ExplorerItem[], hiddenItems: readonly ExplorerItem[]): readonly ExplorerItem[] => {
   const merged = [...hiddenItems]
   const seen = Object.create(null)
   const unique = []
