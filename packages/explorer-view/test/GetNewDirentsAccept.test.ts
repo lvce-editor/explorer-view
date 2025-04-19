@@ -8,7 +8,7 @@ import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 test('getNewDirentsAccept - create file in root', async () => {
   const mockRpc = await MockRpc.create({
     commandMap: {},
-    invoke: (method: string) => {
+    invoke: (method: string): Promise<any> => {
       if (method === 'FileSystem.writeFile') {
         return Promise.resolve()
       }
@@ -26,7 +26,7 @@ test('getNewDirentsAccept - create file in root', async () => {
     pathSeparator: '/',
   }
 
-  const createFn = async (path: string) => {
+  const createFn = async (path: string): Promise<void> => {
     await mockRpc.invoke('FileSystem.writeFile', path, '')
   }
 
@@ -77,7 +77,7 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
     ],
   }
 
-  const createFn = async (path: string) => {
+  const createFn = async (path: string): Promise<void> => {
     await mockRpc.invoke('FileSystem.writeFile', path, '')
   }
 
@@ -117,7 +117,7 @@ test('getNewDirentsAccept - handle error', async () => {
     pathSeparator: '/',
   }
 
-  const createFn = async (path: string) => {
+  const createFn = async (path: string): Promise<void> => {
     await mockRpc.invoke('FileSystem.writeFile', path, '')
   }
 
