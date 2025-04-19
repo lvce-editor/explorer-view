@@ -1,6 +1,8 @@
 import { expect, test } from '@jest/globals'
-import { createUploadTree } from '../src/parts/CreateUploadTree/CreateUploadTree.ts'
-import { getFileOperations } from '../src/parts/GetFileOperations/GetFileOperations.ts'
+import { MockRpc } from '@lvce-editor/rpc'
+import * as RpcId from '../src/parts/RpcId/RpcId.ts'
+import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+import { uploadFileSystemHandles } from '../src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
 class MockFileHandle implements FileSystemHandle {
   kind: 'file' | 'directory'
@@ -34,39 +36,64 @@ class MockFileHandle implements FileSystemHandle {
   }
 }
 
-test('uploadFileSystemHandles - creates correct file operations', async () => {
-  const root = 'test-root'
-  const fileHandles = [
-    new MockFileHandle('file', 'test.txt', 'test content'),
-    new MockFileHandle('directory', 'test-dir', undefined, [new MockFileHandle('file', 'nested.txt', 'nested content')]),
-  ]
-
-  const uploadTree = await createUploadTree(root, fileHandles)
-  const fileOperations = getFileOperations(root, uploadTree)
-
-  expect(fileOperations).toEqual([
-    {
-      type: 'createFile',
-      path: 'test-root/test.txt',
-      text: 'test content',
+test('upload single file', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.writeFile') {
+        return Promise.resolve(true)
+      }
+      if (method === 'FileSystem.mkdir') {
+        return Promise.resolve(true)
+      }
+      throw new Error(`unexpected method ${method}`)
     },
-    {
-      type: 'createFolder',
-      path: 'test-root/test-dir',
-      text: '',
-    },
-    {
-      type: 'createFile',
-      path: 'test-root/test-dir/nested.txt',
-      text: 'nested content',
-    },
-  ])
+  })
+  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  const fileHandle = new MockFileHandle('file', 'test.txt', 'content')
+  const result = await uploadFileSystemHandles('/', '/', [fileHandle])
+  expect(result).toBe(true)
 })
 
-test('uploadFileSystemHandles - handles empty file handles', async () => {
-  const root = 'test-root'
-  const fileHandles: readonly FileSystemHandle[] = []
-  const uploadTree = await createUploadTree(root, fileHandles)
-  const fileOperations = getFileOperations(root, uploadTree)
-  expect(fileOperations).toEqual([])
+test('upload directory with files', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.writeFile') {
+        return Promise.resolve(true)
+      }
+      if (method === 'FileSystem.mkdir') {
+        return Promise.resolve(true)
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  const file1 = new MockFileHandle('file', 'file1.txt', 'content1')
+  const file2 = new MockFileHandle('file', 'file2.txt', 'content2')
+  const dir = new MockFileHandle('directory', 'dir', undefined, [file1, file2])
+  const result = await uploadFileSystemHandles('/', '/', [dir])
+  expect(result).toBe(true)
+})
+
+test('upload multiple files and directories', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.writeFile') {
+        return Promise.resolve(true)
+      }
+      if (method === 'FileSystem.mkdir') {
+        return Promise.resolve(true)
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  const file1 = new MockFileHandle('file', 'file1.txt', 'content1')
+  const file2 = new MockFileHandle('file', 'file2.txt', 'content2')
+  const dir1 = new MockFileHandle('directory', 'dir1', undefined, [file1])
+  const dir2 = new MockFileHandle('directory', 'dir2', undefined, [file2])
+  const result = await uploadFileSystemHandles('/', '/', [dir1, dir2])
+  expect(result).toBe(true)
 })
