@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-handle-drag-leave'
 
-export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Locator, expect }) => {
+export const test: Test = async ({ Command, FileSystem, Workspace, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')

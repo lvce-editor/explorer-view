@@ -6,7 +6,7 @@ export const name = 'viewlet.explorer-create-file-error-no-name-provided'
 
 export const skip = true
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, ContextMenu, expect, Locator, KeyBoard }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
