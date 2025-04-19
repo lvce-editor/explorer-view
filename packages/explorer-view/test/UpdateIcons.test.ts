@@ -1,9 +1,9 @@
 import { expect, test } from '@jest/globals'
+import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import * as CreateDefaultState from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 import * as UpdateIcons from '../src/parts/UpdateIcons/UpdateIcons.ts'
-import { MockRpc } from '@lvce-editor/rpc'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
   if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
