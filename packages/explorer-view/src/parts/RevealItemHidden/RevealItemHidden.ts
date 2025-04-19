@@ -13,7 +13,7 @@ const getPathPartChildren = async (pathPart: any): Promise<readonly any[]> => {
 }
 
 const mergeVisibleWithHiddenItems = (visibleItems: readonly ExplorerItem[], hiddenItems: readonly ExplorerItem[]): readonly ExplorerItem[] => {
-  const merged = [...hiddenItems]
+  const merged = [...visibleItems, ...hiddenItems]
   const seen = Object.create(null)
   const unique = []
   for (const item of merged) {
@@ -23,59 +23,6 @@ const mergeVisibleWithHiddenItems = (visibleItems: readonly ExplorerItem[], hidd
     seen[item.path] = true
     unique.push(item)
   }
-  // @ts-ignore
-  const ordered = []
-
-  // depth one
-  //   let depth=1
-  //   while(true){
-  //     for(const item of unique){
-  //       if(item.depth===depth){
-  //         ordered.push(item)
-  //       }
-  //     }
-  // break
-  //   }
-  // const getChildren = (path) => {
-  //   const children = []
-  //   for (const item of unique) {
-  //     if (item.path.startsWith(path) && item.path !== path) {
-  //       ordered.push(item)
-  //     }
-  //   }
-  //   return children
-  // }
-  // for (const item of unique) {
-  //   for (const potentialChild of unique) {
-  //     if (
-  //       potentialChild.path.startsWith(item.path) &&
-  //       potentialChild.path !== item.path
-  //     ) {
-  //       ordered.push(potentialChild)
-  //     }
-  //   }
-  // }
-  // const refreshedRoots = Object.create(null)
-  // for (const hiddenItem of hiddenItems) {
-  //   const parent = hiddenItem.path.slice(0, hiddenItem.path.lastIndexOf('/'))
-  //   refreshedRoots[parent] = true
-  // }
-  // const mergedDirents = []
-  // for(const v)
-  // for (const visibleItem of visibleItems) {
-  //   if (visibleItem.path === hiddenItemRoot) {
-  //     // TODO update aria posinset and aria setsize
-  //     mergedDirents.push(...hiddenItems)
-  //   } else {
-  //     for (const hiddenItem of hiddenItems) {
-  //       if (hiddenItem.path === visibleItem.path) {
-  //         continue
-  //       }
-  //     }
-  //     mergedDirents.push(visibleItem)
-  //   }
-  // }
-
   return unique
 }
 
