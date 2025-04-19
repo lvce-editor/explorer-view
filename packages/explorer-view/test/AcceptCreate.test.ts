@@ -23,6 +23,8 @@ test('acceptCreate - empty file name', async () => {
   })
 })
 
+const createFn2 = async (path: string): Promise<void> => {}
+
 test('acceptCreate - successful file creation', async () => {
   const invoke = jest.fn((method: string): any => {
     if (method === 'FileSystem.getPathSeparator') {
@@ -50,12 +52,7 @@ test('acceptCreate - successful file creation', async () => {
     fileIconCache: {},
   }
 
-  const createFn = async (path: string) => {
-    // The actual file creation is handled by the RPC
-    // This is just a mock that simulates the file being created
-  }
-
-  const result = await acceptCreate(state, DirentType.File, createFn)
+  const result = await acceptCreate(state, DirentType.File, createFn2)
   expect(result).toEqual({
     ...state,
     items: [
