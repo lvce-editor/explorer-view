@@ -2,9 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-file'
 
-export const skip = 1
-
-export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Locator, expect }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -15,7 +13,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Loc
 
   // act
   await Explorer.focusIndex(1)
-  await Command.execute('Explorer.renameDirent')
+  await Explorer.renameDirent()
 
   // assert
   const explorer = Locator('.Explorer')
