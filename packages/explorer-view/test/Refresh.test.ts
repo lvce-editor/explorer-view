@@ -2,8 +2,8 @@ import { test, expect } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { refresh } from '../src/parts/Refresh/Refresh.ts'
-import { set } from '../src/parts/RpcRegistry/RpcRegistry.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
+import { set } from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('refresh - basic', async () => {
   const mockRpc = await MockRpc.create({
