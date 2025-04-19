@@ -19,9 +19,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Loc
   const explorer = Locator('.Explorer')
   const inputBox = explorer.locator('input')
   await expect(inputBox).toBeVisible()
-
-  // TODO
-  // await expect(inputBox).toBeFocused()
+  await expect(inputBox).toBeFocused()
 
   // act
   await Explorer.cancelEdit()
