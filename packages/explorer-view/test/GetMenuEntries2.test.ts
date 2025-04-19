@@ -1,9 +1,9 @@
 import { test, expect } from '@jest/globals'
-import { getMenuEntries2 } from '../src/parts/GetMenuEntries2/GetMenuEntries2.ts'
-import { set } from '../src/parts/ExplorerStates/ExplorerStates.ts'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { set } from '../src/parts/ExplorerStates/ExplorerStates.ts'
+import { getMenuEntries2 } from '../src/parts/GetMenuEntries2/GetMenuEntries2.ts'
 
 test('getMenuEntries2 - root', () => {
   const uid = 1
