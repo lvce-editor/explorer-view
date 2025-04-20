@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { dirname, join, getBaseName } from '../src/parts/Path/Path.js'
+import { dirname, join, getBaseName } from '../src/parts/Path/Path.ts'
 
 test('dirname returns parent directory', () => {
   expect(dirname('/', '/home/user/file.txt')).toBe('/home/user')
