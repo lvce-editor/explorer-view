@@ -81,7 +81,7 @@ test('newDirent handles directory click when focused item is a directory', async
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test', type: DirentType.Directory, path: '/test', depth: 0 }],
+    items: [{ name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false }],
   }
   const mockEditingType = 1
 
@@ -124,7 +124,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0 }],
+    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
   }
   const mockEditingType = 1
 

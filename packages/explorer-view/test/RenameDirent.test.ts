@@ -10,7 +10,7 @@ test('renameDirent updates state with editing properties', () => {
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0 }],
+    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
   }
 
   const result = renameDirent(mockState)

@@ -11,8 +11,8 @@ test('saveState - returns correct saved state', () => {
   const newState: ExplorerState = {
     ...oldState,
     items: [
-      { name: 'test', type: DirentType.DirectoryExpanded, path: '/test', depth: 0 },
-      { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 1 },
+      { name: 'test', type: DirentType.DirectoryExpanded, path: '/test', depth: 0, selected: false },
+      { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 1, selected: false },
     ],
     root: '/',
     deltaY: 0,
@@ -35,7 +35,7 @@ test('saveState - returns correct saved state', () => {
 test('saveState - handles empty items', () => {
   const uid = 1
   const oldState = createDefaultState()
-  const newState = {
+  const newState: ExplorerState = {
     ...oldState,
     items: [],
     root: '/',
