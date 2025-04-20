@@ -4,7 +4,7 @@ export const handleSelection = (state: ExplorerState, index: number): ExplorerSt
   const { items } = state
   const newItems = items.map((item, i) => ({
     ...item,
-    selected: i === index ? !item.selected : false,
+    selected: i === index ? !item.selected : item.selected,
   }))
   return {
     ...state,
