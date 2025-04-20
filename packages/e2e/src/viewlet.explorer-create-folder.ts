@@ -4,7 +4,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-folder'
 
-export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Locator, expect }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -14,7 +14,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Loc
   await Workspace.setPath(tmpDir)
 
   // act
-  await Command.execute('Explorer.newFolder')
+  await Explorer.newFolder()
 
   // assert
   const inputBox = Locator('input')

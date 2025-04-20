@@ -2,7 +2,7 @@ import { type Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-refresh'
 
-export const test: Test = async ({ Command, FileSystem, Workspace, Locator, expect }) => {
+export const test: Test = async ({ Explorer, Command, FileSystem, Workspace, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -18,7 +18,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Locator, expe
 
   // act
   await Command.execute('FileSystem.remove', `${tmpDir}/file1.txt`)
-  await Command.execute('Explorer.refresh')
+  await Explorer.refresh()
 
   // assert
   // await expect(file1).toHaveCount(0)

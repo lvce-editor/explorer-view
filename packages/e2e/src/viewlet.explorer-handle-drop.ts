@@ -1,8 +1,8 @@
-import type { Test } from '@lvce-editor/test-with-playwright'
+import { type Test, Explorer } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-handle-drop'
 
-export const test: Test = async ({ Command, FileSystem, Workspace, Locator, expect }) => {
+export const test: Test = async ({ Explorer, Command, FileSystem, Workspace, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -18,7 +18,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Locator, expe
   const id = await Command.execute('FileSystemHandle.addFileHandle', fileHandle)
 
   // act
-  await Command.execute('Explorer.handleDrop', 0, 0, [id], fileList)
+  await Explorer.handleDrop(0, 0, [id], fileList)
 
   // assert
   const droppedFile = Locator('.TreeItem', { hasText: 'dropped-file.txt' })
