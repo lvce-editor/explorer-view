@@ -7,14 +7,14 @@ import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const mockRpc = {
-  invoke(method: string, ...params: readonly any[]) {
+  invoke(method: string) {
     switch (method) {
       case 'IconTheme.getFileIcon':
-        return `file-${params[0].name}`
+        return Promise.resolve('file-icon')
       case 'IconTheme.getFolderIcon':
-        return `folder-${params[0].name}`
+        return Promise.resolve('folder-icon')
       default:
-        throw new Error(`unknown method ${method}`)
+        throw new Error(`unexpected method ${method}`)
     }
   },
 } as any
@@ -33,8 +33,8 @@ test('getFileIcons - empty dirents', async () => {
 
 test('getFileIcons - all cached', async () => {
   const dirents: readonly ExplorerItem[] = [
-    { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0 },
-    { type: DirentType.Directory, name: 'b', path: '/b', depth: 0 },
+    { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
+    { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
   ]
   const cache: FileIconCache = {
     '/a.txt': 'cached-a',
@@ -49,35 +49,35 @@ test('getFileIcons - all cached', async () => {
 
 test('getFileIcons - none cached', async () => {
   const dirents: readonly ExplorerItem[] = [
-    { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0 },
-    { type: DirentType.Directory, name: 'b', path: '/b', depth: 0 },
+    { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
+    { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
   ]
   const result = await GetFileIcons.getFileIcons(dirents, {})
   expect(result).toEqual({
-    icons: ['file-a.txt', 'folder-b'],
+    icons: ['file-icon', 'folder-icon'],
     newFileIconCache: {
-      '/a.txt': 'file-a.txt',
-      '/b': 'folder-b',
+      '/a.txt': 'file-icon',
+      '/b': 'folder-icon',
     },
   })
 })
 
 test('getFileIcons - mixed cache', async () => {
   const dirents: readonly ExplorerItem[] = [
-    { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0 },
-    { type: DirentType.Directory, name: 'b', path: '/b', depth: 0 },
-    { type: DirentType.File, name: 'c.txt', path: '/c.txt', depth: 0 },
+    { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
+    { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
+    { type: DirentType.File, name: 'c.txt', path: '/c.txt', depth: 0, selected: false },
   ]
   const cache: FileIconCache = {
     '/a.txt': 'cached-a',
   }
   const result = await GetFileIcons.getFileIcons(dirents, cache)
   expect(result).toEqual({
-    icons: ['cached-a', 'folder-b', 'file-c.txt'],
+    icons: ['cached-a', 'folder-icon', 'file-icon'],
     newFileIconCache: {
       '/a.txt': 'cached-a',
-      '/b': 'folder-b',
-      '/c.txt': 'file-c.txt',
+      '/b': 'folder-icon',
+      '/c.txt': 'file-icon',
     },
   })
 })
