@@ -14,10 +14,10 @@ test('collapseAll - with nested items', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'folder1', type: DirentType.Directory, path: '/folder1', depth: 1 },
-      { name: 'file1.txt', type: DirentType.File, path: '/folder1/file1.txt', depth: 2 },
-      { name: 'folder2', type: DirentType.Directory, path: '/folder2', depth: 1 },
-      { name: 'file2.txt', type: DirentType.File, path: '/folder2/file2.txt', depth: 2 },
+      { name: 'folder1', type: DirentType.Directory, path: '/folder1', depth: 1, selected: false },
+      { name: 'file1.txt', type: DirentType.File, path: '/folder1/file1.txt', depth: 2, selected: false },
+      { name: 'folder2', type: DirentType.Directory, path: '/folder2', depth: 1, selected: false },
+      { name: 'file2.txt', type: DirentType.File, path: '/folder2/file2.txt', depth: 2, selected: false },
     ],
   }
 
@@ -25,8 +25,8 @@ test('collapseAll - with nested items', () => {
   expect(result).toEqual({
     ...state,
     items: [
-      { name: 'folder1', type: DirentType.Directory, path: '/folder1', depth: 1 },
-      { name: 'folder2', type: DirentType.Directory, path: '/folder2', depth: 1 },
+      { name: 'folder1', type: DirentType.Directory, path: '/folder1', depth: 1, selected: false },
+      { name: 'folder2', type: DirentType.Directory, path: '/folder2', depth: 1, selected: false },
     ],
   })
 })

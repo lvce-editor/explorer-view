@@ -1,4 +1,4 @@
-import { test, expect } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -41,6 +41,7 @@ test('getNewDirentsAccept - create file in root', async () => {
     name: 'test.txt',
     type: 1,
     icon: '',
+    selected: false,
   })
   expect(result.newFocusedIndex).toBe(0)
 })
@@ -73,6 +74,7 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
         name: 'folder',
         type: 2,
         icon: '',
+        selected: false,
       },
     ],
   }
@@ -92,6 +94,7 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
     name: 'test.txt',
     type: 1,
     icon: '',
+    selected: false,
   })
   expect(result.newFocusedIndex).toBe(1)
 })

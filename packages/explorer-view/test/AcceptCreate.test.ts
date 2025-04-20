@@ -1,4 +1,4 @@
-import { test, expect, jest } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptCreate } from '../src/parts/AcceptCreate/AcceptCreate.ts'
@@ -45,7 +45,7 @@ test('acceptCreate - successful file creation', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     editingValue: 'test.txt',
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0 }],
+    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
     minLineY: 0,
     height: 100,
     itemHeight: 20,
@@ -56,8 +56,8 @@ test('acceptCreate - successful file creation', async () => {
   expect(result).toEqual({
     ...state,
     items: [
-      { name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0 },
-      { name: 'test.txt', type: DirentType.File, path: '/test.txt/test.txt', depth: 1, posInSet: 1, setSize: 1, icon: '' },
+      { name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false },
+      { name: 'test.txt', type: DirentType.File, path: '/test.txt/test.txt', depth: 1, posInSet: 1, setSize: 1, icon: '', selected: false },
     ],
     editingIndex: -1,
     focusedIndex: 1,
