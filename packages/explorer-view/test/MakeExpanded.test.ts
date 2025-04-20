@@ -1,0 +1,31 @@
+import { test, expect } from '@jest/globals'
+import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.js'
+import { makeExpanded } from '../src/parts/MakeExpanded/MakeExpanded.js'
+
+test('makeExpanded - directory', () => {
+  const dirent: ExplorerItem = {
+    type: DirentType.Directory,
+    name: 'test',
+    path: '/test',
+    depth: 0,
+  }
+  const result = makeExpanded(dirent)
+  expect(result).toEqual({
+    type: DirentType.DirectoryExpanded,
+    name: 'test',
+    path: '/test',
+    depth: 0,
+  })
+})
+
+test('makeExpanded - file', () => {
+  const dirent: ExplorerItem = {
+    type: DirentType.File,
+    name: 'test.txt',
+    path: '/test.txt',
+    depth: 0,
+  }
+  const result = makeExpanded(dirent)
+  expect(result).toEqual(dirent)
+})
