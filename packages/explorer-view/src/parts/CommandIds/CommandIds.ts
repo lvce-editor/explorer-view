@@ -7,6 +7,8 @@ export const commandIds = [
   'dispose',
   'expandAll',
   'expandRecursively',
+  'selectUp',
+  'selectDown',
   'focus',
   'focusFirst',
   'focusIndex',
