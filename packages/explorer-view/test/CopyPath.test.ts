@@ -1,9 +1,10 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { copyPath } from '../src/parts/CopyPath/CopyPath.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 
 test('copyPath - returns state unchanged', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       {

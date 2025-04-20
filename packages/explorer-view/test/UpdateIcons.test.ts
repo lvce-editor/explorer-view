@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as CreateDefaultState from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 import * as UpdateIcons from '../src/parts/UpdateIcons/UpdateIcons.ts'
@@ -20,7 +21,7 @@ const mockRpc = await MockRpc.create({
 test('updateIcons - should update icons for visible items', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
   const defaultState = CreateDefaultState.createDefaultState()
-  const state = {
+  const state: ExplorerState = {
     ...defaultState,
     items: [
       { name: 'file1.ts', type: 1, path: '/test/file1.ts', depth: 1 },
@@ -43,7 +44,7 @@ test('updateIcons - should update icons for visible items', async () => {
 test('updateIcons - should handle empty visible items', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
   const defaultState = CreateDefaultState.createDefaultState()
-  const state = {
+  const state: ExplorerState = {
     ...defaultState,
     items: [],
     minLineY: 0,

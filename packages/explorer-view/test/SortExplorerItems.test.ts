@@ -7,6 +7,7 @@ const createItem = (name: string, type: number): any => ({
   type,
   path: `/test/${name}`,
   depth: 1,
+  selected: false,
 })
 
 test('sorts folders before files', () => {

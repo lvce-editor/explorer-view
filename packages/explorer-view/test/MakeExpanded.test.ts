@@ -9,6 +9,7 @@ test('makeExpanded - directory', () => {
     name: 'test',
     path: '/test',
     depth: 0,
+    selected: false,
   }
   const result = makeExpanded(dirent)
   expect(result).toEqual({
@@ -16,6 +17,7 @@ test('makeExpanded - directory', () => {
     name: 'test',
     path: '/test',
     depth: 0,
+    selected: false,
   })
 })
 

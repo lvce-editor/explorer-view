@@ -3,4 +3,5 @@ export interface ExplorerItem {
   readonly type: number
   readonly path: string
   readonly depth: number
+  readonly selected?: boolean
 }

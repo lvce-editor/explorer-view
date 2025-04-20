@@ -1,4 +1,5 @@
 import { test, expect } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { collapseAll } from '../src/parts/CollapseAll/CollapseAll.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -10,7 +11,7 @@ test('collapseAll - empty state', () => {
 })
 
 test('collapseAll - with nested items', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'folder1', type: DirentType.Directory, path: '/folder1', depth: 1 },
