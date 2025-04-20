@@ -1,10 +1,9 @@
-import { test, expect } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleDrop } from '../src/parts/HandleDrop/HandleDrop.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
-import { VError } from '../src/parts/VError/VError.ts'
 
 class MockFile implements File {
   constructor(
@@ -38,9 +37,9 @@ class MockFile implements File {
 }
 
 class MockFileList implements FileList {
-  private files: File[]
+  private files: readonly File[]
 
-  constructor(files: File[]) {
+  constructor(files: readonly File[]) {
     this.files = files
   }
 
