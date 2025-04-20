@@ -2,8 +2,6 @@ import { type Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-select-multiple-files-with-mouse'
 
-export const skip = 1
-
 export const test: Test = async ({ Command, Explorer, FileSystem, Workspace, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -17,10 +15,10 @@ export const test: Test = async ({ Command, Explorer, FileSystem, Workspace, Loc
   await Command.execute('Explorer.handleClickAt', 0, false, true, 300, 300)
 
   // assert
-  const file1 = Locator('text=file1.txt')
+  const file1 = Locator('.TreeItem').nth(0)
   await expect(file1).toHaveClass('TreeItemActive')
-  const file2 = Locator('text=file1.txt')
+  const file2 = Locator('.TreeItem').nth(1)
   await expect(file2).toHaveClass('TreeItemActive')
-  const file3 = Locator('text=file1.txt')
+  const file3 = Locator('.TreeItem').nth(2)
   await expect(file3).not.toHaveClass('TreeItemActive')
 }
