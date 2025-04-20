@@ -1,11 +1,11 @@
 import { expect, jest, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.js'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
-import { newDirent } from '../src/parts/NewDirent/NewDirent.js'
-import * as RpcId from '../src/parts/RpcId/RpcId.js'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.js'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { newDirent } from '../src/parts/NewDirent/NewDirent.ts'
+import * as RpcId from '../src/parts/RpcId/RpcId.ts'
+import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('newDirent sets focus and updates state when no item is focused', async () => {
   const invoke = jest.fn((method: string): any => {

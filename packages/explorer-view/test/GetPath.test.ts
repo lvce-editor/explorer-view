@@ -21,9 +21,9 @@ test('getPath - directory dirent', () => {
 
 test('getPath - nested path', () => {
   const dirent = {
-    name: 'file.js',
-    path: '/test/folder/subfolder/file.js',
+    name: 'file.ts',
+    path: '/test/folder/subfolder/file.ts',
     type: 1,
   } as any
-  expect(GetPath.getPath(dirent)).toBe('/test/folder/subfolder/file.js')
+  expect(GetPath.getPath(dirent)).toBe('/test/folder/subfolder/file.ts')
 })

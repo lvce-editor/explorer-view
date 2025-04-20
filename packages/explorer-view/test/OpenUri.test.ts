@@ -1,7 +1,7 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
-import { openUri } from '../src/parts/OpenUri/OpenUri.js'
-import * as RpcId from '../src/parts/RpcId/RpcId.js'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.js'
+import { openUri } from '../src/parts/OpenUri/OpenUri.ts'
+import * as RpcId from '../src/parts/RpcId/RpcId.ts'
+import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const mockRpc = {
   invoke: jest.fn(),
