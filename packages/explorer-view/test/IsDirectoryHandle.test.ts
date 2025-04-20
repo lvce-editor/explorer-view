@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { isDirectoryHandle } from '../src/parts/IsDirectoryHandle/IsDirectoryHandle.js'
+import { isDirectoryHandle } from '../src/parts/IsDirectoryHandle/IsDirectoryHandle.ts'
 
 test('isDirectoryHandle', () => {
   const fileHandle = {

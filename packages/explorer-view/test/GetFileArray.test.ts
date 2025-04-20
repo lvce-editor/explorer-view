@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { getFileArray } from '../src/parts/GetFileArray/GetFileArray.js'
+import { getFileArray } from '../src/parts/GetFileArray/GetFileArray.ts'
 
 class MockFileList implements FileList {
   private files: File[] = []

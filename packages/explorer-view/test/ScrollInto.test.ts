@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { scrollInto } from '../src/parts/ScrollInto/ScrollInto.js'
+import { scrollInto } from '../src/parts/ScrollInto/ScrollInto.ts'
 
 test('when index is below minLineY', () => {
   const result = scrollInto(5, 10, 20)

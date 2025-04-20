@@ -1,5 +1,5 @@
 import { test, expect, jest } from '@jest/globals'
-import { getFileHandleText } from '../src/parts/GetFileHandleText/GetFileHandleText.js'
+import { getFileHandleText } from '../src/parts/GetFileHandleText/GetFileHandleText.ts'
 
 test('getFileHandleText returns file content as text', async () => {
   const mockFileHandle = {

@@ -1,10 +1,10 @@
 import { test, expect } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.js'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
-import { revealItemHidden } from '../src/parts/RevealItemHidden/RevealItemHidden.js'
-import * as RpcId from '../src/parts/RpcId/RpcId.js'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { revealItemHidden } from '../src/parts/RevealItemHidden/RevealItemHidden.ts'
+import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('revealItemHidden - reveals hidden item', async () => {
   const mockRpc = await MockRpc.create({

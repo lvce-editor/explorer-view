@@ -1,11 +1,11 @@
 import { expect, jest, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.js'
-import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.js'
-import { newFolder } from '../src/parts/NewFolder/NewFolder.js'
-import * as RpcId from '../src/parts/RpcId/RpcId.js'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.js'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
+import { newFolder } from '../src/parts/NewFolder/NewFolder.ts'
+import * as RpcId from '../src/parts/RpcId/RpcId.ts'
+import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('newFolder', async () => {
   const invoke = jest.fn((method: string): any => {

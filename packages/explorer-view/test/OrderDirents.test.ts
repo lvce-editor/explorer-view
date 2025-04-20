@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
-import { orderDirents } from '../src/parts/OrderDirents/OrderDirents.js'
+import { orderDirents } from '../src/parts/OrderDirents/OrderDirents.ts'
 
 test('empty array returns empty array', () => {
   expect(orderDirents([])).toEqual([])
