@@ -1,10 +1,18 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as HandleSelection from '../HandleSelection/HandleSelection.ts'
 
 export const selectUp = (state: ExplorerState): ExplorerState => {
-  const { focusedIndex } = state
-  if (focusedIndex <= 0) {
+  const { items, focusedIndex } = state
+  const firstSelectedIndex = items.findIndex((item) => item.selected)
+  const targetIndex = firstSelectedIndex === -1 ? focusedIndex : firstSelectedIndex
+  if (targetIndex <= 0) {
     return state
   }
-  return HandleSelection.handleSelection(state, focusedIndex - 1)
+  const newItems = items.map((item, i) => ({
+    ...item,
+    selected: i === targetIndex - 1 ? true : item.selected,
+  }))
+  return {
+    ...state,
+    items: newItems,
+  }
 }
