@@ -25,6 +25,7 @@ export default [
       '@typescript-eslint/prefer-readonly-parameter-types': 'off',
       'prefer-destructuring': 'off',
       'unicorn/no-for-loop': 'off',
+      'jest/no-identical-title': 'off',
     },
   },
   {
