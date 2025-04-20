@@ -10,6 +10,16 @@ import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 
 const ariaExpandedValues: (string | undefined)[] = [undefined, 'true', 'false']
 
+const getClassName = (isSelected: boolean, isFocused: boolean): string => {
+  if (isFocused) {
+    return MergeClassNames.mergeClassNames(ClassNames.TreeItem, ClassNames.TreeItemActive)
+  }
+  if (isSelected) {
+    return MergeClassNames.mergeClassNames(ClassNames.TreeItem, ClassNames.TreeItemActive)
+  }
+  return ClassNames.TreeItem
+}
+
 export const getVisibleExplorerItems = (
   items: readonly ExplorerItem[],
   minLineY: number,
@@ -33,7 +43,8 @@ export const getVisibleExplorerItems = (
     const indent = indentFn(item.depth, chevron)
     const isFocused = i === focusedIndex
     const id = isFocused ? 'TreeItemActive' : undefined
-    const className = isFocused ? MergeClassNames.mergeClassNames(ClassNames.TreeItem, ClassNames.TreeItemActive) : ClassNames.TreeItem
+    const isSelected = item.selected
+    const className = getClassName(isSelected, isFocused)
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]
 
@@ -65,6 +76,7 @@ export const getVisibleExplorerItems = (
       chevron: 0,
       id: undefined,
       className: ClassNames.TreeItem,
+      selected: false,
     })
   }
   return visible
