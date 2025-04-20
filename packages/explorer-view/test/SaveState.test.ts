@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
@@ -7,7 +8,7 @@ import { saveState } from '../src/parts/SaveState/SaveState.ts'
 test('saveState - returns correct saved state', () => {
   const uid = 1
   const oldState = createDefaultState()
-  const newState = {
+  const newState: ExplorerState = {
     ...oldState,
     items: [
       { name: 'test', type: DirentType.DirectoryExpanded, path: '/test', depth: 0 },

@@ -8,6 +8,7 @@ test('getPath - file dirent', () => {
     path: '/test/test.txt',
     type: 1,
     depth: 0,
+    selected: true,
   }
   expect(GetPath.getPath(dirent)).toBe('/test/test.txt')
 })

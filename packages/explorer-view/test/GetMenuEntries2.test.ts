@@ -20,6 +20,7 @@ test('getMenuEntries2 - directory', () => {
     name: 'test',
     path: '/test',
     depth: 0,
+    selected: true,
   }
   const state = {
     ...createDefaultState(),
@@ -38,6 +39,7 @@ test('getMenuEntries2 - file', () => {
     name: 'test.txt',
     path: '/test.txt',
     depth: 0,
+    selected: false,
   }
   const state = {
     ...createDefaultState(),

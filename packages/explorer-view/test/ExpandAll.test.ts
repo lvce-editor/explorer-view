@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { expandAll } from '../src/parts/ExpandAll/ExpandAll.ts'
@@ -26,7 +27,7 @@ const mockRpc = await MockRpc.create({
 
 test('expandAll - no focused item', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
   }
@@ -36,7 +37,7 @@ test('expandAll - no focused item', async () => {
 
 test('expandAll - expand directories at same depth', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'dir1', type: DirentType.Directory, depth: 0, path: '/dir1' },
