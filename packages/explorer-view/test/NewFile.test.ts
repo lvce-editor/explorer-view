@@ -36,7 +36,7 @@ test('newFile', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0 }],
+    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
   }
 
   const result = await newFile(state)

@@ -14,6 +14,7 @@ test('handleClickSymLink - file symlink', async () => {
     name: 'symlink',
     type: DirentType.Symlink,
     depth: 0,
+    selected: false,
   }
   const index = 0
 
@@ -51,6 +52,7 @@ test('handleClickSymLink - unsupported type', async () => {
     name: 'symlink',
     type: DirentType.Symlink,
     depth: 0,
+    selected: false,
   }
   const index = 0
 

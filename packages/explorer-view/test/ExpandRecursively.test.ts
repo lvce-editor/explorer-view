@@ -1,6 +1,7 @@
 import { test, expect } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { Directory, File } from '../src/parts/DirentType/DirentType.ts'
 import { expandRecursively } from '../src/parts/ExpandRecursively/ExpandRecursively.ts'
@@ -32,6 +33,11 @@ test.skip('expand root directory', async () => {
   const state = {
     ...createDefaultState(),
     root: '/test',
+    items: [
+      { name: 'file1.txt', type: File, depth: 0, path: '/test/file1.txt', selected: false },
+      { name: 'dir1', type: Directory, depth: 0, path: '/test/dir1', selected: false },
+    ],
+    focusedIndex: 0,
   }
   const newState = await expandRecursively(state)
   expect(newState.items).toHaveLength(2)
@@ -62,16 +68,11 @@ test.skip('expand focused directory', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-
   const state = {
     ...createDefaultState(),
     items: [
-      {
-        name: 'test',
-        type: Directory,
-        path: '/test',
-        depth: 0,
-      },
+      { name: 'dir1', type: Directory, depth: 0, path: '/test/dir1', selected: false },
+      { name: 'file1.txt', type: File, depth: 0, path: '/test/file1.txt', selected: false },
     ],
     focusedIndex: 0,
   }
@@ -82,7 +83,7 @@ test.skip('expand focused directory', async () => {
 })
 
 test('do not expand file', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       {
@@ -90,6 +91,7 @@ test('do not expand file', async () => {
         type: File,
         path: '/test.txt',
         depth: 0,
+        selected: false,
       },
     ],
     focusedIndex: 0,

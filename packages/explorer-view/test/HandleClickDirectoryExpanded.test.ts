@@ -10,6 +10,7 @@ test.skip('collapse expanded directory', async () => {
     type: DirentType.Directory,
     path: '/test',
     depth: 0,
+    selected: false,
   }
   const index = 0
   const keepFocus = true
@@ -27,18 +28,21 @@ test('collapse expanded directory with children', async () => {
     type: DirentType.Directory,
     path: '/test',
     depth: 0,
+    selected: false,
   }
   const child1 = {
     name: 'child1',
     type: DirentType.File,
     path: '/test/child1',
     depth: 1,
+    selected: false,
   }
   const child2 = {
     name: 'child2',
     type: DirentType.File,
     path: '/test/child2',
     depth: 1,
+    selected: false,
   }
   const state = {
     ...createDefaultState(),

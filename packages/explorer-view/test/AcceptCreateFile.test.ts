@@ -31,6 +31,7 @@ test('acceptCreateFile', async () => {
         type: 1,
         path: 'test',
         depth: 0,
+        selected: false,
       },
     ],
   }
