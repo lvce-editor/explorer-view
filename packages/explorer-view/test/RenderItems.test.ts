@@ -14,6 +14,7 @@ test('renderItems - basic', () => {
         type: 1,
         path: '/test',
         depth: 0,
+        selected: false,
       },
     ],
   }
@@ -34,6 +35,7 @@ test('renderItems - narrow width', () => {
         type: 1,
         path: '/test',
         depth: 0,
+        selected: false,
       },
     ],
   }
