@@ -6,6 +6,16 @@ import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
 export const getKeyBindings = (): readonly KeyBinding[] => {
   return [
     {
+      key: KeyModifier.Shift | KeyCode.UpArrow,
+      command: 'Explorer.selectUp',
+      when: WhenExpression.FocusExplorer,
+    },
+    {
+      key: KeyModifier.Shift | KeyCode.DownArrow,
+      command: 'Explorer.selectDown',
+      when: WhenExpression.FocusExplorer,
+    },
+    {
       key: KeyCode.RightArrow,
       command: 'Explorer.handleArrowRight',
       when: WhenExpression.FocusExplorer,
