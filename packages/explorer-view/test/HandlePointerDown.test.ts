@@ -25,7 +25,7 @@ test('right click outside items', () => {
 test('left click on item', () => {
   const state = {
     ...createDefaultState(),
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0 }],
+    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
   }
   const result = handlePointerDown(state, MouseEventType.LeftClick, 0, 0)
   expect(result).toEqual(state)

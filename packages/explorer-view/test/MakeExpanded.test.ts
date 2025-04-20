@@ -27,6 +27,7 @@ test('makeExpanded - file', () => {
     name: 'test.txt',
     path: '/test.txt',
     depth: 0,
+    selected: false,
   }
   const result = makeExpanded(dirent)
   expect(result).toEqual(dirent)

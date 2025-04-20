@@ -19,6 +19,7 @@ test('isTopLevel - depth 2', () => {
     name: '',
     path: '',
     type: 0,
+    selected: false,
   }
   expect(IsTopLevel.isTopLevel(dirent)).toBe(false)
 })

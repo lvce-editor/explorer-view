@@ -18,7 +18,7 @@ test('handleArrowRight - no focused item', async () => {
 test('handleArrowRight - file', async () => {
   const state = {
     ...createDefaultState(),
-    items: [{ type: DirentType.File, name: 'test.txt', path: '/test.txt', depth: 0 }],
+    items: [{ type: DirentType.File, name: 'test.txt', path: '/test.txt', depth: 0, selected: false }],
     focusedIndex: 0,
   }
   const result = await handleArrowRight(state)
@@ -38,7 +38,7 @@ test.skip('handleArrowRight - directory', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
   const state = {
     ...createDefaultState(),
-    items: [{ type: DirentType.Directory, name: 'test', path: '/test', depth: 0 }],
+    items: [{ type: DirentType.Directory, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
   }
   const result = await handleArrowRight(state)
@@ -48,7 +48,7 @@ test.skip('handleArrowRight - directory', async () => {
 test('handleArrowRight - symlink file', async () => {
   const state = {
     ...createDefaultState(),
-    items: [{ type: DirentType.SymLinkFile, name: 'test.txt', path: '/test.txt', depth: 0 }],
+    items: [{ type: DirentType.SymLinkFile, name: 'test.txt', path: '/test.txt', depth: 0, selected: false }],
     focusedIndex: 0,
   }
   const result = await handleArrowRight(state)
@@ -68,7 +68,7 @@ test.skip('handleArrowRight - symlink folder', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
   const state = {
     ...createDefaultState(),
-    items: [{ type: DirentType.SymLinkFolder, name: 'test', path: '/test', depth: 0 }],
+    items: [{ type: DirentType.SymLinkFolder, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
   }
   const result = await handleArrowRight(state)
@@ -88,7 +88,7 @@ test.skip('handleArrowRight - directory expanded', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
   const state = {
     ...createDefaultState(),
-    items: [{ type: DirentType.DirectoryExpanded, name: 'test', path: '/test', depth: 0 }],
+    items: [{ type: DirentType.DirectoryExpanded, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
   }
   const result = await handleArrowRight(state)

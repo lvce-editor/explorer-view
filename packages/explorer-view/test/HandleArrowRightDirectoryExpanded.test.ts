@@ -13,8 +13,8 @@ test('handleArrowRightDirectoryExpanded - next item has higher depth', () => {
   const state = {
     ...createDefaultState(),
     items: [
-      { path: '/a', name: 'a', type: 1, depth: 0 },
-      { path: '/b', name: 'b', type: 1, depth: 1 },
+      { path: '/a', name: 'a', type: 1, depth: 0, selected: false },
+      { path: '/b', name: 'b', type: 1, depth: 1, selected: false },
     ],
     focusedIndex: 0,
   }
@@ -27,8 +27,8 @@ test('handleArrowRightDirectoryExpanded - next item has same depth', () => {
   const state = {
     ...createDefaultState(),
     items: [
-      { path: '/a', name: 'a', type: 1, depth: 0 },
-      { path: '/b', name: 'b', type: 1, depth: 0 },
+      { path: '/a', name: 'a', type: 1, depth: 0, selected: false },
+      { path: '/b', name: 'b', type: 1, depth: 0, selected: false },
     ],
     focusedIndex: 0,
   }

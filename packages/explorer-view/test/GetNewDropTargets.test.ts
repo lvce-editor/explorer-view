@@ -15,7 +15,7 @@ test('getNewDropTargets - index -1', () => {
 test('getNewDropTargets - cannot be dropped into', () => {
   const state = {
     ...createDefaultState(),
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0 }],
+    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
   }
   const result = getNewDropTargets(state, 0, 0)
   expect(result).toEqual([])
@@ -24,7 +24,7 @@ test('getNewDropTargets - cannot be dropped into', () => {
 test('getNewDropTargets - can be dropped into', () => {
   const state = {
     ...createDefaultState(),
-    items: [{ name: 'test', type: DirentType.Directory, path: '/test', depth: 0 }],
+    items: [{ name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false }],
   }
   const result = getNewDropTargets(state, 0, 0)
   expect(result).toEqual([0])

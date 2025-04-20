@@ -19,6 +19,7 @@ test('getPath - directory dirent', () => {
     path: '/test/folder',
     type: 2,
     depth: 0,
+    selected: false,
   }
   expect(GetPath.getPath(dirent)).toBe('/test/folder')
 })
@@ -29,6 +30,7 @@ test('getPath - nested path', () => {
     path: '/test/folder/subfolder/file.js',
     type: 1,
     depth: 0,
+    selected: false,
   }
   expect(GetPath.getPath(dirent)).toBe('/test/folder/subfolder/file.js')
 })
@@ -39,6 +41,7 @@ test('getPath - root path', () => {
     path: '/',
     type: 2,
     depth: 0,
+    selected: false,
   }
   expect(GetPath.getPath(dirent)).toBe('/')
 })
@@ -49,6 +52,7 @@ test('getPath - empty path', () => {
     path: '',
     type: 2,
     depth: 0,
+    selected: false,
   }
   expect(GetPath.getPath(dirent)).toBe('')
 })
@@ -59,6 +63,7 @@ test('getPath - with spaces in path', () => {
     path: '/test/my folder/my file.txt',
     type: 1,
     depth: 0,
+    selected: true,
   }
   expect(GetPath.getPath(dirent)).toBe('/test/my folder/my file.txt')
 })
@@ -69,6 +74,7 @@ test('getPath - with special characters in path', () => {
     path: '/test/folder#1/file@test.txt',
     type: 1,
     depth: 0,
+    selected: true,
   }
   expect(GetPath.getPath(dirent)).toBe('/test/folder#1/file@test.txt')
 })

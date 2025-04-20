@@ -10,6 +10,7 @@ test('handleClickDirectoryExpanding - updates state with focus', async () => {
     path: '/test',
     type: DirentType.File,
     depth: 0,
+    selected: false,
   }
   const newState = await handleClickDirectoryExpanding(state, dirent, 1, true)
   expect(newState.focusedIndex).toBe(1)
@@ -24,6 +25,7 @@ test('handleClickDirectoryExpanding - updates state without focus', async () => 
     path: '/test',
     type: DirentType.File,
     depth: 0,
+    selected: false,
   }
   const newState = await handleClickDirectoryExpanding(state, dirent, 2, false)
   expect(newState.focusedIndex).toBe(2)

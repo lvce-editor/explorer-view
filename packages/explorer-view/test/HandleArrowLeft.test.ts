@@ -19,6 +19,7 @@ test('handleArrowLeft - directory', () => {
         name: 'test',
         path: '/test',
         depth: 0,
+        selected: false,
       },
     ],
     focusedIndex: 0,
@@ -36,6 +37,7 @@ test('handleArrowLeft - file', () => {
         name: 'test.txt',
         path: '/test.txt',
         depth: 0,
+        selected: false,
       },
     ],
     focusedIndex: 0,
@@ -53,6 +55,7 @@ test('handleArrowLeft - symlink file', () => {
         name: 'test.txt',
         path: '/test.txt',
         depth: 0,
+        selected: false,
       },
     ],
     focusedIndex: 0,
@@ -72,6 +75,43 @@ test('handleArrowLeft - expanded directory', () => {
         expanded: true,
         level: 0,
         depth: 0,
+        selected: false,
+      },
+    ],
+    focusedIndex: 0,
+  }
+  const result = handleArrowLeft(state)
+  expect(result).toBeDefined()
+})
+
+test('handleArrowLeft - expanding directory', () => {
+  const state = {
+    ...createDefaultState(),
+    items: [
+      {
+        type: DirentType.DirectoryExpanding,
+        name: 'test',
+        path: '/test',
+        depth: 0,
+        selected: false,
+      },
+    ],
+    focusedIndex: 0,
+  }
+  const result = handleArrowLeft(state)
+  expect(result).toBeDefined()
+})
+
+test('handleArrowLeft - symlink folder', () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [
+      {
+        type: DirentType.SymLinkFolder,
+        name: 'test',
+        path: '/test',
+        depth: 0,
+        selected: false,
       },
     ],
     focusedIndex: 0,

@@ -40,8 +40,8 @@ test('expandAll - expand directories at same depth', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'dir1', type: DirentType.Directory, depth: 0, path: '/dir1' },
-      { name: 'dir2', type: DirentType.Directory, depth: 0, path: '/dir2' },
+      { name: 'dir1', type: DirentType.Directory, depth: 0, path: '/dir1', selected: false },
+      { name: 'dir2', type: DirentType.Directory, depth: 0, path: '/dir2', selected: false },
     ],
     focusedIndex: 0,
   }
