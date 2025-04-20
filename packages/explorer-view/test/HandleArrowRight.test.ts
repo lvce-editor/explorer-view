@@ -111,7 +111,7 @@ test.skip('handleArrowRight - symlink', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
   const state = {
     ...createDefaultState(),
-    items: [{ type: DirentType.Symlink, name: 'test', path: '/test', depth: 0 }],
+    items: [{ type: DirentType.Symlink, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
   }
   const result = await handleArrowRight(state)
@@ -121,7 +121,7 @@ test.skip('handleArrowRight - symlink', async () => {
 test('handleArrowRight - invalid type', async () => {
   const state = {
     ...createDefaultState(),
-    items: [{ type: 999, name: 'test', path: '/test', depth: 0 }],
+    items: [{ type: 999, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
   }
   await expect(handleArrowRight(state)).rejects.toThrow('unsupported file type 999')
