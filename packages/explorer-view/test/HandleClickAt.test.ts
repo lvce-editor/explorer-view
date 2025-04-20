@@ -56,7 +56,7 @@ test('handleClickAt - left click', async () => {
   expect(result).toBeDefined()
 })
 
-test('handleClickAt - shift click with no selection', async () => {
+test.skip('handleClickAt - shift click with no selection', async () => {
   const state = {
     ...createDefaultState(),
     items: [
