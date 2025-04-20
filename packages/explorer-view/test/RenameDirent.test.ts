@@ -1,10 +1,10 @@
 import { expect, test } from '@jest/globals'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.js'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
-import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.js'
-import * as FocusId from '../src/parts/FocusId/FocusId.js'
-import { renameDirent } from '../src/parts/RenameDirent/RenameDirent.js'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
+import * as FocusId from '../src/parts/FocusId/FocusId.ts'
+import { renameDirent } from '../src/parts/RenameDirent/RenameDirent.ts'
 
 test('renameDirent updates state with editing properties', () => {
   const mockState: ExplorerState = {

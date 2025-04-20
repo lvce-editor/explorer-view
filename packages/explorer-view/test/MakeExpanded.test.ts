@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
-import { makeExpanded } from '../src/parts/MakeExpanded/MakeExpanded.js'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { makeExpanded } from '../src/parts/MakeExpanded/MakeExpanded.ts'
 
 test('makeExpanded - directory', () => {
   const dirent: ExplorerItem = {

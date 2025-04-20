@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { createUploadTree } from '../src/parts/CreateUploadTree/CreateUploadTree.js'
+import { createUploadTree } from '../src/parts/CreateUploadTree/CreateUploadTree.ts'
 
 test('createUploadTree with files', async (): Promise<void> => {
   const fileHandle = {

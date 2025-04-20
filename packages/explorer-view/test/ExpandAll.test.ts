@@ -1,10 +1,10 @@
 import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.js'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
-import { expandAll } from '../src/parts/ExpandAll/ExpandAll.js'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.js'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { expandAll } from '../src/parts/ExpandAll/ExpandAll.ts'
+import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
   if (method === 'FileSystem.readDirWithFileTypes') {
