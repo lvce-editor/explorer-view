@@ -43,15 +43,18 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
           path: state.root,
         }
   const depth = parentDirent.depth + 1
-  const newDirent = {
+  const newDirent: ExplorerItem = {
     path: absolutePath,
+    // @ts-ignore
     posInSet: -1,
     setSize: 1,
     depth,
     name: newFileName,
     type: newDirentType,
     icon: '',
+    selected: false,
   }
+  // @ts-ignore
   newDirent.icon = ''
   let insertIndex = state.focusedIndex
   let deltaPosInSet = 0
@@ -83,7 +86,9 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
     // @ts-ignore
     dirent.posInSet += deltaPosInSet
   }
+  // @ts-ignore
   newDirent.setSize = setSize
+  // @ts-ignore
   newDirent.posInSet = posInSet
   // @ts-ignore
   items.splice(insertIndex + 1, 0, newDirent)
