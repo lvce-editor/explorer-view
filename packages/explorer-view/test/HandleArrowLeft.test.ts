@@ -1,4 +1,5 @@
 import { test, expect } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleArrowLeft } from '../src/parts/HandleArrowLeft/HandleArrowLeft.ts'
@@ -10,15 +11,13 @@ test('handleArrowLeft - no focused item', () => {
 })
 
 test('handleArrowLeft - directory', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       {
         type: DirentType.Directory,
         name: 'test',
         path: '/test',
-        expanded: false,
-        level: 0,
         depth: 0,
       },
     ],
@@ -29,14 +28,13 @@ test('handleArrowLeft - directory', () => {
 })
 
 test('handleArrowLeft - file', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       {
         type: DirentType.File,
         name: 'test.txt',
         path: '/test.txt',
-        level: 0,
         depth: 0,
       },
     ],
@@ -47,14 +45,13 @@ test('handleArrowLeft - file', () => {
 })
 
 test('handleArrowLeft - symlink file', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       {
         type: DirentType.SymLinkFile,
         name: 'test.txt',
         path: '/test.txt',
-        level: 0,
         depth: 0,
       },
     ],

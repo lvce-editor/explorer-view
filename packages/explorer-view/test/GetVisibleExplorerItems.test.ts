@@ -10,6 +10,7 @@ test('getVisibleExplorerItems - basic', () => {
       name: 'test',
       path: '/test',
       type: 0,
+      selected: false,
     },
   ]
   const result = getVisibleExplorerItems(items, 0, 1, 0, -1, None, '', '', ['icon'], true, [])
@@ -35,6 +36,7 @@ test('getVisibleExplorerItems - editing', () => {
       name: 'test',
       path: '/test',
       type: 0,
+      selected: true,
     },
   ]
   const result = getVisibleExplorerItems(items, 0, 1, 0, 0, None, 'new name', 'error', ['icon'], true, [])
