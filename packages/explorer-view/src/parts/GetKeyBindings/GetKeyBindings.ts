@@ -105,5 +105,10 @@ export const getKeyBindings = (): readonly KeyBinding[] => {
       command: 'Explorer.handleClickCurrent',
       when: WhenExpression.FocusExplorer,
     },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyA,
+      command: 'Explorer.selectAll',
+      when: WhenExpression.FocusExplorer,
+    },
   ]
 }

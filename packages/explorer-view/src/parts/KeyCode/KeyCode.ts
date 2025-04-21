@@ -9,6 +9,7 @@ export const RightArrow = 15
 export const DownArrow = 16
 export const Delete = 18
 
+export const KeyA = 30
 export const KeyC = 31
 export const KeyV = 50
 
