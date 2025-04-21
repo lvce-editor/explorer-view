@@ -30,7 +30,7 @@ export const getNewChildDirentsForNewDirent = async (
   const newDirent: ExplorerItem = {
     name: '',
     type: direntType,
-    path: '',
+    path: parentPath,
     depth,
     selected: false,
     posInSet: updatedChildren.length + 1,
