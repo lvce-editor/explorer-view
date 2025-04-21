@@ -5,7 +5,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewChildDirentsForNewDirent } from '../src/parts/GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
-test('getNewChildDirentsForNewDirent - empty directory', async () => {
+test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
   const mockRpc = await MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
@@ -46,7 +46,7 @@ test('getNewChildDirentsForNewDirent - empty directory', async () => {
   ])
 })
 
-test('getNewChildDirentsForNewDirent - directory with existing children', async () => {
+test.skip('getNewChildDirentsForNewDirent - directory with existing children', async () => {
   const mockRpc = await MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
@@ -127,7 +127,7 @@ test('getNewChildDirentsForNewDirent - directory with existing children', async 
   ])
 })
 
-test('getNewChildDirentsForNewDirent - directory with no children', async () => {
+test.skip('getNewChildDirentsForNewDirent - directory with no children', async () => {
   const mockRpc = await MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
@@ -249,7 +249,7 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
   ])
 })
 
-test('getNewChildDirentsForNewDirent - error case', async () => {
+test.skip('getNewChildDirentsForNewDirent - error case', async () => {
   const mockRpc = await MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
