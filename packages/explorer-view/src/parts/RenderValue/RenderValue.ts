@@ -8,7 +8,7 @@ export const renderValue = (oldState: ExplorerState, newState: ExplorerState): r
     return []
   }
   if (newState.focus === FocusId.Input) {
-    return ['Viewlet.setValue', InputName.ExplorerInput, newState.editingValue]
+    return ['Viewlet.setValueByName', InputName.ExplorerInput, newState.editingValue]
   }
   return []
 }
