@@ -17,6 +17,7 @@ test('renameDirent updates state with editing properties', () => {
   const result = renameDirent(mockState)
   expect(result).toEqual({
     ...mockState,
+    items: [{ name: 'test.txt', type: DirentType.EditingFile, path: '/test.txt', depth: 0, selected: false }],
     editingIndex: 0,
     editingType: ExplorerEditingType.Rename,
     editingValue: 'test.txt',
@@ -25,7 +26,26 @@ test('renameDirent updates state with editing properties', () => {
   })
 })
 
-test.skip('renameDirent handles empty state', () => {
+test('renameDirent updates state with editing properties for folder', () => {
+  const mockState: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    items: [{ name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false }],
+  }
+
+  const result = renameDirent(mockState)
+  expect(result).toEqual({
+    ...mockState,
+    items: [{ name: 'test', type: DirentType.EditingFolder, path: '/test', depth: 0, selected: false }],
+    editingIndex: 0,
+    editingType: ExplorerEditingType.Rename,
+    editingValue: 'test',
+    focus: FocusId.Input,
+    inputSource: InputSource.Script,
+  })
+})
+
+test('renameDirent handles empty state', () => {
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
@@ -33,12 +53,5 @@ test.skip('renameDirent handles empty state', () => {
   }
 
   const result = renameDirent(mockState)
-  expect(result).toEqual({
-    ...mockState,
-    editingIndex: -1,
-    editingType: ExplorerEditingType.Rename,
-    editingValue: '',
-    focus: FocusId.Input,
-    inputSource: InputSource.Script,
-  })
+  expect(result).toBe(mockState)
 })
