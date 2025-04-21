@@ -1,5 +1,4 @@
 export interface MouseAction {
-  readonly id: string
   readonly description: string
   readonly button: number
   readonly modifiers: {
