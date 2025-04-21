@@ -11,7 +11,7 @@ export const handleClickAt = async (
   shiftKey: boolean,
   x: number,
   y: number,
-): Promise<ExplorerState | Promise<ExplorerState>> => {
+): Promise<ExplorerState> => {
   if (button !== MouseEventType.LeftClick) {
     return state
   }
