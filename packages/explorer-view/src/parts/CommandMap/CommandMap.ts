@@ -12,6 +12,7 @@ import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as FocusLast from '../FocusLast/FocusLast.ts'
 import * as FocusNext from '../FocusNext/FocusNext.ts'
+import * as FocusNone from '../FocusNone/FocusNone.ts'
 import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
 import * as GetCommandIds from '../GetCommandIds/GetCommandIds.ts'
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
@@ -63,7 +64,6 @@ import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 import * as WrapCommand from '../WrapCommand/WrapCommand.ts'
 
 export const commandMap = {
-  'Explorer.getMenuEntries2': GetMenuEntries2.getMenuEntries2,
   'Explorer.acceptEdit': WrapCommand.wrapCommand(AcceptEdit.acceptEdit),
   'Explorer.cancelEdit': WrapCommand.wrapCommand(CancelEdit.cancelEdit),
   'Explorer.collapseAll': WrapCommand.wrapCommand(CollapseAll.collapseAll),
@@ -75,21 +75,20 @@ export const commandMap = {
   'Explorer.focusIndex': WrapCommand.wrapCommand(FocusIndex.focusIndex),
   'Explorer.focusLast': WrapCommand.wrapCommand(FocusLast.focusLast),
   'Explorer.focusNext': WrapCommand.wrapCommand(FocusNext.focusNext),
+  'Explorer.focusNone': WrapCommand.wrapCommand(FocusNone.focusNone),
   'Explorer.focusPrevious': WrapCommand.wrapCommand(FocusPrevious.focusPrevious),
   'Explorer.getCommandIds': GetCommandIds.getCommandIds,
+  'Explorer.getMenuEntries2': GetMenuEntries2.getMenuEntries2,
+  'Explorer.getMouseActions': GetMouseActions.getMouseActions,
   'Explorer.handleArrowLeft': WrapCommand.wrapCommand(HandleArrowLeft.handleArrowLeft),
   'Explorer.handleArrowRight': WrapCommand.wrapCommand(HandleArrowRight.handleArrowRight),
   'Explorer.handleBlur': WrapCommand.wrapCommand(HandleBlur.handleBlur),
-  'Explorer.selectUp': WrapCommand.wrapCommand(SelectUp.selectUp),
-  'Explorer.selectDown': WrapCommand.wrapCommand(SelectDown.selectDown),
-  'Explorer.selectAll': WrapCommand.wrapCommand(SelectAll.selectAll),
   'Explorer.handleClick': WrapCommand.wrapCommand(HandleClick.handleClick),
   'Explorer.handleClickAt': WrapCommand.wrapCommand(HandleClickAt.handleClickAt),
   'Explorer.handleClickCurrent': WrapCommand.wrapCommand(HandleClickCurrent.handleClickCurrent),
   'Explorer.handleClickCurrentButKeepFocus': WrapCommand.wrapCommand(HandleClickCurrentButKeepFocus.handleClickCurrentButKeepFocus),
   'Explorer.handleClickOpenFolder': WrapCommand.wrapCommand(HandleClickOpenFolder.handleClickOpenFolder),
   'Explorer.handleContextMenu': WrapCommand.wrapCommand(HandleContextMenu.handleContextMenu),
-  'Explorer.getMouseActions': GetMouseActions.getMouseActions,
   'Explorer.handleContextMenuKeyboard': WrapCommand.wrapCommand(HandleContextMenuKeyboard.handleContextMenuKeyboard),
   'Explorer.handleCopy': WrapCommand.wrapCommand(HandleCopy.handleCopy),
   'Explorer.handleDragLeave': WrapCommand.wrapCommand(HandleDragLeave.handleDragLeave),
@@ -111,10 +110,13 @@ export const commandMap = {
   'Explorer.renameDirent': WrapCommand.wrapCommand(RenameDirent.renameDirent),
   'Explorer.restoreState': RestoreState.restoreState,
   'Explorer.revealItem': WrapCommand.wrapCommand(RevealItem.revealItem),
+  'Explorer.selectAll': WrapCommand.wrapCommand(SelectAll.selectAll),
+  'Explorer.selectDown': WrapCommand.wrapCommand(SelectDown.selectDown),
+  'Explorer.selectUp': WrapCommand.wrapCommand(SelectUp.selectUp),
   'Explorer.setDeltaY': WrapCommand.wrapCommand(SetDeltaY.setDeltaY),
+  'Explorer.setSelectedIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
   'Explorer.updateEditingValue': WrapCommand.wrapCommand(UpdateEditingValue.updateEditingValue),
   'Explorer.updateIcons': WrapCommand.wrapCommand(UpdateIcons.updateIcons),
-  'Explorer.setSelectedIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
 
   // not wrapped
   'Explorer.create2': Create2.create2,
