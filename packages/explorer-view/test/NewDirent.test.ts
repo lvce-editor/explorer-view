@@ -126,7 +126,7 @@ test('newDirent handles directory click when focused item is a directory', async
     ],
     icons: ['', ''],
     fileIconCache: {
-      '/': '',
+      '': '',
       '/test': '',
     },
     editingValue: '',
@@ -204,7 +204,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
     ],
     maxLineY: 2,
     fileIconCache: {
-      '/': '',
+      '': '',
       '/test.txt': '',
     },
     icons: ['', ''],
