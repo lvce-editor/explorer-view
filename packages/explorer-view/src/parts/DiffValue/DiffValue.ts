@@ -5,5 +5,8 @@ import * as FocusId from '../FocusId/FocusId.ts'
 export const diffType = DiffType.RenderValue
 
 export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boolean => {
+  if (newState.focus !== FocusId.Input) {
+    return true
+  }
   return oldState.focus === FocusId.Input && newState.focus === FocusId.Input && oldState.editingValue === newState.editingValue
 }

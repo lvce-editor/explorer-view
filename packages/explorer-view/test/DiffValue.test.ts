@@ -13,8 +13,7 @@ test('isEqual - same focus and editing value', () => {
 test('isEqual - different focus', () => {
   const state1 = { ...createDefaultState(), focus: FocusId.Input, editingValue: 'test' }
   const state2 = { ...createDefaultState(), focus: FocusId.List, editingValue: 'test' }
-
-  expect(isEqual(state1, state2)).toBe(false)
+  expect(isEqual(state1, state2)).toBe(true)
 })
 
 test('isEqual - different editing value', () => {
@@ -22,4 +21,11 @@ test('isEqual - different editing value', () => {
   const state2 = { ...createDefaultState(), focus: FocusId.Input, editingValue: 'test2' }
 
   expect(isEqual(state1, state2)).toBe(false)
+})
+
+test('isEqual - new focus is list', () => {
+  const state1 = { ...createDefaultState(), focus: FocusId.Input, editingValue: 'test' }
+  const state2 = { ...createDefaultState(), focus: FocusId.List, editingValue: 'test' }
+
+  expect(isEqual(state1, state2)).toBe(true)
 })
