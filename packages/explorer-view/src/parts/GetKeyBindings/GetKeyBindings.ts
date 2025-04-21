@@ -72,7 +72,7 @@ export const getKeyBindings = (): readonly KeyBinding[] => {
     },
     {
       key: KeyCode.F2,
-      command: 'Explorer.rename',
+      command: 'Explorer.renameDirent',
       when: WhenExpression.FocusExplorer,
     },
     {
