@@ -19,9 +19,7 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
   const explorer = Locator('.Explorer')
   const inputBox = explorer.locator('input')
   await expect(inputBox).toBeVisible()
-
-  // TODO
-  // await expect(inputBox).toBeFocused()
+  await expect(inputBox).toBeFocused()
 
   // act
   await Explorer.updateEditingValue('file4.txt')
@@ -32,8 +30,7 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
 
   const file4 = Locator('.TreeItem', { hasText: 'file4.txt' })
   await expect(file4).toBeVisible()
-
-  // TODO
-  // await expect(explorer).toBeFocused()
+  const listItems = explorer.locator('.ListItems')
+  await expect(listItems).toBeFocused()
   await expect(file4).toHaveId('TreeItemActive')
 }
