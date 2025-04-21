@@ -12,7 +12,7 @@ const createTestState = (): ExplorerState => ({
   ],
 })
 
-const createStateWithSelections = (selectedIndices: number[]) => {
+const createStateWithSelections = (selectedIndices: number[]): ExplorerState => {
   const state = createTestState()
   return {
     ...state,
