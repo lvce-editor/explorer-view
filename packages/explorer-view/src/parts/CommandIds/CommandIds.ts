@@ -9,6 +9,7 @@ export const commandIds = [
   'expandRecursively',
   'selectUp',
   'selectDown',
+  'getMouseActions',
   'focus',
   'focusFirst',
   'focusIndex',

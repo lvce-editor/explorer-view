@@ -17,6 +17,7 @@ import * as GetCommandIds from '../GetCommandIds/GetCommandIds.ts'
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetMenuEntries2 from '../GetMenuEntries2/GetMenuEntries2.ts'
 import * as GetMenuEntries from '../GetMenuEntries/GetMenuEntries.ts'
+import * as GetMouseActions from '../GetMouseActions/GetMouseActions.ts'
 import * as HandleArrowLeft from '../HandleArrowLeft/HandleArrowLeft.ts'
 import * as HandleArrowRight from '../HandleArrowRight/HandleArrowRight.ts'
 import * as HandleBlur from '../HandleBlur/HandleBlur.ts'
@@ -85,6 +86,7 @@ export const commandMap = {
   'Explorer.handleClickCurrentButKeepFocus': WrapCommand.wrapCommand(HandleClickCurrentButKeepFocus.handleClickCurrentButKeepFocus),
   'Explorer.handleClickOpenFolder': WrapCommand.wrapCommand(HandleClickOpenFolder.handleClickOpenFolder),
   'Explorer.handleContextMenu': WrapCommand.wrapCommand(HandleContextMenu.handleContextMenu),
+  'Explorer.getMouseActions': GetMouseActions.getMouseActions,
   'Explorer.handleContextMenuKeyboard': WrapCommand.wrapCommand(HandleContextMenuKeyboard.handleContextMenuKeyboard),
   'Explorer.handleCopy': WrapCommand.wrapCommand(HandleCopy.handleCopy),
   'Explorer.handleDragLeave': WrapCommand.wrapCommand(HandleDragLeave.handleDragLeave),
