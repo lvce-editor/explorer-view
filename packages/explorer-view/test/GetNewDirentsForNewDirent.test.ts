@@ -1,0 +1,159 @@
+import { expect, test } from '@jest/globals'
+import { MockRpc } from '@lvce-editor/rpc'
+import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { getNewDirentsForNewDirent } from '../src/parts/GetNewDirentsForNewDirent/GetNewDirentsForNewDirent.ts'
+import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
+
+test('getNewDirentsForNewDirent - folder with existing children', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return []
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const defaultState = createDefaultState()
+  const state = {
+    ...defaultState,
+    focusedIndex: 0,
+    items: [
+      {
+        path: '/root/folder',
+        posInSet: 1,
+        setSize: 1,
+        depth: 1,
+        name: 'folder',
+        type: DirentType.DirectoryExpanded,
+        icon: '',
+        selected: false,
+      },
+      {
+        path: '/root/folder/file1.txt',
+        posInSet: 1,
+        setSize: 2,
+        depth: 2,
+        name: 'file1.txt',
+        type: DirentType.File,
+        icon: '',
+        selected: false,
+      },
+      {
+        path: '/root/folder/file2.txt',
+        posInSet: 2,
+        setSize: 2,
+        depth: 2,
+        name: 'file2.txt',
+        type: DirentType.File,
+        icon: '',
+        selected: false,
+      },
+    ],
+  }
+
+  const result = await getNewDirentsForNewDirent(state, DirentType.File)
+
+  expect(result).toEqual([
+    {
+      path: '/root/folder',
+      posInSet: 1,
+      setSize: 1,
+      depth: 1,
+      name: 'folder',
+      type: DirentType.DirectoryExpanded,
+      icon: '',
+      selected: false,
+    },
+    {
+      path: '/root/folder/file1.txt',
+      posInSet: 1,
+      setSize: 3,
+      depth: 2,
+      name: 'file1.txt',
+      type: DirentType.File,
+      icon: '',
+      selected: false,
+    },
+    {
+      path: '/root/folder/file2.txt',
+      posInSet: 2,
+      setSize: 3,
+      depth: 2,
+      name: 'file2.txt',
+      type: DirentType.File,
+      icon: '',
+      selected: false,
+    },
+    {
+      name: '',
+      type: DirentType.File,
+      path: '',
+      depth: 2,
+      selected: false,
+      posInSet: 3,
+      setSize: 3,
+      icon: '',
+    },
+  ])
+})
+
+test('getNewDirentsForNewDirent - folder without children', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return []
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const defaultState = createDefaultState()
+  const state = {
+    ...defaultState,
+    focusedIndex: 0,
+    items: [
+      {
+        path: '/root/folder',
+        posInSet: 1,
+        setSize: 1,
+        depth: 1,
+        name: 'folder',
+        type: DirentType.DirectoryExpanded,
+        icon: '',
+        selected: false,
+      },
+    ],
+  }
+
+  const result = await getNewDirentsForNewDirent(state, DirentType.File)
+
+  expect(result).toEqual([
+    {
+      path: '/root/folder',
+      posInSet: 1,
+      setSize: 1,
+      depth: 1,
+      name: 'folder',
+      type: DirentType.DirectoryExpanded,
+      icon: '',
+      selected: false,
+    },
+    {
+      name: '',
+      type: DirentType.File,
+      path: '',
+      depth: 2,
+      selected: false,
+      posInSet: 1,
+      setSize: 1,
+      icon: '',
+    },
+  ])
+})
