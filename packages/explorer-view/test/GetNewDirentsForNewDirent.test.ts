@@ -151,7 +151,7 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
     {
       name: '',
       type: DirentType.File,
-      path: '',
+      path: '/root/folder',
       depth: 2,
       selected: false,
       posInSet: 1,
