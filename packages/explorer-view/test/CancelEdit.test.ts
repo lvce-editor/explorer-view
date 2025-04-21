@@ -2,6 +2,7 @@ import { test, expect } from '@jest/globals'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { cancelEdit } from '../src/parts/CancelEdit/CancelEdit.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 
@@ -16,6 +17,61 @@ test('cancelEdit', () => {
   const result = cancelEdit(state)
   expect(result).toEqual({
     ...state,
+    focusedIndex: 1,
+    focused: true,
+    editingIndex: -1,
+    editingValue: '',
+    editingType: ExplorerEditingType.None,
+    focus: FocusId.List,
+  })
+})
+
+test('cancelEdit - removes editing items', () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 1,
+    editingValue: 'test.txt',
+    editingType: ExplorerEditingType.CreateFile,
+    items: [
+      {
+        depth: 0,
+        icon: '',
+        name: 'file1.txt',
+        path: '/file1.txt',
+        posInSet: 1,
+        setSize: 1,
+        type: DirentType.File,
+        selected: false,
+      },
+      {
+        depth: 0,
+        icon: '',
+        name: 'test.txt',
+        path: '/test.txt',
+        posInSet: 2,
+        setSize: 1,
+        type: DirentType.EditingFile,
+        selected: false,
+      },
+      {
+        depth: 0,
+        icon: '',
+        name: 'newfolder',
+        path: '/newfolder',
+        posInSet: 3,
+        setSize: 1,
+        type: DirentType.EditingFolder,
+        selected: false,
+      },
+    ],
+  }
+
+  const result = cancelEdit(state)
+  expect(result.items).toHaveLength(1)
+  expect(result.items[0].type).toBe(DirentType.File)
+  expect(result).toEqual({
+    ...state,
+    items: [state.items[0]],
     focusedIndex: 1,
     focused: true,
     editingIndex: -1,
