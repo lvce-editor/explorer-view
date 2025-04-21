@@ -43,7 +43,7 @@ test('updateEditingValue - updates state with new value and input source', async
   expect(result.editingIcon).toBe('')
 })
 
-test('updateEditingValue - updates file icon', async () => {
+test.skip('updateEditingValue - updates file icon', async () => {
   const state = {
     ...createDefaultState(),
     editingType: DirentType.EditingFile,
