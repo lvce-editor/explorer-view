@@ -23,7 +23,9 @@ export const handleClickAt = (
     if (firstSelectedIndex === -1) {
       return HandleRangeSelection.handleRangeSelection(state, index, index)
     }
-    return HandleRangeSelection.handleRangeSelection(state, firstSelectedIndex, index)
+    const min = Math.min(firstSelectedIndex, index)
+    const max = Math.min(firstSelectedIndex, index)
+    return HandleRangeSelection.handleRangeSelection(state, min, max)
   }
 
   return HandleClick.handleClick(state, index)
