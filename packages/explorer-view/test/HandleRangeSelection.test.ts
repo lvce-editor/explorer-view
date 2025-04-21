@@ -35,10 +35,7 @@ test('handleRangeSelection - backward range', () => {
       { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
     ],
   }
-  const newState = handleRangeSelection(state, 2, 0)
-  expect(newState.items[0].selected).toBe(true)
-  expect(newState.items[1].selected).toBe(true)
-  expect(newState.items[2].selected).toBe(true)
+  expect(() => handleRangeSelection(state, 2, 0)).toThrow(new Error('startIndex must be less than or equal to endIndex'))
 })
 
 test('handleRangeSelection - preserve existing selections', () => {
