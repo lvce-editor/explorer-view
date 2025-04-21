@@ -4,9 +4,9 @@ import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType
 export const getNewDirentType = (editingType: number): number => {
   switch (editingType) {
     case ExplorerEditingType.CreateFile:
-      return DirentType.File
+      return DirentType.EditingFile
     case ExplorerEditingType.CreateFolder:
-      return DirentType.DirectoryExpanded
+      return DirentType.EditingFolder
     default:
       return DirentType.File
   }

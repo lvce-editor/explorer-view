@@ -2,6 +2,7 @@ import { VError } from '@lvce-editor/verror'
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
+import * as DirentType from '../DirentType/DirentType.ts'
 
 const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: string): string => {
   if (index < 0) {
@@ -92,7 +93,7 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
   newDirent.posInSet = posInSet
   // @ts-ignore
   items.splice(insertIndex + 1, 0, newDirent)
-  const newDirents = [...items]
+  const newDirents = [...items].filter((item) => item.type !== DirentType.EditingFile && item.type !== DirentType.EditingFolder)
   return {
     dirents: newDirents,
     newFocusedIndex: insertIndex + 1,
