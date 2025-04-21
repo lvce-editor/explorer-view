@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.js'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { handleSelection } from '../src/parts/HandleSelection/HandleSelection.js'
 
 test('handleSelection toggles selection of item at index', () => {
