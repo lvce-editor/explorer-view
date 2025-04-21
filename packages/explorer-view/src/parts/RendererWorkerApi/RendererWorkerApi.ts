@@ -19,6 +19,7 @@ export interface RendererWorkerApi {
   readonly 'IconTheme.getFileIcon': (options: { readonly name: string }) => Promise<string>
   readonly 'IconTheme.getFolderIcon': (options: { readonly name: string }) => Promise<string>
   readonly 'Main.openUri': (uri: string, focus: boolean) => Promise<string>
+  readonly 'MouseActions.get': (uid: number, button: number, modifiers: any) => Promise<any>
   readonly 'OpenNativeFolder.openNativeFolder': (path: string) => Promise<void>
   readonly 'Preferences.get': (key: string) => Promise<any>
   readonly 'Workspace.getPath': () => Promise<string>
