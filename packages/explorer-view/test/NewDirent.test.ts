@@ -89,10 +89,29 @@ test('newDirent handles directory click when focused item is a directory', async
   expect(mockRpc.invoke).toHaveBeenCalledWith('Focus.setFocus', 14)
   expect(result).toEqual({
     ...mockState,
-    editingIndex: 0,
+    editingIndex: 1,
     editingType: mockEditingType,
+    items: [
+      { name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false, setSize: 1 },
+      {
+        depth: 1,
+        icon: '',
+        name: '',
+        path: '',
+        posInSet: 1,
+        selected: false,
+        setSize: 2,
+        type: 13,
+      },
+    ],
+    icons: ['', ''],
+    fileIconCache: {
+      '': '',
+      '/test': '',
+    },
     editingValue: '',
     focus: 2,
+    maxLineY: 2,
   })
 })
 
@@ -106,6 +125,12 @@ test('newDirent updates state when focused item is not a directory', async () =>
     }
     if (method === 'FileSystem.getPathSeparator') {
       return '/'
+    }
+    if (method === 'IconTheme.getFileIcon') {
+      return ''
+    }
+    if (method === 'IconTheme.getFolderIcon') {
+      return ''
     }
     if (method === 'Preferences.get') {
       return false
@@ -132,9 +157,35 @@ test('newDirent updates state when focused item is not a directory', async () =>
   expect(invoke).toHaveBeenCalledWith('Focus.setFocus', 14)
   expect(result).toEqual({
     ...mockState,
-    editingIndex: 0,
+    editingIndex: 1,
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
+    items: [
+      {
+        setSize: 1,
+        name: 'test.txt',
+        type: DirentType.File,
+        path: '/test.txt',
+        depth: 0,
+        selected: false,
+      },
+      {
+        depth: 1,
+        icon: '',
+        name: '',
+        path: '',
+        posInSet: 1,
+        selected: false,
+        setSize: 2,
+        type: 13,
+      },
+    ],
+    maxLineY: 2,
+    fileIconCache: {
+      '': '',
+      '/test.txt': '',
+    },
+    icons: ['', ''],
   })
 })
