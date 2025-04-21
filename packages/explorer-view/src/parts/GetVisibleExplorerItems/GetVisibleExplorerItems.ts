@@ -32,13 +32,13 @@ export const getVisibleExplorerItems = (
   icons: readonly string[],
   useChevrons: boolean,
   dropTargets: readonly number[],
+  editingIcon: string,
 ): readonly VisibleExplorerItem[] => {
   const visible: VisibleExplorerItem[] = []
   const indentFn = useChevrons ? GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron : GetTreeItemIndent.getTreeItemIndent
   let iconIndex = 0
   for (let i = minLineY; i < Math.min(maxLineY, items.length); i++) {
     const item = items[i]
-    const icon = icons[iconIndex++]
     const chevron = GetChevronType.getChevronType(item.type, useChevrons)
     const indent = indentFn(item.depth, chevron)
     const isFocused = i === focusedIndex
@@ -47,36 +47,24 @@ export const getVisibleExplorerItems = (
     const className = getClassName(isSelected, isFocused)
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]
+    const isEditing = i === editingIndex
+    let icon = icons[iconIndex++]
+    if (isEditing) {
+      icon = editingIcon
+    }
 
-    // @ts-ignore
     visible.push({
       ...item,
-      isEditing: i === editingIndex,
-      hasEditingError: i === editingIndex && Boolean(editingErrorMessage),
+      posInSet: item.posInSet ?? i + 1,
+      setSize: item.setSize ?? items.length,
+      isEditing: isEditing,
+      hasEditingError: isEditing && Boolean(editingErrorMessage),
       icon,
       indent,
       ariaExpanded,
       chevron,
       id,
       className,
-    })
-  }
-  if (editingType !== ExplorerEditingType.None && editingIndex === -1) {
-    visible.push({
-      depth: 3,
-      posInSet: 1,
-      setSize: 1,
-      icon: '',
-      name: 'new',
-      path: '/test/new',
-      isEditing: true,
-      hasEditingError: Boolean(editingErrorMessage),
-      indent: '',
-      ariaExpanded: undefined,
-      chevron: 0,
-      id: undefined,
-      className: ClassNames.TreeItem,
-      selected: false,
     })
   }
   return visible
