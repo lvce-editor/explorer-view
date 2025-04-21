@@ -117,7 +117,7 @@ test('newDirent handles directory click when focused item is a directory', async
         depth: 1,
         icon: '',
         name: '',
-        path: '',
+        path: '/test',
         posInSet: 1,
         selected: false,
         setSize: 2,
