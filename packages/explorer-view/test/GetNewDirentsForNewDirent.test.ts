@@ -56,7 +56,7 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
     ],
   }
 
-  const result = await getNewDirentsForNewDirent(state, DirentType.File)
+  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File)
 
   expect(result).toEqual([
     {
@@ -132,7 +132,7 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
     ],
   }
 
-  const result = await getNewDirentsForNewDirent(state, DirentType.File)
+  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File)
 
   expect(result).toEqual([
     {
