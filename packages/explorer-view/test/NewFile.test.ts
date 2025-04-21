@@ -51,10 +51,21 @@ test('newFile', async () => {
     ...state,
     editingIndex: 1,
     editingType: ExplorerEditingType.CreateFile,
-    items: [{ name: '', type: DirentType.EditingFile, path: '', depth: 0, selected: false }],
+    items: [
+      {
+        depth: 0,
+        name: 'test.txt',
+        path: '/test.txt',
+        selected: false,
+        setSize: 1,
+        type: 7,
+      },
+      { name: '', type: DirentType.EditingFile, path: '', depth: 0, selected: false },
+    ],
     editingValue: '',
     focus: 2,
     maxLineY: 2,
+    icons: ['', ''],
     fileIconCache: {
       '': '',
       '/test.txt': '',
