@@ -1,12 +1,12 @@
 import { expect, test, beforeEach } from '@jest/globals'
+import { MockRpc } from '@lvce-editor/rpc'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 import { updateEditingValue } from '../src/parts/UpdateEditingValue/UpdateEditingValue.ts'
-import { MockRpc } from '@lvce-editor/rpc'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
   switch (method) {
