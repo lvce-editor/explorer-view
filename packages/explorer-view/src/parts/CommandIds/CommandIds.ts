@@ -35,6 +35,7 @@ export const commandIds = [
   'handleDrop',
   'handleFocus',
   'handleIconThemeChange',
+  'handleInputBlur',
   'handleLanguagesChanged',
   'handleMouseEnter',
   'handleMouseLeave',
@@ -48,7 +49,6 @@ export const commandIds = [
   'newFolder',
   'openContainingFolder',
   'refresh',
-  'setSelectedIndices',
   'removeDirent',
   'rename',
   'renameDirent',
@@ -61,6 +61,7 @@ export const commandIds = [
   'selectDown',
   'selectUp',
   'setDeltaY',
+  'setSelectedIndices',
   'updateEditingValue',
   'updateIcons',
 ]
