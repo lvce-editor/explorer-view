@@ -9,3 +9,6 @@ export const Symlink = 9
 export const SymLinkFile = 10
 export const SymLinkFolder = 11
 export const Unknown = 12
+export const EditingFile = 13
+export const EditingFolder = 14
+export const EditingUnknown = 15
