@@ -54,6 +54,7 @@ import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as SelectAll from '../SelectAll/SelectAll.ts'
 import * as SelectDown from '../SelectDown/SelectDown.ts'
+import * as SelectIndices from '../SelectIndices/SelectIndices.ts'
 import * as SelectUp from '../SelectUp/SelectUp.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 import * as Terminate from '../Terminate/Terminate.ts'
@@ -113,6 +114,7 @@ export const commandMap = {
   'Explorer.setDeltaY': WrapCommand.wrapCommand(SetDeltaY.setDeltaY),
   'Explorer.updateEditingValue': WrapCommand.wrapCommand(UpdateEditingValue.updateEditingValue),
   'Explorer.updateIcons': WrapCommand.wrapCommand(UpdateIcons.updateIcons),
+  'Explorer.setSelectedIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
 
   // not wrapped
   'Explorer.create2': Create2.create2,

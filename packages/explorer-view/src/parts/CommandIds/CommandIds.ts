@@ -48,7 +48,7 @@ export const commandIds = [
   'newFolder',
   'openContainingFolder',
   'refresh',
-  'refresh',
+  'setSelectedIndices',
   'removeDirent',
   'rename',
   'renameDirent',
