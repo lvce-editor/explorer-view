@@ -67,6 +67,8 @@ test('newFile', async () => {
         type: DirentType.EditingFile,
         path: '',
         selected: false,
+        posInSet: 1,
+        setSize: 2,
       },
     ],
     editingValue: '',
