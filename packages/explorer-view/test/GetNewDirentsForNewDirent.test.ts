@@ -55,8 +55,9 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
       },
     ],
   }
+  const root = '/root'
 
-  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File)
+  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File, root)
 
   expect(result).toEqual([
     {
@@ -132,7 +133,9 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
     ],
   }
 
-  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File)
+  const root = '/root'
+
+  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File, root)
 
   expect(result).toEqual([
     {
@@ -176,8 +179,9 @@ test('getNewDirentsForNewDirent - no items', async () => {
     focusedIndex: -1,
     items: [],
   }
+  const root = '/root'
 
-  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File)
+  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File, root)
 
   expect(result).toEqual([
     {
@@ -222,8 +226,9 @@ test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async ()
       },
     ],
   }
+  const root = '/root'
 
-  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File)
+  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File, root)
 
   expect(result).toEqual([
     {
