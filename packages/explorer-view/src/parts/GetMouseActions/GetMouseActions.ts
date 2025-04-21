@@ -32,13 +32,5 @@ export const getMouseActions = (): readonly MouseAction[] => {
       command: 'Explorer.rangeSelection',
       when: WhenExpression.FocusExplorer,
     },
-    {
-      id: 'explorer.contextMenu',
-      description: 'Show context menu on right click',
-      button: 2, // Right click
-      modifiers: {},
-      command: 'Explorer.showContextMenu',
-      when: WhenExpression.FocusExplorer,
-    },
   ]
 }
