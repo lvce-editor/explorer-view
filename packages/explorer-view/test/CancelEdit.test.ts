@@ -80,3 +80,118 @@ test('cancelEdit - removes editing items', () => {
     focus: FocusId.List,
   })
 })
+
+test('cancelEdit - rename file', () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingValue: 'test.txt',
+    editingType: ExplorerEditingType.Rename,
+    items: [
+      {
+        name: 'test.txt',
+        type: DirentType.EditingFile,
+        path: '/test.txt',
+        depth: 0,
+        selected: false,
+      },
+    ],
+  }
+
+  const result = cancelEdit(state)
+  expect(result).toEqual({
+    ...state,
+    items: [
+      {
+        name: 'test.txt',
+        type: DirentType.File,
+        path: '/test.txt',
+        depth: 0,
+        selected: false,
+      },
+    ],
+    focusedIndex: 0,
+    focused: true,
+    editingIndex: -1,
+    editingValue: '',
+    editingType: ExplorerEditingType.None,
+    focus: FocusId.List,
+  })
+})
+
+test('cancelEdit - rename folder', () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingValue: 'test',
+    editingType: ExplorerEditingType.Rename,
+    items: [
+      {
+        name: 'test',
+        type: DirentType.EditingFolder,
+        path: '/test',
+        depth: 0,
+        selected: false,
+      },
+    ],
+  }
+
+  const result = cancelEdit(state)
+  expect(result).toEqual({
+    ...state,
+    items: [
+      {
+        name: 'test',
+        type: DirentType.Directory,
+        path: '/test',
+        depth: 0,
+        selected: false,
+      },
+    ],
+    focusedIndex: 0,
+    focused: true,
+    editingIndex: -1,
+    editingValue: '',
+    editingType: ExplorerEditingType.None,
+    focus: FocusId.List,
+  })
+})
+
+test('cancelEdit - create file', () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 1,
+    editingValue: 'test.txt',
+    editingType: ExplorerEditingType.CreateFile,
+    items: [
+      {
+        name: 'file1.txt',
+        type: DirentType.File,
+        path: '/file1.txt',
+        depth: 0,
+        selected: false,
+      },
+      {
+        name: 'test.txt',
+        type: DirentType.EditingFile,
+        path: '/test.txt',
+        depth: 0,
+        selected: false,
+      },
+    ],
+  }
+
+  const result = cancelEdit(state)
+  expect(result.items).toHaveLength(1)
+  expect(result.items[0].type).toBe(DirentType.File)
+  expect(result).toEqual({
+    ...state,
+    items: [state.items[0]],
+    focusedIndex: 1,
+    focused: true,
+    editingIndex: -1,
+    editingValue: '',
+    editingType: ExplorerEditingType.None,
+    focus: FocusId.List,
+  })
+})
