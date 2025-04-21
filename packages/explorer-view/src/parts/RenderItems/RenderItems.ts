@@ -15,6 +15,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     newState.icons,
     newState.useChevrons,
     newState.dropTargets,
+    newState.editingIcon,
   )
   const isWide = newState.width > 450
   const dom = GetExplorerVirtualDom.getExplorerVirtualDom(

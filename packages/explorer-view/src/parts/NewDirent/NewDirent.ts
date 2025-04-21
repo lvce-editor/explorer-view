@@ -12,9 +12,9 @@ export const newDirent = async (state: ExplorerState, editingType: number): Prom
   // TODO make focus functional instead of side effect
   await Focus.setFocus(FocusKey.ExplorerEditBox)
   // TODO do it like vscode, select position between folders and files
-  const { focusedIndex, items, minLineY, height, itemHeight, fileIconCache } = state
+  const { focusedIndex, items, minLineY, height, itemHeight, fileIconCache, root } = state
   const direntType = GetNewDirentType.getNewDirentType(editingType)
-  const newDirents = await GetNewDirentsForNewDirent.getNewDirentsForNewDirent(items, focusedIndex, direntType)
+  const newDirents = await GetNewDirentsForNewDirent.getNewDirentsForNewDirent(items, focusedIndex, direntType, root)
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newDirents.length)
   const visible = newDirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
@@ -25,6 +25,7 @@ export const newDirent = async (state: ExplorerState, editingType: number): Prom
     editingIndex,
     editingType,
     editingValue: '',
+    focusedIndex: editingIndex,
     focus: FocusId.Input,
     icons,
     fileIconCache: newFileIconCache,

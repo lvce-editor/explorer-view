@@ -18,6 +18,9 @@ test('newFolder', async () => {
     if (method === 'FileSystem.getPathSeparator') {
       return '/'
     }
+    if (method === 'IconTheme.getFolderIcon') {
+      return ''
+    }
     if (method === 'Preferences.get') {
       return false
     }
@@ -42,9 +45,25 @@ test('newFolder', async () => {
   expect(mockRpc.invoke).toHaveBeenCalledWith('Focus.setFocus', 14)
   expect(result).toEqual({
     ...mockState,
-    editingIndex: -1,
+    editingIndex: 0,
     editingType: ExplorerEditingType.CreateFolder,
     editingValue: '',
     focus: 2,
+    fileIconCache: { '/': '' },
+    focusedIndex: 0,
+    maxLineY: 1,
+    icons: [''],
+    items: [
+      {
+        depth: 0,
+        icon: '',
+        name: '',
+        path: '/',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+        type: 103,
+      },
+    ],
   })
 })

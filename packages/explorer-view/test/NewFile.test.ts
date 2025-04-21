@@ -50,6 +50,7 @@ test('newFile', async () => {
   expect(result).toEqual({
     ...state,
     editingIndex: 1,
+    focusedIndex: 1,
     editingType: ExplorerEditingType.CreateFile,
     items: [
       {
@@ -65,7 +66,7 @@ test('newFile', async () => {
         icon: '',
         name: '',
         type: DirentType.EditingFile,
-        path: '',
+        path: '/test.txt',
         selected: false,
         posInSet: 1,
         setSize: 2,
@@ -76,7 +77,6 @@ test('newFile', async () => {
     maxLineY: 2,
     icons: ['', ''],
     fileIconCache: {
-      '': '',
       '/test.txt': '',
     },
   })
