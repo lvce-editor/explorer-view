@@ -1,5 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import { invoke } from '../ParentRpc/ParentRpc.ts'
 
 export const getNewDirentsForNewDirent = async (state: ExplorerState, type: number): Promise<readonly ExplorerItem[]> => {
   const focusedItem = state.items[state.focusedIndex]
@@ -9,7 +10,21 @@ export const getNewDirentsForNewDirent = async (state: ExplorerState, type: numb
   const parentPath = focusedItem.path
   const depth = focusedItem.depth + 1
 
-  const existingChildren = state.items.filter((item) => item.depth === depth && item.path.startsWith(parentPath))
+  // Get existing children or query them if they don't exist
+  let existingChildren = state.items.filter((item) => item.depth === depth && item.path.startsWith(parentPath))
+  if (existingChildren.length === 0) {
+    const childDirents = await invoke('FileSystem.readDirWithFileTypes', parentPath)
+    existingChildren = childDirents.map((dirent: { name: string; type: number }, index: number) => ({
+      name: dirent.name,
+      type: dirent.type,
+      path: `${parentPath}/${dirent.name}`,
+      depth,
+      selected: false,
+      posInSet: index + 1,
+      setSize: childDirents.length,
+      icon: '',
+    }))
+  }
 
   const newDirent: ExplorerItem = {
     name: '',
@@ -22,30 +37,21 @@ export const getNewDirentsForNewDirent = async (state: ExplorerState, type: numb
     icon: '',
   }
 
-  const result = [...state.items]
-  const insertIndex = state.focusedIndex + existingChildren.length + 1
-  result.splice(insertIndex, 0, newDirent)
-
-  // Update setSize for parent
+  // Create new array with updated items
   const parentIndex = state.focusedIndex
-  if (parentIndex >= 0) {
-    result[parentIndex] = {
-      ...result[parentIndex],
-      setSize: result[parentIndex]?.setSize || 0 + 1,
-    }
+  const itemsBeforeParent = state.items.slice(0, parentIndex)
+  const itemsAfterChildren = state.items.slice(parentIndex + 1 + existingChildren.length)
+
+  const updatedParent = {
+    ...state.items[parentIndex],
+    setSize: (state.items[parentIndex]?.setSize || 0) + 1,
   }
 
-  // Update posInSet and setSize for existing children
-  for (let i = state.focusedIndex + 1; i < result.length; i++) {
-    const item = result[i]
-    if (item.depth === depth && item.path.startsWith(parentPath)) {
-      result[i] = {
-        ...item,
-        posInSet: item.posInSet,
-        setSize: existingChildren.length + 1,
-      }
-    }
-  }
+  const updatedChildren = existingChildren.map((child, index) => ({
+    ...child,
+    posInSet: index + 1,
+    setSize: existingChildren.length + 1,
+  }))
 
-  return result
+  return [...itemsBeforeParent, updatedParent, ...updatedChildren, newDirent, ...itemsAfterChildren]
 }
