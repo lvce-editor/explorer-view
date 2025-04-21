@@ -1,3 +1,5 @@
+import { DELTA_EDITING } from '../DeltaEditing/DeltaEditing.ts'
+
 export const BlockDevice = 1
 export const CharacterDevice = 2
 export const Directory = 3
@@ -9,6 +11,10 @@ export const Symlink = 9
 export const SymLinkFile = 10
 export const SymLinkFolder = 11
 export const Unknown = 12
-export const EditingFile = 13
-export const EditingFolder = 14
-export const EditingUnknown = 15
+
+export const EditingFile = File + DELTA_EDITING
+export const EditingFolder = Directory + DELTA_EDITING
+export const EditingUnknown = Unknown + DELTA_EDITING
+export const EditingSymLinkFile = SymLinkFile + DELTA_EDITING
+export const EditingSymLinkFolder = SymLinkFolder + DELTA_EDITING
+export const EditingSymLinkUnknown = Symlink + DELTA_EDITING
