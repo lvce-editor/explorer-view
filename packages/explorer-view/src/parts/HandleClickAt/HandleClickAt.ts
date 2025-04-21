@@ -21,7 +21,7 @@ export const handleClickAt = (
   if (shiftKey) {
     const firstSelectedIndex = state.items.findIndex((item) => item.selected)
     if (firstSelectedIndex === -1) {
-      return HandleClick.handleClick(state, index)
+      return HandleRangeSelection.handleRangeSelection(state, index, index)
     }
     return HandleRangeSelection.handleRangeSelection(state, firstSelectedIndex, index)
   }
