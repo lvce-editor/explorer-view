@@ -62,7 +62,7 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
     {
       path: '/root/folder',
       posInSet: 1,
-      setSize: 1,
+      setSize: 2,
       depth: 1,
       name: 'folder',
       type: DirentType.DirectoryExpanded,
@@ -138,7 +138,7 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
     {
       path: '/root/folder',
       posInSet: 1,
-      setSize: 1,
+      setSize: 2,
       depth: 1,
       name: 'folder',
       type: DirentType.DirectoryExpanded,
