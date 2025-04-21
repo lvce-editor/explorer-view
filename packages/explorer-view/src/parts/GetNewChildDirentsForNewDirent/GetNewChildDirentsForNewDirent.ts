@@ -25,7 +25,7 @@ export const getNewChildDirentsForNewDirent = async (
   const updatedChildren = existingChildren.map((child, index) => ({
     ...child,
     posInSet: index + 1,
-    setSize: existingChildren.length + 1,
+    setSize: existingChildren.length + 2,
   }))
   const newDirent: ExplorerItem = {
     name: '',
@@ -33,8 +33,8 @@ export const getNewChildDirentsForNewDirent = async (
     path: '',
     depth,
     selected: false,
-    posInSet: updatedChildren.length,
-    setSize: updatedChildren.length + 1,
+    posInSet: updatedChildren.length + 1,
+    setSize: existingChildren.length + 2,
     icon: '',
   }
   const allChildDirents = [...updatedChildren, newDirent]
