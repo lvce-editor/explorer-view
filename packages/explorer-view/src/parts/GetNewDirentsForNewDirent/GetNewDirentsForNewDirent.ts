@@ -1,5 +1,5 @@
-import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-import { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
 export const getNewDirentsForNewDirent = async (state: ExplorerState, type: number): Promise<readonly ExplorerItem[]> => {
   const focusedItem = state.items[state.focusedIndex]
