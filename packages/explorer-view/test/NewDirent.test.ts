@@ -21,6 +21,9 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     if (method === 'Preferences.get') {
       return false
     }
+    if (method === 'IconTheme.getFolderIcon') {
+      return ''
+    }
     if (method === 'Focus.setFocus') {
       return undefined
     }
@@ -43,10 +46,26 @@ test('newDirent sets focus and updates state when no item is focused', async () 
   expect(mockRpc.invoke).toHaveBeenCalledWith('Focus.setFocus', 14)
   expect(result).toEqual({
     ...mockState,
-    editingIndex: -1,
+    editingIndex: 0,
+    focusedIndex: 0,
+    icons: [''],
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
+    maxLineY: 1,
+    fileIconCache: { '': '' },
+    items: [
+      {
+        depth: 0,
+        icon: '',
+        name: '',
+        path: '',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+        type: 107,
+      },
+    ],
   })
 })
 
@@ -90,6 +109,7 @@ test('newDirent handles directory click when focused item is a directory', async
   expect(result).toEqual({
     ...mockState,
     editingIndex: 1,
+    focusedIndex: 1,
     editingType: mockEditingType,
     items: [
       { name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false, setSize: 1 },
@@ -158,6 +178,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
   expect(result).toEqual({
     ...mockState,
     editingIndex: 1,
+    focusedIndex: 1,
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,

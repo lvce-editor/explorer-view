@@ -157,3 +157,94 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
     },
   ])
 })
+
+test('getNewDirentsForNewDirent - no items', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return []
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const defaultState = createDefaultState()
+  const state = {
+    ...defaultState,
+    focusedIndex: -1,
+    items: [],
+  }
+
+  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File)
+
+  expect(result).toEqual([
+    {
+      name: '',
+      type: DirentType.File,
+      path: '',
+      depth: 0,
+      selected: false,
+      posInSet: 1,
+      setSize: 1,
+      icon: '',
+    },
+  ])
+})
+
+test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return []
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const defaultState = createDefaultState()
+  const state = {
+    ...defaultState,
+    focusedIndex: -1,
+    items: [
+      {
+        path: '/root/file1.txt',
+        posInSet: 1,
+        setSize: 1,
+        depth: 0,
+        name: 'file1.txt',
+        type: DirentType.File,
+        icon: '',
+        selected: false,
+      },
+    ],
+  }
+
+  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.File)
+
+  expect(result).toEqual([
+    {
+      path: '/root/file1.txt',
+      posInSet: 1,
+      setSize: 1,
+      depth: 0,
+      name: 'file1.txt',
+      type: DirentType.File,
+      icon: '',
+      selected: false,
+    },
+    {
+      name: '',
+      type: DirentType.File,
+      path: '',
+      depth: 0,
+      selected: false,
+      posInSet: 1,
+      setSize: 1,
+      icon: '',
+    },
+  ])
+})

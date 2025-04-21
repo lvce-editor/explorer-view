@@ -25,6 +25,7 @@ export const newDirent = async (state: ExplorerState, editingType: number): Prom
     editingIndex,
     editingType,
     editingValue: '',
+    focusedIndex: editingIndex,
     focus: FocusId.Input,
     icons,
     fileIconCache: newFileIconCache,
