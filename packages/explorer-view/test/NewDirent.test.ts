@@ -129,6 +129,9 @@ test('newDirent updates state when focused item is not a directory', async () =>
     if (method === 'IconTheme.getFileIcon') {
       return ''
     }
+    if (method === 'IconTheme.getFolderIcon') {
+      return ''
+    }
     if (method === 'Preferences.get') {
       return false
     }
