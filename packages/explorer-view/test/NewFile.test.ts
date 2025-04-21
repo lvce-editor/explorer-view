@@ -19,6 +19,12 @@ test('newFile', async () => {
     if (method === 'FileSystem.getPathSeparator') {
       return '/'
     }
+    if (method === 'IconTheme.getFileIcon') {
+      return ''
+    }
+    if (method === 'IconTheme.getFolderIcon') {
+      return ''
+    }
     if (method === 'Preferences.get') {
       return false
     }
@@ -37,14 +43,21 @@ test('newFile', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+    maxLineY: 1,
   }
 
   const result = await newFile(state)
   expect(result).toEqual({
     ...state,
-    editingIndex: 0,
+    editingIndex: 1,
     editingType: ExplorerEditingType.CreateFile,
+    items: [{ name: '', type: DirentType.EditingFile, path: '', depth: 0, selected: false }],
     editingValue: '',
     focus: 2,
+    maxLineY: 2,
+    fileIconCache: {
+      '': '',
+      '/test.txt': '',
+    },
   })
 })

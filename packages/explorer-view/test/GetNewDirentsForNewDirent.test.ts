@@ -72,7 +72,7 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
     {
       path: '/root/folder/file1.txt',
       posInSet: 1,
-      setSize: 3,
+      setSize: 4,
       depth: 2,
       name: 'file1.txt',
       type: DirentType.File,
@@ -82,7 +82,7 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
     {
       path: '/root/folder/file2.txt',
       posInSet: 2,
-      setSize: 3,
+      setSize: 4,
       depth: 2,
       name: 'file2.txt',
       type: DirentType.File,
@@ -96,7 +96,7 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
       depth: 2,
       selected: false,
       posInSet: 3,
-      setSize: 3,
+      setSize: 4,
       icon: '',
     },
   ])
@@ -152,7 +152,7 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
       depth: 2,
       selected: false,
       posInSet: 1,
-      setSize: 1,
+      setSize: 2,
       icon: '',
     },
   ])

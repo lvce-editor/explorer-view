@@ -14,7 +14,6 @@ export const getNewDirentsForNewDirent = async (
   const depth = focusedItem.depth + 1
 
   const updatedChildren = await getNewChildDirentsForNewDirent(items, depth, parentPath, type)
-  console.log({ updatedChildren })
 
   // Create new array with updated items
   const parentIndex = focusedIndex

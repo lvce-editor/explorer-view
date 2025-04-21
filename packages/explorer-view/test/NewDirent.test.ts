@@ -107,6 +107,9 @@ test('newDirent updates state when focused item is not a directory', async () =>
     if (method === 'FileSystem.getPathSeparator') {
       return '/'
     }
+    if (method === 'IconTheme.getFileIcon') {
+      return ''
+    }
     if (method === 'Preferences.get') {
       return false
     }
@@ -132,9 +135,13 @@ test('newDirent updates state when focused item is not a directory', async () =>
   expect(invoke).toHaveBeenCalledWith('Focus.setFocus', 14)
   expect(result).toEqual({
     ...mockState,
-    editingIndex: 0,
+    editingIndex: 1,
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
+    fileIconCache: {
+      '': '',
+      '/test': '',
+    },
   })
 })
