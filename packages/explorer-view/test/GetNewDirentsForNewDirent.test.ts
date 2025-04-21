@@ -187,7 +187,7 @@ test('getNewDirentsForNewDirent - no items', async () => {
     {
       name: '',
       type: DirentType.File,
-      path: '',
+      path: '/root',
       depth: 0,
       selected: false,
       posInSet: 1,
@@ -244,7 +244,7 @@ test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async ()
     {
       name: '',
       type: DirentType.File,
-      path: '',
+      path: '/root',
       depth: 0,
       selected: false,
       posInSet: 1,
