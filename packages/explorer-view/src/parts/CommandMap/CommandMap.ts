@@ -52,6 +52,7 @@ import * as RenderEventListeners from '../RenderEventListeners/RenderEventListen
 import * as RestoreState from '../RestoreState/RestoreState.ts'
 import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
+import * as SelectAll from '../SelectAll/SelectAll.ts'
 import * as SelectDown from '../SelectDown/SelectDown.ts'
 import * as SelectUp from '../SelectUp/SelectUp.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
@@ -80,6 +81,7 @@ export const commandMap = {
   'Explorer.handleBlur': WrapCommand.wrapCommand(HandleBlur.handleBlur),
   'Explorer.selectUp': WrapCommand.wrapCommand(SelectUp.selectUp),
   'Explorer.selectDown': WrapCommand.wrapCommand(SelectDown.selectDown),
+  'Explorer.selectAll': WrapCommand.wrapCommand(SelectAll.selectAll),
   'Explorer.handleClick': WrapCommand.wrapCommand(HandleClick.handleClick),
   'Explorer.handleClickAt': WrapCommand.wrapCommand(HandleClickAt.handleClickAt),
   'Explorer.handleClickCurrent': WrapCommand.wrapCommand(HandleClickCurrent.handleClickCurrent),
