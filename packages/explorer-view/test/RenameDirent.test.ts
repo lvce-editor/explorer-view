@@ -4,6 +4,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
+import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import { renameDirent } from '../src/parts/RenameDirent/RenameDirent.ts'
 
 test('renameDirent updates state with editing properties', () => {
@@ -20,6 +21,7 @@ test('renameDirent updates state with editing properties', () => {
     editingType: ExplorerEditingType.Rename,
     editingValue: 'test.txt',
     focus: FocusId.Input,
+    inputSource: InputSource.Script,
   })
 })
 
@@ -37,5 +39,6 @@ test.skip('renameDirent handles empty state', () => {
     editingType: ExplorerEditingType.Rename,
     editingValue: '',
     focus: FocusId.Input,
+    inputSource: InputSource.Script,
   })
 })
