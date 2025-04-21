@@ -1,9 +1,19 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
+const getLastSelectedIndex = (items: ExplorerState['items']): number => {
+  let lastSelectedIndex = -1
+  for (let index = 0; index < items.length; index++) {
+    if (items[index].selected) {
+      lastSelectedIndex = index
+    }
+  }
+  return lastSelectedIndex
+}
+
 export const selectDown = (state: ExplorerState): ExplorerState => {
   const { items, focusedIndex } = state
-  const firstSelectedIndex = items.findIndex((item) => item.selected)
-  const targetIndex = firstSelectedIndex === -1 ? focusedIndex : firstSelectedIndex
+  const lastSelectedIndex = getLastSelectedIndex(items)
+  const targetIndex = lastSelectedIndex === -1 ? focusedIndex : lastSelectedIndex
   if (targetIndex >= items.length - 1) {
     return state
   }
@@ -14,5 +24,6 @@ export const selectDown = (state: ExplorerState): ExplorerState => {
   return {
     ...state,
     items: newItems,
+    focusedIndex: targetIndex + 1,
   }
 }
