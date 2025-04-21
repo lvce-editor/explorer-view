@@ -170,6 +170,16 @@ test('newDirent updates state when focused item is not a directory', async () =>
         depth: 0,
         selected: false,
       },
+      {
+        depth: 1,
+        icon: '',
+        name: '',
+        path: '',
+        posInSet: 1,
+        selected: false,
+        setSize: 2,
+        type: 13,
+      },
     ],
     maxLineY: 2,
     fileIconCache: {
