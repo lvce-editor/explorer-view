@@ -66,7 +66,7 @@ test('newFile', async () => {
         icon: '',
         name: '',
         type: DirentType.EditingFile,
-        path: '',
+        path: '/test.txt',
         selected: false,
         posInSet: 1,
         setSize: 2,
