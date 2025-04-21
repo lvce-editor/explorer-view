@@ -6,8 +6,8 @@ test('renderEventListeners', () => {
   const eventListeners = RenderEventListeners.renderEventListeners()
   expect(eventListeners).toEqual([
     {
-      name: DomEventListenersFunctions.HandleListBlur,
-      params: ['handleBlur'],
+      name: DomEventListenersFunctions.HandleInputBlur,
+      params: ['handleInputBlur'],
     },
     {
       name: DomEventListenersFunctions.HandleListFocus,

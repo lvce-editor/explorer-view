@@ -19,6 +19,7 @@ export const getInputDom = (hasEditingError: boolean): readonly VirtualDomNode[]
       className: getClassName(hasEditingError),
       id: 'ExplorerInput',
       onInput: DomEventListenerFunctions.HandleEditingInput,
+      onBlur: DomEventListenerFunctions.HandleInputBlur,
       childCount: 0,
       name: InputName.ExplorerInput,
     },
