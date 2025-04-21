@@ -5,7 +5,6 @@ import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
 export const getMouseActions = (): readonly MouseAction[] => {
   return [
     {
-      id: 'explorer.openFile',
       description: 'Open file on click',
       button: MouseEventType.LeftClick,
       modifiers: {},
@@ -13,7 +12,6 @@ export const getMouseActions = (): readonly MouseAction[] => {
       when: WhenExpression.FocusExplorer,
     },
     {
-      id: 'explorer.toggleSelection',
       description: 'Toggle selection with Ctrl+Click',
       button: MouseEventType.LeftClick,
       modifiers: {
@@ -23,7 +21,6 @@ export const getMouseActions = (): readonly MouseAction[] => {
       when: WhenExpression.FocusExplorer,
     },
     {
-      id: 'explorer.rangeSelection',
       description: 'Select range with Shift+Click',
       button: MouseEventType.LeftClick,
       modifiers: {
