@@ -77,7 +77,7 @@ test('newFile', async () => {
     maxLineY: 2,
     icons: ['', ''],
     fileIconCache: {
-      '': '',
+      '/': '',
       '/test.txt': '',
     },
   })
