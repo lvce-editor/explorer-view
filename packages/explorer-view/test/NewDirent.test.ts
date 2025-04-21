@@ -161,7 +161,16 @@ test('newDirent updates state when focused item is not a directory', async () =>
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+    items: [
+      {
+        setSize: 1,
+        name: 'test.txt',
+        type: DirentType.File,
+        path: '/test.txt',
+        depth: 0,
+        selected: false,
+      },
+    ],
     maxLineY: 2,
     fileIconCache: {
       '': '',
