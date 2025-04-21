@@ -18,6 +18,7 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
   // assert
   const explorer = Locator('.Explorer')
   const inputBox = explorer.locator('input')
+  await expect(inputBox).toHaveValue('file2.txt')
   await expect(inputBox).toBeVisible()
   await expect(inputBox).toBeFocused()
 
