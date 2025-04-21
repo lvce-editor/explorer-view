@@ -6,6 +6,7 @@ import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 import { updateEditingValue } from '../src/parts/UpdateEditingValue/UpdateEditingValue.ts'
 import { MockRpc } from '@lvce-editor/rpc'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
   switch (method) {
@@ -28,7 +29,7 @@ beforeEach(() => {
 })
 
 test('updateEditingValue - updates state with new value', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const newValue = 'new value'
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
@@ -36,7 +37,7 @@ test('updateEditingValue - updates state with new value', async () => {
 })
 
 test('updateEditingValue - updates state with new value and input source', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const newValue = 'new value'
   const result = await updateEditingValue(state, newValue, InputSource.User)
   expect(result.editingValue).toBe(newValue)
@@ -44,7 +45,7 @@ test('updateEditingValue - updates state with new value and input source', async
 })
 
 test.skip('updateEditingValue - updates file icon', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     editingType: DirentType.EditingFile,
   }
@@ -55,7 +56,7 @@ test.skip('updateEditingValue - updates file icon', async () => {
 })
 
 test.skip('updateEditingValue - updates folder icon', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     editingType: DirentType.EditingFolder,
   }
@@ -66,7 +67,7 @@ test.skip('updateEditingValue - updates folder icon', async () => {
 })
 
 test.skip('updateEditingValue - preserves other state properties', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const result = await updateEditingValue(state, 'new value')
   expect(result.uid).toBe(state.uid)
   expect(result.root).toBe(state.root)
