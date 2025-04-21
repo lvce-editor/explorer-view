@@ -4,7 +4,6 @@ import * as InputName from '../InputName/InputName.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const renderValue = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
-  console.log('r value')
   if (newState.inputSource === InputSource.User) {
     return []
   }
