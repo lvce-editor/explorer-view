@@ -1,6 +1,7 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
+import * as InputSource from '../InputSource/InputSource.ts'
 
 export const renameDirent = (state: ExplorerState): ExplorerState => {
   const { focusedIndex, items } = state
@@ -11,5 +12,6 @@ export const renameDirent = (state: ExplorerState): ExplorerState => {
     editingType: ExplorerEditingType.Rename,
     editingValue: item.name,
     focus: FocusId.Input,
+    inputSource: InputSource.Script,
   }
 }
