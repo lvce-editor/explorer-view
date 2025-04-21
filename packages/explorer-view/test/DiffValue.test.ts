@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { isEqual } from '../src/parts/DiffValue/DiffValue.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 
 test('isEqual - same focus and editing value', () => {
   const state1 = { ...createDefaultState(), focus: FocusId.Input, editingValue: 'test' }
