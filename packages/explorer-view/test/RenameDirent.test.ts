@@ -12,6 +12,7 @@ test('renameDirent updates state with editing properties', () => {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+    icons: [''],
   }
 
   const result = renameDirent(mockState)
@@ -31,6 +32,7 @@ test('renameDirent updates state with editing properties for folder', () => {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [{ name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false }],
+    icons: [''],
   }
 
   const result = renameDirent(mockState)
