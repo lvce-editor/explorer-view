@@ -5,7 +5,7 @@ import { getNewDirentsForRename } from '../GetNewDirentsForRename/GetNewDirentsF
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const renameDirent = (state: ExplorerState): ExplorerState => {
-  const { focusedIndex, items } = state
+  const { focusedIndex, items, icons, minLineY } = state
   if (items.length === 0) {
     return state
   }
@@ -17,6 +17,7 @@ export const renameDirent = (state: ExplorerState): ExplorerState => {
     editingIndex: focusedIndex,
     editingType: ExplorerEditingType.Rename,
     editingValue: item.name,
+    editingIcon: icons[focusedIndex - minLineY],
     focus: FocusId.Input,
     inputSource: InputSource.Script,
   }

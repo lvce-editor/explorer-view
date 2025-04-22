@@ -55,3 +55,25 @@ test('renameDirent handles empty state', () => {
   const result = renameDirent(mockState)
   expect(result).toBe(mockState)
 })
+
+test('renameDirent preserves icon when entering edit mode', () => {
+  const mockState: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    minLineY: 0,
+    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false, icon: 'file-icon' }],
+    icons: ['file-icon'],
+  }
+
+  const result = renameDirent(mockState)
+  expect(result).toEqual({
+    ...mockState,
+    items: [{ name: 'test.txt', type: DirentType.EditingFile, path: '/test.txt', depth: 0, selected: false, icon: 'file-icon' }],
+    editingIndex: 0,
+    editingType: ExplorerEditingType.Rename,
+    editingValue: 'test.txt',
+    editingIcon: 'file-icon',
+    focus: FocusId.Input,
+    inputSource: InputSource.Script,
+  })
+})
