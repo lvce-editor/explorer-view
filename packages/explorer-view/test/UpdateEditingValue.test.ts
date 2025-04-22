@@ -2,6 +2,7 @@ import { beforeEach, expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
@@ -19,12 +20,11 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
   }
 }
 
-const mockRpc = await MockRpc.create({
-  commandMap: {},
-  invoke,
-})
-
-beforeEach(() => {
+beforeEach(async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke,
+  })
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 })
 
@@ -64,6 +64,32 @@ test('updateEditingValue - updates folder icon', async () => {
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('folder-test')
+})
+
+test('updateEditingValue - updates file icon when renaming file', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingType: ExplorerEditingType.Rename,
+    editingIndex: 0,
+    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+  }
+  const newValue = 'new.txt'
+  const result = await updateEditingValue(state, newValue)
+  expect(result.editingValue).toBe(newValue)
+  expect(result.editingIcon).toBe('file-new.txt')
+})
+
+test('updateEditingValue - updates folder icon when renaming folder', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingType: ExplorerEditingType.Rename,
+    editingIndex: 0,
+    items: [{ name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false }],
+  }
+  const newValue = 'new'
+  const result = await updateEditingValue(state, newValue)
+  expect(result.editingValue).toBe(newValue)
+  expect(result.editingIcon).toBe('folder-new')
 })
 
 test('updateEditingValue - preserves other state properties', async () => {
