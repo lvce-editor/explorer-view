@@ -31,4 +31,8 @@ export const createDefaultState = (): ExplorerState => ({
   platform: 0,
   focus: 0,
   inputSource: 0,
+  editingSelection: {
+    start: 0,
+    end: 0,
+  },
 })
