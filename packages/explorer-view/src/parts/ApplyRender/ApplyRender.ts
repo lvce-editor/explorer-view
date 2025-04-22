@@ -1,6 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as GetRenderer from '../GetRenderer/GetRenderer.ts'
 import * as DiffType from '../DiffType/DiffType.ts'
+import * as GetRenderer from '../GetRenderer/GetRenderer.ts'
 
 export const applyRender = (oldState: ExplorerState, newState: ExplorerState, diffResult: readonly number[]): readonly any[] => {
   const commands = []
