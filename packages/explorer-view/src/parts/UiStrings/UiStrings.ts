@@ -16,4 +16,5 @@ export const OpenInIntegratedTerminal = 'Open in integrated Terminal'
 export const Paste = 'Paste'
 export const RefreshExplorer = 'Refresh Explorer'
 export const Rename = 'Rename'
+export const TypeAFileName = 'Type file name. Press Enter to confirm or Escape to cancel.' // TODO use keybinding
 export const YouHaveNotYetOpenedAFolder = 'You have not yet opened a folder'
