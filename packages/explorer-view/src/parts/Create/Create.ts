@@ -47,6 +47,10 @@ export const create = (
     focus: 0,
     editingErrorMessage: '',
     inputSource: 0,
+    editingSelection: {
+      start: 0,
+      end: 0,
+    },
   }
   ExplorerStates.set(state.uid, state, state)
   return state
