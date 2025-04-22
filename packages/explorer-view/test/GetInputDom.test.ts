@@ -15,6 +15,10 @@ test('getInputDom - without error', () => {
       onBlur: 'handleInputBlur',
       childCount: 0,
       name: InputName.ExplorerInput,
+      ariaLabel: 'Type file name. Press Enter to confirm or Escape to cancel.',
+      autocapitalize: 'off',
+      autocorrect: 'off',
+      spellcheck: 'false',
     },
   ])
 })
@@ -30,6 +34,10 @@ test('getInputDom - with error', () => {
       onBlur: 'handleInputBlur',
       childCount: 0,
       name: InputName.ExplorerInput,
+      ariaLabel: 'Type file name. Press Enter to confirm or Escape to cancel.',
+      autocapitalize: 'off',
+      autocorrect: 'off',
+      spellcheck: 'false',
     },
   ])
 })
