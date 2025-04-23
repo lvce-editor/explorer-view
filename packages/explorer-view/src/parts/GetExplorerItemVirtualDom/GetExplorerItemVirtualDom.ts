@@ -9,7 +9,7 @@ import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts
 export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
   const { posInSet, setSize, icon, name, path, depth, indent, chevron, id, className, isEditing, ariaExpanded, hasEditingError } = item
   const chevronDom = GetChevronVirtualDom.getChevronVirtualDom(chevron)
-  const dom: readonly VirtualDomNode[] = [
+  return [
     {
       type: VirtualDomElements.Div,
       role: AriaRoles.TreeItem,
@@ -30,5 +30,4 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly V
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
     ...GetInputOrLabelDom.getInputOrLabelDom(isEditing, hasEditingError, name),
   ]
-  return dom
 }
