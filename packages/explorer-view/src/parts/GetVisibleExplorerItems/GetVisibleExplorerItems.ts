@@ -1,23 +1,12 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
-import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetChevronType from '../GetChevronType/GetChevronType.ts'
 import * as GetExpandedType from '../GetExpandedType/GetExpandedType.ts'
+import { getTreeItemClassName } from '../GetTreeItemClassName/GetTreeItemClassName.ts'
 import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
 import * as GetTreeItemIndentWithChevron from '../GetTreeItemIndentWithChevron/GetTreeItemIndentWithChevron.ts'
-import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 
 const ariaExpandedValues: (string | undefined)[] = [undefined, 'true', 'false']
-
-const getClassName = (isSelected: boolean, isFocused: boolean): string => {
-  if (isFocused) {
-    return MergeClassNames.mergeClassNames(ClassNames.TreeItem, ClassNames.TreeItemActive)
-  }
-  if (isSelected) {
-    return MergeClassNames.mergeClassNames(ClassNames.TreeItem, ClassNames.TreeItemActive)
-  }
-  return ClassNames.TreeItem
-}
 
 export const getVisibleExplorerItems = (
   items: readonly ExplorerItem[],
@@ -43,7 +32,7 @@ export const getVisibleExplorerItems = (
     const isFocused = i === focusedIndex
     const id = isFocused ? 'TreeItemActive' : undefined
     const isSelected = item.selected
-    const className = getClassName(isSelected, isFocused)
+    const className = getTreeItemClassName(isSelected, isFocused)
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]
     const isEditing = i === editingIndex
