@@ -1,6 +1,7 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as GetClickFn from '../GetClickFn/GetClickFn.ts'
+import { normalizeDirentType } from '../NormalizeDirentType/NormalizeDirentType.ts'
 // TODO viewlet should only have create and refresh functions
 // every thing else can be in a separate module <viewlet>.lazy.js
 // and  <viewlet>.ipc.js
@@ -27,7 +28,8 @@ export const handleClick = async (state: ExplorerState, index: number, keepFocus
     console.warn(`[explorer] dirent at index ${actualIndex} not found`, state)
     return state
   }
-  const clickFn = GetClickFn.getClickFn(dirent.type)
+  const normalizedType = normalizeDirentType(dirent.type)
+  const clickFn = GetClickFn.getClickFn(normalizedType)
   return clickFn(state, dirent, actualIndex, keepFocus)
 }
 
