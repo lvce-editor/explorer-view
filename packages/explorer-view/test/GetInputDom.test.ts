@@ -9,7 +9,7 @@ test('getInputDom - without error', () => {
   expect(result).toEqual([
     {
       type: VirtualDomElements.Input,
-      className: ClassNames.InputBox,
+      className: `${ClassNames.InputBox} ExplorerInputBox`,
       id: 'ExplorerInput',
       onInput: 'handleEditingInput',
       onBlur: 'handleInputBlur',
