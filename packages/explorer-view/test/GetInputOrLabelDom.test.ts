@@ -7,7 +7,7 @@ test('getInputOrLabelDom - editing state', () => {
   const result = getInputOrLabelDom(true, false, 'test')
   expect(result).toHaveLength(1)
   expect(result[0].type).toBe(Input)
-  expect(result[0].className).toBe(InputBox)
+  expect(result[0].className).toBe(`InputBox ExplorerInputBox`)
 })
 
 test('getInputOrLabelDom - non-editing state', () => {
@@ -23,5 +23,5 @@ test('getInputOrLabelDom - editing state with error', () => {
   const result = getInputOrLabelDom(true, true, 'test')
   expect(result).toHaveLength(1)
   expect(result[0].type).toBe(Input)
-  expect(result[0].className).toBe(`${InputBox} ${InputValidationError}`)
+  expect(result[0].className).toBe(`${InputBox} ExplorerInputBox ${InputValidationError}`)
 })
