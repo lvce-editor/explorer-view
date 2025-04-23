@@ -1,12 +1,12 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as ChevronType from '../ChevronType/ChevronType.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as GetChevronType from '../GetChevronType/GetChevronType.ts'
 import * as GetExpandedType from '../GetExpandedType/GetExpandedType.ts'
 import { getTreeItemClassName } from '../GetTreeItemClassName/GetTreeItemClassName.ts'
 import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
 import * as GetTreeItemIndentWithChevron from '../GetTreeItemIndentWithChevron/GetTreeItemIndentWithChevron.ts'
-import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 
 const ariaExpandedValues: (string | undefined)[] = [undefined, 'true', 'false']
 
