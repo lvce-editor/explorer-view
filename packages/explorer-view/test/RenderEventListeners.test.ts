@@ -23,6 +23,11 @@ test('renderEventListeners', () => {
       preventDefault: true,
     },
     {
+      name: DomEventListenersFunctions.HandleInputClick,
+      params: ['handleInputClick'],
+      preventDefault: true,
+    },
+    {
       name: DomEventListenersFunctions.HandleClickOpenFolder,
       params: ['handleClickOpenFolder'],
       preventDefault: true,

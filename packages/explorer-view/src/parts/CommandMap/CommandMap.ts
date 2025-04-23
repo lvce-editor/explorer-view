@@ -36,6 +36,7 @@ import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
 import * as HandleFocus from '../HandleFocus/HandleFocus.ts'
 import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconThemeChange.ts'
 import * as HandleInputBlur from '../HandleInputBlur/HandleInputBlur.ts'
+import * as HandleInputClick from '../HandleInputClick/HandleInputClick.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
@@ -68,7 +69,6 @@ export const commandMap = {
   'Explorer.acceptEdit': WrapCommand.wrapCommand(AcceptEdit.acceptEdit),
   'Explorer.cancelEdit': WrapCommand.wrapCommand(CancelEdit.cancelEdit),
   'Explorer.collapseAll': WrapCommand.wrapCommand(CollapseAll.collapseAll),
-  'Explorer.handleInputBlur': WrapCommand.wrapCommand(HandleInputBlur.handleInputBlur),
   'Explorer.copyPath': WrapCommand.wrapCommand(CopyPath.copyPath),
   'Explorer.copyRelativePath': WrapCommand.wrapCommand(CopyRelativePath.copyRelativePath),
   'Explorer.expandAll': WrapCommand.wrapCommand(ExpandAll.expandAll),
@@ -98,6 +98,8 @@ export const commandMap = {
   'Explorer.handleDrop': WrapCommand.wrapCommand(HandleDrop.handleDrop),
   'Explorer.handleFocus': WrapCommand.wrapCommand(HandleFocus.handleFocus),
   'Explorer.handleIconThemeChange': WrapCommand.wrapCommand(HandleIconThemeChange.handleIconThemeChange),
+  'Explorer.handleInputBlur': WrapCommand.wrapCommand(HandleInputBlur.handleInputBlur),
+  'Explorer.handleInputClick': WrapCommand.wrapCommand(HandleInputClick.handleInputClick),
   'Explorer.handlePaste': WrapCommand.wrapCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapCommand(HandlePointerDown.handlePointerDown),
   'Explorer.handleUpload': WrapCommand.wrapCommand(HandleUpload.handleUpload),
