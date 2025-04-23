@@ -80,3 +80,19 @@ export const fileOrFolderNameMustBeProvided = (): string => {
 export const typeAFileName = (): string => {
   return I18nString.i18nString(UiStrings.TypeAFileName)
 }
+
+export const fileNameCannotStartWithSlash = (): string => {
+  return I18nString.i18nString(UiStrings.FileNameCannotStartWithSlash)
+}
+
+export const fileOrFolderAlreadyExists = (): string => {
+  return I18nString.i18nString(UiStrings.FileOrFolderAlreadyExists)
+}
+
+export const theNameIsNotValid = (): string => {
+  return I18nString.i18nString(UiStrings.TheNameIsNotValid)
+}
+
+export const leadingOrTrailingWhitespaceDetected = (): string => {
+  return I18nString.i18nString(UiStrings.LeadingOrTrailingWhitespaceDetected)
+}
