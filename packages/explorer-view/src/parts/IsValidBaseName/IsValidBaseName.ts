@@ -1,5 +1,7 @@
 // copied from https://github.com/microsoft/vscode/blob/6b924c51528e663dda5091a1493229a361676aca/src/vs/base/common/extpath.ts by Microsoft (License MIT)
 
+/** eslint-disable no-useless-escape */
+
 // Reference: https://en.wikipedia.org/wiki/Filename
 const WINDOWS_INVALID_FILE_CHARS = /[\\/:\*\?"<>\|]/g
 const UNIX_INVALID_FILE_CHARS = /[/]/g
