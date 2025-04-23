@@ -18,3 +18,7 @@ export const RefreshExplorer = 'Refresh Explorer'
 export const Rename = 'Rename'
 export const TypeAFileName = 'Type file name. Press Enter to confirm or Escape to cancel.' // TODO use keybinding
 export const YouHaveNotYetOpenedAFolder = 'You have not yet opened a folder'
+export const FileNameCannotStartWithSlash = 'A file or folder name cannot start with a slash.'
+export const FileOrFolderAlreadyExists = 'A file or folder **{0}** already exists at this location. Please choose a different name.'
+export const TheNameIsNotValid = 'The name **{0}** is not valid as a file or folder name. Please choose a different name.'
+export const LeadingOrTrailingWhitespaceDetected = 'Leading or trailing whitespace detected in file or folder name.'
