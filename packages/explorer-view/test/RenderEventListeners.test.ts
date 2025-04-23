@@ -19,7 +19,7 @@ test('renderEventListeners', () => {
     },
     {
       name: DomEventListenersFunctions.HandleClick,
-      params: ['handleClickAt', 'event.button', 'event.ctrlKey', 'event.shiftKey', 'event.clientX', 'event.clientY'],
+      params: ['handleClickAt', 'event.defaultPrevented', 'event.button', 'event.ctrlKey', 'event.shiftKey', 'event.clientX', 'event.clientY'],
       preventDefault: true,
     },
     {

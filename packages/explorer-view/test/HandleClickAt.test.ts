@@ -11,7 +11,7 @@ test.skip('handleClickAt - left click without shift', async () => {
       { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
     ],
   }
-  const result = await handleClickAt(state, LeftClick, false, false, 0, 0)
+  const result = await handleClickAt(state, false, LeftClick, false, false, 0, 0)
   expect(result).toBeDefined()
 })
 
@@ -23,7 +23,7 @@ test.skip('handleClickAt - shift click with no selection', async () => {
       { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
     ],
   }
-  const result = await handleClickAt(state, LeftClick, false, true, 0, 0)
+  const result = await handleClickAt(state, false, LeftClick, false, true, 0, 0)
   expect(result).toBeDefined()
 })
 
@@ -36,7 +36,7 @@ test('handleClickAt - shift click with existing selection', async () => {
       { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
     ],
   }
-  const result = await handleClickAt(state, LeftClick, false, true, 0, 0)
+  const result = await handleClickAt(state, false, LeftClick, false, true, 0, 0)
   expect(result).toBeDefined()
 })
 
@@ -44,7 +44,7 @@ test('handleClickAt - non left click', async () => {
   const state = createDefaultState()
   const shiftKey = false
   const ctrlKey = false
-  const result = await handleClickAt(state, 2, shiftKey, ctrlKey, 0, 0)
+  const result = await handleClickAt(state, false, 2, shiftKey, ctrlKey, 0, 0)
   expect(result).toBe(state)
 })
 
@@ -52,7 +52,7 @@ test('handleClickAt - left click', async () => {
   const state = createDefaultState()
   const shiftKey = false
   const ctrlKey = false
-  const result = await handleClickAt(state, LeftClick, shiftKey, ctrlKey, 0, 0)
+  const result = await handleClickAt(state, false, LeftClick, shiftKey, ctrlKey, 0, 0)
   expect(result).toBeDefined()
 })
 
@@ -64,7 +64,7 @@ test.skip('handleClickAt - shift click with no selection', async () => {
       { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
     ],
   }
-  const result = await handleClickAt(state, LeftClick, false, true, 0, 0)
+  const result = await handleClickAt(state, false, LeftClick, false, true, 0, 0)
   expect(result).toBeDefined()
 })
 
@@ -77,6 +77,6 @@ test('handleClickAt - shift click with existing selection', async () => {
       { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
     ],
   }
-  const result = await handleClickAt(state, LeftClick, false, true, 0, 0)
+  const result = await handleClickAt(state, false, LeftClick, false, true, 0, 0)
   expect(result).toBeDefined()
 })

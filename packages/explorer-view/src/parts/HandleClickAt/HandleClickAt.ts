@@ -6,12 +6,16 @@ import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 
 export const handleClickAt = async (
   state: ExplorerState,
+  defaultPrevented: boolean,
   button: number,
   ctrlKey: boolean,
   shiftKey: boolean,
   x: number,
   y: number,
 ): Promise<ExplorerState> => {
+  if (defaultPrevented) {
+    return state
+  }
   if (button !== MouseEventType.LeftClick) {
     return state
   }

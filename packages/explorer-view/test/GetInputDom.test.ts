@@ -19,6 +19,7 @@ test('getInputDom - without error', () => {
       autocapitalize: 'off',
       autocorrect: 'off',
       spellcheck: 'false',
+      onClick: 'handleInputClick',
     },
   ])
 })
@@ -38,6 +39,7 @@ test('getInputDom - with error', () => {
       autocapitalize: 'off',
       autocorrect: 'off',
       spellcheck: 'false',
+      onClick: 'handleInputClick',
     },
   ])
 })
