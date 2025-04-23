@@ -80,6 +80,5 @@ export const getVisibleExplorerItems = (
       className,
     })
   }
-  console.log({ visible })
   return visible
 }
