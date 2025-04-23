@@ -1,6 +1,8 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
+import * as ChevronType from '../ChevronType/ChevronType.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
+import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChevronType from '../GetChevronType/GetChevronType.ts'
 import * as GetExpandedType from '../GetExpandedType/GetExpandedType.ts'
 import * as GetTreeItemIndent from '../GetTreeItemIndent/GetTreeItemIndent.ts'
@@ -17,6 +19,17 @@ const getClassName = (isSelected: boolean, isFocused: boolean): string => {
     return MergeClassNames.mergeClassNames(ClassNames.TreeItem, ClassNames.TreeItemActive)
   }
   return ClassNames.TreeItem
+}
+
+const getEditingChevron = (direntType: number): number => {
+  switch (direntType) {
+    case DirentType.EditingDirectoryExpanded:
+      return ChevronType.Down
+    case DirentType.EditingFolder:
+      return ChevronType.Right
+    default:
+      return ChevronType.None
+  }
 }
 
 export const getVisibleExplorerItems = (
@@ -38,8 +51,7 @@ export const getVisibleExplorerItems = (
   let iconIndex = 0
   for (let i = minLineY; i < Math.min(maxLineY, items.length); i++) {
     const item = items[i]
-    const chevron = GetChevronType.getChevronType(item.type, useChevrons)
-    const indent = indentFn(item.depth, chevron)
+    let chevron = GetChevronType.getChevronType(item.type, useChevrons)
     const isFocused = i === focusedIndex
     const id = isFocused ? 'TreeItemActive' : undefined
     const isSelected = item.selected
@@ -50,7 +62,9 @@ export const getVisibleExplorerItems = (
     let icon = icons[iconIndex++]
     if (isEditing) {
       icon = editingIcon
+      chevron = getEditingChevron(item.type)
     }
+    const indent = indentFn(item.depth, chevron)
 
     visible.push({
       ...item,
