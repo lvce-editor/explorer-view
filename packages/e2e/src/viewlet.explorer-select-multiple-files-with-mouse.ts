@@ -12,7 +12,7 @@ export const test: Test = async ({ Command, Explorer, FileSystem, Workspace, Loc
   await Explorer.focusIndex(2)
 
   // act
-  await Command.execute('Explorer.handleClickAt', 0, false, true, 300, 0)
+  await Command.execute('Explorer.handleClickAt', false, 0, false, true, 300, 0)
 
   // assert
   const file1 = Locator('.TreeItem').nth(0)
