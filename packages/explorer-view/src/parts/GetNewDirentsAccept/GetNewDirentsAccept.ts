@@ -1,6 +1,7 @@
 import { VError } from '@lvce-editor/verror'
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import type { NewDirentsAcceptResult } from '../NewDirentsAcceptResult/NewDirentsAcceptResult.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 
@@ -13,11 +14,6 @@ const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: 
 
 export interface Create {
   (path: string): Promise<void>
-}
-
-interface NewDirentsAcceptResult {
-  readonly dirents: readonly ExplorerItem[]
-  readonly newFocusedIndex: number
 }
 
 export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<NewDirentsAcceptResult> => {
