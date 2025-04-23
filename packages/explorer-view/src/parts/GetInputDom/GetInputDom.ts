@@ -18,16 +18,17 @@ export const getInputDom = (hasEditingError: boolean): readonly VirtualDomNode[]
   return [
     {
       type: VirtualDomElements.Input,
+      ariaLabel: ariaLabel,
+      autocapitalize: 'off',
+      autocorrect: 'off',
+      childCount: 0,
       className: getClassName(hasEditingError),
       id: 'ExplorerInput',
-      onInput: DomEventListenerFunctions.HandleEditingInput,
-      onBlur: DomEventListenerFunctions.HandleInputBlur,
-      childCount: 0,
       name: InputName.ExplorerInput,
-      autocorrect: 'off',
-      autocapitalize: 'off',
+      onBlur: DomEventListenerFunctions.HandleInputBlur,
+      onClick: DomEventListenerFunctions.HandleInputClick,
+      onInput: DomEventListenerFunctions.HandleEditingInput,
       spellcheck: 'false',
-      ariaLabel: ariaLabel,
     },
   ]
 }
