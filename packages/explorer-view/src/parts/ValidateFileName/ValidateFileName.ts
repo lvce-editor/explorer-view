@@ -95,7 +95,7 @@ function getWellFormedFileName(filename: string): string {
   return filename
 }
 
-export function validateFileName(name: string): ValidateFileNameResult {
+export function validateFileName(name: string, existingName: string, siblingFileNames: readonly string[]): ValidateFileNameResult {
   // Produce a well formed file name
   name = getWellFormedFileName(name)
 
@@ -116,15 +116,11 @@ export function validateFileName(name: string): ValidateFileNameResult {
   }
 
   const names = coalesce(name.split(/[\\/]/))
-  // @ts-ignore
-  const parent = item.parent
 
-  // @ts-ignore
-  if (name !== item.name) {
+  if (name !== existingName) {
     // Do not allow to overwrite existing file
-    const child = parent?.getChild(name)
-    // @ts-ignore
-    if (child && child !== item) {
+    const child = siblingFileNames.find((sibling) => sibling === name)
+    if (child) {
       return {
         content: ExplorerStrings.fileOrFolderAlreadyExists(),
         severity: Severity.Error,
@@ -133,8 +129,7 @@ export function validateFileName(name: string): ValidateFileNameResult {
   }
 
   // Check for invalid file name.
-  // @ts-ignore
-  if (names.some((folderName) => !isValidBasename(item.resource, false))) {
+  if (names.some((folderName) => !isValidBasename(folderName, false))) {
     return {
       content: ExplorerStrings.theNameIsNotValid(),
       severity: Severity.Error,
