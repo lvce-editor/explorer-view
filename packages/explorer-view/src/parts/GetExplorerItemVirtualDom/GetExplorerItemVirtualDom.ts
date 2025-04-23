@@ -7,7 +7,7 @@ import * as GetInputOrLabelDom from '../GetInputOrLabelDom/GetInputOrLabelDom.ts
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
 export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { posInSet, setSize, icon, name, path, depth, indent, chevron, id, className, isEditing, ariaExpanded, hasEditingError } = item
+  const { ariaExpanded, chevron, className, depth, hasEditingError, icon, id, indent, isEditing, name, path, setSize, posInSet } = item
   const chevronDom = GetChevronVirtualDom.getChevronVirtualDom(chevron)
   return [
     {
