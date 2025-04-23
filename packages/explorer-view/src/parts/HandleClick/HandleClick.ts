@@ -2,6 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as GetClickFn from '../GetClickFn/GetClickFn.ts'
 import { normalizeDirentType } from '../NormalizeDirentType/NormalizeDirentType.ts'
+import { resetEditing } from '../ResetEditing/ResetEditing.ts'
 // TODO viewlet should only have create and refresh functions
 // every thing else can be in a separate module <viewlet>.lazy.js
 // and  <viewlet>.ipc.js
@@ -30,7 +31,14 @@ export const handleClick = async (state: ExplorerState, index: number, keepFocus
   }
   const normalizedType = normalizeDirentType(dirent.type)
   const clickFn = GetClickFn.getClickFn(normalizedType)
-  return clickFn(state, dirent, actualIndex, keepFocus)
+  const newState = await clickFn(state, dirent, actualIndex, keepFocus)
+  if (newState.editingIndex === -1) {
+    return newState
+  }
+  return {
+    ...newState,
+    ...resetEditing,
+  }
 }
 
 // export const handleBlur=()=>{}
