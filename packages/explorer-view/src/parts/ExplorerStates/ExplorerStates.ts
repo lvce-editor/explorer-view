@@ -1,19 +1,4 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as ViewletRegistry from '@lvce-editor//viewlet-registry'
 
-const states = Object.create(null)
-
-export const get = (
-  uid: number,
-): {
-  oldState: ExplorerState
-  newState: ExplorerState
-} => {
-  return states[uid]
-}
-
-export const set = (uid: number, oldState: ExplorerState, newState: ExplorerState): void => {
-  states[uid] = {
-    oldState,
-    newState,
-  }
-}
+export const { get, set, wrapCommand } = ViewletRegistry.create<ExplorerState>()

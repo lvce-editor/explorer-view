@@ -63,7 +63,7 @@ import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 import * as Terminate from '../Terminate/Terminate.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
-import * as WrapCommand from '../WrapCommand/WrapCommand.ts'
+import * as WrapCommand from '../ExplorerStates/ExplorerStates.ts'
 
 export const commandMap = {
   'Explorer.acceptEdit': WrapCommand.wrapCommand(AcceptEdit.acceptEdit),
