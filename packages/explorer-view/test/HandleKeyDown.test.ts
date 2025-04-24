@@ -1,8 +1,6 @@
-import { test, expect } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleKeyDown } from '../src/parts/HandleKeyDown/HandleKeyDown.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('handleKeyDown - empty state', () => {
   const state = createDefaultState()
