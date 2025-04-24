@@ -64,5 +64,6 @@ export const commandIds = [
   'setDeltaY',
   'setSelectedIndices',
   'updateEditingValue',
+  'handleKeyDown',
   'updateIcons',
 ]
