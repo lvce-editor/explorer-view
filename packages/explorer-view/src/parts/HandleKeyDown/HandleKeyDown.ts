@@ -5,14 +5,11 @@ import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 let timeout: number | undefined
 
 export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState => {
-  if (key === '') {
-    if (state.focusWord) {
-      return {
-        ...state,
-        focusWord: '',
-      }
+  if (state.focusWord && key === '') {
+    return {
+      ...state,
+      focusWord: '',
     }
-    return state
   }
   if (!isAscii(key)) {
     return state
