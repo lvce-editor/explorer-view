@@ -34,4 +34,6 @@ export interface ExplorerState {
   readonly platform: number
   readonly focus: number
   readonly inputSource: number
+  readonly focusWord: string
+  readonly focusWordTimeout: number
 }

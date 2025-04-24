@@ -63,6 +63,7 @@ export const commandIds = [
   'selectUp',
   'setDeltaY',
   'setSelectedIndices',
+  'cancelTypeAhead',
   'updateEditingValue',
   'handleKeyDown',
   'updateIcons',

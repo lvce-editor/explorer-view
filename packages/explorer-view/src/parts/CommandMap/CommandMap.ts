@@ -1,5 +1,6 @@
 import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as CancelEdit from '../CancelEdit/CancelEdit.ts'
+import * as CancelTypeAhead from '../CancelTypeAhead/CancelTypeAhead.ts'
 import * as CollapseAll from '../CollapseAll/CollapseAll.ts'
 import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
@@ -69,6 +70,7 @@ import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 export const commandMap = {
   'Explorer.acceptEdit': WrapCommand.wrapCommand(AcceptEdit.acceptEdit),
   'Explorer.handleKeyDown': WrapCommand.wrapCommand(HandleKeyDown.handleKeyDown),
+  'Explorer.canceTypeAhead': WrapCommand.wrapCommand(CancelTypeAhead.cancelTypeAhead),
   'Explorer.cancelEdit': WrapCommand.wrapCommand(CancelEdit.cancelEdit),
   'Explorer.collapseAll': WrapCommand.wrapCommand(CollapseAll.collapseAll),
   'Explorer.copyPath': WrapCommand.wrapCommand(CopyPath.copyPath),
