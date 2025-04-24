@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleKeyDown } from '../src/parts/HandleKeyDown/HandleKeyDown.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('handleKeyDown - empty state', () => {
   const state = createDefaultState()
