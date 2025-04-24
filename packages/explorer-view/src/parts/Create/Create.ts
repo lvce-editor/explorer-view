@@ -52,6 +52,7 @@ export const create = (
       end: 0,
     },
     focusWord: '',
+    focusWordTimeout: 800,
   }
   ExplorerStates.set(state.uid, state, state)
   return state

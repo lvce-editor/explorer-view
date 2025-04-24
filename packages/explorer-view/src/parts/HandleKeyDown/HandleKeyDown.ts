@@ -11,7 +11,6 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
       focusWord: '',
     }
   }
-  console.log({ key })
   if (!isAscii(key)) {
     return state
   }
@@ -27,7 +26,7 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
   // eslint-disable-next-line  @typescript-eslint/no-misused-promises
   timeout = setTimeout(async () => {
     await ParentRpc.invoke('Explorer.handleKeyDown', '')
-  }, 800)
+  }, state.focusWordTimeout)
 
   if (matchingIndex === -1) {
     return {
