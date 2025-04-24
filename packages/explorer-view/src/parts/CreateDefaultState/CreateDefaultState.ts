@@ -35,4 +35,5 @@ export const createDefaultState = (): ExplorerState => ({
     start: 0,
     end: 0,
   },
+  focusWord: '',
 })
