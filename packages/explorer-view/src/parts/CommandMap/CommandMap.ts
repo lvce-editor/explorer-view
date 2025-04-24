@@ -8,6 +8,7 @@ import * as Create from '../Create/Create.ts'
 import * as Diff2 from '../Diff2/Diff2.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as ExpandRecursively from '../ExpandRecursively/ExpandRecursively.ts'
+import * as WrapCommand from '../ExplorerStates/ExplorerStates.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as FocusLast from '../FocusLast/FocusLast.ts'
@@ -63,7 +64,6 @@ import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 import * as Terminate from '../Terminate/Terminate.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
-import * as WrapCommand from '../ExplorerStates/ExplorerStates.ts'
 
 export const commandMap = {
   'Explorer.acceptEdit': WrapCommand.wrapCommand(AcceptEdit.acceptEdit),
