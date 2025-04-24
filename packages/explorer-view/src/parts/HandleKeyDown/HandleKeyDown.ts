@@ -6,10 +6,13 @@ let timeout: number | undefined
 
 export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState => {
   if (key === '') {
-    return {
-      ...state,
-      focusWord: '',
+    if (state.focusWord) {
+      return {
+        ...state,
+        focusWord: '',
+      }
     }
+    return state
   }
   if (!isAscii(key)) {
     return state
