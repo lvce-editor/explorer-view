@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import { cancelTypeAhead } from '../CancelTypeAhead/CancelTypeAhead.ts'
 import { isAscii } from '../IsAscii/IsAscii.ts'
 import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 
@@ -6,10 +7,7 @@ let timeout: number | undefined
 
 export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState => {
   if (state.focusWord && key === '') {
-    return {
-      ...state,
-      focusWord: '',
-    }
+    return cancelTypeAhead(state)
   }
   if (!isAscii(key)) {
     return state
@@ -25,7 +23,7 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
   // @ts-ignore
   // eslint-disable-next-line  @typescript-eslint/no-misused-promises
   timeout = setTimeout(async () => {
-    await ParentRpc.invoke('Explorer.handleKeyDown', '')
+    await ParentRpc.invoke('Explorer.cancelTypeAhead')
   }, state.focusWordTimeout)
 
   if (matchingIndex === -1) {
