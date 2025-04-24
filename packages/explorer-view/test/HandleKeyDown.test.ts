@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleKeyDown } from '../src/parts/HandleKeyDown/HandleKeyDown.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('handleKeyDown - empty state', () => {
   const state = createDefaultState()
@@ -10,7 +11,7 @@ test('handleKeyDown - empty state', () => {
 })
 
 test('handleKeyDown - with items', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'apple', type: 0, path: '/apple', depth: 0, selected: false },
@@ -24,7 +25,7 @@ test('handleKeyDown - with items', () => {
 })
 
 test('handleKeyDown - no match', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'apple', type: 0, path: '/apple', depth: 0, selected: false },
@@ -38,7 +39,7 @@ test('handleKeyDown - no match', () => {
 })
 
 test('handleKeyDown - multiple characters', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'apple', type: 0, path: '/apple', depth: 0, selected: false },
