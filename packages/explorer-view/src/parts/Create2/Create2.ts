@@ -51,6 +51,7 @@ export const create2 = (
       start: 0,
       end: 0,
     },
+    focusWord: '',
   }
   ExplorerStates.set(uid, state, state)
 }

@@ -1,7 +1,44 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import { isAscii } from '../IsAscii/IsAscii.ts'
+import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 
-export const handleKeyDown = (state: ExplorerState): ExplorerState => {
+let timeout: number | undefined
+
+export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState => {
+  if (key === '') {
+    return {
+      ...state,
+      focusWord: '',
+    }
+  }
+  console.log({ key })
+  if (!isAscii(key)) {
+    return state
+  }
+
+  const newFocusWord = state.focusWord + key.toLowerCase()
+  const matchingIndex = state.items.findIndex((item) => item.name.toLowerCase().startsWith(newFocusWord))
+
+  if (timeout) {
+    clearTimeout(timeout)
+  }
+
+  // @ts-ignore
+  // eslint-disable-next-line  @typescript-eslint/no-misused-promises
+  timeout = setTimeout(async () => {
+    await ParentRpc.invoke('Explorer.handleKeyDown', '')
+  }, 800)
+
+  if (matchingIndex === -1) {
+    return {
+      ...state,
+      focusWord: newFocusWord,
+    }
+  }
+
   return {
     ...state,
+    focusWord: newFocusWord,
+    focusedIndex: matchingIndex,
   }
 }
