@@ -7,15 +7,16 @@ import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 let timeout: number | undefined
 
 export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState => {
-  if (state.focusWord && key === '') {
+  const { focusWord, items, focusedIndex, focusWordTimeout } = state
+  if (focusWord && key === '') {
     return cancelTypeAhead(state)
   }
   if (!isAscii(key)) {
     return state
   }
 
-  const newFocusWord = state.focusWord + key.toLowerCase()
-  const matchingIndex = filterByFocusWord(state.items, newFocusWord)
+  const newFocusWord = focusWord + key.toLowerCase()
+  const matchingIndex = filterByFocusWord(items, focusedIndex, newFocusWord)
 
   if (timeout) {
     clearTimeout(timeout)
@@ -25,7 +26,7 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
   // eslint-disable-next-line  @typescript-eslint/no-misused-promises
   timeout = setTimeout(async () => {
     await ParentRpc.invoke('Explorer.cancelTypeAhead')
-  }, state.focusWordTimeout)
+  }, focusWordTimeout)
 
   if (matchingIndex === -1) {
     return {

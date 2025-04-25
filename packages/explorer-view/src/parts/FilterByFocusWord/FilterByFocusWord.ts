@@ -1,6 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
-export const filterByFocusWord = (items: readonly ExplorerItem[], focusWord: string): number => {
+export const filterByFocusWord = (items: readonly ExplorerItem[], focusedIndex: number, focusWord: string): number => {
   const matchesWord = (item: ExplorerItem): boolean => {
     return item.name.toLowerCase().startsWith(focusWord)
   }
