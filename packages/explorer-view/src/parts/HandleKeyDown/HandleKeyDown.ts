@@ -16,7 +16,8 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
   }
 
   const newFocusWord = focusWord + key.toLowerCase()
-  const matchingIndex = filterByFocusWord(items, focusedIndex, newFocusWord)
+  const itemNames = items.map((item) => item.name)
+  const matchingIndex = filterByFocusWord(itemNames, focusedIndex, newFocusWord)
 
   if (timeout) {
     clearTimeout(timeout)

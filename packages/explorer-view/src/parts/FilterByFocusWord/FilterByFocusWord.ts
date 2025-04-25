@@ -1,9 +1,25 @@
-import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-
-export const filterByFocusWord = (items: readonly ExplorerItem[], focusedIndex: number, focusWord: string): number => {
-  const matchesWord = (item: ExplorerItem): boolean => {
-    return item.name.toLowerCase().startsWith(focusWord)
+export const filterByFocusWord = (items: readonly string[], focusedIndex: number, focusWord: string): number => {
+  if (items.length === 0) {
+    return -1
   }
-  const matchingIndex = items.findIndex(matchesWord)
-  return matchingIndex
+
+  const matches: number[] = []
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].toLowerCase().includes(focusWord)) {
+      matches.push(i)
+    }
+  }
+
+  if (matches.length === 0) {
+    return -1
+  }
+
+  // Find the next match after the current focus
+  let nextIndex = matches.findIndex((index) => index > focusedIndex)
+  if (nextIndex === -1) {
+    // If no match found after current focus, wrap around to the first match
+    nextIndex = 0
+  }
+
+  return matches[nextIndex]
 }
