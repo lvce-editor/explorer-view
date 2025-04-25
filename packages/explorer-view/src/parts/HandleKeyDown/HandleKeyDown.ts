@@ -1,5 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { cancelTypeAhead } from '../CancelTypeAhead/CancelTypeAhead.ts'
+import { filterByFocusWord } from '../FilterByFocusWord/FilterByFocusWord.ts'
 import { isAscii } from '../IsAscii/IsAscii.ts'
 import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 
@@ -14,7 +15,7 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
   }
 
   const newFocusWord = state.focusWord + key.toLowerCase()
-  const matchingIndex = state.items.findIndex((item) => item.name.toLowerCase().startsWith(newFocusWord))
+  const matchingIndex = filterByFocusWord(state.items, newFocusWord)
 
   if (timeout) {
     clearTimeout(timeout)
