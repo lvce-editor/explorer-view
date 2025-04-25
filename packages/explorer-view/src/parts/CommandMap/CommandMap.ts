@@ -70,7 +70,7 @@ import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 export const commandMap = {
   'Explorer.acceptEdit': WrapCommand.wrapCommand(AcceptEdit.acceptEdit),
   'Explorer.handleKeyDown': WrapCommand.wrapCommand(HandleKeyDown.handleKeyDown),
-  'Explorer.canceTypeAhead': WrapCommand.wrapCommand(CancelTypeAhead.cancelTypeAhead),
+  'Explorer.cancelTypeAhead': WrapCommand.wrapCommand(CancelTypeAhead.cancelTypeAhead),
   'Explorer.cancelEdit': WrapCommand.wrapCommand(CancelEdit.cancelEdit),
   'Explorer.collapseAll': WrapCommand.wrapCommand(CollapseAll.collapseAll),
   'Explorer.copyPath': WrapCommand.wrapCommand(CopyPath.copyPath),
