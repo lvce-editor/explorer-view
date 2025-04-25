@@ -36,7 +36,7 @@ test('focusIndex - scroll up', () => {
     maxLineY: 1,
     items: [
       {
-        selected: true,
+        selected: false,
       },
       {
         selected: false,
@@ -78,7 +78,7 @@ test('focusIndex - scroll down', () => {
         selected: false,
       },
       {
-        selected: true,
+        selected: false,
       },
     ],
   })
@@ -159,7 +159,7 @@ test('focusIndex - unselects all other items', () => {
         selected: false,
       },
       {
-        selected: true,
+        selected: false,
       },
       {
         selected: false,

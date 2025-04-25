@@ -4,7 +4,7 @@ export const focusIndex = (state: ExplorerState, index: number): ExplorerState =
   const { minLineY, maxLineY, items } = state
   const newItems = items.map((item, i) => ({
     ...item,
-    selected: i === index ? true : false,
+    selected: i === index ? false : false,
   }))
   if (index < minLineY) {
     if (index < 0) {
