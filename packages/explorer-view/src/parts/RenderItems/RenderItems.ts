@@ -18,6 +18,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     newState.editingIcon,
   )
   const isWide = newState.width > 450
+  const contentHeight = newState.items.length * newState.itemHeight
   const dom = GetExplorerVirtualDom.getExplorerVirtualDom(
     visibleDirents,
     newState.focusedIndex,
@@ -25,6 +26,9 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     isWide,
     newState.focused,
     newState.dropTargets,
+    newState.height,
+    contentHeight,
+    newState.deltaY,
   )
   return ['Viewlet.setDom2', dom]
 }
