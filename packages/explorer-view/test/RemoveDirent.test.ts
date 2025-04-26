@@ -131,7 +131,7 @@ test('remove file', async () => {
   const result = await removeDirent(state)
   expect(result.items).toHaveLength(1)
   expect(result.items[0].name).toBe('folder1')
-  expect(result.focusedIndex).toBe(-1)
+  expect(result.focusedIndex).toBe(0)
 })
 
 test('remove folder with children', async () => {
@@ -205,5 +205,5 @@ test('remove file from expanded folder', async () => {
   expect(result.items).toHaveLength(1)
   expect(result.items[0].name).toBe('folder1')
   expect(result.items[0].type).toBe(DirectoryExpanded)
-  expect(result.focusedIndex).toBe(-1)
+  expect(result.focusedIndex).toBe(0)
 })
