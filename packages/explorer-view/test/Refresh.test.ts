@@ -1,32 +1,34 @@
-import { test, expect } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
+import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import { DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import { refresh } from '../src/parts/Refresh/Refresh.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
-import { set } from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
-test('refresh - basic', async () => {
+test('refresh - empty state', async () => {
   const mockRpc = await MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         return Promise.resolve([])
       }
+      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
+        return Promise.resolve('')
+      }
       throw new Error(`unexpected method ${method}`)
     },
   })
-  set(RendererWorker, mockRpc)
+  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state = createDefaultState()
   const result = await refresh(state)
-  expect(result).toBeDefined()
-  expect(result.items).toBeDefined()
-  expect(result.icons).toBeDefined()
-  expect(result.maxLineY).toBeDefined()
-  expect(result.fileIconCache).toBeDefined()
+  expect(result.items).toHaveLength(0)
+  expect(result.icons).toHaveLength(0)
 })
 
-test.skip('refresh - with items', async () => {
+test('refresh - with top level items', async () => {
   const mockRpc = await MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
@@ -36,13 +38,132 @@ test.skip('refresh - with items', async () => {
           { name: 'file2', type: 'file' },
         ])
       }
+      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
+        return Promise.resolve('')
+      }
       throw new Error(`unexpected method ${method}`)
     },
   })
-  set(RendererWorker, mockRpc)
+  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state = createDefaultState()
   const result = await refresh(state)
-  expect(result.items.length).toBe(2)
-  expect(result.icons.length).toBe(2)
+  expect(result.items).toHaveLength(2)
+  expect(result.items[0].name).toBe('file1')
+  expect(result.items[1].name).toBe('file2')
+  expect(result.icons).toHaveLength(2)
+})
+
+test('refresh - preserve expanded folder', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string, path?: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        if (path === '/') {
+          return Promise.resolve([{ name: 'folder1', type: 'directory' }])
+        }
+        if (path === '/folder1') {
+          return Promise.resolve([
+            { name: 'file1.txt', type: 'file' },
+            { name: 'file2.txt', type: 'file' },
+          ])
+        }
+        return Promise.resolve([])
+      }
+      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
+        return Promise.resolve('')
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [
+      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
+      { name: 'file1.txt', type: File, path: '/folder1/file1.txt', depth: 1, selected: false },
+      { name: 'file2.txt', type: File, path: '/folder1/file2.txt', depth: 1, selected: false },
+    ],
+  }
+
+  const result = await refresh(state)
+  expect(result.items).toHaveLength(3)
+  expect(result.items[0].name).toBe('folder1')
+  expect(result.items[0].type).toBe(DirectoryExpanded)
+  expect(result.items[1].name).toBe('file1.txt')
+  expect(result.items[2].name).toBe('file2.txt')
+  expect(result.icons).toHaveLength(3)
+})
+
+test('refresh - remove expanded folder that no longer exists', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return Promise.resolve([{ name: 'file1.txt', type: 'file' }])
+      }
+      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
+        return Promise.resolve('')
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [
+      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
+      { name: 'file1.txt', type: File, path: '/folder1/file1.txt', depth: 1, selected: false },
+    ],
+  }
+
+  const result = await refresh(state)
+  expect(result.items).toHaveLength(1)
+  expect(result.items[0].name).toBe('file1.txt')
+  expect(result.icons).toHaveLength(1)
+})
+
+test('refresh - nested expanded folders', async () => {
+  const mockRpc = await MockRpc.create({
+    commandMap: {},
+    invoke: (method: string, path?: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        if (path === '/') {
+          return Promise.resolve([{ name: 'folder1', type: 'directory' }])
+        }
+        if (path === '/folder1') {
+          return Promise.resolve([{ name: 'folder2', type: 'directory' }])
+        }
+        if (path === '/folder1/folder2') {
+          return Promise.resolve([{ name: 'file1.txt', type: 'file' }])
+        }
+        return Promise.resolve([])
+      }
+      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
+        return Promise.resolve('')
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [
+      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
+      { name: 'folder2', type: DirectoryExpanded, path: '/folder1/folder2', depth: 1, selected: false },
+      { name: 'file1.txt', type: File, path: '/folder1/folder2/file1.txt', depth: 2, selected: false },
+    ],
+  }
+
+  const result = await refresh(state)
+  expect(result.items).toHaveLength(3)
+  expect(result.items[0].name).toBe('folder1')
+  expect(result.items[0].type).toBe(DirectoryExpanded)
+  expect(result.items[1].name).toBe('folder2')
+  expect(result.items[1].type).toBe(DirectoryExpanded)
+  expect(result.items[2].name).toBe('file1.txt')
+  expect(result.icons).toHaveLength(3)
 })
