@@ -53,6 +53,10 @@ export const create2 = (
     },
     focusWord: '',
     focusWordTimeout: 800,
+    finalDeltaY: 0,
+    handleOffset: 0,
+    scrollBarActive: false,
+    scrollBarHeight: 0,
   }
   ExplorerStates.set(uid, state, state)
 }

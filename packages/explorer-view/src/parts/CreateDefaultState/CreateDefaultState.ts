@@ -37,4 +37,8 @@ export const createDefaultState = (): ExplorerState => ({
   },
   focusWord: '',
   focusWordTimeout: 1000,
+  finalDeltaY: 0,
+  handleOffset: 0,
+  scrollBarActive: false,
+  scrollBarHeight: 0,
 })
