@@ -1,18 +1,33 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 
+const isExpanded = (item: ExplorerItem): boolean => {
+  return item.type === DirentType.DirectoryExpanded || item.type === DirentType.DirectoryExpanding
+}
+
+const getExpandedDirents = (items: readonly ExplorerItem[]): readonly ExplorerItem[] => {
+  return items.filter(isExpanded)
+}
+
+const getPath = (item: ExplorerItem): string => {
+  return item.path
+}
+
+const getPaths = (items: readonly ExplorerItem[]): readonly string[] => {
+  return items.map(getPath)
+}
+
 // TODO add lots of tests for this
 export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { root, pathSeparator, minLineY, height, itemHeight, fileIconCache } = state
+  const { root, pathSeparator, minLineY, height, itemHeight, fileIconCache, items } = state
 
   // Get all expanded folders
-  const expandedFolders = state.items
-    .filter((item) => item.type === DirentType.DirectoryExpanded || item.type === DirentType.DirectoryExpanding)
-    .map((item) => item.path)
-
+  const expandedDirents = getExpandedDirents(items)
+  const expandedFolders = getPaths(expandedDirents)
   // Get top level dirents
   const topLevelDirents = await FileSystem.readDirWithFileTypes(root)
   const newDirents = topLevelDirents.map((dirent) => ({
