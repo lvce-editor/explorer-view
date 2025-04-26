@@ -23,7 +23,6 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
 
   const toRemove = getPaths(selectedItems)
   await RemovePaths.removePaths(toRemove)
-  console.log({ toRemove })
   const newState = await Refresh.refresh(state)
   return newState
 }
