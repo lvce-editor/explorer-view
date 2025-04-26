@@ -9,7 +9,7 @@ import { refreshChildDirents } from '../RefreshChildDirents/RefreshChildDirents.
 
 // TODO add lots of tests for this
 export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { root, pathSeparator, minLineY, height, itemHeight, fileIconCache, items } = state
+  const { root, pathSeparator, minLineY, height, itemHeight, fileIconCache, items, focusedIndex } = state
 
   // Get all expanded folders
   const expandedDirents = getExpandedDirents(items)
@@ -55,6 +55,7 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newDirents.length)
   const visible = newDirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
+  const newFocusedIndex = focusedIndex < newDirents.length ? focusedIndex : -1
 
   return {
     ...state,
@@ -62,5 +63,6 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
     fileIconCache: newFileIconCache,
     icons,
     maxLineY,
+    focusedIndex: newFocusedIndex,
   }
 }

@@ -22,8 +22,5 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   const toRemove = selectedItems.map((item) => item.path)
   await RemovePaths.removePaths(toRemove)
   const newState = await Refresh.refresh(state)
-  return {
-    ...newState,
-    focusedIndex: -1,
-  }
+  return newState
 }
