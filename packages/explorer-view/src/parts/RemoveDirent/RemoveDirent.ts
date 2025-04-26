@@ -1,5 +1,4 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 import { getPaths } from '../GetPaths/GetPaths.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
