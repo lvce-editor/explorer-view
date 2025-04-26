@@ -1,7 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
-import { isExpanded } from '../IsExpanded/IsExpanded.ts'
 
 export const refreshChildDirents = async (
   folder: ExplorerItem,
