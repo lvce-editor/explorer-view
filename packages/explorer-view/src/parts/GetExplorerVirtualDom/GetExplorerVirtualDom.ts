@@ -1,3 +1,5 @@
+import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
+import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetExplorerWelcomeVirtualDom from '../GetExplorerWelcomeVirtualDom/GetExplorerWelcomeVirtualDom.ts'
 import * as GetListItemsVirtualDom from '../GetListItemsVirtualDom/GetListItemsVirtualDom.ts'
@@ -5,8 +7,6 @@ import * as GetScrollBarSize from '../GetScrollBarSize/GetScrollBarSize.ts'
 import * as GetScrollBarVirtualDom from '../GetScrollBarVirtualDom/GetScrollBarVirtualDom.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
-import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
-import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 
 const parentNode: VirtualDomNode = {
   type: VirtualDomElements.Div,
