@@ -55,7 +55,10 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newDirents.length)
   const visible = newDirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
-  const newFocusedIndex = focusedIndex < newDirents.length ? focusedIndex : -1
+  let newFocusedIndex = focusedIndex
+  if (focusedIndex >= newDirents.length) {
+    newFocusedIndex = newDirents.length - 1
+  }
 
   return {
     ...state,
