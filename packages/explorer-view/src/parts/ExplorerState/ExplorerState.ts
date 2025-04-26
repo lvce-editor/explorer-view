@@ -36,4 +36,8 @@ export interface ExplorerState {
   readonly inputSource: number
   readonly focusWord: string
   readonly focusWordTimeout: number
+  readonly finalDeltaY: number
+  readonly scrollBarHeight: number
+  readonly handleOffset: number
+  readonly scrollBarActive: boolean
 }
