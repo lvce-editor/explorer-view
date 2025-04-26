@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import { File } from '../src/parts/DirentType/DirentType.ts'
 import * as GetPath from '../src/parts/GetPath/GetPath.ts'
 
 test('getPath - file dirent', () => {
@@ -77,4 +78,9 @@ test('getPath - with special characters in path', () => {
     selected: true,
   }
   expect(GetPath.getPath(dirent)).toBe('/test/folder#1/file@test.txt')
+})
+
+test('getPath', () => {
+  const item = { type: File, name: 'test.txt', path: '/test.txt', depth: 0, selected: false }
+  expect(GetPath.getPath(item)).toBe('/test.txt')
 })
