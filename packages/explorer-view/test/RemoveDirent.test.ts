@@ -142,7 +142,6 @@ test('remove folder with children', async () => {
         return Promise.resolve()
       }
       if (method === 'FileSystem.readDirWithFileTypes') {
-        const [path] = args
         return Promise.resolve([])
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
