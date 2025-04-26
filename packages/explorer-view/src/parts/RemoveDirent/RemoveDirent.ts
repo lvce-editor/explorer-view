@@ -12,18 +12,23 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   if (!dirent) {
     return state
   }
-  const absolutePath = dirent.path
-  try {
-    // TODO handle error
-    await FileSystem.remove(absolutePath)
-  } catch {
-    // TODO vscode shows error as alert (no stacktrace) and retry button
-    // maybe should show alert as well, but where to put stacktrace?
-    // on web should probably show notification (dialog)
-    // ErrorHandling.handleError(error)
-    // await ErrorHandling.showErrorDialog(error)
+
+  // Get all selected items including the focused one
+  const selectedItems = state.items.filter((item) => item.selected || item === dirent)
+  if (selectedItems.length === 0) {
     return state
   }
+
+  // Remove all selected items from the filesystem
+  for (const item of selectedItems) {
+    try {
+      await FileSystem.remove(item.path)
+    } catch {
+      // TODO handle error
+      return state
+    }
+  }
+
   // TODO avoid state mutation
   // @ts-ignore
   const newVersion = ++state.version
@@ -33,30 +38,19 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   if (state.version !== newVersion || state.disposed) {
     return state
   }
-  // TODO is it possible to make this more functional instead of mutating state?
-  // maybe every function returns a new state?
-  const index = state.items.indexOf(dirent)
-  let deleteEnd = index + 1
 
-  for (; deleteEnd < state.items.length; deleteEnd++) {
-    if (state.items[deleteEnd].depth <= dirent.depth) {
-      break
-    }
-  }
-  const deleteCount = deleteEnd - index
-  const newDirents = [...state.items]
-  newDirents.splice(index, deleteCount)
+  // Remove all selected items from the state
+  const newDirents = state.items.filter((item) => !selectedItems.includes(item))
+
+  // Find the new focus index
   let indexToFocus = -1
-
   if (newDirents.length === 0) {
     indexToFocus = -1
-  } else if (index < state.focusedIndex) {
-    indexToFocus = state.focusedIndex - 1
-  } else if (index === state.focusedIndex) {
-    indexToFocus = Math.max(state.focusedIndex - 1, 0)
   } else {
-    indexToFocus = Math.max(state.focusedIndex - 1, 0)
+    const lastSelectedIndex = Math.max(...selectedItems.map((item) => state.items.indexOf(item)))
+    indexToFocus = Math.min(lastSelectedIndex, newDirents.length - 1)
   }
+
   const visible = newDirents.slice(state.minLineY, state.maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, state.fileIconCache)
   return {
