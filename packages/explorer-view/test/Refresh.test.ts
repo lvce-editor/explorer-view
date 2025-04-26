@@ -22,7 +22,7 @@ test('refresh - empty state', async () => {
   })
   RpcRegistry.set(RendererWorker, mockRpc)
 
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const result = await refresh(state)
   expect(result.items).toHaveLength(0)
   expect(result.icons).toHaveLength(0)
@@ -46,7 +46,7 @@ test('refresh - with top level items', async () => {
   })
   RpcRegistry.set(RendererWorker, mockRpc)
 
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const result = await refresh(state)
   expect(result.items).toHaveLength(2)
   expect(result.items[0].name).toBe('file1')
