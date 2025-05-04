@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { getNewDirentsAccept } from '../src/parts/GetNewDirentsAccept/GetNewDirentsAccept.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
-test.skip('getNewDirentsAccept - create file in root', async () => {
+test('getNewDirentsAccept - create file in root', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string): Promise<any> => {
@@ -46,7 +46,7 @@ test.skip('getNewDirentsAccept - create file in root', async () => {
   expect(result.newFocusedIndex).toBe(0)
 })
 
-test.skip('getNewDirentsAccept - create file in subfolder', async () => {
+test('getNewDirentsAccept - create file in subfolder', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
@@ -99,7 +99,7 @@ test.skip('getNewDirentsAccept - create file in subfolder', async () => {
   expect(result.newFocusedIndex).toBe(1)
 })
 
-test.skip('getNewDirentsAccept - handle error', async () => {
+test('getNewDirentsAccept - handle error', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
