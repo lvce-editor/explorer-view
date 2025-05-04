@@ -27,7 +27,7 @@ test.skip('getNewDirentsAccept - create file in root', async () => {
   }
 
   const createFn = async (path: string): Promise<void> => {
-    MockRpc.invoke('FileSystem.writeFile', path, '')
+    mockRpc.invoke('FileSystem.writeFile', path, '')
   }
 
   const result = await getNewDirentsAccept(state, 1, createFn)
@@ -80,7 +80,7 @@ test.skip('getNewDirentsAccept - create file in subfolder', async () => {
   }
 
   const createFn = async (path: string): Promise<void> => {
-    MockRpc.invoke('FileSystem.writeFile', path, '')
+    mockRpc.invoke('FileSystem.writeFile', path, '')
   }
 
   const result = await getNewDirentsAccept(state, 1, createFn)
@@ -121,7 +121,7 @@ test.skip('getNewDirentsAccept - handle error', async () => {
   }
 
   const createFn = async (path: string): Promise<void> => {
-    MockRpc.invoke('FileSystem.writeFile', path, '')
+    mockRpc.invoke('FileSystem.writeFile', path, '')
   }
 
   const result = await getNewDirentsAccept(state, 1, createFn)
