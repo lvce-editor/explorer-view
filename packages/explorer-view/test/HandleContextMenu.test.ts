@@ -7,7 +7,7 @@ import { Keyboard } from '../src/parts/MouseEventType/MouseEventType.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('handleContextMenu - keyboard', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -27,7 +27,7 @@ test('handleContextMenu - keyboard', async () => {
 })
 
 test('handleContextMenu - mouse', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {

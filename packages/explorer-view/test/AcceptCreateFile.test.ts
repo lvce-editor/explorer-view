@@ -7,7 +7,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('acceptCreateFile', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.createFile') {

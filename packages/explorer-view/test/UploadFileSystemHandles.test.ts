@@ -37,7 +37,7 @@ class MockFileHandle implements FileSystemHandle {
 }
 
 test('upload single file', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {
@@ -56,7 +56,7 @@ test('upload single file', async () => {
 })
 
 test('upload directory with files', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {
@@ -77,7 +77,7 @@ test('upload directory with files', async () => {
 })
 
 test('upload multiple files and directories', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {

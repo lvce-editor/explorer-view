@@ -26,7 +26,7 @@ test('handleArrowRight - file', async () => {
 })
 
 test.skip('handleArrowRight - directory', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -56,7 +56,7 @@ test('handleArrowRight - symlink file', async () => {
 })
 
 test.skip('handleArrowRight - symlink folder', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -76,7 +76,7 @@ test.skip('handleArrowRight - symlink folder', async () => {
 })
 
 test.skip('handleArrowRight - directory expanded', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -96,7 +96,7 @@ test.skip('handleArrowRight - directory expanded', async () => {
 })
 
 test.skip('handleArrowRight - symlink', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.getRealPath') {

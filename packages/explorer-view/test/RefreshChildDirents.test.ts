@@ -6,7 +6,7 @@ import { refreshChildDirents } from '../src/parts/RefreshChildDirents/RefreshChi
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('refreshChildDirents - basic', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -32,7 +32,7 @@ test('refreshChildDirents - basic', async () => {
 })
 
 test('refreshChildDirents - with expanded folder', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
