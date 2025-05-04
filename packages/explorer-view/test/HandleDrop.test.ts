@@ -59,7 +59,7 @@ class MockFileList implements FileList {
 }
 
 test('handleDrop - successful drop', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -81,7 +81,7 @@ test('handleDrop - successful drop', async () => {
 })
 
 test('handleDrop - error case', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: () => {
       throw new Error('test error')

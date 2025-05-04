@@ -13,7 +13,7 @@ const invoke = jest.fn(async (method: string) => {
   throw new Error(`Unexpected method: ${method}`)
 })
 
-const mockRpc = await MockRpc.create({
+const mockRpc = MockRpc.create({
   invoke,
   commandMap: {},
 })

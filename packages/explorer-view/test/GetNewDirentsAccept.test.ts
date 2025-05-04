@@ -6,7 +6,7 @@ import { getNewDirentsAccept } from '../src/parts/GetNewDirentsAccept/GetNewDire
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('getNewDirentsAccept - create file in root', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string): Promise<any> => {
       if (method === 'FileSystem.writeFile') {
@@ -47,7 +47,7 @@ test('getNewDirentsAccept - create file in root', async () => {
 })
 
 test('getNewDirentsAccept - create file in subfolder', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {
@@ -100,7 +100,7 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
 })
 
 test('getNewDirentsAccept - handle error', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {

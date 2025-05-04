@@ -32,7 +32,7 @@ test('handleClickSymLink - file symlink', async () => {
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
   })
@@ -67,7 +67,7 @@ test('handleClickSymLink - unsupported type', async () => {
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
   })

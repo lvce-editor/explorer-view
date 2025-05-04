@@ -8,7 +8,7 @@ import { refresh } from '../src/parts/Refresh/Refresh.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('refresh - empty state', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -29,7 +29,7 @@ test('refresh - empty state', async () => {
 })
 
 test('refresh - with top level items', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -55,7 +55,7 @@ test('refresh - with top level items', async () => {
 })
 
 test('refresh - preserve expanded folder', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -97,7 +97,7 @@ test('refresh - preserve expanded folder', async () => {
 })
 
 test('refresh - remove expanded folder that no longer exists', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -126,7 +126,7 @@ test('refresh - remove expanded folder that no longer exists', async () => {
 })
 
 test('refresh - nested expanded folders', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {

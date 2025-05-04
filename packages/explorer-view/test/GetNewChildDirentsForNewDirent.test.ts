@@ -6,7 +6,7 @@ import { getNewChildDirentsForNewDirent } from '../src/parts/GetNewChildDirentsF
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -47,7 +47,7 @@ test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
 })
 
 test.skip('getNewChildDirentsForNewDirent - directory with existing children', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -128,7 +128,7 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
 })
 
 test.skip('getNewChildDirentsForNewDirent - directory with no children', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -169,7 +169,7 @@ test.skip('getNewChildDirentsForNewDirent - directory with no children', async (
 })
 
 test.skip('getNewChildDirentsForNewDirent - different dirent types', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -250,7 +250,7 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
 })
 
 test.skip('getNewChildDirentsForNewDirent - error case', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {

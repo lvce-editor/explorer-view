@@ -7,7 +7,7 @@ import { revealItemHidden } from '../src/parts/RevealItemHidden/RevealItemHidden
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('revealItemHidden - reveals hidden item', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -37,7 +37,7 @@ test('revealItemHidden - returns same state for empty path parts', async () => {
 })
 
 test('revealItemHidden - throws error for non-existent file', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {

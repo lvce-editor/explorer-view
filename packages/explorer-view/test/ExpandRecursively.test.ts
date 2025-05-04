@@ -8,7 +8,7 @@ import { expandRecursively } from '../src/parts/ExpandRecursively/ExpandRecursiv
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('expand root directory', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -46,7 +46,7 @@ test.skip('expand root directory', async () => {
 })
 
 test.skip('expand focused directory', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
