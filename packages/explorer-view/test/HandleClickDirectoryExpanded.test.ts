@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import { set } from '@lvce-editor/rpc-registry'
+import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickDirectoryExpanded } from '../src/parts/HandleClickDirectoryExpanded/HandleClickDirectoryExpanded.ts'
@@ -8,7 +9,7 @@ import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('collapse expanded directory', async () => {
   const state = createDefaultState()
-  const dirent = {
+  const dirent: ExplorerItem = {
     name: 'test',
     type: DirentType.Directory,
     path: '/test',
@@ -26,21 +27,21 @@ test.skip('collapse expanded directory', async () => {
 })
 
 test('collapse expanded directory with children', async () => {
-  const dirent = {
+  const dirent: ExplorerItem = {
     name: 'test',
     type: DirentType.Directory,
     path: '/test',
     depth: 0,
     selected: false,
   }
-  const child1 = {
+  const child1: ExplorerItem = {
     name: 'child1',
     type: DirentType.File,
     path: '/test/child1',
     depth: 1,
     selected: false,
   }
-  const child2 = {
+  const child2: ExplorerItem = {
     name: 'child2',
     type: DirentType.File,
     path: '/test/child2',
@@ -90,7 +91,7 @@ test('collapse expanded directory with many items preserves icons', async () => 
 
   // Add 10 items with unique icons
   for (let i = 0; i < 10; i++) {
-    const child = {
+    const child: ExplorerItem = {
       name: `child${i}`,
       type: DirentType.File,
       path: `/test/child${i}`,
@@ -115,4 +116,63 @@ test('collapse expanded directory with many items preserves icons', async () => 
   expect(newState.focusedIndex).toBe(0)
   expect(newState.focused).toBe(true)
   expect(newState.fileIconCache['/test/']).toBe('folder-icon')
+})
+
+test('collapse expanded directory with scroll position adjustment', async () => {
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return Promise.resolve([])
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  set(RendererWorker, mockRpc)
+
+  const dirent: ExplorerItem = {
+    name: 'test',
+    type: DirentType.Directory,
+    path: '/test',
+    depth: 0,
+    selected: false,
+  }
+  const items = [dirent]
+  const fileIconCache: Record<string, string> = { '/test/': 'folder-icon' }
+
+  // Add 10 items with unique icons
+  for (let i = 0; i < 10; i++) {
+    const child: ExplorerItem = {
+      name: `child${i}`,
+      type: DirentType.File,
+      path: `/test/child${i}`,
+      depth: 1,
+      selected: false,
+    }
+    items.push(child)
+    fileIconCache[`/test/child${i}`] = `icon-${i}`
+  }
+
+  const state = {
+    ...createDefaultState(),
+    items,
+    fileIconCache,
+    minLineY: 5,
+    maxLineY: 10,
+    deltaY: 100, // User has scrolled down
+    height: 200,
+    itemHeight: 20,
+  }
+  const index = 0
+  const keepFocus = true
+
+  const newState = await handleClickDirectoryExpanded(state, dirent, index, keepFocus)
+
+  expect(newState.items).toHaveLength(1)
+  expect(newState.focusedIndex).toBe(0)
+  expect(newState.focused).toBe(true)
+  expect(newState.fileIconCache['/test/']).toBe('folder-icon')
+  // After collapsing, since only one item remains and it fits in viewport,
+  // scroll position should be reset to 0
+  expect(newState.deltaY).toBe(0)
 })
