@@ -1,6 +1,6 @@
-import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { RawDirent } from '../RawDirent/RawDirent.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 
-export const isSymbolicLink = (dirent: ExplorerItem): boolean => {
+export const isSymbolicLink = (dirent: RawDirent): boolean => {
   return dirent.type === DirentType.Symlink
 }
