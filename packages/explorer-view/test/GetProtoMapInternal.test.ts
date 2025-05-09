@@ -1,4 +1,5 @@
 import { test, expect } from '@jest/globals'
+import type { RawDirent } from '../src/parts/RawDirent/RawDirent.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getProtoMapInternal } from '../src/parts/GetProtoMapInternal/GetProtoMapInternal.ts'
 
@@ -14,7 +15,7 @@ test('getProtoMapInternal - empty directory', () => {
 
 test('getProtoMapInternal - directory with files', () => {
   const root = '/root'
-  const pathToDirents = {
+  const pathToDirents: Record<string, readonly RawDirent[]> = {
     '/root': [
       { name: 'file1.txt', type: DirentType.File },
       { name: 'file2.txt', type: DirentType.File },
@@ -46,9 +47,9 @@ test('getProtoMapInternal - directory with files', () => {
   ])
 })
 
-test.skip('getProtoMapInternal - directory with subdirectories', () => {
+test('getProtoMapInternal - directory with subdirectories', () => {
   const root = '/root'
-  const pathToDirents = {
+  const pathToDirents: Record<string, readonly RawDirent[]> = {
     '/root': [
       { name: 'folder1', type: DirentType.Directory },
       { name: 'folder2', type: DirentType.Directory },
@@ -89,12 +90,22 @@ test.skip('getProtoMapInternal - directory with subdirectories', () => {
       icon: '',
       selected: false,
     },
+    {
+      depth: 2,
+      icon: '',
+      name: 'file2.txt',
+      path: '/root/folder2/file2.txt',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: 7,
+    },
   ])
 })
 
 test('getProtoMapInternal - directory with different file types', () => {
   const root = '/root'
-  const pathToDirents = {
+  const pathToDirents: Record<string, readonly RawDirent[]> = {
     '/root': [
       { name: 'file.txt', type: DirentType.File },
       { name: 'symlink.txt', type: DirentType.SymLinkFile },
@@ -158,7 +169,7 @@ test('getProtoMapInternal - non-existent directory', () => {
 
 test('getProtoMapInternal - nested directory structure', () => {
   const root = '/root'
-  const pathToDirents = {
+  const pathToDirents: Record<string, readonly RawDirent[]> = {
     '/root': [{ name: 'folder1', type: DirentType.Directory }],
     '/root/folder1': [{ name: 'folder2', type: DirentType.Directory }],
     '/root/folder1/folder2': [{ name: 'file.txt', type: DirentType.File }],
