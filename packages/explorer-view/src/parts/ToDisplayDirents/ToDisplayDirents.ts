@@ -1,16 +1,23 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { RawDirent } from '../RawDirent/RawDirent.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
-export const toDisplayDirents = (pathSeparator: string, rawDirents: any, parentDirent: any, excluded: any): readonly ExplorerItem[] => {
+export const toDisplayDirents = (
+  pathSeparator: string,
+  rawDirents: readonly RawDirent[],
+  parentPath: string,
+  parentDepth: number,
+  excluded: any,
+): readonly ExplorerItem[] => {
   rawDirents = SortExplorerItems.sortExplorerItems(rawDirents)
   // TODO figure out whether this uses too much memory (name,path -> redundant, depth could be computed on demand)
   const toDisplayDirent = (rawDirent: any, index: number): any => {
-    const path = [parentDirent.path, rawDirent.name].join(pathSeparator)
+    const path = [parentPath, rawDirent.name].join(pathSeparator)
     return {
       name: rawDirent.name,
       posInSet: index + 1,
       setSize: rawDirents.length,
-      depth: parentDirent.depth + 1,
+      depth: parentDepth + 1,
       type: rawDirent.type,
       path, // TODO storing absolute path might be too costly, could also store relative path here
       icon: '',

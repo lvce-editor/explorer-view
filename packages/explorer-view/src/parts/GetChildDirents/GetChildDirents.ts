@@ -29,6 +29,6 @@ export const getChildDirents = async (pathSeparator: string, parentDirent: any, 
   // and more performant
   const uri = parentDirent.path
   const rawDirents = await getChildDirentsRaw(uri)
-  const displayDirents = ToDisplayDirents.toDisplayDirents(pathSeparator, rawDirents, parentDirent, excluded)
+  const displayDirents = ToDisplayDirents.toDisplayDirents(pathSeparator, rawDirents, parentDirent.path, parentDirent.depth, excluded)
   return displayDirents
 }
