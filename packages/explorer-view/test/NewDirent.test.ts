@@ -172,6 +172,9 @@ test('newDirent updates state when focused item is not a directory', async () =>
     if (method === 'Focus.setFocus') {
       return undefined
     }
+    if (method === 'IconTheme.getIcons') {
+      return ['']
+    }
     throw new Error(`unexpected method ${method}`)
   })
 
