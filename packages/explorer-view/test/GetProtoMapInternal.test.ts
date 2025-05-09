@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
-import { getProtoMapInternal } from '../src/parts/GetProtoMapInternal/GetProtoMapInternal.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { getProtoMapInternal } from '../src/parts/GetProtoMapInternal/GetProtoMapInternal.ts'
 
 test('getProtoMapInternal - empty directory', () => {
   const root = '/root'
