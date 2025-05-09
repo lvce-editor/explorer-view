@@ -6,6 +6,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { Directory, DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import { removeDirent } from '../src/parts/RemoveDirent/RemoveDirent.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('removeDirent - removes focused item', async () => {
   const mockRpc = MockRpc.create({
@@ -118,7 +119,7 @@ test('remove file', async () => {
         return Promise.resolve()
       }
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([{ name: 'folder1', type: 'directory' }])
+        return Promise.resolve([{ name: 'folder1', type: DirentType.Directory }])
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
@@ -192,7 +193,7 @@ test('remove file from expanded folder', async () => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         const [path] = args
         if (path === '/') {
-          return Promise.resolve([{ name: 'folder1', type: 'directory' }])
+          return Promise.resolve([{ name: 'folder1', type: DirentType.Directory }])
         }
         if (path === '/folder1') {
           return Promise.resolve([])
