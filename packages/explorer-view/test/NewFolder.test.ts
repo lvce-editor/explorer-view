@@ -28,7 +28,7 @@ test('newFolder', async () => {
       return undefined
     }
     if (method === 'IconTheme.getIcons') {
-      return []
+      return ['']
     }
     throw new Error(`unexpected method ${method}`)
   })
