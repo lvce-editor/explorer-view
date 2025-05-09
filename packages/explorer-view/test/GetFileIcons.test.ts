@@ -6,15 +6,24 @@ import * as GetFileIcons from '../src/parts/GetFileIcons/GetFileIcons.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
+const handleFileIcons = (...params: readonly any[]) => {
+  return params.map((param) => {
+    if (param.type === 2) {
+      return `folder-icon-${param.name}`
+    }
+    return `file-icon-${param.name}`
+  })
+}
+
 const mockRpc = {
-  invoke(method: string) {
+  invoke(method: string, ...params: readonly any[]) {
     switch (method) {
       case 'IconTheme.getFileIcon':
         return Promise.resolve('file-icon')
       case 'IconTheme.getFolderIcon':
         return Promise.resolve('folder-icon')
       case 'IconTheme.getIcons': {
-        return ['']
+        return handleFileIcons(...params)
       }
       default:
         throw new Error(`unexpected method ${method}`)
