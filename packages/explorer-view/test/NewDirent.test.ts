@@ -60,7 +60,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     ...mockState,
     editingIndex: 0,
     focusedIndex: 0,
-    icons: [''],
+    icons: ['file-icon'],
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
@@ -111,7 +111,7 @@ test('newDirent handles directory click when focused item is a directory', async
       return ''
     }
     if (method === 'IconTheme.getIcons') {
-      return handleFileIcons(...params)
+      return handleFileIcons(params[0])
     }
     throw new Error(`unexpected method ${method}`)
   })
