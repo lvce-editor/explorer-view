@@ -13,7 +13,6 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
   const expandedPaths = getPaths(expandedDirents)
   const allPaths = [root, ...expandedPaths]
   const pathToDirents = await getPathDirentsMap(allPaths)
-  console.log({ pathToDirents })
   const sortedPathDirents = sortPathDirentsMap(pathToDirents)
   const newItems = getProtoMap(root, sortedPathDirents, expandedPaths)
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newItems.length)
