@@ -141,7 +141,7 @@ test.only('newDirent handles directory click when focused item is a directory', 
     ],
     icons: ['file-icon', 'file-icon'],
     fileIconCache: {
-      '/test': '',
+      '/test': 'file-icon',
     },
     editingValue: '',
     focus: 2,
