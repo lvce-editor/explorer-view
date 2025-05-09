@@ -1,71 +1,30 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as DirentType from '../DirentType/DirentType.ts'
-import * as FileSystem from '../FileSystem/FileSystem.ts'
 import { getExpandedDirents } from '../GetExpandedDirents/GetExpandedDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import { getPathDirentsMap } from '../GetPathDirentsMap/GetPathDirentsMap.ts'
 import { getPaths } from '../GetPaths/GetPaths.ts'
-import { refreshChildDirents } from '../RefreshChildDirents/RefreshChildDirents.ts'
+import { getProtoMap } from '../GetProtoMap/GetProtoMap.ts'
+import { sortPathDirentsMap } from '../SortPathDirentsMap/SortPathDirentsMap.ts'
 
-// TODO add lots of tests for this
 export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { root, pathSeparator, minLineY, height, itemHeight, fileIconCache, items, focusedIndex } = state
-
-  // Get all expanded folders
+  const { root, minLineY, height, itemHeight, fileIconCache, items, focusedIndex } = state
   const expandedDirents = getExpandedDirents(items)
-  const expandedFolders = getPaths(expandedDirents)
-
-  // Get top level dirents
-  const topLevelDirents = await FileSystem.readDirWithFileTypes(root)
-  const newDirents = topLevelDirents.map((dirent) => {
-    const path = root.endsWith(pathSeparator) ? `${root}${dirent.name}` : `${root}${pathSeparator}${dirent.name}`
-    const type =
-      dirent.type === 'directory' ? (expandedFolders.includes(path) ? DirentType.DirectoryExpanded : DirentType.Directory) : DirentType.File
-    return {
-      name: dirent.name,
-      type,
-      path,
-      depth: 0,
-      selected: false,
-    }
-  })
-
-  // Process expanded folders in parallel
-  const expandedFolderResults = await Promise.all(
-    expandedFolders.map(async (folderPath) => {
-      const folderIndex = newDirents.findIndex((item) => item.path === folderPath)
-      if (folderIndex !== -1) {
-        const folder = newDirents[folderIndex]
-        if (folder.type === DirentType.DirectoryExpanded) {
-          const childItems = await refreshChildDirents(folder, pathSeparator, expandedFolders)
-          return { folderIndex, childItems }
-        }
-      }
-      return null
-    }),
-  )
-
-  // Insert child items in the correct order
-  let offset = 0
-  for (const result of expandedFolderResults) {
-    if (result) {
-      const { folderIndex, childItems } = result
-      newDirents.splice(folderIndex + 1 + offset, 0, ...childItems)
-      offset += childItems.length
-    }
-  }
-
-  const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newDirents.length)
-  const visible = newDirents.slice(minLineY, maxLineY)
+  const expandedPaths = getPaths(expandedDirents)
+  const allPaths = [root, ...expandedPaths]
+  const pathToDirents = await getPathDirentsMap(allPaths)
+  const sortedPathDirents = sortPathDirentsMap(pathToDirents)
+  const newItems = getProtoMap(root, sortedPathDirents, expandedPaths)
+  const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newItems.length)
+  const visible = newItems.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
   let newFocusedIndex = focusedIndex
-  if (focusedIndex >= newDirents.length) {
-    newFocusedIndex = newDirents.length - 1
+  if (focusedIndex >= newItems.length) {
+    newFocusedIndex = newItems.length - 1
   }
-
   return {
     ...state,
-    items: newDirents,
+    items: newItems,
     fileIconCache: newFileIconCache,
     icons,
     maxLineY,
