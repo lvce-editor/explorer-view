@@ -1,4 +1,5 @@
 import type { FileOperation } from '../FileOperation/FileOperation.ts'
+import { join2 } from '../Path/Path.ts'
 
 export const getFileOperationsElectron = async (
   root: string,
@@ -12,7 +13,7 @@ export const getFileOperationsElectron = async (
     const path = paths[i]
     operations.push({
       type: 'copy',
-      path: `${root}/${name}`,
+      path: join2(root, name),
       text: '',
       from: path,
     })

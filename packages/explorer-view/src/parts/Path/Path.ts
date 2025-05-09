@@ -13,3 +13,10 @@ export const join = (pathSeparator: string, ...parts: readonly string[]): string
 export const getBaseName = (pathSeparator: string, path: string): string => {
   return path.slice(path.lastIndexOf(pathSeparator) + 1)
 }
+
+export const join2 = (path: string, childPath: string): string => {
+  if (path.endsWith('/')) {
+    return `${path}${childPath}`
+  }
+  return `${path}/${childPath}`
+}
