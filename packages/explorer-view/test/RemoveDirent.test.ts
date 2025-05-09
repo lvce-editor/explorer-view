@@ -20,6 +20,9 @@ test('removeDirent - removes focused item', async () => {
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
       }
+      if (method === 'IconTheme.getIcons') {
+        return []
+      }
       throw new Error(`unexpected method ${method}`)
     },
   })
@@ -49,6 +52,9 @@ test('removeDirent - removes multiple selected items', async () => {
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
       }
+      if (method === 'IconTheme.getIcons') {
+        return []
+      }
       throw new Error(`unexpected method ${method}`)
     },
   })
@@ -71,15 +77,18 @@ test('removeDirent - removes multiple selected items', async () => {
 test('removeDirent - removes focused item and selected items', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string) => {
+    invoke: async (method: string) => {
       if (method === 'FileSystem.remove') {
-        return Promise.resolve()
+        return
       }
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -114,6 +123,9 @@ test('remove file', async () => {
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
       }
+      if (method === 'IconTheme.getIcons') {
+        return []
+      }
       throw new Error(`unexpected method ${method}`)
     },
   })
@@ -146,6 +158,9 @@ test('remove folder with children', async () => {
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -186,6 +201,9 @@ test('remove file from expanded folder', async () => {
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },

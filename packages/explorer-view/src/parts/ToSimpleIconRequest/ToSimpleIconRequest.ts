@@ -16,7 +16,7 @@ const getSimpleType = (direntType: number): 1 | 2 => {
 
 export const toSimpleIconRequest = (request: IconRequest): SimpleFileIconRequest => {
   return {
-    uri: request.path,
+    name: request.name,
     type: getSimpleType(request.type),
   }
 }

@@ -18,6 +18,9 @@ const invoke = (method: string): any => {
   if (method === 'Preferences.get') {
     return false
   }
+  if (method === 'IconTheme.getIcons') {
+    return ['']
+  }
   throw new Error(`unexpected method ${method}`)
 }
 

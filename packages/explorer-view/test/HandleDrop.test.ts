@@ -68,6 +68,9 @@ test('handleDrop - successful drop', async () => {
       if (method === 'FileSystemHandle.getFileHandles') {
         return Promise.resolve([])
       }
+      if (method === 'IconTheme.getIcons') {
+        return ['']
+      }
       throw new Error(`unexpected method ${method}`)
     },
   })

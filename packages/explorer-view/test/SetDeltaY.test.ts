@@ -9,6 +9,9 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
   if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
     return 'icon'
   }
+  if (method === 'IconTheme.getIcons') {
+    return ['icon']
+  }
   throw new Error(`Unexpected method: ${method}`)
 }
 

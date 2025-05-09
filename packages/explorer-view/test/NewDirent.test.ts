@@ -7,8 +7,17 @@ import { newDirent } from '../src/parts/NewDirent/NewDirent.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
+const handleFileIcons = (requests: readonly any[]): readonly string[] => {
+  return requests.map((param) => {
+    if (param.type === 2) {
+      return `folder-icon`
+    }
+    return `file-icon`
+  })
+}
+
 test('newDirent sets focus and updates state when no item is focused', async () => {
-  const invoke = jest.fn((method: string): any => {
+  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
     if (method === 'Workspace.getPath') {
       return '/new/path'
     }
@@ -26,6 +35,9 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     }
     if (method === 'Focus.setFocus') {
       return undefined
+    }
+    if (method === 'IconTheme.getIcons') {
+      return handleFileIcons(params[0])
     }
     throw new Error(`unexpected method ${method}`)
   })
@@ -48,12 +60,12 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     ...mockState,
     editingIndex: 0,
     focusedIndex: 0,
-    icons: [''],
+    icons: ['file-icon'],
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
     maxLineY: 1,
-    fileIconCache: { '/': '' },
+    fileIconCache: { '/': 'file-icon' },
     items: [
       {
         depth: 0,
@@ -70,7 +82,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
 })
 
 test('newDirent handles directory click when focused item is a directory', async () => {
-  const invoke = jest.fn((method: string): any => {
+  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
     if (method === 'Workspace.getPath') {
       return '/new/path'
     }
@@ -88,6 +100,9 @@ test('newDirent handles directory click when focused item is a directory', async
     }
     if (method === 'IconTheme.getFolderIcon') {
       return ''
+    }
+    if (method === 'IconTheme.getIcons') {
+      return handleFileIcons(params[0])
     }
     throw new Error(`unexpected method ${method}`)
   })
@@ -124,9 +139,9 @@ test('newDirent handles directory click when focused item is a directory', async
         type: DirentType.EditingFile,
       },
     ],
-    icons: ['', ''],
+    icons: ['file-icon', 'file-icon'],
     fileIconCache: {
-      '/test': '',
+      '/test': 'file-icon',
     },
     editingValue: '',
     focus: 2,
@@ -135,7 +150,7 @@ test('newDirent handles directory click when focused item is a directory', async
 })
 
 test('newDirent updates state when focused item is not a directory', async () => {
-  const invoke = jest.fn((method: string): any => {
+  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
     if (method === 'Workspace.getPath') {
       return '/new/path'
     }
@@ -156,6 +171,9 @@ test('newDirent updates state when focused item is not a directory', async () =>
     }
     if (method === 'Focus.setFocus') {
       return undefined
+    }
+    if (method === 'IconTheme.getIcons') {
+      return handleFileIcons(params[0])
     }
     throw new Error(`unexpected method ${method}`)
   })
@@ -203,8 +221,8 @@ test('newDirent updates state when focused item is not a directory', async () =>
     ],
     maxLineY: 2,
     fileIconCache: {
-      '/test.txt': '',
+      '/test.txt': 'file-icon',
     },
-    icons: ['', ''],
+    icons: ['file-icon', 'file-icon'],
   })
 })

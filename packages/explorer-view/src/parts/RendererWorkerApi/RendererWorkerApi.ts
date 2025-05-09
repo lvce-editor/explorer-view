@@ -1,5 +1,5 @@
 export interface SimpleFileIconRequest {
-  readonly uri: string
+  readonly name: string
   readonly type: 1 | 2
 }
 

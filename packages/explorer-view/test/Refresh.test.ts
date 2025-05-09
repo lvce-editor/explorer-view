@@ -17,6 +17,9 @@ test('refresh - empty state', async () => {
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
       }
+      if (method === 'IconTheme.getIcons') {
+        return []
+      }
       throw new Error(`unexpected method ${method}`)
     },
   })
@@ -40,6 +43,9 @@ test('refresh - with top level items', async () => {
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -68,10 +74,14 @@ test('refresh - preserve expanded folder', async () => {
             { name: 'file2.txt', type: 'file' },
           ])
         }
+
         return Promise.resolve([])
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -105,6 +115,9 @@ test('refresh - remove expanded folder that no longer exists', async () => {
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -143,6 +156,9 @@ test('refresh - nested expanded folders', async () => {
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },

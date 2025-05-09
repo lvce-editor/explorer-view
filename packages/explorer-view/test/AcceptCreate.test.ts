@@ -26,12 +26,15 @@ test('acceptCreate - empty file name', async () => {
 const createFn2 = async (path: string): Promise<void> => {}
 
 test('acceptCreate - successful file creation', async () => {
-  const invoke = jest.fn((method: string): any => {
+  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
     if (method === 'FileSystem.getPathSeparator') {
       return '/'
     }
     if (method === 'IconTheme.getFileIcon') {
       return ''
+    }
+    if (method === 'IconTheme.getIcons') {
+      return Array(params[0].length).fill('')
     }
     throw new Error(`unexpected method ${method}`)
   })

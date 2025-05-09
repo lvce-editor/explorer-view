@@ -16,6 +16,9 @@ test('acceptCreateFile', async () => {
       if (method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('folder-icon')
       }
+      if (method === 'IconTheme.getIcons') {
+        return ['folder-icon']
+      }
       throw new Error(`unexpected method ${method}`)
     },
   })
