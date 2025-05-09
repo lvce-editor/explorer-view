@@ -244,7 +244,7 @@ test('refresh - preserve directory types', async () => {
 })
 
 test('refresh - check filesystem response', async () => {
-  let methodCalls: string[] = []
+  const methodCalls: string[] = []
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
