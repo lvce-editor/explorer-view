@@ -47,6 +47,11 @@ test('collapse expanded directory with children', async () => {
   const state = {
     ...createDefaultState(),
     items: [dirent, child1, child2],
+    fileIconCache: {
+      '/test/': '',
+      '/test/child1': '',
+      '/test/child2': '',
+    },
   }
   const index = 0
   const keepFocus = true
