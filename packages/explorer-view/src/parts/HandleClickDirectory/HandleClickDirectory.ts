@@ -1,7 +1,7 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as Focus from '../Focus/Focus.ts'
+import * as SetFocus from '../SetFocus/SetFocus.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
@@ -34,7 +34,7 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
 
   const parts = newDirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, state.fileIconCache)
-  await Focus.setFocus(WhenExpression.FocusExplorer)
+  await SetFocus.setFocus(WhenExpression.FocusExplorer)
   return {
     ...state,
     items: newDirents,

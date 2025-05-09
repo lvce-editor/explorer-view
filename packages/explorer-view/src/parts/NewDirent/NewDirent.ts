@@ -1,6 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as Focus from '../Focus/Focus.ts'
+import * as SetFocus from '../SetFocus/SetFocus.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as FocusKey from '../FocusKey/FocusKey.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
@@ -10,7 +10,7 @@ import * as GetNewDirentType from '../GetNewDirentType/GetNewDirentType.ts'
 
 export const newDirent = async (state: ExplorerState, editingType: number): Promise<ExplorerState> => {
   // TODO make focus functional instead of side effect
-  await Focus.setFocus(FocusKey.ExplorerEditBox)
+  await SetFocus.setFocus(FocusKey.ExplorerEditBox)
   // TODO do it like vscode, select position between folders and files
   const { focusedIndex, items, minLineY, height, itemHeight, fileIconCache, root } = state
   const direntType = GetNewDirentType.getNewDirentType(editingType)
