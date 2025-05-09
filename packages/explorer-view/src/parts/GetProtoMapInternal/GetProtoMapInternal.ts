@@ -1,13 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { RawDirent } from '../RawDirent/RawDirent.ts'
-import * as DirentType from '../DirentType/DirentType.ts'
-
-const restoreDirentType = (rawDirentType: number, path: string, expandedPaths: readonly string[]): number => {
-  if (rawDirentType === DirentType.Directory && expandedPaths.includes(path)) {
-    return DirentType.DirectoryExpanded
-  }
-  return rawDirentType
-}
+import { restoreDirentType } from '../RestoreDirentType/RestoreDirentType.ts'
 
 export const getProtoMapInternal = (
   root: string,
