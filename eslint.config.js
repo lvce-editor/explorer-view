@@ -26,6 +26,7 @@ export default [
       'prefer-destructuring': 'off',
       'unicorn/no-for-loop': 'off',
       'jest/no-identical-title': 'off',
+      'unicorn/prefer-single-call': 'off',
     },
   },
   {
