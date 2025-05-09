@@ -81,7 +81,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
   })
 })
 
-test.only('newDirent handles directory click when focused item is a directory', async () => {
+test('newDirent handles directory click when focused item is a directory', async () => {
   const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
     if (method === 'Workspace.getPath') {
       return '/new/path'
