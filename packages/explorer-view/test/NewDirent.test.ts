@@ -65,7 +65,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     editingValue: '',
     focus: 2,
     maxLineY: 1,
-    fileIconCache: { '/': '' },
+    fileIconCache: { '/': 'file-icon' },
     items: [
       {
         depth: 0,
@@ -230,7 +230,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
     ],
     maxLineY: 2,
     fileIconCache: {
-      '/test.txt': '',
+      '/test.txt': 'file-icon',
     },
     icons: ['file-icon', 'file-icon'],
   })
