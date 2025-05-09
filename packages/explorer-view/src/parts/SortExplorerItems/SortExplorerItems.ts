@@ -1,6 +1,6 @@
-import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { RawDirent } from '../RawDirent/RawDirent.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 
-export const sortExplorerItems = (rawDirents: readonly ExplorerItem[]): readonly ExplorerItem[] => {
+export const sortExplorerItems = (rawDirents: readonly RawDirent[]): readonly RawDirent[] => {
   return rawDirents.toSorted(CompareDirent.compareDirent)
 }
