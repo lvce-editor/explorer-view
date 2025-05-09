@@ -1,14 +1,15 @@
+import type { RawDirent } from '../RawDirent/RawDirent.ts'
 import * as Assert from '../Assert/Assert.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as IsSymbolicLink from '../IsSymbolicLink/IsSymbolicLink.ts'
 import * as ResolveSymbolicLinks from '../ResolveSymbolicLinks/ResolveSymbolicLinks.ts'
 import * as ToDisplayDirents from '../ToDisplayDirents/ToDisplayDirents.ts'
 
-const hasSymbolicLinks = (rawDirents: any): any => {
+const hasSymbolicLinks = (rawDirents: readonly RawDirent[]): boolean => {
   return rawDirents.some(IsSymbolicLink.isSymbolicLink)
 }
 
-export const getChildDirentsRaw = async (uri: string): Promise<any> => {
+export const getChildDirentsRaw = async (uri: string): Promise<readonly RawDirent[]> => {
   const rawDirents = await FileSystem.readDirWithFileTypes(uri)
   Assert.array(rawDirents)
   if (hasSymbolicLinks(rawDirents)) {
