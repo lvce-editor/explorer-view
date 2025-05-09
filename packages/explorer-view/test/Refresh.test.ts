@@ -61,7 +61,7 @@ test('refresh - with top level items', async () => {
   expect(result.icons).toHaveLength(2)
 })
 
-test.only('refresh - preserve expanded folder', async () => {
+test('refresh - preserve expanded folder', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
