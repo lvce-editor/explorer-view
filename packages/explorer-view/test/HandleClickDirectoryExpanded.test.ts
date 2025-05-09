@@ -130,6 +130,14 @@ test('collapse expanded directory with scroll position adjustment', async () => 
   })
   set(RendererWorker, mockRpc)
 
+  const otherFolder: ExplorerItem = {
+    name: '1',
+    type: DirentType.Directory,
+    path: '/1',
+    depth: 0,
+    selected: false,
+  }
+
   const dirent: ExplorerItem = {
     name: 'test',
     type: DirentType.Directory,
@@ -137,7 +145,7 @@ test('collapse expanded directory with scroll position adjustment', async () => 
     depth: 0,
     selected: false,
   }
-  const items = [dirent]
+  const items: ExplorerItem[] = [otherFolder, dirent]
   const fileIconCache: Record<string, string> = { '/test/': 'folder-icon' }
 
   // Add 10 items with unique icons
@@ -157,20 +165,22 @@ test('collapse expanded directory with scroll position adjustment', async () => 
     ...createDefaultState(),
     items,
     fileIconCache,
-    minLineY: 5,
-    maxLineY: 10,
-    deltaY: 100, // User has scrolled down
-    height: 200,
+    minLineY: 2,
+    maxLineY: 7,
+    deltaY: 40, // User has scrolled down
+    height: 100,
     itemHeight: 20,
   }
-  const index = 0
+  const index = 1
   const keepFocus = true
 
   const newState = await handleClickDirectoryExpanded(state, dirent, index, keepFocus)
 
-  expect(newState.items).toHaveLength(1)
-  expect(newState.focusedIndex).toBe(0)
+  expect(newState.items).toHaveLength(2)
+  expect(newState.focusedIndex).toBe(1)
   expect(newState.focused).toBe(true)
+  expect(newState.minLineY).toBe(0)
+  expect(newState.maxLineY).toBe(2)
   expect(newState.fileIconCache['/test/']).toBe('folder-icon')
   // After collapsing, since only one item remains and it fits in viewport,
   // scroll position should be reset to 0
