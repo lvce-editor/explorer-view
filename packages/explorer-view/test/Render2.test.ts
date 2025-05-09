@@ -16,7 +16,7 @@ test('render2 - basic', () => {
       'Viewlet.setDom2',
       [
         {
-          childCount: 1,
+          childCount: 2,
           className: 'Viewlet Explorer',
           role: 'none',
           type: 4,

@@ -1,32 +1,16 @@
 import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
-import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
-import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import { dropTargetFull } from '../DropTargetFull/DropTargetFull.ts'
-import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
-import * as GetExplorerItemVirtualDom from '../GetExplorerItemVirtualDom/GetExplorerItemVirtualDom.ts'
 import * as GetExplorerWelcomeVirtualDom from '../GetExplorerWelcomeVirtualDom/GetExplorerWelcomeVirtualDom.ts'
+import * as GetListItemsVirtualDom from '../GetListItemsVirtualDom/GetListItemsVirtualDom.ts'
+import * as GetScrollBarSize from '../GetScrollBarSize/GetScrollBarSize.ts'
+import * as GetScrollBarVirtualDom from '../GetScrollBarVirtualDom/GetScrollBarVirtualDom.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
-const getActiveDescendant = (focusedIndex: number): string | undefined => {
-  if (focusedIndex >= 0) {
-    return 'TreeItemActive'
-  }
-  return undefined
-}
-
-const getClassName = (focused: boolean, focusedIndex: number, dropTarget: readonly number[]): string => {
-  const extraClass1 = focused && focusedIndex === -1 ? ClassNames.FocusOutline : ClassNames.Empty
-  const extraClass2 = dropTarget === dropTargetFull ? ClassNames.ExplorerDropTarget : ClassNames.Empty
-  const className = MergeClassNames.mergeClassNames(ClassNames.ListItems, extraClass1, extraClass2)
-  return className
-}
-
 const parentNode: VirtualDomNode = {
   type: VirtualDomElements.Div,
-  childCount: 1,
+  childCount: 2,
   className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
   role: 'none',
 }
@@ -38,32 +22,20 @@ export const getExplorerVirtualDom = (
   isWide: boolean,
   focused: boolean,
   dropTargets: readonly number[],
+  height: number,
+  contentHeight: number,
+  scrollTop: number,
 ): readonly VirtualDomNode[] => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
   }
+  const scrollBarHeight = GetScrollBarSize.getScrollBarSize(height, contentHeight, 20)
+  const scrollBarTop = Math.round((scrollTop / contentHeight) * height)
+  const scrollBarDom = GetScrollBarVirtualDom.getScrollBarVirtualDom(scrollBarHeight, scrollBarTop)
   const dom: readonly VirtualDomNode[] = [
     parentNode,
-    {
-      type: VirtualDomElements.Div,
-      className: getClassName(focused, focusedIndex, dropTargets),
-      tabIndex: 0,
-      role: AriaRoles.Tree,
-      ariaLabel: ExplorerStrings.filesExplorer(),
-      childCount: visibleItems.length,
-      ariaActiveDescendant: getActiveDescendant(focusedIndex),
-      onBlur: DomEventListenerFunctions.HandleListBlur,
-      onClick: DomEventListenerFunctions.HandleClick,
-      onContextMenu: DomEventListenerFunctions.HandleContextMenu,
-      onDragLeave: DomEventListenerFunctions.HandleDragLeave,
-      onDragOver: DomEventListenerFunctions.HandleDragOver,
-      onDrop: DomEventListenerFunctions.HandleDrop,
-      onFocus: DomEventListenerFunctions.HandleListFocus,
-      onPointerDown: DomEventListenerFunctions.HandlePointerDown,
-      onWheel: DomEventListenerFunctions.HandleWheel,
-      onKeyDown: DomEventListenerFunctions.HandleListKeyDown,
-    },
-    ...visibleItems.flatMap(GetExplorerItemVirtualDom.getExplorerItemVirtualDom),
+    ...GetListItemsVirtualDom.getListItemsVirtualDom(visibleItems, focusedIndex, focused, dropTargets),
+    ...scrollBarDom,
   ]
   return dom
 }
