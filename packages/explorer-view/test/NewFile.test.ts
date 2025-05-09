@@ -8,8 +8,17 @@ import { newFile } from '../src/parts/NewFile/NewFile.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
+const handleFileIcons = (requests: readonly any[]) => {
+  return requests.map((param) => {
+    if (param.type === 2) {
+      return `folder-icon`
+    }
+    return `file-icon`
+  })
+}
+
 test('newFile', async () => {
-  const invoke = jest.fn((method: string): any => {
+  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
     if (method === 'Workspace.getPath') {
       return '/new/path'
     }
@@ -32,7 +41,7 @@ test('newFile', async () => {
       return undefined
     }
     if (method === 'IconTheme.getIcons') {
-      return ['']
+      return handleFileIcons(params[0])
     }
     throw new Error(`unexpected method ${method}`)
   })
