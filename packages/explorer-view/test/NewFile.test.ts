@@ -31,6 +31,9 @@ test('newFile', async () => {
     if (method === 'Focus.setFocus') {
       return undefined
     }
+    if (method === 'IconTheme.getIcons') {
+      return []
+    }
     throw new Error(`unexpected method ${method}`)
   })
 

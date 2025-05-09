@@ -13,6 +13,9 @@ const mockRpc = {
         return Promise.resolve('file-icon')
       case 'IconTheme.getFolderIcon':
         return Promise.resolve('folder-icon')
+      case 'IconTheme.getIcons': {
+        return ['']
+      }
       default:
         throw new Error(`unexpected method ${method}`)
     }

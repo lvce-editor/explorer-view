@@ -11,6 +11,8 @@ const mockRpc = {
         return `file-icon-${params[0].name}`
       case 'IconTheme.getFolderIcon':
         return `folder-icon-${params[0].name}`
+      case 'IconTheme.getIcons':
+        return [`file-icon-${params[0].name}`]
       default:
         throw new Error(`unknown method ${method}`)
     }
