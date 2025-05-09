@@ -10,6 +10,7 @@ import * as Diff2 from '../Diff2/Diff2.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as ExpandRecursively from '../ExpandRecursively/ExpandRecursively.ts'
 import * as WrapCommand from '../ExplorerStates/ExplorerStates.ts'
+import * as Focus from '../Focus/Focus.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as FocusLast from '../FocusLast/FocusLast.ts'
@@ -69,14 +70,14 @@ import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 
 export const commandMap = {
   'Explorer.acceptEdit': WrapCommand.wrapCommand(AcceptEdit.acceptEdit),
-  'Explorer.handleKeyDown': WrapCommand.wrapCommand(HandleKeyDown.handleKeyDown),
-  'Explorer.cancelTypeAhead': WrapCommand.wrapCommand(CancelTypeAhead.cancelTypeAhead),
   'Explorer.cancelEdit': WrapCommand.wrapCommand(CancelEdit.cancelEdit),
+  'Explorer.cancelTypeAhead': WrapCommand.wrapCommand(CancelTypeAhead.cancelTypeAhead),
   'Explorer.collapseAll': WrapCommand.wrapCommand(CollapseAll.collapseAll),
   'Explorer.copyPath': WrapCommand.wrapCommand(CopyPath.copyPath),
   'Explorer.copyRelativePath': WrapCommand.wrapCommand(CopyRelativePath.copyRelativePath),
   'Explorer.expandAll': WrapCommand.wrapCommand(ExpandAll.expandAll),
   'Explorer.expandRecursively': WrapCommand.wrapCommand(ExpandRecursively.expandRecursively),
+  'Explorer.focus': WrapCommand.wrapCommand(Focus.focus),
   'Explorer.focusFirst': WrapCommand.wrapCommand(FocusFirst.focusFirst),
   'Explorer.focusIndex': WrapCommand.wrapCommand(FocusIndex.focusIndex),
   'Explorer.focusLast': WrapCommand.wrapCommand(FocusLast.focusLast),
@@ -104,6 +105,7 @@ export const commandMap = {
   'Explorer.handleIconThemeChange': WrapCommand.wrapCommand(HandleIconThemeChange.handleIconThemeChange),
   'Explorer.handleInputBlur': WrapCommand.wrapCommand(HandleInputBlur.handleInputBlur),
   'Explorer.handleInputClick': WrapCommand.wrapCommand(HandleInputClick.handleInputClick),
+  'Explorer.handleKeyDown': WrapCommand.wrapCommand(HandleKeyDown.handleKeyDown),
   'Explorer.handlePaste': WrapCommand.wrapCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapCommand(HandlePointerDown.handlePointerDown),
   'Explorer.handleUpload': WrapCommand.wrapCommand(HandleUpload.handleUpload),
