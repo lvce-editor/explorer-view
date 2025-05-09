@@ -20,7 +20,7 @@ export const refreshChildDirent = async (
     selected: false,
   }
 
-  if (isExpandedFolder) {
+  if (isExpandedFolder && dirent.type === 'directory') {
     const nestedItems = await refreshChildDirents(item, pathSeparator, expandedFolders)
     return [item, ...nestedItems]
   }

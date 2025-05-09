@@ -17,13 +17,18 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
 
   // Get top level dirents
   const topLevelDirents = await FileSystem.readDirWithFileTypes(root)
-  const newDirents = topLevelDirents.map((dirent) => ({
-    name: dirent.name,
-    type: dirent.type === 'directory' ? DirentType.Directory : DirentType.File,
-    path: root.endsWith(pathSeparator) ? `${root}${dirent.name}` : `${root}${pathSeparator}${dirent.name}`,
-    depth: 0,
-    selected: false,
-  }))
+  const newDirents = topLevelDirents.map((dirent) => {
+    const path = root.endsWith(pathSeparator) ? `${root}${dirent.name}` : `${root}${pathSeparator}${dirent.name}`
+    const type =
+      dirent.type === 'directory' ? (expandedFolders.includes(path) ? DirentType.DirectoryExpanded : DirentType.Directory) : DirentType.File
+    return {
+      name: dirent.name,
+      type,
+      path,
+      depth: 0,
+      selected: false,
+    }
+  })
 
   // Process expanded folders in parallel
   const expandedFolderResults = await Promise.all(
@@ -31,10 +36,8 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
       const folderIndex = newDirents.findIndex((item) => item.path === folderPath)
       if (folderIndex !== -1) {
         const folder = newDirents[folderIndex]
-        if (folder.type === DirentType.Directory) {
+        if (folder.type === DirentType.DirectoryExpanded) {
           const childItems = await refreshChildDirents(folder, pathSeparator, expandedFolders)
-          // @ts-ignore
-          folder.type = DirentType.DirectoryExpanded
           return { folderIndex, childItems }
         }
       }
