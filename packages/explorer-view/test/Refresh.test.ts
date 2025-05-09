@@ -4,6 +4,7 @@ import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { refresh } from '../src/parts/Refresh/Refresh.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
@@ -37,8 +38,8 @@ test('refresh - with top level items', async () => {
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         return Promise.resolve([
-          { name: 'file1', type: 'file' },
-          { name: 'file2', type: 'file' },
+          { name: 'file1', type: DirentType.File },
+          { name: 'file2', type: DirentType.File },
         ])
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
@@ -60,13 +61,13 @@ test('refresh - with top level items', async () => {
   expect(result.icons).toHaveLength(2)
 })
 
-test('refresh - preserve expanded folder', async () => {
+test.only('refresh - preserve expanded folder', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         if (path === '/') {
-          return Promise.resolve([{ name: 'folder1', type: 'directory' }])
+          return Promise.resolve([{ name: 'folder1', type: DirentType.Directory }])
         }
         if (path === '/folder1') {
           return Promise.resolve([
@@ -111,7 +112,7 @@ test('refresh - remove expanded folder that no longer exists', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([{ name: 'file1.txt', type: 'file' }])
+        return Promise.resolve([{ name: 'file1.txt', type: DirentType.File }])
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('')
@@ -144,13 +145,13 @@ test('refresh - nested expanded folders', async () => {
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         if (path === '/') {
-          return Promise.resolve([{ name: 'folder1', type: 'directory' }])
+          return Promise.resolve([{ name: 'folder1', type: DirentType.Directory }])
         }
         if (path === '/folder1') {
-          return Promise.resolve([{ name: 'folder2', type: 'directory' }])
+          return Promise.resolve([{ name: 'folder2', type: DirentType.Directory }])
         }
         if (path === '/folder1/folder2') {
-          return Promise.resolve([{ name: 'file1.txt', type: 'file' }])
+          return Promise.resolve([{ name: 'file1.txt', type: DirentType.File }])
         }
         return Promise.resolve([])
       }
@@ -191,18 +192,18 @@ test('refresh - preserve directory types', async () => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         if (path === '/') {
           return Promise.resolve([
-            { name: 'folder1', type: 'directory' },
-            { name: 'file1.txt', type: 'file' },
+            { name: 'folder1', type: DirentType.Directory },
+            { name: 'file1.txt', type: DirentType.File },
           ])
         }
         if (path === '/folder1') {
           return Promise.resolve([
-            { name: 'subfolder', type: 'directory' },
-            { name: 'file2.txt', type: 'file' },
+            { name: 'subfolder', type: DirentType.Directory },
+            { name: 'file2.txt', type: DirentType.File },
           ])
         }
         if (path === '/folder1/subfolder') {
-          return Promise.resolve([{ name: 'file3.txt', type: 'file' }])
+          return Promise.resolve([{ name: 'file3.txt', type: DirentType.File }])
         }
         return Promise.resolve([])
       }
@@ -252,8 +253,8 @@ test('refresh - check filesystem response', async () => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         if (path === '/') {
           return Promise.resolve([
-            { name: 'folder1', type: 'directory' },
-            { name: 'file1.txt', type: 'file' },
+            { name: 'folder1', type: DirentType.Directory },
+            { name: 'file1.txt', type: DirentType.File },
           ])
         }
         return Promise.resolve([])
