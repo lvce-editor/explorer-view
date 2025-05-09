@@ -4,9 +4,9 @@ import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { Directory, DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { removeDirent } from '../src/parts/RemoveDirent/RemoveDirent.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
-import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('removeDirent - removes focused item', async () => {
   const mockRpc = MockRpc.create({
