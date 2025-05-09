@@ -52,7 +52,8 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     deltaY = savedState.deltaY
   }
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, restoredDirents.length)
-  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(restoredDirents, fileIconCache)
+  const visible = restoredDirents.slice(minLineY, maxLineY)
+  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
   return {
     ...state,
     root,

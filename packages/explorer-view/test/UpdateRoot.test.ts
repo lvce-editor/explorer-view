@@ -26,7 +26,7 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
 test('updateRoot should merge dirents correctly', async () => {
   const state = createDefaultState()
 
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
   })

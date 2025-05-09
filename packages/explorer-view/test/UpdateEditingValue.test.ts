@@ -21,7 +21,7 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
 }
 
 beforeEach(async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke,
   })

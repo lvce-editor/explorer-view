@@ -12,7 +12,7 @@ test('getFilePaths - non-electron platform', async () => {
 })
 
 test('getFilePaths - electron platform', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystemHandle.getFilePathElectron') {
@@ -29,7 +29,7 @@ test('getFilePaths - electron platform', async () => {
 })
 
 test('getFilePaths - multiple files', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystemHandle.getFilePathElectron') {

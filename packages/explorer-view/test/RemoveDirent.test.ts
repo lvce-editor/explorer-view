@@ -8,7 +8,7 @@ import { removeDirent } from '../src/parts/RemoveDirent/RemoveDirent.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('removeDirent - removes focused item', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.remove') {
@@ -37,7 +37,7 @@ test('removeDirent - removes focused item', async () => {
 })
 
 test('removeDirent - removes multiple selected items', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.remove') {
@@ -69,7 +69,7 @@ test('removeDirent - removes multiple selected items', async () => {
 })
 
 test('removeDirent - removes focused item and selected items', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.remove') {
@@ -102,7 +102,7 @@ test('removeDirent - removes focused item and selected items', async () => {
 })
 
 test('remove file', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.remove') {
@@ -135,7 +135,7 @@ test('remove file', async () => {
 })
 
 test('remove folder with children', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, ...args: unknown[]) => {
       if (method === 'FileSystem.remove') {
@@ -168,7 +168,7 @@ test('remove folder with children', async () => {
 })
 
 test('remove file from expanded folder', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, ...args: unknown[]) => {
       if (method === 'FileSystem.remove') {

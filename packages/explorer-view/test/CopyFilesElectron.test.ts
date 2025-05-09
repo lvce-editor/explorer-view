@@ -15,7 +15,7 @@ test('copyFilesElectron', async () => {
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
   })

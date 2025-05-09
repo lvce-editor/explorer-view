@@ -1,3 +1,8 @@
+export interface SimpleFileIconRequest {
+  readonly uri: string
+  readonly type: 1 | 2
+}
+
 export interface RendererWorkerApi {
   readonly 'ClipBoard.readNativeFiles': () => Promise<readonly string[]>
   readonly 'ClipBoard.writeNativeFiles': (type: string, files: readonly string[]) => Promise<void>
@@ -20,6 +25,7 @@ export interface RendererWorkerApi {
   readonly 'Focus.setFocus': (focusId: number) => Promise<void>
   readonly 'IconTheme.getFileIcon': (options: { readonly name: string }) => Promise<string>
   readonly 'IconTheme.getFolderIcon': (options: { readonly name: string }) => Promise<string>
+  readonly 'IconTheme.getIcons': (requests: readonly SimpleFileIconRequest[]) => Promise<readonly string[]>
   readonly 'Main.openUri': (uri: string, focus: boolean) => Promise<string>
   readonly 'MouseActions.get': (uid: number, button: number, modifiers: any) => Promise<any>
   readonly 'OpenNativeFolder.openNativeFolder': (path: string) => Promise<void>

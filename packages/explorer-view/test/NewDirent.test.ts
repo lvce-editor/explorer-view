@@ -30,7 +30,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
   })
@@ -92,7 +92,7 @@ test('newDirent handles directory click when focused item is a directory', async
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
   })
@@ -160,7 +160,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
   })
