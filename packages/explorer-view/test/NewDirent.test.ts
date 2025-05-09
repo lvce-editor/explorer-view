@@ -232,6 +232,6 @@ test('newDirent updates state when focused item is not a directory', async () =>
     fileIconCache: {
       '/test.txt': '',
     },
-    icons: ['', ''],
+    icons: ['file-icon', 'file-icon'],
   })
 })
