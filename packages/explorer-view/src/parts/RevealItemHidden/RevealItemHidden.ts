@@ -35,7 +35,7 @@ export const revealItemHidden = async (state: ExplorerState, uri: string): Promi
   }
   const pathPartsToReveal = getPathPartsToReveal(root, pathParts, items)
   const pathPartsChildren = await Promise.all(pathPartsToReveal.map(getPathPartChildren))
-  const pathPartsChildrenFlat = pathPartsChildren.flat(1)
+  const pathPartsChildrenFlat = pathPartsChildren.flat()
   const orderedPathParts = orderDirents(pathPartsChildrenFlat)
   const mergedDirents = mergeVisibleWithHiddenItems(items, orderedPathParts)
   const index = getIndex(mergedDirents, uri)
