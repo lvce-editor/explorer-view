@@ -13,6 +13,7 @@ export const commandIds = [
   'focusLast',
   'focusNext',
   'focusNone',
+  'handleInputKeyDown',
   'focusPrevious',
   'getFocusedDirent',
   'getMenuEntries2',

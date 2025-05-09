@@ -29,6 +29,7 @@ import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleClickAt from '../HandleClickAt/HandleClickAt.ts'
 import * as HandleClickCurrent from '../HandleClickCurrent/HandleClickCurrent.ts'
 import * as HandleClickCurrentButKeepFocus from '../HandleClickCurrentButKeepFocus/HandleClickCurrentButKeepFocus.ts'
+import * as HandleInputKeyDown from '../HandleInputKeyDown/HandleInputKeyDown.ts'
 import * as HandleClickOpenFolder from '../HandleClickOpenFolder/HandleClickOpenFolder.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleContextMenuKeyboard from '../HandleContextMenuKeyboard/HandleContextMenuKeyboard.ts'
@@ -105,6 +106,7 @@ export const commandMap = {
   'Explorer.handleIconThemeChange': WrapCommand.wrapCommand(HandleIconThemeChange.handleIconThemeChange),
   'Explorer.handleInputBlur': WrapCommand.wrapCommand(HandleInputBlur.handleInputBlur),
   'Explorer.handleInputClick': WrapCommand.wrapCommand(HandleInputClick.handleInputClick),
+  'Explorer.handleInputKeyDown': WrapCommand.wrapCommand(HandleInputKeyDown.handleInputKeyDown),
   'Explorer.handleKeyDown': WrapCommand.wrapCommand(HandleKeyDown.handleKeyDown),
   'Explorer.handlePaste': WrapCommand.wrapCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapCommand(HandlePointerDown.handlePointerDown),
