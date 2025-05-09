@@ -7,7 +7,7 @@ import { getNewDirentsForNewDirent } from '../src/parts/GetNewDirentsForNewDiren
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('getNewDirentsForNewDirent - folder with existing children', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -104,7 +104,7 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
 })
 
 test('getNewDirentsForNewDirent - folder without children', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -162,7 +162,7 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
 })
 
 test('getNewDirentsForNewDirent - no items', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -198,7 +198,7 @@ test('getNewDirentsForNewDirent - no items', async () => {
 })
 
 test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {

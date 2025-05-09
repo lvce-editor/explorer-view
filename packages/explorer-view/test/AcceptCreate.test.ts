@@ -36,7 +36,7 @@ test('acceptCreate - successful file creation', async () => {
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
   })

@@ -17,7 +17,7 @@ test('copyRelativePath - copies relative path of focused dirent', async (): Prom
   }
 
   let clipboardText = ''
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: async (method: string, ...args: any[]): Promise<void> => {
       if (method === 'ClipBoard.writeText') {
@@ -33,7 +33,7 @@ test('copyRelativePath - copies relative path of focused dirent', async (): Prom
 test('copyRelativePath - returns state when no focused dirent', async (): Promise<void> => {
   const state = createDefaultState()
   let clipboardCalled = false
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: async (method: string): Promise<void> => {
       if (method === 'ClipBoard.writeText') {

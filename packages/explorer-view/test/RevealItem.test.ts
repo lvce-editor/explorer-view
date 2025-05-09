@@ -7,7 +7,7 @@ import { revealItem } from '../src/parts/RevealItem/RevealItem.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('revealItem - item not found', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
@@ -24,7 +24,7 @@ test('revealItem - item not found', async () => {
 })
 
 test('revealItem - item found', async () => {
-  const mockRpc = await MockRpc.create({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
