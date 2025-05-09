@@ -26,7 +26,7 @@ export const handleClickDirectoryExpanded = async (
     const newMaxLineY = Math.min(maxLineY, newTotal)
     const newMinLineY = newMaxLineY - visibleItems
     const deltaY = newMinLineY * itemHeight
-    const parts = newDirents.slice(minLineY, maxLineY)
+    const parts = newDirents.slice(newMinLineY, newMaxLineY)
     const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, fileIconCache)
     return {
       ...state,

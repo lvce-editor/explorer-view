@@ -146,10 +146,13 @@ test('collapse expanded directory with scroll position adjustment', async () => 
     selected: false,
   }
   const items: ExplorerItem[] = [otherFolder, dirent]
-  const fileIconCache: Record<string, string> = { '/test/': 'folder-icon' }
+  const fileIconCache: Record<string, string> = {
+    '/test': 'folder-icon-2',
+    '/1': 'folder-icon-1',
+  }
 
   // Add 10 items with unique icons
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 5; i++) {
     const child: ExplorerItem = {
       name: `child${i}`,
       type: DirentType.File,
@@ -165,9 +168,9 @@ test('collapse expanded directory with scroll position adjustment', async () => 
     ...createDefaultState(),
     items,
     fileIconCache,
-    minLineY: 2,
-    maxLineY: 7,
-    deltaY: 40, // User has scrolled down
+    minLineY: 1,
+    maxLineY: 6,
+    deltaY: 20, // User has scrolled down
     height: 100,
     itemHeight: 20,
   }
@@ -181,7 +184,7 @@ test('collapse expanded directory with scroll position adjustment', async () => 
   expect(newState.focused).toBe(true)
   expect(newState.minLineY).toBe(0)
   expect(newState.maxLineY).toBe(2)
-  expect(newState.fileIconCache['/test/']).toBe('folder-icon')
+  expect(newState.icons).toEqual(['folder-icon-1', 'folder-icon-2'])
   // After collapsing, since only one item remains and it fits in viewport,
   // scroll position should be reset to 0
   expect(newState.deltaY).toBe(0)
