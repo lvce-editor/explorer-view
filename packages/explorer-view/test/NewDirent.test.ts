@@ -27,6 +27,9 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     if (method === 'Focus.setFocus') {
       return undefined
     }
+    if (method === 'IconTheme.getIcons') {
+      return []
+    }
     throw new Error(`unexpected method ${method}`)
   })
 
