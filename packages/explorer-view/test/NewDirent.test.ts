@@ -73,7 +73,16 @@ test('newDirent sets focus and updates state when no item is focused', async () 
 })
 
 test('newDirent handles directory click when focused item is a directory', async () => {
-  const invoke = jest.fn((method: string): any => {
+  const handleFileIcons = (...params: readonly any[]) => {
+    return params.map((param) => {
+      if (param.type === 2) {
+        return `folder-icon-${param.name}`
+      }
+      return `file-icon-${param.name}`
+    })
+  }
+
+  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
     if (method === 'Workspace.getPath') {
       return '/new/path'
     }
@@ -93,7 +102,7 @@ test('newDirent handles directory click when focused item is a directory', async
       return ''
     }
     if (method === 'IconTheme.getIcons') {
-      return ['']
+      return handleFileIcons(...params)
     }
     throw new Error(`unexpected method ${method}`)
   })

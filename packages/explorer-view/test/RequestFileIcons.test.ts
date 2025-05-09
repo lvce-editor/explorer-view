@@ -4,6 +4,15 @@ import * as RequestFileIcons from '../src/parts/RequestFileIcons/RequestFileIcon
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
+const handleFileIcons = (...params: readonly any[]) => {
+  return params.map((param) => {
+    if (param.type === 2) {
+      return `folder-icon-${param.name}`
+    }
+    return `file-icon-${param.name}`
+  })
+}
+
 const mockRpc = {
   invoke(method: string, ...params: readonly any[]) {
     switch (method) {
@@ -12,7 +21,7 @@ const mockRpc = {
       case 'IconTheme.getFolderIcon':
         return `folder-icon-${params[0].name}`
       case 'IconTheme.getIcons':
-        return [`file-icon-${params[0].name}`]
+        return handleFileIcons(...params)
       default:
         throw new Error(`unknown method ${method}`)
     }
