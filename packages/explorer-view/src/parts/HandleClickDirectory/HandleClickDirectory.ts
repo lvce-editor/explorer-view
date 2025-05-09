@@ -1,10 +1,10 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as SetFocus from '../SetFocus/SetFocus.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as SetFocus from '../SetFocus/SetFocus.ts'
 import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
 
 export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus: boolean): Promise<ExplorerState> => {

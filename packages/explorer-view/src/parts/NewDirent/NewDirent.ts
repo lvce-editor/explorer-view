@@ -1,12 +1,12 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as SetFocus from '../SetFocus/SetFocus.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as FocusKey from '../FocusKey/FocusKey.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetNewDirentsForNewDirent from '../GetNewDirentsForNewDirent/GetNewDirentsForNewDirent.ts'
 import * as GetNewDirentType from '../GetNewDirentType/GetNewDirentType.ts'
+import * as SetFocus from '../SetFocus/SetFocus.ts'
 
 export const newDirent = async (state: ExplorerState, editingType: number): Promise<ExplorerState> => {
   // TODO make focus functional instead of side effect
