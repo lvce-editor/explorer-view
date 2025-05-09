@@ -8,7 +8,7 @@ import { newFile } from '../src/parts/NewFile/NewFile.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
-const handleFileIcons = (requests: readonly any[]) => {
+const handleFileIcons = (requests: readonly any[]): readonly string[] => {
   return requests.map((param) => {
     if (param.type === 2) {
       return `folder-icon`
