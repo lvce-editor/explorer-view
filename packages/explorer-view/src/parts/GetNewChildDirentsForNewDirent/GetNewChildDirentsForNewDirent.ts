@@ -1,5 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
+import { join2 } from '../Path/Path.ts'
 
 export const getNewChildDirentsForNewDirent = async (
   items: readonly ExplorerItem[],
@@ -14,7 +15,7 @@ export const getNewChildDirentsForNewDirent = async (
     existingChildren = childDirents.map((dirent: { name: string; type: number }, index: number) => ({
       name: dirent.name,
       type: dirent.type,
-      path: `${parentPath}/${dirent.name}`,
+      path: join2(parentPath, dirent.name),
       depth,
       selected: false,
       posInSet: index + 1,

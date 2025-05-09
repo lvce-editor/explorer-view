@@ -1,5 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { RawDirent } from '../RawDirent/RawDirent.ts'
+import { join2 } from '../Path/Path.ts'
 import { restoreDirentType } from '../RestoreDirentType/RestoreDirentType.ts'
 
 export const getProtoMapInternal = (
@@ -15,7 +16,7 @@ export const getProtoMapInternal = (
   const protoMap: ExplorerItem[] = []
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
-    const path = `${root}/${item.name}`
+    const path = join2(root, item.name)
     const displayDirent: ExplorerItem = {
       name: item.name,
       posInSet: i + 1,
