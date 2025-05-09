@@ -33,6 +33,9 @@ test('acceptCreate - successful file creation', async () => {
     if (method === 'IconTheme.getFileIcon') {
       return ''
     }
+    if (method === 'IconTheme.getIcons') {
+      return ['']
+    }
     throw new Error(`unexpected method ${method}`)
   })
 

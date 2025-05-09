@@ -92,6 +92,9 @@ test('newDirent handles directory click when focused item is a directory', async
     if (method === 'IconTheme.getFolderIcon') {
       return ''
     }
+    if (method === 'IconTheme.getIcons') {
+      return ['']
+    }
     throw new Error(`unexpected method ${method}`)
   })
 
