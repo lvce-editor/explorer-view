@@ -17,7 +17,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Loc
   await expect(inputBox).toBeFocused()
 
   // act
-  await Command.execute('Explorer.handleBlur')
+  await Command.execute('Explorer.handleInputBlur')
 
   // assert
   await expect(inputBox).toBeHidden()
