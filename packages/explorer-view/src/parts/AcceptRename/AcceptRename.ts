@@ -1,10 +1,10 @@
 import { VError } from '@lvce-editor/verror'
-import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as Path from '../Path/Path.ts'
-import { renameDirentsPath } from '../RenameDirentsPath/RenameDirentsPath.ts'
+import { updateDirentsAtPath } from '../UpdateDirentsAtPath/UpdateDirentsAtPath.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   try {
@@ -14,8 +14,8 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     const oldParentPath = Path.dirname(pathSeparator, oldAbsolutePath)
     const newAbsolutePath = [oldParentPath, editingValue].join(pathSeparator)
     await FileSystem.rename(oldAbsolutePath, newAbsolutePath)
-    // const newDirents = await FileSystem.readDirWithFileTypes(oldParentPath)
-    const newItems = renameDirentsPath(items, oldAbsolutePath, newAbsolutePath)
+    const newDirents = await FileSystem.readDirWithFileTypes(oldParentPath)
+    const newItems = updateDirentsAtPath(items, root, newDirents, oldAbsolutePath, newAbsolutePath)
     const focusedIndex = newItems.findIndex((item) => item.path === newAbsolutePath)
     return {
       ...state,
