@@ -1,17 +1,17 @@
-import { test, expect } from '@jest/globals'
-import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import { expect, test } from '@jest/globals'
+import type { Tree } from '../src/parts/Tree/Tree.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { treeToArray } from '../src/parts/TreeToArray/TreeToArray.ts'
 
 test('treeToArray - empty tree', () => {
-  const map: Record<string, readonly ExplorerItem[]> = {}
+  const map: Tree = {}
   const root = '/test'
   expect(treeToArray(map, root)).toEqual([])
 })
 
 test('treeToArray - single file', () => {
-  const map: Record<string, readonly ExplorerItem[]> = {
-    '/test': [{ name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false }],
+  const map: Tree = {
+    '': [{ name: 'file.txt', type: DirentType.File }],
   }
   const root = '/test'
   const result = treeToArray(map, root)
@@ -23,12 +23,12 @@ test('treeToArray - single file', () => {
 })
 
 test('treeToArray - nested structure', () => {
-  const map: Record<string, readonly ExplorerItem[]> = {
-    '/test': [
-      { name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false },
-      { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false },
+  const map: Tree = {
+    '': [
+      { name: 'folder', type: DirentType.Directory },
+      { name: 'file.txt', type: DirentType.File },
     ],
-    '/test/folder': [{ name: 'nested.txt', type: DirentType.File, path: '/test/folder/nested.txt', depth: 1, selected: false }],
+    '/folder': [{ name: 'nested.txt', type: DirentType.File }],
   }
   const root = '/test'
   const result = treeToArray(map, root)
@@ -48,10 +48,10 @@ test('treeToArray - nested structure', () => {
 })
 
 test('treeToArray - deep nested structure', () => {
-  const map: Record<string, readonly ExplorerItem[]> = {
-    '/test': [{ name: 'folder1', type: DirentType.Directory, path: '/test/folder1', depth: 0, selected: false }],
-    '/test/folder1': [{ name: 'folder2', type: DirentType.Directory, path: '/test/folder1/folder2', depth: 1, selected: false }],
-    '/test/folder1/folder2': [{ name: 'deep.txt', type: DirentType.File, path: '/test/folder1/folder2/deep.txt', depth: 2, selected: false }],
+  const map: Tree = {
+    '': [{ name: 'folder1', type: DirentType.Directory }],
+    '/folder1': [{ name: 'folder2', type: DirentType.Directory }],
+    '/folder1/folder2': [{ name: 'deep.txt', type: DirentType.File }],
   }
   const root = '/test'
   const result = treeToArray(map, root)
@@ -65,17 +65,17 @@ test('treeToArray - deep nested structure', () => {
 })
 
 test('treeToArray - update tree and children', () => {
-  const map: Record<string, readonly ExplorerItem[]> = {
-    '/test': [
-      { name: 'folder1', type: DirentType.Directory, path: '/test/folder1', depth: 0, selected: false },
-      { name: 'folder2', type: DirentType.Directory, path: '/test/folder2', depth: 0, selected: false },
+  const map: Tree = {
+    '': [
+      { name: 'folder1', type: DirentType.Directory },
+      { name: 'folder2', type: DirentType.Directory },
     ],
-    '/test/folder1': [
-      { name: 'subfolder', type: DirentType.Directory, path: '/test/folder1/subfolder', depth: 1, selected: false },
-      { name: 'file1.txt', type: DirentType.File, path: '/test/folder1/file1.txt', depth: 1, selected: false },
+    '/folder1': [
+      { name: 'subfolder', type: DirentType.Directory },
+      { name: 'file1.txt', type: DirentType.File },
     ],
-    '/test/folder1/subfolder': [{ name: 'deep.txt', type: DirentType.File, path: '/test/folder1/subfolder/deep.txt', depth: 2, selected: false }],
-    '/test/folder2': [{ name: 'file2.txt', type: DirentType.File, path: '/test/folder2/file2.txt', depth: 1, selected: false }],
+    '/folder1/subfolder': [{ name: 'deep.txt', type: DirentType.File }],
+    '/folder2': [{ name: 'file2.txt', type: DirentType.File }],
   }
   const root = '/test'
   const result = treeToArray(map, root)
