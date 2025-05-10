@@ -1,7 +1,7 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { acceptEdit } from '../AcceptEdit/AcceptEdit.ts'
-import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import { cancelEditInternal } from '../CancelEditInternal/CancelEditInternal.ts'
+import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 
 export const handleBlur = async (state: ExplorerState): Promise<ExplorerState> => {
   // TODO when blur event occurs because of context menu, focused index should stay the same
