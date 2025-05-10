@@ -130,7 +130,7 @@ test('acceptRename - nested file rename', async () => {
   expect(result.focusedIndex).toBe(1)
 })
 
-test.only('acceptRename - preserves nested items', async () => {
+test('acceptRename - preserves nested items', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {

@@ -12,11 +12,9 @@ export const updateTree = (
   const pathWithSlash = `${oldAbsolutePath}/`
 
   for (const [key, value] of Object.entries(tree)) {
-    console.log({ key, value })
     if (key === path) {
       // console.log('is eq')
     } else if (key.startsWith(pathWithSlash)) {
-      console.log('starts wth', key, pathWithSlash)
       // const actual = key.slice(pathWithSlash.length)
     } else {
       // console.log('else', key, path, value)
