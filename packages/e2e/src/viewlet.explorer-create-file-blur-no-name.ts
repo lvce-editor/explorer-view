@@ -20,6 +20,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Loc
   await Command.execute('Explorer.handleBlur')
 
   // assert
-  // const newFile = Locator('text=created.txt')
-  // await expect(newFile).toBeVisible()
+  await expect(inputBox).toBeHidden()
+  const items = Locator('.TreeItem')
+  await expect(items).toHaveCount(1)
 }
