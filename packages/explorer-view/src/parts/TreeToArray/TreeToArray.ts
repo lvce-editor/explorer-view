@@ -2,7 +2,7 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 export const treeToArray = (map: Record<string, readonly ExplorerItem[]>, root: string): readonly ExplorerItem[] => {
   const items: ExplorerItem[] = []
-  const processChildren = (path: string, depth: number) => {
+  const processChildren = (path: string, depth: number): void => {
     const children = map[path]
     if (!children) {
       return
