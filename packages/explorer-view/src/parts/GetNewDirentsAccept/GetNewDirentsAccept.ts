@@ -3,7 +3,8 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import type { NewDirentsAcceptResult } from '../NewDirentsAcceptResult/NewDirentsAcceptResult.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
-import * as DirentType from '../DirentType/DirentType.ts'
+import * as CreateNestedPath from '../CreateNestedPath/CreateNestedPath.ts'
+import * as Path from '../Path/Path.ts'
 
 const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: string): string => {
   if (index < 0) {
@@ -21,8 +22,13 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
   const newFileName = editingValue
   const parentFolder = getParentFolder(state.items, focusedIndex, state.root)
   const absolutePath = [parentFolder, newFileName].join(state.pathSeparator)
-  // TODO better handle error
+
   try {
+    // Create parent directories if they don't exist
+    if (newFileName.includes(state.pathSeparator)) {
+      const parentPath = Path.dirname(state.pathSeparator, absolutePath)
+      await CreateNestedPath.createNestedPath(parentPath, state.pathSeparator)
+    }
     await createFn(absolutePath)
   } catch (error) {
     console.error(new VError(error, `Failed to create file`))
@@ -32,6 +38,7 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
       newFocusedIndex: state.focusedIndex,
     }
   }
+
   const parentDirent =
     focusedIndex >= 0
       ? state.items[focusedIndex]
@@ -87,11 +94,10 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
   newDirent.setSize = setSize
   // @ts-ignore
   newDirent.posInSet = posInSet
-  // @ts-ignore
-  items.splice(insertIndex + 1, 0, newDirent)
-  const newDirents = [...items].filter((item) => item.type !== DirentType.EditingFile && item.type !== DirentType.EditingFolder)
+  const newItems = [...items]
+  newItems.splice(insertIndex + 1, 0, newDirent)
   return {
-    dirents: newDirents,
+    dirents: newItems,
     newFocusedIndex: insertIndex + 1,
   }
 }
