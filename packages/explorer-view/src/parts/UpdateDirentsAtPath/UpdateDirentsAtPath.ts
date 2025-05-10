@@ -4,6 +4,7 @@ import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import { createTree } from '../CreateRenameMap/CreateRenameMap.ts'
 import { join2 } from '../Path/Path.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
+import { updateTree } from '../UpdateTree/UpdateTree.ts'
 
 export const updateDirentsAtPath = (
   items: readonly ExplorerItem[],
@@ -25,10 +26,7 @@ export const updateDirentsAtPath = (
     .sort(CompareDirent.compareDirent)
 
   const tree = createTree(items)
-  const updatedTree = {
-    ...tree,
-    [path]: sortedDirents,
-  }
+  const updatedTree = updateTree(tree, path, sortedDirents)
   const newItems = treeToArray(updatedTree, root)
   return newItems
 }
