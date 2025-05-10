@@ -16,7 +16,7 @@ test('updateTree - empty tree', () => {
 })
 
 test('updateTree - existing tree', () => {
-  const tree = {
+  const tree: Record<string, readonly ExplorerItem[]> = {
     '/test': [{ name: 'old.txt', type: DirentType.File, path: '/test/old.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
   }
   const path = '/test'
@@ -30,7 +30,7 @@ test('updateTree - existing tree', () => {
 })
 
 test('updateTree - nested path', () => {
-  const tree = {
+  const tree: Record<string, readonly ExplorerItem[]> = {
     '/test': [{ name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
   }
   const path = '/test/folder'
@@ -39,7 +39,38 @@ test('updateTree - nested path', () => {
   ]
   const result = updateTree(tree, path, newDirents)
   expect(result).toEqual({
-    '/test': tree['/test'],
-    '/test/folder': newDirents,
+    '/test': [{ name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
+    '/test/folder': [
+      { name: 'nested.txt', type: DirentType.File, path: '/test/folder/nested.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
+    ],
+  })
+})
+
+test.only('updateTree - rename folder with nested items', () => {
+  const tree = {
+    '/test': [{ name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
+    '/test/folder': [
+      { name: 'nested.txt', type: DirentType.File, path: '/test/folder/nested.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
+    ],
+  }
+  const path = '/test'
+  const newDirents: readonly ExplorerItem[] = [
+    { name: 'renamed', type: DirentType.Directory, path: '/test/renamed', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
+  ]
+  const result = updateTree(tree, path, newDirents)
+  expect(result).toEqual({
+    '/test': [{ name: 'renamed', type: DirentType.Directory, path: '/test/renamed', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
+    '/test/renamed': [
+      {
+        name: 'nested.txt',
+        type: DirentType.File,
+        path: '/test/renamed/nested.txt',
+        depth: 0,
+        selected: false,
+        posInSet: 1,
+        setSize: 1,
+        icon: '',
+      },
+    ],
   })
 })
