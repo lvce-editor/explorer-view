@@ -27,7 +27,7 @@ export const updateDirentsAtPath = (
     .sort(CompareDirent.compareDirent)
 
   const tree = createTree(items)
-  const updatedTree = updateTree(tree, path, sortedDirents)
+  const updatedTree = updateTree(tree, path, sortedDirents, oldAbsolutePath)
   const newItems = treeToArray(updatedTree, root)
   return newItems
 }
