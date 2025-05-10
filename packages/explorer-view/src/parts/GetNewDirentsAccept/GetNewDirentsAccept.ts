@@ -1,21 +1,26 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import type { NewDirentsAcceptResult } from '../NewDirentsAcceptResult/NewDirentsAcceptResult.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
 
-export const getNewDirentsAccept = (state: ExplorerState, newDirentType: number): NewDirentsAcceptResult => {
-  const { focusedIndex, editingValue, items } = state
+export const getNewDirentsAccept = (
+  items: readonly ExplorerItem[],
+  focusedIndex: number,
+  editingValue: string,
+  root: string,
+  pathSeparator: string,
+  newDirentType: number,
+): NewDirentsAcceptResult => {
   const newFileName = editingValue
-  const parentFolder = getParentFolder(state.items, focusedIndex, state.root)
-  const absolutePath = [parentFolder, newFileName].join(state.pathSeparator)
+  const parentFolder = getParentFolder(items, focusedIndex, root)
+  const absolutePath = [parentFolder, newFileName].join(pathSeparator)
 
   const parentDirent =
     focusedIndex >= 0
-      ? state.items[focusedIndex]
+      ? items[focusedIndex]
       : {
           depth: 0,
-          path: state.root,
+          path: root,
         }
   const depth = parentDirent.depth + 1
   const newDirent: ExplorerItem = {
