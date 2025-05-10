@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
+import type { Tree } from '../src/parts/Tree/Tree.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
-import { Tree } from '../src/parts/Tree/Tree.ts'
 import { treeToArray } from '../src/parts/TreeToArray/TreeToArray.ts'
 
 test('treeToArray - empty tree', () => {
