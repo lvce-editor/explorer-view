@@ -1,7 +1,13 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { RawDirent } from '../RawDirent/RawDirent.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
-export const toDisplayDirents = (pathSeparator: string, rawDirents: any, parentDirent: any, excluded: any): readonly ExplorerItem[] => {
+export const toDisplayDirents = (
+  pathSeparator: string,
+  rawDirents: readonly RawDirent[],
+  parentDirent: any,
+  excluded: readonly string[],
+): readonly ExplorerItem[] => {
   rawDirents = SortExplorerItems.sortExplorerItems(rawDirents)
   // TODO figure out whether this uses too much memory (name,path -> redundant, depth could be computed on demand)
   const toDisplayDirent = (rawDirent: any, index: number): any => {
