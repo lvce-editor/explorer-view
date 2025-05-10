@@ -12,7 +12,7 @@ export const createNewDirentsAccept = async (
   absolutePath: string,
   root: string,
   createFn: Create,
-): Promise<void> => {
+): Promise<boolean> => {
   try {
     // Create parent directories if they don't exist
     if (newFileName.includes(pathSeparator)) {
@@ -20,7 +20,9 @@ export const createNewDirentsAccept = async (
       await CreateNestedPath.createNestedPath(root, parentPath, pathSeparator)
     }
     await createFn(absolutePath)
+    return true
   } catch (error) {
     console.error(new VError(error, `Failed to create file`))
+    return false
   }
 }
