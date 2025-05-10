@@ -216,6 +216,7 @@ test('acceptRename - maintains sorting order', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    root: '/test',
     items: [
       { name: 'a.txt', type: DirentType.File, path: '/test/a.txt', depth: 0, selected: false },
       { name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false },
@@ -255,6 +256,7 @@ test('acceptRename - handles nested directory structure', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    root: '/test',
     items: [
       { name: 'folder1', type: DirentType.Directory, path: '/test/folder1', depth: 0, selected: false },
       { name: 'nested1', type: DirentType.Directory, path: '/test/folder1/nested1', depth: 1, selected: false },
