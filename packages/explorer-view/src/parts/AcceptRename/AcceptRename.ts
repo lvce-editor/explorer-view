@@ -1,24 +1,11 @@
 import { VError } from '@lvce-editor/verror'
-import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import type { ExplorerItem as BaseExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
+import { createRenameMap } from '../CreateRenameMap/CreateRenameMap.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as Path from '../Path/Path.ts'
-import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
-import * as DirentType from '../DirentType/DirentType.ts'
-import { createRenameMap } from '../CreateRenameMap/CreateRenameMap.ts'
-
-type ExplorerItem = BaseExplorerItem & {
-  children?: ExplorerItem[]
-}
-
-const compareFilesFirst = (a: any, b: any) => {
-  // Files before folders
-  if (a.type === DirentType.File && b.type !== DirentType.File) return -1
-  if (a.type !== DirentType.File && b.type === DirentType.File) return 1
-  return CompareDirent.compareDirent(a, b)
-}
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   try {
