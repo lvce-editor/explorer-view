@@ -26,7 +26,7 @@ test('getNewDirentsAccept - create file in root', async () => {
     pathSeparator: '/',
   }
 
-  const result = await getNewDirentsAccept(state, 1)
+  const result = getNewDirentsAccept(state, 1)
 
   expect(result.dirents).toHaveLength(1)
   expect(result.dirents[0]).toEqual({

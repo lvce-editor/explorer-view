@@ -4,8 +4,8 @@ import { set } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptCreateFile } from '../src/parts/AcceptCreateFile/AcceptCreateFile.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('acceptCreateFile', async () => {
   const mockRpc = MockRpc.create({
