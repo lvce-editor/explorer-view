@@ -20,9 +20,6 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     return state
   }
   const { newDirents, focusedIndex } = ComputeExplorerRenamedDirent.computeExplorerRenamedDirent(items, editingIndex, editingValue)
-  //  TODO move focused index
-  // @ts-ignore
-  state.items = newDirents
   return {
     ...state,
     editingIndex: -1,
@@ -32,5 +29,6 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     focusedIndex,
     focused: true,
     focus: FocusId.List,
+    items: newDirents,
   }
 }
