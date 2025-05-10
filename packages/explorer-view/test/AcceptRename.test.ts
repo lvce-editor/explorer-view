@@ -188,7 +188,7 @@ test('acceptRename - handles rename error', async () => {
   expect(result).toBe(state)
 })
 
-test.skip('acceptRename - maintains sorting order', async () => {
+test('acceptRename - maintains sorting order', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {

@@ -1,11 +1,24 @@
 import { VError } from '@lvce-editor/verror'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
+import type { ExplorerItem as BaseExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as Path from '../Path/Path.ts'
-import { sortExplorerItems } from '../SortExplorerItems/SortExplorerItems.ts'
+import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
+import * as DirentType from '../DirentType/DirentType.ts'
+import { createRenameMap } from '../CreateRenameMap/CreateRenameMap.ts'
+
+type ExplorerItem = BaseExplorerItem & {
+  children?: ExplorerItem[]
+}
+
+const compareFilesFirst = (a: any, b: any) => {
+  // Files before folders
+  if (a.type === DirentType.File && b.type !== DirentType.File) return -1
+  if (a.type !== DirentType.File && b.type === DirentType.File) return 1
+  return CompareDirent.compareDirent(a, b)
+}
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   try {
@@ -13,7 +26,7 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     const renamedDirent = items[editingIndex]
     const oldAbsolutePath = renamedDirent.path
     const oldParentPath = Path.dirname(pathSeparator, oldAbsolutePath)
-    const newAbsolutePath = Path.join2(oldParentPath, editingValue)
+    const newAbsolutePath = [oldParentPath, editingValue].join(pathSeparator)
 
     // 1. Rename the file
     await FileSystem.rename(oldAbsolutePath, newAbsolutePath)
@@ -21,33 +34,46 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     // 2. Read the parent directory to get updated dirents
     const newDirents = await FileSystem.readDirWithFileTypes(oldParentPath)
 
-    const sorted = sortExplorerItems(newDirents)
-
     // 3. Convert raw dirents to explorer items and sort them
-    const explorerItems = sorted.map((dirent, index) => ({
-      name: dirent.name,
-      type: dirent.type,
-      path: [oldParentPath, dirent.name].join(pathSeparator),
-      depth: renamedDirent.depth,
-      selected: false,
-      posInSet: index + 1,
-      setSize: newDirents.length,
-      icon: '',
-    }))
+    const sortedDirents = newDirents
+      .map((dirent, index) => ({
+        name: dirent.name,
+        type: dirent.type,
+        path: [oldParentPath, dirent.name].join(pathSeparator),
+        depth: renamedDirent.depth,
+        selected: false,
+        posInSet: index + 1,
+        setSize: newDirents.length,
+        icon: '',
+      }))
+      .sort(CompareDirent.compareDirent)
 
-    // Find the index of the renamed item
-    const focusedIndex = explorerItems.findIndex((dirent) => dirent.path === newAbsolutePath)
+    // 4. Build a hashmap of items by path
+    const map = createRenameMap(items, oldParentPath, sortedDirents)
 
-    // Update the items array, preserving any nested items
-    const updatedItems = [...items]
-    const startIndex = editingIndex
-    let endIndex = editingIndex + 1
-    while (endIndex < items.length && items[endIndex].depth > renamedDirent.depth) {
-      endIndex++
+    // 5. Build the final items array using DFS
+    const newItems: ExplorerItem[] = []
+    const visited = new Set<string>()
+
+    const visit = (item: ExplorerItem) => {
+      if (visited.has(item.path)) return
+      visited.add(item.path)
+      newItems.push(item)
+      if (item.children) {
+        item.children.sort(CompareDirent.compareDirent)
+        for (const child of item.children) {
+          visit(child)
+        }
+      }
     }
 
-    // Replace the old items with the new sorted dirents
-    updatedItems.splice(startIndex, endIndex - startIndex, ...explorerItems)
+    // Start with root items
+    for (const item of stack) {
+      visit(item)
+    }
+
+    // Find the index of the renamed item
+    const focusedIndex = newItems.findIndex((item) => item.path === newAbsolutePath)
 
     return {
       ...state,
@@ -58,7 +84,7 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
       focusedIndex,
       focused: true,
       focus: FocusId.List,
-      items: updatedItems,
+      items: newItems,
     }
   } catch (error) {
     console.error(new VError(error, `Failed to rename file`))
