@@ -13,6 +13,9 @@ test('acceptCreateFile', async () => {
       if (method === 'FileSystem.createFile') {
         return Promise.resolve()
       }
+      if (method === 'FileSystem.writeFile') {
+        return Promise.resolve()
+      }
       if (method === 'IconTheme.getFolderIcon') {
         return Promise.resolve('folder-icon')
       }
