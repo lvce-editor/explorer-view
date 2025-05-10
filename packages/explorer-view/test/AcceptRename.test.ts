@@ -70,6 +70,7 @@ test('acceptRename - folder rename', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    root: '/test',
     items: [
       { name: 'folder1', type: DirentType.Directory, path: '/test/folder1', depth: 0, selected: false },
       { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false },
@@ -108,6 +109,7 @@ test('acceptRename - nested file rename', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    root: '/test',
     items: [
       { name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false },
       { name: 'a.txt', type: DirentType.File, path: '/test/folder/a.txt', depth: 1, selected: false },
@@ -145,6 +147,7 @@ test('acceptRename - preserves nested items', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    root: '/test',
     items: [
       { name: 'folder1', type: DirentType.Directory, path: '/test/folder1', depth: 0, selected: false },
       { name: 'nested.txt', type: DirentType.File, path: '/test/folder1/nested.txt', depth: 1, selected: false },
