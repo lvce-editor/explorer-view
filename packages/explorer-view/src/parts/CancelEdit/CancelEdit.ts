@@ -10,9 +10,9 @@ const isNormalItem = (item: ExplorerItem): boolean => {
 }
 
 export const cancelEdit = (state: ExplorerState): ExplorerState => {
-  const { editingIndex, editingType } = state
+  const { editingIndex, editingType, items } = state
   if (editingType === ExplorerEditingType.Rename) {
-    const newItems = getNewDirentsForCancelRename(state.items, editingIndex)
+    const newItems = getNewDirentsForCancelRename(items, editingIndex)
     return {
       ...state,
       items: newItems,
@@ -24,7 +24,7 @@ export const cancelEdit = (state: ExplorerState): ExplorerState => {
       focus: FocusId.List,
     }
   }
-  const filteredItems = state.items.filter(isNormalItem)
+  const filteredItems = items.filter(isNormalItem)
   return {
     ...state,
     items: filteredItems,
