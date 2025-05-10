@@ -7,6 +7,7 @@ import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as Path from '../Path/Path.ts'
+import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   try {
@@ -43,26 +44,7 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     }
 
     // 5. Build the final items array using DFS
-    const newItems: ExplorerItem[] = []
-    const visited = new Set<string>()
-
-    const visit = (item: ExplorerItem) => {
-      if (visited.has(item.path)) return
-      visited.add(item.path)
-      newItems.push(item)
-      const children = map[item.path] || []
-      children.sort(CompareDirent.compareDirent)
-      for (const child of children) {
-        visit(child)
-      }
-    }
-
-    // Start with root items
-    const rootItems = map[root] || []
-    rootItems.sort(CompareDirent.compareDirent)
-    for (const item of rootItems) {
-      visit(item)
-    }
+    const newItems = treeToArray(map, root)
 
     // Find the index of the renamed item
     const focusedIndex = newItems.findIndex((item) => item.path === newAbsolutePath)
