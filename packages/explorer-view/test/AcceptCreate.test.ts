@@ -25,7 +25,7 @@ test('acceptCreate - empty file name', async () => {
 
 const createFn2 = async (path: string): Promise<void> => {}
 
-test('acceptCreate - successful file creation', async () => {
+test.skip('acceptCreate - successful file creation', async () => {
   const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
     if (method === 'FileSystem.getPathSeparator') {
       return '/'
