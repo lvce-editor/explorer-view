@@ -7,11 +7,16 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenersFunctions.HandleInputBlur,
       params: ['handleInputBlur'],
     },
-    {
-      name: DomEventListenersFunctions.HandleListKeyDown,
-      params: ['handleKeyDown', 'event.key'],
-      preventDefault: true,
-    },
+    // {
+    //   name: DomEventListenersFunctions.HandleInputKeyDown,
+    //   params: ['handleInputKeyDown'],
+    //   stopPropagation: true, // TODO find a way to do this without stopPropagation
+    // },
+    // {
+    //   name: DomEventListenersFunctions.HandleListKeyDown,
+    //   params: ['handleKeyDown', 'event.key'],
+    //   preventDefault: true,
+    // },
     {
       name: DomEventListenersFunctions.HandleListFocus,
       params: ['handleFocus', 'event.isTrusted', 'event.target.className'],
