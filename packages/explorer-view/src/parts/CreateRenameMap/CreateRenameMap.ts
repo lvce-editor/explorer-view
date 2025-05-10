@@ -1,4 +1,4 @@
-import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as Path from '../Path/Path.ts'
 
 export const createTree = (items: readonly ExplorerItem[]) => {

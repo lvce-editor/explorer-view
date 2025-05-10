@@ -1,4 +1,4 @@
-import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 export const treeToArray = (map: Record<string, readonly ExplorerItem[]>, root: string): readonly ExplorerItem[] => {
   const items: ExplorerItem[] = []

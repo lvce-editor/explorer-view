@@ -1,12 +1,12 @@
 import { VError } from '@lvce-editor/verror'
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import { createTree } from '../CreateRenameMap/CreateRenameMap.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
-import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as Path from '../Path/Path.ts'
-import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   try {

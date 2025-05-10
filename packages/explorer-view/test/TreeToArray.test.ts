@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
-import { treeToArray } from '../src/parts/TreeToArray/TreeToArray.ts'
+import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
-import { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import { treeToArray } from '../src/parts/TreeToArray/TreeToArray.ts'
 
 test('treeToArray - empty tree', () => {
   const map: Record<string, readonly ExplorerItem[]> = {}
