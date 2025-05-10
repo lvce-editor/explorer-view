@@ -7,7 +7,7 @@ export const createNewDirentsRename = async (renamedDirent: ExplorerItem, editin
   try {
     // TODO this does not work with rename of nested file
     const oldAbsolutePath = renamedDirent.path
-    const oldParentPath = Path.dirname(pathSeparator, oldAbsolutePath)
+    const oldParentPath = Path.dirname2(oldAbsolutePath)
     const newAbsolutePath = Path.join2(oldParentPath, editingValue)
     await FileSystem.rename(oldAbsolutePath, newAbsolutePath)
   } catch (error) {
