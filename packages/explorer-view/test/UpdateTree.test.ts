@@ -3,13 +3,18 @@ import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { updateTree } from '../src/parts/UpdateTree/UpdateTree.ts'
 
-test('updateTree - empty tree', () => {
-  const tree = {}
+test('updateTree - renamed one file', () => {
+  const tree = {
+    '/test': [
+      { name: 'initial.txt', type: DirentType.File, path: '/test/initial.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
+    ],
+  }
   const path = '/test'
   const newDirents: readonly ExplorerItem[] = [
     { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
   ]
-  const result = updateTree(tree, path, newDirents)
+  const oldAbsolutePath = '/test/initial.txt'
+  const result = updateTree(tree, path, newDirents, oldAbsolutePath)
   expect(result).toEqual({
     '/test': newDirents,
   })
@@ -23,7 +28,8 @@ test('updateTree - existing tree', () => {
   const newDirents: readonly ExplorerItem[] = [
     { name: 'new.txt', type: DirentType.File, path: '/test/new.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
   ]
-  const result = updateTree(tree, path, newDirents)
+  const oldAbsolutePath = '/test/old.txt'
+  const result = updateTree(tree, path, newDirents, oldAbsolutePath)
   expect(result).toEqual({
     '/test': newDirents,
   })
@@ -37,7 +43,9 @@ test('updateTree - nested path', () => {
   const newDirents: readonly ExplorerItem[] = [
     { name: 'nested.txt', type: DirentType.File, path: '/test/folder/nested.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
   ]
-  const result = updateTree(tree, path, newDirents)
+  const oldAbsolutePath = '/test/folder'
+  const result = updateTree(tree, path, newDirents, oldAbsolutePath)
+
   expect(result).toEqual({
     '/test': [{ name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
     '/test/folder': [
@@ -46,7 +54,7 @@ test('updateTree - nested path', () => {
   })
 })
 
-test.only('updateTree - rename folder with nested items', () => {
+test('updateTree - rename folder with nested items', () => {
   const tree = {
     '/test': [{ name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
     '/test/folder': [
@@ -57,7 +65,9 @@ test.only('updateTree - rename folder with nested items', () => {
   const newDirents: readonly ExplorerItem[] = [
     { name: 'renamed', type: DirentType.Directory, path: '/test/renamed', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
   ]
-  const result = updateTree(tree, path, newDirents)
+  const oldAbsolutePath = '/test/folder'
+
+  const result = updateTree(tree, path, newDirents, oldAbsolutePath)
   expect(result).toEqual({
     '/test': [{ name: 'renamed', type: DirentType.Directory, path: '/test/renamed', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
     '/test/renamed': [

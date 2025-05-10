@@ -4,6 +4,7 @@ export const updateTree = (
   tree: Record<string, readonly ExplorerItem[]>,
   path: string,
   newDirents: readonly ExplorerItem[],
+  oldAbsolutePath: string,
 ): Record<string, readonly ExplorerItem[]> => {
   const updatedTree = Object.create(null)
   updatedTree[path] = newDirents
