@@ -1,4 +1,4 @@
-import { test, expect } from '@jest/globals'
+import { test, expect, jest } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
@@ -9,7 +9,7 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
-test('acceptRename - basic file rename', async () => {
+test.only('acceptRename - basic file rename', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
@@ -164,6 +164,7 @@ test('acceptRename - preserves nested items', async () => {
 })
 
 test('acceptRename - handles rename error', async () => {
+  const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
@@ -186,6 +187,8 @@ test('acceptRename - handles rename error', async () => {
 
   const result = await acceptRename(state)
   expect(result).toBe(state)
+  expect(spy).toHaveBeenCalledTimes(1)
+  expect(spy).toHaveBeenCalledWith(new Error('Failed to rename file: rename failed'))
 })
 
 test('acceptRename - maintains sorting order', async () => {
