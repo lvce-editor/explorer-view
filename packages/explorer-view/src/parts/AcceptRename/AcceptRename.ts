@@ -1,15 +1,16 @@
 import { VError } from '@lvce-editor/verror'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
-import { createRenameMap } from '../CreateRenameMap/CreateRenameMap.ts'
+import { createTree } from '../CreateRenameMap/CreateRenameMap.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as Path from '../Path/Path.ts'
+import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   try {
-    const { editingIndex, editingValue, items, pathSeparator } = state
+    const { editingIndex, editingValue, items, pathSeparator, root } = state
     const renamedDirent = items[editingIndex]
     const oldAbsolutePath = renamedDirent.path
     const oldParentPath = Path.dirname(pathSeparator, oldAbsolutePath)
@@ -36,7 +37,10 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
       .sort(CompareDirent.compareDirent)
 
     // 4. Build a hashmap of items by path
-    const map = createRenameMap(items, oldParentPath, sortedDirents)
+    const map = {
+      ...createTree(items),
+      [oldParentPath]: sortedDirents,
+    }
 
     // 5. Build the final items array using DFS
     const newItems: ExplorerItem[] = []
@@ -46,16 +50,17 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
       if (visited.has(item.path)) return
       visited.add(item.path)
       newItems.push(item)
-      if (item.children) {
-        item.children.sort(CompareDirent.compareDirent)
-        for (const child of item.children) {
-          visit(child)
-        }
+      const children = map[item.path] || []
+      children.sort(CompareDirent.compareDirent)
+      for (const child of children) {
+        visit(child)
       }
     }
 
     // Start with root items
-    for (const item of stack) {
+    const rootItems = map[root] || []
+    rootItems.sort(CompareDirent.compareDirent)
+    for (const item of rootItems) {
       visit(item)
     }
 
