@@ -1,29 +1,15 @@
-import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { getPathPartsToReveal } from '../GetPathPartsToReveal/GetPathPartsToReveal.ts'
+import { mergeVisibleWithHiddenItems } from '../MergeVisibleWithHiddenItems/MergeVisibleWithHiddenItems.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
 
 const getPathPartChildren = async (pathPart: any): Promise<readonly any[]> => {
   const children = await getChildDirents(pathPart.pathSeparator, pathPart)
   return children
-}
-
-const mergeVisibleWithHiddenItems = (visibleItems: readonly ExplorerItem[], hiddenItems: readonly ExplorerItem[]): readonly ExplorerItem[] => {
-  const merged = [...visibleItems, ...hiddenItems]
-  const seen = Object.create(null)
-  const unique = []
-  for (const item of merged) {
-    if (seen[item.path]) {
-      continue
-    }
-    seen[item.path] = true
-    unique.push(item)
-  }
-  return unique
 }
 
 // TODO maybe just insert items into explorer and refresh whole explorer
