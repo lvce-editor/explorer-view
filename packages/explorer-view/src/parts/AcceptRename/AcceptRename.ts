@@ -1,22 +1,14 @@
-import { VError } from '@lvce-editor/verror'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ComputeExplorerRenamedDirent from '../ComputeExplorerRenamedDirent/ComputeExplorerRenamedDirent.ts'
+import { createNewDirentsRename } from '../CreateNewDirentsRename/CreateNewDirentsRename.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
-import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
-import * as Path from '../Path/Path.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   const { editingIndex, editingValue, items, pathSeparator } = state
   const renamedDirent = items[editingIndex]
-  try {
-    // TODO this does not work with rename of nested file
-    const oldAbsolutePath = renamedDirent.path
-    const oldParentPath = Path.dirname(pathSeparator, oldAbsolutePath)
-    const newAbsolutePath = Path.join2(oldParentPath, editingValue)
-    await FileSystem.rename(oldAbsolutePath, newAbsolutePath)
-  } catch (error) {
-    console.error(new VError(error, `Failed to rename file`))
+  const successful = await createNewDirentsRename(renamedDirent, editingValue, pathSeparator)
+  if (!successful) {
     return state
   }
   const { newDirents, focusedIndex } = ComputeExplorerRenamedDirent.computeExplorerRenamedDirent(items, editingIndex, editingValue)
