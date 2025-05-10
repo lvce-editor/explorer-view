@@ -1,14 +1,18 @@
 import type { Create } from '../CreateNewDirentsAccept/CreateNewDirentsAccept.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { createNewDirentsAccept } from '../CreateNewDirentsAccept/CreateNewDirentsAccept.ts'
+import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
-import { getNewDirentsAccept } from '../GetNewDirentsAccept/GetNewDirentsAccept.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
+import { getPathParts } from '../GetPathParts/GetPathParts.ts'
+import { getPathPartsChildren } from '../GetPathPartsChildren/GetPathPartsChildren.ts'
+import { mergeTrees } from '../MergeTrees/MergeTrees.ts'
 import { join2 } from '../Path/Path.ts'
+import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 
 export const acceptCreate = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<ExplorerState> => {
   const { editingValue, minLineY, height, itemHeight, fileIconCache, pathSeparator, root, focusedIndex, items } = state
@@ -30,7 +34,20 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
     return state
   }
 
-  const { dirents, newFocusedIndex } = getNewDirentsAccept(items, focusedIndex, editingValue, root, pathSeparator, newDirentType)
+  const pathPaths = getPathParts(root, absolutePath, pathSeparator)
+  const children = await getPathPartsChildren(pathPaths)
+  // const mergedDirents = children
+
+  const tree = createTree(items, root)
+  const childTree = createTree(children, root)
+  const merged = mergeTrees(tree, childTree)
+
+  const newItems = treeToArray(merged, root)
+
+  const dirents = newItems
+  const newFocusedIndex = newItems.findIndex((dirent) => dirent.path === absolutePath)
+  console.log({ newFocusedIndex, newItems, absolutePath })
+  // const { dirents, newFocusedIndex } = getNewDirentsAccept(items, focusedIndex, editingValue, root, pathSeparator, newDirentType)
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, dirents.length)
   const visible = dirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
