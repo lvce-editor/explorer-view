@@ -1,7 +1,4 @@
-import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import type { PathPart } from '../PathPart/PathPart.ts'
-import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { getPathPartsChildren } from '../GetPathPartsChildren/GetPathPartsChildren.ts'
