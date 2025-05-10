@@ -1,37 +1,14 @@
-import { VError } from '@lvce-editor/verror'
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import type { NewDirentsAcceptResult } from '../NewDirentsAcceptResult/NewDirentsAcceptResult.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
-import * as CreateNestedPath from '../CreateNestedPath/CreateNestedPath.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
-import * as Path from '../Path/Path.ts'
 
-export interface Create {
-  (path: string): Promise<void>
-}
-
-export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<NewDirentsAcceptResult> => {
-  const { focusedIndex, editingValue, pathSeparator, root, items } = state
+export const getNewDirentsAccept = (state: ExplorerState, newDirentType: number): NewDirentsAcceptResult => {
+  const { focusedIndex, editingValue, items } = state
   const newFileName = editingValue
   const parentFolder = getParentFolder(state.items, focusedIndex, state.root)
   const absolutePath = [parentFolder, newFileName].join(state.pathSeparator)
-
-  try {
-    // Create parent directories if they don't exist
-    if (newFileName.includes(pathSeparator)) {
-      const parentPath = Path.dirname(pathSeparator, absolutePath)
-      await CreateNestedPath.createNestedPath(root, parentPath, pathSeparator)
-    }
-    await createFn(absolutePath)
-  } catch (error) {
-    console.error(new VError(error, `Failed to create file`))
-    // TODO display error
-    return {
-      dirents: state.items,
-      newFocusedIndex: state.focusedIndex,
-    }
-  }
 
   const parentDirent =
     focusedIndex >= 0
