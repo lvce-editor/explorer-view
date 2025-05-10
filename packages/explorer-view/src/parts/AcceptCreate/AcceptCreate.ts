@@ -35,7 +35,7 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
   const visible = dirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
 
-  const n = {
+  return {
     ...state,
     items: dirents,
     editingIndex: -1,
@@ -46,6 +46,4 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
     icons,
     fileIconCache: newFileIconCache,
   }
-  const l = await refresh(n)
-  return l
 }
