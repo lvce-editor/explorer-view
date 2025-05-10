@@ -239,15 +239,15 @@ test('acceptRename - maintains sorting order', async () => {
 test('acceptRename - handles nested directory structure', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string, path?: string) => {
+    invoke: async (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'folder2', type: DirentType.Directory },
           { name: 'file.txt', type: DirentType.File },
-        ])
+        ]
       }
       if (method === 'FileSystem.rename') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },
