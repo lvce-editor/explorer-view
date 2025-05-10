@@ -8,7 +8,7 @@ import { renameDirentsPath } from '../RenameDirentsPath/RenameDirentsPath.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
   try {
-    const { editingIndex, editingValue, items, pathSeparator, root } = state
+    const { editingIndex, editingValue, items, pathSeparator } = state
     const renamedDirent = items[editingIndex]
     const oldAbsolutePath = renamedDirent.path
     const oldParentPath = Path.dirname(pathSeparator, oldAbsolutePath)
