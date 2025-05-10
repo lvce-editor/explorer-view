@@ -7,6 +7,7 @@ import { getPathPartsToReveal } from '../GetPathPartsToReveal/GetPathPartsToReve
 import { mergeVisibleWithHiddenItems } from '../MergeVisibleWithHiddenItems/MergeVisibleWithHiddenItems.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 import { scrollInto } from '../ScrollInto/ScrollInto.ts'
+import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 const getPathPartChildren = async (pathPart: PathPart): Promise<readonly ExplorerItem[]> => {
   const children = await getChildDirents(pathPart.pathSeparator, pathPart)
