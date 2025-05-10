@@ -12,16 +12,16 @@ export interface Create {
 }
 
 export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<NewDirentsAcceptResult> => {
-  const { focusedIndex, editingValue, items } = state
+  const { focusedIndex, editingValue, pathSeparator, root, items } = state
   const newFileName = editingValue
   const parentFolder = getParentFolder(state.items, focusedIndex, state.root)
   const absolutePath = [parentFolder, newFileName].join(state.pathSeparator)
 
   try {
     // Create parent directories if they don't exist
-    if (newFileName.includes(state.pathSeparator)) {
-      const parentPath = Path.dirname(state.pathSeparator, absolutePath)
-      await CreateNestedPath.createNestedPath(parentPath, state.pathSeparator)
+    if (newFileName.includes(pathSeparator)) {
+      const parentPath = Path.dirname(pathSeparator, absolutePath)
+      await CreateNestedPath.createNestedPath(root, parentPath, pathSeparator)
     }
     await createFn(absolutePath)
   } catch (error) {
