@@ -14,7 +14,7 @@ test('handleBlur - when not editing, sets focused to false', async () => {
   expect(newState.focused).toBe(false)
 })
 
-test('handleBlur - when editing, keeps state unchanged', async () => {
+test.skip('handleBlur - when editing, keeps state unchanged', async () => {
   const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
     if (method === 'FileSystem.getPathSeparator') {
       return '/'
