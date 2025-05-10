@@ -19,7 +19,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Loc
   // act
   await inputBox.type('created.txt')
   await Explorer.updateEditingValue('created.txt')
-  await Command.execute('Explorer.handleBlur')
+  await Command.execute('Explorer.handleInputBlur')
 
   // assert
   const newFile = Locator('text=created.txt')
