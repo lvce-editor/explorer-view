@@ -9,7 +9,7 @@ export const updateTree = (
   const updatedTree = Object.create(null)
   updatedTree[path] = newDirents
 
-  const pathWithSlash = `${path}/`
+  const pathWithSlash = `${oldAbsolutePath}/`
 
   for (const [key, value] of Object.entries(tree)) {
     console.log({ key, value })

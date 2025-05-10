@@ -11,6 +11,7 @@ export const updateDirentsAtPath = (
   path: string,
   root: string,
   newDirents: readonly RawDirent[],
+  oldAbsolutePath: string,
 ): readonly ExplorerItem[] => {
   const sortedDirents = newDirents
     .map((dirent, index) => ({
