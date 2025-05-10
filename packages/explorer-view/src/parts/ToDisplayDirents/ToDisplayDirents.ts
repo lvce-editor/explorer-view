@@ -1,6 +1,7 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { RawDirent } from '../RawDirent/RawDirent.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
+import { toDisplayDirent } from '../ToDisplayDirent/ToDisplayDirent.ts'
 
 export const toDisplayDirents = (
   pathSeparator: string,
@@ -9,27 +10,17 @@ export const toDisplayDirents = (
   excluded: readonly string[],
 ): readonly ExplorerItem[] => {
   rawDirents = SortExplorerItems.sortExplorerItems(rawDirents)
-  // TODO figure out whether this uses too much memory (name,path -> redundant, depth could be computed on demand)
-  const toDisplayDirent = (rawDirent: any, index: number): any => {
-    const path = [parentDirent.path, rawDirent.name].join(pathSeparator)
-    return {
-      name: rawDirent.name,
-      posInSet: index + 1,
-      setSize: rawDirents.length,
-      depth: parentDirent.depth + 1,
-      type: rawDirent.type,
-      path, // TODO storing absolute path might be too costly, could also store relative path here
-      icon: '',
+  const result: ExplorerItem[] = []
+  const visibleItems = rawDirents.filter((item) => {
+    if (excluded.includes(item.name)) {
+      return false
     }
-  }
-  const result = []
-  let i = 0
-  for (const rawDirent of rawDirents) {
-    if (excluded.includes(rawDirent.name)) {
-      continue
-    }
-    result.push(toDisplayDirent(rawDirent, i))
-    i++
+    return true
+  })
+  const count = visibleItems.length
+  for (let i = 0; i < visibleItems.length; i++) {
+    const rawDirent = visibleItems[i]
+    result.push(toDisplayDirent(parentDirent, rawDirent, i, count))
   }
   return result
 }
