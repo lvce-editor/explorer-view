@@ -12,7 +12,7 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
   await FileSystem.mkdir(`${tmpDir}/a/b/c`)
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, '')
   await Workspace.setPath(tmpDir)
-  await Explorer.expandAll()
+  await Explorer.expandRecursively()
 
   // act
   await Explorer.focusIndex(1)
