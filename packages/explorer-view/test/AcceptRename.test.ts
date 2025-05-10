@@ -227,3 +227,51 @@ test('acceptRename - maintains sorting order', async () => {
   expect(result.items[2].name).toBe('z.txt')
   expect(result.focusedIndex).toBe(0)
 })
+
+test('acceptRename - handles nested directory structure', async () => {
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string, path?: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return Promise.resolve([
+          { name: 'folder2', type: DirentType.Directory },
+          { name: 'file.txt', type: DirentType.File },
+        ])
+      }
+      if (method === 'FileSystem.rename') {
+        return Promise.resolve()
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [
+      { name: 'folder1', type: DirentType.Directory, path: '/test/folder1', depth: 0, selected: false },
+      { name: 'nested1', type: DirentType.Directory, path: '/test/folder1/nested1', depth: 1, selected: false },
+      { name: 'file1.txt', type: DirentType.File, path: '/test/folder1/nested1/file1.txt', depth: 2, selected: false },
+      { name: 'nested2', type: DirentType.Directory, path: '/test/folder1/nested2', depth: 1, selected: false },
+      { name: 'file2.txt', type: DirentType.File, path: '/test/folder1/nested2/file2.txt', depth: 2, selected: false },
+    ],
+    editingIndex: 0,
+    editingValue: 'folder2',
+    editingType: ExplorerEditingType.Rename,
+    pathSeparator: PathSeparatorType.Slash,
+  }
+
+  const result = await acceptRename(state)
+  expect(result.items).toHaveLength(5)
+  expect(result.items[0].name).toBe('folder2')
+  expect(result.items[0].path).toBe('/test/folder2')
+  expect(result.items[1].name).toBe('nested1')
+  expect(result.items[1].path).toBe('/test/folder2/nested1')
+  expect(result.items[2].name).toBe('file1.txt')
+  expect(result.items[2].path).toBe('/test/folder2/nested1/file1.txt')
+  expect(result.items[3].name).toBe('nested2')
+  expect(result.items[3].path).toBe('/test/folder2/nested2')
+  expect(result.items[4].name).toBe('file2.txt')
+  expect(result.items[4].path).toBe('/test/folder2/nested2/file2.txt')
+  expect(result.focusedIndex).toBe(0)
+})
