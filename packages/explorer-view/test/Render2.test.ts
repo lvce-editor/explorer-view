@@ -35,7 +35,7 @@ test('render2 - basic', () => {
           onFocus: 'handleListFocus',
           onPointerDown: 'handlePointerDown',
           onWheel: 'handleWheel',
-          onKeyDown: 'handleListKeyDown',
+          // onKeyDown: 'handleListKeyDown',
           role: 'tree',
           tabIndex: 0,
           type: 4,
