@@ -21,12 +21,11 @@ export const updateDirentsAtPath = async (items: readonly ExplorerItem[], path: 
     }))
     .sort(CompareDirent.compareDirent)
 
-  const map = {
-    ...createTree(items),
+  const tree = createTree(items)
+  const updatedTree = {
+    ...tree,
     [path]: sortedDirents,
   }
-
-  const newItems = treeToArray(map, root)
-
+  const newItems = treeToArray(updatedTree, root)
   return newItems
 }
