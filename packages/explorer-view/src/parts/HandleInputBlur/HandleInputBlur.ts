@@ -1,6 +1,12 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as CancelEdit from '../CancelEdit/CancelEdit.ts'
+import { acceptEdit } from '../AcceptEdit/AcceptEdit.ts'
+import { cancelEditInternal } from '../CancelEditInternal/CancelEditInternal.ts'
 
-export const handleInputBlur = (state: ExplorerState): ExplorerState => {
-  return CancelEdit.cancelEdit(state)
+export const handleInputBlur = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { editingErrorMessage, editingValue } = state
+
+  if (editingErrorMessage || !editingValue) {
+    return cancelEditInternal(state, false)
+  }
+  return acceptEdit(state)
 }
