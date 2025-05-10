@@ -4,14 +4,8 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import type { NewDirentsAcceptResult } from '../NewDirentsAcceptResult/NewDirentsAcceptResult.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import * as CreateNestedPath from '../CreateNestedPath/CreateNestedPath.ts'
+import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
 import * as Path from '../Path/Path.ts'
-
-const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: string): string => {
-  if (index < 0) {
-    return root
-  }
-  return dirents[index].path
-}
 
 export interface Create {
   (path: string): Promise<void>
