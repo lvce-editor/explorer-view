@@ -5,8 +5,9 @@ import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType
 export const handleBlur = async (state: ExplorerState): Promise<ExplorerState> => {
   // TODO when blur event occurs because of context menu, focused index should stay the same
   // but focus outline should be removed
-  const { editingType } = state
-  if (editingType === ExplorerEditingType.None) {
+  const { editingType, editingErrorMessage, editingValue } = state
+
+  if (editingType === ExplorerEditingType.None || editingErrorMessage || !editingValue) {
     return {
       ...state,
       focused: false,
