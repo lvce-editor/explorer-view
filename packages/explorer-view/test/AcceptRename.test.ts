@@ -9,7 +9,7 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
-test.skip('acceptRename - basic file rename', async () => {
+test('acceptRename - basic file rename', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
@@ -49,7 +49,7 @@ test.skip('acceptRename - basic file rename', async () => {
   expect(result.editingType).toBe(ExplorerEditingType.None)
 })
 
-test.skip('acceptRename - folder rename', async () => {
+test('acceptRename - folder rename', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
@@ -87,7 +87,7 @@ test.skip('acceptRename - folder rename', async () => {
   expect(result.focusedIndex).toBe(0)
 })
 
-test.skip('acceptRename - nested file rename', async () => {
+test('acceptRename - nested file rename', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
@@ -127,7 +127,7 @@ test.skip('acceptRename - nested file rename', async () => {
   expect(result.focusedIndex).toBe(1)
 })
 
-test.skip('acceptRename - preserves nested items', async () => {
+test('acceptRename - preserves nested items', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
@@ -163,7 +163,7 @@ test.skip('acceptRename - preserves nested items', async () => {
   expect(result.focusedIndex).toBe(0)
 })
 
-test.skip('acceptRename - handles rename error', async () => {
+test('acceptRename - handles rename error', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {

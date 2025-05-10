@@ -13,7 +13,7 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     // TODO this does not work with rename of nested file
     const oldAbsolutePath = renamedDirent.path
     const oldParentPath = Path.dirname(pathSeparator, oldAbsolutePath)
-    const newAbsolutePath = [oldParentPath, editingValue].join(pathSeparator)
+    const newAbsolutePath = Path.join2(oldParentPath, editingValue)
     await FileSystem.rename(oldAbsolutePath, newAbsolutePath)
   } catch (error) {
     console.error(new VError(error, `Failed to rename file`))
