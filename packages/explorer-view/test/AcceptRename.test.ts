@@ -9,18 +9,18 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
-test.only('acceptRename - basic file rename', async () => {
+test('acceptRename - basic file rename', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string, path?: string) => {
+    invoke: async (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'b.txt', type: DirentType.File },
           { name: 'c.txt', type: DirentType.File },
-        ])
+        ]
       }
       if (method === 'FileSystem.rename') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -29,6 +29,7 @@ test.only('acceptRename - basic file rename', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    root: '/test',
     items: [
       { name: 'a.txt', type: DirentType.File, path: '/test/a.txt', depth: 0, selected: false },
       { name: 'c.txt', type: DirentType.File, path: '/test/c.txt', depth: 0, selected: false },
