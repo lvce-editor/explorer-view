@@ -10,10 +10,10 @@ export const updateDirentsAtPath = (
   items: readonly ExplorerItem[],
   path: string,
   root: string,
-  newDirents: readonly RawDirent[],
+  insertedDirents: readonly RawDirent[],
   oldAbsolutePath: string,
 ): readonly ExplorerItem[] => {
-  const sortedDirents = newDirents
+  const sortedDirents = insertedDirents
     .map((dirent, index) => ({
       name: dirent.name,
       type: dirent.type,
@@ -21,7 +21,7 @@ export const updateDirentsAtPath = (
       depth: 0, // TODO
       selected: false,
       posInSet: index + 1,
-      setSize: newDirents.length,
+      setSize: insertedDirents.length,
       icon: '',
     }))
     .sort(CompareDirent.compareDirent)
