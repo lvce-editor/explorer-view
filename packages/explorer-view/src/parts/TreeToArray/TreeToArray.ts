@@ -1,23 +1,32 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { Tree } from '../Tree/Tree.ts'
+import { join2 } from '../Path/Path.ts'
 
-export const treeToArray = (map: Record<string, readonly ExplorerItem[]>, root: string): readonly ExplorerItem[] => {
+export const treeToArray = (map: Tree, root: string): readonly ExplorerItem[] => {
   const items: ExplorerItem[] = []
   const processChildren = (path: string, depth: number): void => {
     const children = map[path]
     if (!children) {
       return
     }
-    for (let i = 0; i < children.length; i++) {
+    const count = children.length
+    for (let i = 0; i < count; i++) {
       const child = children[i]
+      const childPath = join2(path, child.name)
+      const absolutePath = `${root}${childPath}`
       items.push({
-        ...child,
         depth,
         posInSet: i + 1,
-        setSize: children.length,
+        setSize: count,
+        icon: '',
+        path: absolutePath,
+        selected: false,
+        name: child.name,
+        type: child.type,
       })
-      processChildren(child.path, depth + 1)
+      processChildren(childPath, depth + 1)
     }
   }
-  processChildren(root, 0)
+  processChildren('', 0)
   return items
 }

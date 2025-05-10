@@ -1,7 +1,7 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { RawDirent } from '../RawDirent/RawDirent.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
-import { createTree } from '../CreateRenameMap/CreateRenameMap.ts'
+import { createTree } from '../CreateTree/CreateTree.ts'
 import { join2 } from '../Path/Path.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 
@@ -24,7 +24,7 @@ export const updateDirentsAtPath = (
     }))
     .sort(CompareDirent.compareDirent)
 
-  const tree = createTree(items)
+  const tree = createTree(items, root)
   const updatedTree = {
     ...tree,
     [path]: sortedDirents,
