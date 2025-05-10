@@ -36,7 +36,6 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
 
   const pathPaths = getPathParts(root, absolutePath, pathSeparator)
   const children = await getPathPartsChildren(pathPaths)
-  // const mergedDirents = children
 
   const tree = createTree(items, root)
   const childTree = createTree(children, root)
