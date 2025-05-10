@@ -1,6 +1,6 @@
 import { VError } from '@lvce-editor/verror'
-import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as Path from '../Path/Path.ts'
