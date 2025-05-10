@@ -6,6 +6,10 @@ export const dirname = (pathSeparator: string, path: string): string => {
   return path.slice(0, index)
 }
 
+export const dirname2 = (path: string): string => {
+  return dirname('/', path)
+}
+
 export const join = (pathSeparator: string, ...parts: readonly string[]): string => {
   return parts.join(pathSeparator)
 }
