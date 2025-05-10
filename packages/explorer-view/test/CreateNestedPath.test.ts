@@ -15,8 +15,8 @@ test('createNestedPath - creates all directories', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-
-  await createNestedPath('/a/b/c', '/')
+  const root = '/a'
+  await createNestedPath(root, '/a/b/c', '/')
 })
 
 test('createNestedPath - handles existing directories', async () => {
@@ -30,8 +30,8 @@ test('createNestedPath - handles existing directories', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-
-  await createNestedPath('/a/b/c', '/')
+  const root = '/a'
+  await createNestedPath(root, '/a/b/c', '/')
 })
 
 test('createNestedPath - propagates other errors', async () => {
@@ -45,6 +45,6 @@ test('createNestedPath - propagates other errors', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-
-  await expect(createNestedPath('/a/b/c', '/')).rejects.toThrow('Permission denied')
+  const root = '/a'
+  await expect(createNestedPath(root, '/a/b/c', '/')).rejects.toThrow('Permission denied')
 })
