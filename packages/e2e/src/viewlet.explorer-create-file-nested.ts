@@ -23,6 +23,12 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
   await Explorer.acceptEdit()
 
   // assert
-  const newFile = Locator('text=created.txt')
-  await expect(newFile).toBeVisible()
+  const file1 = Locator('.TreeItem').nth(0)
+  await expect(file1).toHaveText('a')
+  const file2 = Locator('.TreeItem').nth(1)
+  await expect(file2).toHaveText('b')
+  const file3 = Locator('.TreeItem').nth(2)
+  await expect(file3).toHaveText('created.txt')
+  const file4 = Locator('.TreeItem').nth(3)
+  await expect(file4).toHaveText('file1.txt')
 }
