@@ -12,7 +12,7 @@ export interface Create {
 }
 
 export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<NewDirentsAcceptResult> => {
-  const { focusedIndex, editingValue } = state
+  const { focusedIndex, editingValue, items } = state
   const newFileName = editingValue
   const parentFolder = getParentFolder(state.items, focusedIndex, state.root)
   const absolutePath = [parentFolder, newFileName].join(state.pathSeparator)
@@ -54,12 +54,11 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
   }
   // @ts-ignore
   newDirent.icon = ''
-  let insertIndex = state.focusedIndex
+  let insertIndex = focusedIndex
   let deltaPosInSet = 0
   let posInSet = 1
   let setSize = 1
-  let i = Math.max(state.focusedIndex, -1) + 1
-  const { items } = state
+  let i = Math.max(focusedIndex, -1) + 1
   // TODO update posinset and setsize of all affected dirents
   for (; i < items.length; i++) {
     const dirent = items[i]
