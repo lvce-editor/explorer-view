@@ -29,7 +29,13 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
       items: newItems,
     }
   } catch (error) {
-    console.error(new VError(error, `Failed to rename file`))
+import * as FocusId from '../FocusId/FocusId.ts'
+
+export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { editingIndex, editingValue, items, pathSeparator } = state
+  const renamedDirent = items[editingIndex]
+  const successful = await createNewDirentsRename(renamedDirent, editingValue, pathSeparator)
+  if (!successful) {
     return state
   }
 }

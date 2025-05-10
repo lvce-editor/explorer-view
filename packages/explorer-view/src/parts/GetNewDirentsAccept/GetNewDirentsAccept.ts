@@ -3,26 +3,26 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import type { NewDirentsAcceptResult } from '../NewDirentsAcceptResult/NewDirentsAcceptResult.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
-import * as DirentType from '../DirentType/DirentType.ts'
-
-const getParentFolder = (dirents: readonly ExplorerItem[], index: number, root: string): string => {
-  if (index < 0) {
-    return root
-  }
-  return dirents[index].path
-}
+import * as CreateNestedPath from '../CreateNestedPath/CreateNestedPath.ts'
+import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
+import * as Path from '../Path/Path.ts'
 
 export interface Create {
   (path: string): Promise<void>
 }
 
 export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<NewDirentsAcceptResult> => {
-  const { focusedIndex, editingValue } = state
+  const { focusedIndex, editingValue, pathSeparator, root, items } = state
   const newFileName = editingValue
   const parentFolder = getParentFolder(state.items, focusedIndex, state.root)
   const absolutePath = [parentFolder, newFileName].join(state.pathSeparator)
-  // TODO better handle error
+
   try {
+    // Create parent directories if they don't exist
+    if (newFileName.includes(pathSeparator)) {
+      const parentPath = Path.dirname(pathSeparator, absolutePath)
+      await CreateNestedPath.createNestedPath(root, parentPath, pathSeparator)
+    }
     await createFn(absolutePath)
   } catch (error) {
     console.error(new VError(error, `Failed to create file`))
@@ -32,6 +32,7 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
       newFocusedIndex: state.focusedIndex,
     }
   }
+
   const parentDirent =
     focusedIndex >= 0
       ? state.items[focusedIndex]
@@ -53,12 +54,11 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
   }
   // @ts-ignore
   newDirent.icon = ''
-  let insertIndex = state.focusedIndex
+  let insertIndex = focusedIndex
   let deltaPosInSet = 0
   let posInSet = 1
   let setSize = 1
-  let i = Math.max(state.focusedIndex, -1) + 1
-  const { items } = state
+  let i = Math.max(focusedIndex, -1) + 1
   // TODO update posinset and setsize of all affected dirents
   for (; i < items.length; i++) {
     const dirent = items[i]
@@ -87,11 +87,10 @@ export const getNewDirentsAccept = async (state: ExplorerState, newDirentType: n
   newDirent.setSize = setSize
   // @ts-ignore
   newDirent.posInSet = posInSet
-  // @ts-ignore
-  items.splice(insertIndex + 1, 0, newDirent)
-  const newDirents = [...items].filter((item) => item.type !== DirentType.EditingFile && item.type !== DirentType.EditingFolder)
+  const newItems = [...items]
+  newItems.splice(insertIndex + 1, 0, newDirent)
   return {
-    dirents: newDirents,
+    dirents: newItems,
     newFocusedIndex: insertIndex + 1,
   }
 }

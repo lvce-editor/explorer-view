@@ -1,8 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-
-const isTopLevel = (dirent: any): boolean => {
-  return dirent.depth === 1
-}
+import { isTopLevel } from '../IsTopLevel/IsTopLevel.ts'
 
 export const orderDirents = (dirents: readonly ExplorerItem[]): readonly ExplorerItem[] => {
   if (dirents.length === 0) {
