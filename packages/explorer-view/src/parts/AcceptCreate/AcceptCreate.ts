@@ -26,7 +26,10 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
   }
   const parentFolder = getParentFolder(items, focusedIndex, root)
   const absolutePath = join2(parentFolder, newFileName)
-  await createNewDirentsAccept(newFileName, pathSeparator, absolutePath, root, createFn)
+  const successful = await createNewDirentsAccept(newFileName, pathSeparator, absolutePath, root, createFn)
+  if (!successful) {
+    return state
+  }
   const { dirents, newFocusedIndex } = getNewDirentsAccept(state, newDirentType)
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, dirents.length)
   const visible = dirents.slice(minLineY, maxLineY)
