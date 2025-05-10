@@ -29,7 +29,8 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
   if (!successful) {
     return state
   }
-  const { dirents, newFocusedIndex } = getNewDirentsAccept(state, newDirentType)
+
+  const { dirents, newFocusedIndex } = getNewDirentsAccept(items, focusedIndex, editingValue, root, pathSeparator, newDirentType)
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, dirents.length)
   const visible = dirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)

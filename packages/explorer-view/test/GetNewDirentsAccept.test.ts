@@ -1,7 +1,8 @@
 import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewDirentsAccept } from '../src/parts/GetNewDirentsAccept/GetNewDirentsAccept.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
@@ -17,17 +18,13 @@ test('getNewDirentsAccept - create file in root', async () => {
   })
   RpcRegistry.set(RendererWorker, mockRpc)
 
-  const defaultState = createDefaultState()
-  const state = {
-    ...defaultState,
-    editingValue: 'test.txt',
-    focusedIndex: -1,
-    root: '/root',
-    pathSeparator: '/',
-  }
-
-  const result = getNewDirentsAccept(state, 1)
-
+  const items: readonly ExplorerItem[] = []
+  const editingValue = 'test.txt'
+  const focusedIndex = -1
+  const root = '/root'
+  const pathSeparator = '/'
+  const newDirentType = DirentType.File
+  const result = getNewDirentsAccept(items, focusedIndex, editingValue, root, pathSeparator, newDirentType)
   expect(result.dirents).toHaveLength(1)
   expect(result.dirents[0]).toEqual({
     path: '/root/test.txt',
@@ -35,7 +32,7 @@ test('getNewDirentsAccept - create file in root', async () => {
     setSize: 1,
     depth: 1,
     name: 'test.txt',
-    type: 1,
+    type: DirentType.File,
     icon: '',
     selected: false,
   })
@@ -54,28 +51,26 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
   })
   RpcRegistry.set(RendererWorker, mockRpc)
 
-  const defaultState = createDefaultState()
-  const state = {
-    ...defaultState,
-    editingValue: 'test.txt',
-    focusedIndex: 0,
-    root: '/root',
-    pathSeparator: '/',
-    items: [
-      {
-        path: '/root/folder',
-        posInSet: 1,
-        setSize: 1,
-        depth: 1,
-        name: 'folder',
-        type: 2,
-        icon: '',
-        selected: false,
-      },
-    ],
-  }
+  const newDirentType = DirentType.File
 
-  const result = getNewDirentsAccept(state, 1)
+  const editingValue = 'test.txt'
+  const focusedIndex = 0
+  const root = '/root'
+  const pathSeparator = '/'
+  const items = [
+    {
+      path: '/root/folder',
+      posInSet: 1,
+      setSize: 1,
+      depth: 1,
+      name: 'folder',
+      type: 2,
+      icon: '',
+      selected: false,
+    },
+  ]
+
+  const result = getNewDirentsAccept(items, focusedIndex, editingValue, root, pathSeparator, newDirentType)
 
   expect(result.dirents).toHaveLength(2)
   expect(result.dirents[1]).toEqual({
@@ -84,7 +79,7 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
     setSize: 1,
     depth: 2,
     name: 'test.txt',
-    type: 1,
+    type: DirentType.File,
     icon: '',
     selected: false,
   })
@@ -106,17 +101,13 @@ test('getNewDirentsAccept - create nested file', async () => {
   })
   RpcRegistry.set(RendererWorker, mockRpc)
 
-  const defaultState = createDefaultState()
-  const state = {
-    ...defaultState,
-    editingValue: 'a/b/c/test.txt',
-    focusedIndex: -1,
-    root: '/root',
-    pathSeparator: '/',
-  }
-
-  const result = getNewDirentsAccept(state, 1)
-
+  const items: readonly ExplorerItem[] = []
+  const editingValue = 'a/b/c/test.txt'
+  const focusedIndex = -1
+  const root = '/root'
+  const pathSeparator = '/'
+  const newDirentType = DirentType.File
+  const result = getNewDirentsAccept(items, focusedIndex, editingValue, root, pathSeparator, newDirentType)
   expect(result.dirents).toHaveLength(1)
   expect(result.dirents[0]).toEqual({
     path: '/root/a/b/c/test.txt',
@@ -124,7 +115,7 @@ test('getNewDirentsAccept - create nested file', async () => {
     setSize: 1,
     depth: 1,
     name: 'a/b/c/test.txt',
-    type: 1,
+    type: DirentType.File,
     icon: '',
     selected: false,
   })
@@ -143,17 +134,15 @@ test.skip('getNewDirentsAccept - handle error', async () => {
   })
   RpcRegistry.set(RendererWorker, mockRpc)
 
-  const defaultState = createDefaultState()
-  const state = {
-    ...defaultState,
-    editingValue: 'test.txt',
-    focusedIndex: -1,
-    root: '/root',
-    pathSeparator: '/',
-  }
+  const editingValue = 'test.txt'
+  const focusedIndex = -1
+  const root = '/root'
+  const pathSeparator = '/'
+  const items: readonly ExplorerItem[] = []
+  const newDirentType = DirentType.File
 
-  const result = getNewDirentsAccept(state, 1)
+  const result = getNewDirentsAccept(items, focusedIndex, editingValue, root, pathSeparator, newDirentType)
 
-  expect(result.dirents).toEqual(state.items)
-  expect(result.newFocusedIndex).toBe(state.focusedIndex)
+  expect(result.dirents).toEqual(items)
+  expect(result.newFocusedIndex).toBe(focusedIndex)
 })
