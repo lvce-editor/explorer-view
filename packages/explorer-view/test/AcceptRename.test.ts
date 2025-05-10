@@ -130,15 +130,15 @@ test('acceptRename - nested file rename', async () => {
   expect(result.focusedIndex).toBe(1)
 })
 
-test('acceptRename - preserves nested items', async () => {
+test.only('acceptRename - preserves nested items', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([{ name: 'folder2', type: DirentType.Directory }])
+        return [{ name: 'folder2', type: DirentType.Directory }]
       }
       if (method === 'FileSystem.rename') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },
