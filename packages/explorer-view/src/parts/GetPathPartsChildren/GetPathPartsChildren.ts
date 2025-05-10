@@ -8,7 +8,7 @@ const getPathPartChildren = async (pathPart: PathPart): Promise<readonly Explore
   return children
 }
 
-export const getPathPartsChildren = async (pathparts: readonly PathPart[]) => {
+export const getPathPartsChildren = async (pathparts: readonly PathPart[]): Promise<readonly ExplorerItem[]> => {
   const pathPartsChildren = await Promise.all(pathparts.map(getPathPartChildren))
   const pathPartsChildrenFlat = pathPartsChildren.flat()
   const orderedPathParts = orderDirents(pathPartsChildrenFlat)
