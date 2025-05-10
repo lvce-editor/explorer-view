@@ -1,13 +1,16 @@
-import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as CompareDirent from '../CompareDirent/CompareDirent.ts'
 import { createTree } from '../CreateRenameMap/CreateRenameMap.ts'
-import * as FileSystem from '../FileSystem/FileSystem.ts'
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import { join2 } from '../Path/Path.ts'
+import { RawDirent } from '../RawDirent/RawDirent.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 
-export const updateDirentsAtPath = async (items: readonly ExplorerItem[], path: string, root: string): Promise<readonly ExplorerItem[]> => {
-  const newDirents = await FileSystem.readDirWithFileTypes(path)
-
+export const updateDirentsAtPath = (
+  items: readonly ExplorerItem[],
+  path: string,
+  root: string,
+  newDirents: readonly RawDirent[],
+): readonly ExplorerItem[] => {
   const sortedDirents = newDirents
     .map((dirent, index) => ({
       name: dirent.name,

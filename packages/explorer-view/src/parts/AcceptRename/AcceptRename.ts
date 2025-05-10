@@ -14,7 +14,8 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     const oldParentPath = Path.dirname(pathSeparator, oldAbsolutePath)
     const newAbsolutePath = [oldParentPath, editingValue].join(pathSeparator)
     await FileSystem.rename(oldAbsolutePath, newAbsolutePath)
-    const newItems = await updateDirentsAtPath(items, oldParentPath, root)
+    const newDirents = await FileSystem.readDirWithFileTypes(oldParentPath)
+    const newItems = updateDirentsAtPath(items, oldParentPath, root, newDirents)
     const focusedIndex = newItems.findIndex((item) => item.path === newAbsolutePath)
     return {
       ...state,
