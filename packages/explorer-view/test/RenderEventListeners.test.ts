@@ -9,11 +9,11 @@ test('renderEventListeners', () => {
       name: DomEventListenersFunctions.HandleInputBlur,
       params: ['handleInputBlur'],
     },
-    {
-      name: DomEventListenersFunctions.HandleListKeyDown,
-      params: ['handleKeyDown', 'event.key'],
-      preventDefault: true,
-    },
+    // {
+    //   name: DomEventListenersFunctions.HandleListKeyDown,
+    //   params: ['handleKeyDown', 'event.key'],
+    //   preventDefault: true,
+    // },
     {
       name: DomEventListenersFunctions.HandleListFocus,
       params: ['handleFocus', 'event.isTrusted', 'event.target.className'],
