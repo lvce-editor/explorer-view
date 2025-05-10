@@ -9,7 +9,6 @@ import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import { getNewDirentsAccept } from '../GetNewDirentsAccept/GetNewDirentsAccept.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
 import { join2 } from '../Path/Path.ts'
-import { refresh } from '../Refresh/Refresh.ts'
 
 export const acceptCreate = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<ExplorerState> => {
   const { editingValue, minLineY, height, itemHeight, fileIconCache, pathSeparator, root, focusedIndex, items } = state
