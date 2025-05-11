@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { Label, InputBox, InputValidationError } from '../src/parts/ClassNames/ClassNames.ts'
+import { Label, InputValidationError } from '../src/parts/ClassNames/ClassNames.ts'
 import { getInputOrLabelDom } from '../src/parts/GetInputOrLabelDom/GetInputOrLabelDom.ts'
 import { Div, Input } from '../src/parts/VirtualDomElements/VirtualDomElements.ts'
 
@@ -7,7 +7,7 @@ test('getInputOrLabelDom - editing state', () => {
   const result = getInputOrLabelDom(true, false, 'test')
   expect(result).toHaveLength(1)
   expect(result[0].type).toBe(Input)
-  expect(result[0].className).toBe(`InputBox ExplorerInputBox`)
+  expect(result[0].className).toBe(`ExplorerInputBox`)
 })
 
 test('getInputOrLabelDom - non-editing state', () => {
@@ -23,5 +23,5 @@ test('getInputOrLabelDom - editing state with error', () => {
   const result = getInputOrLabelDom(true, true, 'test')
   expect(result).toHaveLength(1)
   expect(result[0].type).toBe(Input)
-  expect(result[0].className).toBe(`${InputBox} ExplorerInputBox ${InputValidationError}`)
+  expect(result[0].className).toBe(`ExplorerInputBox ${InputValidationError}`)
 })
