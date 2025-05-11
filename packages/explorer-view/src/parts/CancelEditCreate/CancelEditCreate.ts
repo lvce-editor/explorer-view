@@ -13,6 +13,7 @@ export const cancelEditCreate = (state: ExplorerState, keepFocus: boolean): Expl
     focused: keepFocus,
     editingIndex: -1,
     editingValue: '',
+    editingErrorMessage: '',
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
   }
