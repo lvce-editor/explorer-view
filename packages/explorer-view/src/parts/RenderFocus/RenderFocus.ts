@@ -7,6 +7,9 @@ export const renderFocus = (oldState: ExplorerState, newState: ExplorerState): r
   if (newState.inputSource === InputSource.User) {
     return []
   }
+  if (!newState.focused) {
+    return []
+  }
   if (newState.focus === FocusId.Input) {
     return ['Viewlet.focusElementByName', InputName.ExplorerInput]
   }
