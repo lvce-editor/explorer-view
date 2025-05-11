@@ -3,6 +3,7 @@
 
 import type { ValidateFileNameResult } from '../ValidateFileNameResult/ValidateFileNameResult.ts'
 import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
+import { hasLeadingOrTrailingWhitespace } from '../HasLeadingOrTrailingWhitespace/HasLeadingOrTrailingWhitespace.ts'
 import { isValidBasename } from '../IsValidBaseName/IsValidBaseName.ts'
 import * as Severity from '../Severity/Severity.ts'
 
@@ -136,7 +137,7 @@ export function validateFileName(name: string, existingName: string, siblingFile
     }
   }
 
-  if (names.some((name) => /^\s|\s$/.test(name))) {
+  if (names.some(hasLeadingOrTrailingWhitespace)) {
     return {
       content: ExplorerStrings.leadingOrTrailingWhitespaceDetected(),
       severity: Severity.Warning,
