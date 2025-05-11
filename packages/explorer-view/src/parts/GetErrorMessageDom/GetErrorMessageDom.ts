@@ -4,12 +4,12 @@ import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as Px from '../Px/Px.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
-export const getErrorMessageDom = (errorMessage: string, errorMessageTop: number): readonly VirtualDomNode[] => {
+export const getErrorMessageDom = (errorMessage: string, errorMessageLeft: number, errorMessageTop: number): readonly VirtualDomNode[] => {
   if (!errorMessage) {
     return []
   }
 
-  const translateString = Px.position(0, errorMessageTop)
+  const translateString = Px.position(errorMessageLeft, errorMessageTop)
   return [
     {
       type: VirtualDomElements.Div,
