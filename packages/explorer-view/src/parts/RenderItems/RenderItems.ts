@@ -1,10 +1,7 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as GetErrorMessagePosition from '../GetErrorMessagePosition/GetErrorMessagePosition.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
-
-const getErrorMessageTop = (itemHeight: number, focusedIndex: number, minLineY: number): number => {
-  return itemHeight * (focusedIndex - minLineY + 1)
-}
 
 export const renderItems = (oldState: ExplorerState, newState: ExplorerState): any => {
   const visibleDirents = GetVisibleExplorerItems.getVisibleExplorerItems(
@@ -23,7 +20,20 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
   )
   const isWide = newState.width > 450
   const contentHeight = newState.items.length * newState.itemHeight
-  const errorMessageTop = getErrorMessageTop(newState.itemHeight, newState.focusedIndex, newState.minLineY)
+  const depth = newState.items[newState.focusedIndex]?.depth || 0
+  const indent = 15
+  const padding = 10
+  const fileIconWidth = 16
+  const { top, left } = GetErrorMessagePosition.getErrorMessagePosition(
+    newState.itemHeight,
+    newState.focusedIndex,
+    newState.minLineY,
+    depth,
+    indent,
+    fileIconWidth,
+    padding,
+  )
+
   const dom = GetExplorerVirtualDom.getExplorerVirtualDom(
     visibleDirents,
     newState.focusedIndex,
@@ -35,7 +45,8 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     contentHeight,
     newState.deltaY,
     newState.editingErrorMessage,
-    errorMessageTop,
+    top,
+    left,
   )
   return ['Viewlet.setDom2', dom]
 }

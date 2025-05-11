@@ -32,6 +32,7 @@ export const getExplorerVirtualDom = (
   scrollTop: number,
   errorMessage: string,
   errorMessageTop: number,
+  errorMessageLeft: number,
 ): readonly VirtualDomNode[] => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
@@ -39,7 +40,7 @@ export const getExplorerVirtualDom = (
   const scrollBarHeight = GetScrollBarSize.getScrollBarSize(height, contentHeight, 20)
   const scrollBarTop = Math.round((scrollTop / contentHeight) * height)
   const scrollBarDom = GetScrollBarVirtualDom.getScrollBarVirtualDom(scrollBarHeight, scrollBarTop)
-  const errorDom = GetErrorMessageDom.getErrorMessageDom(errorMessage, errorMessageTop)
+  const errorDom = GetErrorMessageDom.getErrorMessageDom(errorMessage, errorMessageLeft, errorMessageTop)
   const childCount = getChildCount(scrollBarDom.length, errorDom.length)
   const parentNode: VirtualDomNode = {
     type: VirtualDomElements.Div,
