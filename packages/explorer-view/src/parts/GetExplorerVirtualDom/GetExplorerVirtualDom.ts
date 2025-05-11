@@ -1,6 +1,7 @@
 import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
+import * as GetErrorMessageDom from '../GetErrorMessageDom/GetErrorMessageDom.ts'
 import * as GetExplorerWelcomeVirtualDom from '../GetExplorerWelcomeVirtualDom/GetExplorerWelcomeVirtualDom.ts'
 import * as GetListItemsVirtualDom from '../GetListItemsVirtualDom/GetListItemsVirtualDom.ts'
 import * as GetScrollBarSize from '../GetScrollBarSize/GetScrollBarSize.ts'
@@ -8,11 +9,15 @@ import * as GetScrollBarVirtualDom from '../GetScrollBarVirtualDom/GetScrollBarV
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
-const parentNode: VirtualDomNode = {
-  type: VirtualDomElements.Div,
-  childCount: 2,
-  className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
-  role: 'none',
+const getChildCount = (scrollBarDomLength: number, errorDomLength: number): number => {
+  let childCount = 1
+  if (scrollBarDomLength > 0) {
+    childCount++
+  }
+  if (errorDomLength > 0) {
+    childCount++
+  }
+  return childCount
 }
 
 export const getExplorerVirtualDom = (
@@ -25,6 +30,8 @@ export const getExplorerVirtualDom = (
   height: number,
   contentHeight: number,
   scrollTop: number,
+  errorMessage: string,
+  errorMessageTop: number,
 ): readonly VirtualDomNode[] => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
@@ -32,10 +39,19 @@ export const getExplorerVirtualDom = (
   const scrollBarHeight = GetScrollBarSize.getScrollBarSize(height, contentHeight, 20)
   const scrollBarTop = Math.round((scrollTop / contentHeight) * height)
   const scrollBarDom = GetScrollBarVirtualDom.getScrollBarVirtualDom(scrollBarHeight, scrollBarTop)
+  const errorDom = GetErrorMessageDom.getErrorMessageDom(errorMessage, errorMessageTop)
+  const childCount = getChildCount(scrollBarDom.length, errorDom.length)
+  const parentNode: VirtualDomNode = {
+    type: VirtualDomElements.Div,
+    childCount,
+    className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
+    role: 'none',
+  }
   const dom: readonly VirtualDomNode[] = [
     parentNode,
     ...GetListItemsVirtualDom.getListItemsVirtualDom(visibleItems, focusedIndex, focused, dropTargets),
     ...scrollBarDom,
+    ...errorDom,
   ]
   return dom
 }
