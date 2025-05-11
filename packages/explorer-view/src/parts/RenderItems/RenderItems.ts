@@ -21,9 +21,11 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
   const isWide = newState.width > 450
   const contentHeight = newState.items.length * newState.itemHeight
   const depth = newState.items[newState.focusedIndex]?.depth || 0
-  const indent = 15
+  const indent = 8
   const padding = 10
   const fileIconWidth = 16
+  const defaultPaddingLeft = 0
+  const chevronSpace = 22
   const { top, left } = GetErrorMessagePosition.getErrorMessagePosition(
     newState.itemHeight,
     newState.focusedIndex,
@@ -31,7 +33,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     depth,
     indent,
     fileIconWidth,
-    padding,
+    padding + defaultPaddingLeft + chevronSpace,
   )
 
   const dom = GetExplorerVirtualDom.getExplorerVirtualDom(
