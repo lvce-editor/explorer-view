@@ -9,14 +9,12 @@ export const getErrorMessageDom = (errorMessage: string, errorMessageTop: number
     return []
   }
 
-  const heightString = Px.px(20)
   const translateString = Px.position(0, errorMessageTop)
   return [
     {
       type: VirtualDomElements.Div,
       className: MergeClassNames.mergeClassNames(ClassNames.ExplorerErrorMessage),
       childCount: 1,
-      height: heightString,
       translate: translateString,
     },
     text(errorMessage),
