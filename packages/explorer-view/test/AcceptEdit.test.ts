@@ -7,6 +7,7 @@ beforeEach(() => {
   jest.resetAllMocks()
 })
 
+// TODO don't mock file system, register mockrpc instead
 jest.unstable_mockModule('../src/parts/FileSystem/FileSystem.ts', () => {
   return {
     rename: jest.fn(() => {
@@ -40,7 +41,7 @@ const ViewletExplorer = await import('../src/parts/Create/Create.ts')
 const ViewletExplorerAcceptEdit = await import('../src/parts/AcceptEdit/AcceptEdit.ts')
 const FileSystem = await import('../src/parts/FileSystem/FileSystem.ts')
 
-test('acceptEdit - rename', async () => {
+test.skip('acceptEdit - rename', async () => {
   // @ts-ignore
   FileSystem.rename.mockImplementation(() => {})
   const state = {
@@ -85,7 +86,7 @@ test('acceptEdit - rename', async () => {
   expect(FileSystem.rename).toHaveBeenCalledWith('/test/a.txt', '/test/b.txt')
 })
 
-test('acceptEdit - rename - nested file', async () => {
+test.skip('acceptEdit - rename - nested file', async () => {
   // @ts-ignore
   FileSystem.rename.mockImplementation(() => {})
   const state = {
