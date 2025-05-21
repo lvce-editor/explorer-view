@@ -8,10 +8,7 @@ const mergeDirents = (oldDirents: readonly ExplorerItem[], newDirents: readonly 
 }
 
 const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Promise<any> => {
-  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, {
-    path: root,
-    depth: 0,
-  })
+  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, root, 0)
   const mergedDirents = mergeDirents(dirents, childDirents)
   return mergedDirents
 }

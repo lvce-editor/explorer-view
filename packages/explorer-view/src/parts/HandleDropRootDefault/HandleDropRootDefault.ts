@@ -8,10 +8,7 @@ const mergeDirents = (oldDirents: readonly any[], newDirents: readonly any[]): r
 }
 
 const getMergedDirents = async (root: string, pathSeparator: string, dirents: readonly any[]): Promise<readonly any[]> => {
-  const childDirents = await getChildDirents(pathSeparator, {
-    path: root,
-    depth: 0,
-  })
+  const childDirents = await getChildDirents(pathSeparator, root, 0)
   const mergedDirents = mergeDirents(dirents, childDirents)
   return mergedDirents
 }

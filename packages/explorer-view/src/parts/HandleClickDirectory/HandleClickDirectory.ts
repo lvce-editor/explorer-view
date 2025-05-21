@@ -11,7 +11,7 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
   // @ts-ignore
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
-  const dirents = await GetChildDirents.getChildDirents(state.pathSeparator, dirent)
+  const dirents = await GetChildDirents.getChildDirents(state.pathSeparator, dirent.path, dirent.depth)
   const state2 = state
   if (!state2) {
     return state
