@@ -4,7 +4,7 @@ import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
 
 const getPathPartChildren = async (pathPart: PathPart): Promise<readonly ExplorerItem[]> => {
-  const children = await getChildDirents(pathPart.pathSeparator, pathPart)
+  const children = await getChildDirents(pathPart.pathSeparator, pathPart.path, pathPart.depth)
   return children
 }
 

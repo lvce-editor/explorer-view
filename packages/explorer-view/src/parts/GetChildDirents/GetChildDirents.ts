@@ -17,19 +17,18 @@ export const getChildDirentsRaw = async (uri: string): Promise<readonly RawDiren
 
 export const getChildDirents = async (
   pathSeparator: string,
-  parentDirent: any,
+  parentDirentPath: string,
+  parentDirentDepth: number,
   excluded: readonly string[] = [],
 ): Promise<readonly ExplorerItem[]> => {
   Assert.string(pathSeparator)
-  Assert.object(parentDirent)
   // TODO use event/actor based code instead, this is impossible to cancel right now
   // also cancel updating when opening new folder
   // const dispose = state => state.pendingRequests.forEach(cancelRequest)
   // TODO should use FileSystem directly in this case because it is globally available anyway
   // and more typesafe than Command.execute
   // and more performant
-  const uri = parentDirent.path
-  const rawDirents = await getChildDirentsRaw(uri)
-  const displayDirents = ToDisplayDirents.toDisplayDirents(pathSeparator, rawDirents, parentDirent, excluded)
+  const rawDirents = await getChildDirentsRaw(parentDirentPath)
+  const displayDirents = ToDisplayDirents.toDisplayDirents(pathSeparator, rawDirents, parentDirentPath, parentDirentDepth, excluded)
   return displayDirents
 }

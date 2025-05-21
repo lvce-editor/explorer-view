@@ -6,7 +6,8 @@ import { toDisplayDirent } from '../ToDisplayDirent/ToDisplayDirent.ts'
 export const toDisplayDirents = (
   pathSeparator: string,
   rawDirents: readonly RawDirent[],
-  parentDirent: ExplorerItem,
+  parentDirentPath: string,
+  parentDirentDepth: number,
   excluded: readonly string[],
 ): readonly ExplorerItem[] => {
   rawDirents = SortExplorerItems.sortExplorerItems(rawDirents)
@@ -20,7 +21,7 @@ export const toDisplayDirents = (
   const count = visibleItems.length
   for (let i = 0; i < visibleItems.length; i++) {
     const rawDirent = visibleItems[i]
-    result.push(toDisplayDirent(parentDirent.path, parentDirent.depth, rawDirent, i, count))
+    result.push(toDisplayDirent(parentDirentPath, parentDirentDepth, rawDirent, i, count))
   }
   return result
 }
