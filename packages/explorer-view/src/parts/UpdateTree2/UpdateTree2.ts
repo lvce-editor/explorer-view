@@ -1,13 +1,12 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
-export const updateTree = (
+export const updateTree2 = (
   tree: Record<string, readonly any[]>,
-  path: string,
-  newDirents: readonly ExplorerItem[],
+  update: Record<string, readonly any[]>,
 ): Record<string, readonly ExplorerItem[]> => {
   const updatedTree = {
     ...tree,
-    [path]: newDirents,
+    ...update,
   }
   return updatedTree
 }
