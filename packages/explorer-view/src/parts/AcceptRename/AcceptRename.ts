@@ -4,6 +4,7 @@ import { createNewDirentsRename } from '../CreateNewDirentsRename/CreateNewDiren
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
+import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
@@ -26,10 +27,12 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
   if (!successful) {
     return state
   }
-  const dirname = dirname2(renamedDirent.path)
+  const oldUri = renamedDirent.path
+  const dirname = dirname2(oldUri)
   const newUri = join2(dirname, editingValue)
-  const update = await computeExplorerRenamedDirentUpdate(root, dirname, renamedDirent.depth - 1)
+  const children = await getChildDirents('/', dirname, renamedDirent.depth - 1, [])
   const tree = createTree(items, root)
+  const update = computeExplorerRenamedDirentUpdate(root, dirname, oldUri, children, tree, newUri)
   const newTree = updateTree2(tree, update)
   const newDirents = treeToArray(newTree, root)
   const newFocusedIndex = getIndex(newDirents, newUri)
