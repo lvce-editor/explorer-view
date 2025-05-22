@@ -15,11 +15,18 @@ test('treeToArray - single file', () => {
   }
   const root = '/test'
   const result = treeToArray(map, root)
-  expect(result).toHaveLength(1)
-  expect(result[0].name).toBe('file.txt')
-  expect(result[0].depth).toBe(0)
-  expect(result[0].posInSet).toBe(1)
-  expect(result[0].setSize).toBe(1)
+  expect(result).toEqual([
+    {
+      depth: 1,
+      icon: '',
+      name: 'file.txt',
+      path: '/test/file.txt',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: 7,
+    },
+  ])
 })
 
 test('treeToArray - nested structure', () => {
@@ -32,19 +39,38 @@ test('treeToArray - nested structure', () => {
   }
   const root = '/test'
   const result = treeToArray(map, root)
-  expect(result).toHaveLength(3)
-  expect(result[0].name).toBe('folder')
-  expect(result[0].depth).toBe(0)
-  expect(result[0].posInSet).toBe(1)
-  expect(result[0].setSize).toBe(2)
-  expect(result[1].name).toBe('nested.txt')
-  expect(result[1].depth).toBe(1)
-  expect(result[1].posInSet).toBe(1)
-  expect(result[1].setSize).toBe(1)
-  expect(result[2].name).toBe('file.txt')
-  expect(result[2].depth).toBe(0)
-  expect(result[2].posInSet).toBe(2)
-  expect(result[2].setSize).toBe(2)
+  expect(result).toEqual([
+    {
+      depth: 1,
+      icon: '',
+      name: 'folder',
+      path: '/test/folder',
+      posInSet: 1,
+      selected: false,
+      setSize: 2,
+      type: 3,
+    },
+    {
+      depth: 2,
+      icon: '',
+      name: 'nested.txt',
+      path: '/test/folder/nested.txt',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: 7,
+    },
+    {
+      depth: 1,
+      icon: '',
+      name: 'file.txt',
+      path: '/test/file.txt',
+      posInSet: 2,
+      selected: false,
+      setSize: 2,
+      type: 7,
+    },
+  ])
 })
 
 test('treeToArray - deep nested structure', () => {
@@ -55,13 +81,38 @@ test('treeToArray - deep nested structure', () => {
   }
   const root = '/test'
   const result = treeToArray(map, root)
-  expect(result).toHaveLength(3)
-  expect(result[0].name).toBe('folder1')
-  expect(result[0].depth).toBe(0)
-  expect(result[1].name).toBe('folder2')
-  expect(result[1].depth).toBe(1)
-  expect(result[2].name).toBe('deep.txt')
-  expect(result[2].depth).toBe(2)
+  expect(result).toEqual([
+    {
+      depth: 1,
+      icon: '',
+      name: 'folder1',
+      path: '/test/folder1',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: 3,
+    },
+    {
+      depth: 2,
+      icon: '',
+      name: 'folder2',
+      path: '/test/folder1/folder2',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: 3,
+    },
+    {
+      depth: 3,
+      icon: '',
+      name: 'deep.txt',
+      path: '/test/folder1/folder2/deep.txt',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: 7,
+    },
+  ])
 })
 
 test('treeToArray - update tree and children', () => {
@@ -79,29 +130,66 @@ test('treeToArray - update tree and children', () => {
   }
   const root = '/test'
   const result = treeToArray(map, root)
-  expect(result).toHaveLength(6)
-  expect(result[0].name).toBe('folder1')
-  expect(result[0].depth).toBe(0)
-  expect(result[0].posInSet).toBe(1)
-  expect(result[0].setSize).toBe(2)
-  expect(result[1].name).toBe('subfolder')
-  expect(result[1].depth).toBe(1)
-  expect(result[1].posInSet).toBe(1)
-  expect(result[1].setSize).toBe(2)
-  expect(result[2].name).toBe('deep.txt')
-  expect(result[2].depth).toBe(2)
-  expect(result[2].posInSet).toBe(1)
-  expect(result[2].setSize).toBe(1)
-  expect(result[3].name).toBe('file1.txt')
-  expect(result[3].depth).toBe(1)
-  expect(result[3].posInSet).toBe(2)
-  expect(result[3].setSize).toBe(2)
-  expect(result[4].name).toBe('folder2')
-  expect(result[4].depth).toBe(0)
-  expect(result[4].posInSet).toBe(2)
-  expect(result[4].setSize).toBe(2)
-  expect(result[5].name).toBe('file2.txt')
-  expect(result[5].depth).toBe(1)
-  expect(result[5].posInSet).toBe(1)
-  expect(result[5].setSize).toBe(1)
+  expect(result).toEqual([
+    {
+      depth: 1,
+      icon: '',
+      name: 'folder1',
+      path: '/test/folder1',
+      posInSet: 1,
+      selected: false,
+      setSize: 2,
+      type: 3,
+    },
+    {
+      depth: 2,
+      icon: '',
+      name: 'subfolder',
+      path: '/test/folder1/subfolder',
+      posInSet: 1,
+      selected: false,
+      setSize: 2,
+      type: 3,
+    },
+    {
+      depth: 3,
+      icon: '',
+      name: 'deep.txt',
+      path: '/test/folder1/subfolder/deep.txt',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: 7,
+    },
+    {
+      depth: 2,
+      icon: '',
+      name: 'file1.txt',
+      path: '/test/folder1/file1.txt',
+      posInSet: 2,
+      selected: false,
+      setSize: 2,
+      type: 7,
+    },
+    {
+      depth: 1,
+      icon: '',
+      name: 'folder2',
+      path: '/test/folder2',
+      posInSet: 2,
+      selected: false,
+      setSize: 2,
+      type: 3,
+    },
+    {
+      depth: 2,
+      icon: '',
+      name: 'file2.txt',
+      path: '/test/folder2/file2.txt',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: 7,
+    },
+  ])
 })
