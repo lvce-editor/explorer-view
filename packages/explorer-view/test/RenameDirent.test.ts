@@ -23,7 +23,8 @@ test('renameDirent updates state with editing properties', () => {
     editingType: ExplorerEditingType.Rename,
     editingValue: 'test.txt',
     editingIcon: '',
-    editingSelection: { start: 0, end: 8 },
+    editingSelectionStart: 0,
+    editingSelectionEnd: 8,
     focus: FocusId.Input,
     inputSource: InputSource.Script,
   })
@@ -45,7 +46,8 @@ test('renameDirent updates state with editing properties for folder', () => {
     editingType: ExplorerEditingType.Rename,
     editingValue: 'test',
     editingIcon: '',
-    editingSelection: { start: 0, end: 4 },
+    editingSelectionStart: 0,
+    editingSelectionEnd: 4,
     focus: FocusId.Input,
     inputSource: InputSource.Script,
   })
@@ -79,7 +81,8 @@ test('renameDirent preserves icon when entering edit mode', () => {
     editingType: ExplorerEditingType.Rename,
     editingValue: 'test.txt',
     editingIcon: 'file-icon',
-    editingSelection: { start: 0, end: 8 },
+    editingSelectionStart: 0,
+    editingSelectionEnd: 8,
     focus: FocusId.Input,
     inputSource: InputSource.Script,
   })
