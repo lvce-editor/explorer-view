@@ -62,3 +62,58 @@ test('computeExplorerRenamedDirentUpdate - empty tree', () => {
     'parent/new': [],
   })
 })
+
+test('computeExplorerRenamedDirentUpdate - deep nested rename', () => {
+  const root = '/'
+  const parentPath = '/'
+  const oldUri = '/old'
+  const newUri = '/new'
+  const children: ExplorerItem[] = [
+    {
+      name: 'old',
+      type: 1,
+      path: '/old',
+      depth: 1,
+      selected: false,
+      posInSet: 1,
+      setSize: 1,
+      icon: '',
+    },
+  ]
+  const tree: Tree = {
+    old: [
+      {
+        name: 'level1',
+        type: 1,
+      },
+    ],
+    'old/level1': [
+      {
+        name: 'level2',
+        type: 1,
+      },
+    ],
+    'old/level1/level2': [
+      {
+        name: 'level3',
+        type: 1,
+      },
+    ],
+    'old/level1/level2/level3': [
+      {
+        name: 'file.txt',
+        type: 2,
+      },
+    ],
+  }
+
+  const result = computeExplorerRenamedDirentUpdate(root, parentPath, oldUri, children, tree, newUri)
+
+  expect(result).toEqual({
+    '': children,
+    new: tree['old'],
+    'new/level1': tree['old/level1'],
+    'new/level1/level2': tree['old/level1/level2'],
+    'new/level1/level2/level3': tree['old/level1/level2/level3'],
+  })
+})
