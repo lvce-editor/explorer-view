@@ -14,9 +14,15 @@ export const computeExplorerRenamedDirentUpdate = (
   const relativeDirname = parentPath.slice(rootLength)
   const relativeOldPath = oldUri.slice(rootLength)
   const relativeNewUri = newUri.slice(rootLength)
+  const update: TreeUpdate = Object.create(null)
+  update[relativeDirname] = children
   const oldItems = tree[relativeOldPath] || []
-  return {
-    [relativeDirname]: children,
-    [relativeNewUri]: oldItems, // TODO recursive? and update path
+  update[relativeNewUri] = oldItems
+  for (const [key, value] of Object.entries(tree)) {
+    if (key.startsWith(`${relativeOldPath}/`)) {
+      const newKey = `${relativeNewUri}` + key.slice(relativeOldPath.length)
+      update[newKey] = value
+    }
   }
+  return update
 }
