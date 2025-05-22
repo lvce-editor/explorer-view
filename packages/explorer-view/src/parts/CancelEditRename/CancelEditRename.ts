@@ -16,5 +16,7 @@ export const cancelEditRename = (state: ExplorerState, keepFocus: boolean): Expl
     editingType: ExplorerEditingType.None,
     editingErrorMessage: '',
     focus: FocusId.List,
+    editingSelectionStart: 0,
+    editingSelectionEnd: 0,
   }
 }
