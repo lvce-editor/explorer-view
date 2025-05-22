@@ -5,6 +5,7 @@ export const getNewDirentsForRename = (items: readonly ExplorerItem[], focusedIn
   const item = items[focusedIndex]
   const newItems = [...items]
   const editingType = item.type === DirentType.File ? DirentType.EditingFile : DirentType.EditingFolder
+  // TODO avoid mutation
   newItems[focusedIndex] = {
     ...item,
     type: editingType,
