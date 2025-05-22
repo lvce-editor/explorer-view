@@ -1,13 +1,16 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as InputName from '../src/parts/InputName/InputName.ts'
 import { renderEditingSelection } from '../src/parts/RenderEditingSelection/RenderEditingSelection.ts'
 
 test('renderEditingSelection', () => {
-  const oldState = createDefaultState()
-  const newState = {
+  const oldState: ExplorerState = createDefaultState()
+  const newState: ExplorerState = {
     ...createDefaultState(),
-    editingSelection: { start: 1, end: 6 },
+    editingSelectionStart: 1,
+    editingSelectionEnd: 6,
   }
   const result = renderEditingSelection(oldState, newState)
-  expect(result).toEqual(['Viewlet.setSelection', { start: 1, end: 6 }])
+  expect(result).toEqual(['Viewlet.setSelectionByName', newState.uid, InputName.ExplorerInput, 1, 6])
 })

@@ -47,10 +47,8 @@ export const create2 = (
     focus: 0,
     editingErrorMessage: '',
     inputSource: 0,
-    editingSelection: {
-      start: 0,
-      end: 0,
-    },
+    editingSelectionEnd: 0,
+    editingSelectionStart: 0,
     focusWord: '',
     focusWordTimeout: 800,
     finalDeltaY: 0,
