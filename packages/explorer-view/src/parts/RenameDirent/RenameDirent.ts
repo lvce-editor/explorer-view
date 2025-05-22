@@ -18,7 +18,8 @@ export const renameDirent = (state: ExplorerState): ExplorerState => {
     editingType: ExplorerEditingType.Rename,
     editingValue: item.name,
     editingIcon: icons[focusedIndex - minLineY],
-    editingSelection: { start: 0, end: item.name.length },
+    editingSelectionStart: 0,
+    editingSelectionEnd: item.name.length,
     focus: FocusId.Input,
     inputSource: InputSource.Script,
   }
