@@ -7,6 +7,7 @@ import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as GetIndex from '../GetIndex/GetIndex.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { getPathPartsChildren } from '../GetPathPartsChildren/GetPathPartsChildren.ts'
@@ -44,7 +45,7 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
   const newItems = treeToArray(merged, root)
 
   const dirents = newItems
-  const newFocusedIndex = newItems.findIndex((dirent) => dirent.path === absolutePath)
+  const newFocusedIndex = GetIndex.getIndex(newItems, absolutePath)
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, dirents.length)
   const visible = dirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
