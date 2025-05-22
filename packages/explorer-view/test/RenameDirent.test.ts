@@ -24,7 +24,7 @@ test('renameDirent updates state with editing properties', () => {
     editingValue: 'test.txt',
     editingIcon: '',
     editingSelectionStart: 0,
-    editingSelectionEnd: 8,
+    editingSelectionEnd: 4,
     focus: FocusId.Input,
     inputSource: InputSource.Script,
   })
@@ -82,7 +82,7 @@ test('renameDirent preserves icon when entering edit mode', () => {
     editingValue: 'test.txt',
     editingIcon: 'file-icon',
     editingSelectionStart: 0,
-    editingSelectionEnd: 8,
+    editingSelectionEnd: 4,
     focus: FocusId.Input,
     inputSource: InputSource.Script,
   })
