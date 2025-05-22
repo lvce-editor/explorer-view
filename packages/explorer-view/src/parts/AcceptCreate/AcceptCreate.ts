@@ -3,7 +3,6 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { createNewDirentsAccept } from '../CreateNewDirentsAccept/CreateNewDirentsAccept.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
-import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
@@ -14,15 +13,13 @@ import { getPathPartsChildren } from '../GetPathPartsChildren/GetPathPartsChildr
 import { mergeTrees } from '../MergeTrees/MergeTrees.ts'
 import { join2 } from '../Path/Path.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
+import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
 export const acceptCreate = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<ExplorerState> => {
   const { editingValue, minLineY, height, itemHeight, fileIconCache, pathSeparator, root, focusedIndex, items } = state
   const newFileName = editingValue
-  if (!newFileName) {
-    // TODO show error message that file name must not be empty
-    // below input box
-    // await ErrorHandling.showErrorDialog(new Error('file name must not be empty'))
-    const editingErrorMessage = ExplorerStrings.fileOrFolderNameMustBeProvided()
+  const editingErrorMessage = ValidateFileName2.validateFileName2(newFileName)
+  if (editingErrorMessage) {
     return {
       ...state,
       editingErrorMessage,
