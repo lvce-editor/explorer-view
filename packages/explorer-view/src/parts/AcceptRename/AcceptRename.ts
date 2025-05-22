@@ -48,5 +48,7 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     items: newDirents,
     icons,
     fileIconCache: newFileIconCache,
+    editingSelectionEnd: 0,
+    editingSelectionStart: 0,
   }
 }
