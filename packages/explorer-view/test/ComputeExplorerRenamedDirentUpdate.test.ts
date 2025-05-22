@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
-import { computeExplorerRenamedDirentUpdate } from '../src/parts/ComputeExplorerRenamedDirentUpdate/ComputeExplorerRenamedDirentUpdate.ts'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { Tree } from '../src/parts/Tree/Tree.ts'
+import { computeExplorerRenamedDirentUpdate } from '../src/parts/ComputeExplorerRenamedDirentUpdate/ComputeExplorerRenamedDirentUpdate.ts'
 
 test('computeExplorerRenamedDirentUpdate - basic rename', () => {
   const root = '/'
