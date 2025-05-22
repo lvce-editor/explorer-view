@@ -1,5 +1,3 @@
-// TODO test is flaky https://github.com/lvce-editor/lvce-editor/runs/7883530122?check_suite_focus=true
-
 import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-error-no-name-provided'
@@ -25,9 +23,7 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Loca
 
   // assert
   await expect(inputBox).toHaveClass('InputValidationError')
-
-  // TODO there should be an error message below the input box
-  // const dialog = Locator('#Dialog')
-  // const errorMessage = dialog.locator('#DialogBodyErrorMessage')
-  // await expect(errorMessage).toHaveText('Error: file name must not be empty')
+  const errorMessage = Locator('.ExplorerErrorMessage')
+  await expect(errorMessage).toBeVisible()
+  await expect(errorMessage).toHaveText('A file or folder name must be provided.')
 }
