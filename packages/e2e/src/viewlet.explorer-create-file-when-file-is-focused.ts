@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-when-file-is-focused'
 
-export const skip = 1
-
 export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()

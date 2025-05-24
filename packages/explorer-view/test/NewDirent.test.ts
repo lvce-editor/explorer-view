@@ -201,7 +201,6 @@ test('newDirent updates state when focused item is not a directory', async () =>
     focus: 2,
     items: [
       {
-        setSize: 1,
         name: 'test.txt',
         type: DirentType.File,
         path: '/test.txt',
@@ -209,18 +208,19 @@ test('newDirent updates state when focused item is not a directory', async () =>
         selected: false,
       },
       {
-        depth: 1,
+        depth: 0,
         icon: '',
         name: '',
-        path: '/test.txt',
+        path: '/',
         posInSet: 1,
         selected: false,
-        setSize: 2,
+        setSize: 1,
         type: DirentType.EditingFile,
       },
     ],
     maxLineY: 2,
     fileIconCache: {
+      '/': 'file-icon',
       '/test.txt': 'file-icon',
     },
     icons: ['file-icon', 'file-icon'],
