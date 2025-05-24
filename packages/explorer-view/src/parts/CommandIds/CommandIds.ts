@@ -1,6 +1,7 @@
 export const commandIds = [
   'acceptEdit',
   'cancelEdit',
+  'cancelTypeAhead',
   'collapseAll',
   'copyPath',
   'copyRelativePath',
@@ -13,7 +14,6 @@ export const commandIds = [
   'focusLast',
   'focusNext',
   'focusNone',
-  'handleInputKeyDown',
   'focusPrevious',
   'getFocusedDirent',
   'getMenuEntries2',
@@ -38,6 +38,8 @@ export const commandIds = [
   'handleIconThemeChange',
   'handleInputBlur',
   'handleInputClick',
+  'handleInputKeyDown',
+  'handleKeyDown',
   'handleLanguagesChanged',
   'handleMouseEnter',
   'handleMouseLeave',
@@ -64,8 +66,6 @@ export const commandIds = [
   'selectUp',
   'setDeltaY',
   'setSelectedIndices',
-  'cancelTypeAhead',
   'updateEditingValue',
-  'handleKeyDown',
   'updateIcons',
 ]
