@@ -27,9 +27,12 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
   }
   const parentFolder = getParentFolder(items, focusedIndex, root)
   const absolutePath = join2(parentFolder, newFileName)
-  const successful = await createNewDirentsAccept(newFileName, pathSeparator, absolutePath, root, createFn)
-  if (!successful) {
-    return state
+  const createErrorMessage = await createNewDirentsAccept(newFileName, pathSeparator, absolutePath, root, createFn)
+  if (createErrorMessage) {
+    return {
+      ...state,
+      editingErrorMessage: createErrorMessage,
+    }
   }
 
   const pathPaths = getPathParts(root, absolutePath, pathSeparator)
