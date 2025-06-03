@@ -1,5 +1,6 @@
 import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
+import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetErrorMessageDom from '../GetErrorMessageDom/GetErrorMessageDom.ts'
 import * as GetExplorerWelcomeVirtualDom from '../GetExplorerWelcomeVirtualDom/GetExplorerWelcomeVirtualDom.ts'
@@ -46,7 +47,7 @@ export const getExplorerVirtualDom = (
     type: VirtualDomElements.Div,
     childCount,
     className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
-    role: 'none',
+    role: AriaRoles.None,
   }
   const dom: readonly VirtualDomNode[] = [
     parentNode,
