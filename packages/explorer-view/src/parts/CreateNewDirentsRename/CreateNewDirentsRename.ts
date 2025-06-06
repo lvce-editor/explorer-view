@@ -3,7 +3,7 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as Path from '../Path/Path.ts'
 
-export const createNewDirentsRename = async (renamedDirent: ExplorerItem, editingValue: string, pathSeparator: string): Promise<boolean> => {
+export const createNewDirentsRename = async (renamedDirent: ExplorerItem, editingValue: string, pathSeparator: string): Promise<string> => {
   try {
     // TODO this does not work with rename of nested file
     const oldAbsolutePath = renamedDirent.path
@@ -12,7 +12,7 @@ export const createNewDirentsRename = async (renamedDirent: ExplorerItem, editin
     await FileSystem.rename(oldAbsolutePath, newAbsolutePath)
   } catch (error) {
     console.error(new VError(error, `Failed to rename file`))
-    return false
+    return `${error}`
   }
-  return true
+  return ''
 }

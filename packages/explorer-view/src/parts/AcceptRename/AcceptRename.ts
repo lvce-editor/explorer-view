@@ -23,9 +23,12 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     }
   }
   const renamedDirent = items[editingIndex]
-  const successful = await createNewDirentsRename(renamedDirent, editingValue, pathSeparator)
-  if (!successful) {
-    return state
+  const renameErrorMessage = await createNewDirentsRename(renamedDirent, editingValue, pathSeparator)
+  if (renameErrorMessage) {
+    return {
+      ...state,
+      editingErrorMessage: renameErrorMessage,
+    }
   }
   const oldUri = renamedDirent.path
   const dirname = dirname2(oldUri)

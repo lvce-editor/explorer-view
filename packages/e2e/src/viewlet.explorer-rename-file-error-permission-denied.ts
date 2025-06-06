@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-file-error-permission-denied'
 
-export const skip = 1
-
 export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, Extension }) => {
   // arrange
   const uri = new URL('../fixtures/sample.file-system-provider-permission', import.meta.url).toString()
