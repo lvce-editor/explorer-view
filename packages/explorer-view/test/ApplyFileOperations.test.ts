@@ -4,7 +4,6 @@ import type { FileOperation } from '../src/parts/FileOperation/FileOperation.ts'
 import { applyFileOperations } from '../src/parts/ApplyFileOperations/ApplyFileOperations.ts'
 import * as FileOperationType from '../src/parts/FileOperationType/FileOperationType.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as FileOperationType from '../src/parts/FileOperationType/FileOperationType.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const mockRpc: Rpc = {
