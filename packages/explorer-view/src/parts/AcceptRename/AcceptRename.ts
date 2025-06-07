@@ -12,9 +12,11 @@ import { dirname2, join2 } from '../Path/Path.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import { updateTree2 } from '../UpdateTree2/UpdateTree2.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
+import * as GetFileOperationsRename from '../GetFileOperationsRename/GetFileOperationsRename.ts'
+import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { editingIndex, editingValue, items, pathSeparator, root, minLineY, height, itemHeight, fileIconCache } = state
+  const { editingIndex, editingValue, items, root, minLineY, height, itemHeight, fileIconCache } = state
   const editingErrorMessage = ValidateFileName2.validateFileName2(editingValue)
   if (editingErrorMessage) {
     return {
@@ -23,7 +25,8 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     }
   }
   const renamedDirent = items[editingIndex]
-  const renameErrorMessage = await createNewDirentsRename(renamedDirent, editingValue, pathSeparator)
+  const operations = GetFileOperationsRename.getFileOperationsRename(renamedDirent.path, editingValue)
+  const renameErrorMessage = await ApplyFileOperations.applyFileOperations(operations)
   if (renameErrorMessage) {
     return {
       ...state,
