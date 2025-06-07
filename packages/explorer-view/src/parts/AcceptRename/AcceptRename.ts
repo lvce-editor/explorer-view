@@ -1,7 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 import { computeExplorerRenamedDirentUpdate } from '../ComputeExplorerRenamedDirentUpdate/ComputeExplorerRenamedDirentUpdate.ts'
-import { createNewDirentsRename } from '../CreateNewDirentsRename/CreateNewDirentsRename.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
