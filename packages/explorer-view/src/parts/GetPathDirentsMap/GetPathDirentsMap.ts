@@ -5,8 +5,12 @@ export const getPathDirentsMap = async (allPaths: readonly string[]): Promise<Re
   const pathToDirents: Record<string, readonly RawDirent[]> = Object.create(null)
   await Promise.all(
     allPaths.map(async (path) => {
-      const dirents = await FileSystem.readDirWithFileTypes(path)
-      pathToDirents[path] = dirents
+      try {
+        const dirents = await FileSystem.readDirWithFileTypes(path)
+        pathToDirents[path] = dirents
+      } catch {
+        // ignore
+      }
     }),
   )
   return pathToDirents

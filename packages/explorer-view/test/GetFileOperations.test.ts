@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import * as FileOperationType from '../src/parts/FileOperationType/FileOperationType.ts'
 import { getFileOperations } from '../src/parts/GetFileOperations/GetFileOperations.ts'
 
 test('getFileOperations - empty tree', () => {
@@ -20,7 +21,7 @@ test('getFileOperations - single folder', () => {
   const uploadTree = {
     folder: {},
   }
-  expect(getFileOperations(root, uploadTree)).toEqual([{ type: 'createFolder', path: '/test/folder', text: '' }])
+  expect(getFileOperations(root, uploadTree)).toEqual([{ type: FileOperationType.CreateFolder, path: '/test/folder' }])
 })
 
 test('getFileOperations - nested structure', () => {
@@ -35,10 +36,10 @@ test('getFileOperations - nested structure', () => {
     'file3.txt': 'content3',
   }
   expect(getFileOperations(root, uploadTree)).toEqual([
-    { type: 'createFolder', path: '/test/folder1', text: '' },
-    { type: 'createFile', path: '/test/folder1/file1.txt', text: 'content1' },
-    { type: 'createFolder', path: '/test/folder1/subfolder', text: '' },
-    { type: 'createFile', path: '/test/folder1/subfolder/file2.txt', text: 'content2' },
-    { type: 'createFile', path: '/test/file3.txt', text: 'content3' },
+    { type: FileOperationType.CreateFolder, path: '/test/folder1' },
+    { type: FileOperationType.CreateFile, path: '/test/folder1/file1.txt', text: 'content1' },
+    { type: FileOperationType.CreateFolder, path: '/test/folder1/subfolder' },
+    { type: FileOperationType.CreateFile, path: '/test/folder1/subfolder/file2.txt', text: 'content2' },
+    { type: FileOperationType.CreateFile, path: '/test/file3.txt', text: 'content3' },
   ])
 })

@@ -16,14 +16,12 @@ test('acceptCreate - empty file name', async () => {
     editingValue: '',
   }
 
-  const result = await acceptCreate(state, DirentType.File, async () => {})
+  const result = await acceptCreate(state, DirentType.File)
   expect(result).toEqual({
     ...state,
     editingErrorMessage: ExplorerStrings.fileOrFolderNameMustBeProvided(),
   })
 })
-
-const createFn2 = async (path: string): Promise<void> => {}
 
 test.skip('acceptCreate - successful file creation', async () => {
   const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
@@ -58,7 +56,7 @@ test.skip('acceptCreate - successful file creation', async () => {
     fileIconCache: {},
   }
 
-  const result = await acceptCreate(state, DirentType.File, createFn2)
+  const result = await acceptCreate(state, DirentType.File)
   expect(result).toEqual({
     ...state,
     items: [

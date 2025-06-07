@@ -21,7 +21,7 @@ export const expandAll = async (state: ExplorerState): Promise<ExplorerState> =>
       dirent.type = DirentType.DirectoryExpanding
       // TODO handle error
       // TODO race condition
-      const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent)
+      const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth)
       const newIndex = newDirents.indexOf(dirent)
       if (newIndex === -1) {
         continue

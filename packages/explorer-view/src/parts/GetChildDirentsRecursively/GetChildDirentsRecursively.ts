@@ -11,7 +11,7 @@ export const getChildDirentsRecursively = async (dirent: ExplorerItem, pathSepar
     case DirentType.Directory:
     case DirentType.DirectoryExpanding:
     case DirentType.DirectoryExpanded:
-      const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent)
+      const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth)
       const all = [MakeExpanded.makeExpanded(dirent)]
       for (const childDirent of childDirents) {
         const childAll = await getChildDirentsRecursively(childDirent, pathSeparator)

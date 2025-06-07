@@ -13,10 +13,7 @@ export const handleClickAt = async (
   x: number,
   y: number,
 ): Promise<ExplorerState> => {
-  if (defaultPrevented) {
-    return state
-  }
-  if (button !== MouseEventType.LeftClick) {
+  if (defaultPrevented || button !== MouseEventType.LeftClick) {
     return state
   }
 

@@ -44,7 +44,7 @@ const handleDropIntoFolder = async (
     // @ts-ignore
     await FileSystem.copy(file, to)
   }
-  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent)
+  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth)
   const mergedDirents = getMergedDirents(items, index, dirent, childDirents)
   // TODO update maxlineY
   return {
