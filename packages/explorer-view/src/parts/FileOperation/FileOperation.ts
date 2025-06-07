@@ -1,5 +1,5 @@
 export interface FileOperation {
-  readonly type: 'createFile' | 'createFolder' | 'copy'
+  readonly type: 'createFile' | 'createFolder' | 'copy' | 'rename'
   readonly text: string
   readonly path: string
   readonly from?: string
