@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
-import { getFileOperations } from '../src/parts/GetFileOperations/GetFileOperations.ts'
 import * as FileOperationType from '../src/parts/FileOperationType/FileOperationType.ts'
+import { getFileOperations } from '../src/parts/GetFileOperations/GetFileOperations.ts'
 
 test('getFileOperations - empty tree', () => {
   const root = '/test'
