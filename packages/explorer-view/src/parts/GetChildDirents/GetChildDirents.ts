@@ -1,19 +1,7 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-import type { RawDirent } from '../RawDirent/RawDirent.ts'
 import * as Assert from '../Assert/Assert.ts'
-import * as FileSystem from '../FileSystem/FileSystem.ts'
-import { hasSymbolicLinks } from '../HasSymbolicLink/HasSymbolicLink.ts'
-import * as ResolveSymbolicLinks from '../ResolveSymbolicLinks/ResolveSymbolicLinks.ts'
+import { getChildDirentsRaw } from '../GetChildDirentsRaw/GetChildDirentsRaw.ts'
 import * as ToDisplayDirents from '../ToDisplayDirents/ToDisplayDirents.ts'
-
-export const getChildDirentsRaw = async (uri: string): Promise<readonly RawDirent[]> => {
-  const rawDirents = await FileSystem.readDirWithFileTypes(uri)
-  Assert.array(rawDirents)
-  if (hasSymbolicLinks(rawDirents)) {
-    return ResolveSymbolicLinks.resolveSymbolicLinks(uri, rawDirents)
-  }
-  return rawDirents
-}
 
 export const getChildDirents = async (
   pathSeparator: string,
