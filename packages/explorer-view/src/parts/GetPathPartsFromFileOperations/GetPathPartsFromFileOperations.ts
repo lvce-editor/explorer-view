@@ -16,5 +16,5 @@ const getPathPartUpdate = (operation: FileOperation): string => {
 }
 
 export const getPathPartsFromFileOperations = (operations: readonly FileOperation[]): readonly string[] => {
-  return operations.map(getPathPartUpdate)
+  return operations.map(getPathPartUpdate).filter(Boolean)
 }
