@@ -10,7 +10,6 @@ export const getFileOperationsRename = (oldAbsolutePath: string, newFileName: st
     type: FileOperationType.Rename,
     path: newAbsolutePath,
     from: oldAbsolutePath,
-    text: '',
   })
 
   return operations

@@ -14,7 +14,6 @@ export const getFileOperationsElectron = async (
     operations.push({
       type: 'copy',
       path: join2(root, name),
-      text: '',
       from: path,
     })
   }
