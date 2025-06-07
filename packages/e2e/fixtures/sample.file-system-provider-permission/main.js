@@ -4,15 +4,11 @@ const fileSystemProvider = {
   id: 'xyz',
   writeFile(uri, content) {
     contents[uri] = content
-    if (uri === '/file4.txt') {
-      throw new Error(`Permission Denied`)
-    }
   },
-  readFile(uri) {
-    throw new Error(
-      `VError: Failed to request text from "/language-basics-typescript/3c2c8cd/playground/playground/babel-parser-base.ts": ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor`,
-    )
+  rename(oldUri, newUri) {
+    throw new Error(`Permission Denied`)
   },
+  readFile(uri) {},
   pathSeparator: '/',
   readDirWithFileTypes(uri) {
     const results = []
@@ -24,7 +20,6 @@ const fileSystemProvider = {
         })
       }
     }
-    console.log({ contents, results })
     return results
   },
 }
