@@ -75,7 +75,7 @@ test('selectDown - first item', () => {
     focusedIndex: 0,
   }
   const newState = selectDown(state)
-  expect(newState.items[0].selected).toBe(false)
+  expect(newState.items[0].selected).toBe(true)
   expect(newState.items[1].selected).toBe(true)
 })
 

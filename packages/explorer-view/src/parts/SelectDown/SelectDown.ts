@@ -1,6 +1,7 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
-const getLastSelectedIndex = (items: ExplorerState['items']): number => {
+const getLastSelectedIndex = (items: readonly ExplorerItem[]): number => {
   let lastSelectedIndex = -1
   for (let index = 0; index < items.length; index++) {
     if (items[index].selected) {
@@ -19,7 +20,7 @@ export const selectDown = (state: ExplorerState): ExplorerState => {
   }
   const newItems = items.map((item, i) => ({
     ...item,
-    selected: i === targetIndex + 1 ? true : item.selected,
+    selected: i === targetIndex + 1 ? true : item.selected || i === focusedIndex,
   }))
   return {
     ...state,
