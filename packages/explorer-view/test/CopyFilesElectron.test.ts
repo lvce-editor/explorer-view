@@ -24,7 +24,7 @@ test('copyFilesElectron', async () => {
   const root = '/test'
   const pathSeparator = '/'
   const fileHandles = [{ name: 'file1.txt' }, { name: 'file2.txt' }] as FileSystemHandle[]
-  const files = [] as File[]
+  const files: readonly File[] = []
   const paths = ['/source/file1.txt', '/source/file2.txt']
 
   await copyFilesElectron(root, pathSeparator, fileHandles, files, paths)
