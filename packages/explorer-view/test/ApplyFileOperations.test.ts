@@ -31,7 +31,7 @@ test('should apply empty operations', async () => {
 
 test('should create folder', async () => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
-  const operations: readonly FileOperation[] = [{ type: 'createFolder', path: '/test/folder', text: '' }]
+  const operations: readonly FileOperation[] = [{ type: 'createFolder', path: '/test/folder' }]
   await applyFileOperations(operations)
   expect(mockRpc.invoke).toHaveBeenCalledWith('FileSystem.mkdir', '/test/folder')
 })
@@ -46,7 +46,7 @@ test('should create file', async () => {
 test('should apply multiple operations in sequence', async () => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const operations: readonly FileOperation[] = [
-    { type: 'createFolder', path: '/test/folder', text: '' },
+    { type: 'createFolder', path: '/test/folder' },
     { type: 'createFile', path: '/test/folder/file.txt', text: 'content' },
   ]
   await applyFileOperations(operations)

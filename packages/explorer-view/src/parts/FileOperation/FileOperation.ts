@@ -1,23 +1,28 @@
-export interface FileOperation {
-  readonly type: 'createFile' | 'createFolder' | 'copy' | 'rename'
-  readonly text: string
-  readonly path: string
-  readonly from?: string
+export interface FileOperationBase {
+  readonly type: string
 }
 
-export interface FileOperationCreateFile {
+export interface FileOperationCreateFile extends FileOperationBase {
   readonly type: 'createFile'
   readonly path: string
   readonly text: string
 }
 
-export interface FileOperationCreateFolder {
+export interface FileOperationCreateFolder extends FileOperationBase {
   readonly type: 'createFolder'
   readonly path: string
 }
 
-export interface FileOperationCopy {
+export interface FileOperationCopy extends FileOperationBase {
   readonly type: 'copy'
   readonly path: string
   readonly from: string
 }
+
+export interface FileOperationRename extends FileOperationBase {
+  readonly type: 'rename'
+  readonly path: string
+  readonly from: string
+}
+
+export type FileOperation = FileOperationCopy | FileOperationCreateFile | FileOperationCreateFolder | FileOperationRename

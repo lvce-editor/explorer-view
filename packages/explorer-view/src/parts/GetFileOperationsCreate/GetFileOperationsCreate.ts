@@ -13,7 +13,6 @@ const getFileOperationsNestedPath = (path: string, root: string, pathSeparator: 
     operations.push({
       type: FileOperationType.CreateFolder,
       path: `${root}${currentPath}`,
-      text: '',
     })
   }
   return operations
@@ -41,7 +40,6 @@ export const getFileOperationsCreate = (
     operations.push({
       type: FileOperationType.CreateFolder,
       path: absolutePath,
-      text: '',
     })
   }
 
