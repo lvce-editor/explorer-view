@@ -1,4 +1,3 @@
-import type { Create } from '../CreateNewDirentsAccept/CreateNewDirentsAccept.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
@@ -16,7 +15,7 @@ import { join2 } from '../Path/Path.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
-export const acceptCreate = async (state: ExplorerState, newDirentType: number, createFn: Create): Promise<ExplorerState> => {
+export const acceptCreate = async (state: ExplorerState, newDirentType: number): Promise<ExplorerState> => {
   const { editingValue, minLineY, height, itemHeight, fileIconCache, pathSeparator, root, focusedIndex, items } = state
   const newFileName = editingValue
   const editingErrorMessage = ValidateFileName2.validateFileName2(newFileName)
