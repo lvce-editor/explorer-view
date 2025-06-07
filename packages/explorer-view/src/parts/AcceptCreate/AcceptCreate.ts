@@ -1,11 +1,12 @@
 import type { Create } from '../CreateNewDirentsAccept/CreateNewDirentsAccept.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import { createNewDirentsAccept } from '../CreateNewDirentsAccept/CreateNewDirentsAccept.ts'
+import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as GetFileOperationsCreate from '../GetFileOperationsCreate/GetFileOperationsCreate.ts'
 import * as GetIndex from '../GetIndex/GetIndex.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
@@ -27,7 +28,8 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number, 
   }
   const parentFolder = getParentFolder(items, focusedIndex, root)
   const absolutePath = join2(parentFolder, newFileName)
-  const createErrorMessage = await createNewDirentsAccept(newFileName, pathSeparator, absolutePath, root, createFn)
+  const operations = GetFileOperationsCreate.getFileOperationsCreate(editingValue, newDirentType, pathSeparator, absolutePath, root)
+  const createErrorMessage = await ApplyFileOperations.applyFileOperations(operations)
   if (createErrorMessage) {
     return {
       ...state,
