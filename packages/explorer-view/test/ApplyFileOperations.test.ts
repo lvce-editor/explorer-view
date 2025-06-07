@@ -2,6 +2,7 @@ import type { Rpc } from '@lvce-editor/rpc'
 import { test, expect, jest } from '@jest/globals'
 import type { FileOperation } from '../src/parts/FileOperation/FileOperation.ts'
 import { applyFileOperations } from '../src/parts/ApplyFileOperations/ApplyFileOperations.ts'
+import * as FileOperationType from '../src/parts/FileOperationType/FileOperationType.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
@@ -31,14 +32,14 @@ test('should apply empty operations', async () => {
 
 test('should create folder', async () => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
-  const operations: readonly FileOperation[] = [{ type: 'createFolder', path: '/test/folder' }]
+  const operations: readonly FileOperation[] = [{ type: FileOperationType.CreateFolder, path: '/test/folder' }]
   await applyFileOperations(operations)
   expect(mockRpc.invoke).toHaveBeenCalledWith('FileSystem.mkdir', '/test/folder')
 })
 
 test('should create file', async () => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
-  const operations: readonly FileOperation[] = [{ type: 'createFile', path: '/test/file.txt', text: 'content' }]
+  const operations: readonly FileOperation[] = [{ type: FileOperationType.CreateFile, path: '/test/file.txt', text: 'content' }]
   await applyFileOperations(operations)
   expect(mockRpc.invoke).toHaveBeenCalledWith('FileSystem.writeFile', '/test/file.txt', 'content')
 })
