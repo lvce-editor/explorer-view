@@ -4,6 +4,7 @@ import type { FileOperation } from '../src/parts/FileOperation/FileOperation.ts'
 import { applyFileOperations } from '../src/parts/ApplyFileOperations/ApplyFileOperations.ts'
 import * as FileOperationType from '../src/parts/FileOperationType/FileOperationType.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
+import * as FileOperationType from '../src/parts/FileOperationType/FileOperationType.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const mockRpc: Rpc = {
@@ -47,8 +48,8 @@ test('should create file', async () => {
 test('should apply multiple operations in sequence', async () => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const operations: readonly FileOperation[] = [
-    { type: 'createFolder', path: '/test/folder' },
-    { type: 'createFile', path: '/test/folder/file.txt', text: 'content' },
+    { type: FileOperationType.CreateFolder, path: '/test/folder' },
+    { type: FileOperationType.CreateFile, path: '/test/folder/file.txt', text: 'content' },
   ]
   await applyFileOperations(operations)
   expect(mockRpc.invoke).toHaveBeenCalledWith('FileSystem.mkdir', '/test/folder')
