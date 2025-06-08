@@ -25,8 +25,10 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
   // assert
   const file1 = Locator('.TreeItem').nth(0)
   await expect(file1).toHaveText('a')
+  await expect(file1).toHaveAttribute('aria-expanded', 'true')
   const file2 = Locator('.TreeItem').nth(1)
   await expect(file2).toHaveText('b')
+  await expect(file2).toHaveAttribute('aria-expanded', 'true')
   const file3 = Locator('.TreeItem').nth(2)
   await expect(file3).toHaveText('created.txt')
   const file4 = Locator('.TreeItem').nth(3)
