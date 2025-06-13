@@ -1,5 +1,5 @@
 import type { RendererWorkerApi } from '@lvce-editor/rpc-registry'
-import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
+import * as ParentRpc from '../RendererWorker/RendererWorker.ts'
 
 export const invoke = async <T extends keyof RendererWorkerApi>(
   method: keyof RendererWorkerApi,
