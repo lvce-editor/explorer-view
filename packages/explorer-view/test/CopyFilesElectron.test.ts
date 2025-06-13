@@ -29,6 +29,8 @@ test('copyFilesElectron', async () => {
 
   await copyFilesElectron(root, pathSeparator, fileHandles, files, paths)
   // expect(invoke).toHaveBeenCalledWith('FileSystem.getPathSeparator')
+  // @ts-ignore
   expect(invoke).toHaveBeenCalledWith('FileSystem.copy', '/source/file1.txt', '/test/file1.txt')
+  // @ts-ignore
   expect(invoke).toHaveBeenCalledWith('FileSystem.copy', '/source/file2.txt', '/test/file2.txt')
 })
