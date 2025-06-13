@@ -24,7 +24,6 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
   }
 
   // @ts-ignore
-   
   timeout = setTimeout(async () => {
     await ParentRpc.invoke('Explorer.cancelTypeAhead')
   }, focusWordTimeout)
