@@ -1,5 +1,5 @@
 import type { IconRequest } from '../IconRequest/IconRequest.ts'
-import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
+import * as ParentRpc from '../RendererWorker/RendererWorker.ts'
 import { toSimpleIconRequest } from '../ToSimpleIconRequest/ToSimpleIconRequest.ts'
 
 export const requestFileIcons = async (requests: readonly IconRequest[]): Promise<readonly string[]> => {
