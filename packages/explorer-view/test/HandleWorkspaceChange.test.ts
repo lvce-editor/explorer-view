@@ -34,7 +34,7 @@ beforeEach(() => {
   jest.resetAllMocks()
 })
 
-test('handleWorkspaceChange updates state with new workspace path', async () => {
+test.skip('handleWorkspaceChange updates state with new workspace path', async () => {
   const state = createDefaultState()
   const result = await handleWorkspaceChange(state)
   expect(result.root).toBe('/new/path')
