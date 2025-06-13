@@ -22,6 +22,7 @@ test('handleFocus', async () => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const state = createDefaultState()
   const newState = await handleFocus(state)
+  // @ts-ignore
   expect(invoke).toHaveBeenCalledWith('Focus.setFocus', WhenExpression.FocusExplorer)
   expect(newState).toBe(state)
 })

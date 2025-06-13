@@ -40,8 +40,11 @@ test('handleClickSymLink - file symlink', async () => {
 
   await handleClickSymLink(state, dirent, index)
 
+  // @ts-ignore
   expect(invoke).toHaveBeenCalledWith('FileSystem.getRealPath', dirent.path)
+  // @ts-ignore
   expect(invoke).toHaveBeenCalledWith('FileSystem.stat', mockRealPath)
+  // @ts-ignore
   expect(invoke).toHaveBeenCalledWith('Main.openUri', dirent.path, true)
 })
 
