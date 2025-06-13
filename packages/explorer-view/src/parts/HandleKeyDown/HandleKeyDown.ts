@@ -24,7 +24,7 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
   }
 
   // @ts-ignore
-  // eslint-disable-next-line  @typescript-eslint/no-misused-promises
+   
   timeout = setTimeout(async () => {
     await ParentRpc.invoke('Explorer.cancelTypeAhead')
   }, focusWordTimeout)
