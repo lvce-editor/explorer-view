@@ -1,5 +1,6 @@
 import * as Character from '../Character/Character.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
+import { getChildDirentsRaw } from '../GetChildDirentsRaw/GetChildDirentsRaw.ts'
 import { getSavedChildDirents } from '../GetSavedChildDirents/GetSavedChildDirents.ts'
 import * as PromiseStatus from '../PromiseStatus/PromiseStatus.ts'
 
@@ -44,7 +45,7 @@ export const restoreExpandedState = async (savedState: any, root: any, pathSepar
     return []
   }
   const expandedDirentPaths = [root, ...expandedPaths]
-  const expandedDirentChildren = await Promise.allSettled(expandedDirentPaths.map(GetChildDirents.getChildDirentsRaw))
+  const expandedDirentChildren = await Promise.allSettled(expandedDirentPaths.map(getChildDirentsRaw))
   if (expandedDirentChildren[0].status === PromiseStatus.Rejected) {
     throw expandedDirentChildren[0].reason
   }
