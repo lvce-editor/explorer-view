@@ -21,7 +21,6 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   const parentFolder = getParentFolder(items, focusedIndex, root)
   const absolutePath = join2(parentFolder, newFileName)
   const operations = GetFileOperationsCreate.getFileOperationsCreate(editingValue, newDirentType, pathSeparator, absolutePath, root)
-  console.log({ operations })
   const createErrorMessage = await ApplyFileOperations.applyFileOperations(operations)
   if (createErrorMessage) {
     return {
