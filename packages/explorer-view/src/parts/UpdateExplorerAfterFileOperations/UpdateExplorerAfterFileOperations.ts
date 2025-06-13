@@ -54,7 +54,6 @@ export const updateExplorerAfterFileOperations = async (
   // and update the explorer
   const tree = createTree(items, root)
   const merged = mergeTrees(tree, childTree)
-  console.log({ merged, childTree })
   const newItems = treeToArray(merged, root)
   const dirents = newItems
   const newFocusedIndex = GetIndex.getIndex(newItems, absolutePath)
