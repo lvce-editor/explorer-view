@@ -48,7 +48,7 @@
     "@lvce-editor/i18n": "^1.1.0",
     "@lvce-editor/list": "^1.1.0",
     "@lvce-editor/rpc": "^4.1.0",
-    "@lvce-editor/rpc-registry": "^2.28.0",
+    "@lvce-editor/rpc-registry": "^2.30.0",
     "@lvce-editor/verror": "^1.7.0",
     "@lvce-editor/viewlet-registry": "^1.1.0",
     "@lvce-editor/virtual-dom-worker": "^2.0.0",
