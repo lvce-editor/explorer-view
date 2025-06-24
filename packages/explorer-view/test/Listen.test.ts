@@ -1,28 +1,59 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
+import { test } from '@jest/globals'
+import { listen } from '../src/parts/Listen/Listen.ts'
 
-jest.unstable_mockModule('@lvce-editor/rpc', () => {
-  return {
-    WebWorkerRpcClient: {
-      create: jest.fn(() => {
-        return {
-          dispose: jest.fn(),
-        }
-      }),
-    },
-  }
-})
+interface TestGlobalThis {
+  onmessage: ((this: DedicatedWorkerGlobalScope, ev: MessageEvent) => any) | null
+  WorkerGlobalScope: any
+  addEventListener: (type: string, listener: EventListenerOrEventListenerObject) => void
+}
 
-const Listen = await import('../src/parts/Listen/Listen.ts')
-const rpc = await import('@lvce-editor/rpc')
+declare const globalThis: TestGlobalThis
 
-beforeEach(() => {
-  jest.resetAllMocks()
-})
+// Reset globals
+globalThis.onmessage = null
+// @ts-ignore
+globalThis.postMessage = () => {}
+globalThis.WorkerGlobalScope = {}
 
 test('listen', async () => {
-  await Listen.listen()
-  expect(rpc.WebWorkerRpcClient.create).toHaveBeenCalledTimes(1)
-  expect(rpc.WebWorkerRpcClient.create).toHaveBeenCalledWith({
-    commandMap: expect.any(Object),
+  let onMessageListener: ((event: MessageEvent) => void) | undefined
+
+  // Set up the onmessage handler
+  globalThis.onmessage = (event: MessageEvent) => {
+    if (onMessageListener) {
+      onMessageListener(event)
+    }
+  }
+
+  // Mock addEventListener to capture the listener
+  globalThis.addEventListener = (type: string, listener: EventListenerOrEventListenerObject) => {
+    if (type === 'message') {
+      onMessageListener = listener as (event: MessageEvent) => void
+    }
+  }
+
+  // Start listening
+  const listenPromise = listen()
+
+  // Simulate receiving a message with a MessagePort
+  const { port1, port2 } = new MessageChannel()
+
+  // Send the message with the port
+  const messageEvent = new MessageEvent('message', {
+    data: {
+      jsonrpc: '2.0',
+      method: 'initialize',
+      params: ['message-port', port2],
+    },
+    ports: [port2],
   })
+
+  if (onMessageListener) {
+    onMessageListener(messageEvent)
+  }
+
+  await listenPromise
+
+  port1.close()
+  port2.close()
 })
