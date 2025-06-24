@@ -1,9 +1,10 @@
 import { expect, test } from '@jest/globals'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ViewletExplorerFocusFirst from '../src/parts/FocusFirst/FocusFirst.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('focusFirst', () => {
-  const state = {
+  const state: ExplorerState = {
     root: '/home/test-user/test-path',
     focusedIndex: 1,
     top: 0,
@@ -36,7 +37,7 @@ test('focusFirst', () => {
 })
 
 test('focusFirst - no dirents', () => {
-  const state = {
+  const state: ExplorerState = {
     root: '/home/test-user/test-path',
     focusedIndex: -1,
     top: 0,
@@ -48,7 +49,7 @@ test('focusFirst - no dirents', () => {
 })
 
 test('focusFirst - focus already at first', () => {
-  const state = {
+  const state: ExplorerState = {
     root: '/home/test-user/test-path',
     focusedIndex: 0,
     top: 0,

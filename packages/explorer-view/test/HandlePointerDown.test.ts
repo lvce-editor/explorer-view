@@ -4,6 +4,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 import { handlePointerDown } from '../src/parts/HandlePointerDown/HandlePointerDown.ts'
 import * as MouseEventType from '../src/parts/MouseEventType/MouseEventType.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('left click outside items', () => {
   const state = createDefaultState()
@@ -23,7 +24,7 @@ test('right click outside items', () => {
 })
 
 test('left click on item', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
   }

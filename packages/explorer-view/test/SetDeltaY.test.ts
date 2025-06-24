@@ -4,6 +4,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 import { setDeltaY } from '../src/parts/SetDeltaY/SetDeltaY.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
   if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
@@ -36,7 +37,7 @@ test('should clamp deltaY to 0 when negative', async () => {
 })
 
 test('should clamp deltaY to max scroll value', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: Array(20).fill({}),
   }
@@ -46,7 +47,7 @@ test('should clamp deltaY to max scroll value', async () => {
 })
 
 test('should update visible items and icons', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: Array(20).fill({}),
   }

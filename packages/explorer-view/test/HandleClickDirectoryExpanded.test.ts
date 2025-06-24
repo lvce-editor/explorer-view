@@ -6,6 +6,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickDirectoryExpanded } from '../src/parts/HandleClickDirectoryExpanded/HandleClickDirectoryExpanded.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test.skip('collapse expanded directory', async () => {
   const state = createDefaultState()
@@ -48,7 +49,7 @@ test('collapse expanded directory with children', async () => {
     depth: 1,
     selected: false,
   }
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [dirent, child1, child2],
     fileIconCache: {
@@ -102,7 +103,7 @@ test('collapse expanded directory with many items preserves icons', async () => 
     fileIconCache[`/test/child${i}`] = `icon-${i}`
   }
 
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items,
     fileIconCache,
@@ -164,7 +165,7 @@ test('collapse expanded directory with scroll position adjustment', async () => 
     fileIconCache[`/test/child${i}`] = `icon-${i}`
   }
 
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items,
     fileIconCache,

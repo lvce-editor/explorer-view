@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleArrowRightDirectoryExpanded } from '../src/parts/HandleArrowRightDirectoryExpanded/HandleArrowRightDirectoryExpanded.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test.skip('handleArrowRightDirectoryExpanded - last item', () => {
   const state = createDefaultState()
@@ -10,7 +11,7 @@ test.skip('handleArrowRightDirectoryExpanded - last item', () => {
 })
 
 test('handleArrowRightDirectoryExpanded - next item has higher depth', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { path: '/a', name: 'a', type: 1, depth: 0, selected: false },
@@ -24,7 +25,7 @@ test('handleArrowRightDirectoryExpanded - next item has higher depth', () => {
 })
 
 test('handleArrowRightDirectoryExpanded - next item has same depth', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { path: '/a', name: 'a', type: 1, depth: 0, selected: false },

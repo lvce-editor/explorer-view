@@ -5,6 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewDirentsForNewDirent } from '../src/parts/GetNewDirentsForNewDirent/GetNewDirentsForNewDirent.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('getNewDirentsForNewDirent - folder with existing children', async () => {
   const mockRpc = MockRpc.create({
@@ -19,7 +20,7 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
 
   const defaultState = createDefaultState()
-  const state = {
+  const state: ExplorerState = {
     ...defaultState,
     focusedIndex: 0,
     items: [
@@ -116,7 +117,7 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
 
   const defaultState = createDefaultState()
-  const state = {
+  const state: ExplorerState = {
     ...defaultState,
     focusedIndex: 0,
     items: [
@@ -174,7 +175,7 @@ test('getNewDirentsForNewDirent - no items', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
 
   const defaultState = createDefaultState()
-  const state = {
+  const state: ExplorerState = {
     ...defaultState,
     focusedIndex: -1,
     items: [],
@@ -210,7 +211,7 @@ test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async ()
   RpcRegistry.set(RendererWorker, mockRpc)
 
   const defaultState = createDefaultState()
-  const state = {
+  const state: ExplorerState = {
     ...defaultState,
     focusedIndex: -1,
     items: [

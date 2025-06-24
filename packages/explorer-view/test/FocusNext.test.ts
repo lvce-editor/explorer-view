@@ -1,9 +1,10 @@
 import { expect, test } from '@jest/globals'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ViewletExplorerFocusNext from '../src/parts/FocusNext/FocusNext.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('focusNext', () => {
-  const state = {
+  const state: ExplorerState = {
     root: '/home/test-user/test-path',
     focusedIndex: 0,
     top: 0,
@@ -33,7 +34,7 @@ test('focusNext', () => {
 })
 
 test('focusNext - when no focus', () => {
-  const state = {
+  const state: ExplorerState = {
     root: '/home/test-user/test-path',
     focusedIndex: -1,
     top: 0,
@@ -63,7 +64,7 @@ test('focusNext - when no focus', () => {
 })
 
 test('focusNext - at end', () => {
-  const state = {
+  const state: ExplorerState = {
     root: '/home/test-user/test-path',
     focusedIndex: 2,
     top: 0,

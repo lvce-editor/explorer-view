@@ -1,6 +1,7 @@
 import { test, expect } from '@jest/globals'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { selectUp } from '../src/parts/SelectUp/SelectUp.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('selectUp - first item', () => {
   const state = createDefaultState()
@@ -9,7 +10,7 @@ test('selectUp - first item', () => {
 })
 
 test('selectUp - second item', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -23,7 +24,7 @@ test('selectUp - second item', () => {
 })
 
 test.skip('selectUp - multiple items with selection', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -39,7 +40,7 @@ test.skip('selectUp - multiple items with selection', () => {
 })
 
 test('selectUp - multiple items with selection at top', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: true },
@@ -55,7 +56,7 @@ test('selectUp - multiple items with selection at top', () => {
 })
 
 test.skip('selectUp - multiple items with multiple selections', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: true },

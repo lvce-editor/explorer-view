@@ -4,6 +4,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { set } from '../src/parts/ExplorerStates/ExplorerStates.ts'
 import { getMenuEntries2 } from '../src/parts/GetMenuEntries2/GetMenuEntries2.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('getMenuEntries2 - root', () => {
   const uid = 1
@@ -22,7 +23,7 @@ test('getMenuEntries2 - directory', () => {
     depth: 0,
     selected: true,
   }
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [item],
     focusedIndex: 0,
@@ -41,7 +42,7 @@ test('getMenuEntries2 - file', () => {
     depth: 0,
     selected: false,
   }
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [item],
     focusedIndex: 0,

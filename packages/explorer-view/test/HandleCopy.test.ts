@@ -4,6 +4,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleCopy } from '../src/parts/HandleCopy/HandleCopy.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 const mockRpc = {
   invoke: jest.fn(),
@@ -15,7 +16,7 @@ beforeEach(() => {
 })
 
 test('handleCopy - with focused dirent', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
@@ -28,7 +29,7 @@ test('handleCopy - with focused dirent', async () => {
 })
 
 test('handleCopy - without focused dirent', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
     items: [],
