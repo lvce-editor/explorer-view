@@ -1,20 +1,16 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
+import { MockRpc } from '@lvce-editor/rpc'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { openContainingFolder } from '../src/parts/OpenContainingFolder/OpenContainingFolder.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
-
-const mockRpc = {
-  invoke: jest.fn(),
-} as any
-
-beforeEach(() => {
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
-  jest.resetAllMocks()
-})
+import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('openContainingFolder', async () => {
+  const mockRpc = MockRpc.create({
+    invoke: jest.fn(),
+    commandMap: {},
+  })
+  RendererWorker.set(mockRpc)
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
