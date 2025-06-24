@@ -1,13 +1,14 @@
 import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleArrowRight } from '../src/parts/HandleArrowRight/HandleArrowRight.ts'
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('handleArrowRight - no focused item', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
   }
@@ -16,7 +17,7 @@ test('handleArrowRight - no focused item', async () => {
 })
 
 test('handleArrowRight - file', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.File, name: 'test.txt', path: '/test.txt', depth: 0, selected: false }],
     focusedIndex: 0,
@@ -36,7 +37,7 @@ test.skip('handleArrowRight - directory', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.Directory, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
@@ -46,7 +47,7 @@ test.skip('handleArrowRight - directory', async () => {
 })
 
 test('handleArrowRight - symlink file', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.SymLinkFile, name: 'test.txt', path: '/test.txt', depth: 0, selected: false }],
     focusedIndex: 0,
@@ -66,7 +67,7 @@ test.skip('handleArrowRight - symlink folder', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.SymLinkFolder, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
@@ -86,7 +87,7 @@ test.skip('handleArrowRight - directory expanded', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.DirectoryExpanded, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
@@ -109,7 +110,7 @@ test.skip('handleArrowRight - symlink', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.Symlink, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
@@ -119,7 +120,7 @@ test.skip('handleArrowRight - symlink', async () => {
 })
 
 test('handleArrowRight - invalid type', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: 999, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,

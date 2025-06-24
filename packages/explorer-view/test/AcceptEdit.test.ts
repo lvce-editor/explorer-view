@@ -1,4 +1,5 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
@@ -44,7 +45,7 @@ const FileSystem = await import('../src/parts/FileSystem/FileSystem.ts')
 test.skip('acceptEdit - rename', async () => {
   // @ts-ignore
   FileSystem.rename.mockImplementation(() => {})
-  const state = {
+  const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
     focusedIndex: 0,
     top: 0,
@@ -89,7 +90,7 @@ test.skip('acceptEdit - rename', async () => {
 test.skip('acceptEdit - rename - nested file', async () => {
   // @ts-ignore
   FileSystem.rename.mockImplementation(() => {})
-  const state = {
+  const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
     focusedIndex: 0,
     top: 0,
@@ -151,7 +152,7 @@ test.skip('acceptEdit - rename - nested file', async () => {
 test.skip('acceptEdit - create - insert folder', async () => {
   // @ts-ignore
   FileSystem.mkdir.mockImplementation(() => {})
-  const state = {
+  const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
     focusedIndex: -1,
     top: 0,

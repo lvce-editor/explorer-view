@@ -1,5 +1,6 @@
 import { test, expect } from '@jest/globals'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { set } from '../src/parts/ExplorerStates/ExplorerStates.ts'
@@ -22,7 +23,7 @@ test('getMenuEntries2 - directory', () => {
     depth: 0,
     selected: true,
   }
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [item],
     focusedIndex: 0,
@@ -41,7 +42,7 @@ test('getMenuEntries2 - file', () => {
     depth: 0,
     selected: false,
   }
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [item],
     focusedIndex: 0,

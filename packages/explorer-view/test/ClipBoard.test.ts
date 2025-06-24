@@ -1,22 +1,17 @@
-import { expect, test, beforeEach, jest } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
+import { MockRpc } from '@lvce-editor/rpc'
 import * as ClipBoard from '../src/parts/ClipBoard/ClipBoard.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
-
-const mockInvoke = jest.fn()
-const mockRpc = {
-  invoke: mockInvoke,
-} as any
-
-beforeEach(() => {
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
-  jest.resetAllMocks()
-})
+import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('writeText', async () => {
+  const mockRpc = MockRpc.create({
+    invoke: jest.fn(),
+    commandMap: {},
+  })
+  RendererWorker.set(mockRpc)
   await ClipBoard.writeText('test text')
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('ClipBoard.writeText', 'test text')
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invoke).toHaveBeenCalledWith('ClipBoard.writeText', 'test text')
 })
 
 test('readNativeFiles', async () => {
@@ -24,16 +19,28 @@ test('readNativeFiles', async () => {
     type: 'copy',
     files: ['/test/file1.txt', '/test/file2.txt'],
   }
-  // @ts-ignore
-  mockInvoke.mockResolvedValue(expectedResult)
+  const mockRpc = MockRpc.create({
+    invoke: jest.fn().mockReturnValue(expectedResult),
+    commandMap: {},
+  })
+  RendererWorker.set(mockRpc)
   const result = await ClipBoard.readNativeFiles()
   expect(result).toEqual(expectedResult)
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('ClipBoard.readNativeFiles')
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invoke).toHaveBeenCalledWith('ClipBoard.readNativeFiles')
 })
 
 test('writeNativeFiles', async () => {
+  const expectedResult = {
+    type: 'copy',
+    files: ['/test/file1.txt', '/test/file2.txt'],
+  }
+  const mockRpc = MockRpc.create({
+    invoke: jest.fn().mockReturnValue(expectedResult),
+    commandMap: {},
+  })
+  RendererWorker.set(mockRpc)
   await ClipBoard.writeNativeFiles('copy', ['/test/file.txt'])
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'copy', ['/test/file.txt'])
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'copy', ['/test/file.txt'])
 })
