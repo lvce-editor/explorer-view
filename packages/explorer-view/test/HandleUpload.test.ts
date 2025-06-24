@@ -4,6 +4,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleUpload } from '../src/parts/HandleUpload/HandleUpload.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('should upload a file', async () => {
   const written: any[] = []
@@ -17,7 +18,7 @@ test('should upload a file', async () => {
       throw new Error(`unexpected method ${method}`)
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  RendererWorker.set(mockRpc)
   const state = createDefaultState()
   const file = { name: 'test.txt', text: () => 'hello' }
   const dirents = [{ type: 1, file }]
@@ -34,7 +35,7 @@ test('should do nothing for empty dirents', async () => {
       throw new Error(`unexpected method ${method}`)
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  RendererWorker.set(mockRpc)
   const state = createDefaultState()
   await handleUpload(state, [])
 })
