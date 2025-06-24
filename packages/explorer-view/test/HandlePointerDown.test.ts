@@ -1,10 +1,10 @@
 import { test, expect } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 import { handlePointerDown } from '../src/parts/HandlePointerDown/HandlePointerDown.ts'
 import * as MouseEventType from '../src/parts/MouseEventType/MouseEventType.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('left click outside items', () => {
   const state = createDefaultState()

@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { selectUp } from '../src/parts/SelectUp/SelectUp.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('selectUp - first item', () => {
   const state = createDefaultState()

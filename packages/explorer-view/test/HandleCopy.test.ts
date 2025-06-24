@@ -1,10 +1,10 @@
 import { beforeEach, test, expect, jest } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleCopy } from '../src/parts/HandleCopy/HandleCopy.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 const mockRpc = {
   invoke: jest.fn(),

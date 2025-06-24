@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ViewletExplorerFocusFirst from '../src/parts/FocusFirst/FocusFirst.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('focusFirst', () => {
   const state: ExplorerState = {

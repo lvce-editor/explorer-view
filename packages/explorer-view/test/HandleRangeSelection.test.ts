@@ -1,8 +1,8 @@
 import { expect, test } from '@jest/globals'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleRangeSelection } from '../src/parts/HandleRangeSelection/HandleRangeSelection.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 const createItem = (name: string, selected: boolean): ExplorerItem => ({
   name,

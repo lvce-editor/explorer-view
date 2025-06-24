@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleDragOver } from '../src/parts/HandleDragOver/HandleDragOver.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test.skip('handleDragOver - returns same state when drop targets are equal', () => {
   const state: ExplorerState = {

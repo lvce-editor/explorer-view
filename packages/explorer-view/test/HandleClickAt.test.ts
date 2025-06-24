@@ -1,8 +1,8 @@
 import { test, expect } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleClickAt } from '../src/parts/HandleClickAt/HandleClickAt.ts'
 import { LeftClick } from '../src/parts/MouseEventType/MouseEventType.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test.skip('handleClickAt - left click without shift', async () => {
   const state: ExplorerState = {

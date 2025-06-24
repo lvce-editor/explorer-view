@@ -1,10 +1,10 @@
 import { test, expect } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 import { setDeltaY } from '../src/parts/SetDeltaY/SetDeltaY.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
   if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {

@@ -1,8 +1,8 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 beforeEach(() => {
   jest.resetAllMocks()

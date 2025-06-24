@@ -1,8 +1,8 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewDropTargets } from '../src/parts/GetNewDropTargets/GetNewDropTargets.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('getNewDropTargets - index -1', () => {
   const state: ExplorerState = {
