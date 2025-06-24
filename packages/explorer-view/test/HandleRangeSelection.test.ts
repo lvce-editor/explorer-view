@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleRangeSelection } from '../src/parts/HandleRangeSelection/HandleRangeSelection.ts'
 
@@ -12,7 +13,7 @@ const createItem = (name: string, selected: boolean): ExplorerItem => ({
 })
 
 test('handleRangeSelection - forward range', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -27,7 +28,7 @@ test('handleRangeSelection - forward range', () => {
 })
 
 test('handleRangeSelection - backward range', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -39,7 +40,7 @@ test('handleRangeSelection - backward range', () => {
 })
 
 test('handleRangeSelection - preserve existing selections', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: true },
@@ -54,7 +55,7 @@ test('handleRangeSelection - preserve existing selections', () => {
 })
 
 test('selects items in range', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [createItem('a', false), createItem('b', false), createItem('c', false), createItem('d', false)],
   }
@@ -65,7 +66,7 @@ test('selects items in range', () => {
 })
 
 test('throws error when startIndex > endIndex', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [createItem('a', false), createItem('b', false)],
   }

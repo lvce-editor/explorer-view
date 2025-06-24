@@ -5,7 +5,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleArrowLeft } from '../src/parts/HandleArrowLeft/HandleArrowLeft.ts'
 
 test('handleArrowLeft - no focused item', () => {
-  const state = { ...createDefaultState(), focusedIndex: -1 }
+  const state: ExplorerState = { ...createDefaultState(), focusedIndex: -1 }
   const result = handleArrowLeft(state)
   expect(result).toBe(state)
 })
@@ -65,7 +65,7 @@ test('handleArrowLeft - symlink file', () => {
 })
 
 test('handleArrowLeft - expanded directory', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       {
@@ -77,7 +77,7 @@ test('handleArrowLeft - expanded directory', () => {
         depth: 0,
         selected: false,
       },
-    ],
+    ] as any[],
     focusedIndex: 0,
   }
   const result = handleArrowLeft(state)
@@ -85,7 +85,7 @@ test('handleArrowLeft - expanded directory', () => {
 })
 
 test('handleArrowLeft - expanding directory', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       {

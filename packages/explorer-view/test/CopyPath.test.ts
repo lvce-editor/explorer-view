@@ -23,7 +23,7 @@ test('copyPath - returns state unchanged', async () => {
 })
 
 test('copyPath - handles empty items array', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [],
   }
@@ -33,7 +33,7 @@ test('copyPath - handles empty items array', async () => {
 })
 
 test('copyPath - basic', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       {
