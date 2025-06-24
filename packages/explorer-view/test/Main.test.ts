@@ -1,20 +1,11 @@
-import { expect, jest, test, beforeEach } from '@jest/globals'
+import { test } from '@jest/globals'
+import { main } from '../src/parts/Main/Main.ts'
+import { mockWorkerGlobalRpc } from '@lvce-editor/rpc'
 
-beforeEach(() => {
-  jest.resetAllMocks()
-})
-
-const mockListen = jest.fn()
-
-jest.unstable_mockModule('../src/parts/Listen/Listen.ts', () => {
-  return {
-    listen: mockListen,
-  }
-})
-
-const Main = await import('../src/parts/Main/Main.ts')
-
-test('main', async () => {
-  await Main.main()
-  expect(mockListen).toHaveBeenCalled()
+test('listen', async () => {
+  const { start, dispose } = mockWorkerGlobalRpc()
+  const mainPromise = main()
+  start()
+  await mainPromise
+  dispose()
 })
