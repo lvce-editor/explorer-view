@@ -12,21 +12,21 @@ declare const globalThis: TestGlobalThis
 // Reset globals
 globalThis.onmessage = null
 // @ts-ignore
-globalThis.postMessage = () => {}
+globalThis.postMessage = (): void => {}
 globalThis.WorkerGlobalScope = {}
 
 test('listen', async () => {
   let onMessageListener: ((event: MessageEvent) => void) | undefined
 
   // Set up the onmessage handler
-  globalThis.onmessage = (event: MessageEvent) => {
+  globalThis.onmessage = (event: MessageEvent): void => {
     if (onMessageListener) {
       onMessageListener(event)
     }
   }
 
   // Mock addEventListener to capture the listener
-  globalThis.addEventListener = (type: string, listener: EventListenerOrEventListenerObject) => {
+  globalThis.addEventListener = (type: string, listener: EventListenerOrEventListenerObject): void => {
     if (type === 'message') {
       onMessageListener = listener as (event: MessageEvent) => void
     }
