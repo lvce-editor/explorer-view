@@ -1,6 +1,6 @@
 import { test } from '@jest/globals'
-import { main } from '../src/parts/Main/Main.ts'
 import { mockWorkerGlobalRpc } from '@lvce-editor/rpc'
+import { main } from '../src/parts/Main/Main.ts'
 
 test('listen', async () => {
   const { start, dispose } = mockWorkerGlobalRpc()
