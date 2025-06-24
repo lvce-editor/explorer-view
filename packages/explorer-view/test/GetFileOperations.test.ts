@@ -13,7 +13,7 @@ test('getFileOperations - single file', () => {
   const uploadTree = {
     'file.txt': 'content',
   }
-  expect(getFileOperations(root, uploadTree)).toEqual([{ type: 'createFile', path: '/test/file.txt', text: 'content' }])
+  expect(getFileOperations(root, uploadTree)).toEqual([{ type: FileOperationType.CreateFile, path: '/test/file.txt', text: 'content' }])
 })
 
 test('getFileOperations - single folder', () => {

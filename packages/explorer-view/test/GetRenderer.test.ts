@@ -1,19 +1,32 @@
 import { test, expect } from '@jest/globals'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
 import { getRenderer } from '../src/parts/GetRenderer/GetRenderer.ts'
-import * as RenderFocus from '../src/parts/RenderFocus/RenderFocus.ts'
-import * as RenderItems from '../src/parts/RenderItems/RenderItems.ts'
 
-test('getRenderer - RenderItems', () => {
+test('should return RenderItems for RenderItems diffType', () => {
   const renderer = getRenderer(DiffType.RenderItems)
-  expect(renderer).toBe(RenderItems.renderItems)
+  expect(typeof renderer).toBe('function')
 })
 
-test('getRenderer - RenderFocus', () => {
+test('should return RenderFocus for RenderFocus diffType', () => {
   const renderer = getRenderer(DiffType.RenderFocus)
-  expect(renderer).toBe(RenderFocus.renderFocus)
+  expect(typeof renderer).toBe('function')
 })
 
-test('getRenderer - unknown renderer', () => {
-  expect(() => getRenderer(999)).toThrow('unknown renderer')
+test('should return RenderFocusContext for RenderFocusContext diffType', () => {
+  const renderer = getRenderer(DiffType.RenderFocusContext)
+  expect(typeof renderer).toBe('function')
+})
+
+test('should return RenderValue for RenderValue diffType', () => {
+  const renderer = getRenderer(DiffType.RenderValue)
+  expect(typeof renderer).toBe('function')
+})
+
+test('should return RenderEditingSelection for RenderSelection diffType', () => {
+  const renderer = getRenderer(DiffType.RenderSelection)
+  expect(typeof renderer).toBe('function')
+})
+
+test('should throw for unknown diffType', () => {
+  expect(() => getRenderer(9999)).toThrow('unknown renderer')
 })

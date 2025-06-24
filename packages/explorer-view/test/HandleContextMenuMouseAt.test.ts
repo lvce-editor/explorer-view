@@ -1,4 +1,5 @@
 import { expect, jest, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as HandleContextMenuMouseAt from '../src/parts/HandleContextMenuMouseAt/HandleContextMenuMouseAt.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
@@ -11,7 +12,7 @@ const mockRpc = {
 
 test('handleContextMenuMouseAt', async () => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     uid: 1,
     focusedIndex: 0,

@@ -3,7 +3,6 @@
   "version": "0.0.0-dev",
   "description": "",
   "license": "MIT",
-  "author": "",
   "type": "module",
   "main": "",
   "scripts": {
@@ -26,10 +25,10 @@
   },
   "devDependencies": {
     "@lerna/legacy-package-management": "^8.2.2",
-    "@lvce-editor/eslint-config": "^1.49.0",
-    "eslint": "^9.28.0",
+    "@lvce-editor/eslint-config": "^1.50.0",
+    "eslint": "^9.29.0",
     "lerna": "^8.2.2",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.0",
     "typescript": "^5.8.3"
   }
 }

@@ -1,5 +1,6 @@
 import { test, expect } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
@@ -36,7 +37,7 @@ test('should clamp deltaY to 0 when negative', async () => {
 })
 
 test('should clamp deltaY to max scroll value', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: Array(20).fill({}),
   }
@@ -46,7 +47,7 @@ test('should clamp deltaY to max scroll value', async () => {
 })
 
 test('should update visible items and icons', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: Array(20).fill({}),
   }

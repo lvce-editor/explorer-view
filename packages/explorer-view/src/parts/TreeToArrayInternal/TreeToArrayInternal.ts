@@ -11,7 +11,7 @@ export const treeToArrayInternal = (map: Tree, root: string, items: ExplorerItem
   for (let i = 0; i < count; i++) {
     const child = children[i]
     const childPath = join2(path, child.name)
-    const absolutePath = `${root}${childPath}`
+    const absolutePath = join2(root, childPath)
     items.push({
       depth,
       posInSet: i + 1,

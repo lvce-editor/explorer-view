@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import { set } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickDirectoryExpanded } from '../src/parts/HandleClickDirectoryExpanded/HandleClickDirectoryExpanded.ts'
@@ -48,7 +49,7 @@ test('collapse expanded directory with children', async () => {
     depth: 1,
     selected: false,
   }
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [dirent, child1, child2],
     fileIconCache: {
@@ -102,7 +103,7 @@ test('collapse expanded directory with many items preserves icons', async () => 
     fileIconCache[`/test/child${i}`] = `icon-${i}`
   }
 
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items,
     fileIconCache,
@@ -164,7 +165,7 @@ test('collapse expanded directory with scroll position adjustment', async () => 
     fileIconCache[`/test/child${i}`] = `icon-${i}`
   }
 
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items,
     fileIconCache,

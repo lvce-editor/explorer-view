@@ -1,4 +1,5 @@
 import type { FileOperation } from '../FileOperation/FileOperation.ts'
+import * as FileOperationType from '../FileOperationType/FileOperationType.ts'
 import { join2 } from '../Path/Path.ts'
 
 export const getFileOperationsElectron = async (
@@ -12,7 +13,7 @@ export const getFileOperationsElectron = async (
     const { name } = fileHandle
     const path = paths[i]
     operations.push({
-      type: 'copy',
+      type: FileOperationType.Copy,
       path: join2(root, name),
       from: path,
     })

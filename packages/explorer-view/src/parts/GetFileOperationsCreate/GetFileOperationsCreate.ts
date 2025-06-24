@@ -9,10 +9,10 @@ const getFileOperationsNestedPath = (path: string, root: string, pathSeparator: 
   let currentPath = ''
   for (const part of parts) {
     if (!part) continue
-    currentPath = currentPath ? `${currentPath}${pathSeparator}${part}` : part
+    currentPath = Path.join2(currentPath, part)
     operations.push({
       type: FileOperationType.CreateFolder,
-      path: `${root}${currentPath}`,
+      path: Path.join2(root, currentPath),
     })
   }
   return operations

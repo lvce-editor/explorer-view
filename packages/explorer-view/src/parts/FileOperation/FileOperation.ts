@@ -1,26 +1,28 @@
+import type { Copy, CreateFile, CreateFolder, Rename } from '../FileOperationType/FileOperationType.ts'
+
 export interface FileOperationBase {
-  readonly type: string
+  readonly type: number
 }
 
 export interface FileOperationCreateFile extends FileOperationBase {
-  readonly type: 'createFile'
+  readonly type: typeof CreateFile
   readonly path: string
   readonly text: string
 }
 
 export interface FileOperationCreateFolder extends FileOperationBase {
-  readonly type: 'createFolder'
+  readonly type: typeof CreateFolder
   readonly path: string
 }
 
 export interface FileOperationCopy extends FileOperationBase {
-  readonly type: 'copy'
+  readonly type: typeof Copy
   readonly path: string
   readonly from: string
 }
 
 export interface FileOperationRename extends FileOperationBase {
-  readonly type: 'rename'
+  readonly type: typeof Rename
   readonly path: string
   readonly from: string
 }

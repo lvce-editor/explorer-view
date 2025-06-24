@@ -1,50 +1,16 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
+import * as ViewletExplorerAcceptEdit from '../src/parts/AcceptEdit/AcceptEdit.ts'
+import * as ViewletExplorer from '../src/parts/Create/Create.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
+import * as FileSystem from '../src/parts/FileSystem/FileSystem.ts'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
-
-beforeEach(() => {
-  jest.resetAllMocks()
-})
-
-// TODO don't mock file system, register mockrpc instead
-jest.unstable_mockModule('../src/parts/FileSystem/FileSystem.ts', () => {
-  return {
-    rename: jest.fn(() => {
-      throw new Error('not implemented')
-    }),
-    writeFile: jest.fn(() => {
-      throw new Error('not implemented')
-    }),
-    copy: jest.fn(() => {
-      throw new Error('not implemented')
-    }),
-    remove: jest.fn(() => {
-      throw new Error('not implemented')
-    }),
-    readDirWithFileTypes: jest.fn(() => {
-      throw new Error('not implemented')
-    }),
-    mkdir: jest.fn(() => {
-      throw new Error('not implemented')
-    }),
-    getPathSeparator: (): string => {
-      return '/'
-    },
-    getRealPath: jest.fn(() => {
-      throw new Error('not implemented')
-    }),
-  }
-})
-
-const ViewletExplorer = await import('../src/parts/Create/Create.ts')
-const ViewletExplorerAcceptEdit = await import('../src/parts/AcceptEdit/AcceptEdit.ts')
-const FileSystem = await import('../src/parts/FileSystem/FileSystem.ts')
 
 test.skip('acceptEdit - rename', async () => {
   // @ts-ignore
   FileSystem.rename.mockImplementation(() => {})
-  const state = {
+  const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
     focusedIndex: 0,
     top: 0,
@@ -89,7 +55,7 @@ test.skip('acceptEdit - rename', async () => {
 test.skip('acceptEdit - rename - nested file', async () => {
   // @ts-ignore
   FileSystem.rename.mockImplementation(() => {})
-  const state = {
+  const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
     focusedIndex: 0,
     top: 0,
@@ -151,7 +117,7 @@ test.skip('acceptEdit - rename - nested file', async () => {
 test.skip('acceptEdit - create - insert folder', async () => {
   // @ts-ignore
   FileSystem.mkdir.mockImplementation(() => {})
-  const state = {
+  const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
     focusedIndex: -1,
     top: 0,

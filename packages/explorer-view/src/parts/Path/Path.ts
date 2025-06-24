@@ -19,7 +19,7 @@ export const getBaseName = (pathSeparator: string, path: string): string => {
 }
 
 export const join2 = (path: string, childPath: string): string => {
-  if (path.endsWith('/')) {
+  if (path.endsWith('/') || childPath.startsWith('/')) {
     return `${path}${childPath}`
   }
   return `${path}/${childPath}`
