@@ -20,7 +20,7 @@ test('should upload a file', async () => {
   })
   RendererWorker.set(mockRpc)
   const state = createDefaultState()
-  const file = { name: 'test.txt', text: () => 'hello' }
+  const file = { name: 'test.txt', text: (): string => 'hello' }
   const dirents = [{ type: 1, file }]
   await handleUpload(state, dirents)
   expect(written).toHaveLength(1)
