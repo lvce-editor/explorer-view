@@ -2,7 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { cancelTypeAhead } from '../CancelTypeAhead/CancelTypeAhead.ts'
 import { filterByFocusWord } from '../FilterByFocusWord/FilterByFocusWord.ts'
 import { isAscii } from '../IsAscii/IsAscii.ts'
-import * as ParentRpc from '../RendererWorker/RendererWorker.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 let timeout: number | undefined
 
@@ -25,7 +25,7 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
 
   // @ts-ignore
   timeout = setTimeout(async () => {
-    await ParentRpc.invoke('Explorer.cancelTypeAhead')
+    await RendererWorker.invoke('Explorer.cancelTypeAhead')
   }, focusWordTimeout)
 
   if (matchingIndex === -1) {

@@ -1,5 +1,5 @@
-import * as ParentRpc from '../RendererWorker/RendererWorker.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const openNativeFolder = async (path: string): Promise<void> => {
-  await ParentRpc.invoke('OpenNativeFolder.openNativeFolder', /* path */ path)
+  await RendererWorker.invoke('OpenNativeFolder.openNativeFolder', /* path */ path)
 }

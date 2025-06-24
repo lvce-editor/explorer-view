@@ -1,5 +1,5 @@
-import * as ParentRpc from '../RendererWorker/RendererWorker.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const getFilePathElectron = async (file: File): Promise<string> => {
-  return ParentRpc.invoke('FileSystemHandle.getFilePathElectron', file)
+  return RendererWorker.invoke('FileSystemHandle.getFilePathElectron', file)
 }
