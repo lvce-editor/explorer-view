@@ -1,4 +1,5 @@
 import { test, expect } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
@@ -23,7 +24,7 @@ test('right click outside items', () => {
 })
 
 test('left click on item', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
   }

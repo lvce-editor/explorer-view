@@ -30,7 +30,7 @@ test.skip('expand root directory', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     root: '/test',
     items: [
@@ -68,7 +68,7 @@ test.skip('expand focused directory', async () => {
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'dir1', type: Directory, depth: 0, path: '/test/dir1', selected: false },

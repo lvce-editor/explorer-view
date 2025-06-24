@@ -1,4 +1,5 @@
 import { beforeEach, test, expect, jest } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleCopy } from '../src/parts/HandleCopy/HandleCopy.ts'
@@ -15,7 +16,7 @@ beforeEach(() => {
 })
 
 test('handleCopy - with focused dirent', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
@@ -28,7 +29,7 @@ test('handleCopy - with focused dirent', async () => {
 })
 
 test('handleCopy - without focused dirent', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
     items: [],

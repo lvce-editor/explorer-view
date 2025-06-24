@@ -1,10 +1,11 @@
 import { test, expect } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleClickAt } from '../src/parts/HandleClickAt/HandleClickAt.ts'
 import { LeftClick } from '../src/parts/MouseEventType/MouseEventType.ts'
 
 test.skip('handleClickAt - left click without shift', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -16,7 +17,7 @@ test.skip('handleClickAt - left click without shift', async () => {
 })
 
 test.skip('handleClickAt - shift click with no selection', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -28,7 +29,7 @@ test.skip('handleClickAt - shift click with no selection', async () => {
 })
 
 test('handleClickAt - shift click with existing selection', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: true },
@@ -57,7 +58,7 @@ test('handleClickAt - left click', async () => {
 })
 
 test.skip('handleClickAt - shift click with no selection', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -69,7 +70,7 @@ test.skip('handleClickAt - shift click with no selection', async () => {
 })
 
 test('handleClickAt - shift click with existing selection', async () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: true },

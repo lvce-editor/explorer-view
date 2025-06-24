@@ -10,7 +10,7 @@ test('handleDragLeave returns state unchanged', () => {
 
 // Uncomment when functionality is implemented
 // test('handleDragLeave clears dropTargets', () => {
-//   const state = {
+//   const state :ExplorerState = {
 //     ...createDefaultState(),
 //     dropTargets: ['some-target']
 //   }

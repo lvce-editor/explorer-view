@@ -53,7 +53,7 @@ test('selectDown - at end', () => {
 })
 
 test('selectDown - last item', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -66,7 +66,7 @@ test('selectDown - last item', () => {
 })
 
 test('selectDown - first item', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -80,7 +80,7 @@ test('selectDown - first item', () => {
 })
 
 test.skip('selectDown - multiple items with selection', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -96,7 +96,7 @@ test.skip('selectDown - multiple items with selection', () => {
 })
 
 test('selectDown - multiple items with selection at bottom', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
@@ -112,7 +112,7 @@ test('selectDown - multiple items with selection at bottom', () => {
 })
 
 test.skip('selectDown - multiple items with multiple selections', () => {
-  const state = {
+  const state: ExplorerState = {
     ...createDefaultState(),
     items: [
       { name: 'a', type: 0, path: '/a', depth: 1, selected: true },
