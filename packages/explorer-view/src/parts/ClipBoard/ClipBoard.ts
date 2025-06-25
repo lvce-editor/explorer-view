@@ -5,7 +5,7 @@ export const writeText = async (text: string): Promise<void> => {
   await RendererWorker.invoke('ClipBoard.writeText', /* text */ text)
 }
 
-export const readNativeFiles = async (): Promise<NativeFilesResult> => {
+export const readNativeFiles = async (): Promise<NativeFilesResult | undefined> => {
   // @ts-ignore
   return RendererWorker.invoke('ClipBoard.readNativeFiles')
 }
