@@ -4,7 +4,6 @@ import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations
 import { getFileOperationsCopy } from '../GetFileOperationsCopy/GetFileOperationsCopy.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { refresh } from '../Refresh/Refresh.ts'
-import { updateRoot } from '../UpdateRoot/UpdateRoot.ts'
 
 export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeFilesResult): Promise<ExplorerState> => {
   // TODO handle pasting files into nested folder
