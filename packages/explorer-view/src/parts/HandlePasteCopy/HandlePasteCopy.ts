@@ -1,8 +1,7 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import type { NativeFilesResult } from '../NativeFilesResult/NativeFilesResult.ts'
-import * as FileSystem from '../FileSystem/FileSystem.ts'
-import * as Path from '../Path/Path.ts'
-import { getBaseName } from '../Path/Path.ts'
+import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
+import { getFileOperationsCopy } from '../GetFileOperationsCopy/GetFileOperationsCopy.ts'
 import { updateRoot } from '../UpdateRoot/UpdateRoot.ts'
 
 export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeFilesResult): Promise<ExplorerState> => {
@@ -13,11 +12,11 @@ export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeF
   // TODO what if folder is big and it takes a long time
 
   // TODO use file operations and bulk edit
-  for (const source of nativeFiles.files) {
-    // @ts-ignore
-    const target = Path.join(state.pathSeperator, state.root, getBaseName(state.pathSeparator, source))
-    await FileSystem.copy(source, target)
-  }
+  const operations = getFileOperationsCopy(state.root, nativeFiles.files)
+  // TODO handle error?
+  await ApplyFileOperations.applyFileOperations(operations)
+
+  // TODO use refreshExplorer with the paths that have been affected by file operations
   // TODO only update folder at which level it changed
   return updateRoot(state)
 }
