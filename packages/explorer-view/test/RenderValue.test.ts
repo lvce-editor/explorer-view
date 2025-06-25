@@ -1,10 +1,10 @@
 import { test, expect } from '@jest/globals'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import { renderValue } from '../src/parts/RenderValue/RenderValue.ts'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 
 test('should return empty array when inputSource is User', () => {
   const oldState = createDefaultState()
