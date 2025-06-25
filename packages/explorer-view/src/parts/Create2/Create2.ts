@@ -42,6 +42,7 @@ export const create2 = (
     editingIcon: '',
     fileIconCache: Object.create(null),
     useChevrons: false,
+    confirmDelete: true,
     icons: [],
     platform,
     focus: 0,

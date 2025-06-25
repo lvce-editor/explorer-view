@@ -27,6 +27,7 @@ export const createDefaultState = (): ExplorerState => ({
   editingErrorMessage: '',
   icons: [],
   useChevrons: false,
+  confirmDelete: true,
   fileIconCache: {},
   platform: 0,
   focus: 0,

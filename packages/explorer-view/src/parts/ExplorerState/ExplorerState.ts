@@ -30,6 +30,7 @@ export interface ExplorerState {
   readonly editingSelectionEnd: number
   readonly icons: readonly string[]
   readonly useChevrons: boolean
+  readonly confirmDelete: boolean
   readonly fileIconCache: FileIconCache
   readonly platform: number
   readonly focus: number
