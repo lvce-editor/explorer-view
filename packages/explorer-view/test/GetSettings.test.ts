@@ -28,7 +28,7 @@ test('getSettings - useChevrons true', async () => {
   const settings = await getSettings()
   expect(settings).toEqual({
     useChevrons: true,
-    confirmDelete: true,
+    confirmDelete: false,
     confirmPaste: false,
   })
 })
@@ -48,7 +48,7 @@ test('getSettings - useChevrons undefined', async () => {
   const settings = await getSettings()
   expect(settings).toEqual({
     useChevrons: true,
-    confirmDelete: true,
+    confirmDelete: false,
     confirmPaste: false,
   })
 })
