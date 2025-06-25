@@ -2,73 +2,99 @@ import { expect, test } from '@jest/globals'
 import * as ExplorerStrings from '../src/parts/ExplorerStrings/ExplorerStrings.ts'
 
 test('newFile', () => {
-  expect(typeof ExplorerStrings.newFile()).toBe('string')
+  expect(ExplorerStrings.newFile()).toBe('New File...')
 })
 
 test('newFolder', () => {
-  expect(typeof ExplorerStrings.newFolder()).toBe('string')
+  expect(ExplorerStrings.newFolder()).toBe('New Folder...')
 })
 
 test('openContainingFolder', () => {
-  expect(typeof ExplorerStrings.openContainingFolder()).toBe('string')
+  expect(ExplorerStrings.openContainingFolder()).toBe('Open Containing Folder')
 })
 
 test('openInIntegratedTerminal', () => {
-  expect(typeof ExplorerStrings.openInIntegratedTerminal()).toBe('string')
+  expect(ExplorerStrings.openInIntegratedTerminal()).toBe('Open in integrated Terminal')
 })
 
 test('cut', () => {
-  expect(typeof ExplorerStrings.cut()).toBe('string')
+  expect(ExplorerStrings.cut()).toBe('Cut')
 })
 
 test('copy', () => {
-  expect(typeof ExplorerStrings.copy()).toBe('string')
+  expect(ExplorerStrings.copy()).toBe('Copy')
 })
 
 test('paste', () => {
-  expect(typeof ExplorerStrings.paste()).toBe('string')
+  expect(ExplorerStrings.paste()).toBe('Paste')
 })
 
 test('copyPath', () => {
-  expect(typeof ExplorerStrings.copyPath()).toBe('string')
+  expect(ExplorerStrings.copyPath()).toBe('Copy Path')
 })
 
 test('copyRelativePath', () => {
-  expect(typeof ExplorerStrings.copyRelativePath()).toBe('string')
+  expect(ExplorerStrings.copyRelativePath()).toBe('Copy Relative Path')
 })
 
 test('rename', () => {
-  expect(typeof ExplorerStrings.rename()).toBe('string')
+  expect(ExplorerStrings.rename()).toBe('Rename')
 })
 
 test('deleteItem', () => {
-  expect(typeof ExplorerStrings.deleteItem()).toBe('string')
+  expect(ExplorerStrings.deleteItem()).toBe('Delete')
 })
 
 test('refresh', () => {
-  expect(typeof ExplorerStrings.refresh()).toBe('string')
+  expect(ExplorerStrings.refresh()).toBe('Refresh Explorer')
 })
 
 test('collapseAll', () => {
-  expect(typeof ExplorerStrings.collapseAll()).toBe('string')
+  expect(ExplorerStrings.collapseAll()).toBe('Collapse All Folders in Explorer')
 })
 
 test('explorer', () => {
-  expect(typeof ExplorerStrings.explorer()).toBe('string')
+  expect(ExplorerStrings.explorer()).toBe('Explorer')
 })
 
 test('filesExplorer', () => {
-  expect(typeof ExplorerStrings.filesExplorer()).toBe('string')
+  expect(ExplorerStrings.filesExplorer()).toBe('Files Explorer')
 })
 
 test('youHaveNotYetOpenedAFolder', () => {
-  expect(typeof ExplorerStrings.youHaveNotYetOpenedAFolder()).toBe('string')
+  expect(ExplorerStrings.youHaveNotYetOpenedAFolder()).toBe('You have not yet opened a folder')
 })
 
 test('openFolder', () => {
-  expect(typeof ExplorerStrings.openFolder()).toBe('string')
+  expect(ExplorerStrings.openFolder()).toBe('Open folder')
 })
 
 test('noFolderOpen', () => {
-  expect(typeof ExplorerStrings.noFolderOpen()).toBe('string')
+  expect(ExplorerStrings.noFolderOpen()).toBe('No Folder Open')
+})
+
+test('fileOrFolderNameMustBeProvided', () => {
+  expect(ExplorerStrings.fileOrFolderNameMustBeProvided()).toBe('A file or folder name must be provided.')
+})
+
+test('typeAFileName', () => {
+  expect(ExplorerStrings.typeAFileName()).toBe('Type file name. Press Enter to confirm or Escape to cancel.')
+})
+
+test('fileNameCannotStartWithSlash', () => {
+  expect(ExplorerStrings.fileNameCannotStartWithSlash()).toBe('A file or folder name cannot start with a slash.')
+})
+
+test('fileOrFolderAlreadyExists', () => {
+  expect(ExplorerStrings.fileOrFolderAlreadyExists()).toBe(
+    'A file or folder **{0}** already exists at this location. Please choose a different name.',
+  )
+})
+
+test('theNameIsNotValid', () => {
+  expect(ExplorerStrings.theNameIsNotValid()).toBe('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
+})
+
+test('leadingOrTrailingWhitespaceDetected', () => {
+  expect(ExplorerStrings.leadingOrTrailingWhitespaceDetected()).toBe('Leading or trailing whitespace detected in file or folder name.')
 })
