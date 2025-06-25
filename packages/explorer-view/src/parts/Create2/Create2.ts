@@ -56,6 +56,7 @@ export const create2 = (
     handleOffset: 0,
     scrollBarActive: false,
     scrollBarHeight: 0,
+    confirmPaste: false,
   }
   ExplorerStates.set(uid, state, state)
 }
