@@ -10,7 +10,7 @@ test('confirmDelete - single file', async () => {
     invoke: (method: string, message: string) => {
       if (method === 'Confirmprompt.prompt') {
         // expect(message).toBe('Are you sure you want to delete "/test/file.txt"?')
-        return Promise.resolve(true)
+        return true
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -27,7 +27,7 @@ test('confirmDelete - multiple files', async () => {
     invoke: (method: string, message: string) => {
       if (method === 'Confirmprompt.prompt') {
         // expect(message).toBe('Are you sure you want to delete 3 items?')
-        return Promise.resolve(false)
+        return false
       }
       throw new Error(`unexpected method ${method}`)
     },

@@ -31,7 +31,7 @@ test.skip('handleArrowRight - directory', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -61,7 +61,7 @@ test.skip('handleArrowRight - symlink folder', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -81,7 +81,7 @@ test.skip('handleArrowRight - directory expanded', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -101,10 +101,10 @@ test.skip('handleArrowRight - symlink', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.getRealPath') {
-        return Promise.resolve('/real/path')
+        return '/real/path'
       }
       if (method === 'FileSystem.stat') {
-        return Promise.resolve({ isDirectory: () => false })
+        return { isDirectory: (): boolean => false }
       }
       throw new Error(`unexpected method ${method}`)
     },

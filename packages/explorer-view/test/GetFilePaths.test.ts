@@ -16,7 +16,7 @@ test('getFilePaths - electron platform', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystemHandle.getFilePathElectron') {
-        return Promise.resolve('/path/to/file')
+        return '/path/to/file'
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -33,7 +33,7 @@ test('getFilePaths - multiple files', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystemHandle.getFilePathElectron') {
-        return Promise.resolve('/path/to/file')
+        return '/path/to/file'
       }
       throw new Error(`unexpected method ${method}`)
     },
