@@ -23,7 +23,7 @@ const mockRpc = MockRpc.create({
 
 test('updateIcons - should update icons for visible items', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
-  const defaultState = CreateDefaultState.createDefaultState()
+  const defaultState: ExplorerState = CreateDefaultState.createDefaultState()
   const state: ExplorerState = {
     ...defaultState,
     items: [
@@ -46,7 +46,7 @@ test('updateIcons - should update icons for visible items', async () => {
 
 test('updateIcons - should handle empty visible items', async () => {
   RpcRegistry.set(RendererWorker, mockRpc)
-  const defaultState = CreateDefaultState.createDefaultState()
+  const defaultState: ExplorerState = CreateDefaultState.createDefaultState()
   const state: ExplorerState = {
     ...defaultState,
     items: [],

@@ -9,7 +9,7 @@ import { handleClickDirectoryExpanded } from '../src/parts/HandleClickDirectoryE
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('collapse expanded directory', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const dirent: ExplorerItem = {
     name: 'test',
     type: DirentType.Directory,

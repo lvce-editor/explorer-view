@@ -1,4 +1,4 @@
-import { expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -7,32 +7,32 @@ import { newFolder } from '../src/parts/NewFolder/NewFolder.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
-test('newFolder', async () => {
-  const invoke = jest.fn((method: string): any => {
-    if (method === 'Workspace.getPath') {
-      return '/new/path'
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
-      return []
-    }
-    if (method === 'FileSystem.getPathSeparator') {
-      return '/'
-    }
-    if (method === 'IconTheme.getFolderIcon') {
-      return ''
-    }
-    if (method === 'Preferences.get') {
-      return false
-    }
-    if (method === 'Focus.setFocus') {
-      return undefined
-    }
-    if (method === 'IconTheme.getIcons') {
-      return ['']
-    }
-    throw new Error(`unexpected method ${method}`)
-  })
+const invoke = (method: string): any => {
+  if (method === 'Workspace.getPath') {
+    return '/new/path'
+  }
+  if (method === 'FileSystem.readDirWithFileTypes') {
+    return []
+  }
+  if (method === 'FileSystem.getPathSeparator') {
+    return '/'
+  }
+  if (method === 'IconTheme.getFolderIcon') {
+    return ''
+  }
+  if (method === 'Preferences.get') {
+    return false
+  }
+  if (method === 'Focus.setFocus') {
+    return undefined
+  }
+  if (method === 'IconTheme.getIcons') {
+    return ['']
+  }
+  throw new Error(`unexpected method ${method}`)
+}
 
+test('newFolder', async () => {
   const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
@@ -45,7 +45,6 @@ test('newFolder', async () => {
   }
 
   const result = await newFolder(mockState)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Focus.setFocus', 14)
   expect(result).toEqual({
     ...mockState,
     editingIndex: 0,

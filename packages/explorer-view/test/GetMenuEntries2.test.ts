@@ -8,7 +8,7 @@ import { getMenuEntries2 } from '../src/parts/GetMenuEntries2/GetMenuEntries2.ts
 
 test('getMenuEntries2 - root', () => {
   const uid = 1
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   set(uid, state, state)
   const menuEntries = getMenuEntries2(uid)
   expect(menuEntries.length).toBeGreaterThan(0)

@@ -1,5 +1,6 @@
 import { test, expect } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleWorkspaceChange } from '../src/parts/HandleWorkspaceChange/HandleWorkspaceChange.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
@@ -29,7 +30,7 @@ test('should update state with new workspace path and load content', async () =>
   })
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
-  const initialState = createDefaultState()
+  const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
 
   expect(result.root).toBe('/new/workspace/path')
@@ -68,7 +69,7 @@ test('should preserve state properties when updating workspace', async () => {
   })
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
-  const initialState = createDefaultState()
+  const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
 
   expect(result.uid).toBe(initialState.uid)
@@ -121,7 +122,7 @@ test('should handle workspace path change with existing content', async () => {
   })
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
-  const initialState = createDefaultState()
+  const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
 
   expect(result.root).toBe('/changed/workspace/path')
@@ -155,7 +156,7 @@ test('should handle workspace path change with chevrons enabled', async () => {
   })
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
-  const initialState = createDefaultState()
+  const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
 
   expect(result.root).toBe('/chevron/workspace')
@@ -186,7 +187,7 @@ test('should handle different path separators', async () => {
   })
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
-  const initialState = createDefaultState()
+  const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
 
   expect(result.root).toBe('C:\\windows\\workspace')
