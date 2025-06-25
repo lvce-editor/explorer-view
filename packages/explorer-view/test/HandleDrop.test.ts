@@ -63,10 +63,10 @@ test('handleDrop - successful drop', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       if (method === 'FileSystemHandle.getFileHandles') {
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getIcons') {
         return ['']

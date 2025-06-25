@@ -239,16 +239,16 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
     invoke: (method: string, message?: string) => {
       if (method === 'confirmprompt.prompt') {
         // expect(message).toBe('Are you sure you want to delete "/file1.txt"?')
-        return Promise.resolve(true)
+        return true
       }
       if (method === 'FileSystem.remove') {
-        return Promise.resolve()
+        return
       }
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -276,7 +276,7 @@ test.skip('removeDirent - with confirmation enabled and user cancels', async () 
     invoke: (method: string, message?: string) => {
       if (method === 'confirmprompt.prompt') {
         // expect(message).toBe('Are you sure you want to delete 2 items?')
-        return Promise.resolve(false)
+        return false
       }
       throw new Error(`unexpected method ${method}`)
     },

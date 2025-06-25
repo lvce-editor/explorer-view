@@ -44,7 +44,7 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -91,10 +91,10 @@ test('getNewDirentsAccept - create nested file', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {
-        return Promise.resolve()
+        return
       }
       if (method === 'FileSystem.mkdir') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },

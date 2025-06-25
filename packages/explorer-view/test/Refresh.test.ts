@@ -13,10 +13,10 @@ test('refresh - empty state', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -37,13 +37,13 @@ test('refresh - with top level items', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'file1', type: DirentType.File },
           { name: 'file2', type: DirentType.File },
-        ])
+        ]
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -67,19 +67,19 @@ test('refresh - preserve expanded folder', async () => {
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         if (path === '/') {
-          return Promise.resolve([{ name: 'folder1', type: DirentType.Directory }])
+          return [{ name: 'folder1', type: DirentType.Directory }]
         }
         if (path === '/folder1') {
-          return Promise.resolve([
+          return [
             { name: 'file1.txt', type: 'file' },
             { name: 'file2.txt', type: 'file' },
-          ])
+          ]
         }
 
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -112,10 +112,10 @@ test('refresh - remove expanded folder that no longer exists', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([{ name: 'file1.txt', type: DirentType.File }])
+        return [{ name: 'file1.txt', type: DirentType.File }]
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -145,18 +145,18 @@ test('refresh - nested expanded folders', async () => {
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         if (path === '/') {
-          return Promise.resolve([{ name: 'folder1', type: DirentType.Directory }])
+          return [{ name: 'folder1', type: DirentType.Directory }]
         }
         if (path === '/folder1') {
-          return Promise.resolve([{ name: 'folder2', type: DirentType.Directory }])
+          return [{ name: 'folder2', type: DirentType.Directory }]
         }
         if (path === '/folder1/folder2') {
-          return Promise.resolve([{ name: 'file1.txt', type: DirentType.File }])
+          return [{ name: 'file1.txt', type: DirentType.File }]
         }
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -191,24 +191,24 @@ test('refresh - preserve directory types', async () => {
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         if (path === '/') {
-          return Promise.resolve([
+          return [
             { name: 'folder1', type: DirentType.Directory },
             { name: 'file1.txt', type: DirentType.File },
-          ])
+          ]
         }
         if (path === '/folder1') {
-          return Promise.resolve([
+          return [
             { name: 'subfolder', type: DirentType.Directory },
             { name: 'file2.txt', type: DirentType.File },
-          ])
+          ]
         }
         if (path === '/folder1/subfolder') {
-          return Promise.resolve([{ name: 'file3.txt', type: DirentType.File }])
+          return [{ name: 'file3.txt', type: DirentType.File }]
         }
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -252,15 +252,15 @@ test('refresh - check filesystem response', async () => {
       methodCalls.push(method)
       if (method === 'FileSystem.readDirWithFileTypes') {
         if (path === '/') {
-          return Promise.resolve([
+          return [
             { name: 'folder1', type: DirentType.Directory },
             { name: 'file1.txt', type: DirentType.File },
-          ])
+          ]
         }
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
