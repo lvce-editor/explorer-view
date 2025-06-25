@@ -14,13 +14,13 @@ test.skip('acceptRename - basic file rename', async () => {
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'b.txt', type: DirentType.File },
           { name: 'c.txt', type: DirentType.File },
-        ])
+        ]
       }
       if (method === 'FileSystem.rename') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -54,13 +54,13 @@ test.skip('acceptRename - folder rename', async () => {
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'folder2', type: DirentType.Directory },
           { name: 'file.txt', type: DirentType.File },
-        ])
+        ]
       }
       if (method === 'FileSystem.rename') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -92,13 +92,13 @@ test.skip('acceptRename - nested file rename', async () => {
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'b.txt', type: DirentType.File },
           { name: 'c.txt', type: DirentType.File },
-        ])
+        ]
       }
       if (method === 'FileSystem.rename') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -132,10 +132,10 @@ test.skip('acceptRename - preserves nested items', async () => {
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([{ name: 'folder2', type: DirentType.Directory }])
+        return [{ name: 'folder2', type: DirentType.Directory }]
       }
       if (method === 'FileSystem.rename') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -193,14 +193,14 @@ test.skip('acceptRename - maintains sorting order', async () => {
     commandMap: {},
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'b.txt', type: DirentType.File },
           { name: 'folder', type: DirentType.Directory },
           { name: 'z.txt', type: DirentType.File },
-        ])
+        ]
       }
       if (method === 'FileSystem.rename') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },

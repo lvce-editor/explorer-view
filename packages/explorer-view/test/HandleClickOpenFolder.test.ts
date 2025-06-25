@@ -10,7 +10,7 @@ test('handleClickOpenFolder', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.openFolder') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },

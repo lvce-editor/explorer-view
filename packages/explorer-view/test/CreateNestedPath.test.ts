@@ -9,7 +9,7 @@ test('createNestedPath - creates all directories', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.mkdir') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },

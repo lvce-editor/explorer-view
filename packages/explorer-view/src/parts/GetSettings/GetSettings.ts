@@ -7,8 +7,11 @@ export const getSettings = async (): Promise<Settings> => {
   const useChevrons = useChevronsRaw === false ? false : true
   const confirmDeleteRaw = await RendererWorker.invoke('Preferences.get', 'explorer.confirmdelete')
   const confirmDelete = confirmDeleteRaw === false ? false : true
+  const confirmPasteRaw = await RendererWorker.invoke('Preferences.get', 'explorer.confirmpaste')
+  const confirmPaste = confirmPasteRaw === false ? false : true
   return {
     useChevrons,
     confirmDelete,
+    confirmPaste,
   }
 }

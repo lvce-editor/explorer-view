@@ -73,7 +73,7 @@ test('collapse expanded directory with many items preserves icons', async () => 
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -124,7 +124,7 @@ test('collapse expanded directory with scroll position adjustment', async () => 
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },

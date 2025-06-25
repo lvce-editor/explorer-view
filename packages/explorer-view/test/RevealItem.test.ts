@@ -11,7 +11,7 @@ test('revealItem - item not found', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -28,7 +28,7 @@ test('revealItem - item found', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },

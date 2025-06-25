@@ -12,19 +12,19 @@ test.skip('expand root directory', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'file1.txt', type: 'file', isSymbolicLink: false },
           { name: 'dir1', type: 'directory', isSymbolicLink: false },
-        ])
+        ]
       }
       if (method === 'FileSystem.getPathSeparator') {
-        return Promise.resolve('/')
+        return '/'
       }
       if (method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('folder-icon')
+        return 'folder-icon'
       }
       if (method === 'IconTheme.getFileIcon') {
-        return Promise.resolve('file-icon')
+        return 'file-icon'
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -50,19 +50,19 @@ test.skip('expand focused directory', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'file1.txt', type: 'file', isSymbolicLink: false },
           { name: 'file2.txt', type: 'file', isSymbolicLink: false },
-        ])
+        ]
       }
       if (method === 'FileSystem.getPathSeparator') {
-        return Promise.resolve('/')
+        return '/'
       }
       if (method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('folder-icon')
+        return 'folder-icon'
       }
       if (method === 'IconTheme.getFileIcon') {
-        return Promise.resolve('file-icon')
+        return 'file-icon'
       }
       throw new Error(`unexpected method ${method}`)
     },

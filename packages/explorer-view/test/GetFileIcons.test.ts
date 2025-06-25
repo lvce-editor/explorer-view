@@ -19,9 +19,9 @@ const mockRpc = {
   invoke(method: string, ...params: readonly any[]) {
     switch (method) {
       case 'IconTheme.getFileIcon':
-        return Promise.resolve('file-icon')
+        return 'file-icon'
       case 'IconTheme.getFolderIcon':
-        return Promise.resolve('folder-icon')
+        return 'folder-icon'
       case 'IconTheme.getIcons': {
         return handleFileIcons(params[0])
       }

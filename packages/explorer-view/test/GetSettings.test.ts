@@ -13,6 +13,7 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
     if (settingName === 'explorer.confirmdelete') {
       return params[1]
     }
+    return false
   }
   throw new Error(`Unexpected method: ${method}`)
 }
@@ -28,6 +29,7 @@ test('getSettings - useChevrons true', async () => {
   expect(settings).toEqual({
     useChevrons: true,
     confirmDelete: true,
+    confirmPaste: false,
   })
 })
 
@@ -37,6 +39,7 @@ test.skip('getSettings - useChevrons false', async () => {
   expect(settings).toEqual({
     useChevrons: false,
     confirmDelete: true,
+    confirmPaste: false,
   })
 })
 
@@ -46,5 +49,6 @@ test('getSettings - useChevrons undefined', async () => {
   expect(settings).toEqual({
     useChevrons: true,
     confirmDelete: true,
+    confirmPaste: false,
   })
 })
