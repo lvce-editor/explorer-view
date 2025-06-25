@@ -35,7 +35,7 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
   const { fileIconCache } = state
-  const { useChevrons } = await GetSettings.getSettings()
+  const { useChevrons, confirmDelete } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
   // TODO path separator could be restored from saved state
@@ -66,5 +66,6 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     pathSeparator,
     excluded,
     useChevrons,
+    confirmDelete,
   }
 }
