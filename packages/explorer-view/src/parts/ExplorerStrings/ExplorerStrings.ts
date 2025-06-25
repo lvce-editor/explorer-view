@@ -45,6 +45,14 @@ export const deleteItem = (): string => {
   return I18nString.i18nString(UiStrings.Delete)
 }
 
+export const deleteConfirmationSingle = (path: string): string => {
+  return I18nString.i18nString(UiStrings.DeleteConfirmationSingle, [path])
+}
+
+export const deleteConfirmationMultiple = (count: number): string => {
+  return I18nString.i18nString(UiStrings.DeleteConfirmationMultiple, [count.toString()])
+}
+
 export const refresh = (): string => {
   return I18nString.i18nString(UiStrings.RefreshExplorer)
 }

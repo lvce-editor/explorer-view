@@ -6,7 +6,13 @@ import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
   if (method === 'Preferences.get') {
-    return params[1]
+    const settingName = params[0]
+    if (settingName === 'explorer.useChevrons') {
+      return params[1]
+    }
+    if (settingName === 'explorer.confirmdelete') {
+      return params[1]
+    }
   }
   throw new Error(`Unexpected method: ${method}`)
 }
@@ -21,6 +27,7 @@ test('getSettings - useChevrons true', async () => {
   const settings = await getSettings()
   expect(settings).toEqual({
     useChevrons: true,
+    confirmDelete: true,
   })
 })
 
@@ -29,6 +36,7 @@ test.skip('getSettings - useChevrons false', async () => {
   const settings = await getSettings()
   expect(settings).toEqual({
     useChevrons: false,
+    confirmDelete: true,
   })
 })
 
@@ -37,5 +45,6 @@ test('getSettings - useChevrons undefined', async () => {
   const settings = await getSettings()
   expect(settings).toEqual({
     useChevrons: true,
+    confirmDelete: true,
   })
 })
