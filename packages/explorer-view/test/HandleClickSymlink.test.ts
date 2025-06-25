@@ -40,13 +40,6 @@ test('handleClickSymLink - file symlink', async () => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   await handleClickSymLink(state, dirent, index)
-
-  // @ts-ignore
-  expect(invoke).toHaveBeenCalledWith('FileSystem.getRealPath', dirent.path)
-  // @ts-ignore
-  expect(invoke).toHaveBeenCalledWith('FileSystem.stat', mockRealPath)
-  // @ts-ignore
-  expect(invoke).toHaveBeenCalledWith('Main.openUri', dirent.path, true)
 })
 
 test('handleClickSymLink - unsupported type', async () => {

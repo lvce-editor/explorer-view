@@ -8,7 +8,7 @@ import { set } from '../src/parts/ExplorerStates/ExplorerStates.ts'
 
 test('diff2 - empty states', () => {
   const uid = 1
-  const oldState = createDefaultState()
+  const oldState: ExplorerState = createDefaultState()
   const newState: ExplorerState = {
     ...oldState,
     items: [],

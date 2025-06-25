@@ -1,4 +1,4 @@
-import { test, expect, jest } from '@jest/globals'
+import { test, expect } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -17,35 +17,35 @@ const handleFileIcons = (requests: readonly any[]): readonly string[] => {
   })
 }
 
-test('newFile', async () => {
-  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
-    if (method === 'Workspace.getPath') {
-      return '/new/path'
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
-      return []
-    }
-    if (method === 'FileSystem.getPathSeparator') {
-      return '/'
-    }
-    if (method === 'IconTheme.getFileIcon') {
-      return ''
-    }
-    if (method === 'IconTheme.getFolderIcon') {
-      return ''
-    }
-    if (method === 'Preferences.get') {
-      return false
-    }
-    if (method === 'Focus.setFocus') {
-      return undefined
-    }
-    if (method === 'IconTheme.getIcons') {
-      return handleFileIcons(params[0])
-    }
-    throw new Error(`unexpected method ${method}`)
-  })
+const invoke = (method: string, ...params: readonly any[]): any => {
+  if (method === 'Workspace.getPath') {
+    return '/new/path'
+  }
+  if (method === 'FileSystem.readDirWithFileTypes') {
+    return []
+  }
+  if (method === 'FileSystem.getPathSeparator') {
+    return '/'
+  }
+  if (method === 'IconTheme.getFileIcon') {
+    return ''
+  }
+  if (method === 'IconTheme.getFolderIcon') {
+    return ''
+  }
+  if (method === 'Preferences.get') {
+    return false
+  }
+  if (method === 'Focus.setFocus') {
+    return undefined
+  }
+  if (method === 'IconTheme.getIcons') {
+    return handleFileIcons(params[0])
+  }
+  throw new Error(`unexpected method ${method}`)
+}
 
+test('newFile', async () => {
   const mockRpc = MockRpc.create({
     invoke,
     commandMap: {},
