@@ -10,10 +10,10 @@ test('refreshChildDirents - basic', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([
+        return [
           { name: 'file1.txt', type: 'file' },
           { name: 'folder1', type: 'directory' },
-        ])
+        ]
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -37,12 +37,12 @@ test('refreshChildDirents - with expanded folder', async () => {
     invoke: (method: string, path?: string) => {
       if (method === 'FileSystem.readDirWithFileTypes') {
         if (path === '/test') {
-          return Promise.resolve([{ name: 'folder1', type: 'directory' }])
+          return [{ name: 'folder1', type: 'directory' }]
         }
         if (path === '/test/folder1') {
-          return Promise.resolve([{ name: 'file1.txt', type: 'file' }])
+          return [{ name: 'file1.txt', type: 'file' }]
         }
-        return Promise.resolve([])
+        return []
       }
       throw new Error(`unexpected method ${method}`)
     },

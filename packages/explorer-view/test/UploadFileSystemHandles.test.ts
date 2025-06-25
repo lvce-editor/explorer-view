@@ -41,10 +41,10 @@ test('upload single file', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {
-        return Promise.resolve(true)
+        return true
       }
       if (method === 'FileSystem.mkdir') {
-        return Promise.resolve(true)
+        return true
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -60,10 +60,10 @@ test('upload directory with files', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {
-        return Promise.resolve(true)
+        return true
       }
       if (method === 'FileSystem.mkdir') {
-        return Promise.resolve(true)
+        return true
       }
       throw new Error(`unexpected method ${method}`)
     },
@@ -81,10 +81,10 @@ test('upload multiple files and directories', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.writeFile') {
-        return Promise.resolve(true)
+        return true
       }
       if (method === 'FileSystem.mkdir') {
-        return Promise.resolve(true)
+        return true
       }
       throw new Error(`unexpected method ${method}`)
     },

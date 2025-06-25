@@ -13,13 +13,13 @@ test('removeDirent - removes focused item', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.remove') {
-        return Promise.resolve()
+        return
       }
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -46,13 +46,13 @@ test('removeDirent - removes multiple selected items', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.remove') {
-        return Promise.resolve()
+        return
       }
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -119,13 +119,13 @@ test('remove file', async () => {
     commandMap: {},
     invoke: (method: string) => {
       if (method === 'FileSystem.remove') {
-        return Promise.resolve()
+        return
       }
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([{ name: 'folder1', type: DirentType.Directory }])
+        return [{ name: 'folder1', type: DirentType.Directory }]
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -156,13 +156,13 @@ test('remove folder with children', async () => {
     commandMap: {},
     invoke: (method: string, ...args: unknown[]) => {
       if (method === 'FileSystem.remove') {
-        return Promise.resolve()
+        return
       }
       if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
@@ -193,20 +193,20 @@ test('remove file from expanded folder', async () => {
     commandMap: {},
     invoke: (method: string, ...args: unknown[]) => {
       if (method === 'FileSystem.remove') {
-        return Promise.resolve()
+        return
       }
       if (method === 'FileSystem.readDirWithFileTypes') {
         const [path] = args
         if (path === '/') {
-          return Promise.resolve([{ name: 'folder1', type: DirentType.Directory }])
+          return [{ name: 'folder1', type: DirentType.Directory }]
         }
         if (path === '/folder1') {
-          return Promise.resolve([])
+          return []
         }
-        return Promise.resolve([])
+        return []
       }
       if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
+        return ''
       }
       if (method === 'IconTheme.getIcons') {
         return []
