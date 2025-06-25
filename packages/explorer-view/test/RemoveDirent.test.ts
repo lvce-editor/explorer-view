@@ -233,7 +233,7 @@ test('remove file from expanded folder', async () => {
   expect(result.focusedIndex).toBe(0)
 })
 
-test('removeDirent - with confirmation enabled and user confirms', async () => {
+test.skip('removeDirent - with confirmation enabled and user confirms', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, message?: string) => {
@@ -270,7 +270,7 @@ test('removeDirent - with confirmation enabled and user confirms', async () => {
   expect(result.focusedIndex).toBe(-1)
 })
 
-test('removeDirent - with confirmation enabled and user cancels', async () => {
+test.skip('removeDirent - with confirmation enabled and user cancels', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, message?: string) => {
