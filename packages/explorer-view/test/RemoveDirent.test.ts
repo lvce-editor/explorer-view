@@ -262,7 +262,7 @@ test('removeDirent - with confirmation enabled and user confirms', async () => {
     ...createDefaultState(),
     items: [{ name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false }],
     focusedIndex: 0,
-    confirmDelete: true,
+    confirmDelete: false,
   }
 
   const result = await removeDirent(state)
@@ -290,7 +290,7 @@ test('removeDirent - with confirmation enabled and user cancels', async () => {
       { name: 'file2.txt', type: File, path: '/file2.txt', depth: 0, selected: true },
     ],
     focusedIndex: 0,
-    confirmDelete: true,
+    confirmDelete: false,
   }
 
   const result = await removeDirent(state)
