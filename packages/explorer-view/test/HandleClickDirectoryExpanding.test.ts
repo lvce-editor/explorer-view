@@ -1,10 +1,11 @@
 import { test, expect } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickDirectoryExpanding } from '../src/parts/HandleClickDirectoryExpanding/HandleClickDirectoryExpanding.ts'
 
 test('handleClickDirectoryExpanding - updates state with focus', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const dirent = {
     name: 'test',
     path: '/test',
@@ -19,7 +20,7 @@ test('handleClickDirectoryExpanding - updates state with focus', async () => {
 })
 
 test('handleClickDirectoryExpanding - updates state without focus', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const dirent = {
     name: 'test',
     path: '/test',

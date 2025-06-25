@@ -1,6 +1,7 @@
-import { expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickSymLink } from '../src/parts/HandleClickSymlink/HandleClickSymlink.ts'
@@ -8,7 +9,7 @@ import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('handleClickSymLink - file symlink', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const dirent: ExplorerItem = {
     path: '/test/symlink',
     name: 'symlink',
@@ -19,7 +20,7 @@ test('handleClickSymLink - file symlink', async () => {
   const index = 0
 
   const mockRealPath = '/test/real-file'
-  const invoke = jest.fn((method: string): any => {
+  const invoke = (method: string): any => {
     if (method === 'FileSystem.getRealPath') {
       return mockRealPath
     }
@@ -30,7 +31,7 @@ test('handleClickSymLink - file symlink', async () => {
       return undefined
     }
     throw new Error(`unexpected method ${method}`)
-  })
+  }
 
   const mockRpc = MockRpc.create({
     invoke,
@@ -49,7 +50,7 @@ test('handleClickSymLink - file symlink', async () => {
 })
 
 test('handleClickSymLink - unsupported type', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const dirent: ExplorerItem = {
     path: '/test/symlink',
     name: 'symlink',
@@ -60,7 +61,7 @@ test('handleClickSymLink - unsupported type', async () => {
   const index = 0
 
   const mockRealPath = '/test/real-file'
-  const invoke = jest.fn((method: string): any => {
+  const invoke = (method: string): any => {
     if (method === 'FileSystem.getRealPath') {
       return mockRealPath
     }
@@ -68,7 +69,7 @@ test('handleClickSymLink - unsupported type', async () => {
       return DirentType.Directory
     }
     throw new Error(`unexpected method ${method}`)
-  })
+  }
 
   const mockRpc = MockRpc.create({
     invoke,

@@ -4,7 +4,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleArrowRightDirectoryExpanded } from '../src/parts/HandleArrowRightDirectoryExpanded/HandleArrowRightDirectoryExpanded.ts'
 
 test.skip('handleArrowRightDirectoryExpanded - last item', () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const dirent = { depth: 0 }
   const result = handleArrowRightDirectoryExpanded(state, dirent)
   expect(result).toBe(state)

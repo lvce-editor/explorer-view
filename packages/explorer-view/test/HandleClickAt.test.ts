@@ -42,7 +42,7 @@ test('handleClickAt - shift click with existing selection', async () => {
 })
 
 test('handleClickAt - non left click', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const shiftKey = false
   const ctrlKey = false
   const result = await handleClickAt(state, false, 2, shiftKey, ctrlKey, 0, 0)
@@ -50,7 +50,7 @@ test('handleClickAt - non left click', async () => {
 })
 
 test('handleClickAt - left click', async () => {
-  const state = createDefaultState()
+  const state: ExplorerState = createDefaultState()
   const shiftKey = false
   const ctrlKey = false
   const result = await handleClickAt(state, false, LeftClick, shiftKey, ctrlKey, 0, 0)
