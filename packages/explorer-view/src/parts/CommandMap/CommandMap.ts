@@ -5,7 +5,6 @@ import * as CollapseAll from '../CollapseAll/CollapseAll.ts'
 import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
 import * as Create2 from '../Create2/Create2.ts'
-import * as Create from '../Create/Create.ts'
 import * as Diff2 from '../Diff2/Diff2.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as ExpandRecursively from '../ExpandRecursively/ExpandRecursively.ts'
@@ -140,7 +139,4 @@ export const commandMap = {
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
   'Explorer.saveState': SaveState.saveState,
   'Explorer.terminate': Terminate.terminate,
-
-  // deprecated
-  'Explorer.create': Create.create,
 }
