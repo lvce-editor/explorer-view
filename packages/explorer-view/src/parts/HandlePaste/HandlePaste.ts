@@ -4,6 +4,9 @@ import * as GetPasteHandler from '../GetPasteHandler/GetPasteHandler.ts'
 
 export const handlePaste = async (state: ExplorerState): Promise<ExplorerState> => {
   const nativeFiles = await ClipBoard.readNativeFiles()
+  if (!nativeFiles) {
+    return state
+  }
   // TODO detect cut/paste event, not sure if that is possible
   // TODO check that pasted folder is not a parent folder of opened folder
   // TODO support pasting multiple paths
