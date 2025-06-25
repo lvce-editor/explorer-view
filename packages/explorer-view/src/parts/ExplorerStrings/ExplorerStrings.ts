@@ -29,6 +29,10 @@ export const paste = (): string => {
   return I18nString.i18nString(UiStrings.Paste)
 }
 
+export const pasteConfirmation = (): string => {
+  return I18nString.i18nString(UiStrings.PasteConfirmation)
+}
+
 export const copyPath = (): string => {
   return I18nString.i18nString(UiStrings.CopyPath)
 }
