@@ -12,6 +12,7 @@ export const createUploadTree = async (root: string, fileHandles: readonly FileS
       const childTree = await createUploadTree(name, children)
       uploadTree[name] = childTree
     } else if (isFileHandle(fileHandle)) {
+      // TODO maybe save blob and use filesystem.writeblob
       const text = await getFileHandleText(fileHandle)
       uploadTree[name] = text
     }
