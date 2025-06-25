@@ -12,7 +12,9 @@ export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeF
   // TODO what if folder is big and it takes a long time
 
   // TODO use file operations and bulk edit
-  const operations = getFileOperationsCopy(state.root, nativeFiles.files)
+  const { items, root } = state
+  const existingUris = items.map((item) => item.path)
+  const operations = getFileOperationsCopy(root, existingUris, nativeFiles.files)
   // TODO handle error?
   await ApplyFileOperations.applyFileOperations(operations)
 
