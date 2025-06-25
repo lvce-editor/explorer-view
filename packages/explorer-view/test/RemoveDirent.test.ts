@@ -33,7 +33,6 @@ test('removeDirent - removes focused item', async () => {
     ...createDefaultState(),
     items: [{ name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false }],
     focusedIndex: 0,
-    confirmDelete: false,
   }
 
   const result = await removeDirent(state)
@@ -69,7 +68,6 @@ test('removeDirent - removes multiple selected items', async () => {
       { name: 'file2.txt', type: File, path: '/file2.txt', depth: 0, selected: true },
     ],
     focusedIndex: 0,
-    confirmDelete: false,
   }
 
   const result = await removeDirent(state)
@@ -106,7 +104,6 @@ test('removeDirent - removes focused item and selected items', async () => {
       { name: 'file3.txt', type: File, path: '/file3.txt', depth: 0, selected: true },
     ],
     focusedIndex: 0,
-    confirmDelete: false,
   }
 
   const result = await removeDirent(state)
@@ -142,7 +139,6 @@ test('remove file', async () => {
       { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false },
     ],
     focusedIndex: 1,
-    confirmDelete: false,
   }
 
   const result = await removeDirent(state)
@@ -180,7 +176,6 @@ test('remove folder with children', async () => {
       { name: 'file1.txt', type: File, path: '/folder1/file1.txt', depth: 1, selected: false },
     ],
     focusedIndex: 0,
-    confirmDelete: false,
   }
 
   const result = await removeDirent(state)
@@ -223,77 +218,11 @@ test('remove file from expanded folder', async () => {
       { name: 'file1.txt', type: File, path: '/folder1/file1.txt', depth: 1, selected: false },
     ],
     focusedIndex: 1,
-    confirmDelete: false,
   }
 
   const result = await removeDirent(state)
   expect(result.items).toHaveLength(1)
   expect(result.items[0].name).toBe('folder1')
   expect(result.items[0].type).toBe(DirectoryExpanded)
-  expect(result.focusedIndex).toBe(0)
-})
-
-test('removeDirent - with confirmation enabled and user confirms', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, message?: string) => {
-      if (method === 'confirmprompt.prompt') {
-        expect(message).toBe('Are you sure you want to delete "/file1.txt"?')
-        return Promise.resolve(true)
-      }
-      if (method === 'FileSystem.remove') {
-        return Promise.resolve()
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return Promise.resolve([])
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return Promise.resolve('')
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
-  })
-  RpcRegistry.set(RendererWorker, mockRpc)
-
-  const state: ExplorerState = {
-    ...createDefaultState(),
-    items: [{ name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false }],
-    focusedIndex: 0,
-    confirmDelete: true,
-  }
-
-  const result = await removeDirent(state)
-  expect(result.items).toHaveLength(0)
-  expect(result.focusedIndex).toBe(-1)
-})
-
-test('removeDirent - with confirmation enabled and user cancels', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, message?: string) => {
-      if (method === 'confirmprompt.prompt') {
-        expect(message).toBe('Are you sure you want to delete 2 items?')
-        return Promise.resolve(false)
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
-  })
-  RpcRegistry.set(RendererWorker, mockRpc)
-
-  const state: ExplorerState = {
-    ...createDefaultState(),
-    items: [
-      { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: true },
-      { name: 'file2.txt', type: File, path: '/file2.txt', depth: 0, selected: true },
-    ],
-    focusedIndex: 0,
-    confirmDelete: true,
-  }
-
-  const result = await removeDirent(state)
-  expect(result.items).toHaveLength(2)
   expect(result.focusedIndex).toBe(0)
 })
