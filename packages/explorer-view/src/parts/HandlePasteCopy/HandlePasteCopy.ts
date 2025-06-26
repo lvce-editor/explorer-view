@@ -1,5 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import type { NativeFilesResult } from '../NativeFilesResult/NativeFilesResult.ts'
+import * as AdjustScrollAfterPaste from '../AdjustScrollAfterPaste/AdjustScrollAfterPaste.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 import { getFileOperationsCopy } from '../GetFileOperationsCopy/GetFileOperationsCopy.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
@@ -23,17 +24,13 @@ export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeF
   // TODO only update folder at which level it changed
   const latestState = await refresh(state)
 
-  // Focus on the first newly created file
+  // Focus on the first newly created file and adjust scroll position
   const newFilePaths = operations.map((operation) => operation.path)
   if (newFilePaths.length > 0) {
     const firstNewFilePath = newFilePaths[0]
     const newFileIndex = getIndex(latestState.items, firstNewFilePath)
     if (newFileIndex !== -1) {
-      return {
-        ...latestState,
-        focusedIndex: newFileIndex,
-        focused: true,
-      }
+      return AdjustScrollAfterPaste.adjustScrollAfterPaste(latestState, newFileIndex)
     }
   }
   // If there are no items, ensure focusedIndex is 0
