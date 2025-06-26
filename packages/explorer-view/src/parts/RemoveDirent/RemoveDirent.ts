@@ -4,6 +4,8 @@ import { getPaths } from '../GetPaths/GetPaths.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
 import * as RemovePaths from '../RemovePaths/RemovePaths.ts'
+import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
+import * as FocusId from '../FocusId/FocusId.ts'
 
 export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
   const { items, focusedIndex, confirmDelete } = state
@@ -23,5 +25,9 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   // TODO use file operations, bulk edit and explorer refresh
   await RemovePaths.removePaths(toRemove)
   const newState = await Refresh.refresh(state)
-  return newState
+  return {
+    ...newState,
+    focused: true,
+    focus: FocusId.List,
+  }
 }
