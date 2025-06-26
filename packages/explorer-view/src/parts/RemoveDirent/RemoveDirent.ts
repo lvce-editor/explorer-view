@@ -1,10 +1,10 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ConfirmDelete from '../ConfirmDelete/ConfirmDelete.ts'
+import * as FocusId from '../FocusId/FocusId.ts'
 import { getPaths } from '../GetPaths/GetPaths.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
 import * as RemovePaths from '../RemovePaths/RemovePaths.ts'
-import * as FocusId from '../FocusId/FocusId.ts'
 
 export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
   const { items, focusedIndex, confirmDelete } = state
