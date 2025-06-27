@@ -89,6 +89,10 @@ export const fileOrFolderNameMustBeProvided = (): string => {
   return I18nString.i18nString(UiStrings.FileOrFolderNameMustBeProvider)
 }
 
+export const fileCannotStartWithSlash = (): string => {
+  return I18nString.i18nString(UiStrings.FileNameCannotStartWithSlash)
+}
+
 export const typeAFileName = (): string => {
   return I18nString.i18nString(UiStrings.TypeAFileName)
 }
