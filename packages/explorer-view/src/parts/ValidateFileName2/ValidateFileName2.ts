@@ -5,5 +5,8 @@ export const validateFileName2 = (name: string): string => {
     const editingErrorMessage = ExplorerStrings.fileOrFolderNameMustBeProvided()
     return editingErrorMessage
   }
+  if (name.startsWith('/')) {
+    return ExplorerStrings.fileCannotStartWithSlash()
+  }
   return ''
 }
