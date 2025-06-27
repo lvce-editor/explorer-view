@@ -4,7 +4,7 @@ export const getPathParts = (root: string, uri: string, pathSeparator: string): 
   const parts: PathPart[] = []
   let index = root.length - 1
   let depth = 0
-  while ((index = uri.indexOf('/', index + 1)) !== -1) {
+  while ((index = uri.indexOf(pathSeparator, index + 1)) !== -1) {
     const partUri = uri.slice(0, index)
     parts.push({
       path: partUri,
