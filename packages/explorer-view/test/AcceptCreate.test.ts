@@ -96,7 +96,7 @@ test('acceptCreate - successful file creation', async () => {
     items: [
       {
         name: 'test',
-        type: DirentType.Directory,
+        type: DirentType.DirectoryExpanded,
         depth: 1,
         selected: false,
         icon: '',
