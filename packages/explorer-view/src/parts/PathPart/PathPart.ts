@@ -1,6 +1,7 @@
 export interface PathPart {
-  readonly path: string
   readonly depth: number
-  readonly root: string
+  readonly expanded?: boolean
+  readonly path: string
   readonly pathSeparator: string
+  readonly root: string
 }

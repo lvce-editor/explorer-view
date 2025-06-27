@@ -11,6 +11,7 @@ export const getPathParts = (root: string, uri: string, pathSeparator: string): 
       depth: depth++,
       root,
       pathSeparator,
+      expanded: true,
     })
   }
   return parts
