@@ -9,6 +9,7 @@ export const toDisplayDirents = (
   parentDirentPath: string,
   parentDirentDepth: number,
   excluded: readonly string[],
+  expanded: boolean = false,
 ): readonly ExplorerItem[] => {
   rawDirents = SortExplorerItems.sortExplorerItems(rawDirents)
   const result: ExplorerItem[] = []
@@ -21,7 +22,7 @@ export const toDisplayDirents = (
   const count = visibleItems.length
   for (let i = 0; i < visibleItems.length; i++) {
     const rawDirent = visibleItems[i]
-    result.push(toDisplayDirent(parentDirentPath, parentDirentDepth, rawDirent, i, count))
+    result.push(toDisplayDirent(parentDirentPath, parentDirentDepth, rawDirent.type, rawDirent.name, i, count))
   }
   return result
 }
