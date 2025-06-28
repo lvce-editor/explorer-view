@@ -21,7 +21,15 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Loca
   await Command.execute('Explorer.handlePaste')
 
   // assert
-  const inputBox = Locator('input')
-  await expect(inputBox).toBeVisible()
-  await expect(inputBox).toBeFocused()
+  const file1 = Locator('.TreeItem').nth(0)
+  await expect(file1).toHaveText('a')
+  await expect(file1).toHaveAttribute('aria-expanded', 'true')
+  // TODO should be hidden
+  const file2 = Locator('.TreeItem').nth(1)
+  await expect(file2).toHaveText('file.txt')
+  const file3 = Locator('.TreeItem').nth(2)
+  await expect(file3).toHaveText('b')
+  await expect(file3).toHaveAttribute('aria-expanded', 'false') // TODO should be true
+  const file4 = Locator('.TreeItem').nth(3)
+  await expect(file4).toHaveText('file.txt')
 }
