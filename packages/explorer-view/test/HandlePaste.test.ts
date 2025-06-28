@@ -79,6 +79,9 @@ test('should handle paste with cut type', async () => {
       if (method === 'FileSystem.rename') {
         return undefined
       }
+      if (method === 'FileSystem.copy') {
+        return undefined
+      }
       if (method === 'FileSystem.readDirWithFileTypes') {
         return []
       }
