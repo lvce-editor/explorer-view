@@ -12,6 +12,7 @@ export const commandIds = [
   'focusFirst',
   'focusIndex',
   'focusLast',
+  'handleCut',
   'focusNext',
   'focusNone',
   'focusPrevious',
