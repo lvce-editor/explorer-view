@@ -4,6 +4,7 @@ export const name = 'viewlet.explorer-copy-and-paste-file'
 
 export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, Command }) => {
   // arrange
+  await Command.execute('ClipBoard.enableMemoryClipBoard')
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.writeFile(`${tmpDir}/a/file.txt`, 'content')
