@@ -58,6 +58,7 @@ export const create2 = (
     scrollBarHeight: 0,
     confirmPaste: false,
     pasteShouldMove: false,
+    cutItems: [],
   }
   ExplorerStates.set(uid, state, state)
 }
