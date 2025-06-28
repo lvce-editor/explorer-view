@@ -50,6 +50,7 @@ export const handlePasteCut = async (state: ExplorerState, nativeFiles: NativeFi
       return {
         ...adjustedState,
         pasteShouldMove: false,
+        cutItems: [],
       }
     }
   }
@@ -57,5 +58,6 @@ export const handlePasteCut = async (state: ExplorerState, nativeFiles: NativeFi
   return {
     ...latestState,
     pasteShouldMove: false,
+    cutItems: [],
   }
 }
