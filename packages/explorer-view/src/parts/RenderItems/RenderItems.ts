@@ -4,32 +4,52 @@ import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirt
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
 export const renderItems = (oldState: ExplorerState, newState: ExplorerState): any => {
+  const {
+    items,
+    minLineY,
+    maxLineY,
+    focusedIndex,
+    editingIndex,
+    editingType,
+    editingValue,
+    editingErrorMessage,
+    icons,
+    useChevrons,
+    dropTargets,
+    editingIcon,
+    itemHeight,
+    width,
+    root,
+    deltaY,
+    focused,
+    height,
+  } = newState
   const visibleDirents = GetVisibleExplorerItems.getVisibleExplorerItems(
-    newState.items,
-    newState.minLineY,
-    newState.maxLineY,
-    newState.focusedIndex,
-    newState.editingIndex,
-    newState.editingType,
-    newState.editingValue,
-    newState.editingErrorMessage,
-    newState.icons,
-    newState.useChevrons,
-    newState.dropTargets,
-    newState.editingIcon,
+    items,
+    minLineY,
+    maxLineY,
+    focusedIndex,
+    editingIndex,
+    editingType,
+    editingValue,
+    editingErrorMessage,
+    icons,
+    useChevrons,
+    dropTargets,
+    editingIcon,
   )
-  const isWide = newState.width > 450
-  const contentHeight = newState.items.length * newState.itemHeight
-  const depth = newState.items[newState.focusedIndex]?.depth || 0
+  const isWide = width > 450
+  const contentHeight = items.length * itemHeight
+  const depth = items[focusedIndex]?.depth || 0
   const indent = 8
   const padding = 10
   const fileIconWidth = 16
   const defaultPaddingLeft = 0
   const chevronSpace = 22
   const { top, left } = GetErrorMessagePosition.getErrorMessagePosition(
-    newState.itemHeight,
-    newState.focusedIndex,
-    newState.minLineY,
+    itemHeight,
+    focusedIndex,
+    minLineY,
     depth,
     indent,
     fileIconWidth,
@@ -38,15 +58,15 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
 
   const dom = GetExplorerVirtualDom.getExplorerVirtualDom(
     visibleDirents,
-    newState.focusedIndex,
-    newState.root,
+    focusedIndex,
+    root,
     isWide,
-    newState.focused,
-    newState.dropTargets,
-    newState.height,
+    focused,
+    dropTargets,
+    height,
     contentHeight,
-    newState.deltaY,
-    newState.editingErrorMessage,
+    deltaY,
+    editingErrorMessage,
     top,
     left,
   )
