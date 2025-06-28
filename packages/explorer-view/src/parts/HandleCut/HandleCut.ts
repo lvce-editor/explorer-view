@@ -17,5 +17,6 @@ export const handleCut = async (state: ExplorerState): Promise<ExplorerState> =>
   return {
     ...state,
     pasteShouldMove: true,
+    cutItems: files,
   }
 }

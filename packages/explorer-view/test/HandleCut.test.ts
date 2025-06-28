@@ -23,6 +23,7 @@ test('handleCut - with focused dirent', async () => {
   expect(result).toEqual({
     ...state,
     pasteShouldMove: true,
+    cutItems: ['/test.txt'],
   })
 })
 
