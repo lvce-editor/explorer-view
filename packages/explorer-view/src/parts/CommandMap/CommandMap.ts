@@ -33,6 +33,7 @@ import * as HandleClickOpenFolder from '../HandleClickOpenFolder/HandleClickOpen
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleContextMenuKeyboard from '../HandleContextMenuKeyboard/HandleContextMenuKeyboard.ts'
 import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
+import * as HandleCut from '../HandleCut/HandleCut.ts'
 import * as HandleDragLeave from '../HandleDragLeave/HandleDragLeave.ts'
 import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
@@ -99,6 +100,7 @@ export const commandMap = {
   'Explorer.handleContextMenu': WrapCommand.wrapCommand(HandleContextMenu.handleContextMenu),
   'Explorer.handleContextMenuKeyboard': WrapCommand.wrapCommand(HandleContextMenuKeyboard.handleContextMenuKeyboard),
   'Explorer.handleCopy': WrapCommand.wrapCommand(HandleCopy.handleCopy),
+  'Explorer.handleCut': WrapCommand.wrapCommand(HandleCut.handleCut),
   'Explorer.handleDragLeave': WrapCommand.wrapCommand(HandleDragLeave.handleDragLeave),
   'Explorer.handleDragOver': WrapCommand.wrapCommand(HandleDragOver.handleDragOver),
   'Explorer.handleDrop': WrapCommand.wrapCommand(HandleDrop.handleDrop),

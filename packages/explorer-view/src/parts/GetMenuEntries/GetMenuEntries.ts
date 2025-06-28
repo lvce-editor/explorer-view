@@ -38,7 +38,7 @@ const menuEntryCut: MenuEntry = {
   id: 'cut',
   label: ViewletExplorerStrings.cut(),
   flags: MenuItemFlags.RestoreFocus,
-  command: /* TODO */ '-1',
+  command: 'Explorer.handleCut',
 }
 
 const menuEntryCopy: MenuEntry = {
