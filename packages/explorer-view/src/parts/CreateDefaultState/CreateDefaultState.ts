@@ -42,4 +42,5 @@ export const createDefaultState = (): ExplorerState => ({
   handleOffset: 0,
   scrollBarActive: false,
   scrollBarHeight: 0,
+  cutItems: [],
 })

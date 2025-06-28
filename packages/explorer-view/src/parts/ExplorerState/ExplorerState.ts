@@ -43,4 +43,5 @@ export interface ExplorerState {
   readonly scrollBarHeight: number
   readonly handleOffset: number
   readonly scrollBarActive: boolean
+  readonly cutItems: readonly string[]
 }
