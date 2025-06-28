@@ -1,13 +1,13 @@
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import type { FileOperation } from '../FileOperation/FileOperation.ts'
 import type { NativeFilesResult } from '../NativeFilesResult/NativeFilesResult.ts'
 import * as AdjustScrollAfterPaste from '../AdjustScrollAfterPaste/AdjustScrollAfterPaste.ts'
-import * as FileOperationType from '../FileOperationType/FileOperationType.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
+import * as FileOperationType from '../FileOperationType/FileOperationType.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getBaseName, join2 } from '../Path/Path.ts'
 import { refresh } from '../Refresh/Refresh.ts'
-import { FileOperation } from '../FileOperation/FileOperation.ts'
-import { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 const getOperations = (toUri: string, files: readonly string[]): readonly FileOperation[] => {
   const operations: FileOperation[] = []
