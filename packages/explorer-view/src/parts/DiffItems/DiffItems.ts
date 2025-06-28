@@ -16,6 +16,7 @@ export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boole
     oldState.width === newState.width &&
     oldState.focused === newState.focused &&
     oldState.dropTargets === newState.dropTargets &&
-    oldState.icons === newState.icons
+    oldState.icons === newState.icons &&
+    oldState.cutItems === newState.cutItems
   )
 }
