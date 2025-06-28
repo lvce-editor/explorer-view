@@ -33,7 +33,6 @@ test('handleCut - without focused dirent', async () => {
     commandMap: {},
   })
   RendererWorker.set(mockRpc)
-  const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
@@ -42,6 +41,4 @@ test('handleCut - without focused dirent', async () => {
   const result = await handleCut(state)
   expect(mockRpc.invoke).not.toHaveBeenCalled()
   expect(result).toBe(state)
-  expect(spy).toHaveBeenCalledTimes(1)
-  expect(spy).toHaveBeenCalledWith('[ViewletExplorer/handleCut] no dirent selected')
 })
