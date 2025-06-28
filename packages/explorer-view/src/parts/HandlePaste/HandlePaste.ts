@@ -1,6 +1,8 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
-import * as GetPasteHandler from '../GetPasteHandler/GetPasteHandler.ts'
+import * as HandlePasteCopy from '../HandlePasteCopy/HandlePasteCopy.ts'
+import * as HandlePasteCut from '../HandlePasteCut/HandlePasteCut.ts'
+import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.ts'
 
 export const handlePaste = async (state: ExplorerState): Promise<ExplorerState> => {
   const nativeFiles = await ClipBoard.readNativeFiles()
@@ -19,6 +21,16 @@ export const handlePaste = async (state: ExplorerState): Promise<ExplorerState> 
   // TODO but what if a file is currently selected? Then maybe the parent folder
   // TODO but will it work if the folder is a symlink?
   // TODO handle error gracefully when copy fails
-  const fn = GetPasteHandler.getPasteHandler(nativeFiles.type)
-  return fn(state, nativeFiles)
+
+  // If no files to paste, return original state unchanged
+  if (nativeFiles.type === NativeFileTypes.None) {
+    return state
+  }
+
+  // Use the pasteShouldMove flag to determine whether to cut or copy
+  if (state.pasteShouldMove) {
+    return HandlePasteCut.handlePasteCut(state, nativeFiles)
+  } else {
+    return HandlePasteCopy.handlePasteCopy(state, nativeFiles)
+  }
 }

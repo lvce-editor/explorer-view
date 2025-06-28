@@ -20,7 +20,10 @@ test('handleCut - with focused dirent', async () => {
   const result = await handleCut(state)
 
   expect(mockRpc.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'cut', ['/test.txt'])
-  expect(result).toBe(state)
+  expect(result).toEqual({
+    ...state,
+    pasteShouldMove: true,
+  })
 })
 
 test('handleCut - without focused dirent', async () => {

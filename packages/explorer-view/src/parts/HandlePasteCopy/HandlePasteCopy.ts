@@ -30,7 +30,11 @@ export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeF
     const firstNewFilePath = newFilePaths[0]
     const newFileIndex = getIndex(latestState.items, firstNewFilePath)
     if (newFileIndex !== -1) {
-      return AdjustScrollAfterPaste.adjustScrollAfterPaste(latestState, newFileIndex)
+      const adjustedState = AdjustScrollAfterPaste.adjustScrollAfterPaste(latestState, newFileIndex)
+      return {
+        ...adjustedState,
+        pasteShouldMove: false,
+      }
     }
   }
   // If there are no items, ensure focusedIndex is 0
@@ -38,7 +42,11 @@ export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeF
     return {
       ...latestState,
       focusedIndex: 0,
+      pasteShouldMove: false,
     }
   }
-  return latestState
+  return {
+    ...latestState,
+    pasteShouldMove: false,
+  }
 }
