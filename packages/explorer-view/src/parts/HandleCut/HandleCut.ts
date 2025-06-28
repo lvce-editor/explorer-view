@@ -14,5 +14,8 @@ export const handleCut = async (state: ExplorerState): Promise<ExplorerState> =>
   // TODO handle cut error gracefully
   const files = [absolutePath]
   await ClipBoard.writeNativeFiles('cut', files)
-  return state
+  return {
+    ...state,
+    pasteShouldMove: true,
+  }
 }

@@ -20,7 +20,10 @@ test('handleCopy - with focused dirent', async () => {
   const result = await handleCopy(state)
 
   expect(mockRpc.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'copy', ['/test.txt'])
-  expect(result).toBe(state)
+  expect(result).toEqual({
+    ...state,
+    pasteShouldMove: false,
+  })
 })
 
 test('handleCopy - without focused dirent', async () => {

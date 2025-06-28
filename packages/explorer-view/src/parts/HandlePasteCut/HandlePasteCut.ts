@@ -1,11 +1,12 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import type { NativeFilesResult } from '../NativeFilesResult/NativeFilesResult.ts'
 import * as AdjustScrollAfterPaste from '../AdjustScrollAfterPaste/AdjustScrollAfterPaste.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getBaseName } from '../Path/Path.ts'
 import { refresh } from '../Refresh/Refresh.ts'
 
-export const handlePasteCut = async (state: ExplorerState, nativeFiles: any): Promise<ExplorerState> => {
+export const handlePasteCut = async (state: ExplorerState, nativeFiles: NativeFilesResult): Promise<ExplorerState> => {
   for (const source of nativeFiles.files) {
     const target = `${state.root}${state.pathSeparator}${getBaseName(state.pathSeparator, source)}`
     await FileSystem.rename(source, target)
@@ -20,9 +21,16 @@ export const handlePasteCut = async (state: ExplorerState, nativeFiles: any): Pr
     const targetPath = `${state.root}${state.pathSeparator}${getBaseName(state.pathSeparator, firstPastedFile)}`
     const pastedFileIndex = getIndex(latestState.items, targetPath)
     if (pastedFileIndex !== -1) {
-      return AdjustScrollAfterPaste.adjustScrollAfterPaste(latestState, pastedFileIndex)
+      const adjustedState = AdjustScrollAfterPaste.adjustScrollAfterPaste(latestState, pastedFileIndex)
+      return {
+        ...adjustedState,
+        pasteShouldMove: false,
+      }
     }
   }
 
-  return latestState
+  return {
+    ...latestState,
+    pasteShouldMove: false,
+  }
 }

@@ -14,5 +14,8 @@ export const handleCopy = async (state: ExplorerState): Promise<ExplorerState> =
   // TODO handle copy error gracefully
   const files = [absolutePath]
   await ClipBoard.writeNativeFiles('copy', files)
-  return state
+  return {
+    ...state,
+    pasteShouldMove: false,
+  }
 }
