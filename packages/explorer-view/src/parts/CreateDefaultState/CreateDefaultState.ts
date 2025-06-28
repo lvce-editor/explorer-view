@@ -29,6 +29,7 @@ export const createDefaultState = (): ExplorerState => ({
   useChevrons: false,
   confirmDelete: false,
   confirmPaste: false,
+  pasteShouldMove: false,
   fileIconCache: {},
   platform: 0,
   focus: 0,
