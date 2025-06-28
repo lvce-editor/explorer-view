@@ -1,5 +1,5 @@
-import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 
 export const handleCut = async (state: ExplorerState): Promise<ExplorerState> => {
