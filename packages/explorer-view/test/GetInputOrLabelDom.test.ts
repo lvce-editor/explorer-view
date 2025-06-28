@@ -4,14 +4,14 @@ import { getInputOrLabelDom } from '../src/parts/GetInputOrLabelDom/GetInputOrLa
 import { Div, Input } from '../src/parts/VirtualDomElements/VirtualDomElements.ts'
 
 test('getInputOrLabelDom - editing state', () => {
-  const result = getInputOrLabelDom(true, false, 'test')
+  const result = getInputOrLabelDom(true, false, 'test', false)
   expect(result).toHaveLength(1)
   expect(result[0].type).toBe(Input)
   expect(result[0].className).toBe(`ExplorerInputBox`)
 })
 
 test('getInputOrLabelDom - non-editing state', () => {
-  const result = getInputOrLabelDom(false, false, 'test')
+  const result = getInputOrLabelDom(false, false, 'test', false)
   expect(result).toHaveLength(2)
   expect(result[0].type).toBe(Div)
   expect(result[0].className).toBe(Label)
@@ -20,7 +20,7 @@ test('getInputOrLabelDom - non-editing state', () => {
 })
 
 test('getInputOrLabelDom - editing state with error', () => {
-  const result = getInputOrLabelDom(true, true, 'test')
+  const result = getInputOrLabelDom(true, true, 'test', false)
   expect(result).toHaveLength(1)
   expect(result[0].type).toBe(Input)
   expect(result[0].className).toBe(`ExplorerInputBox ${InputValidationError}`)

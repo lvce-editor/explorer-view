@@ -14,7 +14,7 @@ test('getVisibleExplorerItems - basic', () => {
     },
   ]
   const editingIcon = ''
-  const result = getVisibleExplorerItems(items, 0, 1, 0, -1, None, '', '', ['icon'], true, [], editingIcon)
+  const result = getVisibleExplorerItems(items, 0, 1, 0, -1, None, '', '', ['icon'], true, [], editingIcon, [])
   expect(result).toHaveLength(1)
   expect(result[0]).toMatchObject({
     depth: 0,
@@ -41,7 +41,7 @@ test('getVisibleExplorerItems - editing', () => {
     },
   ]
   const editingIcon = ''
-  const result = getVisibleExplorerItems(items, 0, 1, 0, 0, None, 'new name', 'error', ['icon'], true, [], editingIcon)
+  const result = getVisibleExplorerItems(items, 0, 1, 0, 0, None, 'new name', 'error', ['icon'], true, [], editingIcon, [])
   expect(result).toHaveLength(1)
   expect(result[0]).toMatchObject({
     isEditing: true,
@@ -52,7 +52,7 @@ test('getVisibleExplorerItems - editing', () => {
 test('getVisibleExplorerItems - new item', () => {
   const items: readonly ExplorerItem[] = []
   const editingIcon = ''
-  const result = getVisibleExplorerItems(items, 0, 1, -1, -1, CreateFile, '', 'error', [], true, [], editingIcon)
+  const result = getVisibleExplorerItems(items, 0, 1, -1, -1, CreateFile, '', 'error', [], true, [], editingIcon, [])
   expect(result).toHaveLength(0)
   // expect(result[0]).toMatchObject({
   //   depth: 3,
