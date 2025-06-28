@@ -23,6 +23,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     deltaY,
     focused,
     height,
+    cutItems,
   } = newState
   const visibleDirents = GetVisibleExplorerItems.getVisibleExplorerItems(
     items,
@@ -37,6 +38,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     useChevrons,
     dropTargets,
     editingIcon,
+    cutItems,
   )
   const isWide = width > 450
   const contentHeight = items.length * itemHeight
