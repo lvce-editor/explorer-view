@@ -2,7 +2,7 @@ import { type Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-select-up'
 
-export const test: Test = async ({ Explorer, Command, FileSystem, Workspace, Locator, expect }) => {
+export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -12,7 +12,7 @@ export const test: Test = async ({ Explorer, Command, FileSystem, Workspace, Loc
 
   // act
   await Explorer.focusIndex(1)
-  await Command.execute('Explorer.selectUp')
+  await Explorer.selectUp()
 
   // assert
   const file1 = Locator('.TreeItem').nth(0)

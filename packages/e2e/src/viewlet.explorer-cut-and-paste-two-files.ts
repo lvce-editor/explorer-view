@@ -2,9 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-cut-and-paste-two-files'
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, Command }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, ClipBoard }) => {
   // arrange
-  await Command.execute('ClipBoard.enableMemoryClipBoard')
+  await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.writeFile(`${tmpDir}/a/file-1.txt`, 'content')
@@ -17,9 +17,9 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Loca
 
   // act
   await Explorer.selectIndices([1, 2])
-  await Command.execute('Explorer.handleCut')
+  await Explorer.handleCut()
   await Explorer.focusIndex(3)
-  await Command.execute('Explorer.handlePaste')
+  await Explorer.handlePaste()
 
   // TODO folder should expanded automatically
   await Explorer.focusIndex(1)

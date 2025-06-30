@@ -4,9 +4,9 @@ export const name = 'viewlet.explorer-cut-and-paste-file'
 
 export const skip = 1
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, Command }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, ClipBoard }) => {
   // arrange
-  await Command.execute('ClipBoard.enableMemoryClipBoard')
+  await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.writeFile(`${tmpDir}/a/file.txt`, 'content')
@@ -17,9 +17,9 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Loca
   await Explorer.focusIndex(1)
 
   // act
-  await Command.execute('Explorer.handleCut')
+  await Explorer.handleCut()
   await Explorer.focusIndex(2)
-  await Command.execute('Explorer.handlePaste')
+  await Explorer.handlePaste()
 
   // TODO folder should expanded automatically
   await Explorer.focusIndex(1)

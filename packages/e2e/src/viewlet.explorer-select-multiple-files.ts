@@ -1,8 +1,8 @@
-import type { Test } from '@lvce-editor/test-with-playwright'
+import { type Test, Explorer } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-select-multiple-files'
 
-export const test: Test = async ({ Command, FileSystem, Workspace, Locator, expect }) => {
+export const test: Test = async ({ FileSystem, Workspace, Locator, expect, Explorer }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -11,7 +11,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Locator, expe
   await Workspace.setPath(tmpDir)
 
   // act
-  await Command.execute('Explorer.setSelectedIndices', [0, 1])
+  await Explorer.selectIndices([0, 1])
 
   // assert
   const file1 = Locator('.TreeItem').nth(0)
