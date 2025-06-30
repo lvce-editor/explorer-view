@@ -15,7 +15,7 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Loca
   await Explorer.focusIndex(1)
 
   // act
-  await Command.execute('Explorer.handleCut')
+  await Command.execute('Explorer.handleCopy')
   await Explorer.focusIndex(2)
   await Command.execute('Explorer.handlePaste')
 
