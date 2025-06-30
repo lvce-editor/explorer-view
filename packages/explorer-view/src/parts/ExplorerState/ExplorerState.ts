@@ -2,46 +2,46 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { FileIconCache } from '../FileIconCache/FileIconCache.ts'
 
 export interface ExplorerState {
-  readonly uid: number
-  readonly parentUid: number
-  readonly root: string
-  readonly items: readonly ExplorerItem[]
-  readonly focusedIndex: number
-  readonly focused: boolean
-  readonly hoverIndex: number
-  readonly x: number
-  readonly y: number
-  readonly width: number
-  readonly height: number
-  readonly deltaY: number
-  readonly minLineY: number
-  readonly maxLineY: number
-  readonly pathSeparator: string
-  readonly version: number
-  readonly editingIndex: number
-  readonly itemHeight: number
-  readonly dropTargets: readonly number[]
-  readonly excluded: readonly any[]
-  readonly editingValue: string
-  readonly editingType: number
-  readonly editingIcon: string
-  readonly editingErrorMessage: string
-  readonly editingSelectionStart: number
-  readonly editingSelectionEnd: number
-  readonly icons: readonly string[]
-  readonly useChevrons: boolean
   readonly confirmDelete: boolean
   readonly confirmPaste: boolean
-  readonly pasteShouldMove: boolean
+  readonly cutItems: readonly string[]
+  readonly deltaY: number
+  readonly dropTargets: readonly number[]
+  readonly editingErrorMessage: string
+  readonly editingIcon: string
+  readonly editingIndex: number
+  readonly editingSelectionEnd: number
+  readonly editingSelectionStart: number
+  readonly editingType: number
+  readonly editingValue: string
+  readonly excluded: readonly any[]
   readonly fileIconCache: FileIconCache
-  readonly platform: number
+  readonly finalDeltaY: number
   readonly focus: number
-  readonly inputSource: number
+  readonly focused: boolean
+  readonly focusedIndex: number
   readonly focusWord: string
   readonly focusWordTimeout: number
-  readonly finalDeltaY: number
-  readonly scrollBarHeight: number
   readonly handleOffset: number
+  readonly height: number
+  readonly hoverIndex: number
+  readonly icons: readonly string[]
+  readonly inputSource: number
+  readonly itemHeight: number
+  readonly items: readonly ExplorerItem[]
+  readonly maxLineY: number
+  readonly minLineY: number
+  readonly parentUid: number
+  readonly pasteShouldMove: boolean
+  readonly pathSeparator: string
+  readonly platform: number
+  readonly root: string
   readonly scrollBarActive: boolean
-  readonly cutItems: readonly string[]
+  readonly scrollBarHeight: number
+  readonly uid: number
+  readonly useChevrons: boolean
+  readonly version: number
+  readonly width: number
+  readonly x: number
+  readonly y: number
 }
