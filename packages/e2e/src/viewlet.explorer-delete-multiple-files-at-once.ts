@@ -2,7 +2,7 @@ import { type Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-delete-multiple-files'
 
-export const test: Test = async ({ Command, Explorer, FileSystem, Workspace, Locator }) => {
+export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -14,7 +14,7 @@ export const test: Test = async ({ Command, Explorer, FileSystem, Workspace, Loc
   const file2 = explorer.locator('text=file2.txt')
   const file3 = explorer.locator('text=file3.txt')
   await Explorer.focus()
-  await Command.execute('Explorer.setSelectedIndices', [0, 1])
+  await Explorer.selectIndices([0, 1])
 
   // act
   await Explorer.removeDirent()

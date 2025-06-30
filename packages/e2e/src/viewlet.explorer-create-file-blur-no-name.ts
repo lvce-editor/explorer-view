@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-blur-no-name'
 
-export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Locator, expect }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -17,7 +17,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Loc
   await expect(inputBox).toBeFocused()
 
   // act
-  await Command.execute('Explorer.handleInputBlur')
+  await Explorer.handleInputBlur()
 
   // assert
   await expect(inputBox).toBeHidden()
