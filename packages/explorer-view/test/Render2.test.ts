@@ -1,6 +1,7 @@
 import { test, expect } from '@jest/globals'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
 import * as Render2 from '../src/parts/Render2/Render2.ts'
 
@@ -26,15 +27,15 @@ test('render2 - basic', () => {
           ariaLabel: 'Files Explorer',
           childCount: 0,
           className: 'ListItems',
-          onBlur: 'handleListBlur',
-          onClick: 'handleClick',
-          onContextMenu: 'handleContextMenu',
-          onDragLeave: 'handleDragLeave',
-          onDragOver: 'handleDragOver',
-          onDrop: 'handleDrop',
-          onFocus: 'handleListFocus',
-          onPointerDown: 'handlePointerDown',
-          onWheel: 'handleWheel',
+          onBlur: DomEventListenerFunctions.HandleListBlur,
+          onClick: DomEventListenerFunctions.HandleClick,
+          onContextMenu: DomEventListenerFunctions.HandleContextMenu,
+          onDragLeave: DomEventListenerFunctions.HandleDragLeave,
+          onDragOver: DomEventListenerFunctions.HandleDragOver,
+          onDrop: DomEventListenerFunctions.HandleDrop,
+          onFocus: DomEventListenerFunctions.HandleListFocus,
+          onPointerDown: DomEventListenerFunctions.HandlePointerDown,
+          onWheel: DomEventListenerFunctions.HandleWheel,
           // onKeyDown: 'handleListKeyDown',
           role: 'tree',
           tabIndex: 0,

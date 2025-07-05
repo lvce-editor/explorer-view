@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetExplorerWelcomeVirtualDom from '../src/parts/GetExplorerWelcomeVirtualDom/GetExplorerWelcomeVirtualDom.ts'
 
 test('getExplorerWelcomeVirtualDom - wide', () => {
@@ -27,7 +28,7 @@ test('getExplorerWelcomeVirtualDom - wide', () => {
     {
       childCount: 1,
       className: 'Button ButtonPrimary ButtonWide',
-      onClick: 'handleClickOpenFolder',
+      onClick: DomEventListenerFunctions.HandleClickOpenFolder,
       type: 1,
     },
     {
@@ -64,7 +65,7 @@ test('getExplorerWelcomeVirtualDom - narrow', () => {
     {
       childCount: 1,
       className: 'Button ButtonPrimary ButtonNarrow',
-      onClick: 'handleClickOpenFolder',
+      onClick: DomEventListenerFunctions.HandleClickOpenFolder,
       type: 1,
     },
     {
