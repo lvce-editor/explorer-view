@@ -2,7 +2,7 @@ import { type Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-delete-multiple-files'
 
-export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator }) => {
+export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -20,6 +20,9 @@ export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator }) =
   await Explorer.removeDirent()
 
   // assert
-  // TODO
-  // await expect(file1).toBeHidden()
+  await expect(file1).toBeHidden()
+  await expect(file2).toBeHidden()
+  await expect(file3).toBeVisible()
+
+  // TODO file3 should be focused
 }
