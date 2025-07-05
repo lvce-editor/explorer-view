@@ -69,6 +69,7 @@ export const getVisibleExplorerItems = (
       id,
       className,
       isCut,
+      index: i,
     })
   }
   return visible

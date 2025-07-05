@@ -19,6 +19,7 @@ test('basic item', () => {
     hasEditingError: false,
     selected: false,
     isCut: false,
+    index: 0,
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(4)
@@ -44,6 +45,7 @@ test('item with chevron', () => {
     hasEditingError: false,
     selected: false,
     isCut: false,
+    index: 0,
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(5)
@@ -69,6 +71,7 @@ test('item in editing state', () => {
     hasEditingError: false,
     selected: false,
     isCut: false,
+    index: 0,
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(3)
@@ -93,6 +96,7 @@ test('item with error', () => {
     hasEditingError: true,
     selected: false,
     isCut: false,
+    index: 0,
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(3)
