@@ -2,7 +2,7 @@ import type { NativeFilesResult } from '../NativeFilesResult/NativeFilesResult.t
 import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const writeText = async (text: string): Promise<void> => {
-  await RendererWorker.invoke('ClipBoard.writeText', /* text */ text)
+  await RendererWorker.writeClipBoardText(text)
 }
 
 export const readNativeFiles = async (): Promise<NativeFilesResult | undefined> => {
