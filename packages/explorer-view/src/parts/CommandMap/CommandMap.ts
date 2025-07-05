@@ -63,6 +63,7 @@ import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as SelectAll from '../SelectAll/SelectAll.ts'
 import * as SelectDown from '../SelectDown/SelectDown.ts'
+import * as ToggleIndividualSelection from '../ToggleIndividualSelection/ToggleIndividualSelection.ts'
 import * as SelectIndices from '../SelectIndices/SelectIndices.ts'
 import * as SelectUp from '../SelectUp/SelectUp.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
@@ -126,10 +127,11 @@ export const commandMap = {
   'Explorer.revealItem': WrapCommand.wrapCommand(RevealItem.revealItem),
   'Explorer.selectAll': WrapCommand.wrapCommand(SelectAll.selectAll),
   'Explorer.selectDown': WrapCommand.wrapCommand(SelectDown.selectDown),
+  'Explorer.selectIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
   'Explorer.selectUp': WrapCommand.wrapCommand(SelectUp.selectUp),
   'Explorer.setDeltaY': WrapCommand.wrapCommand(SetDeltaY.setDeltaY),
   'Explorer.setSelectedIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
-  'Explorer.selectIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
+  'Explorer.toggleIndividualSelection': WrapCommand.wrapCommand(ToggleIndividualSelection.toggleIndividualSelection),
   'Explorer.updateEditingValue': WrapCommand.wrapCommand(UpdateEditingValue.updateEditingValue),
   'Explorer.updateIcons': WrapCommand.wrapCommand(UpdateIcons.updateIcons),
 
