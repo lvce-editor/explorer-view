@@ -67,6 +67,7 @@ import * as SelectIndices from '../SelectIndices/SelectIndices.ts'
 import * as SelectUp from '../SelectUp/SelectUp.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 import * as Terminate from '../Terminate/Terminate.ts'
+import * as ToggleIndividualSelection from '../ToggleIndividualSelection/ToggleIndividualSelection.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 
@@ -126,10 +127,11 @@ export const commandMap = {
   'Explorer.revealItem': WrapCommand.wrapCommand(RevealItem.revealItem),
   'Explorer.selectAll': WrapCommand.wrapCommand(SelectAll.selectAll),
   'Explorer.selectDown': WrapCommand.wrapCommand(SelectDown.selectDown),
+  'Explorer.selectIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
   'Explorer.selectUp': WrapCommand.wrapCommand(SelectUp.selectUp),
   'Explorer.setDeltaY': WrapCommand.wrapCommand(SetDeltaY.setDeltaY),
   'Explorer.setSelectedIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
-  'Explorer.selectIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
+  'Explorer.toggleIndividualSelection': WrapCommand.wrapCommand(ToggleIndividualSelection.toggleIndividualSelection),
   'Explorer.updateEditingValue': WrapCommand.wrapCommand(UpdateEditingValue.updateEditingValue),
   'Explorer.updateIcons': WrapCommand.wrapCommand(UpdateIcons.updateIcons),
 

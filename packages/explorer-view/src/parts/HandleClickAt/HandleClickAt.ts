@@ -3,6 +3,7 @@ import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosit
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleClickAtRangeSelection from '../HandleClickAtRangeSelection/HandleClickAtRangeSelection.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
+import { toggleIndividualSelection } from '../ToggleIndividualSelection/ToggleIndividualSelection.ts'
 
 export const handleClickAt = async (
   state: ExplorerState,
@@ -16,12 +17,12 @@ export const handleClickAt = async (
   if (defaultPrevented || button !== MouseEventType.LeftClick) {
     return state
   }
-
   const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
-
   if (shiftKey) {
     return HandleClickAtRangeSelection.handleClickAtRangeSelection(state, index)
   }
-
+  if (ctrlKey) {
+    return toggleIndividualSelection(state, index)
+  }
   return HandleClick.handleClick(state, index)
 }

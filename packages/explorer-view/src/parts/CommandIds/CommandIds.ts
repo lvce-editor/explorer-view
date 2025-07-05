@@ -14,6 +14,7 @@ export const commandIds = [
   'focusLast',
   'handleCut',
   'selectIndices',
+  'toggleIndividualSelection',
   'focusNext',
   'focusNone',
   'focusPrevious',
