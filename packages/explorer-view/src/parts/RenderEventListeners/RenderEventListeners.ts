@@ -43,7 +43,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     {
       name: DomEventListenersFunctions.HandlePointerDown,
       params: ['handlePointerDown', 'event.button', 'event.clientX', 'event.clientY'],
-      preventDefault: true,
+      // preventDefault: true,
     },
     {
       name: DomEventListenersFunctions.HandleEditingInput,
@@ -77,9 +77,13 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenersFunctions.HandleDragStart,
       params: ['handleDragStart'],
       // @ts-ignore
-      dragInfo: {
-        'text/uri': 'abc',
-      },
+      dragInfo: [
+        {
+          type: 'text/plain',
+          data: 'https://example.com',
+        },
+      ],
+      dragEffect: 'copyMove',
     },
   ]
 }
