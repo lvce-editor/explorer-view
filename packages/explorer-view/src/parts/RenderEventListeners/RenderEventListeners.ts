@@ -73,5 +73,13 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenersFunctions.HandleDragLeave,
       params: ['handleDragLeave'],
     },
+    {
+      name: DomEventListenersFunctions.HandleDragStart,
+      params: ['handleDragStart'],
+      // @ts-ignore
+      dragInfo: {
+        'text/uri': 'abc',
+      },
+    },
   ]
 }

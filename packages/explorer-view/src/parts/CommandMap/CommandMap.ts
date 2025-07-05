@@ -36,6 +36,7 @@ import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
 import * as HandleCut from '../HandleCut/HandleCut.ts'
 import * as HandleDragLeave from '../HandleDragLeave/HandleDragLeave.ts'
 import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
+import * as HandleDragStart from '../HandleDragStart/HandleDragStart.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
 import * as HandleFocus from '../HandleFocus/HandleFocus.ts'
 import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconThemeChange.ts'
@@ -85,6 +86,7 @@ export const commandMap = {
   'Explorer.focusFirst': WrapCommand.wrapCommand(FocusFirst.focusFirst),
   'Explorer.focusIndex': WrapCommand.wrapCommand(FocusIndex.focusIndex),
   'Explorer.focusLast': WrapCommand.wrapCommand(FocusLast.focusLast),
+  'Explorer.handleDragStart': WrapCommand.wrapCommand(HandleDragStart.handleDragStart),
   'Explorer.focusNext': WrapCommand.wrapCommand(FocusNext.focusNext),
   'Explorer.focusNone': WrapCommand.wrapCommand(FocusNone.focusNone),
   'Explorer.focusPrevious': WrapCommand.wrapCommand(FocusPrevious.focusPrevious),
