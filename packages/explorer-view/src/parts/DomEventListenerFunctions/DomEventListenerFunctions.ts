@@ -14,3 +14,4 @@ export const HandleListKeyDown = 13
 export const HandlePointerDown = 14
 export const HandleWheel = 15
 export const HandleInputKeyDown = 16
+export const HandleDragStart = 17
