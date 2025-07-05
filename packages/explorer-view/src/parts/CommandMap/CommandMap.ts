@@ -48,6 +48,7 @@ import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as HandleWheel from '../HandleWheel/HandleWheel.ts'
 import * as HandleWorkspaceChange from '../HandleWorkspaceChange/HandleWorkspaceChange.ts'
+import * as Initialize from '../Initialize/Initialize.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as NewFile from '../NewFile/NewFile.ts'
 import * as NewFolder from '../NewFolder/NewFolder.ts'
@@ -145,6 +146,7 @@ export const commandMap = {
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
   'Explorer.saveState': SaveState.saveState,
   'Explorer.terminate': Terminate.terminate,
+  'Explorer.initialize': Initialize.initialize,
 
   // deprecated
   'Explorer.create': Create.create,
