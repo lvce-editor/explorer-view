@@ -18,6 +18,14 @@ export const handleClickAt = async (
     return state
   }
   const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
+  if (index === -1) {
+    return {
+      ...state,
+      focused: true,
+      focusedIndex: -1,
+      // TODO mark all items as not selected
+    }
+  }
   if (shiftKey) {
     return HandleClickAtRangeSelection.handleClickAtRangeSelection(state, index)
   }
