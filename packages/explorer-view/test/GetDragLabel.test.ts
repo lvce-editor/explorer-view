@@ -2,7 +2,7 @@ import { test, expect } from '@jest/globals'
 import { getDragLabel } from '../src/parts/GetDragLabel/GetDragLabel.js'
 
 test('getDragLabel - single url', () => {
-  expect(getDragLabel(['file:///a.txt'])).toBe('file:///a.txt')
+  expect(getDragLabel(['file:///a.txt'])).toBe('a.txt')
 })
 
 test('getDragLabel - multiple urls', () => {
