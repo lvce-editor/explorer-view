@@ -20,7 +20,10 @@ test('left click outside items', () => {
 test('right click outside items', () => {
   const state = createDefaultState()
   const result = handlePointerDown(state, 2, 100, 100)
-  expect(result).toEqual(state)
+  expect(result).toEqual({
+    ...state,
+    focusedIndex: -1,
+  })
 })
 
 test('left click on item', () => {
