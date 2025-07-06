@@ -9,7 +9,7 @@ test('getNewDropTargets - index -1', () => {
     ...createDefaultState(),
     items: [],
   }
-  const result = getNewDropTargets(state, 0)
+  const result = getNewDropTargets(state, -1)
   expect(result).toEqual([-1])
 })
 
