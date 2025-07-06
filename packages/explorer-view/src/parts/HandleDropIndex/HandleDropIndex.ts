@@ -67,8 +67,7 @@ const handleDropIntoFile = (
   if (parentIndex === -1) {
     return HandleDropRoot.handleDropRoot(state, fileHandles, files, paths)
   }
-  // @ts-ignore
-  return handleDropIndex(parentIndex)
+  return handleDropIndex(state, fileHandles, files, paths, parentIndex)
 }
 
 export const handleDropIndex = async (
