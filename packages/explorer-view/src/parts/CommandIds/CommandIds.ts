@@ -34,6 +34,7 @@ export const commandIds = [
   'handleCut',
   'handleDragLeave',
   'handleDragOver',
+  'handleDragOverIndex',
   'handleDragStart',
   'handleDrop',
   'handleFocus',
