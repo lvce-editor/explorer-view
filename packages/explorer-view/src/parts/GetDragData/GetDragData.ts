@@ -1,14 +1,15 @@
 import type { DragDataItem } from '../DragDataItem/DragDataItem.ts'
+import { getDragLabel } from '../GetDragLabel/GetDragLabel.ts'
 
-const getDragLabel = (urls: readonly string[]): string => {
-  if (urls.length === 1) {
-    return urls[0]
+const toUri = (path: string): string => {
+  if (path.startsWith('file://')) {
+    return path
   }
-  return `${urls.length}`
+  return 'file://' + path
 }
 
 export const getDragData = (urls: readonly string[]): readonly DragDataItem[] => {
-  const data = urls.join('\n')
+  const data = urls.map(toUri).join('\n')
   const dragData = [
     {
       type: 'text/uri-list',

@@ -77,12 +77,6 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenersFunctions.HandleDragStart,
       params: ['handleDragStart'],
       // @ts-ignore
-      dragInfo: [
-        {
-          type: 'text/plain',
-          data: 'https://example.com',
-        },
-      ],
       dragEffect: 'copyMove',
     },
   ]
