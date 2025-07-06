@@ -1,6 +1,8 @@
+import { getBaseName } from '../Path/Path.ts'
+
 export const getDragLabel = (urls: readonly string[]): string => {
   if (urls.length === 1) {
-    return urls[0]
+    return getBaseName('/', urls[0])
   }
   return `${urls.length}`
 }
