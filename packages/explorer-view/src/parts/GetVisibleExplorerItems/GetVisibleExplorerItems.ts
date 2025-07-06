@@ -46,7 +46,8 @@ export const getVisibleExplorerItems = (
     const id = isFocused ? 'TreeItemActive' : undefined
     const isSelected = item.selected
     const isCut = cutItems.includes(item.path)
-    const className = getTreeItemClassName(isSelected, isFocused) // TODO compute classname in dom function
+    const isDropping = dropTargets.includes(i)
+    const className = getTreeItemClassName(isSelected, isFocused, isDropping) // TODO compute classname in dom function
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]
     const isEditing = i === editingIndex
