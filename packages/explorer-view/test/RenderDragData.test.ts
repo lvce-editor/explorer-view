@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.js'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.js'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.js'
 import { renderDragData } from '../src/parts/RenderDragData/RenderDragData.js'
 
 test('renderDragData - no items', () => {
