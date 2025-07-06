@@ -8,6 +8,7 @@ export const handleDragOver = (state: ExplorerState, x: number, y: number): Expl
   Assert.number(y)
   const { dropTargets } = state
   const newDropTargets = GetNewDropTargets.getNewDropTargets(state, x, y)
+  console.log({ dropTargets, newDropTargets })
   if (IsEqual.isEqual(dropTargets, newDropTargets)) {
     return state
   }
