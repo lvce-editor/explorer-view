@@ -13,6 +13,8 @@ export const getRemoteUrl = (path) => {
 
 const nodeModulesPath = join(root, 'packages', 'server', 'node_modules')
 
+const workerPath = join(root, '.tmp', 'dist', 'dist', 'explorerViewWorkerMain.js')
+
 const serverStaticPath = join(nodeModulesPath, '@lvce-editor', 'static-server', 'static')
 
 const RE_COMMIT_HASH = /^[a-z\d]+$/
@@ -26,14 +28,11 @@ const rendererWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'r
 
 const content = await readFile(rendererWorkerMainPath, 'utf-8')
 
-const explorerWorkerPath = join(root, '.tmp/dist/dist/explorerViewWorkerMain.js')
-
-const remoteUrl = getRemoteUrl(explorerWorkerPath)
+const remoteUrl = getRemoteUrl(workerPath)
 if (!content.includes('// const explorerWorkerUrl = ')) {
-  await cp(rendererWorkerMainPath, rendererWorkerMainPath + '.original')
   const occurrence = `const explorerWorkerUrl = \`\${assetDir}/packages/explorer-worker/dist/explorerViewWorkerMain.js\``
   const replacement = `// const explorerWorkerUrl = \`\${assetDir}/packages/explorer-worker/dist/explorerViewWorkerMain.js\`
-  const explorerWorkerUrl = \`${remoteUrl}\``
+const explorerWorkerUrl = \`${remoteUrl}\``
 
   const newContent = content.replace(occurrence, replacement)
   await writeFile(rendererWorkerMainPath, newContent)
