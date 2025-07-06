@@ -36,6 +36,7 @@ test('render2 - basic', () => {
           onFocus: DomEventListenerFunctions.HandleListFocus,
           onPointerDown: DomEventListenerFunctions.HandlePointerDown,
           onWheel: DomEventListenerFunctions.HandleWheel,
+          onDragStart: DomEventListenerFunctions.HandleDragStart,
           // onKeyDown: 'handleListKeyDown',
           role: 'tree',
           tabIndex: 0,
