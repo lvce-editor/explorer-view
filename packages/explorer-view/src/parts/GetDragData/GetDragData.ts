@@ -13,5 +13,7 @@ export const getDragData = (urls: readonly string[]): readonly DragDataItem[] =>
       data,
     },
   ]
+  // @ts-ignore
+  dragData.label = `${urls.length}`
   return dragData
 }
