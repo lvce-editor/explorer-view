@@ -1,5 +1,5 @@
-import * as Assert from '../Assert/Assert.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as Assert from '../Assert/Assert.ts'
 import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import { handleDragOverIndex } from '../HandleDragOverIndex/HandleDragOverIndex.ts'
 
