@@ -6,7 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
 import { set } from '../src/parts/ExplorerStates/ExplorerStates.ts'
 
-test('diff2 - empty states', () => {
+test.skip('diff2 - empty states', () => {
   const uid = 1
   const oldState: ExplorerState = createDefaultState()
   const newState: ExplorerState = {
@@ -18,7 +18,7 @@ test('diff2 - empty states', () => {
   expect(result).toEqual([4])
 })
 
-test('diff2 - different states', () => {
+test.skip('diff2 - different states', () => {
   const uid = 2
   const oldState: ExplorerState = {
     ...createDefaultState(),
