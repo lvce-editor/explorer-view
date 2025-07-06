@@ -9,14 +9,13 @@ const getDragLabel = (urls: readonly string[]): string => {
 
 export const getDragData = (urls: readonly string[]): readonly DragDataItem[] => {
   const data = urls.join('\n')
-  // TODO send selected urls
   const dragData = [
     {
-      type: 'text/plain',
+      type: 'text/uri-list',
       data,
     },
     {
-      type: 'text/uri-list',
+      type: 'text/plain',
       data,
     },
   ]
