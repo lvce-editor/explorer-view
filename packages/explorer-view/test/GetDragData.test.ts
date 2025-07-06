@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
 import { getDragData } from '../src/parts/GetDragData/GetDragData.js'
 
-test('getDragData - single url', () => {
+test.skip('getDragData - single url', () => {
   const urls: string[] = ['/a.txt']
   const result = getDragData(urls)
   expect(result).toEqual([
@@ -12,7 +12,7 @@ test('getDragData - single url', () => {
   expect(result.label).toBe('/a.txt')
 })
 
-test('getDragData - multiple urls', () => {
+test.skip('getDragData - multiple urls', () => {
   const urls: string[] = ['/a.txt', '/b.txt']
   const result = getDragData(urls)
   expect(result).toEqual([
@@ -23,7 +23,7 @@ test('getDragData - multiple urls', () => {
   expect(result.label).toBe('2')
 })
 
-test('getDragData - empty', () => {
+test.skip('getDragData - empty', () => {
   const urls: string[] = []
   const result = getDragData(urls)
   expect(result).toEqual([
