@@ -7,8 +7,15 @@ const getDragLabel = (urls: readonly string[]): string => {
   return `${urls.length}`
 }
 
+const toUri = (path: string): string => {
+  if (path.startsWith('file://')) {
+    return path
+  }
+  return 'file://' + path
+}
+
 export const getDragData = (urls: readonly string[]): readonly DragDataItem[] => {
-  const data = urls.join('\n')
+  const data = urls.map(toUri).join('\n')
   const dragData = [
     {
       type: 'text/uri-list',
