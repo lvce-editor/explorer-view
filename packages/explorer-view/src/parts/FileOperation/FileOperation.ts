@@ -1,4 +1,4 @@
-import type { Copy, CreateFile, CreateFolder, Rename } from '../FileOperationType/FileOperationType.ts'
+import type { Copy, CreateFile, CreateFolder, Remove, Rename } from '../FileOperationType/FileOperationType.ts'
 
 export interface FileOperationBase {
   readonly type: number
@@ -27,4 +27,9 @@ export interface FileOperationRename extends FileOperationBase {
   readonly from: string
 }
 
-export type FileOperation = FileOperationCopy | FileOperationCreateFile | FileOperationCreateFolder | FileOperationRename
+export interface FileOperationRemove extends FileOperationBase {
+  readonly type: typeof Remove
+  readonly path: string
+}
+
+export type FileOperation = FileOperationCopy | FileOperationCreateFile | FileOperationCreateFolder | FileOperationRename | FileOperationRemove
