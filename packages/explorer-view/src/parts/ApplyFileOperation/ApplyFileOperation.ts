@@ -12,5 +12,8 @@ export const applyOperation = (operation: FileOperation): Promise<void> => {
   if (operation.type === FileOperationType.Rename) {
     return FileSystem.rename(operation.from || '', operation.path)
   }
+  if (operation.type === FileOperationType.Remove) {
+    return FileSystem.remove(operation.path)
+  }
   return FileSystem.writeFile(operation.path, operation.text)
 }
