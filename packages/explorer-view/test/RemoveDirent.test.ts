@@ -1,4 +1,5 @@
 import { test, expect } from '@jest/globals'
+import { jest } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
@@ -296,4 +297,116 @@ test.skip('removeDirent - with confirmation enabled and user cancels', async () 
   const result = await removeDirent(state)
   expect(result.items).toHaveLength(2)
   expect(result.focusedIndex).toBe(0)
+})
+
+test('removeDirent - shows error message when file operation fails', async () => {
+  const confirmFn = jest.fn()
+  confirmFn.mockImplementation(() => true)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string, message?: string) => {
+      if (method === 'Confirmprompt.prompt') {
+        return confirmFn(message)
+      }
+      if (method === 'FileSystem.remove') {
+        throw new Error('Permission denied')
+      }
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return []
+      }
+      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
+        return ''
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [{ name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false }],
+    focusedIndex: 0,
+    confirmDelete: false,
+  }
+
+  const result = await removeDirent(state)
+  expect(result).toBe(state)
+  expect(confirmFn).toHaveBeenCalledWith('Error: Permission denied')
+})
+
+test('removeDirent - shows error message for multiple files when operation fails', async () => {
+  const confirmFn = jest.fn()
+  confirmFn.mockImplementation(() => true)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string, message?: string) => {
+      if (method === 'Confirmprompt.prompt') {
+        return confirmFn(message)
+      }
+      if (method === 'FileSystem.remove') {
+        throw new Error('Access denied')
+      }
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return []
+      }
+      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
+        return ''
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [
+      { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: true },
+      { name: 'file2.txt', type: File, path: '/file2.txt', depth: 0, selected: true },
+    ],
+    focusedIndex: 0,
+    confirmDelete: false,
+  }
+
+  const result = await removeDirent(state)
+  expect(result).toBe(state)
+  expect(confirmFn).toHaveBeenCalledWith('Error: Access denied')
+})
+
+test('removeDirent - continues normally when no error occurs', async () => {
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.remove') {
+        return
+      }
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return []
+      }
+      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
+        return ''
+      }
+      if (method === 'IconTheme.getIcons') {
+        return []
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  RpcRegistry.set(RendererWorker, mockRpc)
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [{ name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false }],
+    focusedIndex: 0,
+    confirmDelete: false,
+  }
+
+  const result = await removeDirent(state)
+  expect(result.items).toHaveLength(0)
+  expect(result.focusedIndex).toBe(-1)
 })
