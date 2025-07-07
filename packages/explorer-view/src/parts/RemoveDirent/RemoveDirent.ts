@@ -7,6 +7,7 @@ import * as FocusId from '../FocusId/FocusId.ts'
 import { getPaths } from '../GetPaths/GetPaths.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
   const { items, focusedIndex, confirmDelete } = state
@@ -29,7 +30,11 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
     }
   })
   // TODO use bulk edit and explorer refresh
-  await ApplyFileOperations.applyFileOperations(fileOperations)
+  const errorMessage = await ApplyFileOperations.applyFileOperations(fileOperations)
+  if (errorMessage) {
+    await RendererWorker.confirm(errorMessage)
+    return state
+  }
   const newState = await Refresh.refresh(state)
   return {
     ...newState,
