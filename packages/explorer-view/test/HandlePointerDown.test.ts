@@ -14,6 +14,7 @@ test('left click outside items', () => {
     focused: true,
     focusedIndex: -1,
     focus: FocusId.List,
+    pointerDownIndex: -1,
   })
 })
 
@@ -22,7 +23,7 @@ test('right click outside items', () => {
   const result = handlePointerDown(state, 2, 100, 100)
   expect(result).toEqual({
     ...state,
-    focusedIndex: -1,
+    pointerDownIndex: -1,
   })
 })
 
@@ -32,5 +33,8 @@ test('left click on item', () => {
     items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
   }
   const result = handlePointerDown(state, MouseEventType.LeftClick, 0, 0)
-  expect(result).toEqual(state)
+  expect(result).toEqual({
+    ...state,
+    pointerDownIndex: 0,
+  })
 })
