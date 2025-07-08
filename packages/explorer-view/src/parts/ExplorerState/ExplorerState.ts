@@ -27,6 +27,7 @@ export interface ExplorerState {
   readonly hoverIndex: number
   readonly icons: readonly string[]
   readonly inputSource: number
+  readonly isPointerDown: boolean
   readonly itemHeight: number
   readonly items: readonly ExplorerItem[]
   readonly maxLineY: number
@@ -35,6 +36,7 @@ export interface ExplorerState {
   readonly pasteShouldMove: boolean
   readonly pathSeparator: string
   readonly platform: number
+  readonly pointerDownIndex: number
   readonly root: string
   readonly scrollBarActive: boolean
   readonly scrollBarHeight: number
@@ -44,5 +46,4 @@ export interface ExplorerState {
   readonly width: number
   readonly x: number
   readonly y: number
-  readonly isPointerDown: boolean
 }
