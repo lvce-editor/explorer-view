@@ -14,10 +14,13 @@ export const handleClickAt = async (
   x: number,
   y: number,
 ): Promise<ExplorerState> => {
+  console.log('click at')
   if (defaultPrevented || button !== MouseEventType.LeftClick) {
+    console.log('return 1')
     return state
   }
   const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
+  console.log('index')
   if (index === -1) {
     return {
       ...state,
@@ -32,5 +35,6 @@ export const handleClickAt = async (
   if (ctrlKey) {
     return toggleIndividualSelection(state, index)
   }
+  console.log('click', index)
   return HandleClick.handleClick(state, index)
 }

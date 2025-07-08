@@ -5,6 +5,7 @@ import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 
 export const handlePointerDown = (state: ExplorerState, button: number, x: number, y: number): ExplorerState => {
   const index = getIndexFromPosition(state, x, y)
+  console.log('pointer down', button, x, y, index)
   if (button === MouseEventType.LeftClick && index === -1) {
     return {
       ...state,
