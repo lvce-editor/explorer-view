@@ -16,5 +16,6 @@ export const toggleIndividualSelection = async (state: ExplorerState, index: num
   return {
     ...state,
     items: newItems,
+    pointerDownIndex: -1,
   }
 }

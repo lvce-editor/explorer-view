@@ -23,6 +23,7 @@ export const handleClickAt = async (
       ...state,
       focused: true,
       focusedIndex: -1,
+      pointerDownIndex: -1,
       // TODO mark all items as not selected
     }
   }
@@ -32,5 +33,9 @@ export const handleClickAt = async (
   if (ctrlKey) {
     return toggleIndividualSelection(state, index)
   }
-  return HandleClick.handleClick(state, index)
+  const newState = await HandleClick.handleClick(state, index)
+  return {
+    ...newState,
+    pointerDownIndex: -1,
+  }
 }
