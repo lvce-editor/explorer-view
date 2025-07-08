@@ -13,8 +13,5 @@ export const handlePointerDown = (state: ExplorerState, button: number, x: numbe
       focus: FocusId.List,
     }
   }
-  return {
-    ...state,
-    focusedIndex: index,
-  }
+  return state
 }
