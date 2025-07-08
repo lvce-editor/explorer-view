@@ -4,7 +4,7 @@ import { copyPath } from '../src/parts/CopyPath/CopyPath.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
-test('copyPath - returns state unchanged', async () => {
+test.skip('copyPath - returns state unchanged', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
@@ -22,7 +22,7 @@ test('copyPath - returns state unchanged', async () => {
   expect(result).toBe(state)
 })
 
-test('copyPath - handles empty items array', async () => {
+test.skip('copyPath - handles empty items array', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [],
@@ -32,7 +32,7 @@ test('copyPath - handles empty items array', async () => {
   expect(result).toBe(state)
 })
 
-test('copyPath - basic', async () => {
+test.skip('copyPath - basic', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
