@@ -60,6 +60,7 @@ export const create = (
     pasteShouldMove: false,
     cutItems: [],
     isPointerDown: false,
+    pointerDownIndex: -1,
   }
   ExplorerStates.set(state.uid, state, state)
   return state

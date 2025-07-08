@@ -44,4 +44,5 @@ export const createDefaultState = (): ExplorerState => ({
   scrollBarHeight: 0,
   cutItems: [],
   isPointerDown: false,
+  pointerDownIndex: -1,
 })
