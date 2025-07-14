@@ -8,12 +8,12 @@ import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const mockRpc: Rpc = {
   send: jest.fn(),
-  invoke: jest.fn((method: string, ...args: readonly any[]) => {
+  invoke: jest.fn(async (method: string, ...args: readonly any[]) => {
     if (method === 'FileSystem.mkdir') {
-      return Promise.resolve()
+      return
     }
     if (method === 'FileSystem.writeFile') {
-      return Promise.resolve()
+      return
     }
     throw new Error(`Unexpected method: ${method}`)
   }),
