@@ -9,9 +9,9 @@ import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 test('getNewDirentsAccept - create file in root', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string): Promise<any> => {
+    invoke: async (method: string): Promise<any> => {
       if (method === 'FileSystem.writeFile') {
-        return Promise.resolve()
+        return
       }
       throw new Error(`unexpected method ${method}`)
     },
