@@ -15,8 +15,8 @@ class MockFile implements File {
     public webkitRelativePath: string = '',
   ) {}
 
-  arrayBuffer(): Promise<ArrayBuffer> {
-    return Promise.resolve(new ArrayBuffer(0))
+  async arrayBuffer(): Promise<ArrayBuffer> {
+    return new ArrayBuffer(0)
   }
 
   slice(): Blob {
@@ -27,12 +27,12 @@ class MockFile implements File {
     return new ReadableStream()
   }
 
-  text(): Promise<string> {
-    return Promise.resolve('')
+  async text(): Promise<string> {
+    return ''
   }
 
-  bytes(): Promise<Uint8Array> {
-    return Promise.resolve(new Uint8Array(0))
+  async bytes(): Promise<Uint8Array> {
+    return new Uint8Array(0)
   }
 }
 
