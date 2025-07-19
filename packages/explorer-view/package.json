@@ -52,7 +52,7 @@
     "@lvce-editor/rpc": "^4.11.0",
     "@lvce-editor/rpc-registry": "^2.57.0",
     "@lvce-editor/verror": "^1.7.0",
-    "@lvce-editor/viewlet-registry": "^1.2.0",
+    "@lvce-editor/viewlet-registry": "^1.4.0",
     "@lvce-editor/virtual-dom-worker": "^2.13.0",
     "jest": "^30.0.4",
     "ts-jest": "^29.4.0"
