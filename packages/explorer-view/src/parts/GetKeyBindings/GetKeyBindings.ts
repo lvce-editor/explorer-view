@@ -1,6 +1,5 @@
-import { KeyCode } from '@lvce-editor/virtual-dom-worker'
+import { KeyCode, KeyModifier } from '@lvce-editor/virtual-dom-worker'
 import type { KeyBinding } from '../KeyBinding/KeyBinding.ts'
-import * as KeyModifier from '../KeyModifier/KeyModifier.ts'
 import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
 
 export const getKeyBindings = (): readonly KeyBinding[] => {
