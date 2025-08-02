@@ -23,7 +23,7 @@ class MockFile implements File {
     return new Blob()
   }
 
-  stream(): ReadableStream<Uint8Array> {
+  stream(): ReadableStream<Uint8Array<ArrayBuffer>> {
     return new ReadableStream()
   }
 
@@ -31,7 +31,7 @@ class MockFile implements File {
     return ''
   }
 
-  async bytes(): Promise<Uint8Array> {
+  async bytes(): Promise<Uint8Array<ArrayBuffer>> {
     return new Uint8Array(0)
   }
 }
