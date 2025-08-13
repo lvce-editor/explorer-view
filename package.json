@@ -11,9 +11,9 @@
     "dev": "node packages/build/src/dev.js",
     "e2e": "cd packages/e2e && npm run e2e",
     "format": "prettier --write .",
+    "postinstall": "lerna bootstrap --ci",
     "lint": "eslint .",
     "measure": "cd packages/memory && npm run measure",
-    "postinstall": "lerna bootstrap --ci",
     "test": "lerna run test",
     "type-check": "tsc -b"
   },
