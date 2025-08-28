@@ -14,7 +14,7 @@ export const getRenderer = (diffType: number): Renderer => {
     case DiffType.RenderFocus:
       return RenderFocus.renderFocus
     case DiffType.RenderFocusContext:
-      return RenderFocusContext.renderFocus
+      return RenderFocusContext.renderFocusContext
     case DiffType.RenderValue:
       return RenderValue.renderValue
     case DiffType.RenderSelection:
