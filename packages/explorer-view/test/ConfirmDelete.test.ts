@@ -8,7 +8,7 @@ test('confirmDelete - single file', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, message: string) => {
-      if (method === 'Confirmprompt.prompt') {
+      if (method === 'ConfirmPrompt.prompt') {
         // expect(message).toBe('Are you sure you want to delete "/test/file.txt"?')
         return true
       }
@@ -25,7 +25,7 @@ test('confirmDelete - multiple files', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, message: string) => {
-      if (method === 'Confirmprompt.prompt') {
+      if (method === 'ConfirmPrompt.prompt') {
         // expect(message).toBe('Are you sure you want to delete 3 items?')
         return false
       }
