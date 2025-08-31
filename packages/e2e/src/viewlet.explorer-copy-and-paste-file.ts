@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-copy-and-paste-file'
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, Command, ClipBoard }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, ClipBoard }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
@@ -15,7 +15,7 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Loca
   await Explorer.focusIndex(1)
 
   // act
-  await Command.execute('Explorer.handleCopy')
+  await Explorer.handleCopy()
   await Explorer.focusIndex(2)
   await Explorer.handlePaste()
 
