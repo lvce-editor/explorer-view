@@ -7,7 +7,7 @@ test('getFileOperationsCopy - no conflicts', () => {
   const existingUris = ['/test/existing.txt']
   const files = ['/source/file.txt']
 
-  const result = getFileOperationsCopy(root, existingUris, files)
+  const result = getFileOperationsCopy(root, existingUris, files, root)
   expect(result).toEqual([{ type: FileOperationType.Copy, from: '/source/file.txt', path: '/test/file.txt' }])
 })
 
@@ -16,7 +16,7 @@ test('getFileOperationsCopy - single conflict', () => {
   const existingUris = ['/test/file.txt']
   const files = ['/source/file.txt']
 
-  const result = getFileOperationsCopy(root, existingUris, files)
+  const result = getFileOperationsCopy(root, existingUris, files, root)
   expect(result).toEqual([{ type: FileOperationType.Copy, from: '/source/file.txt', path: '/test/file copy.txt' }])
 })
 
@@ -25,7 +25,7 @@ test('getFileOperationsCopy - multiple conflicts', () => {
   const existingUris = ['/test/file.txt', '/test/file copy.txt']
   const files = ['/source/file.txt']
 
-  const result = getFileOperationsCopy(root, existingUris, files)
+  const result = getFileOperationsCopy(root, existingUris, files, root)
   expect(result).toEqual([{ type: FileOperationType.Copy, from: '/source/file.txt', path: '/test/file copy 1.txt' }])
 })
 
@@ -34,7 +34,7 @@ test('getFileOperationsCopy - multiple numbered conflicts', () => {
   const existingUris = ['/test/file.txt', '/test/file copy.txt', '/test/file copy 1.txt', '/test/file copy 2.txt']
   const files = ['/source/file.txt']
 
-  const result = getFileOperationsCopy(root, existingUris, files)
+  const result = getFileOperationsCopy(root, existingUris, files, root)
   expect(result).toEqual([{ type: FileOperationType.Copy, from: '/source/file.txt', path: '/test/file copy 3.txt' }])
 })
 
@@ -43,7 +43,7 @@ test('getFileOperationsCopy - file without extension', () => {
   const existingUris = ['/test/README']
   const files = ['/source/README']
 
-  const result = getFileOperationsCopy(root, existingUris, files)
+  const result = getFileOperationsCopy(root, existingUris, files, root)
   expect(result).toEqual([{ type: FileOperationType.Copy, from: '/source/README', path: '/test/README copy' }])
 })
 
@@ -52,7 +52,7 @@ test('getFileOperationsCopy - file without extension multiple conflicts', () => 
   const existingUris = ['/test/README', '/test/README copy', '/test/README copy 1']
   const files = ['/source/README']
 
-  const result = getFileOperationsCopy(root, existingUris, files)
+  const result = getFileOperationsCopy(root, existingUris, files, root)
   expect(result).toEqual([{ type: FileOperationType.Copy, from: '/source/README', path: '/test/README copy 2' }])
 })
 
@@ -61,7 +61,7 @@ test('getFileOperationsCopy - multiple files with conflicts', () => {
   const existingUris = ['/test/file1.txt', '/test/file2.txt']
   const files = ['/source/file1.txt', '/source/file2.txt']
 
-  const result = getFileOperationsCopy(root, existingUris, files)
+  const result = getFileOperationsCopy(root, existingUris, files, root)
   expect(result).toEqual([
     { type: FileOperationType.Copy, from: '/source/file1.txt', path: '/test/file1 copy.txt' },
     { type: FileOperationType.Copy, from: '/source/file2.txt', path: '/test/file2 copy.txt' },
@@ -73,7 +73,7 @@ test('getFileOperationsCopy - empty existingUris', () => {
   const existingUris: readonly string[] = []
   const files = ['/source/file.txt']
 
-  const result = getFileOperationsCopy(root, existingUris, files)
+  const result = getFileOperationsCopy(root, existingUris, files, root)
   expect(result).toEqual([{ type: FileOperationType.Copy, from: '/source/file.txt', path: '/test/file.txt' }])
 })
 
@@ -82,6 +82,6 @@ test('getFileOperationsCopy - empty files', () => {
   const existingUris = ['/test/existing.txt']
   const files: readonly string[] = []
 
-  const result = getFileOperationsCopy(root, existingUris, files)
+  const result = getFileOperationsCopy(root, existingUris, files, root)
   expect(result).toEqual([])
 })
