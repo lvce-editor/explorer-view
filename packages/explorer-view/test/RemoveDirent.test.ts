@@ -238,7 +238,7 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, message?: string) => {
-      if (method === 'confirmprompt.prompt') {
+      if (method === 'confirmPrompt.prompt') {
         // expect(message).toBe('Are you sure you want to delete "/file1.txt"?')
         return true
       }
@@ -275,7 +275,7 @@ test.skip('removeDirent - with confirmation enabled and user cancels', async () 
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, message?: string) => {
-      if (method === 'confirmprompt.prompt') {
+      if (method === 'confirmPrompt.prompt') {
         // expect(message).toBe('Are you sure you want to delete 2 items?')
         return false
       }
@@ -305,7 +305,7 @@ test('removeDirent - shows error message when file operation fails', async () =>
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, message?: string) => {
-      if (method === 'Confirmprompt.prompt') {
+      if (method === 'confirmPrompt.prompt') {
         return confirmFn(message)
       }
       if (method === 'FileSystem.remove') {
@@ -343,7 +343,7 @@ test('removeDirent - shows error message for multiple files when operation fails
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string, message?: string) => {
-      if (method === 'Confirmprompt.prompt') {
+      if (method === 'confirmPrompt.prompt') {
         return confirmFn(message)
       }
       if (method === 'FileSystem.remove') {
