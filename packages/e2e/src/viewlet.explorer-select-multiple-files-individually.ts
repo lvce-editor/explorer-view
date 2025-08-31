@@ -2,7 +2,7 @@ import { type Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-select-multiple-files-individually'
 
-export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator, expect, Command }) => {
+export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -12,8 +12,8 @@ export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator, exp
   await Explorer.focusIndex(2)
 
   // act
-  await Command.execute('Explorer.toggleIndividualSelection', 1)
-  await Command.execute('Explorer.toggleIndividualSelection', 2)
+  await Explorer.toggleIndividualSelection(1)
+  await Explorer.toggleIndividualSelection(2)
 
   // assert
   const file1 = Locator('.TreeItem').nth(0)
