@@ -8,7 +8,7 @@ test('confirmPaste returns true when user confirms', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
-      if (method === 'confirmPrompt.prompt') {
+      if (method === 'ConfirmPrompt.prompt') {
         return true
       }
       throw new Error(`unexpected method ${method}`)
@@ -24,7 +24,7 @@ test('confirmPaste returns false when user cancels', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
-      if (method === 'confirmPrompt.prompt') {
+      if (method === 'ConfirmPrompt.prompt') {
         return false
       }
       throw new Error(`unexpected method ${method}`)
