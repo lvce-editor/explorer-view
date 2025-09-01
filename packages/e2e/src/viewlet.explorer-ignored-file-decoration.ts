@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-ignored-file-decoration'
 
-export const test: Test = async ({ FileSystem, Workspace, ClipBoard }) => {
+export const test: Test = async ({ FileSystem, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
