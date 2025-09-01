@@ -2,9 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-cut-cancel'
 
-export const skip = 1
+// export const skip = 1
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, ClipBoard }) => {
+export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, expect, Locator, ClipBoard }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
@@ -21,6 +21,9 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Loca
   const treeItem = Locator('.TreeItem[data-index="1"]')
   const treeItemLabel = treeItem.locator('.Label')
   await expect(treeItemLabel).toHaveClass('LabelCut')
+
+  await Command.execute('Explorer.handleEscape')
+  await expect(treeItemLabel).not.toHaveClass('LabelCut')
 
   // await Explorer.focusIndex(2)
   // await Explorer.handlePaste()
