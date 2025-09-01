@@ -5,7 +5,6 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
-
 import { updateEditingValue } from '../src/parts/UpdateEditingValue/UpdateEditingValue.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {

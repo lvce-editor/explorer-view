@@ -3,7 +3,6 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-
 import { setDeltaY } from '../src/parts/SetDeltaY/SetDeltaY.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
