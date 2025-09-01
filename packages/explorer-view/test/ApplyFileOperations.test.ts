@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import { applyFileOperations } from '../src/parts/ApplyFileOperations/ApplyFileOperations.ts'
 import type { FileOperation } from '../src/parts/FileOperation/FileOperation.ts'
+import { applyFileOperations } from '../src/parts/ApplyFileOperations/ApplyFileOperations.ts'
 import * as FileOperationType from '../src/parts/FileOperationType/FileOperationType.ts'
 
 test('should apply empty operations', async () => {
