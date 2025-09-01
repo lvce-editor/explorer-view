@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
- 
+
 import { updateRoot } from '../src/parts/UpdateRoot/UpdateRoot.ts'
 
 test('updateRoot should return same disposed state', async () => {

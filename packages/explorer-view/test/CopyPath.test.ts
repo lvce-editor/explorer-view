@@ -4,7 +4,7 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { copyPath } from '../src/parts/CopyPath/CopyPath.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
- 
+
 
 test('copyPath - writes absolute path of focused dirent to clipboard', async () => {
   let clipboardText = ''

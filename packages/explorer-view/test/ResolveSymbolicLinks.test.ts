@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ErrorCodes from '../src/parts/ErrorCodes/ErrorCodes.ts'
 import * as ResolveSymbolicLinks from '../src/parts/ResolveSymbolicLinks/ResolveSymbolicLinks.ts'
- 
+
 
 test('should resolve symbolic links to files', async () => {
   RendererWorker.registerMockRpc({

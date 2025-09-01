@@ -1,9 +1,9 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
- 
+
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as CreateDefaultState from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
- 
+
 import * as UpdateIcons from '../src/parts/UpdateIcons/UpdateIcons.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
@@ -16,7 +16,7 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
   throw new Error(`Unexpected method: ${method}`)
 }
 
- 
+
 
 test('updateIcons - should update icons for visible items', async () => {
   RendererWorker.registerMockRpc({
