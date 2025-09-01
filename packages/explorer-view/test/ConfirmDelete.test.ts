@@ -1,38 +1,23 @@
-import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { confirmDelete } from '../src/parts/ConfirmDelete/ConfirmDelete.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('confirmDelete - single file', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, message: string) => {
-      if (method === 'ConfirmPrompt.prompt') {
-        // expect(message).toBe('Are you sure you want to delete "/test/file.txt"?')
-        return true
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'ConfirmPrompt.prompt'() {
+      return true
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
-
   const result = await confirmDelete(['/test/file.txt'])
   expect(result).toBe(true)
 })
 
 test('confirmDelete - multiple files', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, message: string) => {
-      if (method === 'ConfirmPrompt.prompt') {
-        // expect(message).toBe('Are you sure you want to delete 3 items?')
-        return false
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'ConfirmPrompt.prompt'() {
+      return false
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const result = await confirmDelete(['/test/file1.txt', '/test/file2.txt', '/test/file3.txt'])
   expect(result).toBe(false)
