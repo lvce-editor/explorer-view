@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handlePaste } from '../src/parts/HandlePaste/HandlePaste.ts'
 import * as NativeFileTypes from '../src/parts/NativeFileTypes/NativeFileTypes.ts'
 

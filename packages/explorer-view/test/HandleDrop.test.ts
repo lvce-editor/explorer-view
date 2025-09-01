@@ -2,7 +2,6 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleDrop } from '../src/parts/HandleDrop/HandleDrop.ts'
- 
 
 class MockFile implements File {
   constructor(

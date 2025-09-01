@@ -18,9 +18,7 @@ test('handleCopy - with focused dirent', async () => {
   }
   const result = await handleCopy(state)
 
-  expect(mockRpc.invocations).toEqual(
-    expect.arrayContaining([['ClipBoard.writeNativeFiles', 'copy', ['/test.txt']]])
-  )
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([['ClipBoard.writeNativeFiles', 'copy', ['/test.txt']]]))
   expect(result).toEqual({
     ...state,
     pasteShouldMove: false,
