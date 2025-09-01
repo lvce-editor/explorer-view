@@ -1,11 +1,10 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleArrowRight } from '../src/parts/HandleArrowRight/HandleArrowRight.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
+import { RendererWorker as RendererWorkerId } from '../src/parts/RpcId/RpcId.ts'
 
 test('handleArrowRight - no focused item', async () => {
   const state: ExplorerState = {
@@ -27,16 +26,11 @@ test('handleArrowRight - file', async () => {
 })
 
 test.skip('handleArrowRight - directory', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.Directory, name: 'test', path: '/test', depth: 0, selected: false }],
@@ -57,16 +51,11 @@ test('handleArrowRight - symlink file', async () => {
 })
 
 test.skip('handleArrowRight - symlink folder', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.SymLinkFolder, name: 'test', path: '/test', depth: 0, selected: false }],
@@ -77,16 +66,11 @@ test.skip('handleArrowRight - symlink folder', async () => {
 })
 
 test.skip('handleArrowRight - directory expanded', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.DirectoryExpanded, name: 'test', path: '/test', depth: 0, selected: false }],
@@ -97,19 +81,14 @@ test.skip('handleArrowRight - directory expanded', async () => {
 })
 
 test.skip('handleArrowRight - symlink', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.getRealPath') {
-        return '/real/path'
-      }
-      if (method === 'FileSystem.stat') {
-        return { isDirectory: (): boolean => false }
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.getRealPath'() {
+      return '/real/path'
+    },
+    'FileSystem.stat'() {
+      return { isDirectory: (): boolean => false }
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ type: DirentType.Symlink, name: 'test', path: '/test', depth: 0, selected: false }],

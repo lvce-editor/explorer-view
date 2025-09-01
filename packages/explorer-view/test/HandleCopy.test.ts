@@ -1,5 +1,5 @@
 import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker as RpcRendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -7,9 +7,8 @@ import { handleCopy } from '../src/parts/HandleCopy/HandleCopy.ts'
 import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('handleCopy - with focused dirent', async () => {
-  const mockRpc = MockRpc.create({
-    invoke: jest.fn(),
-    commandMap: {},
+  const mockRpc = RpcRendererWorker.registerMockRpc({
+    'ClipBoard.writeNativeFiles'() {},
   })
   RendererWorker.set(mockRpc)
   const state: ExplorerState = {
@@ -19,7 +18,9 @@ test('handleCopy - with focused dirent', async () => {
   }
   const result = await handleCopy(state)
 
-  expect(mockRpc.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'copy', ['/test.txt'])
+  expect(mockRpc.invocations).toEqual(
+    expect.arrayContaining([['ClipBoard.writeNativeFiles', 'copy', ['/test.txt']]])
+  )
   expect(result).toEqual({
     ...state,
     pasteShouldMove: false,
@@ -27,9 +28,8 @@ test('handleCopy - with focused dirent', async () => {
 })
 
 test('handleCopy - without focused dirent', async () => {
-  const mockRpc = MockRpc.create({
-    invoke: jest.fn(),
-    commandMap: {},
+  const mockRpc = RpcRendererWorker.registerMockRpc({
+    'ClipBoard.writeNativeFiles'() {},
   })
   RendererWorker.set(mockRpc)
   const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
@@ -39,7 +39,7 @@ test('handleCopy - without focused dirent', async () => {
     items: [],
   }
   const result = await handleCopy(state)
-  expect(mockRpc.invoke).not.toHaveBeenCalled()
+  expect(mockRpc.invocations).toEqual([])
   expect(result).toBe(state)
   expect(spy).toHaveBeenCalledTimes(1)
   expect(spy).toHaveBeenCalledWith('[ViewletExplorer/handleCopy] no dirent selected')
