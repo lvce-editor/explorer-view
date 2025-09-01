@@ -1,7 +1,7 @@
-import { expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { RendererWorker as RpcRendererWorker } from '@lvce-editor/rpc-registry'
-import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { openContainingFolder } from '../src/parts/OpenContainingFolder/OpenContainingFolder.ts'
 import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
@@ -16,8 +16,6 @@ test('openContainingFolder', async () => {
     items: [{ name: 'test.txt', type: 1, path: '/test.txt', depth: 0, selected: false }],
   }
   const result = await openContainingFolder(mockState)
-  expect(mockRpc.invocations).toEqual(
-    expect.arrayContaining([['OpenNativeFolder.openNativeFolder', '']])
-  )
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([['OpenNativeFolder.openNativeFolder', '']]))
   expect(result).toBe(mockState)
 })

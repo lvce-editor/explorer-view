@@ -1,11 +1,9 @@
-import { expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { newDirent } from '../src/parts/NewDirent/NewDirent.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const handleFileIcons = (requests: readonly any[]): readonly string[] => {
   return requests.map((param) => {
@@ -17,31 +15,6 @@ const handleFileIcons = (requests: readonly any[]): readonly string[] => {
 }
 
 test('newDirent sets focus and updates state when no item is focused', async () => {
-  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
-    if (method === 'Workspace.getPath') {
-      return '/new/path'
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
-      return []
-    }
-    if (method === 'FileSystem.getPathSeparator') {
-      return '/'
-    }
-    if (method === 'Preferences.get') {
-      return false
-    }
-    if (method === 'IconTheme.getFolderIcon') {
-      return ''
-    }
-    if (method === 'Focus.setFocus') {
-      return undefined
-    }
-    if (method === 'IconTheme.getIcons') {
-      return handleFileIcons(params[0])
-    }
-    throw new Error(`unexpected method ${method}`)
-  })
-
   const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/new/path'
@@ -98,31 +71,6 @@ test('newDirent sets focus and updates state when no item is focused', async () 
 })
 
 test('newDirent handles directory click when focused item is a directory', async () => {
-  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
-    if (method === 'Workspace.getPath') {
-      return '/new/path'
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
-      return []
-    }
-    if (method === 'FileSystem.getPathSeparator') {
-      return '/'
-    }
-    if (method === 'Preferences.get') {
-      return false
-    }
-    if (method === 'Focus.setFocus') {
-      return undefined
-    }
-    if (method === 'IconTheme.getFolderIcon') {
-      return ''
-    }
-    if (method === 'IconTheme.getIcons') {
-      return handleFileIcons(params[0])
-    }
-    throw new Error(`unexpected method ${method}`)
-  })
-
   const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/new/path'
@@ -182,34 +130,6 @@ test('newDirent handles directory click when focused item is a directory', async
 })
 
 test('newDirent updates state when focused item is not a directory', async () => {
-  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
-    if (method === 'Workspace.getPath') {
-      return '/new/path'
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
-      return []
-    }
-    if (method === 'FileSystem.getPathSeparator') {
-      return '/'
-    }
-    if (method === 'IconTheme.getFileIcon') {
-      return ''
-    }
-    if (method === 'IconTheme.getFolderIcon') {
-      return ''
-    }
-    if (method === 'Preferences.get') {
-      return false
-    }
-    if (method === 'Focus.setFocus') {
-      return undefined
-    }
-    if (method === 'IconTheme.getIcons') {
-      return handleFileIcons(params[0])
-    }
-    throw new Error(`unexpected method ${method}`)
-  })
-
   const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/new/path'
