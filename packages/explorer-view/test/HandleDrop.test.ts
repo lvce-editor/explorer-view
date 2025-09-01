@@ -1,9 +1,7 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleDrop } from '../src/parts/HandleDrop/HandleDrop.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 class MockFile implements File {
   constructor(
@@ -59,22 +57,17 @@ class MockFileList implements FileList {
 }
 
 test('handleDrop - successful drop', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'FileSystemHandle.getFileHandles') {
-        return []
-      }
-      if (method === 'IconTheme.getIcons') {
-        return ['']
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystemHandle.getFileHandles'() {
+      return []
+    },
+    'IconTheme.getIcons'() {
+      return ['']
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state = createDefaultState()
   const fileList = new MockFileList([new MockFile('test.txt', '/test.txt')])
@@ -84,13 +77,11 @@ test('handleDrop - successful drop', async () => {
 })
 
 test('handleDrop - error case', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: () => {
+  RendererWorker.registerMockRpc({
+    'FileSystemHandle.getFileHandles'() {
       throw new Error('test error')
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state = createDefaultState()
   const fileList = new MockFileList([new MockFile('test.txt', '/test.txt')])

@@ -1,11 +1,9 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { newDirent } from '../src/parts/NewDirent/NewDirent.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const handleFileIcons = (requests: readonly any[]): readonly string[] => {
   return requests.map((param) => {
@@ -17,36 +15,27 @@ const handleFileIcons = (requests: readonly any[]): readonly string[] => {
 }
 
 test('newDirent sets focus and updates state when no item is focused', async () => {
-  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
-    if (method === 'Workspace.getPath') {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
       return '/new/path'
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
+    },
+    'FileSystem.readDirWithFileTypes'() {
       return []
-    }
-    if (method === 'FileSystem.getPathSeparator') {
+    },
+    'FileSystem.getPathSeparator'() {
       return '/'
-    }
-    if (method === 'Preferences.get') {
+    },
+    'Preferences.get'() {
       return false
-    }
-    if (method === 'IconTheme.getFolderIcon') {
+    },
+    'IconTheme.getFolderIcon'() {
       return ''
-    }
-    if (method === 'Focus.setFocus') {
-      return undefined
-    }
-    if (method === 'IconTheme.getIcons') {
+    },
+    'Focus.setFocus'() {},
+    'IconTheme.getIcons'(...params: any[]) {
       return handleFileIcons(params[0])
-    }
-    throw new Error(`unexpected method ${method}`)
+    },
   })
-
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
-  })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
@@ -55,7 +44,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Focus.setFocus', 14)
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
   expect(result).toEqual({
     ...mockState,
     editingIndex: 0,
@@ -82,36 +71,27 @@ test('newDirent sets focus and updates state when no item is focused', async () 
 })
 
 test('newDirent handles directory click when focused item is a directory', async () => {
-  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
-    if (method === 'Workspace.getPath') {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
       return '/new/path'
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
+    },
+    'FileSystem.readDirWithFileTypes'() {
       return []
-    }
-    if (method === 'FileSystem.getPathSeparator') {
+    },
+    'FileSystem.getPathSeparator'() {
       return '/'
-    }
-    if (method === 'Preferences.get') {
+    },
+    'Preferences.get'() {
       return false
-    }
-    if (method === 'Focus.setFocus') {
-      return undefined
-    }
-    if (method === 'IconTheme.getFolderIcon') {
+    },
+    'Focus.setFocus'() {},
+    'IconTheme.getFolderIcon'() {
       return ''
-    }
-    if (method === 'IconTheme.getIcons') {
+    },
+    'IconTheme.getIcons'(...params: any[]) {
       return handleFileIcons(params[0])
-    }
-    throw new Error(`unexpected method ${method}`)
+    },
   })
-
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
-  })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
@@ -120,7 +100,7 @@ test('newDirent handles directory click when focused item is a directory', async
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Focus.setFocus', 14)
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
   expect(result).toEqual({
     ...mockState,
     editingIndex: 1,
@@ -150,39 +130,30 @@ test('newDirent handles directory click when focused item is a directory', async
 })
 
 test('newDirent updates state when focused item is not a directory', async () => {
-  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
-    if (method === 'Workspace.getPath') {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
       return '/new/path'
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
+    },
+    'FileSystem.readDirWithFileTypes'() {
       return []
-    }
-    if (method === 'FileSystem.getPathSeparator') {
+    },
+    'FileSystem.getPathSeparator'() {
       return '/'
-    }
-    if (method === 'IconTheme.getFileIcon') {
+    },
+    'IconTheme.getFileIcon'() {
       return ''
-    }
-    if (method === 'IconTheme.getFolderIcon') {
+    },
+    'IconTheme.getFolderIcon'() {
       return ''
-    }
-    if (method === 'Preferences.get') {
+    },
+    'Preferences.get'() {
       return false
-    }
-    if (method === 'Focus.setFocus') {
-      return undefined
-    }
-    if (method === 'IconTheme.getIcons') {
+    },
+    'Focus.setFocus'() {},
+    'IconTheme.getIcons'(...params: any[]) {
       return handleFileIcons(params[0])
-    }
-    throw new Error(`unexpected method ${method}`)
+    },
   })
-
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
-  })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
@@ -191,7 +162,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(invoke).toHaveBeenCalledWith('Focus.setFocus', 14)
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
   expect(result).toEqual({
     ...mockState,
     editingIndex: 1,

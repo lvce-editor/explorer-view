@@ -1,19 +1,14 @@
 import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker as RpcRendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleUpload } from '../src/parts/HandleUpload/HandleUpload.ts'
 import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('should upload a file', async () => {
   const written: any[] = []
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: any[]) => {
-      if (method === 'FileSystem.writeFile') {
-        written.push(args)
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
+  const mockRpc = RpcRendererWorker.registerMockRpc({
+    'FileSystem.writeFile'(...args: any[]) {
+      written.push(args)
     },
   })
   RendererWorker.set(mockRpc)
@@ -27,12 +22,7 @@ test('should upload a file', async () => {
 })
 
 test('should do nothing for empty dirents', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      throw new Error(`unexpected method ${method}`)
-    },
-  })
+  const mockRpc = RpcRendererWorker.registerMockRpc({})
   RendererWorker.set(mockRpc)
   const state = createDefaultState()
   await handleUpload(state, [])

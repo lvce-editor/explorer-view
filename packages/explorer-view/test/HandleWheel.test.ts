@@ -1,24 +1,17 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleWheel } from '../src/parts/HandleWheel/HandleWheel.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
-const mockRpc = MockRpc.create({
-  commandMap: {},
-  invoke: (method: string) => {
-    if (method === 'FileSystem.readDirWithFileTypes') {
-      return []
-    }
-    if (method === 'IconTheme.getIcons') {
-      return []
-    }
-    throw new Error(`unexpected method ${method}`)
+RendererWorker.registerMockRpc({
+  'FileSystem.readDirWithFileTypes'() {
+    return []
+  },
+  'IconTheme.getIcons'() {
+    return []
   },
 })
-RpcRegistry.set(RendererWorker, mockRpc)
 
 test('handleWheel calls SetDeltaY with correct delta', async () => {
   const state: ExplorerState = {
