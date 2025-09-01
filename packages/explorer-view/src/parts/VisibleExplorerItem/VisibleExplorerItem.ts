@@ -14,5 +14,6 @@ export interface VisibleExplorerItem {
   readonly ariaExpanded: string | undefined // TODO make it always string
   readonly selected: boolean
   readonly isCut: boolean
+  readonly isIgnored: boolean
   readonly index: number
 }

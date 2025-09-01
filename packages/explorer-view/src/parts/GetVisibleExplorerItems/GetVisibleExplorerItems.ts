@@ -35,6 +35,7 @@ export const getVisibleExplorerItems = (
   dropTargets: readonly number[],
   editingIcon: string,
   cutItems: readonly string[],
+  sourceControlIgnoredUris: readonly string[] = [],
 ): readonly VisibleExplorerItem[] => {
   const visible: VisibleExplorerItem[] = []
   const indentFn = useChevrons ? GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron : GetTreeItemIndent.getTreeItemIndent
@@ -47,6 +48,7 @@ export const getVisibleExplorerItems = (
     const isSelected = item.selected
     const isCut = cutItems.includes(item.path)
     const isDropping = dropTargets.includes(i)
+    const isIgnored = sourceControlIgnoredUris.includes(item.path)
     const className = getTreeItemClassName(isSelected, isFocused, isDropping) // TODO compute classname in dom function
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]
@@ -70,6 +72,7 @@ export const getVisibleExplorerItems = (
       id,
       className,
       isCut,
+      isIgnored,
       index: i,
     })
   }
