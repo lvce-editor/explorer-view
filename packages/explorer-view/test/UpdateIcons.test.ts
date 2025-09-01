@@ -16,8 +16,6 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
   throw new Error(`Unexpected method: ${method}`)
 }
 
-
-
 test('updateIcons - should update icons for visible items', async () => {
   RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),

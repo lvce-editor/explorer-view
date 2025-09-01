@@ -15,4 +15,3 @@ test('cancelTypeAhead - clears focusWord only', () => {
   expect(result.focusWord).toBe('')
   expect(result.focusedIndex).toBe(2)
 })
-

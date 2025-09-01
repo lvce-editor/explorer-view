@@ -5,7 +5,6 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { revealItemHidden } from '../src/parts/RevealItemHidden/RevealItemHidden.ts'
 
-
 test('revealItemHidden - reveals hidden item', async () => {
   RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {

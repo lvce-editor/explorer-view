@@ -5,7 +5,6 @@ import { copyPath } from '../src/parts/CopyPath/CopyPath.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
-
 test('copyPath - writes absolute path of focused dirent to clipboard', async () => {
   let clipboardText = ''
   RendererWorker.registerMockRpc({
@@ -17,9 +16,7 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false },
-    ],
+    items: [{ name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false }],
     focusedIndex: 0,
   }
 

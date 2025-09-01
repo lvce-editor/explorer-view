@@ -5,7 +5,6 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import { newFolder } from '../src/parts/NewFolder/NewFolder.ts'
 
-
 const invoke = (method: string): any => {
   if (method === 'Workspace.getPath') {
     return '/new/path'
