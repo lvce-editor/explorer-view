@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import { copyRelativePath } from '../src/parts/CopyRelativePath/CopyRelativePath.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -16,33 +16,35 @@ test('copyRelativePath - copies relative path of focused dirent', async (): Prom
     },
   }
 
-  let clipboardText = ''
+  const mockInvoke = jest.fn(async (method: string, ...args: any[]): Promise<void> => {
+    if (method === 'ClipBoard.writeText') {
+      return
+    }
+    throw new Error(`unexpected method ${method}`)
+  })
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: async (method: string, ...args: any[]): Promise<void> => {
-      if (method === 'ClipBoard.writeText') {
-        clipboardText = args[0]
-      }
-    },
+    invoke: mockInvoke,
   })
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   await copyRelativePath(mockState)
-  expect(clipboardText).toBe('')
+  expect(mockInvoke).toHaveBeenCalledWith('ClipBoard.writeText', 'test/file.txt')
 })
 
 test('copyRelativePath - returns state when no focused dirent', async (): Promise<void> => {
   const state = createDefaultState()
-  let clipboardCalled = false
+  const mockInvoke = jest.fn(async (method: string): Promise<void> => {
+    if (method === 'ClipBoard.writeText') {
+      return
+    }
+    throw new Error(`unexpected method ${method}`)
+  })
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: async (method: string): Promise<void> => {
-      if (method === 'ClipBoard.writeText') {
-        clipboardCalled = true
-      }
-    },
+    invoke: mockInvoke,
   })
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const result = await copyRelativePath(state)
   expect(result).toBe(state)
-  expect(clipboardCalled).toBe(false)
+  expect(mockInvoke).not.toHaveBeenCalled()
 })
