@@ -39,6 +39,7 @@ import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as HandleDragOverIndex from '../HandleDragOverIndex/HandleDragOverIndex.ts'
 import * as HandleDragStart from '../HandleDragStart/HandleDragStart.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
+import { handleEscape } from '../HandleEscape/HandleEscape.ts'
 import * as HandleFocus from '../HandleFocus/HandleFocus.ts'
 import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconThemeChange.ts'
 import * as HandleInputBlur from '../HandleInputBlur/HandleInputBlur.ts'
@@ -97,6 +98,7 @@ export const commandMap = {
   'Explorer.getMouseActions': GetMouseActions.getMouseActions,
   'Explorer.handleArrowLeft': WrapCommand.wrapCommand(HandleArrowLeft.handleArrowLeft),
   'Explorer.handleArrowRight': WrapCommand.wrapCommand(HandleArrowRight.handleArrowRight),
+  'Explorer.handleEscape': WrapCommand.wrapCommand(handleEscape),
   'Explorer.handleBlur': WrapCommand.wrapCommand(HandleBlur.handleBlur),
   'Explorer.handleClick': WrapCommand.wrapCommand(HandleClick.handleClick),
   'Explorer.handleClickAt': WrapCommand.wrapCommand(HandleClickAt.handleClickAt),
