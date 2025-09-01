@@ -79,10 +79,10 @@ test('handleDrop - successful drop', async () => {
 
 test('handleDrop - error case', async () => {
   RendererWorker.registerMockRpc({
-    '*': () => {
+    'FileSystemHandle.getFileHandles'() {
       throw new Error('test error')
     },
-  } as any)
+  })
 
   const state = createDefaultState()
   const fileList = new MockFileList([new MockFile('test.txt', '/test.txt')])

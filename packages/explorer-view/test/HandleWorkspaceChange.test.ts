@@ -85,31 +85,26 @@ test('should preserve state properties when updating workspace', async () => {
 })
 
 test('should handle workspace path change with existing content', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Workspace.getPath') {
-        return '/changed/workspace/path'
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'file1.txt', isFile: true, isDirectory: false },
-          { name: 'folder1', isFile: false, isDirectory: true },
-        ]
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'Preferences.get') {
-        return false
-      }
-      if (method === 'IconTheme.getIcons') {
-        return ['file-icon', 'folder-icon']
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
+      return '/changed/workspace/path'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'file1.txt', isFile: true, isDirectory: false },
+        { name: 'folder1', isFile: false, isDirectory: true },
+      ]
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'IconTheme.getIcons'() {
+      return ['file-icon', 'folder-icon']
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
@@ -122,28 +117,23 @@ test('should handle workspace path change with existing content', async () => {
 })
 
 test('should handle workspace path change with chevrons enabled', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Workspace.getPath') {
-        return '/chevron/workspace'
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'Preferences.get') {
-        return true
-      }
-      if (method === 'IconTheme.getIcons') {
-        return ['']
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
+      return '/chevron/workspace'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'Preferences.get'() {
+      return true
+    },
+    'IconTheme.getIcons'() {
+      return ['']
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
@@ -153,28 +143,23 @@ test('should handle workspace path change with chevrons enabled', async () => {
 })
 
 test('should handle different path separators', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Workspace.getPath') {
-        return 'C:\\windows\\workspace'
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '\\'
-      }
-      if (method === 'Preferences.get') {
-        return false
-      }
-      if (method === 'IconTheme.getIcons') {
-        return ['']
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
+      return 'C:\\windows\\workspace'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '\\'
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'IconTheme.getIcons'() {
+      return ['']
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
