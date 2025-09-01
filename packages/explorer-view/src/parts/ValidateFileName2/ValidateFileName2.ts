@@ -7,7 +7,7 @@ export const validateFileName2 = (name: string): string => {
     return editingErrorMessage
   }
   if (name.startsWith(Character.Dot)) {
-    return ExplorerStrings.fileCannotStartWithSlash()
+    return ExplorerStrings.fileCannotStartWithDot()
   }
   if (name.startsWith(Character.Slash)) {
     return ExplorerStrings.fileCannotStartWithSlash()
