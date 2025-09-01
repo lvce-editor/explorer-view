@@ -1,30 +1,27 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { refresh } from '../src/parts/Refresh/Refresh.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
+import { RendererWorker as RendererWorkerId } from '../src/parts/RpcId/RpcId.ts'
 
 test('refresh - empty state', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = createDefaultState()
   const result = await refresh(state)
@@ -33,25 +30,23 @@ test('refresh - empty state', async () => {
 })
 
 test('refresh - with top level items', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'file1', type: DirentType.File },
-          { name: 'file2', type: DirentType.File },
-        ]
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'file1', type: DirentType.File },
+        { name: 'file2', type: DirentType.File },
+      ]
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = createDefaultState()
   const result = await refresh(state)
@@ -62,32 +57,29 @@ test('refresh - with top level items', async () => {
 })
 
 test('refresh - preserve expanded folder', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, path?: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        if (path === '/') {
-          return [{ name: 'folder1', type: DirentType.Directory }]
-        }
-        if (path === '/folder1') {
-          return [
-            { name: 'file1.txt', type: 'file' },
-            { name: 'file2.txt', type: 'file' },
-          ]
-        }
-
-        return []
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(_path: string) {
+      if (_path === '/') {
+        return [{ name: 'folder1', type: DirentType.Directory }]
       }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
+      if (_path === '/folder1') {
+        return [
+          { name: 'file1.txt', type: 'file' },
+          { name: 'file2.txt', type: 'file' },
+        ]
       }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -108,22 +100,20 @@ test('refresh - preserve expanded folder', async () => {
 })
 
 test('refresh - remove expanded folder that no longer exists', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [{ name: 'file1.txt', type: DirentType.File }]
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [{ name: 'file1.txt', type: DirentType.File }]
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -140,31 +130,29 @@ test('refresh - remove expanded folder that no longer exists', async () => {
 })
 
 test('refresh - nested expanded folders', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, path?: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        if (path === '/') {
-          return [{ name: 'folder1', type: DirentType.Directory }]
-        }
-        if (path === '/folder1') {
-          return [{ name: 'folder2', type: DirentType.Directory }]
-        }
-        if (path === '/folder1/folder2') {
-          return [{ name: 'file1.txt', type: DirentType.File }]
-        }
-        return []
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/') {
+        return [{ name: 'folder1', type: DirentType.Directory }]
       }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
+      if (path === '/folder1') {
+        return [{ name: 'folder2', type: DirentType.Directory }]
       }
-      if (method === 'IconTheme.getIcons') {
-        return []
+      if (path === '/folder1/folder2') {
+        return [{ name: 'file1.txt', type: DirentType.File }]
       }
-      throw new Error(`unexpected method ${method}`)
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -186,37 +174,35 @@ test('refresh - nested expanded folders', async () => {
 })
 
 test('refresh - preserve directory types', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, path?: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        if (path === '/') {
-          return [
-            { name: 'folder1', type: DirentType.Directory },
-            { name: 'file1.txt', type: DirentType.File },
-          ]
-        }
-        if (path === '/folder1') {
-          return [
-            { name: 'subfolder', type: DirentType.Directory },
-            { name: 'file2.txt', type: DirentType.File },
-          ]
-        }
-        if (path === '/folder1/subfolder') {
-          return [{ name: 'file3.txt', type: DirentType.File }]
-        }
-        return []
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/') {
+        return [
+          { name: 'folder1', type: DirentType.Directory },
+          { name: 'file1.txt', type: DirentType.File },
+        ]
       }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
+      if (path === '/folder1') {
+        return [
+          { name: 'subfolder', type: DirentType.Directory },
+          { name: 'file2.txt', type: DirentType.File },
+        ]
       }
-      if (method === 'IconTheme.getIcons') {
-        return []
+      if (path === '/folder1/subfolder') {
+        return [{ name: 'file3.txt', type: DirentType.File }]
       }
-      throw new Error(`unexpected method ${method}`)
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -246,29 +232,30 @@ test('refresh - preserve directory types', async () => {
 
 test('refresh - check filesystem response', async () => {
   const methodCalls: string[] = []
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, path?: string) => {
-      methodCalls.push(method)
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        if (path === '/') {
-          return [
-            { name: 'folder1', type: DirentType.Directory },
-            { name: 'file1.txt', type: DirentType.File },
-          ]
-        }
-        return []
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      methodCalls.push('FileSystem.readDirWithFileTypes')
+      if (path === '/') {
+        return [
+          { name: 'folder1', type: DirentType.Directory },
+          { name: 'file1.txt', type: DirentType.File },
+        ]
       }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      methodCalls.push('IconTheme.getFileIcon')
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      methodCalls.push('IconTheme.getFolderIcon')
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      methodCalls.push('IconTheme.getIcons')
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),

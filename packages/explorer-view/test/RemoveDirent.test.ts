@@ -1,34 +1,31 @@
 import { test, expect } from '@jest/globals'
 import { jest } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { Directory, DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { removeDirent } from '../src/parts/RemoveDirent/RemoveDirent.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
+import { RendererWorker as RendererWorkerId } from '../src/parts/RpcId/RpcId.ts'
 
 test('removeDirent - removes focused item', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.remove') {
-        return
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.remove'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -43,25 +40,23 @@ test('removeDirent - removes focused item', async () => {
 })
 
 test('removeDirent - removes multiple selected items', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.remove') {
-        return
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.remove'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -79,25 +74,23 @@ test('removeDirent - removes multiple selected items', async () => {
 })
 
 test('removeDirent - removes focused item and selected items', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: async (method: string) => {
-      if (method === 'FileSystem.remove') {
-        return
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.remove'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -116,25 +109,23 @@ test('removeDirent - removes focused item and selected items', async () => {
 })
 
 test('remove file', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.remove') {
-        return
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [{ name: 'folder1', type: DirentType.Directory }]
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.remove'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return [{ name: 'folder1', type: DirentType.Directory }]
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -153,25 +144,23 @@ test('remove file', async () => {
 })
 
 test('remove folder with children', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: unknown[]) => {
-      if (method === 'FileSystem.remove') {
-        return
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.remove'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -190,32 +179,29 @@ test('remove folder with children', async () => {
 })
 
 test('remove file from expanded folder', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: unknown[]) => {
-      if (method === 'FileSystem.remove') {
-        return
+  RendererWorker.registerMockRpc({
+    'FileSystem.remove'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/') {
+        return [{ name: 'folder1', type: DirentType.Directory }]
       }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        const [path] = args
-        if (path === '/') {
-          return [{ name: 'folder1', type: DirentType.Directory }]
-        }
-        if (path === '/folder1') {
-          return []
-        }
+      if (path === '/folder1') {
         return []
       }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -235,29 +221,26 @@ test('remove file from expanded folder', async () => {
 })
 
 test.skip('removeDirent - with confirmation enabled and user confirms', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, message?: string) => {
-      if (method === 'ConfirmPrompt.prompt') {
-        // expect(message).toBe('Are you sure you want to delete "/file1.txt"?')
-        return true
-      }
-      if (method === 'FileSystem.remove') {
-        return
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'ConfirmPrompt.prompt'(_message?: string) {
+      return true
+    },
+    'FileSystem.remove'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -272,17 +255,11 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
 })
 
 test.skip('removeDirent - with confirmation enabled and user cancels', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, message?: string) => {
-      if (method === 'ConfirmPrompt.prompt') {
-        // expect(message).toBe('Are you sure you want to delete 2 items?')
-        return false
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'ConfirmPrompt.prompt'(_message?: string) {
+      return false
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -302,28 +279,26 @@ test.skip('removeDirent - with confirmation enabled and user cancels', async () 
 test('removeDirent - shows error message when file operation fails', async () => {
   const confirmFn = jest.fn()
   confirmFn.mockImplementation(() => true)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, message?: string) => {
-      if (method === 'ConfirmPrompt.prompt') {
-        return confirmFn(message)
-      }
-      if (method === 'FileSystem.remove') {
-        throw new Error('Permission denied')
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'ConfirmPrompt.prompt'(message?: string) {
+      return confirmFn(message)
+    },
+    'FileSystem.remove'() {
+      throw new Error('Permission denied')
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -340,28 +315,26 @@ test('removeDirent - shows error message when file operation fails', async () =>
 test('removeDirent - shows error message for multiple files when operation fails', async () => {
   const confirmFn = jest.fn()
   confirmFn.mockImplementation(() => true)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, message?: string) => {
-      if (method === 'ConfirmPrompt.prompt') {
-        return confirmFn(message)
-      }
-      if (method === 'FileSystem.remove') {
-        throw new Error('Access denied')
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'ConfirmPrompt.prompt'(message?: string) {
+      return confirmFn(message)
+    },
+    'FileSystem.remove'() {
+      throw new Error('Access denied')
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -379,25 +352,23 @@ test('removeDirent - shows error message for multiple files when operation fails
 })
 
 test('removeDirent - continues normally when no error occurs', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.remove') {
-        return
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-        return ''
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.remove'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
