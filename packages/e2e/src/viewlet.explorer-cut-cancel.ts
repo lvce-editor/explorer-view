@@ -23,7 +23,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, exp
   await expect(treeItemLabel).toHaveClass('LabelCut')
 
   await Command.execute('Explorer.handleEscape')
-  await expect(treeItemLabel).not.toHaveClass('LabelCut')
+  await expect(treeItemLabel).toHaveJSProperty('className', 'Label')
 
   // await Explorer.focusIndex(2)
   // await Explorer.handlePaste()

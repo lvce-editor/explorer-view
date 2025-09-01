@@ -110,6 +110,11 @@ export const getKeyBindings = (): readonly KeyBinding[] => {
       when: WhenExpression.FocusExplorer,
     },
     {
+      key: KeyCode.Escape,
+      command: 'Explorer.handleEscape',
+      when: WhenExpression.FocusExplorer,
+    },
+    {
       key: KeyModifier.CtrlCmd | KeyCode.KeyA,
       command: 'Explorer.selectAll',
       when: WhenExpression.FocusExplorer,
