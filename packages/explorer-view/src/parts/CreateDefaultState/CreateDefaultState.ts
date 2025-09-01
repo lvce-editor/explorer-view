@@ -45,4 +45,5 @@ export const createDefaultState = (): ExplorerState => ({
   cutItems: [],
   isPointerDown: false,
   pointerDownIndex: -1,
+  sourceControlIgnoredUris: [],
 })

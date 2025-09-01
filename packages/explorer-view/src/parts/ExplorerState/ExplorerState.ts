@@ -46,4 +46,5 @@ export interface ExplorerState {
   readonly width: number
   readonly x: number
   readonly y: number
+  readonly sourceControlIgnoredUris: readonly string[]
 }
