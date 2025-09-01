@@ -1,8 +1,8 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { copyRelativePath } from '../src/parts/CopyRelativePath/CopyRelativePath.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('copyRelativePath - copies relative path of focused dirent', async (): Promise<void> => {
   const state: ExplorerState = createDefaultState()
