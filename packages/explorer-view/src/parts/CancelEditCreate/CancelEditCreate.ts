@@ -1,5 +1,5 @@
-import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import { isNormalItem } from '../IsNormalItem/IsNormalItem.ts'
