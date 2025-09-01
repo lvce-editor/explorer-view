@@ -1,48 +1,33 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { copyRelativePath } from '../src/parts/CopyRelativePath/CopyRelativePath.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+import { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('copyRelativePath - copies relative path of focused dirent', async (): Promise<void> => {
-  const state = createDefaultState()
-  const mockState = {
+  const state: ExplorerState = createDefaultState()
+  const mockState: ExplorerState = {
     ...state,
+    // @ts-ignore
     focusedDirent: {
       path: '/test/file.txt',
       name: 'file.txt',
       type: 'file',
     },
   }
-
-  let clipboardText = ''
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: async (method: string, ...args: any[]): Promise<void> => {
-      if (method === 'ClipBoard.writeText') {
-        clipboardText = args[0]
-      }
-    },
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.writeText'() {},
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   await copyRelativePath(mockState)
-  expect(clipboardText).toBe('')
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('copyRelativePath - returns state when no focused dirent', async (): Promise<void> => {
   const state = createDefaultState()
-  let clipboardCalled = false
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: async (method: string): Promise<void> => {
-      if (method === 'ClipBoard.writeText') {
-        clipboardCalled = true
-      }
-    },
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.writeText'() {},
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const result = await copyRelativePath(state)
   expect(result).toBe(state)
-  expect(clipboardCalled).toBe(false)
+  expect(mockRpc.invocations).toEqual([])
 })
