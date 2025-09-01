@@ -3,8 +3,6 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as GetEditingIcon from '../src/parts/GetEditingIcon/GetEditingIcon.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('getEditingIcon - CreateFile', async () => {
   RendererWorker.registerMockRpc({
