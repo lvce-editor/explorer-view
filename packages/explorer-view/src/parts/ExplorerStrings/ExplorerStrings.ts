@@ -93,6 +93,10 @@ export const fileCannotStartWithSlash = (): string => {
   return I18nString.i18nString(UiStrings.FileNameCannotStartWithSlash)
 }
 
+export const fileCannotStartWithDot = (): string => {
+  return I18nString.i18nString(UiStrings.FileCannotStartWithDot)
+}
+
 export const fileCannotStartWithBackSlash = (): string => {
   return I18nString.i18nString(UiStrings.FileCannotStartWithBackSlash)
 }
