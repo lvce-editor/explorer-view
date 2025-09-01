@@ -61,6 +61,7 @@ export const create = (
     cutItems: [],
     isPointerDown: false,
     pointerDownIndex: -1,
+    sourceControlIgnoredUris: [],
   }
   ExplorerStates.set(state.uid, state, state)
   return state
