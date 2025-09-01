@@ -62,3 +62,23 @@ test('getVisibleExplorerItems - new item', () => {
   //   hasEditingError: true,
   // })
 })
+
+test('getVisibleExplorerItems - ignored item is dimmed', () => {
+  const items: ExplorerItem[] = [
+    {
+      depth: 0,
+      name: 'ignored.txt',
+      path: '/ignored.txt',
+      type: 0,
+      selected: false,
+    },
+  ]
+  const editingIcon = ''
+  const ignored = ['/ignored.txt']
+  const result = getVisibleExplorerItems(items, 0, 1, 0, -1, None, '', '', ['icon'], true, [], editingIcon, [], ignored)
+  expect(result).toHaveLength(1)
+  expect(result[0]).toMatchObject({
+    isIgnored: true,
+    isCut: false,
+  })
+})

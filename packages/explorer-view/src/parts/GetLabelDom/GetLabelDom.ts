@@ -10,8 +10,8 @@ const label: VirtualDomNode = {
   childCount: 1,
 }
 
-export const getLabelDom = (name: string, isCut: boolean): readonly VirtualDomNode[] => {
-  if (isCut) {
+export const getLabelDom = (name: string, isDimmed: boolean): readonly VirtualDomNode[] => {
+  if (isDimmed) {
     return [
       {
         type: VirtualDomElements.Div,
