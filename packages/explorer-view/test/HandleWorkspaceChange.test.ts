@@ -1,34 +1,28 @@
 import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleWorkspaceChange } from '../src/parts/HandleWorkspaceChange/HandleWorkspaceChange.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+ 
 
 test('should update state with new workspace path and load content', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Workspace.getPath') {
-        return '/new/workspace/path'
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'Preferences.get') {
-        return false
-      }
-      if (method === 'IconTheme.getIcons') {
-        return ['']
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
+      return '/new/workspace/path'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'IconTheme.getIcons'() {
+      return ['']
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
@@ -46,28 +40,23 @@ test('should update state with new workspace path and load content', async () =>
 })
 
 test('should preserve state properties when updating workspace', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Workspace.getPath') {
-        return '/another/workspace'
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'Preferences.get') {
-        return true
-      }
-      if (method === 'IconTheme.getIcons') {
-        return ['']
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
+      return '/another/workspace'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'Preferences.get'() {
+      return true
+    },
+    'IconTheme.getIcons'() {
+      return ['']
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
