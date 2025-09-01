@@ -1,10 +1,9 @@
 import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+ 
 import { setDeltaY } from '../src/parts/SetDeltaY/SetDeltaY.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
@@ -17,12 +16,11 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
   throw new Error(`Unexpected method: ${method}`)
 }
 
-const mockRpc = MockRpc.create({
-  invoke,
-  commandMap: {},
+RendererWorker.registerMockRpc({
+  'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
+  'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
+  'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
 })
-
-RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
 test('should not change state when deltaY is the same', async () => {
   const state: ExplorerState = createDefaultState()

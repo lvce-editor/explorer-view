@@ -1,29 +1,22 @@
 import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ErrorCodes from '../src/parts/ErrorCodes/ErrorCodes.ts'
 import * as ResolveSymbolicLinks from '../src/parts/ResolveSymbolicLinks/ResolveSymbolicLinks.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+ 
 
 test('should resolve symbolic links to files', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...params: any[]) => {
-      if (method === 'FileSystem.stat') {
-        const path = params[0] as string
-        if (path.includes('symlink-file')) {
-          return DirentType.File
-        }
-        if (path.includes('symlink-dir')) {
-          return DirentType.Directory
-        }
-        throw new Error(`unexpected path ${path}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.stat'(path: string) {
+      if (path.includes('symlink-file')) {
+        return DirentType.File
       }
-      throw new Error(`unexpected method ${method}`)
+      if (path.includes('symlink-dir')) {
+        return DirentType.Directory
+      }
+      throw new Error(`unexpected path ${path}`)
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const uri = '/test/path'
   const rawDirents = [
@@ -42,18 +35,13 @@ test('should resolve symbolic links to files', async () => {
 })
 
 test('should handle ENOENT errors by returning SymLinkFile type', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...params: any[]) => {
-      if (method === 'FileSystem.stat') {
-        const enoentError = new Error('File not found')
-        ;(enoentError as any).code = ErrorCodes.ENOENT
-        throw enoentError
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.stat'() {
+      const enoentError = new Error('File not found') as any
+      enoentError.code = ErrorCodes.ENOENT
+      throw enoentError
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const uri = '/test/path'
   const rawDirents = [{ name: 'broken-symlink', type: DirentType.Symlink }]
@@ -64,18 +52,13 @@ test('should handle ENOENT errors by returning SymLinkFile type', async () => {
 })
 
 test('should handle other errors by returning original dirent', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...params: any[]) => {
-      if (method === 'FileSystem.stat') {
-        const otherError = new Error('Permission denied')
-        ;(otherError as any).code = 'EACCES'
-        throw otherError
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.stat'() {
+      const otherError = new Error('Permission denied') as any
+      otherError.code = 'EACCES'
+      throw otherError
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   // Mock console.error to prevent noise in test output
   const originalConsoleError = console.error
@@ -96,13 +79,7 @@ test('should handle other errors by returning original dirent', async () => {
 })
 
 test('should handle non-symbolic link dirents without processing', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...params: any[]) => {
-      throw new Error(`unexpected method ${method}`)
-    },
-  })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  RendererWorker.registerMockRpc({})
 
   const uri = '/test/path'
   const rawDirents = [
@@ -117,13 +94,7 @@ test('should handle non-symbolic link dirents without processing', async () => {
 })
 
 test('should handle empty dirents array', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...params: any[]) => {
-      throw new Error(`unexpected method ${method}`)
-    },
-  })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  RendererWorker.registerMockRpc({})
 
   const uri = '/test/path'
   const rawDirents: any[] = []
@@ -134,23 +105,17 @@ test('should handle empty dirents array', async () => {
 })
 
 test('should handle mixed dirents with some symlinks and some regular files', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...params: any[]) => {
-      if (method === 'FileSystem.stat') {
-        const path = params[0] as string
-        if (path.includes('symlink1')) {
-          return DirentType.File
-        }
-        if (path.includes('symlink2')) {
-          return DirentType.Directory
-        }
-        throw new Error(`unexpected path ${path}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.stat'(path: string) {
+      if (path.includes('symlink1')) {
+        return DirentType.File
       }
-      throw new Error(`unexpected method ${method}`)
+      if (path.includes('symlink2')) {
+        return DirentType.Directory
+      }
+      throw new Error(`unexpected path ${path}`)
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const uri = '/test/path'
   const rawDirents = [
@@ -173,26 +138,20 @@ test('should handle mixed dirents with some symlinks and some regular files', as
 })
 
 test('should handle symlinks that resolve to different types', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...params: any[]) => {
-      if (method === 'FileSystem.stat') {
-        const path = params[0] as string
-        if (path.includes('symlink-file')) {
-          return DirentType.File
-        }
-        if (path.includes('symlink-dir')) {
-          return DirentType.Directory
-        }
-        if (path.includes('symlink-socket')) {
-          return DirentType.Socket
-        }
-        throw new Error(`unexpected path ${path}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.stat'(path: string) {
+      if (path.includes('symlink-file')) {
+        return DirentType.File
       }
-      throw new Error(`unexpected method ${method}`)
+      if (path.includes('symlink-dir')) {
+        return DirentType.Directory
+      }
+      if (path.includes('symlink-socket')) {
+        return DirentType.Socket
+      }
+      throw new Error(`unexpected path ${path}`)
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const uri = '/test/path'
   const rawDirents = [
