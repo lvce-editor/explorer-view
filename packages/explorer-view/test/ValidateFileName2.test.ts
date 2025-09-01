@@ -14,7 +14,7 @@ test('validateFileName2 - file cannot start with slash', () => {
 })
 
 test('validateFileName2 - file cannot start with dot', () => {
-  expect(validateFileName2('.')).toBe('A file or folder name cannot start with dot.')
+  expect(validateFileName2('.')).toBe('A file or folder name cannot start with a dot.')
 })
 
 test('canBeDroppedInto - normal name', () => {
