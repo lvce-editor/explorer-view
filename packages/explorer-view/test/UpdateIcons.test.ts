@@ -1,9 +1,7 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as CreateDefaultState from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 import * as UpdateIcons from '../src/parts/UpdateIcons/UpdateIcons.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
@@ -16,13 +14,12 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
   throw new Error(`Unexpected method: ${method}`)
 }
 
-const mockRpc = MockRpc.create({
-  invoke,
-  commandMap: {},
-})
-
 test('updateIcons - should update icons for visible items', async () => {
-  RpcRegistry.set(RendererWorker, mockRpc)
+  RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
+    'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
+    'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
+  })
   const defaultState: ExplorerState = CreateDefaultState.createDefaultState()
   const state: ExplorerState = {
     ...defaultState,
@@ -45,7 +42,11 @@ test('updateIcons - should update icons for visible items', async () => {
 })
 
 test('updateIcons - should handle empty visible items', async () => {
-  RpcRegistry.set(RendererWorker, mockRpc)
+  RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
+    'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
+    'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
+  })
   const defaultState: ExplorerState = CreateDefaultState.createDefaultState()
   const state: ExplorerState = {
     ...defaultState,

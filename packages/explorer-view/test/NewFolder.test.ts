@@ -1,11 +1,9 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import { newFolder } from '../src/parts/NewFolder/NewFolder.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const invoke = (method: string): any => {
   if (method === 'Workspace.getPath') {
@@ -33,11 +31,15 @@ const invoke = (method: string): any => {
 }
 
 test('newFolder', async () => {
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
+  RendererWorker.registerMockRpc({
+    'Workspace.getPath': invoke.bind(undefined, 'Workspace.getPath'),
+    'FileSystem.readDirWithFileTypes': invoke.bind(undefined, 'FileSystem.readDirWithFileTypes'),
+    'FileSystem.getPathSeparator': invoke.bind(undefined, 'FileSystem.getPathSeparator'),
+    'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
+    'Preferences.get': invoke.bind(undefined, 'Preferences.get'),
+    'Focus.setFocus': invoke.bind(undefined, 'Focus.setFocus'),
+    'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,

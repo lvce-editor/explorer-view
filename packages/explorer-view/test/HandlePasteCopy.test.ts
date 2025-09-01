@@ -1,38 +1,31 @@
 import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handlePasteCopy } from '../src/parts/HandlePasteCopy/HandlePasteCopy.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('should focus on first newly created file after paste copy', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.copy') {
-        return undefined
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'index.js', type: DirentType.File },
-          { name: 'index copy.js', type: DirentType.File },
-        ]
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'Preferences.get') {
-        return false
-      }
-      if (method === 'IconTheme.getIcons') {
-        return ['', '']
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.copy'() {
+      return undefined
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'index.js', type: DirentType.File },
+        { name: 'index copy.js', type: DirentType.File },
+      ]
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'IconTheme.getIcons'() {
+      return ['', '']
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const initialState: ExplorerState = {
     ...createDefaultState(),
@@ -57,33 +50,28 @@ test('should focus on first newly created file after paste copy', async () => {
 })
 
 test('should handle paste copy with multiple files and focus on first', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.copy') {
-        return undefined
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'file1.txt', type: DirentType.File },
-          { name: 'file1 copy.txt', type: DirentType.File },
-          { name: 'file2.txt', type: DirentType.File },
-          { name: 'file2 copy.txt', type: DirentType.File },
-        ]
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'Preferences.get') {
-        return false
-      }
-      if (method === 'IconTheme.getIcons') {
-        return ['', '', '', '']
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.copy'() {
+      return undefined
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'file1.txt', type: DirentType.File },
+        { name: 'file1 copy.txt', type: DirentType.File },
+        { name: 'file2.txt', type: DirentType.File },
+        { name: 'file2 copy.txt', type: DirentType.File },
+      ]
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'IconTheme.getIcons'() {
+      return ['', '', '', '']
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const initialState: ExplorerState = {
     ...createDefaultState(),
@@ -111,25 +99,20 @@ test('should handle paste copy with multiple files and focus on first', async ()
 })
 
 test('should handle paste copy with empty files array', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'Preferences.get') {
-        return false
-      }
-      if (method === 'IconTheme.getIcons') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'IconTheme.getIcons'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const initialState: ExplorerState = {
     ...createDefaultState(),

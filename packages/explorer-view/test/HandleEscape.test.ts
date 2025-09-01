@@ -15,4 +15,3 @@ test('handleEscape - clears cutItems and keeps other state', async () => {
   expect(result.cutItems).toEqual([])
   expect(result.focusedIndex).toBe(1)
 })
-

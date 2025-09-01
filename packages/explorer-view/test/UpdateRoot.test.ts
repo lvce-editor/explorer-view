@@ -1,8 +1,6 @@
 import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 import { updateRoot } from '../src/parts/UpdateRoot/UpdateRoot.ts'
 
 test('updateRoot should return same disposed state', async () => {
@@ -26,11 +24,9 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
 test('updateRoot should merge dirents correctly', async () => {
   const state = createDefaultState()
 
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes': invoke.bind(undefined, 'FileSystem.readDirWithFileTypes'),
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const result = await updateRoot(state)
   expect(result.items).toHaveLength(2)

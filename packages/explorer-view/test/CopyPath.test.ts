@@ -1,31 +1,22 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { copyPath } from '../src/parts/CopyPath/CopyPath.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('copyPath - writes absolute path of focused dirent to clipboard', async () => {
   let clipboardText = ''
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: async (method: string, ...args: any[]): Promise<void> => {
-      if (method === 'ClipBoard.writeText') {
-        clipboardText = args[0]
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'ClipBoard.writeText'(text: string) {
+      clipboardText = text
+      return
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false },
-    ],
+    items: [{ name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false }],
     focusedIndex: 0,
   }
 
@@ -37,17 +28,12 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
 
 test('copyPath - does nothing when no focused dirent', async () => {
   let clipboardCalled = false
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: async (method: string): Promise<void> => {
-      if (method === 'ClipBoard.writeText') {
-        clipboardCalled = true
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'ClipBoard.writeText'() {
+      clipboardCalled = true
+      return
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),

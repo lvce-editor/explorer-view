@@ -1,5 +1,4 @@
 import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -9,11 +8,8 @@ import { handlePaste } from '../src/parts/HandlePaste/HandlePaste.ts'
 import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('pasteShouldMove should be true after cut operation', async () => {
-  const mockRpc = MockRpc.create({
-    invoke: jest.fn(),
-    commandMap: {},
-  })
-  RendererWorker.set(mockRpc)
+  const mock = { invoke: jest.fn() }
+  RendererWorker.set(mock as any)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -24,15 +20,12 @@ test('pasteShouldMove should be true after cut operation', async () => {
   const result = await handleCut(state)
 
   expect(result.pasteShouldMove).toBe(true)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'cut', ['/test.txt'])
+  expect(mock.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'cut', ['/test.txt'])
 })
 
 test('pasteShouldMove should be false after copy operation', async () => {
-  const mockRpc = MockRpc.create({
-    invoke: jest.fn(),
-    commandMap: {},
-  })
-  RendererWorker.set(mockRpc)
+  const mock = { invoke: jest.fn() }
+  RendererWorker.set(mock as any)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -43,12 +36,11 @@ test('pasteShouldMove should be false after copy operation', async () => {
   const result = await handleCopy(state)
 
   expect(result.pasteShouldMove).toBe(false)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'copy', ['/test.txt'])
+  expect(mock.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'copy', ['/test.txt'])
 })
 
 test.skip('pasteShouldMove should be reset to false after paste operation', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mock: any = {
     invoke: (method: string) => {
       if (method === 'ClipBoard.readNativeFiles') {
         return {
@@ -80,8 +72,8 @@ test.skip('pasteShouldMove should be reset to false after paste operation', asyn
       }
       throw new Error(`unexpected method ${method}`)
     },
-  })
-  RendererWorker.set(mockRpc)
+  }
+  RendererWorker.set(mock)
 
   const state: ExplorerState = {
     ...createDefaultState(),

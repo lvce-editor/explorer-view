@@ -1,24 +1,17 @@
 import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { Directory, DirectoryExpanded } from '../src/parts/DirentType/DirentType.ts'
 import { refreshChildDirents } from '../src/parts/RefreshChildDirents/RefreshChildDirents.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('refreshChildDirents - basic', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'file1.txt', type: 'file' },
-          { name: 'folder1', type: 'directory' },
-        ]
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'file1.txt', type: 'file' },
+        { name: 'folder1', type: 'directory' },
+      ]
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const folder = { type: Directory, name: 'test', path: '/test', depth: 0, selected: false }
   const result = await refreshChildDirents(folder, '/', [])
@@ -32,22 +25,17 @@ test('refreshChildDirents - basic', async () => {
 })
 
 test('refreshChildDirents - with expanded folder', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, path?: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        if (path === '/test') {
-          return [{ name: 'folder1', type: 'directory' }]
-        }
-        if (path === '/test/folder1') {
-          return [{ name: 'file1.txt', type: 'file' }]
-        }
-        return []
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path?: string) {
+      if (path === '/test') {
+        return [{ name: 'folder1', type: 'directory' }]
       }
-      throw new Error(`unexpected method ${method}`)
+      if (path === '/test/folder1') {
+        return [{ name: 'file1.txt', type: 'file' }]
+      }
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const folder = { type: Directory, name: 'test', path: '/test', depth: 0, selected: false }
   const result = await refreshChildDirents(folder, '/', ['/test/folder1'])

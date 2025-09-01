@@ -1,7 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { uploadFileSystemHandles } from '../src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
 class MockFileHandle implements FileSystemHandle {
@@ -37,38 +35,28 @@ class MockFileHandle implements FileSystemHandle {
 }
 
 test('upload single file', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.writeFile') {
-        return true
-      }
-      if (method === 'FileSystem.mkdir') {
-        return true
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return true
+    },
+    'FileSystem.mkdir'() {
+      return true
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const fileHandle = new MockFileHandle('file', 'test.txt', 'content')
   const result = await uploadFileSystemHandles('/', '/', [fileHandle])
   expect(result).toBe(true)
 })
 
 test('upload directory with files', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.writeFile') {
-        return true
-      }
-      if (method === 'FileSystem.mkdir') {
-        return true
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return true
+    },
+    'FileSystem.mkdir'() {
+      return true
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const file1 = new MockFileHandle('file', 'file1.txt', 'content1')
   const file2 = new MockFileHandle('file', 'file2.txt', 'content2')
   const dir = new MockFileHandle('directory', 'dir', undefined, [file1, file2])
@@ -77,19 +65,14 @@ test('upload directory with files', async () => {
 })
 
 test('upload multiple files and directories', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.writeFile') {
-        return true
-      }
-      if (method === 'FileSystem.mkdir') {
-        return true
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return true
+    },
+    'FileSystem.mkdir'() {
+      return true
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const file1 = new MockFileHandle('file', 'file1.txt', 'content1')
   const file2 = new MockFileHandle('file', 'file2.txt', 'content2')
   const dir1 = new MockFileHandle('directory', 'dir1', undefined, [file1])
