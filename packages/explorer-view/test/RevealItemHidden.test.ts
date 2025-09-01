@@ -1,31 +1,26 @@
 import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { revealItemHidden } from '../src/parts/RevealItemHidden/RevealItemHidden.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
+ 
 
 test('revealItemHidden - reveals hidden item', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...params: readonly any[]) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        if (params[0] === '/root') {
-          return [{ name: 'folder1', isDirectory: true, type: DirentType.File, path: '/root/folder1' }]
-        }
-        if (params[0] === '/root/folder1') {
-          return [
-            { name: 'file1.txt', isDirectory: false, type: DirentType.File, path: '/root/folder1/file1.txt' },
-            { name: 'file2.txt', isDirectory: false, type: DirentType.File, path: '/root/folder1/file2.txt' },
-          ]
-        }
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/root') {
+        return [{ name: 'folder1', isDirectory: true, type: DirentType.File, path: '/root/folder1' }]
       }
-      throw new Error(`unexpected method ${method}`)
+      if (path === '/root/folder1') {
+        return [
+          { name: 'file1.txt', isDirectory: false, type: DirentType.File, path: '/root/folder1/file1.txt' },
+          { name: 'file2.txt', isDirectory: false, type: DirentType.File, path: '/root/folder1/file2.txt' },
+        ]
+      }
+      return []
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     root: '/root',
@@ -43,16 +38,11 @@ test('revealItemHidden - returns same state for empty path parts', async () => {
 })
 
 test('revealItemHidden - throws error for non-existent file', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const state = createDefaultState()
   await expect(revealItemHidden(state, '/non/existent/file.txt')).rejects.toThrow('File not found in explorer')
 })

@@ -1,12 +1,11 @@
 import { beforeEach, expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+ 
 import { updateEditingValue } from '../src/parts/UpdateEditingValue/UpdateEditingValue.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
@@ -21,11 +20,10 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
 }
 
 beforeEach(async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke,
+  RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
+    'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 })
 
 test('updateEditingValue - updates state with new value', async () => {
