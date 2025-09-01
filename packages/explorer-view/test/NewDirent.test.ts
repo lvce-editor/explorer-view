@@ -1,8 +1,8 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
-import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { newDirent } from '../src/parts/NewDirent/NewDirent.ts'
 
 const handleFileIcons = (requests: readonly any[]): readonly string[] => {
