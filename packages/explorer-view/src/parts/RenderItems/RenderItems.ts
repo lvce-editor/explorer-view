@@ -6,6 +6,7 @@ import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleE
 export const renderItems = (oldState: ExplorerState, newState: ExplorerState): any => {
   const {
     cutItems,
+    sourceControlIgnoredUris,
     deltaY,
     dropTargets,
     editingErrorMessage,
@@ -39,6 +40,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     dropTargets,
     editingIcon,
     cutItems,
+    sourceControlIgnoredUris,
   )
   const isWide = width > 450
   const contentHeight = items.length * itemHeight

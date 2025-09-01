@@ -19,6 +19,7 @@ test('basic item', () => {
     hasEditingError: false,
     selected: false,
     isCut: false,
+    isIgnored: false,
     index: 0,
   }
   const dom = getExplorerItemVirtualDom(item)
@@ -45,6 +46,7 @@ test('item with chevron', () => {
     hasEditingError: false,
     selected: false,
     isCut: false,
+    isIgnored: false,
     index: 0,
   }
   const dom = getExplorerItemVirtualDom(item)
@@ -71,6 +73,7 @@ test('item in editing state', () => {
     hasEditingError: false,
     selected: false,
     isCut: false,
+    isIgnored: false,
     index: 0,
   }
   const dom = getExplorerItemVirtualDom(item)
@@ -96,6 +99,7 @@ test('item with error', () => {
     hasEditingError: true,
     selected: false,
     isCut: false,
+    isIgnored: false,
     index: 0,
   }
   const dom = getExplorerItemVirtualDom(item)
