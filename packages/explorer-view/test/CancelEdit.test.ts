@@ -1,22 +1,14 @@
-import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { cancelEdit } from '../src/parts/CancelEdit/CancelEdit.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 
 test('cancelEdit', async () => {
-  RendererWorker.set(
-    MockRpc.create({
-      commandMap: {},
-      invoke() {
-        return ''
-      },
-    }),
-  )
+  RendererWorker.registerMockRpc({})
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
@@ -37,14 +29,11 @@ test('cancelEdit', async () => {
 })
 
 test('cancelEdit - removes editing items', async () => {
-  RendererWorker.set(
-    MockRpc.create({
-      commandMap: {},
-      invoke() {
-        return ''
-      },
-    }),
-  )
+  RendererWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return []
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
@@ -100,14 +89,11 @@ test('cancelEdit - removes editing items', async () => {
 })
 
 test('cancelEdit - rename file', async () => {
-  RendererWorker.set(
-    MockRpc.create({
-      commandMap: {},
-      invoke() {
-        return ''
-      },
-    }),
-  )
+  RendererWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return []
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 0,
@@ -146,14 +132,11 @@ test('cancelEdit - rename file', async () => {
 })
 
 test('cancelEdit - rename folder', async () => {
-  RendererWorker.set(
-    MockRpc.create({
-      commandMap: {},
-      invoke() {
-        return ''
-      },
-    }),
-  )
+  RendererWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return []
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 0,
@@ -192,14 +175,11 @@ test('cancelEdit - rename folder', async () => {
 })
 
 test('cancelEdit - create file', async () => {
-  RendererWorker.set(
-    MockRpc.create({
-      commandMap: {},
-      invoke() {
-        return ''
-      },
-    }),
-  )
+  RendererWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return []
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
