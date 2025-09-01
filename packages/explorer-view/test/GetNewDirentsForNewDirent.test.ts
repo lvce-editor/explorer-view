@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -8,16 +8,11 @@ import { getNewDirentsForNewDirent } from '../src/parts/GetNewDirentsForNewDiren
 import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('getNewDirentsForNewDirent - folder with existing children', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const defaultState = createDefaultState()
   const state: ExplorerState = {
@@ -105,16 +100,11 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
 })
 
 test('getNewDirentsForNewDirent - folder without children', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const defaultState = createDefaultState()
   const state: ExplorerState = {
@@ -163,16 +153,11 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
 })
 
 test('getNewDirentsForNewDirent - no items', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const defaultState = createDefaultState()
   const state: ExplorerState = {
@@ -199,16 +184,11 @@ test('getNewDirentsForNewDirent - no items', async () => {
 })
 
 test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const defaultState = createDefaultState()
   const state: ExplorerState = {

@@ -1,5 +1,5 @@
 import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -42,11 +42,27 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
+      return '/new/path'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'Focus.setFocus'() {},
+    'IconTheme.getIcons'(...params: any[]) {
+      return handleFileIcons(params[0])
+    },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
@@ -107,11 +123,27 @@ test('newDirent handles directory click when focused item is a directory', async
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
+      return '/new/path'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Focus.setFocus'() {},
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'(...params: any[]) {
+      return handleFileIcons(params[0])
+    },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
@@ -178,11 +210,30 @@ test('newDirent updates state when focused item is not a directory', async () =>
     throw new Error(`unexpected method ${method}`)
   })
 
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
+  RendererWorker.registerMockRpc({
+    'Workspace.getPath'() {
+      return '/new/path'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Focus.setFocus'() {},
+    'IconTheme.getIcons'(...params: any[]) {
+      return handleFileIcons(params[0])
+    },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
