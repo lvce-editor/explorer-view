@@ -1,5 +1,5 @@
-import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as Character from '../Character/Character.ts'
+import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 
 export const validateFileName2 = (name: string): string => {
   if (!name) {
