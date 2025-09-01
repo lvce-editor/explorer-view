@@ -210,7 +210,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
     throw new Error(`unexpected method ${method}`)
   })
 
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/new/path'
     },
@@ -242,7 +242,6 @@ test('newDirent updates state when focused item is not a directory', async () =>
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  const mockRpc = RpcRegistry.get(RpcId.RendererWorker)
   expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
   expect(result).toEqual({
     ...mockState,
