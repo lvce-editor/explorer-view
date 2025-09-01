@@ -1,4 +1,6 @@
 import { test, expect } from '@jest/globals'
+import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { cancelEdit } from '../src/parts/CancelEdit/CancelEdit.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -6,7 +8,15 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 
-test('cancelEdit', () => {
+test('cancelEdit', async () => {
+  RendererWorker.set(
+    MockRpc.create({
+      commandMap: {},
+      invoke() {
+        return ''
+      },
+    }),
+  )
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
@@ -14,7 +24,7 @@ test('cancelEdit', () => {
     editingType: ExplorerEditingType.CreateFile,
   }
 
-  const result = cancelEdit(state)
+  const result = await cancelEdit(state)
   expect(result).toEqual({
     ...state,
     focusedIndex: 1,
@@ -26,7 +36,15 @@ test('cancelEdit', () => {
   })
 })
 
-test('cancelEdit - removes editing items', () => {
+test('cancelEdit - removes editing items', async () => {
+  RendererWorker.set(
+    MockRpc.create({
+      commandMap: {},
+      invoke() {
+        return ''
+      },
+    }),
+  )
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
@@ -66,7 +84,7 @@ test('cancelEdit - removes editing items', () => {
     ],
   }
 
-  const result = cancelEdit(state)
+  const result = await cancelEdit(state)
   expect(result.items).toHaveLength(1)
   expect(result.items[0].type).toBe(DirentType.File)
   expect(result).toEqual({
@@ -81,7 +99,15 @@ test('cancelEdit - removes editing items', () => {
   })
 })
 
-test('cancelEdit - rename file', () => {
+test('cancelEdit - rename file', async () => {
+  RendererWorker.set(
+    MockRpc.create({
+      commandMap: {},
+      invoke() {
+        return ''
+      },
+    }),
+  )
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 0,
@@ -98,7 +124,7 @@ test('cancelEdit - rename file', () => {
     ],
   }
 
-  const result = cancelEdit(state)
+  const result = await cancelEdit(state)
   expect(result).toEqual({
     ...state,
     items: [
@@ -119,7 +145,15 @@ test('cancelEdit - rename file', () => {
   })
 })
 
-test('cancelEdit - rename folder', () => {
+test('cancelEdit - rename folder', async () => {
+  RendererWorker.set(
+    MockRpc.create({
+      commandMap: {},
+      invoke() {
+        return ''
+      },
+    }),
+  )
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 0,
@@ -136,7 +170,7 @@ test('cancelEdit - rename folder', () => {
     ],
   }
 
-  const result = cancelEdit(state)
+  const result = await cancelEdit(state)
   expect(result).toEqual({
     ...state,
     items: [
@@ -157,7 +191,15 @@ test('cancelEdit - rename folder', () => {
   })
 })
 
-test('cancelEdit - create file', () => {
+test('cancelEdit - create file', async () => {
+  RendererWorker.set(
+    MockRpc.create({
+      commandMap: {},
+      invoke() {
+        return ''
+      },
+    }),
+  )
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
@@ -181,7 +223,7 @@ test('cancelEdit - create file', () => {
     ],
   }
 
-  const result = cancelEdit(state)
+  const result = await cancelEdit(state)
   expect(result.items).toHaveLength(1)
   expect(result.items[0].type).toBe(DirentType.File)
   expect(result).toEqual({
