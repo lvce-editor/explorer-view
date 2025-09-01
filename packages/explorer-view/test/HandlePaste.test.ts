@@ -1,11 +1,9 @@
-import { test, expect } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { handlePaste } from '../src/parts/HandlePaste/HandlePaste.ts'
 import * as NativeFileTypes from '../src/parts/NativeFileTypes/NativeFileTypes.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('should handle paste with no files (none type)', async () => {
   RendererWorker.registerMockRpc({
