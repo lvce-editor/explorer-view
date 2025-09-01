@@ -1,11 +1,13 @@
-import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
+import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import { isNormalItem } from '../IsNormalItem/IsNormalItem.ts'
 
-export const cancelEditCreate = (state: ExplorerState, keepFocus: boolean): ExplorerState => {
-  const { editingIndex, items } = state
+export const cancelEditCreate = async (state: ExplorerState, keepFocus: boolean): Promise<ExplorerState> => {
+  const { editingIndex, items, fileIconCache } = state
   const filteredItems = items.filter(isNormalItem)
+  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(filteredItems, fileIconCache)
   return {
     ...state,
     items: filteredItems,
@@ -16,5 +18,7 @@ export const cancelEditCreate = (state: ExplorerState, keepFocus: boolean): Expl
     editingErrorMessage: '',
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
+    icons,
+    fileIconCache: newFileIconCache,
   }
 }
