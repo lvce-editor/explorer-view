@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { getSettings } from '../src/parts/GetSettings/GetSettings.ts'
 
 const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {

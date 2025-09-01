@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
-import { set } from '@lvce-editor/rpc-registry'
+import { set, RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleContextMenu } from '../src/parts/HandleContextMenu/HandleContextMenu.ts'
 import { Keyboard } from '../src/parts/MouseEventType/MouseEventType.ts'
