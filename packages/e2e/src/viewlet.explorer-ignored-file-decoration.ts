@@ -4,7 +4,6 @@ export const name = 'viewlet.explorer-ignored-file-decoration'
 
 export const test: Test = async ({ FileSystem, Workspace, ClipBoard }) => {
   // arrange
-  await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.mkdir(`${tmpDir}/b`)
