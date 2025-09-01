@@ -2,7 +2,6 @@ import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { Directory, DirectoryExpanded } from '../src/parts/DirentType/DirentType.ts'
 import { refreshChildDirents } from '../src/parts/RefreshChildDirents/RefreshChildDirents.ts'
-import { RendererWorker as RendererWorkerId } from '../src/parts/RpcId/RpcId.ts'
 
 test('refreshChildDirents - basic', async () => {
   RendererWorker.registerMockRpc({

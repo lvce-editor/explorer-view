@@ -6,7 +6,6 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { Directory, DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { removeDirent } from '../src/parts/RemoveDirent/RemoveDirent.ts'
-import { RendererWorker as RendererWorkerId } from '../src/parts/RpcId/RpcId.ts'
 
 test('removeDirent - removes focused item', async () => {
   RendererWorker.registerMockRpc({

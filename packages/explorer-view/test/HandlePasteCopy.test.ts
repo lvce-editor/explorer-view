@@ -4,7 +4,6 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handlePasteCopy } from '../src/parts/HandlePasteCopy/HandlePasteCopy.ts'
-import { RendererWorker as RendererWorkerId } from '../src/parts/RpcId/RpcId.ts'
 
 test('should focus on first newly created file after paste copy', async () => {
   RendererWorker.registerMockRpc({

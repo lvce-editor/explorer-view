@@ -1,6 +1,5 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import { uploadFileSystemHandles } from '../src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
 class MockFileHandle implements FileSystemHandle {

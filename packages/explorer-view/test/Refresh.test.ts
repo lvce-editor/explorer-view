@@ -5,7 +5,6 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { refresh } from '../src/parts/Refresh/Refresh.ts'
-import { RendererWorker as RendererWorkerId } from '../src/parts/RpcId/RpcId.ts'
 
 test('refresh - empty state', async () => {
   RendererWorker.registerMockRpc({
