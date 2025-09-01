@@ -4,7 +4,6 @@ import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewDirentsAccept } from '../src/parts/GetNewDirentsAccept/GetNewDirentsAccept.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('getNewDirentsAccept - create file in root', async () => {
   const mockRpc = MockRpc.create({

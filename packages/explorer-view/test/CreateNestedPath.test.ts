@@ -2,7 +2,6 @@ import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import { createNestedPath } from '../src/parts/CreateNestedPath/CreateNestedPath.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('createNestedPath - creates all directories', async () => {
   const mockRpc = MockRpc.create({

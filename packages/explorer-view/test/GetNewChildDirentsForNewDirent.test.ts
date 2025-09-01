@@ -3,7 +3,6 @@ import { MockRpc } from '@lvce-editor/rpc'
 import * as RpcRegistry from '@lvce-editor/rpc-registry'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewChildDirentsForNewDirent } from '../src/parts/GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
   const mockRpc = MockRpc.create({

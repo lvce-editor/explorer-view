@@ -6,7 +6,6 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickDirectoryExpanded } from '../src/parts/HandleClickDirectoryExpanded/HandleClickDirectoryExpanded.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('collapse expanded directory', async () => {
   const state: ExplorerState = createDefaultState()

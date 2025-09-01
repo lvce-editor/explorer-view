@@ -5,7 +5,6 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewDirentsForNewDirent } from '../src/parts/GetNewDirentsForNewDirent/GetNewDirentsForNewDirent.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('getNewDirentsForNewDirent - folder with existing children', async () => {
   RendererWorker.registerMockRpc({

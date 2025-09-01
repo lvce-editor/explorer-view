@@ -4,7 +4,6 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptCreateFile } from '../src/parts/AcceptCreateFile/AcceptCreateFile.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('acceptCreateFile', async () => {
   RendererWorker.registerMockRpc({

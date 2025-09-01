@@ -4,7 +4,6 @@ import { set } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleContextMenu } from '../src/parts/HandleContextMenu/HandleContextMenu.ts'
 import { Keyboard } from '../src/parts/MouseEventType/MouseEventType.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('handleContextMenu - keyboard', async () => {
   const mockRpc = MockRpc.create({

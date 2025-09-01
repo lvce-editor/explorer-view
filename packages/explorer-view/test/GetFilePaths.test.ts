@@ -2,7 +2,6 @@ import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { getFilePaths } from '../src/parts/GetFilePaths/GetFilePaths.ts'
 import * as PlatformType from '../src/parts/PlatformType/PlatformType.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('getFilePaths - non-electron platform', async () => {
   const files = [new File([], 'test.txt')]
