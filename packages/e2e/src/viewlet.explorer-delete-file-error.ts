@@ -7,6 +7,7 @@ export const skip = 1
 // @ts-ignore
 export const test: Test = async ({ Dialog, Extension, FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
+  // @ts-ignore
   await Dialog.mockConfirm(() => {
     return true
   })
