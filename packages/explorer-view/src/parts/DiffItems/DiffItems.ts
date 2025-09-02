@@ -1,7 +1,4 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as DiffType from '../DiffType/DiffType.ts'
-
-export const diffType = DiffType.RenderItems
 
 export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boolean => {
   return (

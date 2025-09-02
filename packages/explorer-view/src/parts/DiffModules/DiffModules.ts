@@ -8,10 +8,10 @@ import * as DiffValue from '../DiffValue/DiffValue.ts'
 export const modules = [DiffItems.isEqual, DiffFocus.isEqual, DiffFocus.isEqual, DiffValue.isEqual, DiffSelection.isEqual, DiffDragData.isEqual]
 
 export const numbers = [
-  DiffItems.diffType,
-  DiffFocus.diffType,
+  DiffType.RenderItems,
+  DiffType.RenderFocus,
   DiffType.RenderFocusContext,
-  DiffValue.diffType,
-  DiffSelection.diffType,
-  DiffDragData.diffType,
+  DiffType.RenderValue,
+  DiffType.RenderSelection,
+  DiffType.RenderDragData,
 ]

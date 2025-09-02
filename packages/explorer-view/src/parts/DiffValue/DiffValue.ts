@@ -1,8 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as DiffType from '../DiffType/DiffType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
-
-export const diffType = DiffType.RenderValue
 
 export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boolean => {
   if (newState.focus !== FocusId.Input) {
