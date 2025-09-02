@@ -1,12 +1,7 @@
 import { expect, test } from '@jest/globals'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-import { isEqual, diffType } from '../src/parts/DiffSelection/DiffSelection.ts'
-import * as DiffType from '../src/parts/DiffType/DiffType.ts'
-
-test('diffType should be RenderSelection', () => {
-  expect(diffType).toBe(DiffType.RenderSelection)
-})
+import { isEqual } from '../src/parts/DiffSelection/DiffSelection.ts'
 
 test('isEqual - same selection', () => {
   const state: ExplorerState = {

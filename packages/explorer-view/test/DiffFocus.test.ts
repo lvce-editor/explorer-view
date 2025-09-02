@@ -1,11 +1,6 @@
-import { test, expect } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-import { isEqual, diffType } from '../src/parts/DiffFocus/DiffFocus.ts'
-import * as DiffType from '../src/parts/DiffType/DiffType.ts'
-
-test('diffType should be RenderFocus', () => {
-  expect(diffType).toBe(DiffType.RenderFocus)
-})
+import { isEqual } from '../src/parts/DiffFocus/DiffFocus.ts'
 
 test('isEqual should return true when focused and focus are equal', () => {
   const oldState = {
