@@ -1,6 +1,6 @@
+import { WhenExpression } from '@lvce-editor/constants'
 import type { MouseAction } from '../MouseAction/MouseAction.ts'
 import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
-import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
 
 export const getMouseActions = (): readonly MouseAction[] => {
   return [
