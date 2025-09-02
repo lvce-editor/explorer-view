@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-folder-nested'
 
-export const skip = 1
-
 export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -37,4 +35,6 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
   await expect(file3).toHaveText('c')
   const file4 = Locator('.TreeItem').nth(3)
   await expect(file4).toHaveText('file1.txt')
+
+  // TODO folder d should be expanded
 }
