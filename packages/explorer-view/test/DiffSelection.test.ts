@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { isEqual } from '../src/parts/DiffSelection/DiffSelection.ts'
-import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 
 test('isEqual - same selection', () => {
   const state: ExplorerState = {
