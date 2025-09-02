@@ -10,7 +10,7 @@ test('should return FocusExplorerEditBox when focus is Input', () => {
 
   const result = renderFocusContext(oldState, newState)
 
-  expect(result).toEqual(['Viewlet.setFocusContext', WhenExpression.FocusExplorerEditBox])
+  expect(result).toEqual(['Viewlet.setFocusContext', newState.uid, WhenExpression.FocusExplorerEditBox])
 })
 
 test('should return FocusExplorer when focus is List', () => {
@@ -19,7 +19,7 @@ test('should return FocusExplorer when focus is List', () => {
 
   const result = renderFocusContext(oldState, newState)
 
-  expect(result).toEqual(['Viewlet.setFocusContext', WhenExpression.FocusExplorer])
+  expect(result).toEqual(['Viewlet.setFocusContext', newState.uid, WhenExpression.FocusExplorer])
 })
 
 test('should return empty array when focus is None', () => {
