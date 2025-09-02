@@ -1,3 +1,3 @@
-import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
+import { WhenExpression } from '@lvce-editor/constants'
 
 export const ExplorerEditBox = WhenExpression.FocusExplorerEditBox
