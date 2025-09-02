@@ -4,10 +4,10 @@ import * as FocusId from '../FocusId/FocusId.ts'
 
 export const renderFocusContext = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
   if (newState.focus === FocusId.Input) {
-    return ['Viewlet.setFocusContext', WhenExpression.FocusExplorerEditBox]
+    return ['Viewlet.setFocusContext', newState.uid, WhenExpression.FocusExplorerEditBox]
   }
   if (newState.focus === FocusId.List) {
-    return ['Viewlet.setFocusContext', WhenExpression.FocusExplorer]
+    return ['Viewlet.setFocusContext', newState.uid, WhenExpression.FocusExplorer]
   }
   return []
 }
