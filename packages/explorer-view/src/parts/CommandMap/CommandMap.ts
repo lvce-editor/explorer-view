@@ -149,7 +149,7 @@ export const commandMap = {
   'Explorer.render2': Render2.render2,
   'Explorer.renderActions2': RenderActions2.renderActions,
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
-  'Explorer.saveState': SaveState.saveState,
+  'Explorer.saveState': WrapCommand.wrapGetter(SaveState.saveState),
   'Explorer.terminate': Terminate.terminate,
   'Explorer.initialize': Initialize.initialize,
 
