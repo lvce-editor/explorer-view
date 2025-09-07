@@ -7,7 +7,6 @@
     "types": [],
     "moduleResolution": "node",
     "rootDir": ".",
-    "allowJs": true,
     "skipLibCheck": true,
     "noEmit": true,
     "allowSyntheticDefaultImports": true,
@@ -16,7 +15,8 @@
     "strict": true,
     "noImplicitAny": false,
     "composite": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "noUnusedLocals": true
   },
   "include": ["src", "test"]
 }
