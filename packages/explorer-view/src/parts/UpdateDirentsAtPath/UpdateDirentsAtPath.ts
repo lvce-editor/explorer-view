@@ -22,7 +22,7 @@ export const updateDirentsAtPath = (
       setSize: newDirents.length,
       icon: '',
     }))
-    .sort(CompareDirent.compareDirent)
+    .toSorted(CompareDirent.compareDirent)
 
   const tree = createTree(items, root)
   const updatedTree = {
