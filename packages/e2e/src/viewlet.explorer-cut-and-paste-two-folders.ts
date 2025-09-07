@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-cut-and-paste-two-folders'
 
-export const skip = 1
-
 export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, ClipBoard }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
