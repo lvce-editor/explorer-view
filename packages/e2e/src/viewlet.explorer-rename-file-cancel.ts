@@ -8,7 +8,6 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'content 2')
   await FileSystem.writeFile(`${tmpDir}/file3.txt`, 'content 3')
-
   await Workspace.setPath(tmpDir)
 
   // act
