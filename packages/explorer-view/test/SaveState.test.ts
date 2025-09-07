@@ -21,7 +21,7 @@ test('saveState - returns correct saved state', () => {
   }
   ExplorerStates.set(uid, oldState, newState)
 
-  const result = saveState(uid)
+  const result = saveState(newState)
 
   expect(result).toEqual({
     expandedPaths: ['/test'],
@@ -45,7 +45,7 @@ test('saveState - handles empty items', () => {
   }
   ExplorerStates.set(uid, oldState, newState)
 
-  const result = saveState(uid)
+  const result = saveState(newState)
 
   expect(result).toEqual({
     expandedPaths: [],
