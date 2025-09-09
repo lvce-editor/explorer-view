@@ -11,13 +11,13 @@ export const handleClickAt = async (
   button: number,
   ctrlKey: boolean,
   shiftKey: boolean,
-  x: number,
-  y: number,
+  eventX: number,
+  eventY: number,
 ): Promise<ExplorerState> => {
   if (defaultPrevented || button !== MouseEventType.LeftClick) {
     return state
   }
-  const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
+  const index = GetIndexFromPosition.getIndexFromPosition(state, eventX, eventY)
   if (index === -1) {
     return {
       ...state,
