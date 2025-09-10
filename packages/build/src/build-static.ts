@@ -17,7 +17,7 @@ const { commitHash } = await sharedProcess.exportStatic({
 
 const rendererWorkerPath = join(root, 'dist', commitHash, 'packages', 'renderer-worker', 'dist', 'rendererWorkerMain.js')
 
-export const getRemoteUrl = (path) => {
+export const getRemoteUrl = (path: string): string => {
   const url = pathToFileURL(path).toString().slice(8)
   return `/remote/${url}`
 }
