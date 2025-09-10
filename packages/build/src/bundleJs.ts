@@ -3,7 +3,7 @@ import { babel } from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { join } from 'path'
 import { rollup, type RollupOptions } from 'rollup'
-import { root } from './root.js'
+import { root } from './root.ts'
 
 const options: RollupOptions = {
   input: join(root, 'packages/explorer-view/src/explorerViewWorkerMain.ts'),

@@ -2,7 +2,7 @@ import { execa } from 'execa'
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { bundleJs } from './bundleJs.js'
-import { root } from './root.js'
+import { root } from './root.ts'
 
 const dist = join(root, '.tmp', 'dist')
 
