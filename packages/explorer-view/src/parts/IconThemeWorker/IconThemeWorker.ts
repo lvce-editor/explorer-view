@@ -1,5 +1,3 @@
-import { Rpc } from '@lvce-editor/rpc-registry'
+import { IconThemeWorker } from '@lvce-editor/rpc-registry'
 
-export const set = (rpc: Rpc): void => {
-  // TODO
-}
+export const { set, invoke } = IconThemeWorker
