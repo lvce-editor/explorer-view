@@ -1,5 +1,5 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptCreate } from '../src/parts/AcceptCreate/AcceptCreate.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -7,8 +7,6 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as ExplorerStrings from '../src/parts/ExplorerStrings/ExplorerStrings.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('acceptCreate - empty file name', async () => {
   const state: ExplorerState = {
@@ -24,18 +22,17 @@ test('acceptCreate - empty file name', async () => {
 })
 
 test('acceptCreate - successful file creation', async () => {
-  const invoke = jest.fn((method: string, ...params: readonly any[]): any => {
-    if (method === 'FileSystem.getPathSeparator') {
+  RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
       return '/'
-    }
-    if (method === 'IconTheme.getFileIcon') {
+    },
+    'IconTheme.getFileIcon'() {
       return ''
-    }
-    if (method === 'IconTheme.getIcons') {
-      return Array(params[0].length).fill('')
-    }
-    if (method === 'FileSystem.readDirWithFileTypes') {
-      const path = params[0]
+    },
+    'IconTheme.getIcons'() {
+      return Array(2).fill('')
+    },
+    'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === 'memfs:///workspace') {
         return [{ name: 'test', type: DirentType.Directory }]
       }
@@ -43,21 +40,14 @@ test('acceptCreate - successful file creation', async () => {
         return [{ name: 'test.txt', type: DirentType.File }]
       }
       throw new Error(`unexpected file read ${path}`)
-    }
-    if (method === 'FileSystem.mkdir') {
+    },
+    'FileSystem.mkdir'() {
       return
-    }
-    if (method === 'FileSystem.writeFile') {
+    },
+    'FileSystem.writeFile'() {
       return
-    }
-    throw new Error(`unexpected method ${method}`)
+    },
   })
-
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
-  })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
