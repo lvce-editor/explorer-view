@@ -18,8 +18,7 @@ test('handleContextMenu - keyboard', async () => {
   const newState = await handleContextMenu(state, Keyboard, 0, 0)
   expect(newState).toBeDefined()
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes'],
-    ['ContextMenu.show']
+    ['ContextMenu.show', 0, 20, 4]
   ])
 })
 
@@ -37,7 +36,6 @@ test('handleContextMenu - mouse', async () => {
   const newState = await handleContextMenu(state, 2, 100, 100)
   expect(newState).toBeDefined()
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes'],
-    ['ContextMenu.show']
+    ['ContextMenu.show', 100, 100, 4]
   ])
 })

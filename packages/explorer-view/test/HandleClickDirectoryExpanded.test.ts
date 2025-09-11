@@ -110,7 +110,7 @@ test('collapse expanded directory with many items preserves icons', async () => 
   expect(newState.focusedIndex).toBe(0)
   expect(newState.focused).toBe(true)
   expect(newState.fileIconCache['/test/']).toBe('folder-icon')
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('collapse expanded directory with scroll position adjustment', async () => {
@@ -178,5 +178,5 @@ test('collapse expanded directory with scroll position adjustment', async () => 
   // After collapsing, since only one item remains and it fits in viewport,
   // scroll position should be reset to 0
   expect(newState.deltaY).toBe(0)
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
+  expect(mockRpc.invocations).toEqual([])
 })
