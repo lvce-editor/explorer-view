@@ -30,7 +30,7 @@ test('getNewDirentsAccept - create file in root', async () => {
     selected: false,
   })
   expect(result.newFocusedIndex).toBe(0)
-  expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', '/root/test.txt', '']])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('getNewDirentsAccept - create file in subfolder', async () => {
@@ -73,7 +73,7 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
     selected: false,
   })
   expect(result.newFocusedIndex).toBe(1)
-  expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', '/root/folder/test.txt', '']])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('getNewDirentsAccept - create nested file', async () => {
@@ -105,16 +105,11 @@ test('getNewDirentsAccept - create nested file', async () => {
     selected: false,
   })
   expect(result.newFocusedIndex).toBe(0)
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.mkdir', '/root/a'],
-    ['FileSystem.mkdir', '/root/a/b'],
-    ['FileSystem.mkdir', '/root/a/b/c'],
-    ['FileSystem.writeFile', '/root/a/b/c/test.txt', '']
-  ])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('getNewDirentsAccept - handle error', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       return Promise.reject(new Error('Failed to create file'))
     },

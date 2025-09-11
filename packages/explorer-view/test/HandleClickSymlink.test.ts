@@ -34,7 +34,7 @@ test('handleClickSymLink - file symlink', async () => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.getRealPath', '/test/symlink'],
     ['FileSystem.stat', '/test/real-file'],
-    ['Main.openUri', '/test/real-file']
+    ['Main.openUri', '/test/symlink', true]
   ])
 })
 

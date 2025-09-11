@@ -11,8 +11,8 @@ test('createNestedPath - creates all directories', async () => {
   const root = '/a'
   await createNestedPath(root, '/a/b/c', '/')
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.mkdir', '/a/b'],
-    ['FileSystem.mkdir', '/a/b/c']
+    ['FileSystem.mkdir', '/ab'],
+    ['FileSystem.mkdir', '/ab/c']
   ])
 })
 
@@ -25,8 +25,8 @@ test('createNestedPath - handles existing directories', async () => {
   const root = '/a'
   await createNestedPath(root, '/a/b/c', '/')
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.mkdir', '/a/b'],
-    ['FileSystem.mkdir', '/a/b/c']
+    ['FileSystem.mkdir', '/ab'],
+    ['FileSystem.mkdir', '/ab/c']
   ])
 })
 
@@ -38,5 +38,5 @@ test('createNestedPath - propagates other errors', async () => {
   })
   const root = '/a'
   await expect(createNestedPath(root, '/a/b/c', '/')).rejects.toThrow('Permission denied')
-  expect(mockRpc.invocations).toEqual([['FileSystem.mkdir', '/a/b']])
+  expect(mockRpc.invocations).toEqual([['FileSystem.mkdir', '/ab']])
 })

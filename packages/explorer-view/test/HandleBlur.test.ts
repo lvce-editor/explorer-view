@@ -13,11 +13,20 @@ test('handleBlur - when not editing, sets focused to false', async () => {
 })
 
 test.skip('handleBlur - when editing, keeps state unchanged', async () => {
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'FileSystem.writeFile'() {
+      return
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return Array(1).fill('')
+    },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     editingType: ExplorerEditingType.CreateFile,
