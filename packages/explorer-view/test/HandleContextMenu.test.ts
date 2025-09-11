@@ -17,9 +17,7 @@ test('handleContextMenu - keyboard', async () => {
   const state = createDefaultState()
   const newState = await handleContextMenu(state, Keyboard, 0, 0)
   expect(newState).toBeDefined()
-  expect(mockRpc.invocations).toEqual([
-    ['ContextMenu.show', 0, 20, 4]
-  ])
+  expect(mockRpc.invocations).toEqual([['ContextMenu.show', 0, 20, 4]])
 })
 
 test('handleContextMenu - mouse', async () => {
@@ -35,7 +33,5 @@ test('handleContextMenu - mouse', async () => {
   const state = createDefaultState()
   const newState = await handleContextMenu(state, 2, 100, 100)
   expect(newState).toBeDefined()
-  expect(mockRpc.invocations).toEqual([
-    ['ContextMenu.show', 100, 100, 4]
-  ])
+  expect(mockRpc.invocations).toEqual([['ContextMenu.show', 100, 100, 4]])
 })

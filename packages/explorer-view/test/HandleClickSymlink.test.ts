@@ -34,7 +34,7 @@ test('handleClickSymLink - file symlink', async () => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.getRealPath', '/test/symlink'],
     ['FileSystem.stat', '/test/real-file'],
-    ['Main.openUri', '/test/symlink', true]
+    ['Main.openUri', '/test/symlink', true],
   ])
 })
 
@@ -62,6 +62,6 @@ test('handleClickSymLink - unsupported type', async () => {
   await expect(handleClickSymLink(state, dirent, index)).rejects.toThrow('unsupported file type')
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.getRealPath', '/test/symlink'],
-    ['FileSystem.stat', '/test/real-file']
+    ['FileSystem.stat', '/test/real-file'],
   ])
 })

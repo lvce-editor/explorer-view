@@ -12,7 +12,7 @@ test('createNestedPath - creates all directories', async () => {
   await createNestedPath(root, '/a/b/c', '/')
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.mkdir', '/ab'],
-    ['FileSystem.mkdir', '/ab/c']
+    ['FileSystem.mkdir', '/ab/c'],
   ])
 })
 
@@ -26,7 +26,7 @@ test('createNestedPath - handles existing directories', async () => {
   await createNestedPath(root, '/a/b/c', '/')
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.mkdir', '/ab'],
-    ['FileSystem.mkdir', '/ab/c']
+    ['FileSystem.mkdir', '/ab/c'],
   ])
 })
 

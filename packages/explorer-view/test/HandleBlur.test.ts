@@ -60,6 +60,12 @@ test.skip('handleBlur - when editing, keeps state unchanged', async () => {
     ['FileSystem.getPathSeparator'],
     ['FileSystem.writeFile', '1/created.txt', ''],
     ['IconTheme.getFileIcon', { name: '1', type: DirentType.File, path: '1', depth: 0, selected: false }],
-    ['IconTheme.getIcons', [{ name: '1', type: DirentType.File, path: '1', depth: 0, selected: false }, { name: 'created.txt', type: DirentType.File, path: '1/created.txt', depth: 0, selected: false }]]
+    [
+      'IconTheme.getIcons',
+      [
+        { name: '1', type: DirentType.File, path: '1', depth: 0, selected: false },
+        { name: 'created.txt', type: DirentType.File, path: '1/created.txt', depth: 0, selected: false },
+      ],
+    ],
   ])
 })
