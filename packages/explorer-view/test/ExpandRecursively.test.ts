@@ -1,35 +1,28 @@
 import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { Directory, File } from '../src/parts/DirentType/DirentType.ts'
 import { expandRecursively } from '../src/parts/ExpandRecursively/ExpandRecursively.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('expand root directory', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'file1.txt', type: 'file', isSymbolicLink: false },
-          { name: 'dir1', type: 'directory', isSymbolicLink: false },
-        ]
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'IconTheme.getFolderIcon') {
-        return 'folder-icon'
-      }
-      if (method === 'IconTheme.getFileIcon') {
-        return 'file-icon'
-      }
-      throw new Error(`unexpected method ${method}`)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'file1.txt', type: 'file', isSymbolicLink: false },
+        { name: 'dir1', type: 'directory', isSymbolicLink: false },
+      ]
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'IconTheme.getFolderIcon'() {
+      return 'folder-icon'
+    },
+    'IconTheme.getFileIcon'() {
+      return 'file-icon'
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     root: '/test',
