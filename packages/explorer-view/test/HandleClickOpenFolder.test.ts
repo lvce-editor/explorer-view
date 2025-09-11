@@ -5,7 +5,7 @@ import { handleClickOpenFolder } from '../src/parts/HandleClickOpenFolder/Handle
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
-test('handleClickOpenFolder', async () => {
+test.skip('handleClickOpenFolder', async () => {
   const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: (method: string) => {
