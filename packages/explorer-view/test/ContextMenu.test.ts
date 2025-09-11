@@ -1,20 +1,15 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ContextMenu from '../src/parts/ContextMenu/ContextMenu.ts'
-import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('show', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    invoke: mockInvoke,
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ContextMenu.show'() {},
   })
-  RendererWorker.set(mockRpc)
   const x = 100
   const y = 200
   const id = 1
   const args = ['arg1', 'arg2']
   await ContextMenu.show(x, y, id, ...args)
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('ContextMenu.show', x, y, id, ...args)
+  expect(mockRpc.invocations).toEqual([['ContextMenu.show', x, y, id, ...args]])
 })
