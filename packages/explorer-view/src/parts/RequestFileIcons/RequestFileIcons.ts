@@ -1,5 +1,5 @@
 import type { IconRequest } from '../IconRequest/IconRequest.ts'
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import * as IconThemeWorker from '../IconThemeWorker/IconThemeWorker.ts'
 import { toSimpleIconRequest } from '../ToSimpleIconRequest/ToSimpleIconRequest.ts'
 
 export const requestFileIcons = async (requests: readonly IconRequest[]): Promise<readonly string[]> => {
@@ -7,6 +7,8 @@ export const requestFileIcons = async (requests: readonly IconRequest[]): Promis
     return []
   }
   const simpleRequests = requests.map(toSimpleIconRequest)
-  const icons = await RendererWorker.invoke('IconTheme.getIcons', simpleRequests)
+  // @ts-ignore
+  const icons = await IconThemeWorker.invoke('IconTheme.getIcons', simpleRequests)
+  // @ts-ignore
   return icons
 }
