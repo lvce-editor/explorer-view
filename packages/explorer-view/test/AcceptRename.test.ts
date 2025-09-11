@@ -43,22 +43,17 @@ test.skip('acceptRename - basic file rename', async () => {
 })
 
 test.skip('acceptRename - folder rename', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, path?: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'folder2', type: DirentType.Directory },
-          { name: 'file.txt', type: DirentType.File },
-        ]
-      }
-      if (method === 'FileSystem.rename') {
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'folder2', type: DirentType.Directory },
+        { name: 'file.txt', type: DirentType.File },
+      ]
+    },
+    'FileSystem.rename'() {
+      return
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
