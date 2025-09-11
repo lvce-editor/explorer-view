@@ -1,45 +1,39 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { expandAll } from '../src/parts/ExpandAll/ExpandAll.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
-const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
-  if (method === 'FileSystem.readDirWithFileTypes') {
+const mockRpc = RendererWorker.registerMockRpc({
+  'FileSystem.readDirWithFileTypes'() {
     return [
       { name: 'file1', type: DirentType.File, path: '/dir1/file1' },
       { name: 'file2', type: DirentType.File, path: '/dir1/file2' },
     ]
-  }
-  if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
+  },
+  'IconTheme.getFileIcon'() {
     return ['icon1', 'icon2']
-  }
-  if (method === 'IconTheme.getIcons') {
+  },
+  'IconTheme.getFolderIcon'() {
     return ['icon1', 'icon2']
-  }
-  throw new Error(`Unexpected method: ${method}`)
-}
-
-const mockRpc = MockRpc.create({
-  invoke,
-  commandMap: {},
+  },
+  'IconTheme.getIcons'() {
+    return ['icon1', 'icon2']
+  },
 })
 
 test('expandAll - no focused item', async () => {
-  RpcRegistry.set(RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
   }
   const result = await expandAll(state)
   expect(result).toBe(state)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('expandAll - expand directories at same depth', async () => {
-  RpcRegistry.set(RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
@@ -58,4 +52,10 @@ test('expandAll - expand directories at same depth', async () => {
   expect(result.items[3].name).toBe('dir2')
   expect(result.icons).toHaveLength(6)
   expect(result.fileIconCache).toBeDefined()
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/dir1'],
+    ['FileSystem.readDirWithFileTypes', '/dir2'],
+    ['IconTheme.getIcons', [{ name: 'file1', type: DirentType.File, path: '/dir1/file1' }, { name: 'file2', type: DirentType.File, path: '/dir1/file2' }]],
+    ['IconTheme.getIcons', [{ name: 'file1', type: DirentType.File, path: '/dir1/file1' }, { name: 'file2', type: DirentType.File, path: '/dir1/file2' }]]
+  ])
 })

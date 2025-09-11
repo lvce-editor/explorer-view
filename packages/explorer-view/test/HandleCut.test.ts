@@ -1,17 +1,14 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleCut } from '../src/parts/HandleCut/HandleCut.ts'
-import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('handleCut - with focused dirent', async () => {
-  const mockRpc = MockRpc.create({
-    invoke: jest.fn(),
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.writeNativeFiles'() {},
   })
-  RendererWorker.set(mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
@@ -19,7 +16,7 @@ test('handleCut - with focused dirent', async () => {
   }
   const result = await handleCut(state)
 
-  expect(mockRpc.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'cut', ['/test.txt'])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', 'cut', ['/test.txt']]])
   expect(result).toEqual({
     ...state,
     pasteShouldMove: true,
@@ -28,17 +25,13 @@ test('handleCut - with focused dirent', async () => {
 })
 
 test('handleCut - without focused dirent', async () => {
-  const mockRpc = MockRpc.create({
-    invoke: jest.fn(),
-    commandMap: {},
-  })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({})
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
     items: [],
   }
   const result = await handleCut(state)
-  expect(mockRpc.invoke).not.toHaveBeenCalled()
+  expect(mockRpc.invocations).toEqual([])
   expect(result).toBe(state)
 })
