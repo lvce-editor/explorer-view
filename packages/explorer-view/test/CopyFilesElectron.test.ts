@@ -13,14 +13,13 @@ test('copyFilesElectron', async () => {
   })
 
   const root = '/test'
-  const pathSeparator = '/'
   const fileHandles = [{ name: 'file1.txt' }, { name: 'file2.txt' }] as FileSystemHandle[]
   const files: readonly File[] = []
   const paths = ['/source/file1.txt', '/source/file2.txt']
 
-  await copyFilesElectron(root, pathSeparator, fileHandles, files, paths)
+  await copyFilesElectron(root, fileHandles, files, paths)
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.getPathSeparator'],
+    ['FileSystem.getPathSeparator', '/test'],
     ['FileSystem.copy', '/source/file1.txt', '/test/file1.txt'],
     ['FileSystem.copy', '/source/file2.txt', '/test/file2.txt']
   ])

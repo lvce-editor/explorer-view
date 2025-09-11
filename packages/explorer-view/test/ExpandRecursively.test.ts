@@ -6,7 +6,7 @@ import { Directory, File } from '../src/parts/DirentType/DirentType.ts'
 import { expandRecursively } from '../src/parts/ExpandRecursively/ExpandRecursively.ts'
 
 test.skip('expand root directory', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1.txt', type: 'file', isSymbolicLink: false },
@@ -39,28 +39,23 @@ test.skip('expand root directory', async () => {
 })
 
 test.skip('expand focused directory', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'file1.txt', type: 'file', isSymbolicLink: false },
-          { name: 'file2.txt', type: 'file', isSymbolicLink: false },
-        ]
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'IconTheme.getFolderIcon') {
-        return 'folder-icon'
-      }
-      if (method === 'IconTheme.getFileIcon') {
-        return 'file-icon'
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'file1.txt', type: 'file', isSymbolicLink: false },
+        { name: 'file2.txt', type: 'file', isSymbolicLink: false },
+      ]
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'IconTheme.getFolderIcon'() {
+      return 'folder-icon'
+    },
+    'IconTheme.getFileIcon'() {
+      return 'file-icon'
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
