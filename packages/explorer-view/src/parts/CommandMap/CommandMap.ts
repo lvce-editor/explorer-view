@@ -1,11 +1,12 @@
+import { terminate } from '@lvce-editor/viewlet-registry'
 import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as CancelEdit from '../CancelEdit/CancelEdit.ts'
 import * as CancelTypeAhead from '../CancelTypeAhead/CancelTypeAhead.ts'
 import * as CollapseAll from '../CollapseAll/CollapseAll.ts'
 import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
-import * as Create2 from '../Create2/Create2.ts'
 import * as Create from '../Create/Create.ts'
+import * as Create2 from '../Create2/Create2.ts'
 import * as Diff2 from '../Diff2/Diff2.ts'
 import * as ExpandAll from '../ExpandAll/ExpandAll.ts'
 import * as ExpandRecursively from '../ExpandRecursively/ExpandRecursively.ts'
@@ -18,8 +19,8 @@ import * as FocusNext from '../FocusNext/FocusNext.ts'
 import * as FocusNone from '../FocusNone/FocusNone.ts'
 import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
-import * as GetMenuEntries2 from '../GetMenuEntries2/GetMenuEntries2.ts'
 import * as GetMenuEntries from '../GetMenuEntries/GetMenuEntries.ts'
+import * as GetMenuEntries2 from '../GetMenuEntries2/GetMenuEntries2.ts'
 import * as GetMouseActions from '../GetMouseActions/GetMouseActions.ts'
 import * as HandleArrowLeft from '../HandleArrowLeft/HandleArrowLeft.ts'
 import * as HandleArrowRight from '../HandleArrowRight/HandleArrowRight.ts'
@@ -69,7 +70,6 @@ import * as SelectDown from '../SelectDown/SelectDown.ts'
 import * as SelectIndices from '../SelectIndices/SelectIndices.ts'
 import * as SelectUp from '../SelectUp/SelectUp.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
-import * as Terminate from '../Terminate/Terminate.ts'
 import * as ToggleIndividualSelection from '../ToggleIndividualSelection/ToggleIndividualSelection.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
@@ -150,7 +150,7 @@ export const commandMap = {
   'Explorer.renderActions2': RenderActions2.renderActions,
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
   'Explorer.saveState': WrapCommand.wrapGetter(SaveState.saveState),
-  'Explorer.terminate': Terminate.terminate,
+  'Explorer.terminate': terminate,
   'Explorer.initialize': Initialize.initialize,
 
   // deprecated
