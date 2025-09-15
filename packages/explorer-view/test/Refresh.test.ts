@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
@@ -11,6 +11,9 @@ test('refresh - empty state', async () => {
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+  })
+  
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
