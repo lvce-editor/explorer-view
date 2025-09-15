@@ -1,4 +1,4 @@
-import type { Test } from '@lvce-editor/test-with-playwright'
+import { type Test, Explorer } from '@lvce-editor/test-with-playwright'
 // manual accessibility tests
 
 // explorer
@@ -13,7 +13,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-accessibility'
 
-export const test: Test = async ({ FileSystem, Workspace, Main, Locator, expect }) => {
+export const test: Test = async ({ Explorer, FileSystem, Workspace, Main, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/languages`)
@@ -54,7 +54,7 @@ export const test: Test = async ({ FileSystem, Workspace, Main, Locator, expect 
   await expect(treeItemTestTxt).toHaveAttribute('aria-setsize', '3')
   // await expect(treeItemTestTxt).not.toHaveAttribute('aria-expanded', 'false') // TODO
 
-  await treeItemLanguages.click()
+  await Explorer.handleClick(0)
   await expect(treeItemLanguages).toHaveAttribute('aria-level', '1')
   await expect(treeItemLanguages).toHaveAttribute('aria-posinset', '1')
   await expect(treeItemLanguages).toHaveAttribute('aria-setsize', '3')
