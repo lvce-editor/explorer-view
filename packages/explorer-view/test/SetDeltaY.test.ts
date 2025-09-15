@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -15,7 +15,7 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
   throw new Error(`Unexpected method: ${method}`)
 }
 
-RendererWorker.registerMockRpc({
+IconThemeWorker.registerMockRpc({
   'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
   'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
   'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),

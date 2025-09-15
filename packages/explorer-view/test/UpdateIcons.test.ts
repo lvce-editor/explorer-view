@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as CreateDefaultState from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as UpdateIcons from '../src/parts/UpdateIcons/UpdateIcons.ts'
@@ -15,7 +15,7 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
 }
 
 test('updateIcons - should update icons for visible items', async () => {
-  RendererWorker.registerMockRpc({
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
     'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
     'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
@@ -42,7 +42,7 @@ test('updateIcons - should update icons for visible items', async () => {
 })
 
 test('updateIcons - should handle empty visible items', async () => {
-  RendererWorker.registerMockRpc({
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
     'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
     'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
