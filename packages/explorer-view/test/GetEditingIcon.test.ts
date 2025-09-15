@@ -1,11 +1,11 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { IconThemeWorker } from '@lvce-editor/rpc-registry'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as GetEditingIcon from '../src/parts/GetEditingIcon/GetEditingIcon.ts'
 
 test('getEditingIcon - CreateFile', async () => {
-  RendererWorker.registerMockRpc({
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'file-icon'
     },
@@ -16,7 +16,7 @@ test('getEditingIcon - CreateFile', async () => {
 })
 
 test('getEditingIcon - CreateFolder', async () => {
-  RendererWorker.registerMockRpc({
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
     },
@@ -27,7 +27,7 @@ test('getEditingIcon - CreateFolder', async () => {
 })
 
 test('getEditingIcon - Rename File', async () => {
-  RendererWorker.registerMockRpc({
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'file-icon'
     },
@@ -38,7 +38,7 @@ test('getEditingIcon - Rename File', async () => {
 })
 
 test('getEditingIcon - Rename EditingFile', async () => {
-  RendererWorker.registerMockRpc({
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'file-icon'
     },
@@ -49,7 +49,7 @@ test('getEditingIcon - Rename EditingFile', async () => {
 })
 
 test('getEditingIcon - Rename Directory', async () => {
-  RendererWorker.registerMockRpc({
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
     },
@@ -60,7 +60,7 @@ test('getEditingIcon - Rename Directory', async () => {
 })
 
 test('getEditingIcon - Rename EditingFolder', async () => {
-  RendererWorker.registerMockRpc({
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
     },
@@ -71,7 +71,7 @@ test('getEditingIcon - Rename EditingFolder', async () => {
 })
 
 test('getEditingIcon - Rename EditingDirectoryExpanded', async () => {
-  RendererWorker.registerMockRpc({
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
     },

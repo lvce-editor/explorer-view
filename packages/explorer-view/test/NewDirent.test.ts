@@ -146,16 +146,19 @@ test('newDirent updates state when focused item is not a directory', async () =>
     'FileSystem.getPathSeparator'() {
       return '/'
     },
+    'Preferences.get'() {
+      return false
+    },
+    'Focus.setFocus'() {},
+  })
+  
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
     'IconTheme.getFolderIcon'() {
       return ''
     },
-    'Preferences.get'() {
-      return false
-    },
-    'Focus.setFocus'() {},
     'IconTheme.getIcons'(...params: any[]) {
       return handleFileIcons(params[0])
     },
