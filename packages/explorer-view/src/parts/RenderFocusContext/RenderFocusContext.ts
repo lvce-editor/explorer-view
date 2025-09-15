@@ -1,13 +1,13 @@
-import { WhenExpression } from '@lvce-editor/constants'
+import { ViewletCommand, WhenExpression } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 
 export const renderFocusContext = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
   if (newState.focus === FocusId.Input) {
-    return ['Viewlet.setFocusContext', newState.uid, WhenExpression.FocusExplorerEditBox]
+    return [ViewletCommand.SetFocusContext, newState.uid, WhenExpression.FocusExplorerEditBox]
   }
   if (newState.focus === FocusId.List) {
-    return ['Viewlet.setFocusContext', newState.uid, WhenExpression.FocusExplorer]
+    return [ViewletCommand.SetFocusContext, newState.uid, WhenExpression.FocusExplorer]
   }
   return []
 }
