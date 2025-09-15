@@ -1,3 +1,4 @@
+import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as InputName from '../InputName/InputName.ts'
@@ -8,10 +9,10 @@ export const renderFocus = (oldState: ExplorerState, newState: ExplorerState): r
     return []
   }
   if (newState.focus === FocusId.Input) {
-    return ['Viewlet.focusElementByName', InputName.ExplorerInput]
+    return [ViewletCommand.FocusElementByName, InputName.ExplorerInput]
   }
   if (newState.focus === FocusId.List) {
-    return ['Viewlet.focusSelector', '.ListItems']
+    return [ViewletCommand.FocusSelector, '.ListItems']
   }
   // TODO
   // 1. when focused, focus the outer list element
