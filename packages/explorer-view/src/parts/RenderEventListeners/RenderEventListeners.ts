@@ -1,3 +1,4 @@
+import { EventExpression } from '@lvce-editor/constants'
 import type { DomEventListener } from '../DomEventListener/DomEventListener.ts'
 import * as DomEventListenersFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
@@ -27,7 +28,15 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenersFunctions.HandleClick,
-      params: ['handleClickAt', 'event.defaultPrevented', 'event.button', 'event.ctrlKey', 'event.shiftKey', 'event.clientX', 'event.clientY'],
+      params: [
+        'handleClickAt',
+        'event.defaultPrevented',
+        EventExpression.Button,
+        EventExpression.CtrlKey,
+        'event.shiftKey',
+        EventExpression.ClientX,
+        EventExpression.ClientY,
+      ],
       preventDefault: true,
     },
     {
@@ -42,31 +51,31 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenersFunctions.HandlePointerDown,
-      params: ['handlePointerDown', 'event.button', 'event.clientX', 'event.clientY'],
+      params: ['handlePointerDown', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY],
       // preventDefault: true,
     },
     {
       name: DomEventListenersFunctions.HandleEditingInput,
-      params: ['updateEditingValue', 'event.target.value'],
+      params: ['updateEditingValue', EventExpression.TargetValue],
     },
     {
       name: DomEventListenersFunctions.HandleContextMenu,
-      params: ['handleContextMenu', 'event.button', 'event.clientX', 'event.clientY'],
+      params: ['handleContextMenu', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY],
       preventDefault: true,
     },
     {
       name: DomEventListenersFunctions.HandleWheel,
-      params: ['handleWheel', 'event.deltaMode', 'event.deltaY'],
+      params: ['handleWheel', EventExpression.DeltaMode, EventExpression.DeltaY],
       passive: true,
     },
     {
       name: DomEventListenersFunctions.HandleDragOver,
-      params: ['handleDragOver', 'event.clientX', 'event.clientY'],
+      params: ['handleDragOver', EventExpression.ClientX, EventExpression.ClientY],
       preventDefault: true,
     },
     {
       name: DomEventListenersFunctions.HandleDrop,
-      params: ['handleDrop', 'event.clientX', 'event.clientY', 'event.dataTransfer.files2', 'event.dataTransfer.files'],
+      params: ['handleDrop', EventExpression.ClientX, EventExpression.ClientY, 'event.dataTransfer.files2', 'event.dataTransfer.files'],
       preventDefault: true,
     },
     {
