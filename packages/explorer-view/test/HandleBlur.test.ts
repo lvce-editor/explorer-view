@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -20,6 +20,9 @@ test.skip('handleBlur - when editing, keeps state unchanged', async () => {
     'FileSystem.writeFile'() {
       return
     },
+  })
+  
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },

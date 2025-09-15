@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -12,6 +12,9 @@ const mockRpc = RendererWorker.registerMockRpc({
       { name: 'file2', type: DirentType.File, path: '/dir1/file2' },
     ]
   },
+})
+
+IconThemeWorker.registerMockRpc({
   'IconTheme.getFileIcon'() {
     return ['icon1', 'icon2']
   },

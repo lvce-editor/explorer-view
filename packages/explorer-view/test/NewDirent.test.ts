@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -28,10 +28,13 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     'Preferences.get'() {
       return false
     },
+    'Focus.setFocus'() {},
+  })
+  
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return ''
     },
-    'Focus.setFocus'() {},
     'IconTheme.getIcons'(...params: any[]) {
       return handleFileIcons(params[0])
     },
@@ -85,6 +88,9 @@ test('newDirent handles directory click when focused item is a directory', async
       return false
     },
     'Focus.setFocus'() {},
+  })
+  
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return ''
     },
