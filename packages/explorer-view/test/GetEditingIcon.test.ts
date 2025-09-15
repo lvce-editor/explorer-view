@@ -103,7 +103,7 @@ test('getEditingIcon - None editing type', async () => {
 })
 
 test('getEditingIcon - unknown editing type', async () => {
-  RendererWorker.registerMockRpc({})
+  IconThemeWorker.registerMockRpc({})
 
   const result = await GetEditingIcon.getEditingIcon(999, 'test')
   expect(result).toBe('')
