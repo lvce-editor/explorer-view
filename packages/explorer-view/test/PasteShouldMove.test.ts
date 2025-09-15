@@ -1,15 +1,16 @@
-import { expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleCopy } from '../src/parts/HandleCopy/HandleCopy.ts'
 import { handleCut } from '../src/parts/HandleCut/HandleCut.ts'
 import { handlePaste } from '../src/parts/HandlePaste/HandlePaste.ts'
-import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('pasteShouldMove should be true after cut operation', async () => {
-  const mock = { invoke: jest.fn() }
-  RendererWorker.set(mock as any)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.writeNativeFiles'() {},
+  })
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -20,12 +21,13 @@ test('pasteShouldMove should be true after cut operation', async () => {
   const result = await handleCut(state)
 
   expect(result.pasteShouldMove).toBe(true)
-  expect(mock.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'cut', ['/test.txt'])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', 'cut', ['/test.txt']]])
 })
 
 test('pasteShouldMove should be false after copy operation', async () => {
-  const mock = { invoke: jest.fn() }
-  RendererWorker.set(mock as any)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.writeNativeFiles'() {},
+  })
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -36,7 +38,7 @@ test('pasteShouldMove should be false after copy operation', async () => {
   const result = await handleCopy(state)
 
   expect(result.pasteShouldMove).toBe(false)
-  expect(mock.invoke).toHaveBeenCalledWith('ClipBoard.writeNativeFiles', 'copy', ['/test.txt'])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', 'copy', ['/test.txt']]])
 })
 
 test.skip('pasteShouldMove should be reset to false after paste operation', async () => {
