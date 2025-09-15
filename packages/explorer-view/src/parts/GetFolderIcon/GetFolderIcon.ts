@@ -1,4 +1,4 @@
-import * as IconThemeWorker from '../IconThemeWorker/IconThemeWorker.ts'
+import * as IconThemeWorker from '@lvce-editor/rpc-registry'
 
 export const getFolderIcon = async (name: string): Promise<string> => {
   // @ts-ignore

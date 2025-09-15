@@ -1,5 +1,5 @@
 import type { IconRequest } from '../IconRequest/IconRequest.ts'
-import * as IconThemeWorker from '../IconThemeWorker/IconThemeWorker.ts'
+import * as IconThemeWorker from '@lvce-editor/rpc-registry'
 import { toSimpleIconRequest } from '../ToSimpleIconRequest/ToSimpleIconRequest.ts'
 
 export const requestFileIcons = async (requests: readonly IconRequest[]): Promise<readonly string[]> => {
