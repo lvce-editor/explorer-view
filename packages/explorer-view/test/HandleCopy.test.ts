@@ -1,8 +1,8 @@
 import { expect, jest, test } from '@jest/globals'
 import { RendererWorker as RpcRendererWorker } from '@lvce-editor/rpc-registry'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
-import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { handleCopy } from '../src/parts/HandleCopy/HandleCopy.ts'
 
 test('handleCopy - with focused dirent', async () => {
