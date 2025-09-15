@@ -1,16 +1,14 @@
 import { expect, jest, test } from '@jest/globals'
 import { RendererWorker as RpcRendererWorker } from '@lvce-editor/rpc-registry'
-import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { handleCopy } from '../src/parts/HandleCopy/HandleCopy.ts'
-import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.ts'
 
 test('handleCopy - with focused dirent', async () => {
   const mockRpc = RpcRendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
   })
-  RendererWorker.set(mockRpc)
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
@@ -29,7 +27,6 @@ test('handleCopy - without focused dirent', async () => {
   const mockRpc = RpcRendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
   })
-  RendererWorker.set(mockRpc)
   const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
   const state: ExplorerState = {
     ...createDefaultState(),
