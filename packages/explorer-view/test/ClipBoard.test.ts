@@ -29,7 +29,6 @@ test('writeNativeFiles', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
   })
-  RendererWorker.set(mockRpc)
   await ClipBoard.writeNativeFiles('copy', ['/test/file.txt'])
   expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', 'copy', ['/test/file.txt']]])
 })
