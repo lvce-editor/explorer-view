@@ -32,11 +32,9 @@ test('cancelEdit - removes editing items', async () => {
   RendererWorker.registerMockRpc({  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return []
-  })
-    },
+    }
   })
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -96,11 +94,9 @@ test('cancelEdit - rename file', async () => {
   RendererWorker.registerMockRpc({  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return []
-  })
-    },
+    }
   })
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -143,11 +139,9 @@ test('cancelEdit - rename folder', async () => {
   RendererWorker.registerMockRpc({  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return []
-  })
-    },
+    }
   })
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -190,11 +184,9 @@ test('cancelEdit - create file', async () => {
   RendererWorker.registerMockRpc({  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return []
-  })
-    },
+    }
   })
   const state: ExplorerState = {
     ...createDefaultState(),

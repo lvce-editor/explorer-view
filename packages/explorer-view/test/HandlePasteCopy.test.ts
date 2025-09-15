@@ -24,11 +24,9 @@ test('should focus on first newly created file after paste copy', async () => {
     },  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return ['', '']
-  })
-    },
+    }
   })
 
   const initialState: ExplorerState = {
@@ -77,8 +75,7 @@ test('should handle paste copy with multiple files and focus on first', async ()
 
     'IconTheme.getIcons'() {
       return ['', '', '', '']
-  })
-    },
+    }
   })
 
   const initialState: ExplorerState = {
@@ -122,8 +119,7 @@ test('should handle paste copy with empty files array', async () => {
 
     'IconTheme.getIcons'() {
       return []
-  })
-    },
+    }
   })
 
   const initialState: ExplorerState = {

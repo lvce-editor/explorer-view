@@ -28,14 +28,15 @@ test('acceptCreate - successful file creation', async () => {
     },  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getFileIcon'() {
       return ''
-  })
     },
     'IconTheme.getIcons'() {
       return Array(2).fill('')
-    },
+    }
+  })
+
+  RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === 'memfs:///workspace') {
         return [{ name: 'test', type: DirentType.Directory }]
@@ -50,7 +51,7 @@ test('acceptCreate - successful file creation', async () => {
     },
     'FileSystem.writeFile'() {
       return
-    },
+    }
   })
 
   const state: ExplorerState = {
