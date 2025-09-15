@@ -1,5 +1,6 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import * as IconThemeWorker from '../IconThemeWorker/IconThemeWorker.ts'
 
 export const getFolderIcon = async (name: string): Promise<string> => {
-  return Rpc.invoke('IconTheme.getFolderIcon', { name })
+  // @ts-ignore
+  return IconThemeWorker.invoke('IconTheme.getFolderIcon', { name })
 }

@@ -82,21 +82,21 @@ test('getEditingIcon - Rename EditingDirectoryExpanded', async () => {
 })
 
 test('getEditingIcon - Rename with unsupported dirent type', async () => {
-  RendererWorker.registerMockRpc({})
+  IconThemeWorker.registerMockRpc({})
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.Rename, 'test', DirentType.Symlink)
   expect(result).toBe('')
 })
 
 test('getEditingIcon - Rename without dirent type', async () => {
-  RendererWorker.registerMockRpc({})
+  IconThemeWorker.registerMockRpc({})
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.Rename, 'test')
   expect(result).toBe('')
 })
 
 test('getEditingIcon - None editing type', async () => {
-  RendererWorker.registerMockRpc({})
+  IconThemeWorker.registerMockRpc({})
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.None, 'test')
   expect(result).toBe('')
