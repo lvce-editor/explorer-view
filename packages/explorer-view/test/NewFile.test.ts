@@ -51,7 +51,7 @@ test('newFile', async () => {
     'Preferences.get': invoke.bind(undefined, 'Preferences.get'),
     'Focus.setFocus': invoke.bind(undefined, 'Focus.setFocus'),
   })
-  
+
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
     'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),

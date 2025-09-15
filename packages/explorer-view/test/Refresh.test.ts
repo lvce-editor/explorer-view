@@ -12,7 +12,7 @@ test('refresh - empty state', async () => {
       return []
     },
   })
-  
+
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
