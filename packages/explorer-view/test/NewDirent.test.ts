@@ -30,7 +30,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     },
     'Focus.setFocus'() {},
   })
-  
+
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return ''
@@ -89,7 +89,7 @@ test('newDirent handles directory click when focused item is a directory', async
     },
     'Focus.setFocus'() {},
   })
-  
+
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return ''
@@ -151,7 +151,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
     },
     'Focus.setFocus'() {},
   })
-  
+
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''

@@ -14,7 +14,8 @@ test('removeDirent - removes focused item', async () => {
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -25,7 +26,7 @@ test('removeDirent - removes focused item', async () => {
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {
@@ -47,7 +48,8 @@ test('removeDirent - removes multiple selected items', async () => {
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -58,7 +60,7 @@ test('removeDirent - removes multiple selected items', async () => {
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {
@@ -83,7 +85,8 @@ test('removeDirent - removes focused item and selected items', async () => {
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -94,7 +97,7 @@ test('removeDirent - removes focused item and selected items', async () => {
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {
@@ -120,7 +123,8 @@ test('remove file', async () => {
     },
     'FileSystem.readDirWithFileTypes'() {
       return [{ name: 'folder1', type: DirentType.Directory }]
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -131,7 +135,7 @@ test('remove file', async () => {
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {
@@ -157,7 +161,8 @@ test('remove folder with children', async () => {
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -168,7 +173,7 @@ test('remove folder with children', async () => {
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {
@@ -200,7 +205,8 @@ test('remove file from expanded folder', async () => {
         return []
       }
       return []
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -211,7 +217,7 @@ test('remove file from expanded folder', async () => {
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {
@@ -241,7 +247,8 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -252,7 +259,7 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {
@@ -301,7 +308,8 @@ test('removeDirent - shows error message when file operation fails', async () =>
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -312,7 +320,7 @@ test('removeDirent - shows error message when file operation fails', async () =>
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {
@@ -339,7 +347,8 @@ test('removeDirent - shows error message for multiple files when operation fails
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -350,7 +359,7 @@ test('removeDirent - shows error message for multiple files when operation fails
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {
@@ -375,7 +384,8 @@ test('removeDirent - continues normally when no error occurs', async () => {
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -386,7 +396,7 @@ test('removeDirent - continues normally when no error occurs', async () => {
     },
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const state: ExplorerState = {

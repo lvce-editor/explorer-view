@@ -29,12 +29,12 @@ test('cancelEdit', async () => {
 })
 
 test('cancelEdit - removes editing items', async () => {
-  RendererWorker.registerMockRpc({  })
+  RendererWorker.registerMockRpc({})
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -91,12 +91,12 @@ test('cancelEdit - removes editing items', async () => {
 })
 
 test('cancelEdit - rename file', async () => {
-  RendererWorker.registerMockRpc({  })
+  RendererWorker.registerMockRpc({})
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -136,12 +136,12 @@ test('cancelEdit - rename file', async () => {
 })
 
 test('cancelEdit - rename folder', async () => {
-  RendererWorker.registerMockRpc({  })
+  RendererWorker.registerMockRpc({})
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -181,12 +181,12 @@ test('cancelEdit - rename folder', async () => {
 })
 
 test('cancelEdit - create file', async () => {
-  RendererWorker.registerMockRpc({  })
+  RendererWorker.registerMockRpc({})
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
   const state: ExplorerState = {
     ...createDefaultState(),

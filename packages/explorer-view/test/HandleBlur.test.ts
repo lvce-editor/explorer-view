@@ -21,7 +21,7 @@ test.skip('handleBlur - when editing, keeps state unchanged', async () => {
       return
     },
   })
-  
+
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''

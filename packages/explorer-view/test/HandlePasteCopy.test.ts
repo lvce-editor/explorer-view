@@ -21,12 +21,13 @@ test('should focus on first newly created file after paste copy', async () => {
     },
     'Preferences.get'() {
       return false
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['', '']
-    }
+    },
   })
 
   const initialState: ExplorerState = {
@@ -69,13 +70,13 @@ test('should handle paste copy with multiple files and focus on first', async ()
     },
     'Preferences.get'() {
       return false
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return ['', '', '', '']
-    }
+    },
   })
 
   const initialState: ExplorerState = {
@@ -113,13 +114,13 @@ test('should handle paste copy with empty files array', async () => {
     },
     'Preferences.get'() {
       return false
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return []
-    }
+    },
   })
 
   const initialState: ExplorerState = {

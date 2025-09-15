@@ -7,12 +7,13 @@ import { handleWheel } from '../src/parts/HandleWheel/HandleWheel.ts'
 RendererWorker.registerMockRpc({
   'FileSystem.readDirWithFileTypes'() {
     return []
-  },  })
+  },
+})
 
 IconThemeWorker.registerMockRpc({
   'IconTheme.getIcons'() {
     return []
-  }
+  },
 })
 
 test('handleWheel calls SetDeltaY with correct delta', async () => {

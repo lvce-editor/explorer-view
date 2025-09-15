@@ -25,7 +25,8 @@ test('acceptCreate - successful file creation', async () => {
   RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
-    },  })
+    },
+  })
 
   IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
@@ -33,7 +34,7 @@ test('acceptCreate - successful file creation', async () => {
     },
     'IconTheme.getIcons'() {
       return Array(2).fill('')
-    }
+    },
   })
 
   RendererWorker.registerMockRpc({
@@ -51,7 +52,7 @@ test('acceptCreate - successful file creation', async () => {
     },
     'FileSystem.writeFile'() {
       return
-    }
+    },
   })
 
   const state: ExplorerState = {

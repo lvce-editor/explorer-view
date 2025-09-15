@@ -15,7 +15,7 @@ test('acceptCreateFile', async () => {
         return [{ name: 'folder1', type: DirentType.Directory }]
       }
       return []
-    }
+    },
   })
 
   IconThemeWorker.registerMockRpc({
@@ -24,7 +24,7 @@ test('acceptCreateFile', async () => {
     },
     'IconTheme.getIcons'() {
       return ['folder-icon']
-    }
+    },
   })
 
   const state: ExplorerState = {
