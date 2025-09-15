@@ -2,6 +2,5 @@ import { initializeFileSystemWorker } from '../InitializeFileSystemWorker/Initia
 import { initializeIconThemeWorker } from '../InitializeIconThemeWorker/InitializeIconThemeWorker.ts'
 
 export const initialize = async (): Promise<void> => {
-  await initializeFileSystemWorker()
-  await initializeIconThemeWorker()
+  await Promise.all([initializeFileSystemWorker(), initializeIconThemeWorker()])
 }
