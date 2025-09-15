@@ -26,7 +26,6 @@ export const test: Test = async ({ Explorer, FileSystem, Workspace, Main, Locato
 
   // act
   await Workspace.setPath(tmpDir)
-  await Main.openUri(`${tmpDir}/test.txt`)
 
   const titleLanguages = '/languages'
   const treeItemLanguages = Locator(`.TreeItem[title$="${titleLanguages}"]`)
