@@ -1,3 +1,4 @@
+import { terminate } from '@lvce-editor/viewlet-registry'
 import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as CancelEdit from '../CancelEdit/CancelEdit.ts'
 import * as CancelTypeAhead from '../CancelTypeAhead/CancelTypeAhead.ts'
@@ -69,7 +70,6 @@ import * as SelectDown from '../SelectDown/SelectDown.ts'
 import * as SelectIndices from '../SelectIndices/SelectIndices.ts'
 import * as SelectUp from '../SelectUp/SelectUp.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
-import * as Terminate from '../Terminate/Terminate.ts'
 import * as ToggleIndividualSelection from '../ToggleIndividualSelection/ToggleIndividualSelection.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
@@ -150,7 +150,7 @@ export const commandMap = {
   'Explorer.renderActions2': RenderActions2.renderActions,
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
   'Explorer.saveState': WrapCommand.wrapGetter(SaveState.saveState),
-  'Explorer.terminate': Terminate.terminate,
+  'Explorer.terminate': terminate,
   'Explorer.initialize': Initialize.initialize,
 
   // deprecated
