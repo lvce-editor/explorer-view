@@ -20,11 +20,9 @@ test('should update state with new workspace path and load content', async () =>
     },  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return ['']
-  })
-    },
+    }
   })
 
   const initialState: ExplorerState = createDefaultState()
@@ -58,11 +56,9 @@ test('should preserve state properties when updating workspace', async () => {
     },  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return ['']
-  })
-    },
+    }
   })
 
   const initialState: ExplorerState = createDefaultState()
@@ -113,8 +109,7 @@ test('should handle workspace path change with existing content', async () => {
 
     'IconTheme.getIcons'() {
       return ['file-icon', 'folder-icon']
-  })
-    },
+    }
   })
 
   const initialState: ExplorerState = createDefaultState()
@@ -143,11 +138,9 @@ test('should handle workspace path change with chevrons enabled', async () => {
     },  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return ['']
-  })
-    },
+    }
   })
 
   const initialState: ExplorerState = createDefaultState()
@@ -173,11 +166,9 @@ test('should handle different path separators', async () => {
     },  })
 
   IconThemeWorker.registerMockRpc({
-
     'IconTheme.getIcons'() {
       return ['']
-  })
-    },
+    }
   })
 
   const initialState: ExplorerState = createDefaultState()

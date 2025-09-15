@@ -9,12 +9,10 @@ RendererWorker.registerMockRpc({
     return []
   },  })
 
-  IconThemeWorker.registerMockRpc({
-
+IconThemeWorker.registerMockRpc({
   'IconTheme.getIcons'() {
     return []
-  })
-  },
+  }
 })
 
 test('handleWheel calls SetDeltaY with correct delta', async () => {
