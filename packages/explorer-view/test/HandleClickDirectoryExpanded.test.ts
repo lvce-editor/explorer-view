@@ -1,12 +1,10 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import { set } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickDirectoryExpanded } from '../src/parts/HandleClickDirectoryExpanded/HandleClickDirectoryExpanded.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test.skip('collapse expanded directory', async () => {
   const state: ExplorerState = createDefaultState()
@@ -69,16 +67,11 @@ test('collapse expanded directory with children', async () => {
 })
 
 test('collapse expanded directory with many items preserves icons', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  set(RendererWorker, mockRpc)
 
   const dirent = {
     name: 'test',
@@ -117,19 +110,15 @@ test('collapse expanded directory with many items preserves icons', async () => 
   expect(newState.focusedIndex).toBe(0)
   expect(newState.focused).toBe(true)
   expect(newState.fileIconCache['/test/']).toBe('folder-icon')
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('collapse expanded directory with scroll position adjustment', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
-  set(RendererWorker, mockRpc)
 
   const otherFolder: ExplorerItem = {
     name: '1',
@@ -189,4 +178,5 @@ test('collapse expanded directory with scroll position adjustment', async () => 
   // After collapsing, since only one item remains and it fits in viewport,
   // scroll position should be reset to 0
   expect(newState.deltaY).toBe(0)
+  expect(mockRpc.invocations).toEqual([])
 })

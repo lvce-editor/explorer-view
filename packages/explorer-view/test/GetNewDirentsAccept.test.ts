@@ -1,22 +1,15 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import * as RpcRegistry from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewDirentsAccept } from '../src/parts/GetNewDirentsAccept/GetNewDirentsAccept.ts'
-import { RendererWorker } from '../src/parts/RpcId/RpcId.ts'
 
 test('getNewDirentsAccept - create file in root', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: async (method: string): Promise<any> => {
-      if (method === 'FileSystem.writeFile') {
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const items: readonly ExplorerItem[] = []
   const editingValue = 'test.txt'
@@ -37,19 +30,15 @@ test('getNewDirentsAccept - create file in root', async () => {
     selected: false,
   })
   expect(result.newFocusedIndex).toBe(0)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('getNewDirentsAccept - create file in subfolder', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.writeFile') {
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const newDirentType = DirentType.File
 
@@ -84,22 +73,18 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
     selected: false,
   })
   expect(result.newFocusedIndex).toBe(1)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('getNewDirentsAccept - create nested file', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.writeFile') {
-        return
-      }
-      if (method === 'FileSystem.mkdir') {
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return
+    },
+    'FileSystem.mkdir'() {
+      return
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const items: readonly ExplorerItem[] = []
   const editingValue = 'a/b/c/test.txt'
@@ -120,19 +105,15 @@ test('getNewDirentsAccept - create nested file', async () => {
     selected: false,
   })
   expect(result.newFocusedIndex).toBe(0)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('getNewDirentsAccept - handle error', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.writeFile') {
-        return Promise.reject(new Error('Failed to create file'))
-      }
-      throw new Error(`unexpected method ${method}`)
+  RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return Promise.reject(new Error('Failed to create file'))
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const editingValue = 'test.txt'
   const focusedIndex = -1

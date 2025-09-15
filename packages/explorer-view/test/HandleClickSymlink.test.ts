@@ -1,12 +1,10 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickSymLink } from '../src/parts/HandleClickSymlink/HandleClickSymlink.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 test('handleClickSymLink - file symlink', async () => {
   const state: ExplorerState = createDefaultState()
@@ -20,26 +18,24 @@ test('handleClickSymLink - file symlink', async () => {
   const index = 0
 
   const mockRealPath = '/test/real-file'
-  const invoke = (method: string): any => {
-    if (method === 'FileSystem.getRealPath') {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getRealPath'() {
       return mockRealPath
-    }
-    if (method === 'FileSystem.stat') {
+    },
+    'FileSystem.stat'() {
       return DirentType.File
-    }
-    if (method === 'Main.openUri') {
+    },
+    'Main.openUri'() {
       return undefined
-    }
-    throw new Error(`unexpected method ${method}`)
-  }
-
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
+    },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   await handleClickSymLink(state, dirent, index)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.getRealPath', '/test/symlink'],
+    ['FileSystem.stat', '/test/real-file'],
+    ['Main.openUri', '/test/symlink', true],
+  ])
 })
 
 test('handleClickSymLink - unsupported type', async () => {
@@ -54,21 +50,18 @@ test('handleClickSymLink - unsupported type', async () => {
   const index = 0
 
   const mockRealPath = '/test/real-file'
-  const invoke = (method: string): any => {
-    if (method === 'FileSystem.getRealPath') {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getRealPath'() {
       return mockRealPath
-    }
-    if (method === 'FileSystem.stat') {
+    },
+    'FileSystem.stat'() {
       return DirentType.Directory
-    }
-    throw new Error(`unexpected method ${method}`)
-  }
-
-  const mockRpc = MockRpc.create({
-    invoke,
-    commandMap: {},
+    },
   })
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
 
   await expect(handleClickSymLink(state, dirent, index)).rejects.toThrow('unsupported file type')
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.getRealPath', '/test/symlink'],
+    ['FileSystem.stat', '/test/real-file'],
+  ])
 })
