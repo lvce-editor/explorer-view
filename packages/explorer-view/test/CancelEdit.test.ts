@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { cancelEdit } from '../src/parts/CancelEdit/CancelEdit.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -29,9 +29,13 @@ test('cancelEdit', async () => {
 })
 
 test('cancelEdit - removes editing items', async () => {
-  RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({  })
+
+  IconThemeWorker.registerMockRpc({
+
     'IconTheme.getIcons'() {
       return []
+  })
     },
   })
   const state: ExplorerState = {
@@ -89,9 +93,13 @@ test('cancelEdit - removes editing items', async () => {
 })
 
 test('cancelEdit - rename file', async () => {
-  RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({  })
+
+  IconThemeWorker.registerMockRpc({
+
     'IconTheme.getIcons'() {
       return []
+  })
     },
   })
   const state: ExplorerState = {
@@ -132,9 +140,13 @@ test('cancelEdit - rename file', async () => {
 })
 
 test('cancelEdit - rename folder', async () => {
-  RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({  })
+
+  IconThemeWorker.registerMockRpc({
+
     'IconTheme.getIcons'() {
       return []
+  })
     },
   })
   const state: ExplorerState = {
@@ -175,9 +187,13 @@ test('cancelEdit - rename folder', async () => {
 })
 
 test('cancelEdit - create file', async () => {
-  RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({  })
+
+  IconThemeWorker.registerMockRpc({
+
     'IconTheme.getIcons'() {
       return []
+  })
     },
   })
   const state: ExplorerState = {

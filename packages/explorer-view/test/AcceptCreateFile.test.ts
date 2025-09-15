@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptCreateFile } from '../src/parts/AcceptCreateFile/AcceptCreateFile.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -8,9 +8,13 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 test('acceptCreateFile', async () => {
   RendererWorker.registerMockRpc({
     'FileSystem.createFile'() {},
-    'FileSystem.writeFile'() {},
+    'FileSystem.writeFile'() {},  })
+
+  IconThemeWorker.registerMockRpc({
+
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
+  })
     },
     'IconTheme.getIcons'() {
       return ['folder-icon']

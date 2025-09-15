@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -21,9 +21,13 @@ test('should focus on first newly created file after paste copy', async () => {
     },
     'Preferences.get'() {
       return false
-    },
+    },  })
+
+  IconThemeWorker.registerMockRpc({
+
     'IconTheme.getIcons'() {
       return ['', '']
+  })
     },
   })
 
@@ -67,9 +71,13 @@ test('should handle paste copy with multiple files and focus on first', async ()
     },
     'Preferences.get'() {
       return false
-    },
+    },  })
+
+  IconThemeWorker.registerMockRpc({
+
     'IconTheme.getIcons'() {
       return ['', '', '', '']
+  })
     },
   })
 
@@ -108,9 +116,13 @@ test('should handle paste copy with empty files array', async () => {
     },
     'Preferences.get'() {
       return false
-    },
+    },  })
+
+  IconThemeWorker.registerMockRpc({
+
     'IconTheme.getIcons'() {
       return []
+  })
     },
   })
 

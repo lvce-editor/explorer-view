@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleWheel } from '../src/parts/HandleWheel/HandleWheel.ts'
@@ -7,9 +7,13 @@ import { handleWheel } from '../src/parts/HandleWheel/HandleWheel.ts'
 RendererWorker.registerMockRpc({
   'FileSystem.readDirWithFileTypes'() {
     return []
-  },
+  },  })
+
+  IconThemeWorker.registerMockRpc({
+
   'IconTheme.getIcons'() {
     return []
+  })
   },
 })
 
