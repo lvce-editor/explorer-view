@@ -5,10 +5,28 @@ import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import { getPathDirentsMap } from '../GetPathDirentsMap/GetPathDirentsMap.ts'
 import { getPaths } from '../GetPaths/GetPaths.ts'
 import { getProtoMap } from '../GetProtoMap/GetProtoMap.ts'
+import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import { sortPathDirentsMap } from '../SortPathDirentsMap/SortPathDirentsMap.ts'
 
 export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { root, minLineY, height, itemHeight, fileIconCache, items, focusedIndex } = state
+  const {
+    root,
+    minLineY,
+    height,
+    itemHeight,
+    fileIconCache,
+    cutItems,
+    sourceControlIgnoredUris,
+    dropTargets,
+    editingErrorMessage,
+    editingIcon,
+    editingIndex,
+    editingType,
+    editingValue,
+    focusedIndex,
+    items,
+    useChevrons,
+  } = state
   const expandedDirents = getExpandedDirents(items)
   const expandedPaths = getPaths(expandedDirents)
   const allPaths = [root, ...expandedPaths]
@@ -22,12 +40,29 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
   if (focusedIndex >= newItems.length) {
     newFocusedIndex = newItems.length - 1
   }
+  const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
+    items,
+    minLineY,
+    maxLineY,
+    focusedIndex,
+    editingIndex,
+    editingType,
+    editingValue,
+    editingErrorMessage,
+    icons,
+    useChevrons,
+    dropTargets,
+    editingIcon,
+    cutItems,
+    sourceControlIgnoredUris,
+  )
   return {
     ...state,
-    items: newItems,
     fileIconCache: newFileIconCache,
-    icons,
-    maxLineY,
     focusedIndex: newFocusedIndex,
+    icons,
+    items: newItems,
+    maxLineY,
+    visibleExplorerItems,
   }
 }
