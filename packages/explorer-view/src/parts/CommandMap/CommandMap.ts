@@ -122,7 +122,7 @@ export const commandMap = {
   'Explorer.handleUpload': WrapCommand.wrapCommand(HandleUpload.handleUpload),
   'Explorer.handleWheel': WrapCommand.wrapCommand(HandleWheel.handleWheel),
   'Explorer.handleWorkspaceChange': WrapCommand.wrapCommand(HandleWorkspaceChange.handleWorkspaceChange),
-  'Explorer.loadContent': WrapCommand.wrapCommand(LoadContent.loadContent),
+  'Explorer.loadContent': WrapCommand.wrapListItemCommand(LoadContent.loadContent),
   'Explorer.newFile': WrapCommand.wrapCommand(NewFile.newFile),
   'Explorer.newFolder': WrapCommand.wrapCommand(NewFolder.newFolder),
   'Explorer.openContainingFolder': WrapCommand.wrapCommand(OpenContainingFolder.openContainingFolder),
