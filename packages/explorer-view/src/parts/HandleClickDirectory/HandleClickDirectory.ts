@@ -3,9 +3,6 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
-import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
-import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
-import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
 export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus: boolean): Promise<ExplorerState> => {
   // @ts-ignore
@@ -35,8 +32,6 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
     focused: keepFocus,
     focusedIndex: newIndex,
     items: newDirents,
-    maxLineY,
-    visibleExplorerItems,
     focus: FocusId.List,
   }
 }

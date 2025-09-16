@@ -50,21 +50,9 @@ test('expandAll - expand directories at same depth', async () => {
   expect(result.items[1].type).toBe(DirentType.File)
   expect(result.items[2].name).toBe('file2')
   expect(result.items[3].name).toBe('dir2')
-  expect(result.icons).toHaveLength(6)
   expect(result.fileIconCache).toBeDefined()
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', '/dir1'],
     ['FileSystem.readDirWithFileTypes', '/dir2'],
-    [
-      'IconTheme.getIcons',
-      [
-        { name: 'dir1', type: 2 },
-        { name: 'file1', type: 1 },
-        { name: 'file2', type: 1 },
-        { name: 'dir2', type: 2 },
-        { name: 'file1', type: 1 },
-        { name: 'file2', type: 1 },
-      ],
-    ],
   ])
 })
