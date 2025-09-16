@@ -15,7 +15,7 @@ import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
 export const acceptCreate = async (state: ExplorerState, newDirentType: number): Promise<ExplorerState> => {
-  const { editingValue, minLineY, height, itemHeight, fileIconCache, pathSeparator, root, focusedIndex, items } = state
+  const { editingValue, minLineY, height, itemHeight, pathSeparator, root, focusedIndex, items } = state
   const newFileName = editingValue
   const editingErrorMessage = ValidateFileName2.validateFileName2(newFileName)
   if (editingErrorMessage) {
