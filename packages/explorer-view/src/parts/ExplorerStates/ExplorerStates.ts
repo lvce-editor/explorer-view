@@ -34,6 +34,9 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState)
     const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
+    if (items === intermediate.newState.items && minLineY === intermediate.newState.minLineY && editingIcon === intermediate.newState.editingIcon) {
+      return
+    }
     const visible = items.slice(minLineY, maxLineY)
     const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
     const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
