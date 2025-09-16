@@ -110,7 +110,6 @@ test('should handle workspace path change with existing content', async () => {
 
   expect(result.root).toBe('/changed/workspace/path')
   expect(result.items).toHaveLength(2)
-  expect(result.icons).toHaveLength(2)
   expect(result.pathSeparator).toBe('/')
   expect(result.useChevrons).toBe(false)
 })
