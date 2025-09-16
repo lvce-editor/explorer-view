@@ -10,15 +10,15 @@ export const handleClickDirectoryExpanded = async (
   index: number,
   keepFocus: boolean,
 ): Promise<ExplorerState> => {
-  const { minLineY, maxLineY, itemHeight, fileIconCache } = state
+  const { minLineY, maxLineY, itemHeight, fileIconCache, items } = state
   // @ts-ignore
   dirent.type = DirentType.Directory
   // @ts-ignore
   dirent.icon = ''
-  const endIndex = GetParentEndIndex.getParentEndIndex(state.items, index)
+  const endIndex = GetParentEndIndex.getParentEndIndex(items, index)
   const removeCount = endIndex - index - 1
   // TODO race conditions and side effects are everywhere
-  const newDirents = [...state.items]
+  const newDirents = [...items]
   newDirents.splice(index + 1, removeCount)
   const newTotal = newDirents.length
   if (newTotal < maxLineY) {
