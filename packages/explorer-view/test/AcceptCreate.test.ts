@@ -22,7 +22,7 @@ test('acceptCreate - empty file name', async () => {
 })
 
 test('acceptCreate - successful file creation', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },
@@ -110,4 +110,11 @@ test('acceptCreate - successful file creation', async () => {
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
   })
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.getPathSeparator', 'memfs:///workspace'],
+    ['FileSystem.writeFile', 'memfs:///workspace/test/test.txt', ''],
+    ['FileSystem.readDirWithFileTypes', 'memfs:///workspace'],
+    ['FileSystem.readDirWithFileTypes', 'memfs:///workspace/test'],
+    ['IconTheme.getIcons', []],
+  ])
 })

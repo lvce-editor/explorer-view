@@ -18,8 +18,10 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
   }
 }
 
+let mockRpc: any
+
 beforeEach(async () => {
-  RendererWorker.registerMockRpc({
+  mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
     'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
   })
@@ -31,6 +33,7 @@ test('updateEditingValue - updates state with new value', async () => {
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('')
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('updateEditingValue - updates state with new value and input source', async () => {
@@ -39,6 +42,7 @@ test('updateEditingValue - updates state with new value and input source', async
   const result = await updateEditingValue(state, newValue, InputSource.User)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('')
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('updateEditingValue - updates file icon', async () => {
@@ -50,6 +54,9 @@ test('updateEditingValue - updates file icon', async () => {
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('file-test.txt')
+  expect(mockRpc.invocations).toEqual([
+    ['IconTheme.getFileIcon', { name: 'test.txt' }],
+  ])
 })
 
 test('updateEditingValue - updates folder icon', async () => {
@@ -61,6 +68,9 @@ test('updateEditingValue - updates folder icon', async () => {
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('folder-test')
+  expect(mockRpc.invocations).toEqual([
+    ['IconTheme.getFolderIcon', { name: 'test' }],
+  ])
 })
 
 test('updateEditingValue - updates file icon when renaming file', async () => {
@@ -74,6 +84,9 @@ test('updateEditingValue - updates file icon when renaming file', async () => {
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('file-new.txt')
+  expect(mockRpc.invocations).toEqual([
+    ['IconTheme.getFileIcon', { name: 'new.txt' }],
+  ])
 })
 
 test('updateEditingValue - updates folder icon when renaming folder', async () => {
@@ -87,6 +100,9 @@ test('updateEditingValue - updates folder icon when renaming folder', async () =
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('folder-new')
+  expect(mockRpc.invocations).toEqual([
+    ['IconTheme.getFolderIcon', { name: 'new' }],
+  ])
 })
 
 test('updateEditingValue - preserves other state properties', async () => {
@@ -95,4 +111,5 @@ test('updateEditingValue - preserves other state properties', async () => {
   expect(result.uid).toBe(state.uid)
   expect(result.root).toBe(state.root)
   expect(result.items).toBe(state.items)
+  expect(mockRpc.invocations).toEqual([])
 })
