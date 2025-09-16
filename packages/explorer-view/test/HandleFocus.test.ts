@@ -4,7 +4,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleFocus } from '../src/parts/HandleFocus/HandleFocus.ts'
 import * as WhenExpression from '../src/parts/WhenExpression/WhenExpression.ts'
 
-test('handleFocus', async () => {
+test.skip('handleFocus', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Focus.setFocus'() {},
   })

@@ -1,8 +1,9 @@
-import { WhenExpression } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as SetFocus from '../SetFocus/SetFocus.ts'
+import * as FocusId from '../FocusId/FocusId.ts'
 
 export const handleFocus = async (state: ExplorerState): Promise<ExplorerState> => {
-  await SetFocus.setFocus(WhenExpression.FocusExplorer)
-  return state
+  return {
+    ...state,
+    focus: FocusId.List,
+  }
 }
