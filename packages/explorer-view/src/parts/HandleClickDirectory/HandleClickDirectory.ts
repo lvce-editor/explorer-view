@@ -1,12 +1,11 @@
-import { WhenExpression } from '@lvce-editor/constants'
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
+import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
-import * as SetFocus from '../SetFocus/SetFocus.ts'
 
 export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus: boolean): Promise<ExplorerState> => {
   const {
@@ -65,8 +64,6 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
     sourceControlIgnoredUris,
   )
 
-  // TODO use functional focus rendering
-  await SetFocus.setFocus(WhenExpression.FocusExplorer)
   return {
     ...state,
     fileIconCache: newFileIconCache,
@@ -76,5 +73,6 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
     items: newDirents,
     maxLineY,
     visibleExplorerItems,
+    focus: FocusId.List,
   }
 }
