@@ -3,8 +3,6 @@ import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
-import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
-import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetFileOperationsCreate from '../GetFileOperationsCreate/GetFileOperationsCreate.ts'
 import * as GetIndex from '../GetIndex/GetIndex.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
@@ -16,7 +14,7 @@ import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
 export const acceptCreate = async (state: ExplorerState, newDirentType: number): Promise<ExplorerState> => {
-  const { editingValue, minLineY, height, itemHeight, fileIconCache, pathSeparator, root, focusedIndex, items } = state
+  const { editingValue, pathSeparator, root, focusedIndex, items } = state
   const newFileName = editingValue
   const editingErrorMessage = ValidateFileName2.validateFileName2(newFileName)
   if (editingErrorMessage) {
@@ -47,9 +45,6 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
 
   const dirents = newItems
   const newFocusedIndex = GetIndex.getIndex(newItems, absolutePath)
-  const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, dirents.length)
-  const visible = dirents.slice(minLineY, maxLineY)
-  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
 
   return {
     ...state,
@@ -57,9 +52,6 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
     editingIndex: -1,
     focusedIndex: newFocusedIndex,
     editingType: ExplorerEditingType.None,
-    maxLineY,
     focus: FocusId.List,
-    icons,
-    fileIconCache: newFileIconCache,
   }
 }

@@ -108,12 +108,6 @@ test('acceptCreate - successful file creation', async () => {
     editingIndex: -1,
     focusedIndex: 1,
     editingType: ExplorerEditingType.None,
-    maxLineY: 2,
     focus: FocusId.List,
-    icons: ['', ''],
-    fileIconCache: {
-      'memfs:///workspace/test': '',
-      'memfs:///workspace/test/test.txt': '',
-    },
   })
 })
