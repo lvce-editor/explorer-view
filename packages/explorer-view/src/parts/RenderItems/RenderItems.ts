@@ -1,3 +1,4 @@
+import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetErrorMessagePosition from '../GetErrorMessagePosition/GetErrorMessagePosition.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
@@ -37,5 +38,5 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     top,
     left,
   )
-  return ['Viewlet.setDom2', dom]
+  return [ViewletCommand.SetDom2, dom]
 }
