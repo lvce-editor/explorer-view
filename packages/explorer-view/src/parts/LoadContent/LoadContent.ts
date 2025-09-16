@@ -46,10 +46,8 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     editingIndex,
     editingType,
     editingValue,
-    focused,
     focusedIndex,
     items,
-    width,
   } = state
   const { useChevrons, confirmDelete } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
