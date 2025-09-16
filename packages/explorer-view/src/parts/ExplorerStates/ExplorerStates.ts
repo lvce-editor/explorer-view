@@ -28,7 +28,7 @@ export const wrapListItemCommand = <T extends any[]>(
       height,
       itemHeight,
       fileIconCache,
-    } = newState
+    } = updatedState
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState)
     const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
