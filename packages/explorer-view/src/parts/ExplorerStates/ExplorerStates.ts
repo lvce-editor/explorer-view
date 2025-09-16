@@ -7,83 +7,54 @@ import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleE
 export const { get, set, wrapCommand, registerCommands, getCommandIds, wrapGetter } = ViewletRegistry.create<ExplorerState>()
 
 export const wrapListItemCommand = <T extends any[]>(
-  fn: (state: ExplorerState, ...args: T) => Promise<ExplorerState>
+  fn: (state: ExplorerState, ...args: T) => Promise<ExplorerState>,
 ): ((state: ExplorerState, ...args: T) => Promise<ExplorerState>) => {
-  return async (state: ExplorerState, ...args: T): Promise<ExplorerState> => {
+  const wrappedCommand = async (state: ExplorerState, ...args: T): Promise<ExplorerState> => {
     const newState = await fn(state, ...args)
+    const {
+      items,
+      minLineY,
+      focusedIndex,
+      editingIndex,
+      editingType,
+      editingValue,
+      editingErrorMessage,
+      useChevrons,
+      dropTargets,
+      editingIcon,
+      cutItems,
+      sourceControlIgnoredUris,
+      height,
+      itemHeight,
+      fileIconCache,
+    } = newState
+    const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
+    const visible = items.slice(minLineY, maxLineY)
+    const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
+    const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
+      items,
+      minLineY,
+      maxLineY,
+      focusedIndex,
+      editingIndex,
+      editingType,
+      editingValue,
+      editingErrorMessage,
+      icons,
+      useChevrons,
+      dropTargets,
+      editingIcon,
+      cutItems,
+      sourceControlIgnoredUris,
+    )
 
-    // If the items have changed, update visible items and icons
-    if (newState.items !== state.items || newState.minLineY !== state.minLineY || newState.maxLineY !== state.maxLineY) {
-      const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(newState.minLineY, newState.height, newState.itemHeight, newState.items.length)
-      const visible = newState.items.slice(newState.minLineY, maxLineY)
-      const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, newState.fileIconCache)
-      const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
-        newState.items,
-        newState.minLineY,
-        maxLineY,
-        newState.focusedIndex,
-        newState.editingIndex,
-        newState.editingType,
-        newState.editingValue,
-        newState.editingErrorMessage,
-        icons,
-        newState.useChevrons,
-        newState.dropTargets,
-        newState.editingIcon,
-        newState.cutItems,
-        newState.sourceControlIgnoredUris,
-      )
-
-      return {
-        ...newState,
-        visibleExplorerItems,
-        fileIconCache: newFileIconCache,
-        icons,
-        maxLineY,
-      }
+    return {
+      ...newState,
+      visibleExplorerItems,
+      fileIconCache: newFileIconCache,
+      icons,
+      maxLineY,
     }
-
-    return newState
   }
-}
-
-export const wrapListItemCommandSync = <T extends any[]>(
-  fn: (state: ExplorerState, ...args: T) => ExplorerState
-): ((state: ExplorerState, ...args: T) => Promise<ExplorerState>) => {
-  return async (state: ExplorerState, ...args: T): Promise<ExplorerState> => {
-    const newState = fn(state, ...args)
-
-    // If the items have changed, update visible items and icons
-    if (newState.items !== state.items || newState.minLineY !== state.minLineY || newState.maxLineY !== state.maxLineY) {
-      const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(newState.minLineY, newState.height, newState.itemHeight, newState.items.length)
-      const visible = newState.items.slice(newState.minLineY, maxLineY)
-      const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, newState.fileIconCache)
-      const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
-        newState.items,
-        newState.minLineY,
-        maxLineY,
-        newState.focusedIndex,
-        newState.editingIndex,
-        newState.editingType,
-        newState.editingValue,
-        newState.editingErrorMessage,
-        icons,
-        newState.useChevrons,
-        newState.dropTargets,
-        newState.editingIcon,
-        newState.cutItems,
-        newState.sourceControlIgnoredUris,
-      )
-
-      return {
-        ...newState,
-        visibleExplorerItems,
-        fileIconCache: newFileIconCache,
-        icons,
-        maxLineY,
-      }
-    }
-
-    return newState
-  }
+  return wrappedCommand
 }
