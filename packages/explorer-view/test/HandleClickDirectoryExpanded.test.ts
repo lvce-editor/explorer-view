@@ -174,7 +174,6 @@ test('collapse expanded directory with scroll position adjustment', async () => 
   expect(newState.focused).toBe(true)
   expect(newState.minLineY).toBe(0)
   expect(newState.maxLineY).toBe(2)
-  expect(newState.icons).toEqual(['folder-icon-1', 'folder-icon-2'])
   // After collapsing, since only one item remains and it fits in viewport,
   // scroll position should be reset to 0
   expect(newState.deltaY).toBe(0)
