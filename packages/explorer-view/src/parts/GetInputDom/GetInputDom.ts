@@ -5,7 +5,10 @@ import { getInputClassName } from '../GetInputClassName/GetInputClassName.ts'
 import * as InputName from '../InputName/InputName.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
-export const getInputDom = (hasEditingError: boolean): readonly VirtualDomNode[] => {
+export const getInputDom = (isEditing: boolean, hasEditingError: boolean): readonly VirtualDomNode[] => {
+  if (!isEditing) {
+    return []
+  }
   const ariaLabel = ExplorerStrings.typeAFileName()
   return [
     {
