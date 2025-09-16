@@ -135,7 +135,7 @@ export const commandMap = {
   'Explorer.selectDown': WrapCommand.wrapCommand(SelectDown.selectDown),
   'Explorer.selectIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
   'Explorer.selectUp': WrapCommand.wrapCommand(SelectUp.selectUp),
-  'Explorer.setDeltaY': WrapCommand.wrapCommand(SetDeltaY.setDeltaY),
+  'Explorer.setDeltaY': WrapCommand.wrapListItemCommand(SetDeltaY.setDeltaY),
   'Explorer.setSelectedIndices': WrapCommand.wrapCommand(SelectIndices.setSelectedIndices),
   'Explorer.toggleIndividualSelection': WrapCommand.wrapCommand(ToggleIndividualSelection.toggleIndividualSelection),
   'Explorer.updateEditingValue': WrapCommand.wrapCommand(UpdateEditingValue.updateEditingValue),
