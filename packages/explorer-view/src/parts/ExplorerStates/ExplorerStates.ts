@@ -6,9 +6,11 @@ import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleE
 
 export const { get, set, wrapCommand, registerCommands, getCommandIds, wrapGetter } = ViewletRegistry.create<ExplorerState>()
 
-export const wrapListItemCommand = <T extends any[]>(
-  fn: (state: ExplorerState, ...args: T) => Promise<ExplorerState>,
-): ((id: number, ...args: T) => Promise<void>) => {
+interface Fn<T extends any[]> {
+  (state: ExplorerState, ...args: T): ExplorerState | Promise<ExplorerState>
+}
+
+export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, ...args: T) => Promise<void>) => {
   const wrappedCommand = async (id: number, ...args: T): Promise<void> => {
     const { newState } = get(id)
     const updatedState = await fn(newState, ...args)
@@ -32,6 +34,15 @@ export const wrapListItemCommand = <T extends any[]>(
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState)
     const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
+    if (
+      items === intermediate.newState.items &&
+      minLineY === intermediate.newState.minLineY &&
+      editingIcon === intermediate.newState.editingIcon &&
+      cutItems === intermediate.newState.cutItems &&
+      editingErrorMessage === intermediate.newState.editingErrorMessage
+    ) {
+      return
+    }
     const visible = items.slice(minLineY, maxLineY)
     const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
     const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(

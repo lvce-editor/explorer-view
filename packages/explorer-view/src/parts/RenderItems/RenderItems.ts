@@ -1,47 +1,11 @@
+import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetErrorMessagePosition from '../GetErrorMessagePosition/GetErrorMessagePosition.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
-import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
 export const renderItems = (oldState: ExplorerState, newState: ExplorerState): any => {
-  const {
-    cutItems,
-    sourceControlIgnoredUris,
-    deltaY,
-    dropTargets,
-    editingErrorMessage,
-    editingIcon,
-    editingIndex,
-    editingType,
-    editingValue,
-    focused,
-    focusedIndex,
-    height,
-    icons,
-    itemHeight,
-    items,
-    maxLineY,
-    minLineY,
-    root,
-    useChevrons,
-    width,
-  } = newState
-  const visibleDirents = GetVisibleExplorerItems.getVisibleExplorerItems(
-    items,
-    minLineY,
-    maxLineY,
-    focusedIndex,
-    editingIndex,
-    editingType,
-    editingValue,
-    editingErrorMessage,
-    icons,
-    useChevrons,
-    dropTargets,
-    editingIcon,
-    cutItems,
-    sourceControlIgnoredUris,
-  )
+  const { deltaY, dropTargets, editingErrorMessage, focused, focusedIndex, height, itemHeight, items, minLineY, root, width } = newState
+  const visibleDirents = newState.visibleExplorerItems
   const isWide = width > 450
   const contentHeight = items.length * itemHeight
   const depth = items[focusedIndex]?.depth || 0
@@ -74,5 +38,5 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     top,
     left,
   )
-  return ['Viewlet.setDom2', dom]
+  return [ViewletCommand.SetDom2, dom]
 }
