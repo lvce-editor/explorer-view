@@ -2,13 +2,11 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
-import * as FocusKey from '../FocusKey/FocusKey.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetNewDirentsForNewDirent from '../GetNewDirentsForNewDirent/GetNewDirentsForNewDirent.ts'
 import * as GetNewDirentType from '../GetNewDirentType/GetNewDirentType.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
-import * as SetFocus from '../SetFocus/SetFocus.ts'
 
 const isFolder = (direntType: number): boolean => {
   return direntType === DirentType.Directory || direntType === DirentType.DirectoryExpanded || direntType === DirentType.SymLinkFolder
@@ -25,8 +23,6 @@ const getFittingIndex = (dirents: readonly ExplorerItem[], startIndex: number): 
 }
 
 export const newDirent = async (state: ExplorerState, editingType: number): Promise<ExplorerState> => {
-  // TODO make focus functional instead of side effect
-  await SetFocus.setFocus(FocusKey.ExplorerEditBox)
   // TODO do it like vscode, select position between folders and files
   const {
     minLineY,
