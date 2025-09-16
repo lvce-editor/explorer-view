@@ -47,7 +47,6 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     editingType,
     editingValue,
     focusedIndex,
-    items,
   } = state
   const { useChevrons, confirmDelete } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
@@ -70,7 +69,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
 
   const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
-    items,
+    restoredDirents,
     minLineY,
     maxLineY,
     focusedIndex,
