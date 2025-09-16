@@ -1,5 +1,6 @@
 import type { Renderer } from '../Renderer/Renderer.ts'
 import * as DiffType from '../DiffType/DiffType.ts'
+import { renderCss } from '../RenderCss/RenderCss.ts'
 import * as RenderDragData from '../RenderDragData/RenderDragData.ts'
 import * as RenderEditingSelection from '../RenderEditingSelection/RenderEditingSelection.ts'
 import * as RenderFocus from '../RenderFocus/RenderFocus.ts'
@@ -21,6 +22,8 @@ export const getRenderer = (diffType: number): Renderer => {
       return RenderEditingSelection.renderEditingSelection
     case DiffType.RenderDragData:
       return RenderDragData.renderDragData
+    case DiffType.RenderCss:
+      return renderCss
     default:
       throw new Error('unknown renderer')
   }
