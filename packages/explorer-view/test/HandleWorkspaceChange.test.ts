@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleWorkspaceChange } from '../src/parts/HandleWorkspaceChange/HandleWorkspaceChange.ts'
 
 test('should update state with new workspace path and load content', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/new/workspace/path'
     },
@@ -36,6 +36,15 @@ test('should update state with new workspace path and load content', async () =>
   expect(result).toHaveProperty('pathSeparator')
   expect(result).toHaveProperty('excluded')
   expect(result).toHaveProperty('useChevrons')
+  expect(mockRpc.invocations).toEqual([
+    ['Workspace.getPath'],
+    ['Preferences.get', 'explorer.useChevrons'],
+    ['Preferences.get', 'explorer.confirmdelete'],
+    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Workspace.getPath'],
+    ['FileSystem.getPathSeparator', '/new/workspace/path'],
+    ['FileSystem.readDirWithFileTypes', '/new/workspace/path'],
+  ])
 })
 
 test('should preserve state properties when updating workspace', async () => {
