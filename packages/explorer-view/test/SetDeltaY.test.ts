@@ -51,9 +51,7 @@ test('should clamp deltaY to max scroll value', async () => {
   const result = await setDeltaY(state, 500)
   expect(result.deltaY).toBe(300)
   expect(result.minLineY).toBe(15)
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getIcons', []],
-  ])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('should update visible items and icons', async () => {
@@ -72,7 +70,5 @@ test('should update visible items and icons', async () => {
   expect(result.deltaY).toBe(100)
   expect(result.minLineY).toBe(5)
   expect(result.maxLineY).toBe(10)
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getIcons', []],
-  ])
+  expect(mockRpc.invocations).toEqual([])
 })

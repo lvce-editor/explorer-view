@@ -40,7 +40,10 @@ test('updateIcons - should update icons for visible items', async () => {
   expect(result.minLineY).toBe(state.minLineY)
   expect(result.maxLineY).toBe(state.maxLineY)
   expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getIcons', []],
+    ['IconTheme.getIcons', [
+      { name: 'file1.ts', type: 1 },
+      { name: 'file2.ts', type: 1 },
+    ]],
   ])
 })
 

@@ -111,10 +111,9 @@ test('acceptCreate - successful file creation', async () => {
     focus: FocusId.List,
   })
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.getPathSeparator', 'memfs:///workspace'],
+    ['FileSystem.mkdir', 'memfs:///workspace/test'],
     ['FileSystem.writeFile', 'memfs:///workspace/test/test.txt', ''],
     ['FileSystem.readDirWithFileTypes', 'memfs:///workspace'],
     ['FileSystem.readDirWithFileTypes', 'memfs:///workspace/test'],
-    ['IconTheme.getIcons', []],
   ])
 })
