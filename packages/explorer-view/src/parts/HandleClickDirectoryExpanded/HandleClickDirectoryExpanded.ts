@@ -1,9 +1,7 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
-import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
 export const handleClickDirectoryExpanded = async (
   state: ExplorerState,
@@ -11,23 +9,7 @@ export const handleClickDirectoryExpanded = async (
   index: number,
   keepFocus: boolean,
 ): Promise<ExplorerState> => {
-  const {
-    minLineY,
-    maxLineY,
-    itemHeight,
-    fileIconCache,
-    cutItems,
-    sourceControlIgnoredUris,
-    dropTargets,
-    editingErrorMessage,
-    editingIcon,
-    editingIndex,
-    editingType,
-    editingValue,
-    focusedIndex,
-    useChevrons,
-    items,
-  } = state
+  const { minLineY, maxLineY, itemHeight, items } = state
   // @ts-ignore
   dirent.type = DirentType.Directory
   // @ts-ignore
@@ -43,62 +25,20 @@ export const handleClickDirectoryExpanded = async (
     const newMaxLineY = Math.min(maxLineY, newTotal)
     const newMinLineY = newMaxLineY - visibleItems
     const deltaY = newMinLineY * itemHeight
-    const parts = newDirents.slice(newMinLineY, newMaxLineY)
-    const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, fileIconCache)
-    const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
-      newDirents,
-      minLineY,
-      maxLineY,
-      focusedIndex,
-      editingIndex,
-      editingType,
-      editingValue,
-      editingErrorMessage,
-      icons,
-      useChevrons,
-      dropTargets,
-      editingIcon,
-      cutItems,
-      sourceControlIgnoredUris,
-    )
     return {
       ...state,
       deltaY,
-      fileIconCache: newFileIconCache,
       focused: keepFocus,
       focusedIndex: index,
-      icons,
       items: newDirents,
       maxLineY: newMaxLineY,
       minLineY: newMinLineY,
-      visibleExplorerItems,
     }
   }
-  const parts = newDirents.slice(minLineY, maxLineY)
-  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, fileIconCache)
-  const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
-    newDirents,
-    minLineY,
-    maxLineY,
-    focusedIndex,
-    editingIndex,
-    editingType,
-    editingValue,
-    editingErrorMessage,
-    icons,
-    useChevrons,
-    dropTargets,
-    editingIcon,
-    cutItems,
-    sourceControlIgnoredUris,
-  )
   return {
     ...state,
-    fileIconCache: newFileIconCache,
     focused: keepFocus,
     focusedIndex: index,
-    icons,
     items: newDirents,
-    visibleExplorerItems,
   }
 }
