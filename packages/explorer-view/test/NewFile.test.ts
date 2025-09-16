@@ -89,11 +89,5 @@ test('newFile', async () => {
     ],
     editingValue: '',
     focus: 2,
-    maxLineY: 2,
-    icons: ['file-icon', 'file-icon'],
-    fileIconCache: {
-      '/': 'file-icon',
-      '/test.txt': 'file-icon',
-    },
   })
 })

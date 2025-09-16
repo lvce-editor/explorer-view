@@ -49,12 +49,9 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     ...mockState,
     editingIndex: 0,
     focusedIndex: 0,
-    icons: ['file-icon'],
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
-    maxLineY: 1,
-    fileIconCache: { '/': 'file-icon' },
     items: [
       {
         depth: 0,
@@ -120,13 +117,8 @@ test('newDirent handles directory click when focused item is a directory', async
         type: DirentType.EditingFile,
       },
     ],
-    icons: ['file-icon', 'file-icon'],
-    fileIconCache: {
-      '/test': 'file-icon',
-    },
     editingValue: '',
     focus: 2,
-    maxLineY: 2,
   })
 })
 
@@ -191,11 +183,5 @@ test('newDirent updates state when focused item is not a directory', async () =>
         type: DirentType.EditingFile,
       },
     ],
-    maxLineY: 2,
-    fileIconCache: {
-      '/': 'file-icon',
-      '/test.txt': 'file-icon',
-    },
-    icons: ['file-icon', 'file-icon'],
   })
 })
