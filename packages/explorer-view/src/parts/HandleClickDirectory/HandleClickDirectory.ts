@@ -5,9 +5,22 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as SetFocus from '../SetFocus/SetFocus.ts'
 
 export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus: boolean): Promise<ExplorerState> => {
+  const {
+    cutItems,
+    sourceControlIgnoredUris,
+    dropTargets,
+    editingErrorMessage,
+    editingIcon,
+    editingIndex,
+    editingType,
+    editingValue,
+    focusedIndex,
+    useChevrons,
+  } = state
   // @ts-ignore
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
@@ -34,14 +47,34 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
 
   const parts = newDirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, state.fileIconCache)
+
+  const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
+    newDirents,
+    minLineY,
+    maxLineY,
+    focusedIndex,
+    editingIndex,
+    editingType,
+    editingValue,
+    editingErrorMessage,
+    icons,
+    useChevrons,
+    dropTargets,
+    editingIcon,
+    cutItems,
+    sourceControlIgnoredUris,
+  )
+
+  // TODO use functional focus rendering
   await SetFocus.setFocus(WhenExpression.FocusExplorer)
   return {
     ...state,
-    items: newDirents,
-    icons,
     fileIconCache: newFileIconCache,
-    focusedIndex: newIndex,
     focused: keepFocus,
+    focusedIndex: newIndex,
+    icons,
+    items: newDirents,
     maxLineY,
+    visibleExplorerItems,
   }
 }

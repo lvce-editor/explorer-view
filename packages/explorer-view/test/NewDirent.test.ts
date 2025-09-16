@@ -103,6 +103,7 @@ test('newDirent handles directory click when focused item is a directory', async
   expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
   expect(result).toEqual({
     ...mockState,
+    visibleExplorerItems: expect.anything(),
     editingIndex: 1,
     focusedIndex: 1,
     editingType: mockEditingType,
@@ -165,6 +166,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
   expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
   expect(result).toEqual({
     ...mockState,
+    visibleExplorerItems: expect.anything(),
     editingIndex: 1,
     focusedIndex: 1,
     editingType: mockEditingType,
