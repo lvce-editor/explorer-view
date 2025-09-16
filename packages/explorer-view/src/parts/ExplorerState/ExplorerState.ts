@@ -14,6 +14,8 @@ export interface ExplorerState {
   readonly editingSelectionStart: number
   readonly editingType: number
   readonly editingValue: string
+  readonly errorMessageLeft: number
+  readonly errorMessageTop: number
   readonly excluded: readonly any[]
   readonly fileIconCache: FileIconCache
   readonly finalDeltaY: number
@@ -30,6 +32,7 @@ export interface ExplorerState {
   readonly isPointerDown: boolean
   readonly itemHeight: number
   readonly items: readonly ExplorerItem[]
+  readonly maxIndent: number
   readonly maxLineY: number
   readonly minLineY: number
   readonly parentUid: number
@@ -47,5 +50,4 @@ export interface ExplorerState {
   readonly width: number
   readonly x: number
   readonly y: number
-  readonly maxIndent: number
 }
