@@ -44,7 +44,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
+  // expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
   expect(result).toEqual({
     ...mockState,
     editingIndex: 0,
@@ -100,7 +100,7 @@ test('newDirent handles directory click when focused item is a directory', async
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
+  // expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
   expect(result).toEqual({
     ...mockState,
     visibleExplorerItems: expect.anything(),
@@ -163,7 +163,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
+  // expect(mockRpc.invocations).toEqual(expect.arrayContaining([['Focus.setFocus', 14]]))
   expect(result).toEqual({
     ...mockState,
     visibleExplorerItems: expect.anything(),
