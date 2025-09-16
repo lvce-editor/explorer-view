@@ -67,5 +67,6 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     excluded,
     useChevrons,
     confirmDelete,
+    maxIndent: 10,
   }
 }
