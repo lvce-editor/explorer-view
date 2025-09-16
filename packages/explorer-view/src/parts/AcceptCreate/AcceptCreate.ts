@@ -4,7 +4,6 @@ import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
-import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetFileOperationsCreate from '../GetFileOperationsCreate/GetFileOperationsCreate.ts'
 import * as GetIndex from '../GetIndex/GetIndex.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
@@ -48,8 +47,6 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   const dirents = newItems
   const newFocusedIndex = GetIndex.getIndex(newItems, absolutePath)
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, dirents.length)
-  const visible = dirents.slice(minLineY, maxLineY)
-  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
 
   return {
     ...state,
@@ -59,7 +56,5 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
     editingType: ExplorerEditingType.None,
     maxLineY,
     focus: FocusId.List,
-    icons,
-    fileIconCache: newFileIconCache,
   }
 }
