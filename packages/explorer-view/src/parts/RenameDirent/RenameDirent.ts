@@ -5,7 +5,7 @@ import { getNewDirentsForRename } from '../GetNewDirentsForRename/GetNewDirentsF
 import { getRenameSelectionRange } from '../GetRenameSelectionRange/GetRenameSelectionRange.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 
-export const renameDirent = (state: ExplorerState): ExplorerState => {
+export const renameDirent = async (state: ExplorerState): Promise<ExplorerState> => {
   const { focusedIndex, items, icons, minLineY } = state
   if (items.length === 0) {
     return state

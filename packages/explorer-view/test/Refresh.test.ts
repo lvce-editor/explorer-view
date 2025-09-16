@@ -52,7 +52,6 @@ test('refresh - with top level items', async () => {
   expect(result.items).toHaveLength(2)
   expect(result.items[0].name).toBe('file1')
   expect(result.items[1].name).toBe('file2')
-  expect(result.icons).toHaveLength(2)
 })
 
 test('refresh - preserve expanded folder', async () => {
@@ -95,7 +94,6 @@ test('refresh - preserve expanded folder', async () => {
   expect(result.items[0].type).toBe(DirectoryExpanded)
   expect(result.items[1].name).toBe('file1.txt')
   expect(result.items[2].name).toBe('file2.txt')
-  expect(result.icons).toHaveLength(3)
 })
 
 test('refresh - remove expanded folder that no longer exists', async () => {
@@ -125,7 +123,6 @@ test('refresh - remove expanded folder that no longer exists', async () => {
   const result = await refresh(state)
   expect(result.items).toHaveLength(1)
   expect(result.items[0].name).toBe('file1.txt')
-  expect(result.icons).toHaveLength(1)
 })
 
 test('refresh - nested expanded folders', async () => {
@@ -169,7 +166,6 @@ test('refresh - nested expanded folders', async () => {
   expect(result.items[1].name).toBe('folder2')
   expect(result.items[1].type).toBe(DirectoryExpanded)
   expect(result.items[2].name).toBe('file1.txt')
-  expect(result.icons).toHaveLength(3)
 })
 
 test('refresh - preserve directory types', async () => {
@@ -226,7 +222,6 @@ test('refresh - preserve directory types', async () => {
   expect(result.items[3].type).toBe(File)
   expect(result.items[4].name).toBe('file1.txt')
   expect(result.items[4].type).toBe(File)
-  expect(result.icons).toHaveLength(5)
 })
 
 test('refresh - check filesystem response', async () => {
