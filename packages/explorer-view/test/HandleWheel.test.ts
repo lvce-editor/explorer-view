@@ -4,7 +4,7 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleWheel } from '../src/parts/HandleWheel/HandleWheel.ts'
 
-RendererWorker.registerMockRpc({
+const mockRpc = RendererWorker.registerMockRpc({
   'FileSystem.readDirWithFileTypes'() {
     return []
   },
@@ -29,6 +29,7 @@ test('handleWheel calls SetDeltaY with correct delta', async () => {
   }
   const result = await handleWheel(state, 0, 5)
   expect(result.deltaY).toBe(15)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('handleWheel with negative delta', async () => {
@@ -47,4 +48,5 @@ test('handleWheel with negative delta', async () => {
   }
   const result = await handleWheel(state, 0, -3)
   expect(result.deltaY).toBe(7)
+  expect(mockRpc.invocations).toEqual([])
 })

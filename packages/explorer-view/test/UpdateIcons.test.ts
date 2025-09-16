@@ -15,7 +15,7 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
 }
 
 test('updateIcons - should update icons for visible items', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
     'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
     'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
@@ -39,10 +39,19 @@ test('updateIcons - should update icons for visible items', async () => {
   expect(result.items).toEqual(state.items)
   expect(result.minLineY).toBe(state.minLineY)
   expect(result.maxLineY).toBe(state.maxLineY)
+  expect(mockRpc.invocations).toEqual([
+    [
+      'IconTheme.getIcons',
+      [
+        { name: 'file1.ts', type: 1 },
+        { name: 'file2.ts', type: 1 },
+      ],
+    ],
+  ])
 })
 
 test('updateIcons - should handle empty visible items', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
     'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
     'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
@@ -60,4 +69,5 @@ test('updateIcons - should handle empty visible items', async () => {
   expect(result.icons).toHaveLength(0)
   expect(result.fileIconCache).toBeDefined()
   expect(result.items).toEqual(state.items)
+  expect(mockRpc.invocations).toEqual([])
 })
