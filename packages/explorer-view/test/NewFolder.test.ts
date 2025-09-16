@@ -31,7 +31,7 @@ const invoke = (method: string): any => {
 }
 
 test('newFolder', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath': invoke.bind(undefined, 'Workspace.getPath'),
     'FileSystem.readDirWithFileTypes': invoke.bind(undefined, 'FileSystem.readDirWithFileTypes'),
     'FileSystem.getPathSeparator': invoke.bind(undefined, 'FileSystem.getPathSeparator'),
@@ -67,4 +67,5 @@ test('newFolder', async () => {
       },
     ],
   })
+  expect(mockRpc.invocations).toEqual([])
 })

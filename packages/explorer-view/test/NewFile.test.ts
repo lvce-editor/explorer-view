@@ -44,7 +44,7 @@ const invoke = (method: string, ...params: readonly any[]): any => {
 }
 
 test('newFile', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath': invoke.bind(undefined, 'Workspace.getPath'),
     'FileSystem.readDirWithFileTypes': invoke.bind(undefined, 'FileSystem.readDirWithFileTypes'),
     'FileSystem.getPathSeparator': invoke.bind(undefined, 'FileSystem.getPathSeparator'),
@@ -57,7 +57,7 @@ test('newFile', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+    items: [{ name: 'testfolder', type: DirentType.Directory, path: '/testfolder', depth: 0, selected: false }],
     maxLineY: 1,
   }
 
@@ -71,23 +71,27 @@ test('newFile', async () => {
     items: [
       {
         depth: 0,
-        name: 'test.txt',
-        path: '/test.txt',
+        name: 'testfolder',
+        path: '/testfolder',
         selected: false,
-        type: 7,
+        type: 3,
+        setSize: 1,
       },
       {
-        depth: 0,
+        depth: 1,
         icon: '',
         name: '',
         type: DirentType.EditingFile,
-        path: '/',
+        path: '/testfolder',
         selected: false,
         posInSet: 1,
-        setSize: 1,
+        setSize: 2,
       },
     ],
     editingValue: '',
     focus: 2,
   })
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/testfolder'],
+  ])
 })

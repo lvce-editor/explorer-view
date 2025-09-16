@@ -8,7 +8,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { removeDirent } from '../src/parts/RemoveDirent/RemoveDirent.ts'
 
 test('removeDirent - removes focused item', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.remove'() {
       return
     },
@@ -36,10 +36,14 @@ test('removeDirent - removes focused item', async () => {
   const result = await removeDirent(state)
   expect(result.items).toHaveLength(0)
   expect(result.focusedIndex).toBe(-1)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.remove', '/file1.txt'],
+    ['FileSystem.readDirWithFileTypes', '/'],
+  ])
 })
 
 test('removeDirent - removes multiple selected items', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.remove'() {
       return
     },
@@ -70,10 +74,15 @@ test('removeDirent - removes multiple selected items', async () => {
   const result = await removeDirent(state)
   expect(result.items).toHaveLength(0)
   expect(result.focusedIndex).toBe(-1)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.remove', '/file1.txt'],
+    ['FileSystem.remove', '/file2.txt'],
+    ['FileSystem.readDirWithFileTypes', '/'],
+  ])
 })
 
 test('removeDirent - removes focused item and selected items', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.remove'() {
       return
     },
@@ -105,10 +114,16 @@ test('removeDirent - removes focused item and selected items', async () => {
   const result = await removeDirent(state)
   expect(result.items).toHaveLength(0)
   expect(result.focusedIndex).toBe(-1)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.remove', '/file1.txt'],
+    ['FileSystem.remove', '/file2.txt'],
+    ['FileSystem.remove', '/file3.txt'],
+    ['FileSystem.readDirWithFileTypes', '/'],
+  ])
 })
 
 test('remove file', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.remove'() {
       return
     },
@@ -140,6 +155,10 @@ test('remove file', async () => {
   expect(result.items).toHaveLength(1)
   expect(result.items[0].name).toBe('folder1')
   expect(result.focusedIndex).toBe(0)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.remove', '/file1.txt'],
+    ['FileSystem.readDirWithFileTypes', '/'],
+  ])
 })
 
 test('remove folder with children', async () => {
