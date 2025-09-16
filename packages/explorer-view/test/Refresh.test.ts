@@ -26,9 +26,7 @@ test('refresh - empty state', async () => {
   const result = await refresh(state)
   expect(result.items).toHaveLength(0)
   expect(result.icons).toHaveLength(0)
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes', '/'],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
 
 test('refresh - with top level items', async () => {
@@ -55,9 +53,7 @@ test('refresh - with top level items', async () => {
   expect(result.items).toHaveLength(2)
   expect(result.items[0].name).toBe('file1')
   expect(result.items[1].name).toBe('file2')
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes', '/'],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
 
 test('refresh - preserve expanded folder', async () => {

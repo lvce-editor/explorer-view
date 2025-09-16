@@ -91,7 +91,5 @@ test('newFile', async () => {
     editingValue: '',
     focus: 2,
   })
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes', '/testfolder'],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/testfolder']])
 })
