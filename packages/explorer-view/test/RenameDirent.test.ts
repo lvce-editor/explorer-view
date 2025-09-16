@@ -7,7 +7,7 @@ import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import { renameDirent } from '../src/parts/RenameDirent/RenameDirent.ts'
 
-test('renameDirent updates state with editing properties', () => {
+test('renameDirent updates state with editing properties', async () => {
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
@@ -15,7 +15,7 @@ test('renameDirent updates state with editing properties', () => {
     icons: [''],
   }
 
-  const result = renameDirent(mockState)
+  const result = await renameDirent(mockState)
   expect(result).toEqual({
     ...mockState,
     items: [{ name: 'test.txt', type: DirentType.EditingFile, path: '/test.txt', depth: 0, selected: false }],
@@ -30,7 +30,7 @@ test('renameDirent updates state with editing properties', () => {
   })
 })
 
-test('renameDirent updates state with editing properties for folder', () => {
+test('renameDirent updates state with editing properties for folder', async () => {
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
@@ -38,7 +38,7 @@ test('renameDirent updates state with editing properties for folder', () => {
     icons: [''],
   }
 
-  const result = renameDirent(mockState)
+  const result = await renameDirent(mockState)
   expect(result).toEqual({
     ...mockState,
     items: [{ name: 'test', type: DirentType.EditingFolder, path: '/test', depth: 0, selected: false }],
@@ -53,18 +53,18 @@ test('renameDirent updates state with editing properties for folder', () => {
   })
 })
 
-test('renameDirent handles empty state', () => {
+test('renameDirent handles empty state', async () => {
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
     items: [],
   }
 
-  const result = renameDirent(mockState)
+  const result = await renameDirent(mockState)
   expect(result).toBe(mockState)
 })
 
-test('renameDirent preserves icon when entering edit mode', () => {
+test('renameDirent preserves icon when entering edit mode', async () => {
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
@@ -73,7 +73,7 @@ test('renameDirent preserves icon when entering edit mode', () => {
     icons: ['file-icon'],
   }
 
-  const result = renameDirent(mockState)
+  const result = await renameDirent(mockState)
   expect(result).toEqual({
     ...mockState,
     items: [{ name: 'test.txt', type: DirentType.EditingFile, path: '/test.txt', depth: 0, selected: false, icon: 'file-icon' }],
