@@ -75,7 +75,7 @@ import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 
 export const commandMap = {
-  'Explorer.acceptEdit': WrapCommand.wrapCommand(AcceptEdit.acceptEdit),
+  'Explorer.acceptEdit': WrapCommand.wrapListItemCommand(AcceptEdit.acceptEdit),
   'Explorer.cancelEdit': WrapCommand.wrapCommand(CancelEdit.cancelEdit),
   'Explorer.cancelTypeAhead': WrapCommand.wrapCommand(CancelTypeAhead.cancelTypeAhead),
   'Explorer.collapseAll': WrapCommand.wrapCommand(CollapseAll.collapseAll),
