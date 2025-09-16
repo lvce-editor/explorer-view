@@ -47,4 +47,6 @@ export const createDefaultState = (): ExplorerState => ({
   pointerDownIndex: -1,
   sourceControlIgnoredUris: [],
   maxIndent: 0,
+  errorMessageLeft: 0,
+  errorMessageTop: 0,
 })
