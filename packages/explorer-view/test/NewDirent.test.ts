@@ -15,7 +15,7 @@ const handleFileIcons = (requests: readonly any[]): readonly string[] => {
 }
 
 test('newDirent sets focus and updates state when no item is focused', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/new/path'
     },
@@ -71,7 +71,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
 })
 
 test('newDirent handles directory click when focused item is a directory', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/new/path'
     },
@@ -131,7 +131,7 @@ test('newDirent handles directory click when focused item is a directory', async
 })
 
 test('newDirent updates state when focused item is not a directory', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/new/path'
     },
