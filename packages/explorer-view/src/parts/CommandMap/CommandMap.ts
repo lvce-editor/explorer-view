@@ -81,7 +81,7 @@ export const commandMap = {
   'Explorer.collapseAll': WrapCommand.wrapCommand(CollapseAll.collapseAll),
   'Explorer.copyPath': WrapCommand.wrapCommand(CopyPath.copyPath),
   'Explorer.copyRelativePath': WrapCommand.wrapCommand(CopyRelativePath.copyRelativePath),
-  'Explorer.expandAll': WrapCommand.wrapCommand(ExpandAll.expandAll),
+  'Explorer.expandAll': WrapCommand.wrapListItemCommand(ExpandAll.expandAll),
   'Explorer.expandRecursively': WrapCommand.wrapCommand(ExpandRecursively.expandRecursively),
   'Explorer.focus': WrapCommand.wrapCommand(Focus.focus),
   'Explorer.focusFirst': WrapCommand.wrapCommand(FocusFirst.focusFirst),
