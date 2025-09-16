@@ -8,9 +8,10 @@ export const { get, set, wrapCommand, registerCommands, getCommandIds, wrapGette
 
 export const wrapListItemCommand = <T extends any[]>(
   fn: (state: ExplorerState, ...args: T) => Promise<ExplorerState>,
-): ((state: ExplorerState, ...args: T) => Promise<ExplorerState>) => {
-  const wrappedCommand = async (state: ExplorerState, ...args: T): Promise<ExplorerState> => {
-    const newState = await fn(state, ...args)
+): ((id: number, ...args: T) => Promise<ExplorerState>) => {
+  const wrappedCommand = async (id: number, ...args: T): Promise<ExplorerState> => {
+    const { newState } = get(id)
+    const updatedState = await fn(newState, ...args)
     const {
       items,
       minLineY,
@@ -28,6 +29,8 @@ export const wrapListItemCommand = <T extends any[]>(
       itemHeight,
       fileIconCache,
     } = newState
+    const intermediate = get(id)
+    set(id, intermediate.oldState, updatedState)
     const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
     const visible = items.slice(minLineY, maxLineY)
     const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
@@ -49,7 +52,7 @@ export const wrapListItemCommand = <T extends any[]>(
     )
 
     return {
-      ...newState,
+      ...updatedState,
       visibleExplorerItems,
       fileIconCache: newFileIconCache,
       icons,
