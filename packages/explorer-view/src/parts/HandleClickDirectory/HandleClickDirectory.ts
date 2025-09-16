@@ -3,7 +3,6 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
-import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 
 export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus: boolean): Promise<ExplorerState> => {
   // @ts-ignore
@@ -26,16 +25,13 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
   dirent.type = DirentType.DirectoryExpanded
   // @ts-ignore
   dirent.icon = ''
-  const { height, itemHeight, minLineY } = state2
   // TODO when focused index has changed while expanding, don't update it
-  const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, newDirents.length)
 
   return {
     ...state,
     focused: keepFocus,
     focusedIndex: newIndex,
     items: newDirents,
-    maxLineY,
     focus: FocusId.List,
   }
 }
