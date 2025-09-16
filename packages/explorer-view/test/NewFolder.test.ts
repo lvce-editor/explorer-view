@@ -53,10 +53,7 @@ test('newFolder', async () => {
     editingType: ExplorerEditingType.CreateFolder,
     editingValue: '',
     focus: 2,
-    fileIconCache: { '/': '' },
     focusedIndex: 0,
-    maxLineY: 1,
-    icons: [''],
     items: [
       {
         depth: 0,

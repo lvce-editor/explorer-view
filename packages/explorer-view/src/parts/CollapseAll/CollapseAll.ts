@@ -4,9 +4,7 @@ import * as ToCollapsedDirent from '../ToCollapsedDirent/ToCollapsedDirent.ts'
 
 export const collapseAll = async (state: ExplorerState): Promise<ExplorerState> => {
   const { items } = state
-
   const newDirents = items.filter(IsTopLevel.isTopLevel).map(ToCollapsedDirent.toCollapsedDirent)
-
   return {
     ...state,
     items: newDirents,
