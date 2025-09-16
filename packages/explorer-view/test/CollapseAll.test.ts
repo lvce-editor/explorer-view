@@ -34,6 +34,5 @@ test('collapseAll - with nested items', async () => {
       { name: 'folder1', type: DirentType.Directory, path: '/folder1', depth: 1, selected: false },
       { name: 'folder2', type: DirentType.Directory, path: '/folder2', depth: 1, selected: false },
     ],
-    icons: ['icon', 'icon'],
   })
 })
