@@ -3,8 +3,10 @@ import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetSettings from '../GetSettings/GetSettings.ts'
+import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
+
 // TODO viewlet should only have create and refresh functions
 // every thing else can be in a separate module <viewlet>.lazy.js
 // and  <viewlet>.ipc.js
@@ -34,7 +36,21 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
-  const { fileIconCache } = state
+  const {
+    fileIconCache,
+    cutItems,
+    sourceControlIgnoredUris,
+    dropTargets,
+    editingErrorMessage,
+    editingIcon,
+    editingIndex,
+    editingType,
+    editingValue,
+    focused,
+    focusedIndex,
+    items,
+    width,
+  } = state
   const { useChevrons, confirmDelete } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
@@ -54,19 +70,37 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, restoredDirents.length)
   const visible = restoredDirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
+
+  const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
+    items,
+    minLineY,
+    maxLineY,
+    focusedIndex,
+    editingIndex,
+    editingType,
+    editingValue,
+    editingErrorMessage,
+    icons,
+    useChevrons,
+    dropTargets,
+    editingIcon,
+    cutItems,
+    sourceControlIgnoredUris,
+  )
   return {
     ...state,
-    root,
-    items: restoredDirents,
-    icons,
-    fileIconCache: newFileIconCache,
-    minLineY,
-    deltaY,
-    maxLineY,
-    pathSeparator,
-    excluded,
-    useChevrons,
     confirmDelete,
+    deltaY,
+    excluded,
+    fileIconCache: newFileIconCache,
+    icons,
+    items: restoredDirents,
     maxIndent: 10,
+    maxLineY,
+    minLineY,
+    pathSeparator,
+    root,
+    useChevrons,
+    visibleExplorerItems,
   }
 }
