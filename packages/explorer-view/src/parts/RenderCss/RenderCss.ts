@@ -12,7 +12,7 @@ export const renderCss = (oldState: ExplorerState, newState: ExplorerState): rea
   for (let i = 0; i < maxIndent; i++) {
     const indent = getTreeItemIndent(i)
     rules.push(`.Indent-${i} {
-  padding-left: ${indent}px;
+  padding-left: ${indent};
 }`)
   }
   const css = rules.join('\n')
