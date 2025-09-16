@@ -99,7 +99,7 @@ export const commandMap = {
   'Explorer.handleArrowRight': WrapCommand.wrapCommand(HandleArrowRight.handleArrowRight),
   'Explorer.handleEscape': WrapCommand.wrapCommand(handleEscape),
   'Explorer.handleBlur': WrapCommand.wrapCommand(HandleBlur.handleBlur),
-  'Explorer.handleClick': WrapCommand.wrapCommand(HandleClick.handleClick),
+  'Explorer.handleClick': WrapCommand.wrapListItemCommand(HandleClick.handleClick),
   'Explorer.handleClickAt': WrapCommand.wrapCommand(HandleClickAt.handleClickAt),
   'Explorer.handleClickCurrent': WrapCommand.wrapCommand(HandleClickCurrent.handleClickCurrent),
   'Explorer.handleClickCurrentButKeepFocus': WrapCommand.wrapCommand(HandleClickCurrentButKeepFocus.handleClickCurrentButKeepFocus),
