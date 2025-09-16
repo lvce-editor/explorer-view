@@ -67,6 +67,7 @@ test('newFile', async () => {
     editingIndex: 1,
     focusedIndex: 1,
     editingType: ExplorerEditingType.CreateFile,
+    visibleExplorerItems: expect.anything(),
     items: [
       {
         depth: 0,
