@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -48,10 +48,13 @@ test('newFile', async () => {
     'Workspace.getPath': invoke.bind(undefined, 'Workspace.getPath'),
     'FileSystem.readDirWithFileTypes': invoke.bind(undefined, 'FileSystem.readDirWithFileTypes'),
     'FileSystem.getPathSeparator': invoke.bind(undefined, 'FileSystem.getPathSeparator'),
-    'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
-    'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
     'Preferences.get': invoke.bind(undefined, 'Preferences.get'),
     'Focus.setFocus': invoke.bind(undefined, 'Focus.setFocus'),
+  })
+
+  IconThemeWorker.registerMockRpc({
+    'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
+    'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
     'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
   })
   const state: ExplorerState = {

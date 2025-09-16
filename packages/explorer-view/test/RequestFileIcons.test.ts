@@ -1,8 +1,7 @@
 import { test, expect, beforeAll } from '@jest/globals'
+import { IconThemeWorker } from '@lvce-editor/rpc-registry'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as RequestFileIcons from '../src/parts/RequestFileIcons/RequestFileIcons.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const handleFileIcons = (requests: readonly any[]): readonly string[] => {
   return requests.map((param) => {
@@ -13,23 +12,12 @@ const handleFileIcons = (requests: readonly any[]): readonly string[] => {
   })
 }
 
-const mockRpc = {
-  invoke(method: string, ...params: readonly any[]) {
-    switch (method) {
-      case 'IconTheme.getFileIcon':
-        return `file-icon-${params[0].name}`
-      case 'IconTheme.getFolderIcon':
-        return `folder-icon-${params[0].name}`
-      case 'IconTheme.getIcons':
-        return handleFileIcons(params[0])
-      default:
-        throw new Error(`unknown method ${method}`)
-    }
-  },
-} as any
-
 beforeAll(() => {
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  IconThemeWorker.registerMockRpc({
+    'IconTheme.getFileIcon': (param: any) => `file-icon-${param.name}`,
+    'IconTheme.getFolderIcon': (param: any) => `folder-icon-${param.name}`,
+    'IconTheme.getIcons': (requests: any[]) => handleFileIcons(requests),
+  })
 })
 
 test('requestFileIcons - empty requests', async () => {

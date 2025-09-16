@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
 import { jest } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { Directory, DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
@@ -15,6 +15,9 @@ test('removeDirent - removes focused item', async () => {
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
@@ -50,6 +53,9 @@ test('removeDirent - removes multiple selected items', async () => {
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
@@ -89,6 +95,9 @@ test('removeDirent - removes focused item and selected items', async () => {
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
@@ -130,6 +139,9 @@ test('remove file', async () => {
     'FileSystem.readDirWithFileTypes'() {
       return [{ name: 'folder1', type: DirentType.Directory }]
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
@@ -169,6 +181,9 @@ test('remove folder with children', async () => {
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
@@ -210,6 +225,9 @@ test('remove file from expanded folder', async () => {
       }
       return []
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
@@ -249,6 +267,9 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
@@ -307,6 +328,9 @@ test('removeDirent - shows error message when file operation fails', async () =>
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
@@ -343,6 +367,9 @@ test('removeDirent - shows error message for multiple files when operation fails
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
@@ -377,6 +404,9 @@ test('removeDirent - continues normally when no error occurs', async () => {
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },

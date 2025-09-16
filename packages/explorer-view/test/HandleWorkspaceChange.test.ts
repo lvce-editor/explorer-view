@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleWorkspaceChange } from '../src/parts/HandleWorkspaceChange/HandleWorkspaceChange.ts'
@@ -18,6 +18,9 @@ test('should update state with new workspace path and load content', async () =>
     'Preferences.get'() {
       return false
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['']
     },
@@ -61,6 +64,9 @@ test('should preserve state properties when updating workspace', async () => {
     'Preferences.get'() {
       return true
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['']
     },
@@ -109,6 +115,9 @@ test('should handle workspace path change with existing content', async () => {
     'Preferences.get'() {
       return false
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['file-icon', 'folder-icon']
     },
@@ -137,6 +146,9 @@ test('should handle workspace path change with chevrons enabled', async () => {
     'Preferences.get'() {
       return true
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['']
     },
@@ -163,6 +175,9 @@ test('should handle different path separators', async () => {
     'Preferences.get'() {
       return false
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['']
     },

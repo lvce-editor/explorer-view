@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptCreate } from '../src/parts/AcceptCreate/AcceptCreate.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -26,12 +26,18 @@ test('acceptCreate - successful file creation', async () => {
     'FileSystem.getPathSeparator'() {
       return '/'
     },
+  })
+
+  IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ''
     },
     'IconTheme.getIcons'() {
       return Array(2).fill('')
     },
+  })
+
+  RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === 'memfs:///workspace') {
         return [{ name: 'test', type: DirentType.Directory }]
