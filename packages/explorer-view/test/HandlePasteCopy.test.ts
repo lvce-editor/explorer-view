@@ -6,7 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handlePasteCopy } from '../src/parts/HandlePasteCopy/HandlePasteCopy.ts'
 
 test('should focus on first newly created file after paste copy', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.copy'() {
       return undefined
     },
@@ -47,6 +47,13 @@ test('should focus on first newly created file after paste copy', async () => {
   const focusedItem = result.items[result.focusedIndex]
   expect(focusedItem.path).toBe('/test/index copy.js')
   expect(result.focused).toBe(true)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.copy', '/source/index.js', '/test/index copy.js'],
+    ['FileSystem.readDirWithFileTypes', '/test'],
+    ['FileSystem.getPathSeparator'],
+    ['Preferences.get', 'explorer.confirmpaste'],
+    ['IconTheme.getIcons', []],
+  ])
 })
 
 test('should handle paste copy with multiple files and focus on first', async () => {
