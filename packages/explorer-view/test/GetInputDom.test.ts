@@ -6,7 +6,7 @@ import * as InputName from '../src/parts/InputName/InputName.ts'
 import * as VirtualDomElements from '../src/parts/VirtualDomElements/VirtualDomElements.ts'
 
 test('getInputDom - without error', () => {
-  const result = getInputDom(false)
+  const result = getInputDom(true, false)
   expect(result).toEqual([
     {
       type: VirtualDomElements.Input,
@@ -26,7 +26,7 @@ test('getInputDom - without error', () => {
 })
 
 test('getInputDom - with error', () => {
-  const result = getInputDom(true)
+  const result = getInputDom(true, true)
   expect(result).toEqual([
     {
       type: VirtualDomElements.Input,
