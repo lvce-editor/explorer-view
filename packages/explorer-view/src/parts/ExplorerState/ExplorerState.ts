@@ -47,4 +47,5 @@ export interface ExplorerState {
   readonly width: number
   readonly x: number
   readonly y: number
+  readonly maxIndent: number
 }
