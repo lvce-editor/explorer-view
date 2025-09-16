@@ -10,7 +10,10 @@ const label: VirtualDomNode = {
   childCount: 1,
 }
 
-export const getLabelDom = (name: string, isDimmed: boolean): readonly VirtualDomNode[] => {
+export const getLabelDom = (isEditing: boolean, name: string, isDimmed: boolean): readonly VirtualDomNode[] => {
+  if (isEditing) {
+    return []
+  }
   if (isDimmed) {
     return [
       {

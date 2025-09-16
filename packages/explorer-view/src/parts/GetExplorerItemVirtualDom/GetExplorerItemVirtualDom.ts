@@ -3,7 +3,8 @@ import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorer
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as GetChevronVirtualDom from '../GetChevronVirtualDom/GetChevronVirtualDom.ts'
 import * as GetFileIconVirtualDom from '../GetFileIconVirtualDom/GetFileIconVirtualDom.ts'
-import * as GetInputOrLabelDom from '../GetInputOrLabelDom/GetInputOrLabelDom.ts'
+import * as GetInputDom from '../GetInputDom/GetInputDom.ts'
+import * as GetLabelDom from '../GetLabelDom/GetLabelDom.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
 export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
@@ -46,6 +47,7 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly V
     },
     ...chevronDom,
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
-    ...GetInputOrLabelDom.getInputOrLabelDom(isEditing, hasEditingError, name, isCut, isIgnored),
+    ...GetInputDom.getInputDom(isEditing, hasEditingError),
+    ...GetLabelDom.getLabelDom(isEditing, name, isCut || isIgnored),
   ]
 }
