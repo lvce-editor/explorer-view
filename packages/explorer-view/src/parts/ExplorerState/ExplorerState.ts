@@ -40,11 +40,11 @@ export interface ExplorerState {
   readonly root: string
   readonly scrollBarActive: boolean
   readonly scrollBarHeight: number
+  readonly sourceControlIgnoredUris: readonly string[]
   readonly uid: number
   readonly useChevrons: boolean
   readonly version: number
   readonly width: number
   readonly x: number
   readonly y: number
-  readonly sourceControlIgnoredUris: readonly string[]
 }
