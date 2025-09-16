@@ -40,7 +40,7 @@ export const handleClickDirectoryExpanded = async (
       deltaY,
     }
   }
-  const parts = newDirents.slice(state.minLineY, state.maxLineY)
+  const parts = newDirents.slice(minLineY, maxLineY)
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, fileIconCache)
   return {
     ...state,
