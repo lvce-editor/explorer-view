@@ -6,7 +6,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('acceptCreateFile', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.createFile'() {},
     'FileSystem.writeFile'() {},
     'IconTheme.getFolderIcon'() {
@@ -42,4 +42,7 @@ test('acceptCreateFile', async () => {
   const newState = await acceptCreateFile(state)
   expect(newState.editingIndex).toBe(-1)
   expect(newState.editingType).toBe(0)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.writeFile', 'test/test.txt', ''],
+  ])
 })
