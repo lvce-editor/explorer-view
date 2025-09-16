@@ -6,9 +6,11 @@ import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleE
 
 export const { get, set, wrapCommand, registerCommands, getCommandIds, wrapGetter } = ViewletRegistry.create<ExplorerState>()
 
-export const wrapListItemCommand = <T extends any[]>(
-  fn: (state: ExplorerState, ...args: T) => Promise<ExplorerState>,
-): ((id: number, ...args: T) => Promise<void>) => {
+interface Fn<T extends any[]> {
+  (state: ExplorerState, ...args: T): ExplorerState | Promise<ExplorerState>
+}
+
+export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, ...args: T) => Promise<void>) => {
   const wrappedCommand = async (id: number, ...args: T): Promise<void> => {
     const { newState } = get(id)
     const updatedState = await fn(newState, ...args)
