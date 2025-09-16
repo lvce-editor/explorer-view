@@ -78,7 +78,7 @@ export const commandMap = {
   'Explorer.acceptEdit': WrapCommand.wrapListItemCommand(AcceptEdit.acceptEdit),
   'Explorer.cancelEdit': WrapCommand.wrapListItemCommand(CancelEdit.cancelEdit),
   'Explorer.cancelTypeAhead': WrapCommand.wrapCommand(CancelTypeAhead.cancelTypeAhead),
-  'Explorer.collapseAll': WrapCommand.wrapCommand(CollapseAll.collapseAll),
+  'Explorer.collapseAll': WrapCommand.wrapListItemCommand(CollapseAll.collapseAll),
   'Explorer.copyPath': WrapCommand.wrapCommand(CopyPath.copyPath),
   'Explorer.copyRelativePath': WrapCommand.wrapCommand(CopyRelativePath.copyRelativePath),
   'Explorer.expandAll': WrapCommand.wrapListItemCommand(ExpandAll.expandAll),
