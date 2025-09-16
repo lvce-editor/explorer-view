@@ -24,8 +24,6 @@ const getFittingIndex = (dirents: readonly ExplorerItem[], startIndex: number): 
 }
 
 export const newDirent = async (state: ExplorerState, editingType: number): Promise<ExplorerState> => {
-  // TODO make focus functional instead of side effect
-  await SetFocus.setFocus(FocusKey.ExplorerEditBox)
   // TODO do it like vscode, select position between folders and files
   const { focusedIndex, items, minLineY, height, itemHeight, fileIconCache, root } = state
   const index = getFittingIndex(items, focusedIndex)
