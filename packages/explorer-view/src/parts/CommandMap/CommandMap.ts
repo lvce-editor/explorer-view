@@ -117,7 +117,7 @@ export const commandMap = {
   'Explorer.handleInputClick': WrapCommand.wrapCommand(HandleInputClick.handleInputClick),
   'Explorer.handleInputKeyDown': WrapCommand.wrapCommand(HandleInputKeyDown.handleInputKeyDown),
   'Explorer.handleKeyDown': WrapCommand.wrapCommand(HandleKeyDown.handleKeyDown),
-  'Explorer.handlePaste': WrapCommand.wrapCommand(HandlePaste.handlePaste),
+  'Explorer.handlePaste': WrapCommand.wrapListItemCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapCommand(HandlePointerDown.handlePointerDown),
   'Explorer.handleUpload': WrapCommand.wrapCommand(HandleUpload.handleUpload),
   'Explorer.handleWheel': WrapCommand.wrapCommand(HandleWheel.handleWheel),

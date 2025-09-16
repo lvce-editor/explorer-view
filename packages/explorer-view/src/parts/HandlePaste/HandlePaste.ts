@@ -30,7 +30,6 @@ export const handlePaste = async (state: ExplorerState): Promise<ExplorerState> 
   // Use the pasteShouldMove flag to determine whether to cut or copy
   if (state.pasteShouldMove) {
     return HandlePasteCut.handlePasteCut(state, nativeFiles)
-  } else {
-    return HandlePasteCopy.handlePasteCopy(state, nativeFiles)
   }
+  return HandlePasteCopy.handlePasteCopy(state, nativeFiles)
 }
