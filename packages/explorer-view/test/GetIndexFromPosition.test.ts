@@ -1,9 +1,11 @@
 import { expect, test } from '@jest/globals'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { getIndexFromPosition } from '../src/parts/GetIndexFromPosition/GetIndexFromPosition.ts'
 
 test.skip('getIndexFromPosition', () => {
   const state: ExplorerState = {
+    ...createDefaultState(),
     uid: 44,
     parentUid: 43,
     root: 'test:///virtual-dom',

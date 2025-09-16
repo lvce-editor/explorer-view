@@ -62,6 +62,7 @@ export const create2 = (
     isPointerDown: false,
     pointerDownIndex: -1,
     sourceControlIgnoredUris: [],
+    maxIndent: 0,
   }
   ExplorerStates.set(uid, state, state)
 }
