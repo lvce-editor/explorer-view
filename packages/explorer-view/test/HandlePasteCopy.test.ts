@@ -141,7 +141,5 @@ test('should handle paste copy with empty files array', async () => {
   expect(result).toBeDefined()
   expect(result.items).toHaveLength(0)
   expect(result.focusedIndex).toBe(0)
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes', '/test'],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
 })

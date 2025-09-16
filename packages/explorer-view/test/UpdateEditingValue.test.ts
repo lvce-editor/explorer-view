@@ -54,9 +54,7 @@ test('updateEditingValue - updates file icon', async () => {
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('file-test.txt')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFileIcon', { name: 'test.txt' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFileIcon', { name: 'test.txt' }]])
 })
 
 test('updateEditingValue - updates folder icon', async () => {
@@ -68,9 +66,7 @@ test('updateEditingValue - updates folder icon', async () => {
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('folder-test')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFolderIcon', { name: 'test' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: 'test' }]])
 })
 
 test('updateEditingValue - updates file icon when renaming file', async () => {
@@ -84,9 +80,7 @@ test('updateEditingValue - updates file icon when renaming file', async () => {
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('file-new.txt')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFileIcon', { name: 'new.txt' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFileIcon', { name: 'new.txt' }]])
 })
 
 test('updateEditingValue - updates folder icon when renaming folder', async () => {
@@ -100,9 +94,7 @@ test('updateEditingValue - updates folder icon when renaming folder', async () =
   const result = await updateEditingValue(state, newValue)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('folder-new')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFolderIcon', { name: 'new' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: 'new' }]])
 })
 
 test('updateEditingValue - preserves other state properties', async () => {

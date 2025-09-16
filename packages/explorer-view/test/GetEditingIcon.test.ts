@@ -13,9 +13,7 @@ test('getEditingIcon - CreateFile', async () => {
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.CreateFile, 'test.txt')
   expect(result).toBe('file-icon')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFileIcon', { name: 'test.txt' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFileIcon', { name: 'test.txt' }]])
 })
 
 test('getEditingIcon - CreateFolder', async () => {
@@ -27,9 +25,7 @@ test('getEditingIcon - CreateFolder', async () => {
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.CreateFolder, 'test-folder')
   expect(result).toBe('folder-icon')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFolderIcon', { name: 'test-folder' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: 'test-folder' }]])
 })
 
 test('getEditingIcon - Rename File', async () => {
@@ -41,9 +37,7 @@ test('getEditingIcon - Rename File', async () => {
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.Rename, 'test.txt', DirentType.File)
   expect(result).toBe('file-icon')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFileIcon', { name: 'test.txt' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFileIcon', { name: 'test.txt' }]])
 })
 
 test('getEditingIcon - Rename EditingFile', async () => {
@@ -55,9 +49,7 @@ test('getEditingIcon - Rename EditingFile', async () => {
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.Rename, 'test.txt', DirentType.EditingFile)
   expect(result).toBe('file-icon')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFileIcon', { name: 'test.txt' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFileIcon', { name: 'test.txt' }]])
 })
 
 test('getEditingIcon - Rename Directory', async () => {
@@ -69,9 +61,7 @@ test('getEditingIcon - Rename Directory', async () => {
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.Rename, 'test-folder', DirentType.Directory)
   expect(result).toBe('folder-icon')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFolderIcon', { name: 'test-folder' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: 'test-folder' }]])
 })
 
 test('getEditingIcon - Rename EditingFolder', async () => {
@@ -83,9 +73,7 @@ test('getEditingIcon - Rename EditingFolder', async () => {
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.Rename, 'test-folder', DirentType.EditingFolder)
   expect(result).toBe('folder-icon')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFolderIcon', { name: 'test-folder' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: 'test-folder' }]])
 })
 
 test('getEditingIcon - Rename EditingDirectoryExpanded', async () => {
@@ -97,9 +85,7 @@ test('getEditingIcon - Rename EditingDirectoryExpanded', async () => {
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.Rename, 'test-folder', DirentType.EditingDirectoryExpanded)
   expect(result).toBe('folder-icon')
-  expect(mockRpc.invocations).toEqual([
-    ['IconTheme.getFolderIcon', { name: 'test-folder' }],
-  ])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: 'test-folder' }]])
 })
 
 test('getEditingIcon - Rename with unsupported dirent type', async () => {
