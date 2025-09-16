@@ -74,31 +74,10 @@ export const handleClickDirectoryExpanded = async (
       visibleExplorerItems,
     }
   }
-  const parts = newDirents.slice(minLineY, maxLineY)
-  const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(parts, fileIconCache)
-  const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
-    newDirents,
-    minLineY,
-    maxLineY,
-    focusedIndex,
-    editingIndex,
-    editingType,
-    editingValue,
-    editingErrorMessage,
-    icons,
-    useChevrons,
-    dropTargets,
-    editingIcon,
-    cutItems,
-    sourceControlIgnoredUris,
-  )
   return {
     ...state,
-    fileIconCache: newFileIconCache,
     focused: keepFocus,
     focusedIndex: index,
-    icons,
     items: newDirents,
-    visibleExplorerItems,
   }
 }
