@@ -26,22 +26,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     useChevrons,
     width,
   } = newState
-  const visibleDirents = GetVisibleExplorerItems.getVisibleExplorerItems(
-    items,
-    minLineY,
-    maxLineY,
-    focusedIndex,
-    editingIndex,
-    editingType,
-    editingValue,
-    editingErrorMessage,
-    icons,
-    useChevrons,
-    dropTargets,
-    editingIcon,
-    cutItems,
-    sourceControlIgnoredUris,
-  )
+  const visibleDirents = newState.visibleExplorerItems
   const isWide = width > 450
   const contentHeight = items.length * itemHeight
   const depth = items[focusedIndex]?.depth || 0
