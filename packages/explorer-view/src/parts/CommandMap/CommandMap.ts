@@ -128,7 +128,7 @@ export const commandMap = {
   'Explorer.openContainingFolder': WrapCommand.wrapCommand(OpenContainingFolder.openContainingFolder),
   'Explorer.refresh': WrapCommand.wrapListItemCommand(Refresh.refresh),
   'Explorer.removeDirent': WrapCommand.wrapListItemCommand(RemoveDirent.removeDirent),
-  'Explorer.renameDirent': WrapCommand.wrapListItemCommand(RenameDirent.renameDirent),
+  'Explorer.renameDirent': WrapCommand.wrapListItemCommandSync(RenameDirent.renameDirent),
   'Explorer.restoreState': RestoreState.restoreState,
   'Explorer.revealItem': WrapCommand.wrapCommand(RevealItem.revealItem),
   'Explorer.selectAll': WrapCommand.wrapCommand(SelectAll.selectAll),
