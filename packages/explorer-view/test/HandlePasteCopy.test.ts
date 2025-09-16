@@ -50,9 +50,6 @@ test('should focus on first newly created file after paste copy', async () => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.copy', '/source/index.js', '/test/index copy.js'],
     ['FileSystem.readDirWithFileTypes', '/test'],
-    ['FileSystem.getPathSeparator'],
-    ['Preferences.get', 'explorer.confirmpaste'],
-    ['IconTheme.getIcons', []],
   ])
 })
 
@@ -107,9 +104,6 @@ test('should handle paste copy with multiple files and focus on first', async ()
     ['FileSystem.copy', '/source/file1.txt', '/test/file1 copy.txt'],
     ['FileSystem.copy', '/source/file2.txt', '/test/file2 copy.txt'],
     ['FileSystem.readDirWithFileTypes', '/test'],
-    ['FileSystem.getPathSeparator'],
-    ['Preferences.get', 'explorer.confirmpaste'],
-    ['IconTheme.getIcons', []],
   ])
 })
 
@@ -147,5 +141,7 @@ test('should handle paste copy with empty files array', async () => {
   expect(result).toBeDefined()
   expect(result.items).toHaveLength(0)
   expect(result.focusedIndex).toBe(0)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/test'],
+  ])
 })
