@@ -24,7 +24,7 @@ const invoke = async (method: string, ...params: readonly any[]): Promise<any> =
 test('updateRoot should merge dirents correctly', async () => {
   const state = createDefaultState()
 
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes': invoke.bind(undefined, 'FileSystem.readDirWithFileTypes'),
   })
 
@@ -32,4 +32,7 @@ test('updateRoot should merge dirents correctly', async () => {
   expect(result.items).toHaveLength(2)
   expect(result.items[0].name).toBe('dir1')
   expect(result.items[1].name).toBe('file1')
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/'],
+  ])
 })

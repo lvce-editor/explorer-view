@@ -51,6 +51,7 @@ test('revealItemHidden - throws error for non-existent file', async () => {
   const state = createDefaultState()
   await expect(revealItemHidden(state, '/non/existent/file.txt')).rejects.toThrow('File not found in explorer')
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes', '/'],
+    ['FileSystem.readDirWithFileTypes', '/non'],
+    ['FileSystem.readDirWithFileTypes', '/non/existent'],
   ])
 })
