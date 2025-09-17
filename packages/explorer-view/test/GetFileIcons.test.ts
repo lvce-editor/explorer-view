@@ -65,10 +65,15 @@ test('getFileIcons - none cached', async () => {
       '/b': 'folder-icon',
     },
   })
-  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [
-    { name: 'a.txt', type: 1 },
-    { name: 'b', type: 2 }
-  ]]])
+  expect(mockRpc.invocations).toEqual([
+    [
+      'IconTheme.getIcons',
+      [
+        { name: 'a.txt', type: 1 },
+        { name: 'b', type: 2 },
+      ],
+    ],
+  ])
 })
 
 test('getFileIcons - mixed cache', async () => {

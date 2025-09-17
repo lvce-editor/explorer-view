@@ -63,8 +63,13 @@ test('requestFileIcons - mixed requests', async () => {
 
   const result = await RequestFileIcons.requestFileIcons(requests)
   expect(result).toEqual(['file-icon', 'folder-icon'])
-  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [
-    { name: 'file.txt', type: 1 },
-    { name: 'folder', type: 2 }
-  ]]])
+  expect(mockRpc.invocations).toEqual([
+    [
+      'IconTheme.getIcons',
+      [
+        { name: 'file.txt', type: 1 },
+        { name: 'folder', type: 2 },
+      ],
+    ],
+  ])
 })
