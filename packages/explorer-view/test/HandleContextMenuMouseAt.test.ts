@@ -8,6 +8,7 @@ import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const mockInvoke = (method: string, ...args: any[]): void => {}
 const mockRpc: Rpc = {
+  // @ts-ignore
   invoke: mockInvoke,
   send: () => {},
   invokeAndTransfer: async () => [],

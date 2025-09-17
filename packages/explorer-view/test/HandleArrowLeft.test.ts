@@ -72,6 +72,7 @@ test('handleArrowLeft - expanded directory', () => {
         type: DirentType.DirectoryExpanded,
         name: 'test',
         path: '/test',
+        // @ts-ignore
         expanded: true,
         level: 0,
         depth: 0,
