@@ -19,9 +19,7 @@ test('should handle paste with no files (none type)', async () => {
   const result = await handlePaste(initialState)
 
   expect(result).toBe(initialState)
-  expect(mockRpc.invocations).toEqual([
-    ['ClipBoard.readNativeFiles'],
-  ])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readNativeFiles']])
 })
 
 test('should handle paste with copy type', async () => {
@@ -166,10 +164,7 @@ test('should handle paste with empty files array', async () => {
   expect(result).toBeDefined()
   expect(result).toHaveProperty('items')
   expect(result).toHaveProperty('icons')
-  expect(mockRpc.invocations).toEqual([
-    ['ClipBoard.readNativeFiles'],
-    ['FileSystem.readDirWithFileTypes', '/'],
-  ])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readNativeFiles'], ['FileSystem.readDirWithFileTypes', '/']])
 })
 
 test('should preserve state properties when handling paste', async () => {

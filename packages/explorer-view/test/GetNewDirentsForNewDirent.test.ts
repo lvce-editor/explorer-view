@@ -149,9 +149,7 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
       icon: '',
     },
   ])
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes', '/root/folder'],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/folder']])
 })
 
 test('getNewDirentsForNewDirent - no items', async () => {

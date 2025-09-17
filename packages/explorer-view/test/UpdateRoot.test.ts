@@ -27,7 +27,5 @@ test('updateRoot should merge dirents correctly', async () => {
   expect(result.items).toHaveLength(2)
   expect(result.items[0].name).toBe('dir1')
   expect(result.items[1].name).toBe('file1')
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes', '/'],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })

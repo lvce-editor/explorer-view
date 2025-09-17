@@ -91,7 +91,5 @@ test('handleDrop - error case', async () => {
   const fileList = new MockFileList([new MockFile('test.txt', '/test.txt')])
 
   await expect(handleDrop(state, 0, 0, [1], fileList)).rejects.toThrow(new Error('Failed to drop files: test error'))
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystemHandle.getFileHandles', [1]],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystemHandle.getFileHandles', [1]]])
 })

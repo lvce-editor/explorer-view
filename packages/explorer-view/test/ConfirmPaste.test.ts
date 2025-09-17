@@ -10,9 +10,7 @@ test('confirmPaste returns true when user confirms', async () => {
   })
   const result = await confirmPaste()
   expect(result).toBe(true)
-  expect(mockRpc.invocations).toEqual([
-    ['ConfirmPrompt.prompt', 'Are you sure you want to paste these files?', undefined],
-  ])
+  expect(mockRpc.invocations).toEqual([['ConfirmPrompt.prompt', 'Are you sure you want to paste these files?', undefined]])
 })
 
 test('confirmPaste returns false when user cancels', async () => {
@@ -23,7 +21,5 @@ test('confirmPaste returns false when user cancels', async () => {
   })
   const result = await confirmPaste()
   expect(result).toBe(false)
-  expect(mockRpc.invocations).toEqual([
-    ['ConfirmPrompt.prompt', 'Are you sure you want to paste these files?', undefined],
-  ])
+  expect(mockRpc.invocations).toEqual([['ConfirmPrompt.prompt', 'Are you sure you want to paste these files?', undefined]])
 })

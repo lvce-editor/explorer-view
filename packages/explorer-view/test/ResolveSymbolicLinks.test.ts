@@ -52,9 +52,7 @@ test('should handle ENOENT errors by returning SymLinkFile type', async () => {
   const result = await ResolveSymbolicLinks.resolveSymbolicLinks(uri, rawDirents)
 
   expect(result).toEqual([{ name: 'broken-symlink', type: DirentType.SymLinkFile }])
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.stat', '/test/path/broken-symlink'],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.stat', '/test/path/broken-symlink']])
 })
 
 test('should handle other errors by returning original dirent', async () => {
@@ -76,9 +74,7 @@ test('should handle other errors by returning original dirent', async () => {
   const result = await ResolveSymbolicLinks.resolveSymbolicLinks(uri, rawDirents)
 
   expect(result).toEqual([{ name: 'error-symlink', type: DirentType.Symlink }])
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.stat', '/test/path/error-symlink'],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.stat', '/test/path/error-symlink']])
 
   // Verify console.error was called with the expected message
   expect(console.error).toHaveBeenCalledWith('Failed to resolve symbolic link for error-symlink: Error: Permission denied')

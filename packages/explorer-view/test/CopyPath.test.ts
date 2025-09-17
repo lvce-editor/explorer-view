@@ -21,9 +21,7 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
   const result = await copyPath(state)
 
   expect(result).toBe(state)
-  expect(mockRpc.invocations).toEqual([
-    ['ClipBoard.writeText', '/test/file.txt'],
-  ])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', '/test/file.txt']])
 })
 
 test('copyPath - does nothing when no focused dirent', async () => {

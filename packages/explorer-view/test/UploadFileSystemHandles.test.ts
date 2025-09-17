@@ -46,9 +46,7 @@ test('upload single file', async () => {
   const fileHandle = new MockFileHandle('file', 'test.txt', 'content')
   const result = await uploadFileSystemHandles('/', '/', [fileHandle])
   expect(result).toBe(true)
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.writeFile', '/test.txt', 'content'],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', '/test.txt', 'content']])
 })
 
 test('upload directory with files', async () => {

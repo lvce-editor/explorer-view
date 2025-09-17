@@ -19,9 +19,7 @@ test('getFilePaths - electron platform', async () => {
   const files = [new File([], 'test.txt')]
   const paths = await getFilePaths(files, PlatformType.Electron)
   expect(paths).toEqual(['/path/to/file'])
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystemHandle.getFilePathElectron', files[0]],
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystemHandle.getFilePathElectron', files[0]]])
 })
 
 test('getFilePaths - multiple files', async () => {
