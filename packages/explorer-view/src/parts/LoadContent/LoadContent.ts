@@ -4,15 +4,6 @@ import * as GetSettings from '../GetSettings/GetSettings.ts'
 import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
 
-// TODO viewlet should only have create and refresh functions
-// every thing else can be in a separate module <viewlet>.lazy.js
-// and  <viewlet>.ipc.js
-
-// viewlet: creating | refreshing | done | disposed
-// TODO recycle viewlets (maybe)
-
-// TODO instead of root string, there should be a root dirent
-
 const getPathSeparator = (root: any): any => {
   return FileSystem.getPathSeparator(root)
 }
