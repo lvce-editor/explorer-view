@@ -3,7 +3,6 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as RequestFileIcons from '../src/parts/RequestFileIcons/RequestFileIcons.ts'
 
-
 test('requestFileIcons - empty requests', async () => {
   const mockRpc = RendererWorker.registerMockRpc({})
 
