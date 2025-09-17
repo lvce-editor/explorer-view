@@ -5,20 +5,16 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { setDeltaY } from '../src/parts/SetDeltaY/SetDeltaY.ts'
 
-const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
-  if (method === 'IconTheme.getFileIcon' || method === 'IconTheme.getFolderIcon') {
-    return 'icon'
-  }
-  if (method === 'IconTheme.getIcons') {
-    return ['icon']
-  }
-  throw new Error(`Unexpected method: ${method}`)
-}
-
 const mockRpc = RendererWorker.registerMockRpc({
-  'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
-  'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
-  'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
+  'IconTheme.getFileIcon'() {
+    return 'icon'
+  },
+  'IconTheme.getFolderIcon'() {
+    return 'icon'
+  },
+  'IconTheme.getIcons'() {
+    return ['icon']
+  },
 })
 
 test('should not change state when deltaY is the same', async () => {
