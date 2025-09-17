@@ -7,13 +7,3 @@ test('handleDragLeave returns state unchanged', () => {
   const result = handleDragLeave(state)
   expect(result).toBe(state)
 })
-
-// Uncomment when functionality is implemented
-// test('handleDragLeave clears dropTargets', () => {
-//   const state :ExplorerState = {
-//     ...createDefaultState(),
-//     dropTargets: ['some-target']
-//   }
-//   const result = handleDragLeave(state)
-//   expect(result.dropTargets).toEqual([])
-// })
