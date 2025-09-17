@@ -72,12 +72,13 @@ test('handleArrowLeft - expanded directory', () => {
         type: DirentType.DirectoryExpanded,
         name: 'test',
         path: '/test',
+        // @ts-ignore
         expanded: true,
         level: 0,
         depth: 0,
         selected: false,
       },
-    ] as any[],
+    ],
     focusedIndex: 0,
   }
   const result = handleArrowLeft(state)

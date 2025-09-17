@@ -40,7 +40,7 @@ test('should resolve symbolic links to files', async () => {
 test('should handle ENOENT errors by returning SymLinkFile type', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'() {
-      const enoentError = new Error('File not found') as any
+      const enoentError = new Error('File not found') as Error & { code: string }
       enoentError.code = ErrorCodes.ENOENT
       throw enoentError
     },
@@ -58,7 +58,7 @@ test('should handle ENOENT errors by returning SymLinkFile type', async () => {
 test('should handle other errors by returning original dirent', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'() {
-      const otherError = new Error('Permission denied') as any
+      const otherError = new Error('Permission denied') as Error & { code: string }
       otherError.code = 'EACCES'
       throw otherError
     },

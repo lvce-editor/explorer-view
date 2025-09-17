@@ -1,3 +1,4 @@
+import type { Rpc } from '@lvce-editor/rpc'
 import { expect, test } from '@jest/globals'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -6,9 +7,13 @@ import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
 const mockInvoke = (method: string, ...args: any[]): void => {}
-const mockRpc = {
+const mockRpc: Rpc = {
+  // @ts-ignore
   invoke: mockInvoke,
-} as any
+  send: () => {},
+  invokeAndTransfer: async () => [],
+  dispose: async () => {},
+}
 
 test('handleContextMenuMouseAt', async () => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)

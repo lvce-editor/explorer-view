@@ -1,35 +1,48 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as IsExpandedDirectory from '../src/parts/IsExpandedDirectory/IsExpandedDirectory.ts'
 
 test('isExpandedDirectory - expanded directory', () => {
-  expect(
-    IsExpandedDirectory.isExpandedDirectory({
-      type: DirentType.DirectoryExpanded,
-    } as any),
-  ).toBe(true)
+  const item: ExplorerItem = {
+    name: 'test',
+    type: DirentType.DirectoryExpanded,
+    path: '/test',
+    depth: 0,
+    selected: false,
+  }
+  expect(IsExpandedDirectory.isExpandedDirectory(item)).toBe(true)
 })
 
 test('isExpandedDirectory - collapsed directory', () => {
-  expect(
-    IsExpandedDirectory.isExpandedDirectory({
-      type: DirentType.Directory,
-    } as any),
-  ).toBe(false)
+  const item: ExplorerItem = {
+    name: 'test',
+    type: DirentType.Directory,
+    path: '/test',
+    depth: 0,
+    selected: false,
+  }
+  expect(IsExpandedDirectory.isExpandedDirectory(item)).toBe(false)
 })
 
 test('isExpandedDirectory - expanding directory', () => {
-  expect(
-    IsExpandedDirectory.isExpandedDirectory({
-      type: DirentType.DirectoryExpanding,
-    } as any),
-  ).toBe(false)
+  const item: ExplorerItem = {
+    name: 'test',
+    type: DirentType.DirectoryExpanding,
+    path: '/test',
+    depth: 0,
+    selected: false,
+  }
+  expect(IsExpandedDirectory.isExpandedDirectory(item)).toBe(false)
 })
 
 test('isExpandedDirectory - file', () => {
-  expect(
-    IsExpandedDirectory.isExpandedDirectory({
-      type: DirentType.File,
-    } as any),
-  ).toBe(false)
+  const item: ExplorerItem = {
+    name: 'test.txt',
+    type: DirentType.File,
+    path: '/test.txt',
+    depth: 0,
+    selected: false,
+  }
+  expect(IsExpandedDirectory.isExpandedDirectory(item)).toBe(false)
 })
