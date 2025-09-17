@@ -25,7 +25,7 @@ test('handleArrowRight - file', async () => {
 })
 
 test.skip('handleArrowRight - directory', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -37,6 +37,7 @@ test.skip('handleArrowRight - directory', async () => {
   }
   const result = await handleArrowRight(state)
   expect(result).not.toBe(state)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('handleArrowRight - symlink file', async () => {
@@ -50,7 +51,7 @@ test('handleArrowRight - symlink file', async () => {
 })
 
 test.skip('handleArrowRight - symlink folder', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -62,10 +63,11 @@ test.skip('handleArrowRight - symlink folder', async () => {
   }
   const result = await handleArrowRight(state)
   expect(result).not.toBe(state)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('handleArrowRight - directory expanded', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -77,10 +79,11 @@ test.skip('handleArrowRight - directory expanded', async () => {
   }
   const result = await handleArrowRight(state)
   expect(result).not.toBe(state)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('handleArrowRight - symlink', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getRealPath'() {
       return '/real/path'
     },
@@ -95,6 +98,7 @@ test.skip('handleArrowRight - symlink', async () => {
   }
   const result = await handleArrowRight(state)
   expect(result).not.toBe(state)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('handleArrowRight - invalid type', async () => {

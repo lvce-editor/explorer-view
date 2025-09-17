@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { getSettings } from '../src/parts/GetSettings/GetSettings.ts'
 
 test('getSettings - useChevrons true', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'() {
       return undefined
     },
@@ -14,10 +14,15 @@ test('getSettings - useChevrons true', async () => {
     confirmDelete: false,
     confirmPaste: false,
   })
+  expect(mockRpc.invocations).toEqual([
+    ['Preferences.get', 'explorer.useChevrons'],
+    ['Preferences.get', 'explorer.confirmdelete'],
+    ['Preferences.get', 'explorer.confirmpaste'],
+  ])
 })
 
 test.skip('getSettings - useChevrons false', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'(settingName: string) {
       if (settingName === 'explorer.useChevrons') {
         return false
@@ -34,10 +39,15 @@ test.skip('getSettings - useChevrons false', async () => {
     confirmDelete: true,
     confirmPaste: false,
   })
+  expect(mockRpc.invocations).toEqual([
+    ['Preferences.get', 'explorer.useChevrons'],
+    ['Preferences.get', 'explorer.confirmdelete'],
+    ['Preferences.get', 'explorer.confirmpaste'],
+  ])
 })
 
 test('getSettings - useChevrons undefined', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'() {
       return undefined
     },
@@ -48,4 +58,9 @@ test('getSettings - useChevrons undefined', async () => {
     confirmDelete: false,
     confirmPaste: false,
   })
+  expect(mockRpc.invocations).toEqual([
+    ['Preferences.get', 'explorer.useChevrons'],
+    ['Preferences.get', 'explorer.confirmdelete'],
+    ['Preferences.get', 'explorer.confirmpaste'],
+  ])
 })
