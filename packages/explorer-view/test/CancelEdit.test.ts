@@ -30,7 +30,7 @@ test('cancelEdit', async () => {
 })
 
 test('cancelEdit - removes editing items', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
     },
