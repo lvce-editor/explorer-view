@@ -5,7 +5,7 @@ import * as ErrorCodes from '../src/parts/ErrorCodes/ErrorCodes.ts'
 import * as ResolveSymbolicLinks from '../src/parts/ResolveSymbolicLinks/ResolveSymbolicLinks.ts'
 
 test('should resolve symbolic links to files', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'(path: string) {
       if (path.includes('symlink-file')) {
         return DirentType.File
@@ -31,10 +31,14 @@ test('should resolve symbolic links to files', async () => {
     { name: 'regular-file', type: DirentType.File },
     { name: 'symlink-dir', type: DirentType.SymLinkFolder },
   ])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.stat', '/test/path/symlink-file'],
+    ['FileSystem.stat', '/test/path/symlink-dir'],
+  ])
 })
 
 test('should handle ENOENT errors by returning SymLinkFile type', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'() {
       const enoentError = new Error('File not found') as any
       enoentError.code = ErrorCodes.ENOENT
@@ -48,10 +52,13 @@ test('should handle ENOENT errors by returning SymLinkFile type', async () => {
   const result = await ResolveSymbolicLinks.resolveSymbolicLinks(uri, rawDirents)
 
   expect(result).toEqual([{ name: 'broken-symlink', type: DirentType.SymLinkFile }])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.stat', '/test/path/broken-symlink'],
+  ])
 })
 
 test('should handle other errors by returning original dirent', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'() {
       const otherError = new Error('Permission denied') as any
       otherError.code = 'EACCES'
@@ -69,6 +76,9 @@ test('should handle other errors by returning original dirent', async () => {
   const result = await ResolveSymbolicLinks.resolveSymbolicLinks(uri, rawDirents)
 
   expect(result).toEqual([{ name: 'error-symlink', type: DirentType.Symlink }])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.stat', '/test/path/error-symlink'],
+  ])
 
   // Verify console.error was called with the expected message
   expect(console.error).toHaveBeenCalledWith('Failed to resolve symbolic link for error-symlink: Error: Permission denied')
@@ -78,7 +88,7 @@ test('should handle other errors by returning original dirent', async () => {
 })
 
 test('should handle non-symbolic link dirents without processing', async () => {
-  RendererWorker.registerMockRpc({})
+  const mockRpc = RendererWorker.registerMockRpc({})
 
   const uri = '/test/path'
   const rawDirents = [
@@ -90,10 +100,11 @@ test('should handle non-symbolic link dirents without processing', async () => {
   const result = await ResolveSymbolicLinks.resolveSymbolicLinks(uri, rawDirents)
 
   expect(result).toEqual(rawDirents)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('should handle empty dirents array', async () => {
-  RendererWorker.registerMockRpc({})
+  const mockRpc = RendererWorker.registerMockRpc({})
 
   const uri = '/test/path'
   const rawDirents: any[] = []
@@ -101,10 +112,11 @@ test('should handle empty dirents array', async () => {
   const result = await ResolveSymbolicLinks.resolveSymbolicLinks(uri, rawDirents)
 
   expect(result).toEqual([])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('should handle mixed dirents with some symlinks and some regular files', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'(path: string) {
       if (path.includes('symlink1')) {
         return DirentType.File
@@ -134,10 +146,14 @@ test('should handle mixed dirents with some symlinks and some regular files', as
     { name: 'symlink2', type: DirentType.SymLinkFolder },
     { name: 'file2.txt', type: DirentType.File },
   ])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.stat', '/test/path/symlink1'],
+    ['FileSystem.stat', '/test/path/symlink2'],
+  ])
 })
 
 test('should handle symlinks that resolve to different types', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'(path: string) {
       if (path.includes('symlink-file')) {
         return DirentType.File
@@ -165,5 +181,10 @@ test('should handle symlinks that resolve to different types', async () => {
     { name: 'symlink-file', type: DirentType.SymLinkFile },
     { name: 'symlink-dir', type: DirentType.SymLinkFolder },
     { name: 'symlink-socket', type: DirentType.Symlink },
+  ])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.stat', '/test/path/symlink-file'],
+    ['FileSystem.stat', '/test/path/symlink-dir'],
+    ['FileSystem.stat', '/test/path/symlink-socket'],
   ])
 })
