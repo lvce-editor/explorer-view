@@ -11,21 +11,16 @@ test('updateRoot should return same disposed state', async () => {
   expect(result).toBe(state)
 })
 
-const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
-  if (method === 'FileSystem.readDirWithFileTypes') {
-    return [
-      { name: 'file1', type: 'file' },
-      { name: 'dir1', type: 'directory' },
-    ]
-  }
-  throw new Error(`Unexpected method: ${method}`)
-}
-
 test('updateRoot should merge dirents correctly', async () => {
   const state = createDefaultState()
 
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes': invoke.bind(undefined, 'FileSystem.readDirWithFileTypes'),
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'file1', type: 'file' },
+        { name: 'dir1', type: 'directory' },
+      ]
+    },
   })
 
   const result = await updateRoot(state)
