@@ -18,7 +18,6 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
   await expect(inputBox).toBeFocused()
 
   // act
-  await inputBox.type('a/b/c')
   await Explorer.updateEditingValue('a/b/c')
   await Explorer.acceptEdit()
 
