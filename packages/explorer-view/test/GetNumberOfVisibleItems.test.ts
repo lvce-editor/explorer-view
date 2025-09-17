@@ -17,10 +17,10 @@ test('getNumberOfVisibleItems - small height', () => {
   expect(GetNumberOfVisibleItems.getNumberOfVisibleItems(10, 22)).toBe(2)
 })
 
-test.skip('getNumberOfVisibleItems - zero height', () => {
+test('getNumberOfVisibleItems - zero height', () => {
   expect(GetNumberOfVisibleItems.getNumberOfVisibleItems(0, 22)).toBe(0)
 })
 
-test.skip('getNumberOfVisibleItems - negative height', () => {
+test('getNumberOfVisibleItems - negative height', () => {
   expect(GetNumberOfVisibleItems.getNumberOfVisibleItems(-100, 22)).toBe(0)
 })

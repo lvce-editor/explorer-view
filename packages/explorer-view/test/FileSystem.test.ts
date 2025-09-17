@@ -94,7 +94,7 @@ test('getPathSeparator', async () => {
     },
   })
 
-  const result = await FileSystem.getPathSeparator()
+  const result = await FileSystem.getPathSeparator('/')
   expect(result).toBe('/')
-  expect(mockRpc.invocations).toEqual([['FileSystem.getPathSeparator']])
+  expect(mockRpc.invocations).toEqual([['FileSystem.getPathSeparator', '/']])
 })

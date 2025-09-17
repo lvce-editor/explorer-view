@@ -2,88 +2,97 @@ import { expect, test } from '@jest/globals'
 import * as GetPathParts from '../src/parts/GetPathParts/GetPathParts.ts'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
 
-test.skip('getPathParts - empty path', () => {
+test('getPathParts - empty path', () => {
   expect(GetPathParts.getPathParts('', '', PathSeparatorType.Slash)).toEqual([])
 })
 
-test.skip('getPathParts - root path', () => {
+test('getPathParts - root path', () => {
   expect(GetPathParts.getPathParts('/', '/', PathSeparatorType.Slash)).toEqual([])
 })
 
-test.skip('getPathParts - single level', () => {
+test('getPathParts - single level', () => {
   expect(GetPathParts.getPathParts('/root', '/root/folder', PathSeparatorType.Slash)).toEqual([
     {
       depth: 0,
       path: '/root',
       pathSeparator: '/',
       root: '/root',
+      expanded: true,
     },
   ])
 })
 
-test.skip('getPathParts - multiple levels', () => {
+test('getPathParts - multiple levels', () => {
   expect(GetPathParts.getPathParts('/root', '/root/folder/subfolder/file.txt', PathSeparatorType.Slash)).toEqual([
     {
       depth: 0,
       path: '/root',
       pathSeparator: '/',
       root: '/root',
+      expanded: true,
     },
     {
       depth: 1,
       path: '/root/folder',
       pathSeparator: '/',
       root: '/root',
+      expanded: true,
     },
     {
       depth: 2,
       path: '/root/folder/subfolder',
       pathSeparator: '/',
       root: '/root',
+      expanded: true,
     },
   ])
 })
 
-test.skip('getPathParts - path equals root', () => {
+test('getPathParts - path equals root', () => {
   expect(GetPathParts.getPathParts('/root', '/root', PathSeparatorType.Slash)).toEqual([])
 })
 
-test.skip('getPathParts - trailing slash', () => {
+test('getPathParts - trailing slash', () => {
   expect(GetPathParts.getPathParts('/root', '/root/folder/', PathSeparatorType.Slash)).toEqual([
     {
       depth: 0,
       path: '/root',
       pathSeparator: '/',
       root: '/root',
+      expanded: true,
     },
     {
       depth: 1,
       path: '/root/folder',
       pathSeparator: '/',
       root: '/root',
+      expanded: true,
     },
   ])
 })
 
-test.skip('getPathParts - multiple slashes', () => {
+test('getPathParts - multiple slashes', () => {
   expect(GetPathParts.getPathParts('/root', '/root/folder//subfolder', PathSeparatorType.Slash)).toEqual([
     {
       depth: 0,
       path: '/root',
       pathSeparator: '/',
       root: '/root',
+      expanded: true,
     },
     {
       depth: 1,
       path: '/root/folder',
       pathSeparator: '/',
       root: '/root',
+      expanded: true,
     },
     {
       depth: 2,
       path: '/root/folder/',
       pathSeparator: '/',
       root: '/root',
+      expanded: true,
     },
   ])
 })

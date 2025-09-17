@@ -5,15 +5,6 @@ import type { FileIconCache } from '../src/parts/FileIconCache/FileIconCache.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as GetFileIcons from '../src/parts/GetFileIcons/GetFileIcons.ts'
 
-const handleFileIcons = (requests: readonly any[]): readonly string[] => {
-  return requests.map((param) => {
-    if (param.type === 3) {
-      // DirentType.Directory
-      return `folder-icon`
-    }
-    return `file-icon`
-  })
-}
 
 test('getFileIcons - empty dirents', async () => {
   const mockRpc = RendererWorker.registerMockRpc({})
