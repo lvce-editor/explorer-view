@@ -1,53 +1,24 @@
-import type { Rpc } from '@lvce-editor/rpc'
-import { test, expect, beforeEach } from '@jest/globals'
+import { test, expect } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { FileIconCache } from '../src/parts/FileIconCache/FileIconCache.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as GetFileIcons from '../src/parts/GetFileIcons/GetFileIcons.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
-
-const handleFileIcons = (requests: readonly any[]): readonly string[] => {
-  return requests.map((param) => {
-    if (param.type === 2) {
-      return `folder-icon`
-    }
-    return `file-icon`
-  })
-}
-
-const mockRpc: Rpc = {
-  invoke: async (method: string, ...params: readonly any[]) => {
-    switch (method) {
-      case 'IconTheme.getFileIcon':
-        return 'file-icon'
-      case 'IconTheme.getFolderIcon':
-        return 'folder-icon'
-      case 'IconTheme.getIcons': {
-        return handleFileIcons(params[0])
-      }
-      default:
-        throw new Error(`unexpected method ${method}`)
-    }
-  },
-  send: () => {},
-  invokeAndTransfer: async () => [],
-  dispose: async () => {},
-}
-
-beforeEach(() => {
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
-})
 
 test('getFileIcons - empty dirents', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({})
+
   const result = await GetFileIcons.getFileIcons([], {})
   expect(result).toEqual({
     icons: [],
     newFileIconCache: {},
   })
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('getFileIcons - all cached', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({})
+
   const dirents: readonly ExplorerItem[] = [
     { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
     { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
@@ -61,6 +32,7 @@ test('getFileIcons - all cached', async () => {
     icons: ['cached-a', 'cached-b'],
     newFileIconCache: cache,
   })
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('getFileIcons - none cached', async () => {
@@ -68,6 +40,13 @@ test('getFileIcons - none cached', async () => {
     { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
     { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
   ]
+
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return ['file-icon', 'folder-icon']
+    },
+  })
+
   const result = await GetFileIcons.getFileIcons(dirents, {})
   expect(result).toEqual({
     icons: ['file-icon', 'folder-icon'],
@@ -76,6 +55,15 @@ test('getFileIcons - none cached', async () => {
       '/b': 'folder-icon',
     },
   })
+  expect(mockRpc.invocations).toEqual([
+    [
+      'IconTheme.getIcons',
+      [
+        { name: 'a.txt', type: 1 },
+        { name: 'b', type: 2 },
+      ],
+    ],
+  ])
 })
 
 test('getFileIcons - mixed cache', async () => {
@@ -87,6 +75,13 @@ test('getFileIcons - mixed cache', async () => {
   const cache: FileIconCache = {
     '/a.txt': 'cached-a',
   }
+
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return ['folder-icon', 'file-icon']
+    },
+  })
+
   const result = await GetFileIcons.getFileIcons(dirents, cache)
   expect(result).toEqual({
     icons: ['cached-a', 'folder-icon', 'file-icon'],
@@ -96,4 +91,13 @@ test('getFileIcons - mixed cache', async () => {
       '/c.txt': 'file-icon',
     },
   })
+  expect(mockRpc.invocations).toEqual([
+    [
+      'IconTheme.getIcons',
+      [
+        { name: 'b', type: 2 },
+        { name: 'c.txt', type: 1 },
+      ],
+    ],
+  ])
 })

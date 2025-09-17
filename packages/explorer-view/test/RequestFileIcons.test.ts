@@ -1,56 +1,42 @@
-import type { Rpc } from '@lvce-editor/rpc'
-import { test, expect, beforeAll } from '@jest/globals'
+import { test, expect } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as RequestFileIcons from '../src/parts/RequestFileIcons/RequestFileIcons.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
-
-const handleFileIcons = (requests: readonly any[]): readonly string[] => {
-  return requests.map((param) => {
-    if (param.type === 2) {
-      return `folder-icon`
-    }
-    return `file-icon`
-  })
-}
-
-const mockRpc: Rpc = {
-  invoke: async (method: string, ...params: readonly any[]) => {
-    switch (method) {
-      case 'IconTheme.getFileIcon':
-        return `file-icon-${params[0].name}`
-      case 'IconTheme.getFolderIcon':
-        return `folder-icon-${params[0].name}`
-      case 'IconTheme.getIcons':
-        return handleFileIcons(params[0])
-      default:
-        throw new Error(`unknown method ${method}`)
-    }
-  },
-  send: () => {},
-  invokeAndTransfer: async () => [],
-  dispose: async () => {},
-}
-
-beforeAll(() => {
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
-})
 
 test('requestFileIcons - empty requests', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({})
+
   const result = await RequestFileIcons.requestFileIcons([])
   expect(result).toEqual([])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('requestFileIcons - file icons', async () => {
   const requests = [{ type: DirentType.File, name: 'file.txt', path: '/test/file.txt' }]
+
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return ['file-icon']
+    },
+  })
+
   const result = await RequestFileIcons.requestFileIcons(requests)
   expect(result).toEqual(['file-icon'])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ name: 'file.txt', type: 1 }]]])
 })
 
 test('requestFileIcons - folder icons', async () => {
   const requests = [{ type: DirentType.Directory, name: 'folder', path: '/test/folder' }]
+
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return ['folder-icon']
+    },
+  })
+
   const result = await RequestFileIcons.requestFileIcons(requests)
   expect(result).toEqual(['folder-icon'])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ name: 'folder', type: 2 }]]])
 })
 
 test('requestFileIcons - mixed requests', async () => {
@@ -58,6 +44,22 @@ test('requestFileIcons - mixed requests', async () => {
     { type: DirentType.File, name: 'file.txt', path: '/test/file.txt' },
     { type: DirentType.Directory, name: 'folder', path: '/test/folder' },
   ]
+
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return ['file-icon', 'folder-icon']
+    },
+  })
+
   const result = await RequestFileIcons.requestFileIcons(requests)
   expect(result).toEqual(['file-icon', 'folder-icon'])
+  expect(mockRpc.invocations).toEqual([
+    [
+      'IconTheme.getIcons',
+      [
+        { name: 'file.txt', type: 1 },
+        { name: 'folder', type: 2 },
+      ],
+    ],
+  ])
 })

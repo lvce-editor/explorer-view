@@ -3,7 +3,7 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { getIndexFromPosition } from '../src/parts/GetIndexFromPosition/GetIndexFromPosition.ts'
 
-test.skip('getIndexFromPosition', () => {
+test('getIndexFromPosition', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     uid: 44,
@@ -298,5 +298,5 @@ test.skip('getIndexFromPosition', () => {
     pointerDownIndex: -1,
     sourceControlIgnoredUris: [],
   }
-  expect(getIndexFromPosition(state, 988, 449)).toBe(17)
+  expect(getIndexFromPosition(state, 988, 1700)).toBe(1)
 })
