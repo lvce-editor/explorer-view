@@ -4,16 +4,15 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleWheel } from '../src/parts/HandleWheel/HandleWheel.ts'
 
-const mockRpc = RendererWorker.registerMockRpc({
-  'FileSystem.readDirWithFileTypes'() {
-    return []
-  },
-  'IconTheme.getIcons'() {
-    return []
-  },
-})
-
 test('handleWheel calls SetDeltaY with correct delta', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getIcons'() {
+      return []
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     deltaY: 10,
@@ -33,6 +32,14 @@ test('handleWheel calls SetDeltaY with correct delta', async () => {
 })
 
 test('handleWheel with negative delta', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'IconTheme.getIcons'() {
+      return []
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     deltaY: 10,

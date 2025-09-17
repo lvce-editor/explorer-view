@@ -5,19 +5,18 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { setDeltaY } from '../src/parts/SetDeltaY/SetDeltaY.ts'
 
-const mockRpc = RendererWorker.registerMockRpc({
-  'IconTheme.getFileIcon'() {
-    return 'icon'
-  },
-  'IconTheme.getFolderIcon'() {
-    return 'icon'
-  },
-  'IconTheme.getIcons'() {
-    return ['icon']
-  },
-})
-
 test('should not change state when deltaY is the same', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getFolderIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getIcons'() {
+      return ['icon']
+    },
+  })
   const state: ExplorerState = createDefaultState()
   const result = await setDeltaY(state, 0)
   expect(result).toBe(state)
@@ -25,6 +24,17 @@ test('should not change state when deltaY is the same', async () => {
 })
 
 test('should clamp deltaY to 0 when negative', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getFolderIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getIcons'() {
+      return ['icon']
+    },
+  })
   const state: ExplorerState = createDefaultState()
   const result = await setDeltaY(state, -50)
   expect(result.deltaY).toBe(0)
@@ -33,6 +43,17 @@ test('should clamp deltaY to 0 when negative', async () => {
 })
 
 test('should clamp deltaY to max scroll value', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getFolderIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getIcons'() {
+      return ['icon']
+    },
+  })
   const items: ExplorerItem[] = Array.from({ length: 20 }, (_, i) => ({
     name: `file${i}`,
     type: 1,
@@ -51,6 +72,17 @@ test('should clamp deltaY to max scroll value', async () => {
 })
 
 test('should update visible items and icons', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getFolderIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getIcons'() {
+      return ['icon']
+    },
+  })
   const items: ExplorerItem[] = Array.from({ length: 20 }, (_, i) => ({
     name: `file${i}`,
     type: 1,
