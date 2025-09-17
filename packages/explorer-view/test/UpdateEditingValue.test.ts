@@ -7,23 +7,16 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import { updateEditingValue } from '../src/parts/UpdateEditingValue/UpdateEditingValue.ts'
 
-const invoke = async (method: string, ...params: readonly any[]): Promise<any> => {
-  switch (method) {
-    case 'IconTheme.getFileIcon':
-      return `file-${params[0].name}`
-    case 'IconTheme.getFolderIcon':
-      return `folder-${params[0].name}`
-    default:
-      throw new Error(`unknown method ${method}`)
-  }
-}
-
 let mockRpc: any
 
 beforeEach(async () => {
   mockRpc = RendererWorker.registerMockRpc({
-    'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
-    'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
+    'IconTheme.getFileIcon'(params: any) {
+      return `file-${params.name}`
+    },
+    'IconTheme.getFolderIcon'(params: any) {
+      return `folder-${params.name}`
+    },
   })
 })
 

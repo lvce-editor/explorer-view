@@ -57,7 +57,7 @@ class MockFileList implements FileList {
 }
 
 test('handleDrop - successful drop', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -74,10 +74,14 @@ test('handleDrop - successful drop', async () => {
 
   const result = await handleDrop(state, 0, 0, [1], fileList)
   expect(result).toBeDefined()
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystemHandle.getFileHandles', [1]],
+    ['FileSystem.readDirWithFileTypes', '/'],
+  ])
 })
 
 test('handleDrop - error case', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystemHandle.getFileHandles'() {
       throw new Error('test error')
     },
@@ -87,4 +91,5 @@ test('handleDrop - error case', async () => {
   const fileList = new MockFileList([new MockFile('test.txt', '/test.txt')])
 
   await expect(handleDrop(state, 0, 0, [1], fileList)).rejects.toThrow(new Error('Failed to drop files: test error'))
+  expect(mockRpc.invocations).toEqual([['FileSystemHandle.getFileHandles', [1]]])
 })

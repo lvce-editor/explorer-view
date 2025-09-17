@@ -6,10 +6,8 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('copyPath - writes absolute path of focused dirent to clipboard', async () => {
-  let clipboardText = ''
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'(text: string) {
-      clipboardText = text
       return
     },
   })
@@ -23,14 +21,12 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
   const result = await copyPath(state)
 
   expect(result).toBe(state)
-  expect(clipboardText).toBe('/test/file.txt')
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', '/test/file.txt']])
 })
 
 test('copyPath - does nothing when no focused dirent', async () => {
-  let clipboardCalled = false
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {
-      clipboardCalled = true
       return
     },
   })
@@ -44,5 +40,5 @@ test('copyPath - does nothing when no focused dirent', async () => {
   const result = await copyPath(state)
 
   expect(result).toBe(state)
-  expect(clipboardCalled).toBe(false)
+  expect(mockRpc.invocations).toEqual([])
 })

@@ -8,7 +8,7 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 
 test('cancelEdit', async () => {
-  RendererWorker.registerMockRpc({})
+  const mockRpc = RendererWorker.registerMockRpc({})
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
@@ -26,6 +26,7 @@ test('cancelEdit', async () => {
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
   })
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('cancelEdit - removes editing items', async () => {

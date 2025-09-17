@@ -4,7 +4,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewChildDirentsForNewDirent } from '../src/parts/GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
 
 test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -37,10 +37,11 @@ test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
       icon: '',
     },
   ])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('getNewChildDirentsForNewDirent - directory with existing children', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -113,10 +114,11 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
       icon: '',
     },
   ])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('getNewChildDirentsForNewDirent - directory with no children', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -149,10 +151,11 @@ test.skip('getNewChildDirentsForNewDirent - directory with no children', async (
       icon: '',
     },
   ])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('getNewChildDirentsForNewDirent - different dirent types', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -225,10 +228,11 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
       icon: '',
     },
   ])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('getNewChildDirentsForNewDirent - error case', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       throw new Error('Failed to read directory')
     },
@@ -248,4 +252,5 @@ test.skip('getNewChildDirentsForNewDirent - error case', async () => {
   ]
 
   await expect(getNewChildDirentsForNewDirent(items, 2, '/root/folder', DirentType.File)).rejects.toThrow('Failed to read directory')
+  expect(mockRpc.invocations).toEqual([])
 })

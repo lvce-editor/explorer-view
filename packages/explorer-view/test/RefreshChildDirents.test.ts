@@ -4,7 +4,7 @@ import { Directory, DirectoryExpanded } from '../src/parts/DirentType/DirentType
 import { refreshChildDirents } from '../src/parts/RefreshChildDirents/RefreshChildDirents.ts'
 
 test('refreshChildDirents - basic', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1.txt', type: 'file' },
@@ -22,10 +22,11 @@ test('refreshChildDirents - basic', async () => {
   expect(result[1].name).toBe('folder1')
   expect(result[1].path).toBe('/test/folder1')
   expect(result[1].depth).toBe(1)
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
 })
 
 test('refreshChildDirents - with expanded folder', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path?: string) {
       if (path === '/test') {
         return [{ name: 'folder1', type: 'directory' }]
@@ -47,4 +48,8 @@ test('refreshChildDirents - with expanded folder', async () => {
   expect(result[1].name).toBe('file1.txt')
   expect(result[1].path).toBe('/test/folder1/file1.txt')
   expect(result[1].depth).toBe(2)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/test'],
+    ['FileSystem.readDirWithFileTypes', '/test/folder1'],
+  ])
 })

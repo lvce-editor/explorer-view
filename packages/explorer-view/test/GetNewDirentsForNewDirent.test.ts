@@ -6,7 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewDirentsForNewDirent } from '../src/parts/GetNewDirentsForNewDirent/GetNewDirentsForNewDirent.ts'
 
 test('getNewDirentsForNewDirent - folder with existing children', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -95,10 +95,11 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
       icon: '',
     },
   ])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('getNewDirentsForNewDirent - folder without children', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -148,10 +149,11 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
       icon: '',
     },
   ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/folder']])
 })
 
 test('getNewDirentsForNewDirent - no items', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -179,10 +181,11 @@ test('getNewDirentsForNewDirent - no items', async () => {
       icon: '',
     },
   ])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -231,4 +234,5 @@ test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async ()
       icon: '',
     },
   ])
+  expect(mockRpc.invocations).toEqual([])
 })

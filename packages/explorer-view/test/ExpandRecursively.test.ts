@@ -6,7 +6,7 @@ import { Directory, File } from '../src/parts/DirentType/DirentType.ts'
 import { expandRecursively } from '../src/parts/ExpandRecursively/ExpandRecursively.ts'
 
 test.skip('expand root directory', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1.txt', type: 'file', isSymbolicLink: false },
@@ -36,10 +36,11 @@ test.skip('expand root directory', async () => {
   expect(newState.items).toHaveLength(2)
   expect(newState.items[0].name).toBe('file1.txt')
   expect(newState.items[1].name).toBe('dir1')
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('expand focused directory', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1.txt', type: 'file', isSymbolicLink: false },
@@ -68,6 +69,7 @@ test.skip('expand focused directory', async () => {
   expect(newState.items).toHaveLength(2)
   expect(newState.items[0].name).toBe('file1.txt')
   expect(newState.items[1].name).toBe('file2.txt')
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('do not expand file', async () => {

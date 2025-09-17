@@ -5,40 +5,29 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import { newFolder } from '../src/parts/NewFolder/NewFolder.ts'
 
-const invoke = (method: string): any => {
-  if (method === 'Workspace.getPath') {
-    return '/new/path'
-  }
-  if (method === 'FileSystem.readDirWithFileTypes') {
-    return []
-  }
-  if (method === 'FileSystem.getPathSeparator') {
-    return '/'
-  }
-  if (method === 'IconTheme.getFolderIcon') {
-    return ''
-  }
-  if (method === 'Preferences.get') {
-    return false
-  }
-  if (method === 'Focus.setFocus') {
-    return undefined
-  }
-  if (method === 'IconTheme.getIcons') {
-    return ['']
-  }
-  throw new Error(`unexpected method ${method}`)
-}
-
 test('newFolder', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath': invoke.bind(undefined, 'Workspace.getPath'),
-    'FileSystem.readDirWithFileTypes': invoke.bind(undefined, 'FileSystem.readDirWithFileTypes'),
-    'FileSystem.getPathSeparator': invoke.bind(undefined, 'FileSystem.getPathSeparator'),
-    'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
-    'Preferences.get': invoke.bind(undefined, 'Preferences.get'),
-    'Focus.setFocus': invoke.bind(undefined, 'Focus.setFocus'),
-    'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
+    'Workspace.getPath'() {
+      return '/new/path'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Focus.setFocus'() {
+      return undefined
+    },
+    'IconTheme.getIcons'() {
+      return ['']
+    },
   })
   const mockState: ExplorerState = {
     ...createDefaultState(),

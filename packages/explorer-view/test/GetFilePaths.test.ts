@@ -10,7 +10,7 @@ test('getFilePaths - non-electron platform', async () => {
 })
 
 test('getFilePaths - electron platform', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystemHandle.getFilePathElectron'() {
       return '/path/to/file'
     },
@@ -19,10 +19,11 @@ test('getFilePaths - electron platform', async () => {
   const files = [new File([], 'test.txt')]
   const paths = await getFilePaths(files, PlatformType.Electron)
   expect(paths).toEqual(['/path/to/file'])
+  expect(mockRpc.invocations).toEqual([['FileSystemHandle.getFilePathElectron', files[0]]])
 })
 
 test('getFilePaths - multiple files', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystemHandle.getFilePathElectron'() {
       return '/path/to/file'
     },
@@ -31,4 +32,8 @@ test('getFilePaths - multiple files', async () => {
   const files = [new File([], 'test1.txt'), new File([], 'test2.txt')]
   const paths = await getFilePaths(files, PlatformType.Electron)
   expect(paths).toEqual(['/path/to/file', '/path/to/file'])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystemHandle.getFilePathElectron', files[0]],
+    ['FileSystemHandle.getFilePathElectron', files[1]],
+  ])
 })

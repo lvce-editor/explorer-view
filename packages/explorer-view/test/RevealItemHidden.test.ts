@@ -6,7 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { revealItemHidden } from '../src/parts/RevealItemHidden/RevealItemHidden.ts'
 
 test('revealItemHidden - reveals hidden item', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/root') {
         return [{ name: 'folder1', isDirectory: true, type: DirentType.File, path: '/root/folder1' }]
@@ -28,20 +28,30 @@ test('revealItemHidden - reveals hidden item', async () => {
   expect(newState.items.length).toBeGreaterThan(0)
   expect(newState.focused).toBe(true)
   expect(newState.focusedIndex).toBeGreaterThanOrEqual(0)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/root'],
+    ['FileSystem.readDirWithFileTypes', '/root/folder1'],
+  ])
 })
 
 test('revealItemHidden - returns same state for empty path parts', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({})
   const state = createDefaultState()
   const newState = await revealItemHidden(state, '')
   expect(newState).toEqual(state)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('revealItemHidden - throws error for non-existent file', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
   })
   const state = createDefaultState()
   await expect(revealItemHidden(state, '/non/existent/file.txt')).rejects.toThrow('File not found in explorer')
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/non'],
+    ['FileSystem.readDirWithFileTypes', '/non/existent'],
+  ])
 })

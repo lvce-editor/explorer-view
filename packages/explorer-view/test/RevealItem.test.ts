@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { revealItem } from '../src/parts/RevealItem/RevealItem.ts'
 
 test('revealItem - item not found', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -14,10 +14,11 @@ test('revealItem - item not found', async () => {
   const state = createDefaultState()
   const newState = await revealItem(state, 'test')
   expect(newState.items).toEqual([])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('revealItem - item found', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -37,4 +38,5 @@ test('revealItem - item found', async () => {
   }
   const newState = await revealItem(state, 'test')
   expect(newState.items[0].path).toBe('test')
+  expect(mockRpc.invocations).toEqual([])
 })

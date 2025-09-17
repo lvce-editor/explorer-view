@@ -6,53 +6,37 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import { newFile } from '../src/parts/NewFile/NewFile.ts'
 
-const handleFileIcons = (requests: readonly any[]): readonly string[] => {
-  return requests.map((param) => {
-    if (param.type === 2) {
-      return `folder-icon`
-    }
-    return `file-icon`
-  })
-}
-
-const invoke = (method: string, ...params: readonly any[]): any => {
-  if (method === 'Workspace.getPath') {
-    return '/new/path'
-  }
-  if (method === 'FileSystem.readDirWithFileTypes') {
-    return []
-  }
-  if (method === 'FileSystem.getPathSeparator') {
-    return '/'
-  }
-  if (method === 'IconTheme.getFileIcon') {
-    return ''
-  }
-  if (method === 'IconTheme.getFolderIcon') {
-    return ''
-  }
-  if (method === 'Preferences.get') {
-    return false
-  }
-  if (method === 'Focus.setFocus') {
-    return undefined
-  }
-  if (method === 'IconTheme.getIcons') {
-    return handleFileIcons(params[0])
-  }
-  throw new Error(`unexpected method ${method}`)
-}
-
 test('newFile', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath': invoke.bind(undefined, 'Workspace.getPath'),
-    'FileSystem.readDirWithFileTypes': invoke.bind(undefined, 'FileSystem.readDirWithFileTypes'),
-    'FileSystem.getPathSeparator': invoke.bind(undefined, 'FileSystem.getPathSeparator'),
-    'IconTheme.getFileIcon': invoke.bind(undefined, 'IconTheme.getFileIcon'),
-    'IconTheme.getFolderIcon': invoke.bind(undefined, 'IconTheme.getFolderIcon'),
-    'Preferences.get': invoke.bind(undefined, 'Preferences.get'),
-    'Focus.setFocus': invoke.bind(undefined, 'Focus.setFocus'),
-    'IconTheme.getIcons': invoke.bind(undefined, 'IconTheme.getIcons'),
+    'Workspace.getPath'() {
+      return '/new/path'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Focus.setFocus'() {
+      return undefined
+    },
+    'IconTheme.getIcons'(requests: readonly any[]) {
+      return requests.map((param) => {
+        if (param.type === 2) {
+          return `folder-icon`
+        }
+        return `file-icon`
+      })
+    },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
