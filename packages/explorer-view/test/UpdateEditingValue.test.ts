@@ -1,4 +1,4 @@
-import { beforeEach, expect, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -7,10 +7,8 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import { updateEditingValue } from '../src/parts/UpdateEditingValue/UpdateEditingValue.ts'
 
-let mockRpc: any
-
-beforeEach(async () => {
-  mockRpc = RendererWorker.registerMockRpc({
+test('updateEditingValue - updates state with new value', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
@@ -18,9 +16,6 @@ beforeEach(async () => {
       return `folder-${params.name}`
     },
   })
-})
-
-test('updateEditingValue - updates state with new value', async () => {
   const state: ExplorerState = createDefaultState()
   const newValue = 'new value'
   const result = await updateEditingValue(state, newValue)
@@ -30,6 +25,14 @@ test('updateEditingValue - updates state with new value', async () => {
 })
 
 test('updateEditingValue - updates state with new value and input source', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'(params: any) {
+      return `file-${params.name}`
+    },
+    'IconTheme.getFolderIcon'(params: any) {
+      return `folder-${params.name}`
+    },
+  })
   const state: ExplorerState = createDefaultState()
   const newValue = 'new value'
   const result = await updateEditingValue(state, newValue, InputSource.User)
@@ -39,6 +42,14 @@ test('updateEditingValue - updates state with new value and input source', async
 })
 
 test('updateEditingValue - updates file icon', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'(params: any) {
+      return `file-${params.name}`
+    },
+    'IconTheme.getFolderIcon'(params: any) {
+      return `folder-${params.name}`
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     editingType: ExplorerEditingType.CreateFile,
@@ -51,6 +62,14 @@ test('updateEditingValue - updates file icon', async () => {
 })
 
 test('updateEditingValue - updates folder icon', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'(params: any) {
+      return `file-${params.name}`
+    },
+    'IconTheme.getFolderIcon'(params: any) {
+      return `folder-${params.name}`
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     editingType: ExplorerEditingType.CreateFolder,
@@ -63,6 +82,14 @@ test('updateEditingValue - updates folder icon', async () => {
 })
 
 test('updateEditingValue - updates file icon when renaming file', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'(params: any) {
+      return `file-${params.name}`
+    },
+    'IconTheme.getFolderIcon'(params: any) {
+      return `folder-${params.name}`
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     editingType: ExplorerEditingType.Rename,
@@ -77,6 +104,14 @@ test('updateEditingValue - updates file icon when renaming file', async () => {
 })
 
 test('updateEditingValue - updates folder icon when renaming folder', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'(params: any) {
+      return `file-${params.name}`
+    },
+    'IconTheme.getFolderIcon'(params: any) {
+      return `folder-${params.name}`
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     editingType: ExplorerEditingType.Rename,
@@ -91,6 +126,14 @@ test('updateEditingValue - updates folder icon when renaming folder', async () =
 })
 
 test('updateEditingValue - preserves other state properties', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'(params: any) {
+      return `file-${params.name}`
+    },
+    'IconTheme.getFolderIcon'(params: any) {
+      return `folder-${params.name}`
+    },
+  })
   const state: ExplorerState = createDefaultState()
   const result = await updateEditingValue(state, 'new value')
   expect(result.uid).toBe(state.uid)

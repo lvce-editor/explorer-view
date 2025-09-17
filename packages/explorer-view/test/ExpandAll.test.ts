@@ -5,25 +5,24 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { expandAll } from '../src/parts/ExpandAll/ExpandAll.ts'
 
-const mockRpc = RendererWorker.registerMockRpc({
-  'FileSystem.readDirWithFileTypes'() {
-    return [
-      { name: 'file1', type: DirentType.File, path: '/dir1/file1' },
-      { name: 'file2', type: DirentType.File, path: '/dir1/file2' },
-    ]
-  },
-  'IconTheme.getFileIcon'() {
-    return ['icon1', 'icon2']
-  },
-  'IconTheme.getFolderIcon'() {
-    return ['icon1', 'icon2']
-  },
-  'IconTheme.getIcons'() {
-    return ['icon1', 'icon2']
-  },
-})
-
 test('expandAll - no focused item', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'file1', type: DirentType.File, path: '/dir1/file1' },
+        { name: 'file2', type: DirentType.File, path: '/dir1/file2' },
+      ]
+    },
+    'IconTheme.getFileIcon'() {
+      return ['icon1', 'icon2']
+    },
+    'IconTheme.getFolderIcon'() {
+      return ['icon1', 'icon2']
+    },
+    'IconTheme.getIcons'() {
+      return ['icon1', 'icon2']
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
@@ -34,6 +33,23 @@ test('expandAll - no focused item', async () => {
 })
 
 test('expandAll - expand directories at same depth', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'file1', type: DirentType.File, path: '/dir1/file1' },
+        { name: 'file2', type: DirentType.File, path: '/dir1/file2' },
+      ]
+    },
+    'IconTheme.getFileIcon'() {
+      return ['icon1', 'icon2']
+    },
+    'IconTheme.getFolderIcon'() {
+      return ['icon1', 'icon2']
+    },
+    'IconTheme.getIcons'() {
+      return ['icon1', 'icon2']
+    },
+  })
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
