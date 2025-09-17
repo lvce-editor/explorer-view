@@ -1,4 +1,4 @@
-import { Test } from '../types/Test'
+import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-switch-folders'
 
