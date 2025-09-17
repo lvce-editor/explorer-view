@@ -1,3 +1,4 @@
+import type { Rpc } from '@lvce-editor/rpc'
 import { test, expect, beforeAll } from '@jest/globals'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as RequestFileIcons from '../src/parts/RequestFileIcons/RequestFileIcons.ts'
@@ -13,8 +14,8 @@ const handleFileIcons = (requests: readonly any[]): readonly string[] => {
   })
 }
 
-const mockRpc = {
-  invoke(method: string, ...params: readonly any[]) {
+const mockRpc: Rpc = {
+  invoke: async (method: string, ...params: readonly any[]) => {
     switch (method) {
       case 'IconTheme.getFileIcon':
         return `file-icon-${params[0].name}`
@@ -26,7 +27,10 @@ const mockRpc = {
         throw new Error(`unknown method ${method}`)
     }
   },
-} as any
+  send: () => {},
+  invokeAndTransfer: async () => [],
+  dispose: async () => {},
+}
 
 beforeAll(() => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)

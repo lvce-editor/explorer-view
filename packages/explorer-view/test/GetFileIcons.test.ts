@@ -1,3 +1,4 @@
+import type { Rpc } from '@lvce-editor/rpc'
 import { test, expect, beforeEach } from '@jest/globals'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { FileIconCache } from '../src/parts/FileIconCache/FileIconCache.ts'
@@ -15,8 +16,8 @@ const handleFileIcons = (requests: readonly any[]): readonly string[] => {
   })
 }
 
-const mockRpc = {
-  invoke(method: string, ...params: readonly any[]) {
+const mockRpc: Rpc = {
+  invoke: async (method: string, ...params: readonly any[]) => {
     switch (method) {
       case 'IconTheme.getFileIcon':
         return 'file-icon'
@@ -29,7 +30,10 @@ const mockRpc = {
         throw new Error(`unexpected method ${method}`)
     }
   },
-} as any
+  send: () => {},
+  invokeAndTransfer: async () => [],
+  dispose: async () => {},
+}
 
 beforeEach(() => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)

@@ -1,10 +1,11 @@
+import type { Rpc } from '@lvce-editor/rpc'
 import { test, expect, beforeEach } from '@jest/globals'
 import * as FileSystem from '../src/parts/FileSystem/FileSystem.ts'
 import * as RpcId from '../src/parts/RpcId/RpcId.ts'
 import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
 
-const mockRpc = {
-  invoke(method: string, ...params: any[]) {
+const mockRpc: Rpc = {
+  invoke: async (method: string, ...params: any[]) => {
     switch (method) {
       case 'FileSystem.readDirWithFileTypes':
         return [
@@ -31,7 +32,10 @@ const mockRpc = {
         throw new Error(`unknown method ${method}`)
     }
   },
-} as any
+  send: () => {},
+  invokeAndTransfer: async () => [],
+  dispose: async () => {},
+}
 
 beforeEach(() => {
   RpcRegistry.set(RpcId.RendererWorker, mockRpc)

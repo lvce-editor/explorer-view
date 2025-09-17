@@ -1,38 +1,59 @@
 import { expect, test } from '@jest/globals'
+import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as IsSymbolicLink from '../src/parts/IsSymbolicLink/IsSymbolicLink.ts'
 
 test('isSymbolicLink - symlink', () => {
-  const dirent = {
+  const dirent: ExplorerItem = {
+    name: 'symlink',
     type: DirentType.Symlink,
-  } as any
+    path: '/symlink',
+    depth: 0,
+    selected: false,
+  }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(true)
 })
 
 test('isSymbolicLink - file', () => {
-  const dirent = {
+  const dirent: ExplorerItem = {
+    name: 'file.txt',
     type: DirentType.File,
-  } as any
+    path: '/file.txt',
+    depth: 0,
+    selected: false,
+  }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(false)
 })
 
 test('isSymbolicLink - directory', () => {
-  const dirent = {
+  const dirent: ExplorerItem = {
+    name: 'directory',
     type: DirentType.Directory,
-  } as any
+    path: '/directory',
+    depth: 0,
+    selected: false,
+  }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(false)
 })
 
 test('isSymbolicLink - symlink file', () => {
-  const dirent = {
+  const dirent: ExplorerItem = {
+    name: 'symlink-file',
     type: DirentType.SymLinkFile,
-  } as any
+    path: '/symlink-file',
+    depth: 0,
+    selected: false,
+  }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(false)
 })
 
 test('isSymbolicLink - symlink folder', () => {
-  const dirent = {
+  const dirent: ExplorerItem = {
+    name: 'symlink-folder',
     type: DirentType.SymLinkFolder,
-  } as any
+    path: '/symlink-folder',
+    depth: 0,
+    selected: false,
+  }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(false)
 })

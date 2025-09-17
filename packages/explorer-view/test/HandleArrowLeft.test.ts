@@ -77,7 +77,7 @@ test('handleArrowLeft - expanded directory', () => {
         depth: 0,
         selected: false,
       },
-    ] as any[],
+    ],
     focusedIndex: 0,
   }
   const result = handleArrowLeft(state)
