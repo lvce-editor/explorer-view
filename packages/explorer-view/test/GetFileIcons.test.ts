@@ -50,13 +50,13 @@ test('getFileIcons - none cached', async () => {
     { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
     { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
   ]
-  
+
   const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['file-icon', 'folder-icon']
     },
   })
-  
+
   const result = await GetFileIcons.getFileIcons(dirents, {})
   expect(result).toEqual({
     icons: ['file-icon', 'folder-icon'],
@@ -65,7 +65,10 @@ test('getFileIcons - none cached', async () => {
       '/b': 'folder-icon',
     },
   })
-  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', dirents]])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [
+    { name: 'a.txt', type: 1 },
+    { name: 'b', type: 2 }
+  ]]])
 })
 
 test('getFileIcons - mixed cache', async () => {
@@ -77,13 +80,13 @@ test('getFileIcons - mixed cache', async () => {
   const cache: FileIconCache = {
     '/a.txt': 'cached-a',
   }
-  
+
   const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['folder-icon', 'file-icon']
     },
   })
-  
+
   const result = await GetFileIcons.getFileIcons(dirents, cache)
   expect(result).toEqual({
     icons: ['cached-a', 'folder-icon', 'file-icon'],
@@ -97,8 +100,8 @@ test('getFileIcons - mixed cache', async () => {
     [
       'IconTheme.getIcons',
       [
-        { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
-        { type: DirentType.File, name: 'c.txt', path: '/c.txt', depth: 0, selected: false },
+        { name: 'b', type: 2 },
+        { name: 'c.txt', type: 1 },
       ],
     ],
   ])

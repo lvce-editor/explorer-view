@@ -23,13 +23,13 @@ test('requestFileIcons - empty requests', async () => {
 
 test('requestFileIcons - file icons', async () => {
   const requests = [{ type: DirentType.File, name: 'file.txt', path: '/test/file.txt' }]
-  
+
   const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['file-icon']
     },
   })
-  
+
   const result = await RequestFileIcons.requestFileIcons(requests)
   expect(result).toEqual(['file-icon'])
   expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ name: 'file.txt', type: 1 }]]])
@@ -37,13 +37,13 @@ test('requestFileIcons - file icons', async () => {
 
 test('requestFileIcons - folder icons', async () => {
   const requests = [{ type: DirentType.Directory, name: 'folder', path: '/test/folder' }]
-  
+
   const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['folder-icon']
     },
   })
-  
+
   const result = await RequestFileIcons.requestFileIcons(requests)
   expect(result).toEqual(['folder-icon'])
   expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ name: 'folder', type: 2 }]]])
@@ -54,13 +54,13 @@ test('requestFileIcons - mixed requests', async () => {
     { type: DirentType.File, name: 'file.txt', path: '/test/file.txt' },
     { type: DirentType.Directory, name: 'folder', path: '/test/folder' },
   ]
-  
+
   const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['file-icon', 'folder-icon']
     },
   })
-  
+
   const result = await RequestFileIcons.requestFileIcons(requests)
   expect(result).toEqual(['file-icon', 'folder-icon'])
   expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [
