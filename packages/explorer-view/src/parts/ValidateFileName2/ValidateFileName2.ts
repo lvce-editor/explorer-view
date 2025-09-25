@@ -1,7 +1,7 @@
 import * as Character from '../Character/Character.ts'
 import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 
-export const validateFileName2 = (name: string): string => {
+export const validateFileName2 = (name: string, siblingFileNames: readonly string[] = []): string => {
   if (!name) {
     const editingErrorMessage = ExplorerStrings.fileOrFolderNameMustBeProvided()
     return editingErrorMessage
@@ -15,5 +15,11 @@ export const validateFileName2 = (name: string): string => {
   if (name.startsWith(Character.BackSlash)) {
     return ExplorerStrings.fileCannotStartWithBackSlash()
   }
+
+  // Check if file already exists
+  if (siblingFileNames.includes(name)) {
+    return ExplorerStrings.fileOrFolderAlreadyExists()
+  }
+
   return ''
 }
