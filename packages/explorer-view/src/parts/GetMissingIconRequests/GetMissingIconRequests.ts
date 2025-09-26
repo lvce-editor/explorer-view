@@ -2,18 +2,26 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { FileIconCache } from '../FileIconCache/FileIconCache.ts'
 import type { IconRequest } from '../IconRequest/IconRequest.ts'
 
-export const getMissingIconRequests = (dirents: readonly ExplorerItem[], fileIconCache: FileIconCache): readonly IconRequest[] => {
-  const missingRequests: IconRequest[] = []
-
+const getMissingDirents = (dirents: readonly ExplorerItem[], fileIconCache: FileIconCache): readonly ExplorerItem[] => {
+  const missingDirents: ExplorerItem[] = []
   for (const dirent of dirents) {
     if (!(dirent.path in fileIconCache)) {
-      missingRequests.push({
-        type: dirent.type,
-        name: dirent.name,
-        path: dirent.path,
-      })
+      missingDirents.push(dirent)
     }
   }
+  return missingDirents
+}
 
-  return missingRequests
+const toIconRequest = (dirent: ExplorerItem): IconRequest => {
+  return {
+    type: dirent.type,
+    name: dirent.name,
+    path: dirent.path,
+  }
+}
+
+export const getMissingIconRequests = (dirents: readonly ExplorerItem[], fileIconCache: FileIconCache): readonly IconRequest[] => {
+  const missingRequests = getMissingDirents(dirents, fileIconCache)
+  const iconRequests = missingRequests.map(toIconRequest)
+  return iconRequests
 }
