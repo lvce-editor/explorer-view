@@ -3,20 +3,20 @@ import * as GetTreeItemIndentWithChevron from '../src/parts/GetTreeItemIndentWit
 
 test('getTreeItemIndentWithChevron - depth 0', () => {
   const chevron = 0
-  expect(GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron(0, chevron)).toBe('26px')
+  expect(GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron(0, chevron)).toBe(26)
 })
 
 test('getTreeItemIndentWithChevron - depth 1', () => {
   const chevron = 0
-  expect(GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron(1, chevron)).toBe('34px')
+  expect(GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron(1, chevron)).toBe(34)
 })
 
 test('getTreeItemIndentWithChevron - depth 2', () => {
   const chevron = 0
-  expect(GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron(2, chevron)).toBe('42px')
+  expect(GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron(2, chevron)).toBe(42)
 })
 
 test('getTreeItemIndentWithChevron - depth 3', () => {
   const chevron = 0
-  expect(GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron(3, chevron)).toBe('50px')
+  expect(GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron(3, chevron)).toBe(50)
 })

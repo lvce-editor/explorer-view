@@ -1,25 +1,12 @@
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import { getTreeItemIndent } from '../GetTreeItemIndent/GetTreeItemIndent.ts'
-
-const getCss = (scrollBarHeight: number, maxIndent: number): string => {
-  const rules = [
-    `.Explorer {
-  --ScrollBarThumbHeight: ${scrollBarHeight}px;
-`,
-  ]
-  for (let i = 0; i < maxIndent; i++) {
-    const indent = getTreeItemIndent(i)
-    rules.push(`.Indent-${i} {
-  padding-left: ${indent};
-}`)
-  }
-  const css = rules.join('\n')
-  return css
-}
+import { getCss } from '../GetCss/GetCss.ts'
+import { getUnique } from '../GetUnique/GetUnique.ts'
 
 export const renderCss = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
-  const { scrollBarHeight, uid, maxIndent } = newState
-  const css = getCss(scrollBarHeight, maxIndent)
+  const { scrollBarHeight, uid, visibleExplorerItems } = newState
+  const indents = visibleExplorerItems.map((item) => item.indent)
+  const uniqueIndents = getUnique(indents)
+  const css = getCss(scrollBarHeight, uniqueIndents)
   return [ViewletCommand.SetCss, uid, css]
 }
