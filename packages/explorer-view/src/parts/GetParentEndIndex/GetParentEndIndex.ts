@@ -7,5 +7,5 @@ export const getParentEndIndex = (dirents: readonly ExplorerItem[], index: numbe
   while (endIndex < dirents.length && dirents[endIndex].depth > depth) {
     endIndex++
   }
-  return endIndex + 1
+  return endIndex
 }
