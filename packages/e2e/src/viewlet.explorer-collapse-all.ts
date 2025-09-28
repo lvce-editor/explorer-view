@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-collapse-all'
 
-export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Locator, expect }) => {
+export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a/b`)
@@ -13,7 +13,7 @@ export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, Loc
   await Explorer.focusLast()
 
   // act
-  await Command.execute(`Explorer.collapseAll`)
+  await Explorer.collapseAll()
 
   // assert
   const treeItems = Locator('.TreeItem')
