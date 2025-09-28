@@ -9,7 +9,7 @@ export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator, exp
   await Workspace.setPath(tmpDir)
 
   // act
-  await Explorer.handleDragOver(5000, 70)
+  await Explorer.handleDragOverIndex(0)
 
   // assert
   const treeItems = Locator('.Explorer .TreeItem')
