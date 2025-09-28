@@ -38,7 +38,6 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly V
       ariaSetSize: setSize,
       ariaLevel: depth,
       childCount: 2 + chevronDom.length,
-      paddingLeft: indent,
       ariaLabel: name,
       ariaExpanded,
       ariaDescription: '',

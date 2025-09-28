@@ -49,7 +49,8 @@ export const getVisibleExplorerItems = (
     const isCut = cutItems.includes(item.path)
     const isDropping = dropTargets.includes(i)
     const isIgnored = sourceControlIgnoredUris.includes(item.path)
-    const className = getTreeItemClassName(isSelected, isFocused, isDropping, useChevrons, item.depth) // TODO compute classname in dom function
+    const indent = indentFn(item.depth, chevron)
+    const className = getTreeItemClassName(isSelected, isFocused, isDropping, useChevrons, indent)
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]
     const isEditing = i === editingIndex
@@ -58,7 +59,6 @@ export const getVisibleExplorerItems = (
       icon = editingIcon
       chevron = getEditingChevron(item.type)
     }
-    const indent = indentFn(item.depth, chevron)
     visible.push({
       ...item,
       posInSet: item.posInSet ?? i + 1,
