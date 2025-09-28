@@ -13,7 +13,7 @@ export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator, exp
   await Explorer.expandRecursively()
 
   // act
-  await Explorer.handleDragOver(5000, 100)
+  await Explorer.handleDragOverIndex(2)
 
   // assert
   const treeItems = Locator('.Explorer .TreeItem')
