@@ -1,12 +1,16 @@
 import { type Rpc, TransferMessagePortRpcParent } from '@lvce-editor/rpc'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { VError } from '@lvce-editor/verror'
-import * as SendMessagePortToFileSystemWorker from '../SendMessagePortToFileSystemWorker/SendMessagePortToFileSystemWorker.ts'
+
+const send = (port: MessagePort): Promise<void> => {
+  return RendererWorker.sendMessagePortToIconThemeWorker(port, 0)
+}
 
 export const createIconThemeWorkerRpc = async (): Promise<Rpc> => {
   try {
     const rpc = await TransferMessagePortRpcParent.create({
       commandMap: {},
-      send: SendMessagePortToFileSystemWorker.sendMessagePortToFileSystemWorker,
+      send,
     })
     return rpc
   } catch (error) {
