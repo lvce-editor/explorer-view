@@ -2,8 +2,7 @@ import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getTreeItemIndent } from '../GetTreeItemIndent/GetTreeItemIndent.ts'
 
-export const renderCss = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
-  const { scrollBarHeight, uid, maxIndent } = newState
+const getCss = (scrollBarHeight: number, maxIndent: number): string => {
   const rules = [
     `.Explorer {
   --ScrollBarThumbHeight: ${scrollBarHeight}px;
@@ -16,5 +15,11 @@ export const renderCss = (oldState: ExplorerState, newState: ExplorerState): rea
 }`)
   }
   const css = rules.join('\n')
+  return css
+}
+
+export const renderCss = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
+  const { scrollBarHeight, uid, maxIndent } = newState
+  const css = getCss(scrollBarHeight, maxIndent)
   return [ViewletCommand.SetCss, uid, css]
 }
