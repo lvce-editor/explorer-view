@@ -2,9 +2,10 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 export const getParentEndIndex = (dirents: readonly ExplorerItem[], index: number): number => {
   const dirent = dirents[index]
+  const depth = dirent.depth
   let endIndex = index + 1
-  while (endIndex < dirents.length && dirents[endIndex].depth > dirent.depth) {
+  while (endIndex < dirents.length && dirents[endIndex].depth > depth) {
     endIndex++
   }
-  return endIndex
+  return endIndex + 1
 }
