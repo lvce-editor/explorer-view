@@ -23,7 +23,7 @@ test('getVisibleExplorerItems - basic', () => {
     icon: 'icon',
     isEditing: false,
     hasEditingError: false,
-    indent: '26px',
+    indent: 26,
     ariaExpanded: undefined,
     chevron: 0,
     id: 'TreeItemActive',
