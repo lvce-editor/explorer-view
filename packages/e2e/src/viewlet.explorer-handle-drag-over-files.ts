@@ -23,7 +23,6 @@ export const test: Test = async ({ Explorer, FileSystem, Workspace, Locator, exp
   await expect(treeItemTwo).toHaveClass('DropTarget')
   const treeItemThree = treeItems.nth(2)
   await expect(treeItemThree).toHaveClass('DropTarget')
-  // TODO
-  // const treeItemFour = treeItems.nth(3)
-  // await expect(treeItemFour).toHaveClass('DropTarget')
+  const treeItemFour = treeItems.nth(3)
+  await expect(treeItemFour).toHaveClass('DropTarget')
 }
