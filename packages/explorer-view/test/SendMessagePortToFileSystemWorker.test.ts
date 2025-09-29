@@ -1,9 +1,9 @@
-import { test, expect, jest } from '@jest/globals'
+import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { sendMessagePortToFileSystemWorker } from '../src/parts/SendMessagePortToFileSystemWorker/SendMessagePortToFileSystemWorker.ts'
 
 test('sendMessagePortToFileSystemWorker calls RendererWorker.sendMessagePortToFileSystemWorker with correct parameters', async () => {
-  const mockPort = { postMessage: jest.fn(), close: jest.fn() }
+  const { port1 } = new MessageChannel()
   const mockRpc = RendererWorker.registerMockRpc({
     'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
       return undefined
@@ -13,16 +13,16 @@ test('sendMessagePortToFileSystemWorker calls RendererWorker.sendMessagePortToFi
     },
   })
 
-  await sendMessagePortToFileSystemWorker(mockPort)
+  await sendMessagePortToFileSystemWorker(port1)
 
   expect(mockRpc.invocations).toEqual([
-    ['SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker', mockPort, 'FileSystem.handleMessagePort', 0],
+    ['SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker', port1, 'FileSystem.handleMessagePort', 0],
   ])
 })
 
 test('sendMessagePortToFileSystemWorker handles different port types', async () => {
-  const mockPort1 = { postMessage: jest.fn(), close: jest.fn() }
-  const mockPort2 = { send: jest.fn(), terminate: jest.fn() }
+  const { port1: port1a } = new MessageChannel()
+  const { port1: port2a } = new MessageChannel()
 
   const mockRpc = RendererWorker.registerMockRpc({
     'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
@@ -33,17 +33,17 @@ test('sendMessagePortToFileSystemWorker handles different port types', async () 
     },
   })
 
-  await sendMessagePortToFileSystemWorker(mockPort1)
-  await sendMessagePortToFileSystemWorker(mockPort2)
+  await sendMessagePortToFileSystemWorker(port1a)
+  await sendMessagePortToFileSystemWorker(port2a)
 
   expect(mockRpc.invocations).toEqual([
-    ['SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker', mockPort1, 'FileSystem.handleMessagePort', 0],
-    ['SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker', mockPort2, 'FileSystem.handleMessagePort', 0],
+    ['SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker', port1a, 'FileSystem.handleMessagePort', 0],
+    ['SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker', port2a, 'FileSystem.handleMessagePort', 0],
   ])
 })
 
 test('sendMessagePortToFileSystemWorker propagates errors from RendererWorker', async () => {
-  const mockPort = { postMessage: jest.fn(), close: jest.fn() }
+  const { port1 } = new MessageChannel()
   const error = new Error('RPC call failed')
 
   const mockRpc = RendererWorker.registerMockRpc({
@@ -55,14 +55,14 @@ test('sendMessagePortToFileSystemWorker propagates errors from RendererWorker', 
     },
   })
 
-  await expect(sendMessagePortToFileSystemWorker(mockPort)).rejects.toThrow('RPC call failed')
+  await expect(sendMessagePortToFileSystemWorker(port1)).rejects.toThrow('RPC call failed')
   expect(mockRpc.invocations).toEqual([
-    ['SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker', mockPort, 'FileSystem.handleMessagePort', 0],
+    ['SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker', port1, 'FileSystem.handleMessagePort', 0],
   ])
 })
 
 test('sendMessagePortToFileSystemWorker returns void when successful', async () => {
-  const mockPort = { postMessage: jest.fn(), close: jest.fn() }
+  const { port1 } = new MessageChannel()
 
   RendererWorker.registerMockRpc({
     'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
@@ -73,6 +73,6 @@ test('sendMessagePortToFileSystemWorker returns void when successful', async () 
     },
   })
 
-  const result = await sendMessagePortToFileSystemWorker(mockPort)
+  const result = await sendMessagePortToFileSystemWorker(port1)
   expect(result).toBeUndefined()
 })
