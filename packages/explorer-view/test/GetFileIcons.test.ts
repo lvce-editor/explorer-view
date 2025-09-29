@@ -1,12 +1,12 @@
 import { test, expect } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { FileIconCache } from '../src/parts/FileIconCache/FileIconCache.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as GetFileIcons from '../src/parts/GetFileIcons/GetFileIcons.ts'
 
 test('getFileIcons - empty dirents', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  const mockRpc = IconThemeWorker.registerMockRpc({})
 
   const result = await GetFileIcons.getFileIcons([], {})
   expect(result).toEqual({
@@ -17,7 +17,7 @@ test('getFileIcons - empty dirents', async () => {
 })
 
 test('getFileIcons - all cached', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  const mockRpc = IconThemeWorker.registerMockRpc({})
 
   const dirents: readonly ExplorerItem[] = [
     { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
