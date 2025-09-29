@@ -44,11 +44,10 @@ test('sendMessagePortToFileSystemWorker handles different port types', async () 
 
 test('sendMessagePortToFileSystemWorker propagates errors from RendererWorker', async () => {
   const { port1 } = new MessageChannel()
-  const error = new Error('RPC call failed')
 
   const mockRpc = RendererWorker.registerMockRpc({
     'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
-      throw error
+      throw new Error('RPC call failed')
     },
     'FileSystem.handleMessagePort'() {
       return undefined
