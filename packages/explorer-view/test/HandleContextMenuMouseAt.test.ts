@@ -20,5 +20,5 @@ test('handleContextMenuMouseAt', async () => {
   }
   const result = await HandleContextMenuMouseAt.handleContextMenuMouseAt(state, 100, 200)
   expect(mockRpc.invocations).toEqual([['ContextMenu.show', 100, 200, 4]])
-  expect(result).toBe(state)
+  expect(result).toEqual({ ...state, focused: false, focusedIndex: -1 })
 })
