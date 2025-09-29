@@ -1,5 +1,5 @@
-const defaultIndent = 1
+const defaultIndent = 12
 
-export const getTreeItemIndent = (depth: number): string => {
-  return `${depth * defaultIndent}rem`
+export const getTreeItemIndent = (depth: number): number => {
+  return depth * defaultIndent
 }

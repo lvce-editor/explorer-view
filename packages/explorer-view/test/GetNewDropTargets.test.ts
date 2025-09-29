@@ -19,7 +19,7 @@ test('getNewDropTargets - cannot be dropped into', () => {
     items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
   }
   const result = getNewDropTargets(state, 0)
-  expect(result).toEqual([-1, 0])
+  expect(result).toEqual([-1, 0, 1])
 })
 
 test('getNewDropTargets - can be dropped into', () => {

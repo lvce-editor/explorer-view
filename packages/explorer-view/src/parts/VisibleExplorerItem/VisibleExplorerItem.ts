@@ -7,7 +7,7 @@ export interface VisibleExplorerItem {
   readonly path: string
   readonly posInSet: number
   readonly setSize: number
-  readonly indent: string // TODO maybe use a classname for indent instead of inline styles
+  readonly indent: number
   readonly chevron: number
   readonly id: string | undefined // TODO make it always string
   readonly className: string

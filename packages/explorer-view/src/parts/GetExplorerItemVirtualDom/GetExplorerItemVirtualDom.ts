@@ -8,24 +8,8 @@ import * as GetLabelDom from '../GetLabelDom/GetLabelDom.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
 export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const {
-    ariaExpanded,
-    chevron,
-    className,
-    depth,
-    hasEditingError,
-    icon,
-    id,
-    indent,
-    isEditing,
-    name,
-    path,
-    setSize,
-    posInSet,
-    isCut,
-    isIgnored,
-    index,
-  } = item
+  const { ariaExpanded, chevron, className, depth, hasEditingError, icon, id, isEditing, name, path, setSize, posInSet, isCut, isIgnored, index } =
+    item
   const chevronDom = GetChevronVirtualDom.getChevronVirtualDom(chevron)
   return [
     {
@@ -38,7 +22,6 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly V
       ariaSetSize: setSize,
       ariaLevel: depth,
       childCount: 2 + chevronDom.length,
-      paddingLeft: indent,
       ariaLabel: name,
       ariaExpanded,
       ariaDescription: '',

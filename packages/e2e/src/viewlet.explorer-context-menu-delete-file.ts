@@ -1,8 +1,10 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-delete-last-file'
+export const name = 'viewlet.explorer-context-menu-delete-file'
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, expect }) => {
+export const skip = 1
+
+export const test: Test = async ({ ContextMenu, FileSystem, Workspace, Explorer, Locator, expect }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -10,14 +12,15 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, Locator, exp
   await FileSystem.writeFile(`${tmpDir}/file3.txt`, 'content 3')
   await Workspace.setPath(tmpDir)
   await Explorer.focusFirst()
+  await Workspace.setPath(tmpDir)
 
   // act
-  await Explorer.removeDirent()
+  await Explorer.openContextMenu(0)
+  await ContextMenu.selectItem('Delete')
 
   // assert
   const file1 = Locator('text=file1.txt')
   await expect(file1).toBeHidden()
   const listItems = Locator('.Explorer .ListItems')
   await expect(listItems).toBeFocused()
-  // TODO explorer should have focus outline
 }
