@@ -41,7 +41,7 @@ test('getFileIcons - none cached', async () => {
     { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
   ]
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['file-icon', 'folder-icon']
     },
@@ -76,7 +76,7 @@ test('getFileIcons - mixed cache', async () => {
     '/a.txt': 'cached-a',
   }
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['folder-icon', 'file-icon']
     },

@@ -1,11 +1,11 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { IconThemeWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as CreateDefaultState from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as UpdateIcons from '../src/parts/UpdateIcons/UpdateIcons.ts'
 
 test('updateIcons - should update icons for visible items', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ['icon1', 'icon2']
     },
@@ -47,7 +47,7 @@ test('updateIcons - should update icons for visible items', async () => {
 })
 
 test('updateIcons - should handle empty visible items', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ['icon1', 'icon2']
     },

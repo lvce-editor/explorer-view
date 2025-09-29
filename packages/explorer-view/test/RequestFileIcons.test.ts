@@ -1,10 +1,10 @@
 import { test, expect } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { IconThemeWorker } from '@lvce-editor/rpc-registry'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as RequestFileIcons from '../src/parts/RequestFileIcons/RequestFileIcons.ts'
 
 test('requestFileIcons - empty requests', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  const mockRpc = IconThemeWorker.registerMockRpc({})
 
   const result = await RequestFileIcons.requestFileIcons([])
   expect(result).toEqual([])
@@ -14,7 +14,7 @@ test('requestFileIcons - empty requests', async () => {
 test('requestFileIcons - file icons', async () => {
   const requests = [{ type: DirentType.File, name: 'file.txt', path: '/test/file.txt' }]
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['file-icon']
     },
@@ -28,7 +28,7 @@ test('requestFileIcons - file icons', async () => {
 test('requestFileIcons - folder icons', async () => {
   const requests = [{ type: DirentType.Directory, name: 'folder', path: '/test/folder' }]
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['folder-icon']
     },
@@ -45,7 +45,7 @@ test('requestFileIcons - mixed requests', async () => {
     { type: DirentType.Directory, name: 'folder', path: '/test/folder' },
   ]
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['file-icon', 'folder-icon']
     },
