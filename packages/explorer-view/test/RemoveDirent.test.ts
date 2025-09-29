@@ -329,9 +329,11 @@ test('removeDirent - shows error message when file operation fails', async () =>
   const result = await removeDirent(state)
   expect(result).toBe(state)
   expect(confirmFn).toHaveBeenCalledWith('Error: Permission denied')
-  expect(consoleErrorSpy).toHaveBeenCalledWith(expect.objectContaining({
-    message: expect.stringContaining('Failed to apply file operations: Permission denied')
-  }))
+  expect(consoleErrorSpy).toHaveBeenCalledWith(
+    expect.objectContaining({
+      message: expect.stringContaining('Failed to apply file operations: Permission denied'),
+    }),
+  )
 })
 
 test('removeDirent - shows error message for multiple files when operation fails', async () => {
@@ -372,9 +374,11 @@ test('removeDirent - shows error message for multiple files when operation fails
   const result = await removeDirent(state)
   expect(result).toBe(state)
   expect(confirmFn).toHaveBeenCalledWith('Error: Access denied')
-  expect(consoleErrorSpy).toHaveBeenCalledWith(expect.objectContaining({
-    message: expect.stringContaining('Failed to apply file operations: Access denied')
-  }))
+  expect(consoleErrorSpy).toHaveBeenCalledWith(
+    expect.objectContaining({
+      message: expect.stringContaining('Failed to apply file operations: Access denied'),
+    }),
+  )
 })
 
 test('removeDirent - continues normally when no error occurs', async () => {
