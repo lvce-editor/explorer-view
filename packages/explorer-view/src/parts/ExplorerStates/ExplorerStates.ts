@@ -40,7 +40,8 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
       editingIcon === intermediate.newState.editingIcon &&
       cutItems === intermediate.newState.cutItems &&
       editingErrorMessage === intermediate.newState.editingErrorMessage &&
-      dropTargets === intermediate.newState.dropTargets
+      dropTargets === intermediate.newState.dropTargets &&
+      fileIconCache === intermediate.newState.fileIconCache
     ) {
       return
     }
