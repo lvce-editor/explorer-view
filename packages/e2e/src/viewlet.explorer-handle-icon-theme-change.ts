@@ -2,15 +2,14 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-icon-theme.change'
 
-export const skip = 1
-
 export const test: Test = async ({ FileSystem, Workspace, Extension, IconTheme, Locator, expect, BaseUrl }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/test.xyz`, 'test')
   await FileSystem.mkdir(`${tmpDir}/test-folder`)
   await Workspace.setPath(tmpDir)
-  await Extension.addWebExtension(new URL('../fixtures/sample.icon-theme', import.meta.url).toString())
+  const extensionUri = import.meta.resolve('../fixtures/sample.icon-theme')
+  await Extension.addWebExtension(extensionUri)
 
   // act
   await IconTheme.setIconTheme('test-icon-theme')
