@@ -41,6 +41,7 @@ export default [
   {
     rules: {
       'github-actions/needs': 'off',
+      'github-actions/permissions': 'off',
     },
   },
 ]
