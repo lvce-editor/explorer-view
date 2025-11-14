@@ -30,7 +30,7 @@ test('cancelEdit', async () => {
 })
 
 test('cancelEdit - removes editing items', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
     },
@@ -87,10 +87,11 @@ test('cancelEdit - removes editing items', async () => {
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
   })
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('cancelEdit - rename file', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
     },
@@ -130,10 +131,11 @@ test('cancelEdit - rename file', async () => {
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
   })
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('cancelEdit - rename folder', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
     },
@@ -173,10 +175,11 @@ test('cancelEdit - rename folder', async () => {
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
   })
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('cancelEdit - create file', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
     },
@@ -217,4 +220,5 @@ test('cancelEdit - create file', async () => {
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
   })
+  expect(mockRpc.invocations).toEqual([])
 })
