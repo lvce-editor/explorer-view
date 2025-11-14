@@ -19,8 +19,6 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
       minLineY,
       focusedIndex,
       editingIndex,
-      editingType,
-      editingValue,
       editingErrorMessage,
       useChevrons,
       dropTargets,
