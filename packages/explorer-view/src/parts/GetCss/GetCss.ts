@@ -1,8 +1,10 @@
-export const getCss = (scrollBarHeight: number, uniqueIndents: readonly number[]): string => {
+export const getCss = (scrollBarHeight: number, uniqueIndents: readonly number[], errorMessageLeft: number, errorMessageTop: number): string => {
   // TODO each visible item should have an indent property
   const rules = [
     `.Explorer {
   --ScrollBarThumbHeight: ${scrollBarHeight}px;
+  --ErrorMessageTop: ${errorMessageTop}px;
+  --ErrorMessageLeft: ${errorMessageLeft}px;
 }`,
   ]
   for (const item of uniqueIndents) {
