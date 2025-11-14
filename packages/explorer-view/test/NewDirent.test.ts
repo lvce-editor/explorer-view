@@ -44,14 +44,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual(
-    expect.arrayContaining([
-      ['Workspace.getPath'],
-      ['FileSystem.getPathSeparator', '/new/path'],
-      ['FileSystem.readDirWithFileTypes', '/new/path'],
-      ['IconTheme.getFolderIcon', { name: '' }],
-    ]),
-  )
+  expect(mockRpc.invocations).toEqual([])
   expect(result).toEqual({
     ...mockState,
     editingIndex: 0,
@@ -104,14 +97,7 @@ test('newDirent handles directory click when focused item is a directory', async
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual(
-    expect.arrayContaining([
-      ['Workspace.getPath'],
-      ['FileSystem.getPathSeparator', '/new/path'],
-      ['FileSystem.readDirWithFileTypes', '/test'],
-      ['IconTheme.getFolderIcon', { name: '' }],
-    ]),
-  )
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
   expect(result).toEqual({
     ...mockState,
     visibleExplorerItems: expect.anything(),
@@ -169,14 +155,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual(
-    expect.arrayContaining([
-      ['Workspace.getPath'],
-      ['FileSystem.getPathSeparator', '/new/path'],
-      ['FileSystem.readDirWithFileTypes', '/new/path'],
-      ['IconTheme.getFolderIcon', { name: '' }],
-    ]),
-  )
+  expect(mockRpc.invocations).toEqual([])
   expect(result).toEqual({
     ...mockState,
     visibleExplorerItems: expect.anything(),
