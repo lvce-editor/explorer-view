@@ -1,6 +1,6 @@
+import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const getEditingIcon = async (editingType: number, value: string, direntType?: number): Promise<string> => {
   if (editingType === ExplorerEditingType.CreateFile) {
