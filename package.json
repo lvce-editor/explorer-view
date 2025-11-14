@@ -3,7 +3,6 @@
   "version": "0.0.0-dev",
   "license": "MIT",
   "type": "module",
-  "main": "",
   "scripts": {
     "build": "node packages/build/src/build.ts",
     "build:static": "node packages/build/src/build-static.ts",
