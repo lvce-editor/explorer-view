@@ -1,4 +1,4 @@
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const confirmDelete = async (paths: readonly string[]): Promise<boolean> => {
   // TODO use i18n string
