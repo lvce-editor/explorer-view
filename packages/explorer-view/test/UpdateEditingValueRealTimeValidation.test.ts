@@ -81,7 +81,7 @@ test('updateEditingValue - real-time validation during folder creation', async (
 })
 
 test('updateEditingValue - no validation during rename', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
