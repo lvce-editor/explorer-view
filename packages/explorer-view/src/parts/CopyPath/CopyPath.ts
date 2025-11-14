@@ -1,6 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const copyPath = async (state: ExplorerState): Promise<ExplorerState> => {
   const dirent = GetFocusedDirent.getFocusedDirent(state)

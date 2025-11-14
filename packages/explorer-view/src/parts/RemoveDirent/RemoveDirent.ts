@@ -7,7 +7,7 @@ import * as FocusId from '../FocusId/FocusId.ts'
 import { getPaths } from '../GetPaths/GetPaths.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
   const { items, focusedIndex, confirmDelete } = state
