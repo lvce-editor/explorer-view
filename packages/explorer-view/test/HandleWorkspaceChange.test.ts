@@ -142,7 +142,7 @@ test('should handle workspace path change with existing content', async () => {
 })
 
 test('should handle workspace path change with chevrons enabled', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/chevron/workspace'
     },
@@ -165,10 +165,19 @@ test('should handle workspace path change with chevrons enabled', async () => {
 
   expect(result.root).toBe('/chevron/workspace')
   expect(result.useChevrons).toBe(true)
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
+    ['Workspace.getPath'],
+    ['Preferences.get', 'explorer.useChevrons'],
+    ['Preferences.get', 'explorer.confirmdelete'],
+    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Workspace.getPath'],
+    ['FileSystem.getPathSeparator', '/chevron/workspace'],
+    ['FileSystem.readDirWithFileTypes', '/chevron/workspace'],
+  ]))
 })
 
 test('should handle different path separators', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return 'C:\\windows\\workspace'
     },
@@ -191,4 +200,13 @@ test('should handle different path separators', async () => {
 
   expect(result.root).toBe('C:\\windows\\workspace')
   expect(result.pathSeparator).toBe('\\')
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
+    ['Workspace.getPath'],
+    ['Preferences.get', 'explorer.useChevrons'],
+    ['Preferences.get', 'explorer.confirmdelete'],
+    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Workspace.getPath'],
+    ['FileSystem.getPathSeparator', 'C:\\windows\\workspace'],
+    ['FileSystem.readDirWithFileTypes', 'C:\\windows\\workspace'],
+  ]))
 })
