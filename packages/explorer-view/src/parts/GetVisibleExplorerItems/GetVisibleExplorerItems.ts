@@ -27,8 +27,6 @@ export const getVisibleExplorerItems = (
   maxLineY: number,
   focusedIndex: number,
   editingIndex: number,
-  editingType: number,
-  editingValue: string,
   editingErrorMessage: string,
   icons: readonly string[],
   useChevrons: boolean,
