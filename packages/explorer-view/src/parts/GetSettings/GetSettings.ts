@@ -1,5 +1,5 @@
-import type { Settings } from '../Settings/Settings.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { Settings } from '../Settings/Settings.ts'
 
 export const getSettings = async (): Promise<Settings> => {
   // TODO get all settings at once

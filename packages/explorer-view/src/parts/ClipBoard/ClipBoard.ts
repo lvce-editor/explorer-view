@@ -1,5 +1,5 @@
-import type { NativeFilesResult } from '../NativeFilesResult/NativeFilesResult.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { NativeFilesResult } from '../NativeFilesResult/NativeFilesResult.ts'
 
 export const writeText = async (text: string): Promise<void> => {
   await RendererWorker.writeClipBoardText(text)
