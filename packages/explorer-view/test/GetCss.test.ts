@@ -7,6 +7,8 @@ test('getCss - basic scrollBarHeight and empty indents', () => {
   const result = getCss(scrollBarHeight, uniqueIndents, 0, 0)
   expect(result).toBe(`.Explorer {
   --ScrollBarThumbHeight: 20px;
+  --ErrorMessageTop: 0px;
+  --ErrorMessageLeft: 0px;
 }`)
 })
 
@@ -16,6 +18,8 @@ test('getCss - with single indent', () => {
   const result = getCss(scrollBarHeight, uniqueIndents, 0, 0)
   expect(result).toBe(`.Explorer {
   --ScrollBarThumbHeight: 15px;
+  --ErrorMessageTop: 0px;
+  --ErrorMessageLeft: 0px;
 }
 .Indent-10 {
   padding-left: 10px;
@@ -28,6 +32,8 @@ test('getCss - with multiple indents', () => {
   const result = getCss(scrollBarHeight, uniqueIndents, 0, 0)
   expect(result).toBe(`.Explorer {
   --ScrollBarThumbHeight: 25px;
+  --ErrorMessageTop: 0px;
+  --ErrorMessageLeft: 0px;
 }
 .Indent-0 {
   padding-left: 0px;
@@ -46,6 +52,8 @@ test('getCss - with zero scrollBarHeight', () => {
   const result = getCss(scrollBarHeight, uniqueIndents, 0, 0)
   expect(result).toBe(`.Explorer {
   --ScrollBarThumbHeight: 0px;
+  --ErrorMessageTop: 0px;
+  --ErrorMessageLeft: 0px;
 }
 .Indent-5 {
   padding-left: 5px;
@@ -61,6 +69,8 @@ test('getCss - with large indents', () => {
   const result = getCss(scrollBarHeight, uniqueIndents, 0, 0)
   expect(result).toBe(`.Explorer {
   --ScrollBarThumbHeight: 30px;
+  --ErrorMessageTop: 0px;
+  --ErrorMessageLeft: 0px;
 }
 .Indent-100 {
   padding-left: 100px;
