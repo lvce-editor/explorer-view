@@ -1,5 +1,6 @@
 import { test, expect } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { MockRpc } from '@lvce-editor/rpc'
+import { RpcRegistry, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptRename } from '../src/parts/AcceptRename/AcceptRename.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -7,18 +8,23 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
 
-test.skip('acceptRename - basic file rename', async () => {
-  RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return [
-        { name: 'b.txt', type: DirentType.File },
-        { name: 'c.txt', type: DirentType.File },
-      ]
-    },
-    'FileSystem.rename'() {
-      return
+test('acceptRename - basic file rename', async () => {
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return [
+          { name: 'b.txt', type: DirentType.File },
+          { name: 'c.txt', type: DirentType.File },
+        ]
+      }
+      if (method === 'FileSystem.rename') {
+        return
+      }
+      throw new Error(`unexpected method ${method}`)
     },
   })
+  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -42,18 +48,23 @@ test.skip('acceptRename - basic file rename', async () => {
   expect(result.editingType).toBe(ExplorerEditingType.None)
 })
 
-test.skip('acceptRename - folder rename', async () => {
-  RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return [
-        { name: 'folder2', type: DirentType.Directory },
-        { name: 'file.txt', type: DirentType.File },
-      ]
-    },
-    'FileSystem.rename'() {
-      return
+test('acceptRename - folder rename', async () => {
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return [
+          { name: 'folder2', type: DirentType.Directory },
+          { name: 'file.txt', type: DirentType.File },
+        ]
+      }
+      if (method === 'FileSystem.rename') {
+        return
+      }
+      throw new Error(`unexpected method ${method}`)
     },
   })
+  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -75,18 +86,23 @@ test.skip('acceptRename - folder rename', async () => {
   expect(result.focusedIndex).toBe(0)
 })
 
-test.skip('acceptRename - nested file rename', async () => {
-  RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return [
-        { name: 'b.txt', type: DirentType.File },
-        { name: 'c.txt', type: DirentType.File },
-      ]
-    },
-    'FileSystem.rename'() {
-      return
+test('acceptRename - nested file rename', async () => {
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return [
+          { name: 'b.txt', type: DirentType.File },
+          { name: 'c.txt', type: DirentType.File },
+        ]
+      }
+      if (method === 'FileSystem.rename') {
+        return
+      }
+      throw new Error(`unexpected method ${method}`)
     },
   })
+  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -110,15 +126,20 @@ test.skip('acceptRename - nested file rename', async () => {
   expect(result.focusedIndex).toBe(1)
 })
 
-test.skip('acceptRename - preserves nested items', async () => {
-  RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return [{ name: 'folder2', type: DirentType.Directory }]
-    },
-    'FileSystem.rename'() {
-      return
+test('acceptRename - preserves nested items', async () => {
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return [{ name: 'folder2', type: DirentType.Directory }]
+      }
+      if (method === 'FileSystem.rename') {
+        return
+      }
+      throw new Error(`unexpected method ${method}`)
     },
   })
+  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -141,12 +162,17 @@ test.skip('acceptRename - preserves nested items', async () => {
   expect(result.focusedIndex).toBe(0)
 })
 
-test.skip('acceptRename - handles rename error', async () => {
-  RendererWorker.registerMockRpc({
-    'FileSystem.rename'() {
-      return Promise.reject(new Error('rename failed'))
+test('acceptRename - handles rename error', async () => {
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.rename') {
+        throw new Error('rename failed')
+      }
+      throw new Error(`unexpected method ${method}`)
     },
   })
+  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -161,19 +187,24 @@ test.skip('acceptRename - handles rename error', async () => {
   expect(result).toBe(state)
 })
 
-test.skip('acceptRename - maintains sorting order', async () => {
-  RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return [
-        { name: 'b.txt', type: DirentType.File },
-        { name: 'folder', type: DirentType.Directory },
-        { name: 'z.txt', type: DirentType.File },
-      ]
-    },
-    'FileSystem.rename'() {
-      return
+test('acceptRename - maintains sorting order', async () => {
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string) => {
+      if (method === 'FileSystem.readDirWithFileTypes') {
+        return [
+          { name: 'b.txt', type: DirentType.File },
+          { name: 'folder', type: DirentType.Directory },
+          { name: 'z.txt', type: DirentType.File },
+        ]
+      }
+      if (method === 'FileSystem.rename') {
+        return
+      }
+      throw new Error(`unexpected method ${method}`)
     },
   })
+  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
