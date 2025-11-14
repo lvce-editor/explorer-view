@@ -7,7 +7,7 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import { updateEditingValue } from '../src/parts/UpdateEditingValue/UpdateEditingValue.ts'
 
 test('updateEditingValue - real-time validation during file creation', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
