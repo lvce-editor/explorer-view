@@ -44,7 +44,7 @@ test('updateEditingValue - real-time validation during file creation', async () 
 })
 
 test('updateEditingValue - real-time validation during folder creation', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
