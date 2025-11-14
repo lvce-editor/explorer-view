@@ -38,4 +38,5 @@ test('handleCopy - without focused dirent', async () => {
   expect(result).toBe(state)
   expect(spy).toHaveBeenCalledTimes(1)
   expect(spy).toHaveBeenCalledWith('[ViewletExplorer/handleCopy] no dirent selected')
+  spy.mockRestore()
 })
