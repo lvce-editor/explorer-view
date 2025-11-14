@@ -1,4 +1,5 @@
 import * as config from '@lvce-editor/eslint-config'
+import * as actions from '@lvce-editor/eslint-plugin-github-actions'
 
 export default [
   ...config.default,
@@ -27,12 +28,20 @@ export default [
       'unicorn/no-for-loop': 'off',
       'jest/no-identical-title': 'off',
       'unicorn/prefer-single-call': 'off',
+      'unicorn/no-immediate-mutation': 'off',
     },
   },
   {
     files: ['**/*.test.ts'],
     rules: {
       '@typescript-eslint/unbound-method': 'off',
+    },
+  },
+  ...actions.default,
+  {
+    rules: {
+      'github-actions/needs': 'off',
+      'github-actions/permissions': 'off',
     },
   },
 ]

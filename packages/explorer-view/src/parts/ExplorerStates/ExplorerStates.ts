@@ -4,7 +4,7 @@ import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
-export const { get, set, wrapCommand, registerCommands, getCommandIds, wrapGetter } = ViewletRegistry.create<ExplorerState>()
+export const { get, set, registerCommands, getCommandIds, wrapGetter } = ViewletRegistry.create<ExplorerState>()
 
 interface Fn<T extends any[]> {
   (state: ExplorerState, ...args: T): ExplorerState | Promise<ExplorerState>
@@ -19,8 +19,6 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
       minLineY,
       focusedIndex,
       editingIndex,
-      editingType,
-      editingValue,
       editingErrorMessage,
       useChevrons,
       dropTargets,
@@ -39,7 +37,9 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
       minLineY === intermediate.newState.minLineY &&
       editingIcon === intermediate.newState.editingIcon &&
       cutItems === intermediate.newState.cutItems &&
-      editingErrorMessage === intermediate.newState.editingErrorMessage
+      editingErrorMessage === intermediate.newState.editingErrorMessage &&
+      dropTargets === intermediate.newState.dropTargets &&
+      fileIconCache === intermediate.newState.fileIconCache
     ) {
       return
     }
@@ -51,8 +51,6 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
       maxLineY,
       focusedIndex,
       editingIndex,
-      editingType,
-      editingValue,
       editingErrorMessage,
       icons,
       useChevrons,

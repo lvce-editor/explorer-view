@@ -19,5 +19,8 @@ test('handleContextMenuKeyboard', async () => {
   }
   const result = await HandleContextMenuKeyboard.handleContextMenuKeyboard(state)
   expect(mockRpc.invocations).toEqual([['ContextMenu.show', 100, 260, 4]])
-  expect(result).toBe(state)
+  expect(result).toEqual({
+    ...state,
+    focused: false,
+  })
 })
