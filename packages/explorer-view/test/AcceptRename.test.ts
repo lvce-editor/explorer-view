@@ -8,7 +8,7 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
 
 test.skip('acceptRename - basic file rename', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'b.txt', type: DirentType.File },
@@ -40,10 +40,14 @@ test.skip('acceptRename - basic file rename', async () => {
   expect(result.focusedIndex).toBe(0)
   expect(result.editingIndex).toBe(-1)
   expect(result.editingType).toBe(ExplorerEditingType.None)
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
+    ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],
+    ['FileSystem.readDirWithFileTypes', '/test'],
+  ]))
 })
 
 test.skip('acceptRename - folder rename', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'folder2', type: DirentType.Directory },
@@ -73,10 +77,14 @@ test.skip('acceptRename - folder rename', async () => {
   expect(result.items[0].path).toBe('/test/folder2')
   expect(result.items[1].name).toBe('file.txt')
   expect(result.focusedIndex).toBe(0)
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
+    ['FileSystem.rename', '/test/folder1', '/test/folder2'],
+    ['FileSystem.readDirWithFileTypes', '/test'],
+  ]))
 })
 
 test.skip('acceptRename - nested file rename', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'b.txt', type: DirentType.File },
@@ -108,10 +116,14 @@ test.skip('acceptRename - nested file rename', async () => {
   expect(result.items[1].path).toBe('/test/folder/b.txt')
   expect(result.items[2].name).toBe('c.txt')
   expect(result.focusedIndex).toBe(1)
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
+    ['FileSystem.rename', '/test/folder/a.txt', '/test/folder/b.txt'],
+    ['FileSystem.readDirWithFileTypes', '/test/folder'],
+  ]))
 })
 
 test.skip('acceptRename - preserves nested items', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [{ name: 'folder2', type: DirentType.Directory }]
     },
@@ -139,10 +151,14 @@ test.skip('acceptRename - preserves nested items', async () => {
   expect(result.items[1].name).toBe('nested.txt')
   expect(result.items[1].path).toBe('/test/folder2/nested.txt')
   expect(result.focusedIndex).toBe(0)
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
+    ['FileSystem.rename', '/test/folder1', '/test/folder2'],
+    ['FileSystem.readDirWithFileTypes', '/test'],
+  ]))
 })
 
 test.skip('acceptRename - handles rename error', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.rename'() {
       return Promise.reject(new Error('rename failed'))
     },
@@ -159,10 +175,11 @@ test.skip('acceptRename - handles rename error', async () => {
 
   const result = await acceptRename(state)
   expect(result).toBe(state)
+  expect(mockRpc.invocations).toEqual([['FileSystem.rename', '/test/a.txt', '/test/b.txt']])
 })
 
 test.skip('acceptRename - maintains sorting order', async () => {
-  RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'b.txt', type: DirentType.File },
@@ -194,4 +211,8 @@ test.skip('acceptRename - maintains sorting order', async () => {
   expect(result.items[1].name).toBe('folder')
   expect(result.items[2].name).toBe('z.txt')
   expect(result.focusedIndex).toBe(0)
+  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
+    ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],
+    ['FileSystem.readDirWithFileTypes', '/test'],
+  ]))
 })
