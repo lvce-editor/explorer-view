@@ -1,11 +1,7 @@
-import { type RendererWorkerApi, FileSystemWorker } from '@lvce-editor/rpc-registry'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { FileSystemWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 
 // TODO use direct connection
-export const invoke = async <T extends keyof RendererWorkerApi>(
-  method: keyof RendererWorkerApi,
-  ...params: Parameters<RendererWorkerApi[T]>
-): Promise<Awaited<ReturnType<RendererWorkerApi[T]>>> => {
+export const invoke = async (method: string, ...params: readonly unknown[]): Promise<any> => {
   return RendererWorker.invoke(method, ...params)
 }
 
