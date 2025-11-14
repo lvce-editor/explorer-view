@@ -1,5 +1,5 @@
 import { type RendererWorkerApi, FileSystemWorker } from '@lvce-editor/rpc-registry'
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 // TODO use direct connection
 export const invoke = async <T extends keyof RendererWorkerApi>(
