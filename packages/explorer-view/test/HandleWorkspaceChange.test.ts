@@ -90,15 +90,17 @@ test('should preserve state properties when updating workspace', async () => {
   expect(result.scrollBarHeight).toBe(initialState.scrollBarHeight)
   expect(result.handleOffset).toBe(initialState.handleOffset)
   expect(result.scrollBarActive).toBe(initialState.scrollBarActive)
-  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
-    ['Workspace.getPath'],
-    ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
-    ['Workspace.getPath'],
-    ['FileSystem.getPathSeparator', '/another/workspace'],
-    ['FileSystem.readDirWithFileTypes', '/another/workspace'],
-  ]))
+  expect(mockRpc.invocations).toEqual(
+    expect.arrayContaining([
+      ['Workspace.getPath'],
+      ['Preferences.get', 'explorer.useChevrons'],
+      ['Preferences.get', 'explorer.confirmdelete'],
+      ['Preferences.get', 'explorer.confirmpaste'],
+      ['Workspace.getPath'],
+      ['FileSystem.getPathSeparator', '/another/workspace'],
+      ['FileSystem.readDirWithFileTypes', '/another/workspace'],
+    ]),
+  )
 })
 
 test('should handle workspace path change with existing content', async () => {
@@ -130,15 +132,17 @@ test('should handle workspace path change with existing content', async () => {
   expect(result.items).toHaveLength(2)
   expect(result.pathSeparator).toBe('/')
   expect(result.useChevrons).toBe(false)
-  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
-    ['Workspace.getPath'],
-    ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
-    ['Workspace.getPath'],
-    ['FileSystem.getPathSeparator', '/changed/workspace/path'],
-    ['FileSystem.readDirWithFileTypes', '/changed/workspace/path'],
-  ]))
+  expect(mockRpc.invocations).toEqual(
+    expect.arrayContaining([
+      ['Workspace.getPath'],
+      ['Preferences.get', 'explorer.useChevrons'],
+      ['Preferences.get', 'explorer.confirmdelete'],
+      ['Preferences.get', 'explorer.confirmpaste'],
+      ['Workspace.getPath'],
+      ['FileSystem.getPathSeparator', '/changed/workspace/path'],
+      ['FileSystem.readDirWithFileTypes', '/changed/workspace/path'],
+    ]),
+  )
 })
 
 test('should handle workspace path change with chevrons enabled', async () => {
@@ -165,15 +169,17 @@ test('should handle workspace path change with chevrons enabled', async () => {
 
   expect(result.root).toBe('/chevron/workspace')
   expect(result.useChevrons).toBe(true)
-  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
-    ['Workspace.getPath'],
-    ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
-    ['Workspace.getPath'],
-    ['FileSystem.getPathSeparator', '/chevron/workspace'],
-    ['FileSystem.readDirWithFileTypes', '/chevron/workspace'],
-  ]))
+  expect(mockRpc.invocations).toEqual(
+    expect.arrayContaining([
+      ['Workspace.getPath'],
+      ['Preferences.get', 'explorer.useChevrons'],
+      ['Preferences.get', 'explorer.confirmdelete'],
+      ['Preferences.get', 'explorer.confirmpaste'],
+      ['Workspace.getPath'],
+      ['FileSystem.getPathSeparator', '/chevron/workspace'],
+      ['FileSystem.readDirWithFileTypes', '/chevron/workspace'],
+    ]),
+  )
 })
 
 test('should handle different path separators', async () => {
@@ -200,13 +206,15 @@ test('should handle different path separators', async () => {
 
   expect(result.root).toBe('C:\\windows\\workspace')
   expect(result.pathSeparator).toBe('\\')
-  expect(mockRpc.invocations).toEqual(expect.arrayContaining([
-    ['Workspace.getPath'],
-    ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
-    ['Workspace.getPath'],
-    ['FileSystem.getPathSeparator', 'C:\\windows\\workspace'],
-    ['FileSystem.readDirWithFileTypes', 'C:\\windows\\workspace'],
-  ]))
+  expect(mockRpc.invocations).toEqual(
+    expect.arrayContaining([
+      ['Workspace.getPath'],
+      ['Preferences.get', 'explorer.useChevrons'],
+      ['Preferences.get', 'explorer.confirmdelete'],
+      ['Preferences.get', 'explorer.confirmpaste'],
+      ['Workspace.getPath'],
+      ['FileSystem.getPathSeparator', 'C:\\windows\\workspace'],
+      ['FileSystem.readDirWithFileTypes', 'C:\\windows\\workspace'],
+    ]),
+  )
 })
