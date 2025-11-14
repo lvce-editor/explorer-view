@@ -8,6 +8,7 @@ import * as GetIndex from '../GetIndex/GetIndex.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { getPathPartsChildren } from '../GetPathPartsChildren/GetPathPartsChildren.ts'
+import { getSiblingFileNames } from '../GetSiblingFileNames/GetSiblingFileNames.ts'
 import { mergeTrees } from '../MergeTrees/MergeTrees.ts'
 import { join2 } from '../Path/Path.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
@@ -16,7 +17,8 @@ import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 export const acceptCreate = async (state: ExplorerState, newDirentType: number): Promise<ExplorerState> => {
   const { editingValue, pathSeparator, root, focusedIndex, items } = state
   const newFileName = editingValue
-  const editingErrorMessage = ValidateFileName2.validateFileName2(newFileName)
+  const siblingFileNames = getSiblingFileNames(items, focusedIndex, root, pathSeparator)
+  const editingErrorMessage = ValidateFileName2.validateFileName2(newFileName, siblingFileNames)
   if (editingErrorMessage) {
     return {
       ...state,
