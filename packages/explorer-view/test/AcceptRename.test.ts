@@ -1,6 +1,5 @@
-import { test, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import { RpcRegistry, RendererWorker } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker, RpcRegistry } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptRename } from '../src/parts/AcceptRename/AcceptRename.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -50,22 +49,6 @@ test.skip('acceptRename - basic file rename', async () => {
   )
 })
 
-<<<<<<< HEAD
-test('acceptRename - folder rename', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'folder2', type: DirentType.Directory },
-          { name: 'file.txt', type: DirentType.File },
-        ]
-      }
-      if (method === 'FileSystem.rename') {
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
-=======
 test.skip('acceptRename - folder rename', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
@@ -76,7 +59,6 @@ test.skip('acceptRename - folder rename', async () => {
     },
     'FileSystem.rename'() {
       return
->>>>>>> origin/main
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
@@ -107,22 +89,6 @@ test.skip('acceptRename - folder rename', async () => {
   )
 })
 
-<<<<<<< HEAD
-test('acceptRename - nested file rename', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'b.txt', type: DirentType.File },
-          { name: 'c.txt', type: DirentType.File },
-        ]
-      }
-      if (method === 'FileSystem.rename') {
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
-=======
 test.skip('acceptRename - nested file rename', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
@@ -133,7 +99,6 @@ test.skip('acceptRename - nested file rename', async () => {
     },
     'FileSystem.rename'() {
       return
->>>>>>> origin/main
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
@@ -166,19 +131,6 @@ test.skip('acceptRename - nested file rename', async () => {
   )
 })
 
-<<<<<<< HEAD
-test('acceptRename - preserves nested items', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [{ name: 'folder2', type: DirentType.Directory }]
-      }
-      if (method === 'FileSystem.rename') {
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
-=======
 test.skip('acceptRename - preserves nested items', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
@@ -186,7 +138,6 @@ test.skip('acceptRename - preserves nested items', async () => {
     },
     'FileSystem.rename'() {
       return
->>>>>>> origin/main
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
@@ -218,21 +169,10 @@ test.skip('acceptRename - preserves nested items', async () => {
   )
 })
 
-<<<<<<< HEAD
-test('acceptRename - handles rename error', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.rename') {
-        throw new Error('rename failed')
-      }
-      throw new Error(`unexpected method ${method}`)
-=======
 test.skip('acceptRename - handles rename error', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.rename'() {
       return Promise.reject(new Error('rename failed'))
->>>>>>> origin/main
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
@@ -251,23 +191,6 @@ test.skip('acceptRename - handles rename error', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.rename', '/test/a.txt', '/test/b.txt']])
 })
 
-<<<<<<< HEAD
-test('acceptRename - maintains sorting order', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return [
-          { name: 'b.txt', type: DirentType.File },
-          { name: 'folder', type: DirentType.Directory },
-          { name: 'z.txt', type: DirentType.File },
-        ]
-      }
-      if (method === 'FileSystem.rename') {
-        return
-      }
-      throw new Error(`unexpected method ${method}`)
-=======
 test.skip('acceptRename - maintains sorting order', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
@@ -279,7 +202,6 @@ test.skip('acceptRename - maintains sorting order', async () => {
     },
     'FileSystem.rename'() {
       return
->>>>>>> origin/main
     },
   })
   RpcRegistry.set(RendererWorker, mockRpc)
