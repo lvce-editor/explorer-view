@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker, RpcRegistry } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptRename } from '../src/parts/AcceptRename/AcceptRename.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -19,7 +19,6 @@ test.skip('acceptRename - basic file rename', async () => {
       return
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -61,7 +60,6 @@ test.skip('acceptRename - folder rename', async () => {
       return
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -101,7 +99,6 @@ test.skip('acceptRename - nested file rename', async () => {
       return
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -140,7 +137,6 @@ test.skip('acceptRename - preserves nested items', async () => {
       return
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -175,7 +171,6 @@ test.skip('acceptRename - handles rename error', async () => {
       return Promise.reject(new Error('rename failed'))
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -204,7 +199,6 @@ test.skip('acceptRename - maintains sorting order', async () => {
       return
     },
   })
-  RpcRegistry.set(RendererWorker, mockRpc)
 
   const state: ExplorerState = {
     ...createDefaultState(),
