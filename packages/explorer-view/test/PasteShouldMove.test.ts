@@ -41,45 +41,30 @@ test('pasteShouldMove should be false after copy operation', async () => {
   expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', 'copy', ['/test.txt']]])
 })
 
-test.skip('pasteShouldMove should be reset to false after paste operation', async () => {
-  const mock: any = {
-    invoke: (method: string) => {
-      if (method === 'ClipBoard.readNativeFiles') {
-        return {
-          type: 'copy',
-          files: ['/source/file.txt'],
-          source: 'gnomeCopiedFiles',
-        }
+test('pasteShouldMove should be reset to false after paste operation', async () => {
+  RendererWorker.registerMockRpc({
+    'ClipBoard.readNativeFiles'() {
+      return {
+        type: 'copy',
+        files: ['/source/file.txt'],
       }
-      if (method === 'FileSystem.copy') {
-        return undefined
-      }
-      if (method === 'FileSystem.rename') {
-        return undefined
-      }
-      if (method === 'FileSystem.readDirWithFileTypes') {
-        return []
-      }
-      if (method === 'FileSystem.getPathSeparator') {
-        return '/'
-      }
-      if (method === 'FileSystem.getBaseName') {
-        return 'file.txt'
-      }
-      if (method === 'Preferences.get') {
-        return false
-      }
-      if (method === 'IconTheme.getIcons') {
-        return ['']
-      }
-      throw new Error(`unexpected method ${method}`)
     },
-  }
-  RendererWorker.set(mock)
+    'FileSystem.rename'() {},
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'IconTheme.getIcons'() {
+      return ['']
+    },
+  })
 
   const state: ExplorerState = {
     ...createDefaultState(),
     pasteShouldMove: true, // Simulate state after cut operation
+    focusedIndex: -1, // No item focused, use root as target
   }
 
   const result = await handlePaste(state)
