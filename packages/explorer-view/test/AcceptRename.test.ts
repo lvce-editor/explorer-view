@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptRename } from '../src/parts/AcceptRename/AcceptRename.ts'
