@@ -1,6 +1,6 @@
+import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as Assert from '../Assert/Assert.ts'
 import * as ContextMenu from '../ContextMenu/ContextMenu.ts'
-import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 import * as MenuEntryId from '../MenuEntryId/MenuEntryId.ts'
 
