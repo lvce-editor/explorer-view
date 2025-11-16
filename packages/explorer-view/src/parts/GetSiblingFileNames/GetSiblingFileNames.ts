@@ -7,11 +7,12 @@ export const getSiblingFileNames = (items: readonly ExplorerItem[], focusedIndex
   }
 
   const focusedItem = items[focusedIndex]
-  const focusedItemParentPath = focusedItem.path.slice(0, -(focusedItem.name.length + 1))
+  const nameLength = focusedItem.name ? focusedItem.name.length + 1 : 0
+  const focusedItemParentPath = focusedItem.path.slice(0, -nameLength)
 
   // Find all items that are direct children of the same parent as the focused item
   const siblingItems = items.filter((item) => {
-    const itemParentPath = item.path.slice(0, -(item.name.length + 1))
+    const itemParentPath = item.path.slice(0, -nameLength)
     return itemParentPath === focusedItemParentPath
   })
 
