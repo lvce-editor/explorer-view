@@ -14,6 +14,8 @@ export const handleContextMenuAtIndex = async (state: ExplorerState, index: numb
     focused: false,
   }
   ExplorerStates.set(uid, state, newState)
-  await ContextMenu.show(x, y, MenuEntryId.Explorer)
+  await ContextMenu.show2(uid, MenuEntryId.Explorer, x, y, {
+    menuId: MenuEntryId.Explorer,
+  })
   return newState
 }

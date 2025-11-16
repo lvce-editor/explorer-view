@@ -6,7 +6,7 @@ import * as HandleContextMenuKeyboard from '../src/parts/HandleContextMenuKeyboa
 
 test('handleContextMenuKeyboard', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'ContextMenu.show'() {},
+    'ContextMenu.show2'() {},
   })
 
   const state: ExplorerState = {
@@ -18,7 +18,7 @@ test('handleContextMenuKeyboard', async () => {
     itemHeight: 20,
   }
   const result = await HandleContextMenuKeyboard.handleContextMenuKeyboard(state)
-  expect(mockRpc.invocations).toEqual([['ContextMenu.show', 100, 260, 4]])
+  expect(mockRpc.invocations).toEqual([['ContextMenu.show2', 1, 4, 100, 260, { menuId: 4 }]])
   expect(result).toEqual({
     ...state,
     focused: false,
