@@ -109,8 +109,10 @@ export const fileNameCannotStartWithSlash = (): string => {
   return I18nString.i18nString(UiStrings.FileNameCannotStartWithSlash)
 }
 
-export const fileOrFolderAlreadyExists = (): string => {
-  return I18nString.i18nString(UiStrings.FileOrFolderAlreadyExists)
+export const fileOrFolderAlreadyExists = (name: string): string => {
+  return I18nString.i18nString(UiStrings.FileOrFolderAlreadyExists, {
+    PH1: name,
+  })
 }
 
 export const theNameIsNotValid = (): string => {

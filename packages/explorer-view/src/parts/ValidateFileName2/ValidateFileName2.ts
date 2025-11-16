@@ -18,7 +18,7 @@ export const validateFileName2 = (name: string, siblingFileNames: readonly strin
 
   // Check if file already exists
   if (siblingFileNames.includes(name)) {
-    return ExplorerStrings.fileOrFolderAlreadyExists()
+    return ExplorerStrings.fileOrFolderAlreadyExists(name)
   }
 
   return ''

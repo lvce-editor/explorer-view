@@ -123,7 +123,7 @@ export function validateFileName(name: string, existingName: string, siblingFile
     const child = siblingFileNames.find((sibling) => sibling === name)
     if (child) {
       return {
-        content: ExplorerStrings.fileOrFolderAlreadyExists(),
+        content: ExplorerStrings.fileOrFolderAlreadyExists(name),
         severity: Severity.Error,
       }
     }
