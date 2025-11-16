@@ -1,5 +1,5 @@
-import { hasProperty } from '../HasProperty/HasProperty.ts'
 import type { RestoredState } from '../RestoredState/RestoredState.ts'
+import { hasProperty } from '../HasProperty/HasProperty.ts'
 
 const getSavedMinLineY = (savedState: unknown): number => {
   if (hasProperty(savedState, 'minLineY') && typeof savedState.minLineY === 'number') {
