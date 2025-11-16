@@ -91,7 +91,7 @@ export const commandMap = {
   'Explorer.focusNone': WrapCommand.wrapListItemCommand(FocusNone.focusNone),
   'Explorer.focusPrevious': WrapCommand.wrapListItemCommand(FocusPrevious.focusPrevious),
   'Explorer.getCommandIds': WrapCommand.getCommandIds,
-  'Explorer.getMenuEntries2': GetMenuEntries2.getMenuEntries2,
+  'Explorer.getMenuEntries2': WrapCommand.wrapGetter(GetMenuEntries2.getMenuEntries2),
   'Explorer.getMouseActions': GetMouseActions.getMouseActions,
   'Explorer.handleArrowLeft': WrapCommand.wrapListItemCommand(HandleArrowLeft.handleArrowLeft),
   'Explorer.handleArrowRight': WrapCommand.wrapListItemCommand(HandleArrowRight.handleArrowRight),
