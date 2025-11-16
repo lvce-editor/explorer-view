@@ -153,6 +153,5 @@ export const commandMap = {
   'Explorer.terminate': terminate,
   'Explorer.initialize': Initialize.initialize,
 
-  // deprecated
   'Explorer.create': Create.create,
 }
