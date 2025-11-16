@@ -8,19 +8,9 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenersFunctions.HandleInputBlur,
       params: ['handleInputBlur'],
     },
-    // {
-    //   name: DomEventListenersFunctions.HandleInputKeyDown,
-    //   params: ['handleInputKeyDown'],
-    //   stopPropagation: true, // TODO find a way to do this without stopPropagation
-    // },
-    // {
-    //   name: DomEventListenersFunctions.HandleListKeyDown,
-    //   params: ['handleKeyDown', 'event.key'],
-    //   preventDefault: true,
-    // },
     {
       name: DomEventListenersFunctions.HandleListFocus,
-      params: ['handleFocus', 'event.isTrusted', 'event.target.className'],
+      params: ['handleFocus', EventExpression.IsTrusted, EventExpression.EventTargetClassName],
     },
     {
       name: DomEventListenersFunctions.HandleListBlur,
@@ -30,10 +20,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenersFunctions.HandleClick,
       params: [
         'handleClickAt',
-        'event.defaultPrevented',
+        EventExpression.DefaultPrevented,
         EventExpression.Button,
         EventExpression.CtrlKey,
-        'event.shiftKey',
+        EventExpression.ShiftKey,
         EventExpression.ClientX,
         EventExpression.ClientY,
       ],
@@ -52,7 +42,6 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     {
       name: DomEventListenersFunctions.HandlePointerDown,
       params: ['handlePointerDown', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY],
-      // preventDefault: true,
     },
     {
       name: DomEventListenersFunctions.HandleEditingInput,
@@ -75,7 +64,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenersFunctions.HandleDrop,
-      params: ['handleDrop', EventExpression.ClientX, EventExpression.ClientY, 'event.dataTransfer.files2', 'event.dataTransfer.files'],
+      params: ['handleDrop', EventExpression.ClientX, EventExpression.ClientY, EventExpression.DataTransferFiles2, EventExpression.DataTransferFiles],
       preventDefault: true,
     },
     {
