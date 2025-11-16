@@ -6,7 +6,7 @@ import * as HandleContextMenuMouseAt from '../src/parts/HandleContextMenuMouseAt
 
 test('handleContextMenuMouseAt', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'ContextMenu.show'() {},
+    'ContextMenu.show2'() {},
   })
 
   const state: ExplorerState = {
@@ -19,6 +19,6 @@ test('handleContextMenuMouseAt', async () => {
     itemHeight: 20,
   }
   const result = await HandleContextMenuMouseAt.handleContextMenuMouseAt(state, 100, 200)
-  expect(mockRpc.invocations).toEqual([['ContextMenu.show', 100, 200, 4]])
+  expect(mockRpc.invocations).toEqual([['ContextMenu.show2', 1, 4, 100, 200, { menuId: 4 }]])
   expect(result).toEqual({ ...state, focused: false, focusedIndex: -1 })
 })
