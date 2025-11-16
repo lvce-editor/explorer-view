@@ -29,7 +29,7 @@ test('validateFileName2 - valid name', () => {
 test('validateFileName2 - file already exists', () => {
   const siblingFileNames = ['existing-file.txt', 'another-file.js']
   const result = ValidateFileName2.validateFileName2('existing-file.txt', siblingFileNames)
-  expect(result).toBe('A file or folder **{0}** already exists at this location. Please choose a different name.')
+  expect(result).toBe('A file or folder **existing-file.txt** already exists at this location. Please choose a different name.')
 })
 
 test('validateFileName2 - file does not exist', () => {

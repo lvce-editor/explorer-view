@@ -172,7 +172,7 @@ test('updateEditingValue - real-time validation during file creation', async () 
 
   // Test typing a name that already exists
   const result = await updateEditingValue(state, 'existing-file.txt')
-  expect(result.editingErrorMessage).toBe('A file or folder **{0}** already exists at this location. Please choose a different name.')
+  expect(result.editingErrorMessage).toBe('A file or folder **existing-file.txt** already exists at this location. Please choose a different name.')
 
   // Test typing a name that doesn't exist
   const result2 = await updateEditingValue(state, 'new-file.txt')
@@ -209,7 +209,7 @@ test('updateEditingValue - real-time validation during folder creation', async (
 
   // Test typing a name that already exists
   const result = await updateEditingValue(state, 'existing-folder')
-  expect(result.editingErrorMessage).toBe('A file or folder **{0}** already exists at this location. Please choose a different name.')
+  expect(result.editingErrorMessage).toBe('A file or folder **existing-folder** already exists at this location. Please choose a different name.')
 
   // Test typing a name that doesn't exist
   const result2 = await updateEditingValue(state, 'new-folder')

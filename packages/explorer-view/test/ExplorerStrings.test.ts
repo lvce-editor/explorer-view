@@ -86,8 +86,8 @@ test('fileNameCannotStartWithSlash', () => {
 })
 
 test('fileOrFolderAlreadyExists', () => {
-  expect(ExplorerStrings.fileOrFolderAlreadyExists()).toBe(
-    'A file or folder **{0}** already exists at this location. Please choose a different name.',
+  expect(ExplorerStrings.fileOrFolderAlreadyExists('test-file.txt')).toBe(
+    'A file or folder **test-file.txt** already exists at this location. Please choose a different name.',
   )
 })
 
