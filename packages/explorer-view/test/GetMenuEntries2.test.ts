@@ -10,7 +10,7 @@ test('getMenuEntries2 - root', () => {
   const uid = 1
   const state: ExplorerState = createDefaultState()
   set(uid, state, state)
-  const menuEntries = getMenuEntries2(uid)
+  const menuEntries = getMenuEntries2(state)
   expect(menuEntries.length).toBeGreaterThan(0)
 })
 
@@ -29,7 +29,7 @@ test('getMenuEntries2 - directory', () => {
     focusedIndex: 0,
   }
   set(uid, state, state)
-  const menuEntries = getMenuEntries2(uid)
+  const menuEntries = getMenuEntries2(state)
   expect(menuEntries.length).toBeGreaterThan(0)
 })
 
@@ -48,6 +48,6 @@ test('getMenuEntries2 - file', () => {
     focusedIndex: 0,
   }
   set(uid, state, state)
-  const menuEntries = getMenuEntries2(uid)
+  const menuEntries = getMenuEntries2(state)
   expect(menuEntries.length).toBeGreaterThan(0)
 })
