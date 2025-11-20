@@ -1,6 +1,7 @@
 export interface Position {
   readonly left: number
   readonly top: number
+  readonly errorMessageWidth: number
 }
 
 export const getErrorMessagePosition = (
@@ -11,11 +12,14 @@ export const getErrorMessagePosition = (
   indent: number,
   fileIconWidth: number,
   padding: number,
+  width: number,
 ): Position => {
   const top = itemHeight * (focusedIndex - minLineY + 1)
   const left = depth * indent + fileIconWidth + padding
+  const errorMessageWidth = width - left
   return {
     top,
     left,
+    errorMessageWidth,
   }
 }

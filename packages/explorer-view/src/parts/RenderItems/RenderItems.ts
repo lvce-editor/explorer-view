@@ -22,6 +22,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     indent,
     fileIconWidth,
     padding + defaultPaddingLeft + chevronSpace,
+    width,
   )
 
   const dom = GetExplorerVirtualDom.getExplorerVirtualDom(
