@@ -1,4 +1,3 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import type { FileOperation } from '../FileOperation/FileOperation.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
@@ -8,6 +7,7 @@ import * as FocusId from '../FocusId/FocusId.ts'
 import { getPaths } from '../GetPaths/GetPaths.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
+import { showErrorAlert } from '../ShowErrorAlert/ShowErrorAlert.ts'
 
 export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
   const { items, focusedIndex, confirmDelete } = state
@@ -32,7 +32,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   // TODO use bulk edit and explorer refresh
   const errorMessage = await ApplyFileOperations.applyFileOperations(fileOperations)
   if (errorMessage) {
-    await RendererWorker.confirm(errorMessage)
+    await showErrorAlert(errorMessage)
     return state
   }
   const newState = await Refresh.refresh(state)
