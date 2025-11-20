@@ -4,12 +4,19 @@ const getIndentRule = (indent: number): string => {
 }`
 }
 
-export const getCss = (scrollBarHeight: number, uniqueIndents: readonly number[], errorMessageLeft: number, errorMessageTop: number): string => {
+export const getCss = (
+  scrollBarHeight: number,
+  uniqueIndents: readonly number[],
+  errorMessageLeft: number,
+  errorMessageTop: number,
+  errorMessageWidth: number,
+): string => {
   const rules = [
     `.Explorer {
   --ScrollBarThumbHeight: ${scrollBarHeight}px;
   --ErrorMessageTop: ${errorMessageTop}px;
   --ErrorMessageLeft: ${errorMessageLeft}px;
+  --ErrorMessageWidth: ${errorMessageWidth}px;
 }`,
     ...uniqueIndents.map(getIndentRule),
   ]
