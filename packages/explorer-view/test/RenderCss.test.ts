@@ -19,7 +19,7 @@ test('renderCss - basic with empty visibleExplorerItems', () => {
   --ScrollBarThumbHeight: 20px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
-  --ErrorMessageWidth: undefinedpx;
+  --ErrorMessageWidth: 52px;
 }`,
   ])
 })
@@ -60,7 +60,7 @@ test('renderCss - with single visibleExplorerItem', () => {
   --ScrollBarThumbHeight: 15px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
-  --ErrorMessageWidth: undefinedpx;
+  --ErrorMessageWidth: 52px;
 }
 .Indent-10 {
   padding-left: 10px;
@@ -142,7 +142,7 @@ test('renderCss - with multiple visibleExplorerItems with different indents', ()
   --ScrollBarThumbHeight: 25px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
-  --ErrorMessageWidth: undefinedpx;
+  --ErrorMessageWidth: 52px;
 }
 .Indent-0 {
   padding-left: 0px;
@@ -227,7 +227,7 @@ test('renderCss - with duplicate indents should only generate unique indent clas
   --ScrollBarThumbHeight: 30px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
-  --ErrorMessageWidth: undefinedpx;
+  --ErrorMessageWidth: 52px;
 }
 .Indent-10 {
   padding-left: 10px;
@@ -274,7 +274,7 @@ test('renderCss - with zero scrollBarHeight', () => {
   --ScrollBarThumbHeight: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
-  --ErrorMessageWidth: undefinedpx;
+  --ErrorMessageWidth: 52px;
 }
 .Indent-5 {
   padding-left: 5px;
