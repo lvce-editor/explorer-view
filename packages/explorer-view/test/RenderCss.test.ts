@@ -222,8 +222,9 @@ test('renderCss - with duplicate indents should only generate unique indent clas
     999,
     `.Explorer {
   --ScrollBarThumbHeight: 30px;
-  --ErrorMessageTop: 0px;
-  --ErrorMessageLeft: 0px;
+  --ErrorMessageTop: 20px;
+  --ErrorMessageLeft: 48px;
+  --ErrorMessageWidth: undefinedpx;
 }
 .Indent-10 {
   padding-left: 10px;
@@ -270,6 +271,7 @@ test('renderCss - with zero scrollBarHeight', () => {
   --ScrollBarThumbHeight: 0px;
   --ErrorMessageTop: 0px;
   --ErrorMessageLeft: 0px;
+  --ErrorMessageWidth: undefinedpx;
 }
 .Indent-5 {
   padding-left: 5px;
