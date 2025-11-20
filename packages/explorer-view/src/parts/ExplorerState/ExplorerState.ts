@@ -18,6 +18,7 @@ export interface ExplorerState {
   readonly editingValue: string
   readonly errorMessageLeft: number
   readonly errorMessageTop: number
+  readonly errorMessageWidth: number
   readonly excluded: readonly any[]
   readonly fileIconCache: FileIconCache
   readonly finalDeltaY: number
