@@ -10,6 +10,7 @@ export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boole
     oldState.maxIndent === newState.maxIndent &&
     oldState.scrollBarActive === newState.scrollBarActive &&
     oldState.scrollBarHeight === newState.scrollBarHeight &&
-    oldState.visibleExplorerItems === newState.visibleExplorerItems
+    oldState.visibleExplorerItems === newState.visibleExplorerItems &&
+    oldState.editingErrorMessage === newState.editingErrorMessage
   )
 }
