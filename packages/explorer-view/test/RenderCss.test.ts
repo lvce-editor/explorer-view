@@ -17,8 +17,9 @@ test('renderCss - basic with empty visibleExplorerItems', () => {
     123,
     `.Explorer {
   --ScrollBarThumbHeight: 20px;
-  --ErrorMessageTop: 0px;
-  --ErrorMessageLeft: 0px;
+  --ErrorMessageTop: 20px;
+  --ErrorMessageLeft: 48px;
+  --ErrorMessageWidth: undefinedpx;
 }`,
   ])
 })
@@ -57,8 +58,9 @@ test('renderCss - with single visibleExplorerItem', () => {
     456,
     `.Explorer {
   --ScrollBarThumbHeight: 15px;
-  --ErrorMessageTop: 0px;
-  --ErrorMessageLeft: 0px;
+  --ErrorMessageTop: 20px;
+  --ErrorMessageLeft: 48px;
+  --ErrorMessageWidth: undefinedpx;
 }
 .Indent-10 {
   padding-left: 10px;
@@ -138,8 +140,9 @@ test('renderCss - with multiple visibleExplorerItems with different indents', ()
     789,
     `.Explorer {
   --ScrollBarThumbHeight: 25px;
-  --ErrorMessageTop: 0px;
-  --ErrorMessageLeft: 0px;
+  --ErrorMessageTop: 20px;
+  --ErrorMessageLeft: 48px;
+  --ErrorMessageWidth: undefinedpx;
 }
 .Indent-0 {
   padding-left: 0px;
@@ -269,8 +272,8 @@ test('renderCss - with zero scrollBarHeight', () => {
     111,
     `.Explorer {
   --ScrollBarThumbHeight: 0px;
-  --ErrorMessageTop: 0px;
-  --ErrorMessageLeft: 0px;
+  --ErrorMessageTop: 20px;
+  --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: undefinedpx;
 }
 .Indent-5 {
