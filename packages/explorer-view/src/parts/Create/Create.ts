@@ -66,6 +66,7 @@ export const create = (
     errorMessageLeft: 0,
     errorMessageTop: 0,
     visibleExplorerItems: [],
+    errorMessageWidth: 0,
   }
   ExplorerStates.set(state.uid, state, state)
   return state
