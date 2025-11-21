@@ -47,7 +47,7 @@
   "devDependencies": {
     "@jest/globals": "^30.2.0",
     "@lvce-editor/assert": "^1.4.0",
-    "@lvce-editor/constants": "^1.37.0",
+    "@lvce-editor/constants": "^1.38.0",
     "@lvce-editor/i18n": "^2.1.0",
     "@lvce-editor/list": "^1.7.0",
     "@lvce-editor/rpc": "^4.20.0",
