@@ -1,17 +1,6 @@
 import { SourceControlWorker } from '@lvce-editor/rpc-registry'
 import { DecorationsEnabled } from '../Config/Config.ts'
-
-const ensureUris = (maybeUris: readonly string[]): readonly string[] => {
-  const uris: string[] = []
-  for (const item of maybeUris) {
-    if (item.startsWith('/')) {
-      uris.push(`file://` + item)
-    } else {
-      uris.push(item)
-    }
-  }
-  return uris
-}
+import { ensureUris } from '../EnsureUris/EnsureUris.ts'
 
 export const getFileDecorations = async (scheme: string, root: string, maybeUris: readonly string[]): Promise<readonly any[]> => {
   try {
@@ -23,7 +12,6 @@ export const getFileDecorations = async (scheme: string, root: string, maybeUris
       return []
     }
     const providerId = providerIds[0]
-    // @ts-ignore
     const uris = ensureUris(maybeUris)
     const decorations = await SourceControlWorker.invoke('SourceControl.getFileDecorations', providerId, uris)
     return decorations
