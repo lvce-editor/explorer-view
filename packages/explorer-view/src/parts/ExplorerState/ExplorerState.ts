@@ -1,4 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { FileDecoration } from '../FileDecoration/FileDecoration.ts'
 import type { FileIconCache } from '../FileIconCache/FileIconCache.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 
@@ -53,5 +54,5 @@ export interface ExplorerState {
   readonly width: number
   readonly x: number
   readonly y: number
-  readonly decorations?: readonly any[]
+  readonly decorations: readonly FileDecoration[]
 }
