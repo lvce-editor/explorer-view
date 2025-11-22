@@ -1,4 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import type { FileDecoration } from '../FileDecoration/FileDecoration.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as ChevronType from '../ChevronType/ChevronType.ts'
 import { createDecorationMap } from '../CreateDecorationMap/CreateDecorationMap.ts'
@@ -35,7 +36,7 @@ export const getVisibleExplorerItems = (
   editingIcon: string,
   cutItems: readonly string[],
   sourceControlIgnoredUris: readonly string[] = [],
-  decorations: readonly any[],
+  decorations: readonly FileDecoration[],
 ): readonly VisibleExplorerItem[] => {
   const decorationMap = createDecorationMap(decorations)
   const visible: VisibleExplorerItem[] = []
