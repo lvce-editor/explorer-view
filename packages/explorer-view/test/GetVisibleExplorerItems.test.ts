@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
+import type { FileDecoration } from '../src/parts/FileDecoration/FileDecoration.ts'
 import { getVisibleExplorerItems } from '../src/parts/GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
 test('getVisibleExplorerItems - basic', () => {
@@ -13,7 +14,8 @@ test('getVisibleExplorerItems - basic', () => {
     },
   ]
   const editingIcon = ''
-  const result = getVisibleExplorerItems(items, 0, 1, 0, -1, '', ['icon'], true, [], editingIcon, [])
+  const decorations: readonly FileDecoration[] = []
+  const result = getVisibleExplorerItems(items, 0, 1, 0, -1, '', ['icon'], true, [], editingIcon, [], [], decorations)
   expect(result).toHaveLength(1)
   expect(result[0]).toMatchObject({
     depth: 0,
@@ -40,7 +42,8 @@ test('getVisibleExplorerItems - editing', () => {
     },
   ]
   const editingIcon = ''
-  const result = getVisibleExplorerItems(items, 0, 1, 0, 0, 'error', ['icon'], true, [], editingIcon, [])
+  const decorations: readonly FileDecoration[] = []
+  const result = getVisibleExplorerItems(items, 0, 1, 0, 0, 'error', ['icon'], true, [], editingIcon, [], [], decorations)
   expect(result).toHaveLength(1)
   expect(result[0]).toMatchObject({
     isEditing: true,
@@ -51,7 +54,9 @@ test('getVisibleExplorerItems - editing', () => {
 test('getVisibleExplorerItems - new item', () => {
   const items: readonly ExplorerItem[] = []
   const editingIcon = ''
-  const result = getVisibleExplorerItems(items, 0, 1, -1, -1, 'error', [], true, [], editingIcon, [])
+  const decorations: readonly FileDecoration[] = []
+
+  const result = getVisibleExplorerItems(items, 0, 1, -1, -1, 'error', [], true, [], editingIcon, [], [], decorations)
   expect(result).toHaveLength(0)
   // expect(result[0]).toMatchObject({
   //   depth: 3,
@@ -74,7 +79,9 @@ test('getVisibleExplorerItems - ignored item is dimmed', () => {
   ]
   const editingIcon = ''
   const ignored = ['/ignored.txt']
-  const result = getVisibleExplorerItems(items, 0, 1, 0, -1, '', ['icon'], true, [], editingIcon, [], ignored)
+  const decorations: readonly FileDecoration[] = []
+
+  const result = getVisibleExplorerItems(items, 0, 1, 0, -1, '', ['icon'], true, [], editingIcon, [], ignored, decorations)
   expect(result).toHaveLength(1)
   expect(result[0]).toMatchObject({
     isIgnored: true,

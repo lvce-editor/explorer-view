@@ -28,6 +28,7 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
       height,
       itemHeight,
       fileIconCache,
+      decorations,
     } = updatedState
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState)
@@ -39,7 +40,8 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
       cutItems === intermediate.newState.cutItems &&
       editingErrorMessage === intermediate.newState.editingErrorMessage &&
       dropTargets === intermediate.newState.dropTargets &&
-      fileIconCache === intermediate.newState.fileIconCache
+      fileIconCache === intermediate.newState.fileIconCache &&
+      decorations === intermediate.newState.decorations
     ) {
       return
     }
@@ -58,6 +60,7 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
       editingIcon,
       cutItems,
       sourceControlIgnoredUris,
+      decorations,
     )
     const finalState: ExplorerState = {
       ...updatedState,
