@@ -1,5 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
+import * as GetFileDecorations from '../GetFileDecorations/GetFileDecorations.ts'
 import * as GetSettings from '../GetSettings/GetSettings.ts'
 import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
@@ -40,6 +41,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     deltaY = savedState.deltaY
   }
 
+  const decorations = await GetFileDecorations.getFileDecorations([])
   return {
     ...state,
     confirmDelete,
@@ -51,5 +53,6 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     pathSeparator,
     root,
     useChevrons,
+    decorations,
   }
 }
