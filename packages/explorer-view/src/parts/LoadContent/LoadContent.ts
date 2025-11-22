@@ -24,6 +24,16 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
   return workspacePath
 }
 
+const RE_PROTOCOL = /^[a-z+]:\/\//
+
+const getScheme = (uri: string): string => {
+  const match = uri.match(RE_PROTOCOL)
+  if (!match) {
+    return ''
+  }
+  return match[0]
+}
+
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
   const { useChevrons, confirmDelete } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
@@ -41,7 +51,10 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     deltaY = savedState.deltaY
   }
 
+  const scheme = getScheme(root)
   const decorations = await GetFileDecorations.getFileDecorations(
+    scheme,
+    root,
     restoredDirents.filter((item: any) => item.depth === 1).map((item: any) => item.path),
   )
   return {
