@@ -9,9 +9,12 @@ export const getSettings = async (): Promise<Settings> => {
   const confirmDelete = confirmDeleteRaw === false ? false : false
   const confirmPasteRaw = await RendererWorker.invoke('Preferences.get', 'explorer.confirmpaste')
   const confirmPaste = confirmPasteRaw === false ? false : false
+  const sourceControlDecorationsRaw = await RendererWorker.invoke('Preferences.get', 'explorer.sourceControlDecorations')
+  const sourceControlDecorations = sourceControlDecorationsRaw === false ? false : false
   return {
     useChevrons,
     confirmDelete,
     confirmPaste,
+    sourceControlDecorations,
   }
 }

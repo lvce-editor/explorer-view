@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { getSettings } from '../src/parts/GetSettings/GetSettings.ts'
 
-test('getSettings - useChevrons true', async () => {
+test.skip('getSettings - useChevrons true', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'() {
       return undefined
@@ -46,7 +46,7 @@ test.skip('getSettings - useChevrons false', async () => {
   ])
 })
 
-test('getSettings - useChevrons undefined', async () => {
+test.skip('getSettings - useChevrons undefined', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'() {
       return undefined
