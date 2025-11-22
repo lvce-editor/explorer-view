@@ -60,7 +60,7 @@ export const getVisibleExplorerItems = (
       icon = editingIcon
       chevron = getEditingChevron(item.type)
     }
-    const decoration = decorationMap[item.path]
+    const decoration = decorationMap[item.path] || ''
     visible.push({
       ...item,
       posInSet: item.posInSet ?? i + 1,
