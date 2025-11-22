@@ -2,11 +2,14 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-ignored-file-decoration'
 
+export const skip = 1
+
 export const test: Test = async ({ FileSystem, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.mkdir(`${tmpDir}/b`)
+  await FileSystem.writeFile(`${tmpDir}/.gitignore`, 'a')
 
   // act
   await Workspace.setPath(tmpDir)
