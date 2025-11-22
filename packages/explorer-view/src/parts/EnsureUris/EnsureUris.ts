@@ -1,11 +1,10 @@
-export const ensureUris = (maybeUris: readonly string[]): readonly string[] => {
-  const uris: string[] = []
-  for (const item of maybeUris) {
-    if (item.startsWith('/')) {
-      uris.push(`file://` + item)
-    } else {
-      uris.push(item)
-    }
+export const ensureUri = (item: string): string => {
+  if (item.startsWith('/')) {
+    return `file://` + item
   }
-  return uris
+  return item
+}
+
+export const ensureUris = (maybeUris: readonly string[]): readonly string[] => {
+  return maybeUris.map(ensureUri)
 }
