@@ -1,6 +1,7 @@
 import { SourceControlWorker } from '@lvce-editor/rpc-registry'
 import type { FileDecoration } from '../FileDecoration/FileDecoration.ts'
 import { ensureUris } from '../EnsureUris/EnsureUris.ts'
+import { normalizeDecorations } from '../NormalizeDecorations/NormalizeDecorations.ts'
 
 export const getFileDecorations = async (
   scheme: string,
@@ -20,7 +21,8 @@ export const getFileDecorations = async (
     const providerId = providerIds.at(-1)
     const uris = ensureUris(maybeUris)
     const decorations = await SourceControlWorker.invoke('SourceControl.getFileDecorations', providerId, uris)
-    return decorations
+    const normalized = normalizeDecorations(decorations)
+    return normalized
   } catch (error) {
     console.error(error)
     return []
