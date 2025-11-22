@@ -1,6 +1,7 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as ChevronType from '../ChevronType/ChevronType.ts'
+import { createDecorationMap } from '../CreateDecorationMap/CreateDecorationMap.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChevronType from '../GetChevronType/GetChevronType.ts'
 import * as GetExpandedType from '../GetExpandedType/GetExpandedType.ts'
@@ -34,7 +35,9 @@ export const getVisibleExplorerItems = (
   editingIcon: string,
   cutItems: readonly string[],
   sourceControlIgnoredUris: readonly string[] = [],
+  decorations: readonly any[],
 ): readonly VisibleExplorerItem[] => {
+  const decorationMap = createDecorationMap(decorations)
   const visible: VisibleExplorerItem[] = []
   const indentFn = useChevrons ? GetTreeItemIndentWithChevron.getTreeItemIndentWithChevron : GetTreeItemIndent.getTreeItemIndent
   let iconIndex = 0
@@ -57,6 +60,7 @@ export const getVisibleExplorerItems = (
       icon = editingIcon
       chevron = getEditingChevron(item.type)
     }
+    const decoration = decorationMap[item.path]
     visible.push({
       ...item,
       posInSet: item.posInSet ?? i + 1,
@@ -72,6 +76,8 @@ export const getVisibleExplorerItems = (
       isCut,
       isIgnored,
       index: i,
+      // @ts-ignore
+      decoration,
     })
   }
   return visible
