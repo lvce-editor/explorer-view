@@ -16,7 +16,8 @@ export const getFileDecorations = async (
     if (providerIds.length === 0) {
       return []
     }
-    const providerId = providerIds[0]
+    // TODO how to handle multiple providers?
+    const providerId = providerIds.at(-1)
     const uris = ensureUris(maybeUris)
     const decorations = await SourceControlWorker.invoke('SourceControl.getFileDecorations', providerId, uris)
     return decorations
