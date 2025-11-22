@@ -1,4 +1,5 @@
 import { SourceControlWorker } from '@lvce-editor/rpc-registry'
+import type { FileDecoration } from '../FileDecoration/FileDecoration.ts'
 import { ensureUris } from '../EnsureUris/EnsureUris.ts'
 
 export const getFileDecorations = async (
@@ -6,7 +7,7 @@ export const getFileDecorations = async (
   root: string,
   maybeUris: readonly string[],
   decorationsEnabled: boolean,
-): Promise<readonly any[]> => {
+): Promise<readonly FileDecoration[]> => {
   try {
     if (!decorationsEnabled) {
       return []
