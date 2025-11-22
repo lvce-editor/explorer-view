@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-rename-file-error-permission-denied'
 
 export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, Extension }) => {
   // arrange
-  const uri = new URL('../fixtures/sample.file-system-provider-permission', import.meta.url).toString()
+  const uri = import.meta.resolve('../fixtures/sample.file-system-provider-permission')
   await Extension.addWebExtension(uri)
 
   const prefix = 'extension-host://xyz://'
