@@ -1,10 +1,10 @@
 import { test, expect } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, SourceControlWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleWorkspaceChange } from '../src/parts/HandleWorkspaceChange/HandleWorkspaceChange.ts'
 
-test.skip('should update state with new workspace path and load content', async () => {
+test('should update state with new workspace path and load content', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/new/workspace/path'
@@ -18,8 +18,11 @@ test.skip('should update state with new workspace path and load content', async 
     'Preferences.get'() {
       return false
     },
-    'IconTheme.getIcons'() {
-      return ['']
+  })
+
+  const mockSourceControlRpc = SourceControlWorker.registerMockRpc({
+    'SourceControl.getEnabledProviderIds'() {
+      return []
     },
   })
 
@@ -41,13 +44,15 @@ test.skip('should update state with new workspace path and load content', async 
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', '/new/workspace/path'],
     ['FileSystem.readDirWithFileTypes', '/new/workspace/path'],
   ])
+  expect(mockSourceControlRpc.invocations).toEqual([])
 })
 
-test.skip('should preserve state properties when updating workspace', async () => {
+test('should preserve state properties when updating workspace', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/another/workspace'
@@ -61,8 +66,11 @@ test.skip('should preserve state properties when updating workspace', async () =
     'Preferences.get'() {
       return true
     },
-    'IconTheme.getIcons'() {
-      return ['']
+  })
+
+  const mockSourceControlRpc = SourceControlWorker.registerMockRpc({
+    'SourceControl.getEnabledProviderIds'() {
+      return []
     },
   })
 
@@ -96,14 +104,18 @@ test.skip('should preserve state properties when updating workspace', async () =
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/another/workspace'],
       ['FileSystem.readDirWithFileTypes', '/another/workspace'],
     ]),
   )
+  expect(mockSourceControlRpc.invocations).toEqual([
+    ['SourceControl.getEnabledProviderIds', '', '/another/workspace'],
+  ])
 })
 
-test.skip('should handle workspace path change with existing content', async () => {
+test('should handle workspace path change with existing content', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/changed/workspace/path'
@@ -120,8 +132,11 @@ test.skip('should handle workspace path change with existing content', async () 
     'Preferences.get'() {
       return false
     },
-    'IconTheme.getIcons'() {
-      return ['file-icon', 'folder-icon']
+  })
+
+  const mockSourceControlRpc = SourceControlWorker.registerMockRpc({
+    'SourceControl.getEnabledProviderIds'() {
+      return []
     },
   })
 
@@ -138,14 +153,16 @@ test.skip('should handle workspace path change with existing content', async () 
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/changed/workspace/path'],
       ['FileSystem.readDirWithFileTypes', '/changed/workspace/path'],
     ]),
   )
+  expect(mockSourceControlRpc.invocations).toEqual([])
 })
 
-test.skip('should handle workspace path change with chevrons enabled', async () => {
+test('should handle workspace path change with chevrons enabled', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return '/chevron/workspace'
@@ -159,8 +176,11 @@ test.skip('should handle workspace path change with chevrons enabled', async () 
     'Preferences.get'() {
       return true
     },
-    'IconTheme.getIcons'() {
-      return ['']
+  })
+
+  const mockSourceControlRpc = SourceControlWorker.registerMockRpc({
+    'SourceControl.getEnabledProviderIds'() {
+      return []
     },
   })
 
@@ -175,14 +195,18 @@ test.skip('should handle workspace path change with chevrons enabled', async () 
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/chevron/workspace'],
       ['FileSystem.readDirWithFileTypes', '/chevron/workspace'],
     ]),
   )
+  expect(mockSourceControlRpc.invocations).toEqual([
+    ['SourceControl.getEnabledProviderIds', '', '/chevron/workspace'],
+  ])
 })
 
-test.skip('should handle different path separators', async () => {
+test('should handle different path separators', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Workspace.getPath'() {
       return 'C:\\windows\\workspace'
@@ -196,8 +220,11 @@ test.skip('should handle different path separators', async () => {
     'Preferences.get'() {
       return false
     },
-    'IconTheme.getIcons'() {
-      return ['']
+  })
+
+  const mockSourceControlRpc = SourceControlWorker.registerMockRpc({
+    'SourceControl.getEnabledProviderIds'() {
+      return []
     },
   })
 
@@ -212,9 +239,11 @@ test.skip('should handle different path separators', async () => {
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', 'C:\\windows\\workspace'],
       ['FileSystem.readDirWithFileTypes', 'C:\\windows\\workspace'],
     ]),
   )
+  expect(mockSourceControlRpc.invocations).toEqual([])
 })
