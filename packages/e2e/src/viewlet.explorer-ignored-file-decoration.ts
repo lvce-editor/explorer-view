@@ -2,9 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-ignored-file-decoration'
 
-export const skip = 1
-
-export const test: Test = async ({ FileSystem, Workspace, Extension, Settings }) => {
+export const test: Test = async ({ FileSystem, Workspace, Extension, Settings, Locator, expect }) => {
   // arrange
   await Settings.update({
     'explorer.sourceControlDecorations': true,
@@ -20,6 +18,7 @@ export const test: Test = async ({ FileSystem, Workspace, Extension, Settings })
   await Workspace.setPath(tmpDir)
 
   // assert
-  // TODO add an ignore file that marks b as ignored
-  // TODO verify that b is marked as ignored
+  const a = Locator('.TreeItem[aria-label="a"]')
+  await expect(a).toBeVisible()
+  await expect(a).toHaveClass('decoration-ignored')
 }
