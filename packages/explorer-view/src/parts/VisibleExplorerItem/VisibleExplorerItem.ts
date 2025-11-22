@@ -1,19 +1,20 @@
 export interface VisibleExplorerItem {
-  readonly isEditing: boolean
+  readonly ariaExpanded: string | undefined // TODO make it always string
+  readonly chevron: number
+  readonly className: string
+  readonly decoration?: string
+  readonly depth: number
   readonly hasEditingError: boolean
   readonly icon: string
-  readonly depth: number
+  readonly id: string | undefined // TODO make it always string
+  readonly indent: number
+  readonly index: number
+  readonly isCut: boolean
+  readonly isEditing: boolean
+  readonly isIgnored: boolean
   readonly name: string
   readonly path: string
   readonly posInSet: number
-  readonly setSize: number
-  readonly indent: number
-  readonly chevron: number
-  readonly id: string | undefined // TODO make it always string
-  readonly className: string
-  readonly ariaExpanded: string | undefined // TODO make it always string
   readonly selected: boolean
-  readonly isCut: boolean
-  readonly isIgnored: boolean
-  readonly index: number
+  readonly setSize: number
 }
