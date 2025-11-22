@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import { DecorationsEnabled } from '../Config/Config.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetFileDecorations from '../GetFileDecorations/GetFileDecorations.ts'
 import * as GetSettings from '../GetSettings/GetSettings.ts'
@@ -56,6 +57,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     scheme,
     root,
     restoredDirents.filter((item: any) => item.depth === 1).map((item: any) => item.path),
+    DecorationsEnabled,
   )
   return {
     ...state,

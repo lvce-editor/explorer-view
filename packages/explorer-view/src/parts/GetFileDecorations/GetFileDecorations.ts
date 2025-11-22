@@ -1,10 +1,14 @@
 import { SourceControlWorker } from '@lvce-editor/rpc-registry'
-import { DecorationsEnabled } from '../Config/Config.ts'
 import { ensureUris } from '../EnsureUris/EnsureUris.ts'
 
-export const getFileDecorations = async (scheme: string, root: string, maybeUris: readonly string[]): Promise<readonly any[]> => {
+export const getFileDecorations = async (
+  scheme: string,
+  root: string,
+  maybeUris: readonly string[],
+  decorationsEnabled: boolean,
+): Promise<readonly any[]> => {
   try {
-    if (!DecorationsEnabled) {
+    if (!decorationsEnabled) {
       return []
     }
     const providerIds = await SourceControlWorker.invoke('SourceControl.getEnabledProviderIds', scheme, root)
