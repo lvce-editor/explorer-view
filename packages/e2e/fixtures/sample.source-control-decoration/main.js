@@ -24,6 +24,21 @@ const fileSystemProvider = {
   },
 }
 
+const sourceControlProvider = {
+  id: 'xyz',
+  getChangedFiles() {
+    return []
+  },
+  getBadgeCount() {
+    return 0
+  },
+  getFileDecorations() {
+    // TODO
+    return []
+  },
+}
+
 export const activate = () => {
   vscode.registerFileSystemProvider(fileSystemProvider)
+  vscode.registerSourceControlProvider(sourceControlProvider)
 }
