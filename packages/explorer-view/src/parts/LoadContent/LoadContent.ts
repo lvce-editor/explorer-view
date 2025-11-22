@@ -41,7 +41,9 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     deltaY = savedState.deltaY
   }
 
-  const decorations = await GetFileDecorations.getFileDecorations([])
+  const decorations = await GetFileDecorations.getFileDecorations(
+    restoredDirents.filter((item: any) => item.depth === 1).map((item: any) => item.path),
+  )
   return {
     ...state,
     confirmDelete,
