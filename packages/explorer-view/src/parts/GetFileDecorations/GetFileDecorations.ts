@@ -1,3 +1,5 @@
+import { SourceControlWorker } from '@lvce-editor/rpc-registry'
+
 const ensureUris = (maybeUris: readonly string[]): readonly string[] => {
   const uris: string[] = []
   for (const item of maybeUris) {
@@ -11,8 +13,12 @@ const ensureUris = (maybeUris: readonly string[]): readonly string[] => {
 }
 
 export const getFileDecorations = async (maybeUris: readonly string[]): Promise<readonly any[]> => {
-  // @ts-ignore
-  const uris = ensureUris(maybeUris)
-  // TODO
-  return []
+  try {
+    // @ts-ignore
+    const uris = ensureUris(maybeUris)
+    const decorations = await SourceControlWorker.invoke('SourceControl.getDecorations', uris)
+    return decorations
+  } catch {
+    return []
+  }
 }
