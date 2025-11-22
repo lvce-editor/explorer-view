@@ -10,6 +10,9 @@ const fileSystemProvider = {
   },
   rename(oldUri, newUri) {},
   readFile(uri) {},
+  exists(uri) {
+    return false
+  },
   pathSeparator: '/',
   readDirWithFileTypes(uri) {
     const results = []
@@ -33,9 +36,18 @@ const sourceControlProvider = {
   getBadgeCount() {
     return 0
   },
-  getFileDecorations() {
-    // TODO
-    return []
+  getFileDecorations(uris) {
+    const filtered = uris.filter((uri) => uri.endsWith('a'))
+    const decorations = filtered.map((item) => {
+      return {
+        decoration: 'ignored',
+        uri: item,
+      }
+    })
+    return decorations
+  },
+  isActive() {
+    return true
   },
 }
 
