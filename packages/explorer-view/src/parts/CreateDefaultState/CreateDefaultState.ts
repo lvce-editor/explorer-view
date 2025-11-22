@@ -51,4 +51,5 @@ export const createDefaultState = (): ExplorerState => ({
   errorMessageTop: 0,
   visibleExplorerItems: [],
   errorMessageWidth: 0,
+  decorations: [],
 })
