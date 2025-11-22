@@ -5,9 +5,10 @@ const fileSystemProvider = {
   writeFile(uri, content) {
     contents[uri] = content
   },
-  rename(oldUri, newUri) {
-    throw new Error(`Permission Denied`)
+  mkdir(uri) {
+    contents[uri] = ''
   },
+  rename(oldUri, newUri) {},
   readFile(uri) {},
   pathSeparator: '/',
   readDirWithFileTypes(uri) {
@@ -16,7 +17,7 @@ const fileSystemProvider = {
       if (key.startsWith(uri)) {
         results.push({
           type: 7,
-          name: key.slice(key.lastIndexOf('/')),
+          name: key.slice(key.lastIndexOf('/') + 1),
         })
       }
     }
