@@ -52,4 +52,5 @@ export const createDefaultState = (): ExplorerState => ({
   visibleExplorerItems: [],
   errorMessageWidth: 0,
   decorations: [],
+  sourceControlDecorations: false,
 })

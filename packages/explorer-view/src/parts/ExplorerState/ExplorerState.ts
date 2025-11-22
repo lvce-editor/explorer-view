@@ -55,4 +55,5 @@ export interface ExplorerState {
   readonly x: number
   readonly y: number
   readonly decorations: readonly FileDecoration[]
+  readonly sourceControlDecorations: boolean
 }
