@@ -11,7 +11,7 @@ export const test: Test = async ({ Dialog, Extension, FileSystem, Workspace, Exp
     _message = message
     return true
   })
-  const uri = new URL('../fixtures/sample.file-system-provider-delete-file-error', import.meta.url).toString()
+  const uri = import.meta.resolve('../fixtures/sample.file-system-provider-delete-file-error')
   await Extension.addWebExtension(uri)
   const prefix = 'extension-host://xyz://'
   await FileSystem.writeFile(`${prefix}/file1.txt`, 'content 1')
