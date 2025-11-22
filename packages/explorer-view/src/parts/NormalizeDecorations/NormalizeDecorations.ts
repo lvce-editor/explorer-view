@@ -5,7 +5,7 @@ const isValid = (decoration: FileDecoration): boolean => {
 }
 
 export const normalizeDecorations = (decorations: readonly FileDecoration[]): readonly FileDecoration[] => {
-  if (!decorations) {
+  if (!decorations || !Array.isArray(decorations)) {
     return []
   }
   return decorations.filter(isValid)
