@@ -11,6 +11,7 @@ import { getPathPartsChildren } from '../GetPathPartsChildren/GetPathPartsChildr
 import { getSiblingFileNames } from '../GetSiblingFileNames/GetSiblingFileNames.ts'
 import { mergeTrees } from '../MergeTrees/MergeTrees.ts'
 import { join2 } from '../Path/Path.ts'
+import { refreshWorkspace } from '../RefreshWorkspace/RefreshWorkspace.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
@@ -48,6 +49,7 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   const dirents = newItems
   const newFocusedIndex = GetIndex.getIndex(newItems, absolutePath)
 
+  await refreshWorkspace()
   return {
     ...state,
     items: dirents,
