@@ -51,6 +51,7 @@ import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as HandleWheel from '../HandleWheel/HandleWheel.ts'
 import * as HandleWorkspaceChange from '../HandleWorkspaceChange/HandleWorkspaceChange.ts'
+import { handleWorkspaceRefresh } from '../HandleWorkspaceRefresh/HandleWorkspaceRefresh.ts'
 import * as Initialize from '../Initialize/Initialize.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as NewFile from '../NewFile/NewFile.ts'
@@ -122,6 +123,7 @@ export const commandMap = {
   'Explorer.handleUpload': WrapCommand.wrapListItemCommand(HandleUpload.handleUpload),
   'Explorer.handleWheel': WrapCommand.wrapListItemCommand(HandleWheel.handleWheel),
   'Explorer.handleWorkspaceChange': WrapCommand.wrapListItemCommand(HandleWorkspaceChange.handleWorkspaceChange),
+  'Explorer.handleWorkspaceRefresh': WrapCommand.wrapListItemCommand(handleWorkspaceRefresh),
   'Explorer.loadContent': WrapCommand.wrapListItemCommand(LoadContent.loadContent),
   'Explorer.newFile': WrapCommand.wrapListItemCommand(NewFile.newFile),
   'Explorer.newFolder': WrapCommand.wrapListItemCommand(NewFolder.newFolder),
