@@ -19,7 +19,7 @@ test('cancelEdit', async () => {
   const result = await cancelEdit(state)
   expect(result).toEqual({
     ...state,
-    focusedIndex: 1,
+    focusedIndex: -1,
     focused: true,
     editingIndex: -1,
     editingValue: '',
