@@ -6,9 +6,49 @@ test('validateFileName2 - empty name', () => {
   expect(result).toBe('A file or folder name must be provided.')
 })
 
-test('validateFileName2 - name starting with dot', () => {
+test('validateFileName2 - name starting with dot (allowed)', () => {
   const result = ValidateFileName2.validateFileName2('.hidden')
-  expect(result).toBe('A file or folder name cannot start with a dot.')
+  expect(result).toBe('')
+})
+
+test('validateFileName2 - dotfile like .git (allowed)', () => {
+  const result = ValidateFileName2.validateFileName2('.git')
+  expect(result).toBe('')
+})
+
+test('validateFileName2 - dotfile like .editorconfig (allowed)', () => {
+  const result = ValidateFileName2.validateFileName2('.editorconfig')
+  expect(result).toBe('')
+})
+
+test('validateFileName2 - reserved name "." (not allowed)', () => {
+  const result = ValidateFileName2.validateFileName2('.')
+  expect(result).toBe('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
+})
+
+test('validateFileName2 - reserved name ".." (not allowed)', () => {
+  const result = ValidateFileName2.validateFileName2('..')
+  expect(result).toBe('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
+})
+
+test('validateFileName2 - reserved name "..." (not allowed)', () => {
+  const result = ValidateFileName2.validateFileName2('...')
+  expect(result).toBe('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
+})
+
+test('validateFileName2 - reserved name "../" (not allowed)', () => {
+  const result = ValidateFileName2.validateFileName2('../')
+  expect(result).toBe('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
+})
+
+test('validateFileName2 - name starting with "../" (not allowed)', () => {
+  const result = ValidateFileName2.validateFileName2('../file.txt')
+  expect(result).toBe('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
+})
+
+test('validateFileName2 - name starting with "../" folder (not allowed)', () => {
+  const result = ValidateFileName2.validateFileName2('../folder')
+  expect(result).toBe('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
 })
 
 test('validateFileName2 - name starting with slash', () => {
