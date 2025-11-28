@@ -16,6 +16,7 @@ export const getInputDom = (isEditing: boolean, hasEditingError: boolean): reado
       ariaLabel: ariaLabel,
       autocapitalize: 'off',
       autocorrect: 'off',
+      autocomplete: 'off',
       childCount: 0,
       className: getInputClassName(hasEditingError),
       id: 'ExplorerInput',
