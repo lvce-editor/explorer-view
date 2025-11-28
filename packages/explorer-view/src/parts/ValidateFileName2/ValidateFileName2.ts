@@ -6,14 +6,21 @@ export const validateFileName2 = (name: string, siblingFileNames: readonly strin
     const editingErrorMessage = ExplorerStrings.fileOrFolderNameMustBeProvided()
     return editingErrorMessage
   }
-  if (name.startsWith(Character.Dot)) {
-    return ExplorerStrings.fileCannotStartWithDot()
-  }
   if (name.startsWith(Character.Slash)) {
     return ExplorerStrings.fileCannotStartWithSlash()
   }
   if (name.startsWith(Character.BackSlash)) {
     return ExplorerStrings.fileCannotStartWithBackSlash()
+  }
+
+  // Disallow reserved directory names
+  if (name === '.' || name === '..' || name === '...') {
+    return ExplorerStrings.theNameIsNotValid()
+  }
+
+  // Disallow any filename starting with ../
+  if (name.startsWith('../')) {
+    return ExplorerStrings.theNameIsNotValid()
   }
 
   // Check if file already exists

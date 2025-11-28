@@ -23,8 +23,12 @@ export function isValidBasename(name: string | null | undefined, isWindowsOS: bo
     return false // check for certain invalid file names
   }
 
-  if (name === '.' || name === '..') {
+  if (name === '.' || name === '..' || name === '...') {
     return false // check for reserved values
+  }
+
+  if (name.startsWith('../')) {
+    return false // check for names starting with ../
   }
 
   if (isWindowsOS && name[name.length - 1] === '.') {

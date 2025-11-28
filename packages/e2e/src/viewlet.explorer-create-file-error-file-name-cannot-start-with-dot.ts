@@ -25,5 +25,5 @@ export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Loca
   await expect(inputBox).toHaveClass('InputValidationError')
   const errorMessage = Locator('.ExplorerErrorMessage')
   await expect(errorMessage).toBeVisible()
-  await expect(errorMessage).toHaveText('A file or folder name cannot start with a dot.')
+  await expect(errorMessage).toHaveText('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
 }
