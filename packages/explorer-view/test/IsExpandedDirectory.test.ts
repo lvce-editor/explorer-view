@@ -5,44 +5,44 @@ import * as IsExpandedDirectory from '../src/parts/IsExpandedDirectory/IsExpande
 
 test('isExpandedDirectory - expanded directory', () => {
   const item: ExplorerItem = {
-    name: 'test',
-    type: DirentType.DirectoryExpanded,
-    path: '/test',
     depth: 0,
+    name: 'test',
+    path: '/test',
     selected: false,
+    type: DirentType.DirectoryExpanded,
   }
   expect(IsExpandedDirectory.isExpandedDirectory(item)).toBe(true)
 })
 
 test('isExpandedDirectory - collapsed directory', () => {
   const item: ExplorerItem = {
-    name: 'test',
-    type: DirentType.Directory,
-    path: '/test',
     depth: 0,
+    name: 'test',
+    path: '/test',
     selected: false,
+    type: DirentType.Directory,
   }
   expect(IsExpandedDirectory.isExpandedDirectory(item)).toBe(false)
 })
 
 test('isExpandedDirectory - expanding directory', () => {
   const item: ExplorerItem = {
-    name: 'test',
-    type: DirentType.DirectoryExpanding,
-    path: '/test',
     depth: 0,
+    name: 'test',
+    path: '/test',
     selected: false,
+    type: DirentType.DirectoryExpanding,
   }
   expect(IsExpandedDirectory.isExpandedDirectory(item)).toBe(false)
 })
 
 test('isExpandedDirectory - file', () => {
   const item: ExplorerItem = {
-    name: 'test.txt',
-    type: DirentType.File,
-    path: '/test.txt',
     depth: 0,
+    name: 'test.txt',
+    path: '/test.txt',
     selected: false,
+    type: DirentType.File,
   }
   expect(IsExpandedDirectory.isExpandedDirectory(item)).toBe(false)
 })

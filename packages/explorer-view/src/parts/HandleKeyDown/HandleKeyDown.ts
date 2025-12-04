@@ -7,7 +7,7 @@ import { isAscii } from '../IsAscii/IsAscii.ts'
 let timeout: number | undefined
 
 export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState => {
-  const { focusWord, items, focusedIndex, focusWordTimeout } = state
+  const { focusedIndex, focusWord, focusWordTimeout, items } = state
   if (focusWord && key === '') {
     return cancelTypeAhead(state)
   }
@@ -37,7 +37,7 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
 
   return {
     ...state,
-    focusWord: newFocusWord,
     focusedIndex: matchingIndex,
+    focusWord: newFocusWord,
   }
 }

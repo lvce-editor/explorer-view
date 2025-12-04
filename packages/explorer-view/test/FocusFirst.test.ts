@@ -7,29 +7,29 @@ import * as ViewletExplorerFocusFirst from '../src/parts/FocusFirst/FocusFirst.t
 test('focusFirst', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/home/test-user/test-path',
     focusedIndex: 1,
     height: 600,
     items: [
       {
-        name: 'index.css',
-        type: DirentType.File,
-        path: '/index.css',
         depth: 1,
-        selected: false,
+        name: 'index.css',
+        path: '/index.css',
         posInSet: 0,
+        selected: false,
         setSize: 2,
+        type: DirentType.File,
       },
       {
-        name: 'index.html',
-        type: DirentType.File,
-        path: '/index.html',
         depth: 1,
-        selected: false,
+        name: 'index.html',
+        path: '/index.html',
         posInSet: 1,
+        selected: false,
         setSize: 2,
+        type: DirentType.File,
       },
     ],
+    root: '/home/test-user/test-path',
   }
   expect(ViewletExplorerFocusFirst.focusFirst(state)).toMatchObject({
     focusedIndex: 0,
@@ -39,10 +39,10 @@ test('focusFirst', () => {
 test('focusFirst - no dirents', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/home/test-user/test-path',
     focusedIndex: -1,
     height: 600,
     items: [],
+    root: '/home/test-user/test-path',
   }
   expect(ViewletExplorerFocusFirst.focusFirst(state)).toBe(state)
 })
@@ -50,29 +50,29 @@ test('focusFirst - no dirents', () => {
 test('focusFirst - focus already at first', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/home/test-user/test-path',
     focusedIndex: 0,
     height: 600,
     items: [
       {
-        name: 'index.css',
-        type: DirentType.File,
-        path: '/index.css',
         depth: 1,
-        selected: false,
+        name: 'index.css',
+        path: '/index.css',
         posInSet: 0,
+        selected: false,
         setSize: 2,
+        type: DirentType.File,
       },
       {
-        name: 'index.html',
-        type: DirentType.File,
-        path: '/index.html',
         depth: 1,
-        selected: false,
+        name: 'index.html',
+        path: '/index.html',
         posInSet: 1,
+        selected: false,
         setSize: 2,
+        type: DirentType.File,
       },
     ],
+    root: '/home/test-user/test-path',
   }
   expect(ViewletExplorerFocusFirst.focusFirst(state)).toBe(state)
 })

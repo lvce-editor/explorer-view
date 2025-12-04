@@ -5,10 +5,10 @@ import { getActionVirtualDom } from '../src/parts/GetActionVirtualDom/GetActionV
 
 test('getActionVirtualDom - button action', () => {
   const action: ViewletAction = {
-    type: ActionType.Button,
-    id: 'test-button',
     command: 'test.command',
     icon: 'test-icon',
+    id: 'test-button',
+    type: ActionType.Button,
   }
   const result = getActionVirtualDom(action)
   expect(result).toHaveLength(2)
@@ -17,9 +17,9 @@ test('getActionVirtualDom - button action', () => {
 
 test('getActionVirtualDom - unknown action type', () => {
   const action: ViewletAction = {
-    type: 999, // Using a number that's not defined in ActionType
-    id: 'test-unknown',
     command: 'test.command',
+    id: 'test-unknown',
+    type: 999, // Using a number that's not defined in ActionType
   }
   const result = getActionVirtualDom(action)
   expect(result).toEqual([])

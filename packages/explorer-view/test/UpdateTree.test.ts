@@ -7,7 +7,7 @@ test('updateTree - empty tree', () => {
   const tree = {}
   const path = '/test'
   const newDirents: readonly ExplorerItem[] = [
-    { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
+    { depth: 0, icon: '', name: 'file.txt', path: '/test/file.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
   ]
   const result = updateTree(tree, path, newDirents)
   expect(result).toEqual({
@@ -17,11 +17,11 @@ test('updateTree - empty tree', () => {
 
 test('updateTree - existing tree', () => {
   const tree = {
-    '/test': [{ name: 'old.txt', type: DirentType.File, path: '/test/old.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
+    '/test': [{ depth: 0, icon: '', name: 'old.txt', path: '/test/old.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File }],
   }
   const path = '/test'
   const newDirents: readonly ExplorerItem[] = [
-    { name: 'new.txt', type: DirentType.File, path: '/test/new.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
+    { depth: 0, icon: '', name: 'new.txt', path: '/test/new.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
   ]
   const result = updateTree(tree, path, newDirents)
   expect(result).toEqual({
@@ -31,11 +31,11 @@ test('updateTree - existing tree', () => {
 
 test('updateTree - nested path', () => {
   const tree = {
-    '/test': [{ name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' }],
+    '/test': [{ depth: 0, icon: '', name: 'folder', path: '/test/folder', posInSet: 1, selected: false, setSize: 1, type: DirentType.Directory }],
   }
   const path = '/test/folder'
   const newDirents: readonly ExplorerItem[] = [
-    { name: 'nested.txt', type: DirentType.File, path: '/test/folder/nested.txt', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
+    { depth: 0, icon: '', name: 'nested.txt', path: '/test/folder/nested.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
   ]
   const result = updateTree(tree, path, newDirents)
   expect(result).toEqual({

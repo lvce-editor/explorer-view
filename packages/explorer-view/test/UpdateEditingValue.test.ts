@@ -92,9 +92,9 @@ test('updateEditingValue - updates file icon when renaming file', async () => {
   })
   const state: ExplorerState = {
     ...createDefaultState(),
-    editingType: ExplorerEditingType.Rename,
     editingIndex: 0,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+    editingType: ExplorerEditingType.Rename,
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
   }
   const newValue = 'new.txt'
   const result = await updateEditingValue(state, newValue)
@@ -114,9 +114,9 @@ test('updateEditingValue - updates folder icon when renaming folder', async () =
   })
   const state: ExplorerState = {
     ...createDefaultState(),
-    editingType: ExplorerEditingType.Rename,
     editingIndex: 0,
-    items: [{ name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false }],
+    editingType: ExplorerEditingType.Rename,
+    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Directory }],
   }
   const newValue = 'new'
   const result = await updateEditingValue(state, newValue)
@@ -158,14 +158,14 @@ test('updateEditingValue - real-time validation during file creation', async () 
     focusedIndex: 0,
     items: [
       {
-        path: '/root/existing-file.txt',
-        name: 'existing-file.txt',
         depth: 0,
-        type: DirentType.File,
         icon: '',
-        selected: false,
+        name: 'existing-file.txt',
+        path: '/root/existing-file.txt',
         posInSet: 0,
+        selected: false,
         setSize: 1,
+        type: DirentType.File,
       },
     ],
   }
@@ -195,14 +195,14 @@ test('updateEditingValue - real-time validation during folder creation', async (
     focusedIndex: 0,
     items: [
       {
-        path: '/root/existing-folder',
-        name: 'existing-folder',
         depth: 0,
-        type: DirentType.Directory,
         icon: '',
-        selected: false,
+        name: 'existing-folder',
+        path: '/root/existing-folder',
         posInSet: 0,
+        selected: false,
         setSize: 1,
+        type: DirentType.Directory,
       },
     ],
   }
@@ -232,14 +232,14 @@ test('updateEditingValue - no validation during rename', async () => {
     focusedIndex: 0,
     items: [
       {
-        path: '/root/existing-file.txt',
-        name: 'existing-file.txt',
         depth: 0,
-        type: DirentType.File,
         icon: '',
-        selected: false,
+        name: 'existing-file.txt',
+        path: '/root/existing-file.txt',
         posInSet: 0,
+        selected: false,
         setSize: 1,
+        type: DirentType.File,
       },
     ],
   }

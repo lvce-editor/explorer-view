@@ -7,9 +7,9 @@ export const getFileOperationsRename = (oldAbsolutePath: string, newFileName: st
   const oldParentPath = Path.dirname2(oldAbsolutePath)
   const newAbsolutePath = Path.join2(oldParentPath, newFileName)
   operations.push({
-    type: FileOperationType.Rename,
-    path: newAbsolutePath,
     from: oldAbsolutePath,
+    path: newAbsolutePath,
+    type: FileOperationType.Rename,
   })
 
   return operations

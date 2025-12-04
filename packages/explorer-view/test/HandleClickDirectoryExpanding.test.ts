@@ -7,11 +7,11 @@ import { handleClickDirectoryExpanding } from '../src/parts/HandleClickDirectory
 test('handleClickDirectoryExpanding - updates state with focus', async () => {
   const state: ExplorerState = createDefaultState()
   const dirent = {
+    depth: 0,
     name: 'test',
     path: '/test',
-    type: DirentType.File,
-    depth: 0,
     selected: false,
+    type: DirentType.File,
   }
   const newState = await handleClickDirectoryExpanding(state, dirent, 1, true)
   expect(newState.focusedIndex).toBe(1)
@@ -22,11 +22,11 @@ test('handleClickDirectoryExpanding - updates state with focus', async () => {
 test('handleClickDirectoryExpanding - updates state without focus', async () => {
   const state: ExplorerState = createDefaultState()
   const dirent = {
+    depth: 0,
     name: 'test',
     path: '/test',
-    type: DirentType.File,
-    depth: 0,
     selected: false,
+    type: DirentType.File,
   }
   const newState = await handleClickDirectoryExpanding(state, dirent, 2, false)
   expect(newState.focusedIndex).toBe(2)

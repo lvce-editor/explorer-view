@@ -13,14 +13,14 @@ export const getNewChildDirentsForNewDirent = async (
   if (existingChildren.length === 0) {
     const childDirents = await FileSystem.readDirWithFileTypes(parentPath)
     existingChildren = childDirents.map((dirent: { name: string; type: number }, index: number) => ({
-      name: dirent.name,
-      type: dirent.type,
-      path: join2(parentPath, dirent.name),
       depth,
-      selected: false,
-      posInSet: index + 1,
-      setSize: childDirents.length,
       icon: '',
+      name: dirent.name,
+      path: join2(parentPath, dirent.name),
+      posInSet: index + 1,
+      selected: false,
+      setSize: childDirents.length,
+      type: dirent.type,
     }))
   }
   const updatedChildren = existingChildren.map((child, index) => ({
@@ -29,14 +29,14 @@ export const getNewChildDirentsForNewDirent = async (
     setSize: existingChildren.length + 2,
   }))
   const newDirent: ExplorerItem = {
-    name: '',
-    type: direntType,
-    path: parentPath,
     depth,
-    selected: false,
-    posInSet: updatedChildren.length + 1,
-    setSize: existingChildren.length + 2,
     icon: '',
+    name: '',
+    path: parentPath,
+    posInSet: updatedChildren.length + 1,
+    selected: false,
+    setSize: existingChildren.length + 2,
+    type: direntType,
   }
   const allChildDirents = [...updatedChildren, newDirent]
   return allChildDirents

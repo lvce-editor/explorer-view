@@ -13,16 +13,16 @@ test('handleArrowLeft - no focused item', () => {
 test('handleArrowLeft - directory', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
+    focusedIndex: 0,
     items: [
       {
-        type: DirentType.Directory,
+        depth: 0,
         name: 'test',
         path: '/test',
-        depth: 0,
         selected: false,
+        type: DirentType.Directory,
       },
     ],
-    focusedIndex: 0,
   }
   const result = handleArrowLeft(state)
   expect(result).toBeDefined()
@@ -31,16 +31,16 @@ test('handleArrowLeft - directory', () => {
 test('handleArrowLeft - file', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
+    focusedIndex: 0,
     items: [
       {
-        type: DirentType.File,
+        depth: 0,
         name: 'test.txt',
         path: '/test.txt',
-        depth: 0,
         selected: false,
+        type: DirentType.File,
       },
     ],
-    focusedIndex: 0,
   }
   const result = handleArrowLeft(state)
   expect(result).toBeDefined()
@@ -49,16 +49,16 @@ test('handleArrowLeft - file', () => {
 test('handleArrowLeft - symlink file', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
+    focusedIndex: 0,
     items: [
       {
-        type: DirentType.SymLinkFile,
+        depth: 0,
         name: 'test.txt',
         path: '/test.txt',
-        depth: 0,
         selected: false,
+        type: DirentType.SymLinkFile,
       },
     ],
-    focusedIndex: 0,
   }
   const result = handleArrowLeft(state)
   expect(result).toBeDefined()
@@ -67,19 +67,19 @@ test('handleArrowLeft - symlink file', () => {
 test('handleArrowLeft - expanded directory', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
+    focusedIndex: 0,
     items: [
       {
-        type: DirentType.DirectoryExpanded,
-        name: 'test',
-        path: '/test',
+        depth: 0,
         // @ts-ignore
         expanded: true,
         level: 0,
-        depth: 0,
+        name: 'test',
+        path: '/test',
         selected: false,
+        type: DirentType.DirectoryExpanded,
       },
     ],
-    focusedIndex: 0,
   }
   const result = handleArrowLeft(state)
   expect(result).toBeDefined()
@@ -88,16 +88,16 @@ test('handleArrowLeft - expanded directory', () => {
 test('handleArrowLeft - expanding directory', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
+    focusedIndex: 0,
     items: [
       {
-        type: DirentType.DirectoryExpanding,
+        depth: 0,
         name: 'test',
         path: '/test',
-        depth: 0,
         selected: false,
+        type: DirentType.DirectoryExpanding,
       },
     ],
-    focusedIndex: 0,
   }
   const result = handleArrowLeft(state)
   expect(result).toBeDefined()
@@ -106,16 +106,16 @@ test('handleArrowLeft - expanding directory', () => {
 test('handleArrowLeft - symlink folder', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
+    focusedIndex: 0,
     items: [
       {
-        type: DirentType.SymLinkFolder,
+        depth: 0,
         name: 'test',
         path: '/test',
-        depth: 0,
         selected: false,
+        type: DirentType.SymLinkFolder,
       },
     ],
-    focusedIndex: 0,
   }
   const result = handleArrowLeft(state)
   expect(result).toBeDefined()

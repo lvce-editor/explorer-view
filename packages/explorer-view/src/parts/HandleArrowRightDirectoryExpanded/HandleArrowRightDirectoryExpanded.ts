@@ -2,7 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 
 export const handleArrowRightDirectoryExpanded = (state: ExplorerState, dirent: any): ExplorerState => {
-  const { items, focusedIndex } = state
+  const { focusedIndex, items } = state
   if (focusedIndex === items.length - 1) {
     return state
   }

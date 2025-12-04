@@ -7,8 +7,8 @@ test('isTopLevel - depth 1', () => {
     depth: 1,
     name: '',
     path: '',
-    type: 0,
     selected: false,
+    type: 0,
   }
   expect(IsTopLevel.isTopLevel(dirent)).toBe(true)
 })
@@ -18,8 +18,8 @@ test('isTopLevel - depth 2', () => {
     depth: 2,
     name: '',
     path: '',
-    type: 0,
     selected: false,
+    type: 0,
   }
   expect(IsTopLevel.isTopLevel(dirent)).toBe(false)
 })

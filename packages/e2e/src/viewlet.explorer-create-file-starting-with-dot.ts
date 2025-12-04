@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-create-file-starting-with-dot'
 
 export const skip = 1
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')

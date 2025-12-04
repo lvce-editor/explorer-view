@@ -22,13 +22,13 @@ test.skip('acceptRename - basic file rename', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a.txt', type: DirentType.File, path: '/test/a.txt', depth: 0, selected: false },
-      { name: 'c.txt', type: DirentType.File, path: '/test/c.txt', depth: 0, selected: false },
-    ],
     editingIndex: 0,
-    editingValue: 'b.txt',
     editingType: ExplorerEditingType.Rename,
+    editingValue: 'b.txt',
+    items: [
+      { depth: 0, name: 'a.txt', path: '/test/a.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'c.txt', path: '/test/c.txt', selected: false, type: DirentType.File },
+    ],
     pathSeparator: PathSeparatorType.Slash,
   }
 
@@ -63,13 +63,13 @@ test.skip('acceptRename - folder rename', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'folder1', type: DirentType.Directory, path: '/test/folder1', depth: 0, selected: false },
-      { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false },
-    ],
     editingIndex: 0,
-    editingValue: 'folder2',
     editingType: ExplorerEditingType.Rename,
+    editingValue: 'folder2',
+    items: [
+      { depth: 0, name: 'folder1', path: '/test/folder1', selected: false, type: DirentType.Directory },
+      { depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File },
+    ],
     pathSeparator: PathSeparatorType.Slash,
   }
 
@@ -102,14 +102,14 @@ test.skip('acceptRename - nested file rename', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false },
-      { name: 'a.txt', type: DirentType.File, path: '/test/folder/a.txt', depth: 1, selected: false },
-      { name: 'c.txt', type: DirentType.File, path: '/test/folder/c.txt', depth: 1, selected: false },
-    ],
     editingIndex: 1,
-    editingValue: 'b.txt',
     editingType: ExplorerEditingType.Rename,
+    editingValue: 'b.txt',
+    items: [
+      { depth: 0, name: 'folder', path: '/test/folder', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'a.txt', path: '/test/folder/a.txt', selected: false, type: DirentType.File },
+      { depth: 1, name: 'c.txt', path: '/test/folder/c.txt', selected: false, type: DirentType.File },
+    ],
     pathSeparator: PathSeparatorType.Slash,
   }
 
@@ -140,13 +140,13 @@ test.skip('acceptRename - preserves nested items', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'folder1', type: DirentType.Directory, path: '/test/folder1', depth: 0, selected: false },
-      { name: 'nested.txt', type: DirentType.File, path: '/test/folder1/nested.txt', depth: 1, selected: false },
-    ],
     editingIndex: 0,
-    editingValue: 'folder2',
     editingType: ExplorerEditingType.Rename,
+    editingValue: 'folder2',
+    items: [
+      { depth: 0, name: 'folder1', path: '/test/folder1', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'nested.txt', path: '/test/folder1/nested.txt', selected: false, type: DirentType.File },
+    ],
     pathSeparator: PathSeparatorType.Slash,
   }
 
@@ -174,10 +174,10 @@ test.skip('acceptRename - handles rename error', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'a.txt', type: DirentType.File, path: '/test/a.txt', depth: 0, selected: false }],
     editingIndex: 0,
-    editingValue: 'b.txt',
     editingType: ExplorerEditingType.Rename,
+    editingValue: 'b.txt',
+    items: [{ depth: 0, name: 'a.txt', path: '/test/a.txt', selected: false, type: DirentType.File }],
     pathSeparator: PathSeparatorType.Slash,
   }
 
@@ -202,14 +202,14 @@ test.skip('acceptRename - maintains sorting order', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a.txt', type: DirentType.File, path: '/test/a.txt', depth: 0, selected: false },
-      { name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false },
-      { name: 'z.txt', type: DirentType.File, path: '/test/z.txt', depth: 0, selected: false },
-    ],
     editingIndex: 0,
-    editingValue: 'b.txt',
     editingType: ExplorerEditingType.Rename,
+    editingValue: 'b.txt',
+    items: [
+      { depth: 0, name: 'a.txt', path: '/test/a.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'folder', path: '/test/folder', selected: false, type: DirentType.Directory },
+      { depth: 0, name: 'z.txt', path: '/test/z.txt', selected: false, type: DirentType.File },
+    ],
     pathSeparator: PathSeparatorType.Slash,
   }
 

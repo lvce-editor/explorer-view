@@ -6,8 +6,8 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 test('cancelTypeAhead - clears focusWord only', () => {
   const initialState: ExplorerState = {
     ...createDefaultState(),
-    focusWord: 'abc',
     focusedIndex: 2,
+    focusWord: 'abc',
   }
 
   const result = cancelTypeAhead(initialState)

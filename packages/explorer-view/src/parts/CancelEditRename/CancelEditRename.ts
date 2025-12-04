@@ -10,15 +10,15 @@ export const cancelEditRename = (state: ExplorerState, keepFocus: boolean): Expl
   const newFocusedIndex = getFocusedIndexCancel(items, editingIndex)
   return {
     ...state,
-    items: newItems,
-    focusedIndex: newFocusedIndex,
-    focused: keepFocus,
-    editingIndex: -1,
-    editingValue: '',
-    editingType: ExplorerEditingType.None,
     editingErrorMessage: '',
-    focus: FocusId.List,
-    editingSelectionStart: 0,
+    editingIndex: -1,
     editingSelectionEnd: 0,
+    editingSelectionStart: 0,
+    editingType: ExplorerEditingType.None,
+    editingValue: '',
+    focus: FocusId.List,
+    focused: keepFocus,
+    focusedIndex: newFocusedIndex,
+    items: newItems,
   }
 }

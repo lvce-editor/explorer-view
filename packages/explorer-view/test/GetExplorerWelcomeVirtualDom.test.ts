@@ -28,8 +28,8 @@ test('getExplorerWelcomeVirtualDom - wide', () => {
     {
       childCount: 1,
       className: 'Button ButtonPrimary ButtonWide',
-      onClick: DomEventListenerFunctions.HandleClickOpenFolder,
       name: 'OpenFolder',
+      onClick: DomEventListenerFunctions.HandleClickOpenFolder,
       type: 1,
     },
     {
@@ -66,8 +66,8 @@ test('getExplorerWelcomeVirtualDom - narrow', () => {
     {
       childCount: 1,
       className: 'Button ButtonPrimary ButtonNarrow',
-      onClick: DomEventListenerFunctions.HandleClickOpenFolder,
       name: 'OpenFolder',
+      onClick: DomEventListenerFunctions.HandleClickOpenFolder,
       type: 1,
     },
     {

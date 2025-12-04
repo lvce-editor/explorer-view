@@ -14,7 +14,7 @@ export const handleClickDirectoryExpanding = async (
   dirent.icon = ''
   return {
     ...state,
-    focusedIndex: index,
     focused: keepFocus,
+    focusedIndex: index,
   }
 }

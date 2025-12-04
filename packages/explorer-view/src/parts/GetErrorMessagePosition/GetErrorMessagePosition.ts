@@ -18,8 +18,8 @@ export const getErrorMessagePosition = (
   const left = depth * indent + fileIconWidth + padding
   const errorMessageWidth = width - left
   return {
-    top,
-    left,
     errorMessageWidth,
+    left,
+    top,
   }
 }

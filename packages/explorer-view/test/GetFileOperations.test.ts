@@ -13,7 +13,7 @@ test('getFileOperations - single file', () => {
   const uploadTree = {
     'file.txt': 'content',
   }
-  expect(getFileOperations(root, uploadTree)).toEqual([{ type: FileOperationType.CreateFile, path: '/test/file.txt', text: 'content' }])
+  expect(getFileOperations(root, uploadTree)).toEqual([{ path: '/test/file.txt', text: 'content', type: FileOperationType.CreateFile }])
 })
 
 test('getFileOperations - single folder', () => {
@@ -21,25 +21,25 @@ test('getFileOperations - single folder', () => {
   const uploadTree = {
     folder: {},
   }
-  expect(getFileOperations(root, uploadTree)).toEqual([{ type: FileOperationType.CreateFolder, path: '/test/folder' }])
+  expect(getFileOperations(root, uploadTree)).toEqual([{ path: '/test/folder', type: FileOperationType.CreateFolder }])
 })
 
 test('getFileOperations - nested structure', () => {
   const root = '/test'
   const uploadTree = {
+    'file3.txt': 'content3',
     folder1: {
       'file1.txt': 'content1',
       subfolder: {
         'file2.txt': 'content2',
       },
     },
-    'file3.txt': 'content3',
   }
   expect(getFileOperations(root, uploadTree)).toEqual([
-    { type: FileOperationType.CreateFolder, path: '/test/folder1' },
-    { type: FileOperationType.CreateFile, path: '/test/folder1/file1.txt', text: 'content1' },
-    { type: FileOperationType.CreateFolder, path: '/test/folder1/subfolder' },
-    { type: FileOperationType.CreateFile, path: '/test/folder1/subfolder/file2.txt', text: 'content2' },
-    { type: FileOperationType.CreateFile, path: '/test/file3.txt', text: 'content3' },
+    { path: '/test/folder1', type: FileOperationType.CreateFolder },
+    { path: '/test/folder1/file1.txt', text: 'content1', type: FileOperationType.CreateFile },
+    { path: '/test/folder1/subfolder', type: FileOperationType.CreateFolder },
+    { path: '/test/folder1/subfolder/file2.txt', text: 'content2', type: FileOperationType.CreateFile },
+    { path: '/test/file3.txt', text: 'content3', type: FileOperationType.CreateFile },
   ])
 })

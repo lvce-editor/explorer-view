@@ -4,11 +4,11 @@ import * as DirentType from '../DirentType/DirentType.ts'
 
 const priorityMapFoldersFirst: Record<number, number> = {
   [DirentType.Directory]: 1,
-  [DirentType.SymLinkFolder]: 1,
   [DirentType.File]: 0,
-  [DirentType.SymLinkFile]: 0,
-  [DirentType.Unknown]: 0,
   [DirentType.Socket]: 0,
+  [DirentType.SymLinkFile]: 0,
+  [DirentType.SymLinkFolder]: 1,
+  [DirentType.Unknown]: 0,
 }
 
 const compareDirentType = (direntA: RawDirent, direntB: RawDirent): number => {

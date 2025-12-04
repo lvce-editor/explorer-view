@@ -72,10 +72,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleDragLeave'],
     },
     {
-      name: DomEventListenersFunctions.HandleDragStart,
-      params: ['handleDragStart'],
       // @ts-ignore
       dragEffect: 'copyMove',
+      name: DomEventListenersFunctions.HandleDragStart,
+      params: ['handleDragStart'],
     },
   ]
 }

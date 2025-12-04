@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-context-menu-delete-file-with-focus'
 
 export const skip = 1
 
-export const test: Test = async ({ ContextMenu, FileSystem, Workspace, Explorer, Locator, expect }) => {
+export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')

@@ -24,9 +24,9 @@ const getSavedWorkspacePath = (savedState: unknown): string => {
 export const restoreState = (savedState: unknown): RestoredState => {
   if (!savedState) {
     return {
-      root: '',
-      minLineY: 0,
       deltaY: 0,
+      minLineY: 0,
+      root: '',
     }
   }
 
@@ -34,8 +34,8 @@ export const restoreState = (savedState: unknown): RestoredState => {
   const minLineY = getSavedMinLineY(savedState)
   const deltaY = getSavedDeltaY(savedState)
   return {
-    root,
-    minLineY,
     deltaY,
+    minLineY,
+    root,
   }
 }

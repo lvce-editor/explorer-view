@@ -10,10 +10,10 @@ test('getSettings - useChevrons true', async () => {
   })
   const settings = await getSettings()
   expect(settings).toEqual({
-    useChevrons: true,
     confirmDelete: false,
     confirmPaste: false,
     sourceControlDecorations: true,
+    useChevrons: true,
   })
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
@@ -40,10 +40,10 @@ test('getSettings - useChevrons false', async () => {
   })
   const settings = await getSettings()
   expect(settings).toEqual({
-    useChevrons: false,
     confirmDelete: false,
     confirmPaste: false,
     sourceControlDecorations: false,
+    useChevrons: false,
   })
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
@@ -61,10 +61,10 @@ test('getSettings - useChevrons undefined', async () => {
   })
   const settings = await getSettings()
   expect(settings).toEqual({
-    useChevrons: true,
     confirmDelete: false,
     confirmPaste: false,
     sourceControlDecorations: true,
+    useChevrons: true,
   })
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],

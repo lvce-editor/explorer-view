@@ -4,17 +4,17 @@ import { getIndex } from '../src/parts/GetIndex/GetIndex.ts'
 
 test('getIndex - finds item', () => {
   const items: readonly ExplorerItem[] = [
-    { path: '/a', name: 'a', type: 1, depth: 0, selected: false },
-    { path: '/b', name: 'b', type: 2, depth: 0, selected: true },
-    { path: '/c', name: 'c', type: 1, depth: 0, selected: false },
+    { depth: 0, name: 'a', path: '/a', selected: false, type: 1 },
+    { depth: 0, name: 'b', path: '/b', selected: true, type: 2 },
+    { depth: 0, name: 'c', path: '/c', selected: false, type: 1 },
   ]
   expect(getIndex(items, '/b')).toBe(1)
 })
 
 test('getIndex - item not found', () => {
   const items: readonly ExplorerItem[] = [
-    { path: '/a', name: 'a', type: 1, depth: 0, selected: false },
-    { path: '/b', name: 'b', type: 2, depth: 0, selected: false },
+    { depth: 0, name: 'a', path: '/a', selected: false, type: 1 },
+    { depth: 0, name: 'b', path: '/b', selected: false, type: 2 },
   ]
   expect(getIndex(items, '/not-found')).toBe(-1)
 })

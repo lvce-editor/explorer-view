@@ -15,7 +15,7 @@ test('pasteShouldMove should be true after cut operation', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
   }
 
   const result = await handleCut(state)
@@ -32,7 +32,7 @@ test('pasteShouldMove should be false after copy operation', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
   }
 
   const result = await handleCopy(state)
@@ -45,26 +45,26 @@ test('pasteShouldMove should be reset to false after paste operation', async () 
   RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
-        type: 'copy',
         files: ['/source/file.txt'],
+        type: 'copy',
       }
     },
-    'FileSystem.rename'() {},
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
-    'Preferences.get'() {
-      return false
-    },
+    'FileSystem.rename'() {},
     'IconTheme.getIcons'() {
       return ['']
+    },
+    'Preferences.get'() {
+      return false
     },
   })
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    pasteShouldMove: true, // Simulate state after cut operation
     focusedIndex: -1, // No item focused, use root as target
+    pasteShouldMove: true, // Simulate state after cut operation
   }
 
   const result = await handlePaste(state)

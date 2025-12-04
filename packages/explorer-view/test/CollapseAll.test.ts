@@ -20,10 +20,10 @@ test('collapseAll - with nested items', async () => {
       '/folder2/file2.txt': 'icon',
     },
     items: [
-      { name: 'folder1', type: DirentType.Directory, path: '/folder1', depth: 1, selected: false },
-      { name: 'file1.txt', type: DirentType.File, path: '/folder1/file1.txt', depth: 2, selected: false },
-      { name: 'folder2', type: DirentType.Directory, path: '/folder2', depth: 1, selected: false },
-      { name: 'file2.txt', type: DirentType.File, path: '/folder2/file2.txt', depth: 2, selected: false },
+      { depth: 1, name: 'folder1', path: '/folder1', selected: false, type: DirentType.Directory },
+      { depth: 2, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: DirentType.File },
+      { depth: 1, name: 'folder2', path: '/folder2', selected: false, type: DirentType.Directory },
+      { depth: 2, name: 'file2.txt', path: '/folder2/file2.txt', selected: false, type: DirentType.File },
     ],
   }
 
@@ -31,8 +31,8 @@ test('collapseAll - with nested items', async () => {
   expect(result).toEqual({
     ...state,
     items: [
-      { name: 'folder1', type: DirentType.Directory, path: '/folder1', depth: 1, selected: false },
-      { name: 'folder2', type: DirentType.Directory, path: '/folder2', depth: 1, selected: false },
+      { depth: 1, name: 'folder1', path: '/folder1', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'folder2', path: '/folder2', selected: false, type: DirentType.Directory },
     ],
   })
 })

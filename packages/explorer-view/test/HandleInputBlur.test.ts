@@ -16,7 +16,7 @@ test('should cancel edit if editing value is empty', async () => {
 })
 
 test('should accept edit if no error and value present', async () => {
-  const state: ExplorerState = { ...createDefaultState(), editingErrorMessage: '', editingValue: 'foo', editingType: 0 }
+  const state: ExplorerState = { ...createDefaultState(), editingErrorMessage: '', editingType: 0, editingValue: 'foo' }
   const result = await handleInputBlur(state)
   expect(result.editingValue).toBe('foo')
 })

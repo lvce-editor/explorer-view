@@ -11,8 +11,8 @@ const getFileOperationsNestedPath = (path: string, root: string, pathSeparator: 
     if (!part) continue
     currentPath = Path.join2(currentPath, part)
     operations.push({
-      type: FileOperationType.CreateFolder,
       path: Path.join2(root, currentPath),
+      type: FileOperationType.CreateFolder,
     })
   }
   return operations
@@ -32,14 +32,14 @@ export const getFileOperationsCreate = (
 
   if (newDirentType === DirentType.File) {
     operations.push({
-      type: FileOperationType.CreateFile,
       path: absolutePath,
       text: '',
+      type: FileOperationType.CreateFile,
     })
   } else if (newDirentType === DirentType.Directory) {
     operations.push({
-      type: FileOperationType.CreateFolder,
       path: absolutePath,
+      type: FileOperationType.CreateFolder,
     })
   }
 

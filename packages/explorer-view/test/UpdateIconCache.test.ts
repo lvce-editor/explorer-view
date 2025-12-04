@@ -15,7 +15,7 @@ test('updateIconCache - new icons', () => {
   const cache: FileIconCache = {
     '/test/file1.txt': 'icon1',
   }
-  const requests: readonly IconRequest[] = [{ type: DirentType.File, name: 'file2.txt', path: '/test/file2.txt' }]
+  const requests: readonly IconRequest[] = [{ name: 'file2.txt', path: '/test/file2.txt', type: DirentType.File }]
   const newIcons: readonly string[] = ['icon2']
   expect(UpdateIconCache.updateIconCache(cache, requests, newIcons)).toEqual({
     '/test/file1.txt': 'icon1',
@@ -25,7 +25,7 @@ test('updateIconCache - new icons', () => {
 
 test('updateIconCache - immutability', () => {
   const cache: FileIconCache = { existing: 'icon' }
-  const requests: readonly IconRequest[] = [{ type: DirentType.File, name: 'file.txt', path: '/test/file.txt' }]
+  const requests: readonly IconRequest[] = [{ name: 'file.txt', path: '/test/file.txt', type: DirentType.File }]
   const newIcons: readonly string[] = ['new-icon']
   const result = UpdateIconCache.updateIconCache(cache, requests, newIcons)
   expect(result).not.toBe(cache)

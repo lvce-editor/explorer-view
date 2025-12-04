@@ -20,14 +20,14 @@ test('getNewDirentsAccept - create file in root', async () => {
   const result = getNewDirentsAccept(items, focusedIndex, editingValue, root, pathSeparator, newDirentType)
   expect(result.dirents).toHaveLength(1)
   expect(result.dirents[0]).toEqual({
+    depth: 1,
+    icon: '',
+    name: 'test.txt',
     path: '/root/test.txt',
     posInSet: 1,
-    setSize: 1,
-    depth: 1,
-    name: 'test.txt',
-    type: DirentType.File,
-    icon: '',
     selected: false,
+    setSize: 1,
+    type: DirentType.File,
   })
   expect(result.newFocusedIndex).toBe(0)
   expect(mockRpc.invocations).toEqual([])
@@ -48,14 +48,14 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
   const pathSeparator = '/'
   const items = [
     {
+      depth: 1,
+      icon: '',
+      name: 'folder',
       path: '/root/folder',
       posInSet: 1,
-      setSize: 1,
-      depth: 1,
-      name: 'folder',
-      type: 2,
-      icon: '',
       selected: false,
+      setSize: 1,
+      type: 2,
     },
   ]
 
@@ -63,14 +63,14 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
 
   expect(result.dirents).toHaveLength(2)
   expect(result.dirents[1]).toEqual({
+    depth: 2,
+    icon: '',
+    name: 'test.txt',
     path: '/root/folder/test.txt',
     posInSet: 1,
-    setSize: 1,
-    depth: 2,
-    name: 'test.txt',
-    type: DirentType.File,
-    icon: '',
     selected: false,
+    setSize: 1,
+    type: DirentType.File,
   })
   expect(result.newFocusedIndex).toBe(1)
   expect(mockRpc.invocations).toEqual([])
@@ -78,10 +78,10 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
 
 test('getNewDirentsAccept - create nested file', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.writeFile'() {
+    'FileSystem.mkdir'() {
       return
     },
-    'FileSystem.mkdir'() {
+    'FileSystem.writeFile'() {
       return
     },
   })
@@ -95,14 +95,14 @@ test('getNewDirentsAccept - create nested file', async () => {
   const result = getNewDirentsAccept(items, focusedIndex, editingValue, root, pathSeparator, newDirentType)
   expect(result.dirents).toHaveLength(1)
   expect(result.dirents[0]).toEqual({
+    depth: 1,
+    icon: '',
+    name: 'a/b/c/test.txt',
     path: '/root/a/b/c/test.txt',
     posInSet: 1,
-    setSize: 1,
-    depth: 1,
-    name: 'a/b/c/test.txt',
-    type: DirentType.File,
-    icon: '',
     selected: false,
+    setSize: 1,
+    type: DirentType.File,
   })
   expect(result.newFocusedIndex).toBe(0)
   expect(mockRpc.invocations).toEqual([])

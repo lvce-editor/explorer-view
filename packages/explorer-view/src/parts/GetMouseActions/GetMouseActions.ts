@@ -5,28 +5,28 @@ import * as MouseEventType from '../MouseEventType/MouseEventType.ts'
 export const getMouseActions = (): readonly MouseAction[] => {
   return [
     {
-      description: 'Open file on click',
       button: MouseEventType.LeftClick,
-      modifiers: {},
       command: 'Explorer.openFile',
+      description: 'Open file on click',
+      modifiers: {},
       when: WhenExpression.FocusExplorer,
     },
     {
-      description: 'Toggle selection with Ctrl+Click',
       button: MouseEventType.LeftClick,
+      command: 'Explorer.toggleSelection',
+      description: 'Toggle selection with Ctrl+Click',
       modifiers: {
         ctrl: true,
       },
-      command: 'Explorer.toggleSelection',
       when: WhenExpression.FocusExplorer,
     },
     {
-      description: 'Select range with Shift+Click',
       button: MouseEventType.LeftClick,
+      command: 'Explorer.rangeSelection',
+      description: 'Select range with Shift+Click',
       modifiers: {
         shift: true,
       },
-      command: 'Explorer.rangeSelection',
       when: WhenExpression.FocusExplorer,
     },
   ]

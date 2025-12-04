@@ -51,6 +51,13 @@ export default [
           order: 'asc',
         },
       ],
+      'perfectionist/sort-objects': [
+        'error',
+        {
+          type: 'alphabetical',
+          order: 'asc',
+        },
+      ],
     },
   },
   {

@@ -3,21 +3,21 @@ import { Directory, DirectoryExpanded, DirectoryExpanding, File } from '../src/p
 import { isExpanded } from '../src/parts/IsExpanded/IsExpanded.ts'
 
 test('isExpanded - DirectoryExpanded', () => {
-  const item = { type: DirectoryExpanded, name: 'test', path: '/test', depth: 0, selected: false }
+  const item = { depth: 0, name: 'test', path: '/test', selected: false, type: DirectoryExpanded }
   expect(isExpanded(item)).toBe(true)
 })
 
 test('isExpanded - DirectoryExpanding', () => {
-  const item = { type: DirectoryExpanding, name: 'test', path: '/test', depth: 0, selected: false }
+  const item = { depth: 0, name: 'test', path: '/test', selected: false, type: DirectoryExpanding }
   expect(isExpanded(item)).toBe(true)
 })
 
 test('isExpanded - Directory', () => {
-  const item = { type: Directory, name: 'test', path: '/test', depth: 0, selected: false }
+  const item = { depth: 0, name: 'test', path: '/test', selected: false, type: Directory }
   expect(isExpanded(item)).toBe(false)
 })
 
 test('isExpanded - File', () => {
-  const item = { type: File, name: 'test', path: '/test', depth: 0, selected: false }
+  const item = { depth: 0, name: 'test', path: '/test', selected: false, type: File }
   expect(isExpanded(item)).toBe(false)
 })

@@ -14,9 +14,9 @@ const getMissingDirents = (dirents: readonly ExplorerItem[], fileIconCache: File
 
 const toIconRequest = (dirent: ExplorerItem): IconRequest => {
   return {
-    type: dirent.type,
     name: dirent.name,
     path: dirent.path,
+    type: dirent.type,
   }
 }
 

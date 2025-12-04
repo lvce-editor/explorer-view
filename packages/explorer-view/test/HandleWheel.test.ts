@@ -16,15 +16,15 @@ test('handleWheel calls SetDeltaY with correct delta', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     deltaY: 10,
-    items: [
-      { name: 'test1', type: 1, path: '/test1', depth: 0, selected: false },
-      { name: 'test2', type: 1, path: '/test2', depth: 0, selected: false },
-      { name: 'test3', type: 1, path: '/test3', depth: 0, selected: false },
-      { name: 'test4', type: 1, path: '/test4', depth: 0, selected: false },
-      { name: 'test5', type: 1, path: '/test5', depth: 0, selected: false },
-    ],
     height: 50,
     itemHeight: 20,
+    items: [
+      { depth: 0, name: 'test1', path: '/test1', selected: false, type: 1 },
+      { depth: 0, name: 'test2', path: '/test2', selected: false, type: 1 },
+      { depth: 0, name: 'test3', path: '/test3', selected: false, type: 1 },
+      { depth: 0, name: 'test4', path: '/test4', selected: false, type: 1 },
+      { depth: 0, name: 'test5', path: '/test5', selected: false, type: 1 },
+    ],
   }
   const result = await handleWheel(state, 0, 5)
   expect(result.deltaY).toBe(15)
@@ -43,15 +43,15 @@ test('handleWheel with negative delta', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     deltaY: 10,
-    items: [
-      { name: 'test1', type: 1, path: '/test1', depth: 0, selected: false },
-      { name: 'test2', type: 1, path: '/test2', depth: 0, selected: false },
-      { name: 'test3', type: 1, path: '/test3', depth: 0, selected: false },
-      { name: 'test4', type: 1, path: '/test4', depth: 0, selected: false },
-      { name: 'test5', type: 1, path: '/test5', depth: 0, selected: false },
-    ],
     height: 50,
     itemHeight: 20,
+    items: [
+      { depth: 0, name: 'test1', path: '/test1', selected: false, type: 1 },
+      { depth: 0, name: 'test2', path: '/test2', selected: false, type: 1 },
+      { depth: 0, name: 'test3', path: '/test3', selected: false, type: 1 },
+      { depth: 0, name: 'test4', path: '/test4', selected: false, type: 1 },
+      { depth: 0, name: 'test5', path: '/test5', selected: false, type: 1 },
+    ],
   }
   const result = await handleWheel(state, 0, -3)
   expect(result.deltaY).toBe(7)

@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-sort-numeric-file-names'
 
 export const skip = 1
 
-export const test: Test = async ({ FileSystem, Workspace, Locator, expect }) => {
+export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/file-1.txt`)

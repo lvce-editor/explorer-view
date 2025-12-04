@@ -7,26 +7,26 @@ import { newFolder } from '../src/parts/NewFolder/NewFolder.ts'
 
 test('newFolder', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return '/new/path'
+    'FileSystem.getPathSeparator'() {
+      return '/'
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
+    'Focus.setFocus'() {
+      return undefined
     },
     'IconTheme.getFolderIcon'() {
       return ''
     },
+    'IconTheme.getIcons'() {
+      return ['']
+    },
     'Preferences.get'() {
       return false
     },
-    'Focus.setFocus'() {
-      return undefined
-    },
-    'IconTheme.getIcons'() {
-      return ['']
+    'Workspace.getPath'() {
+      return '/new/path'
     },
   })
   const mockState: ExplorerState = {

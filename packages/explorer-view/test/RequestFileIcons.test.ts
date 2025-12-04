@@ -12,7 +12,7 @@ test('requestFileIcons - empty requests', async () => {
 })
 
 test('requestFileIcons - file icons', async () => {
-  const requests = [{ type: DirentType.File, name: 'file.txt', path: '/test/file.txt' }]
+  const requests = [{ name: 'file.txt', path: '/test/file.txt', type: DirentType.File }]
 
   const mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
@@ -26,7 +26,7 @@ test('requestFileIcons - file icons', async () => {
 })
 
 test('requestFileIcons - folder icons', async () => {
-  const requests = [{ type: DirentType.Directory, name: 'folder', path: '/test/folder' }]
+  const requests = [{ name: 'folder', path: '/test/folder', type: DirentType.Directory }]
 
   const mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
@@ -41,8 +41,8 @@ test('requestFileIcons - folder icons', async () => {
 
 test('requestFileIcons - mixed requests', async () => {
   const requests = [
-    { type: DirentType.File, name: 'file.txt', path: '/test/file.txt' },
-    { type: DirentType.Directory, name: 'folder', path: '/test/folder' },
+    { name: 'file.txt', path: '/test/file.txt', type: DirentType.File },
+    { name: 'folder', path: '/test/folder', type: DirentType.Directory },
   ]
 
   const mockRpc = IconThemeWorker.registerMockRpc({

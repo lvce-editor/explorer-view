@@ -4,11 +4,11 @@ import { copyFilesElectron } from '../src/parts/CopyFilesElectron/CopyFilesElect
 
 test('copyFilesElectron', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.copy'() {
       return undefined
+    },
+    'FileSystem.getPathSeparator'() {
+      return '/'
     },
   })
 

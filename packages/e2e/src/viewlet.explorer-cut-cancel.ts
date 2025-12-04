@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-cut-cancel'
 
-export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, expect, Locator, ClipBoard }) => {
+export const test: Test = async ({ ClipBoard, Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()

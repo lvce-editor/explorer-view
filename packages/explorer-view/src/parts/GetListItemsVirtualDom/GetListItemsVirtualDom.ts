@@ -31,13 +31,10 @@ export const getListItemsVirtualDom = (
 ): readonly VirtualDomNode[] => {
   const dom: readonly VirtualDomNode[] = [
     {
-      type: VirtualDomElements.Div,
-      className: getClassName(focused, focusedIndex, dropTargets),
-      tabIndex: 0,
-      role: AriaRoles.Tree,
+      ariaActiveDescendant: getActiveDescendant(focusedIndex),
       ariaLabel: ExplorerStrings.filesExplorer(),
       childCount: visibleItems.length,
-      ariaActiveDescendant: getActiveDescendant(focusedIndex),
+      className: getClassName(focused, focusedIndex, dropTargets),
       onBlur: DomEventListenerFunctions.HandleListBlur,
       onClick: DomEventListenerFunctions.HandleClick,
       onContextMenu: DomEventListenerFunctions.HandleContextMenu,
@@ -48,6 +45,9 @@ export const getListItemsVirtualDom = (
       onFocus: DomEventListenerFunctions.HandleListFocus,
       onPointerDown: DomEventListenerFunctions.HandlePointerDown,
       onWheel: DomEventListenerFunctions.HandleWheel,
+      role: AriaRoles.Tree,
+      tabIndex: 0,
+      type: VirtualDomElements.Div,
       // onKeyDown: DomEventListenerFunctions.HandleListKeyDown,
     },
     ...visibleItems.flatMap(GetExplorerItemVirtualDom.getExplorerItemVirtualDom),

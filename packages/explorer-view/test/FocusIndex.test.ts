@@ -7,33 +7,31 @@ import * as ViewletExplorerFocusIndex from '../src/parts/FocusIndex/FocusIndex.t
 test('focusIndex - scroll up', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/home/test-user/test-path',
+    deltaY: 0,
     focusedIndex: 1,
     height: 600,
-    deltaY: 0,
-    minLineY: 1,
-    maxLineY: 2,
     items: [
       {
         depth: 1,
         name: 'index.css',
         path: '/index.css',
-        type: DirentType.File,
         selected: false,
+        type: DirentType.File,
       },
       {
         depth: 1,
         name: 'index.html',
         path: '/index.html',
-        type: DirentType.File,
         selected: true,
+        type: DirentType.File,
       },
     ],
+    maxLineY: 2,
+    minLineY: 1,
+    root: '/home/test-user/test-path',
   }
   expect(ViewletExplorerFocusIndex.focusIndex(state, 0)).toMatchObject({
     focusedIndex: 0,
-    minLineY: 0,
-    maxLineY: 1,
     items: [
       {
         selected: false,
@@ -42,37 +40,37 @@ test('focusIndex - scroll up', () => {
         selected: false,
       },
     ],
+    maxLineY: 1,
+    minLineY: 0,
   })
 })
 
 test('focusIndex - scroll down', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/home/test-user/test-path',
     focusedIndex: 0,
-    minLineY: 0,
-    maxLineY: 1,
     items: [
       {
         depth: 1,
         name: 'index.css',
         path: '/index.css',
-        type: DirentType.File,
         selected: true,
+        type: DirentType.File,
       },
       {
         depth: 1,
         name: 'index.html',
         path: '/index.html',
-        type: DirentType.File,
         selected: false,
+        type: DirentType.File,
       },
     ],
+    maxLineY: 1,
+    minLineY: 0,
+    root: '/home/test-user/test-path',
   }
   expect(ViewletExplorerFocusIndex.focusIndex(state, 1)).toMatchObject({
     focusedIndex: 1,
-    minLineY: 1,
-    maxLineY: 2,
     items: [
       {
         selected: false,
@@ -81,6 +79,8 @@ test('focusIndex - scroll down', () => {
         selected: false,
       },
     ],
+    maxLineY: 2,
+    minLineY: 1,
   })
 })
 
@@ -88,29 +88,27 @@ test('focusIndex - focus container', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    minLineY: 0,
-    maxLineY: 1,
     items: [
       {
         depth: 1,
         name: 'index.css',
         path: '/index.css',
-        type: DirentType.File,
         selected: true,
+        type: DirentType.File,
       },
       {
         depth: 1,
         name: 'index.html',
         path: '/index.html',
-        type: DirentType.File,
         selected: false,
+        type: DirentType.File,
       },
     ],
+    maxLineY: 1,
+    minLineY: 0,
   }
   expect(ViewletExplorerFocusIndex.focusIndex(state, -1)).toMatchObject({
     focusedIndex: -1,
-    minLineY: 0,
-    maxLineY: 1,
     items: [
       {
         selected: false,
@@ -119,6 +117,8 @@ test('focusIndex - focus container', () => {
         selected: false,
       },
     ],
+    maxLineY: 1,
+    minLineY: 0,
   })
 })
 
@@ -126,31 +126,31 @@ test('focusIndex - unselects all other items', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    minLineY: 0,
-    maxLineY: 3,
     items: [
       {
         depth: 1,
         name: 'index.css',
         path: '/index.css',
-        type: DirentType.File,
         selected: true,
+        type: DirentType.File,
       },
       {
         depth: 1,
         name: 'index.html',
         path: '/index.html',
-        type: DirentType.File,
         selected: true,
+        type: DirentType.File,
       },
       {
         depth: 1,
         name: 'index.js',
         path: '/index.js',
-        type: DirentType.File,
         selected: true,
+        type: DirentType.File,
       },
     ],
+    maxLineY: 3,
+    minLineY: 0,
   }
   expect(ViewletExplorerFocusIndex.focusIndex(state, 1)).toMatchObject({
     focusedIndex: 1,

@@ -14,9 +14,9 @@ export const getFileOperationsElectron = async (
     const { name } = fileHandle
     const path = paths[i]
     operations.push({
-      type: FileOperationType.Copy,
-      path: join(pathSeparator, root, name),
       from: path,
+      path: join(pathSeparator, root, name),
+      type: FileOperationType.Copy,
     })
   }
   return operations

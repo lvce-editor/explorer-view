@@ -6,8 +6,8 @@ import { isEqual } from '../src/parts/DiffSelection/DiffSelection.ts'
 test('isEqual - same selection', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    editingSelectionStart: 0,
     editingSelectionEnd: 5,
+    editingSelectionStart: 0,
   }
   const result = isEqual(state, state)
   expect(result).toBe(true)
@@ -16,13 +16,13 @@ test('isEqual - same selection', () => {
 test('isEqual - different selection', () => {
   const oldState: ExplorerState = {
     ...createDefaultState(),
-    editingSelectionStart: 0,
     editingSelectionEnd: 5,
+    editingSelectionStart: 0,
   }
   const newState: ExplorerState = {
     ...createDefaultState(),
-    editingSelectionStart: 1,
     editingSelectionEnd: 6,
+    editingSelectionStart: 1,
   }
   const result = isEqual(oldState, newState)
   expect(result).toBe(false)

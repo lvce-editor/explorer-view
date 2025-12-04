@@ -19,7 +19,7 @@ test('should create folder', async () => {
     'FileSystem.mkdir'() {},
     'FileSystem.writeFile'() {},
   })
-  const operations: readonly FileOperation[] = [{ type: FileOperationType.CreateFolder, path: '/test/folder' }]
+  const operations: readonly FileOperation[] = [{ path: '/test/folder', type: FileOperationType.CreateFolder }]
   await applyFileOperations(operations)
   expect(mockRpc.invocations).toEqual([['FileSystem.mkdir', '/test/folder']])
 })
@@ -29,7 +29,7 @@ test('should create file', async () => {
     'FileSystem.mkdir'() {},
     'FileSystem.writeFile'() {},
   })
-  const operations: readonly FileOperation[] = [{ type: FileOperationType.CreateFile, path: '/test/file.txt', text: 'content' }]
+  const operations: readonly FileOperation[] = [{ path: '/test/file.txt', text: 'content', type: FileOperationType.CreateFile }]
   await applyFileOperations(operations)
   expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', '/test/file.txt', 'content']])
 })
@@ -40,8 +40,8 @@ test('should apply multiple operations in sequence', async () => {
     'FileSystem.writeFile'() {},
   })
   const operations: readonly FileOperation[] = [
-    { type: FileOperationType.CreateFolder, path: '/test/folder' },
-    { type: FileOperationType.CreateFile, path: '/test/folder/file.txt', text: 'content' },
+    { path: '/test/folder', type: FileOperationType.CreateFolder },
+    { path: '/test/folder/file.txt', text: 'content', type: FileOperationType.CreateFile },
   ]
   await applyFileOperations(operations)
   expect(mockRpc.invocations).toEqual([

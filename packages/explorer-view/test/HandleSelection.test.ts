@@ -7,9 +7,9 @@ test('handleSelection toggles selection of item at index', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'file1', type: 0, path: '/file1', depth: 0, selected: false },
-      { name: 'file2', type: 0, path: '/file2', depth: 0, selected: false },
-      { name: 'file3', type: 0, path: '/file3', depth: 0, selected: false },
+      { depth: 0, name: 'file1', path: '/file1', selected: false, type: 0 },
+      { depth: 0, name: 'file2', path: '/file2', selected: false, type: 0 },
+      { depth: 0, name: 'file3', path: '/file3', selected: false, type: 0 },
     ],
   }
 

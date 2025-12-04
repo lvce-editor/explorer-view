@@ -12,12 +12,12 @@ export const getDragData = (urls: readonly string[]): readonly DragDataItem[] =>
   const data = urls.map(toUri).join('\n')
   const dragData = [
     {
-      type: 'text/uri-list',
       data,
+      type: 'text/uri-list',
     },
     {
-      type: 'text/plain',
       data,
+      type: 'text/plain',
     },
   ]
   // @ts-ignore

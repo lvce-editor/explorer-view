@@ -20,8 +20,8 @@ test('getFileIcons - all cached', async () => {
   const mockRpc = IconThemeWorker.registerMockRpc({})
 
   const dirents: readonly ExplorerItem[] = [
-    { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
-    { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
+    { depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File },
+    { depth: 0, name: 'b', path: '/b', selected: false, type: DirentType.Directory },
   ]
   const cache: FileIconCache = {
     '/a.txt': 'cached-a',
@@ -37,8 +37,8 @@ test('getFileIcons - all cached', async () => {
 
 test('getFileIcons - none cached', async () => {
   const dirents: readonly ExplorerItem[] = [
-    { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
-    { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
+    { depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File },
+    { depth: 0, name: 'b', path: '/b', selected: false, type: DirentType.Directory },
   ]
 
   const mockRpc = IconThemeWorker.registerMockRpc({
@@ -68,9 +68,9 @@ test('getFileIcons - none cached', async () => {
 
 test('getFileIcons - mixed cache', async () => {
   const dirents: readonly ExplorerItem[] = [
-    { type: DirentType.File, name: 'a.txt', path: '/a.txt', depth: 0, selected: false },
-    { type: DirentType.Directory, name: 'b', path: '/b', depth: 0, selected: false },
-    { type: DirentType.File, name: 'c.txt', path: '/c.txt', depth: 0, selected: false },
+    { depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File },
+    { depth: 0, name: 'b', path: '/b', selected: false, type: DirentType.Directory },
+    { depth: 0, name: 'c.txt', path: '/c.txt', selected: false, type: DirentType.File },
   ]
   const cache: FileIconCache = {
     '/a.txt': 'cached-a',

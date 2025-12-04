@@ -4,11 +4,11 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { selectAll } from '../src/parts/SelectAll/SelectAll.ts'
 
 const createItem = (name: string, selected: boolean): ExplorerItem => ({
-  name,
-  type: 0,
-  path: `/${name}`,
   depth: 0,
+  name,
+  path: `/${name}`,
   selected,
+  type: 0,
 })
 
 test('selectAll', () => {

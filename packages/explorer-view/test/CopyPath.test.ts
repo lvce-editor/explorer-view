@@ -14,8 +14,8 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }],
   }
 
   const result = await copyPath(state)
@@ -33,8 +33,8 @@ test('copyPath - does nothing when no focused dirent', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [],
     focusedIndex: 0,
+    items: [],
   }
 
   const result = await copyPath(state)

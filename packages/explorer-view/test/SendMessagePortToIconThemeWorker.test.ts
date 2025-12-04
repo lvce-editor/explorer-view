@@ -5,10 +5,10 @@ import { sendMessagePortToIconThemeWorker } from '../src/parts/SendMessagePortTo
 test('sendMessagePortToIconThemeWorker calls RendererWorker.sendMessagePortToIconThemeWorker with correct parameters', async () => {
   const { port1 } = new MessageChannel()
   const mockRpc = RendererWorker.registerMockRpc({
-    'SendMessagePortToExtensionHostWorker.sendMessagePortToIconThemeWorker'() {
+    'IconTheme.handleMessagePort'() {
       return undefined
     },
-    'IconTheme.handleMessagePort'() {
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToIconThemeWorker'() {
       return undefined
     },
   })
@@ -25,10 +25,10 @@ test('sendMessagePortToIconThemeWorker handles different port types', async () =
   const { port1: port2a } = new MessageChannel()
 
   const mockRpc = RendererWorker.registerMockRpc({
-    'SendMessagePortToExtensionHostWorker.sendMessagePortToIconThemeWorker'() {
+    'IconTheme.handleMessagePort'() {
       return undefined
     },
-    'IconTheme.handleMessagePort'() {
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToIconThemeWorker'() {
       return undefined
     },
   })
@@ -46,11 +46,11 @@ test('sendMessagePortToIconThemeWorker propagates errors from RendererWorker', a
   const { port1 } = new MessageChannel()
 
   const mockRpc = RendererWorker.registerMockRpc({
-    'SendMessagePortToExtensionHostWorker.sendMessagePortToIconThemeWorker'() {
-      throw new Error('RPC call failed')
-    },
     'IconTheme.handleMessagePort'() {
       return undefined
+    },
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToIconThemeWorker'() {
+      throw new Error('RPC call failed')
     },
   })
 
@@ -64,10 +64,10 @@ test('sendMessagePortToIconThemeWorker returns void when successful', async () =
   const { port1 } = new MessageChannel()
 
   RendererWorker.registerMockRpc({
-    'SendMessagePortToExtensionHostWorker.sendMessagePortToIconThemeWorker'() {
+    'IconTheme.handleMessagePort'() {
       return undefined
     },
-    'IconTheme.handleMessagePort'() {
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToIconThemeWorker'() {
       return undefined
     },
   })

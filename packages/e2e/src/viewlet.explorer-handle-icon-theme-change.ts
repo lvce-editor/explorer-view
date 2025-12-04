@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-icon-theme.change'
 
 export const skip = 1
 
-export const test: Test = async ({ FileSystem, Workspace, Extension, IconTheme, Locator, expect, BaseUrl }) => {
+export const test: Test = async ({ BaseUrl, expect, Extension, FileSystem, IconTheme, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/test.xyz`, 'test')
