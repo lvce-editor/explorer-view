@@ -9,7 +9,7 @@ test('revealItemVisible - updates state with new scroll position and focus', () 
     ...state,
     focused: true,
     focusedIndex: 2,
-    minLineY: 2,
     maxLineY: 2,
+    minLineY: 2,
   })
 })

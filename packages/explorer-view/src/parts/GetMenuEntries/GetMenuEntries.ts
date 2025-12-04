@@ -7,80 +7,80 @@ import * as MenuEntrySeparator from '../MenuEntrySeparator/MenuEntrySeparator.ts
 import * as MenuItemFlags from '../MenuItemFlags/MenuItemFlags.ts'
 
 const menuEntryNewFile: MenuEntry = {
+  command: 'Explorer.newFile',
+  flags: MenuItemFlags.None,
   id: 'newFile',
   label: ViewletExplorerStrings.newFile(),
-  flags: MenuItemFlags.None,
-  command: 'Explorer.newFile',
 }
 
 const menuEntryNewFolder: MenuEntry = {
+  command: 'Explorer.newFolder',
+  flags: MenuItemFlags.None,
   id: 'newFolder',
   label: ViewletExplorerStrings.newFolder(),
-  flags: MenuItemFlags.None,
-  command: 'Explorer.newFolder',
 }
 
 const menuEntryOpenContainingFolder: MenuEntry = {
+  command: 'Explorer.openContainingFolder',
+  flags: MenuItemFlags.RestoreFocus,
   id: 'openContainingFolder',
   label: ViewletExplorerStrings.openContainingFolder(),
-  flags: MenuItemFlags.RestoreFocus,
-  command: 'Explorer.openContainingFolder',
 }
 
 const menuEntryOpenInIntegratedTerminal: MenuEntry = {
+  command: /* TODO */ '-1',
+  flags: MenuItemFlags.None,
   id: 'openInIntegratedTerminal',
   label: ViewletExplorerStrings.openInIntegratedTerminal(),
-  flags: MenuItemFlags.None,
-  command: /* TODO */ '-1',
 }
 
 const menuEntryCut: MenuEntry = {
+  command: 'Explorer.handleCut',
+  flags: MenuItemFlags.RestoreFocus,
   id: 'cut',
   label: ViewletExplorerStrings.cut(),
-  flags: MenuItemFlags.RestoreFocus,
-  command: 'Explorer.handleCut',
 }
 
 const menuEntryCopy: MenuEntry = {
+  command: 'Explorer.handleCopy',
+  flags: MenuItemFlags.RestoreFocus,
   id: 'copy',
   label: ViewletExplorerStrings.copy(),
-  flags: MenuItemFlags.RestoreFocus,
-  command: 'Explorer.handleCopy',
 }
 
 const menuEntryPaste: MenuEntry = {
+  command: 'Explorer.handlePaste',
+  flags: MenuItemFlags.None,
   id: 'paste',
   label: ViewletExplorerStrings.paste(),
-  flags: MenuItemFlags.None,
-  command: 'Explorer.handlePaste',
 }
 
 const menuEntryCopyPath: MenuEntry = {
+  command: 'Explorer.copyPath',
+  flags: MenuItemFlags.RestoreFocus,
   id: 'copyPath',
   label: ViewletExplorerStrings.copyPath(),
-  flags: MenuItemFlags.RestoreFocus,
-  command: 'Explorer.copyPath',
 }
 
 const menuEntryCopyRelativePath: MenuEntry = {
+  command: 'Explorer.copyRelativePath',
+  flags: MenuItemFlags.RestoreFocus,
   id: 'copyRelativePath',
   label: ViewletExplorerStrings.copyRelativePath(),
-  flags: MenuItemFlags.RestoreFocus,
-  command: 'Explorer.copyRelativePath',
 }
 
 const menuEntryRename: MenuEntry = {
+  command: 'Explorer.renameDirent',
+  flags: MenuItemFlags.None,
   id: 'rename',
   label: ViewletExplorerStrings.rename(),
-  flags: MenuItemFlags.None,
-  command: 'Explorer.renameDirent',
 }
 
 const menuEntryDelete: MenuEntry = {
+  command: 'Explorer.removeDirent',
+  flags: MenuItemFlags.None,
   id: 'delete',
   label: ViewletExplorerStrings.deleteItem(),
-  flags: MenuItemFlags.None,
-  command: 'Explorer.removeDirent',
 }
 
 const ALL_ENTRIES: readonly MenuEntry[] = [

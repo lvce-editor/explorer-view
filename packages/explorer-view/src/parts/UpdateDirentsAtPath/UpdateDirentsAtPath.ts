@@ -13,14 +13,14 @@ export const updateDirentsAtPath = (
 ): readonly ExplorerItem[] => {
   const sortedDirents = newDirents
     .map((dirent, index) => ({
-      name: dirent.name,
-      type: dirent.type,
-      path: join2(path, dirent.name),
       depth: 0, // TODO
-      selected: false,
-      posInSet: index + 1,
-      setSize: newDirents.length,
       icon: '',
+      name: dirent.name,
+      path: join2(path, dirent.name),
+      posInSet: index + 1,
+      selected: false,
+      setSize: newDirents.length,
+      type: dirent.type,
     }))
     .toSorted(CompareDirent.compareDirent)
 

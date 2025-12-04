@@ -15,17 +15,17 @@ export const getFileOperationsCopy = (
     const baseName = Path.getBaseName('/', file)
     if (existingUris.includes(file)) {
       operations.push({
-        type: FileOperationType.Rename,
         from: file,
         path: Path.join2(focusedUri, baseName),
+        type: FileOperationType.Rename,
       })
     } else {
       const uniqueName = generateUniqueName(baseName, existingUris, root)
       const newUri = Path.join2(root, uniqueName)
       operations.push({
-        type: FileOperationType.Copy,
         from: file, // TODO ensure file is uri
         path: newUri,
+        type: FileOperationType.Copy,
       })
     }
   }

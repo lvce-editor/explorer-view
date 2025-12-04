@@ -10,16 +10,16 @@ test('getScrollBarVirtualDom - renders scrollbar with height and position', () =
   const dom = getScrollBarVirtualDom(100, 50)
   expect(dom).toEqual([
     {
-      type: 4,
-      className: 'ScrollBar ScrollBarSmall',
       childCount: 1,
+      className: 'ScrollBar ScrollBarSmall',
+      type: 4,
     },
     {
-      type: 4,
-      className: 'ScrollBarThumb',
       childCount: 0,
+      className: 'ScrollBarThumb',
       height: '100px',
       translate: '0px 50px',
+      type: 4,
     },
   ])
 })

@@ -9,8 +9,8 @@ test('getVisibleExplorerItems - basic', () => {
       depth: 0,
       name: 'test',
       path: '/test',
-      type: 0,
       selected: false,
+      type: 0,
     },
   ]
   const editingIcon = ''
@@ -18,16 +18,16 @@ test('getVisibleExplorerItems - basic', () => {
   const result = getVisibleExplorerItems(items, 0, 1, 0, -1, '', ['icon'], true, [], editingIcon, [], [], decorations)
   expect(result).toHaveLength(1)
   expect(result[0]).toMatchObject({
-    depth: 0,
-    name: 'test',
-    path: '/test',
-    icon: 'icon',
-    isEditing: false,
-    hasEditingError: false,
-    indent: 26,
     ariaExpanded: undefined,
     chevron: 0,
+    depth: 0,
+    hasEditingError: false,
+    icon: 'icon',
     id: 'TreeItemActive',
+    indent: 26,
+    isEditing: false,
+    name: 'test',
+    path: '/test',
   })
 })
 
@@ -37,8 +37,8 @@ test('getVisibleExplorerItems - editing', () => {
       depth: 0,
       name: 'test',
       path: '/test',
-      type: 0,
       selected: true,
+      type: 0,
     },
   ]
   const editingIcon = ''
@@ -46,8 +46,8 @@ test('getVisibleExplorerItems - editing', () => {
   const result = getVisibleExplorerItems(items, 0, 1, 0, 0, 'error', ['icon'], true, [], editingIcon, [], [], decorations)
   expect(result).toHaveLength(1)
   expect(result[0]).toMatchObject({
-    isEditing: true,
     hasEditingError: true,
+    isEditing: true,
   })
 })
 
@@ -73,8 +73,8 @@ test('getVisibleExplorerItems - ignored item is dimmed', () => {
       depth: 0,
       name: 'ignored.txt',
       path: '/ignored.txt',
-      type: 0,
       selected: false,
+      type: 0,
     },
   ]
   const editingIcon = ''
@@ -84,7 +84,7 @@ test('getVisibleExplorerItems - ignored item is dimmed', () => {
   const result = getVisibleExplorerItems(items, 0, 1, 0, -1, '', ['icon'], true, [], editingIcon, [], ignored, decorations)
   expect(result).toHaveLength(1)
   expect(result[0]).toMatchObject({
-    isIgnored: true,
     isCut: false,
+    isIgnored: true,
   })
 })

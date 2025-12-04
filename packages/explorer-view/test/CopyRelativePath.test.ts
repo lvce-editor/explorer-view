@@ -8,8 +8,8 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 test('copyRelativePath - copies relative path of focused dirent', async (): Promise<void> => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }],
   }
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
@@ -32,8 +32,8 @@ test('copyRelativePath - returns state when no focused dirent', async (): Promis
 test('copyRelativePath - slices first character from path', async (): Promise<void> => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'file.txt', type: DirentType.File, path: '/single', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'file.txt', path: '/single', selected: false, type: DirentType.File }],
   }
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
@@ -45,8 +45,8 @@ test('copyRelativePath - slices first character from path', async (): Promise<vo
 test('copyRelativePath - handles nested paths correctly', async (): Promise<void> => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'file.txt', type: DirentType.File, path: '/a/b/c/file.txt', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'file.txt', path: '/a/b/c/file.txt', selected: false, type: DirentType.File }],
   }
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
@@ -58,8 +58,8 @@ test('copyRelativePath - handles nested paths correctly', async (): Promise<void
 test('copyRelativePath - returns state after writing to clipboard', async (): Promise<void> => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }],
   }
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},

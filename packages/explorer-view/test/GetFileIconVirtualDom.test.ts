@@ -6,20 +6,20 @@ import * as VirtualDomElements from '../src/parts/VirtualDomElements/VirtualDomE
 
 test('getFileIconVirtualDom - with icon path', () => {
   expect(GetFileIconVirtualDom.getFileIconVirtualDom('/icons/file.svg')).toEqual({
-    type: VirtualDomElements.Img,
-    className: ClassNames.FileIcon,
-    src: '/icons/file.svg',
-    role: AriaRoles.None,
     childCount: 0,
+    className: ClassNames.FileIcon,
+    role: AriaRoles.None,
+    src: '/icons/file.svg',
+    type: VirtualDomElements.Img,
   })
 })
 
 test('getFileIconVirtualDom - empty icon path', () => {
   expect(GetFileIconVirtualDom.getFileIconVirtualDom('')).toEqual({
-    type: VirtualDomElements.Img,
-    className: ClassNames.FileIcon,
-    src: '',
-    role: AriaRoles.None,
     childCount: 0,
+    className: ClassNames.FileIcon,
+    role: AriaRoles.None,
+    src: '',
+    type: VirtualDomElements.Img,
   })
 })

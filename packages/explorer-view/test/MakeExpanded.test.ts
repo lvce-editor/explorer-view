@@ -5,29 +5,29 @@ import { makeExpanded } from '../src/parts/MakeExpanded/MakeExpanded.ts'
 
 test('makeExpanded - directory', () => {
   const dirent: ExplorerItem = {
-    type: DirentType.Directory,
+    depth: 0,
     name: 'test',
     path: '/test',
-    depth: 0,
     selected: false,
+    type: DirentType.Directory,
   }
   const result = makeExpanded(dirent)
   expect(result).toEqual({
-    type: DirentType.DirectoryExpanded,
+    depth: 0,
     name: 'test',
     path: '/test',
-    depth: 0,
     selected: false,
+    type: DirentType.DirectoryExpanded,
   })
 })
 
 test('makeExpanded - file', () => {
   const dirent: ExplorerItem = {
-    type: DirentType.File,
+    depth: 0,
     name: 'test.txt',
     path: '/test.txt',
-    depth: 0,
     selected: false,
+    type: DirentType.File,
   }
   const result = makeExpanded(dirent)
   expect(result).toEqual(dirent)

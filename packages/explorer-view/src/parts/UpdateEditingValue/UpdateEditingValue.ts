@@ -6,7 +6,7 @@ import * as InputSource from '../InputSource/InputSource.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
 export const updateEditingValue = async (state: ExplorerState, value: string, inputSource: number = InputSource.User): Promise<ExplorerState> => {
-  const { editingType, items, editingIndex, pathSeparator, root, focusedIndex } = state
+  const { editingIndex, editingType, focusedIndex, items, pathSeparator, root } = state
   const editingIcon = await getEditingIcon(editingType, value, items[editingIndex]?.type)
 
   // Get sibling file names for validation during file/folder creation
@@ -18,8 +18,8 @@ export const updateEditingValue = async (state: ExplorerState, value: string, in
   const editingErrorMessage = ValidateFileName2.validateFileName2(value, siblingFileNames)
   return {
     ...state,
-    editingValue: value,
-    editingIcon,
     editingErrorMessage,
+    editingIcon,
+    editingValue: value,
   }
 }

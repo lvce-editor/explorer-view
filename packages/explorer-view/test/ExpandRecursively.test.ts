@@ -7,30 +7,30 @@ import { expandRecursively } from '../src/parts/ExpandRecursively/ExpandRecursiv
 
 test.skip('expand root directory', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return [
-        { name: 'file1.txt', type: 'file', isSymbolicLink: false },
-        { name: 'dir1', type: 'directory', isSymbolicLink: false },
-      ]
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'IconTheme.getFolderIcon'() {
-      return 'folder-icon'
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { isSymbolicLink: false, name: 'file1.txt', type: 'file' },
+        { isSymbolicLink: false, name: 'dir1', type: 'directory' },
+      ]
     },
     'IconTheme.getFileIcon'() {
       return 'file-icon'
     },
+    'IconTheme.getFolderIcon'() {
+      return 'folder-icon'
+    },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/test',
-    items: [
-      { name: 'file1.txt', type: File, depth: 0, path: '/test/file1.txt', selected: false },
-      { name: 'dir1', type: Directory, depth: 0, path: '/test/dir1', selected: false },
-    ],
     focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'file1.txt', path: '/test/file1.txt', selected: false, type: File },
+      { depth: 0, name: 'dir1', path: '/test/dir1', selected: false, type: Directory },
+    ],
+    root: '/test',
   }
   const newState = await expandRecursively(state)
   expect(newState.items).toHaveLength(2)
@@ -41,29 +41,29 @@ test.skip('expand root directory', async () => {
 
 test.skip('expand focused directory', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return [
-        { name: 'file1.txt', type: 'file', isSymbolicLink: false },
-        { name: 'file2.txt', type: 'file', isSymbolicLink: false },
-      ]
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'IconTheme.getFolderIcon'() {
-      return 'folder-icon'
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { isSymbolicLink: false, name: 'file1.txt', type: 'file' },
+        { isSymbolicLink: false, name: 'file2.txt', type: 'file' },
+      ]
     },
     'IconTheme.getFileIcon'() {
       return 'file-icon'
     },
+    'IconTheme.getFolderIcon'() {
+      return 'folder-icon'
+    },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'dir1', type: Directory, depth: 0, path: '/test/dir1', selected: false },
-      { name: 'file1.txt', type: File, depth: 0, path: '/test/file1.txt', selected: false },
-    ],
     focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'dir1', path: '/test/dir1', selected: false, type: Directory },
+      { depth: 0, name: 'file1.txt', path: '/test/file1.txt', selected: false, type: File },
+    ],
   }
   const newState = await expandRecursively(state)
   expect(newState.items).toHaveLength(2)
@@ -75,16 +75,16 @@ test.skip('expand focused directory', async () => {
 test('do not expand file', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
+    focusedIndex: 0,
     items: [
       {
-        name: 'test.txt',
-        type: File,
-        path: '/test.txt',
         depth: 0,
+        name: 'test.txt',
+        path: '/test.txt',
         selected: false,
+        type: File,
       },
     ],
-    focusedIndex: 0,
   }
   const newState = await expandRecursively(state)
   expect(newState.items).toHaveLength(1)

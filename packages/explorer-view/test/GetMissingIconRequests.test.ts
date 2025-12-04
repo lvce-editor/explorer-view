@@ -11,7 +11,7 @@ test('getMissingIconRequests - empty list', () => {
 })
 
 test('getMissingIconRequests - all in cache', () => {
-  const dirents: readonly ExplorerItem[] = [{ type: DirentType.File, path: '/test/file.txt', name: 'file.txt', depth: 0, selected: false }]
+  const dirents: readonly ExplorerItem[] = [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }]
   const cache: FileIconCache = {
     '/test/file.txt': 'icon',
   }
@@ -20,13 +20,13 @@ test('getMissingIconRequests - all in cache', () => {
 
 test('getMissingIconRequests - some missing', () => {
   const dirents: readonly ExplorerItem[] = [
-    { type: DirentType.File, path: '/test/file1.txt', name: 'file1.txt', depth: 0, selected: false },
-    { type: DirentType.File, path: '/test/file2.txt', name: 'file2.txt', depth: 0, selected: false },
+    { depth: 0, name: 'file1.txt', path: '/test/file1.txt', selected: false, type: DirentType.File },
+    { depth: 0, name: 'file2.txt', path: '/test/file2.txt', selected: false, type: DirentType.File },
   ]
   const cache: FileIconCache = {
     '/test/file1.txt': 'icon',
   }
   expect(GetMissingIconRequests.getMissingIconRequests(dirents, cache)).toEqual([
-    { type: DirentType.File, name: 'file2.txt', path: '/test/file2.txt' },
+    { name: 'file2.txt', path: '/test/file2.txt', type: DirentType.File },
   ])
 })

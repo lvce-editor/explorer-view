@@ -43,10 +43,10 @@ export const getExplorerVirtualDom = (
   const errorDom = GetErrorMessageDom.getErrorMessageDom(errorMessage)
   const childCount = getChildCount(scrollBarDom.length, errorDom.length)
   const parentNode: VirtualDomNode = {
-    type: VirtualDomElements.Div,
     childCount,
     className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
     role: AriaRoles.None,
+    type: VirtualDomElements.Div,
   }
   const dom: readonly VirtualDomNode[] = [
     parentNode,

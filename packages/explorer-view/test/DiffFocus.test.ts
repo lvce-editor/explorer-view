@@ -5,13 +5,13 @@ import { isEqual } from '../src/parts/DiffFocus/DiffFocus.ts'
 test('isEqual should return true when focused and focus are equal', () => {
   const oldState = {
     ...createDefaultState(),
-    focused: true,
     focus: 1,
+    focused: true,
   }
   const newState = {
     ...createDefaultState(),
-    focused: true,
     focus: 1,
+    focused: true,
   }
   expect(isEqual(oldState, newState)).toBe(true)
 })
@@ -19,13 +19,13 @@ test('isEqual should return true when focused and focus are equal', () => {
 test('isEqual should return false when focused differs', () => {
   const oldState = {
     ...createDefaultState(),
-    focused: true,
     focus: 1,
+    focused: true,
   }
   const newState = {
     ...createDefaultState(),
-    focused: false,
     focus: 1,
+    focused: false,
   }
   expect(isEqual(oldState, newState)).toBe(false)
 })
@@ -33,13 +33,13 @@ test('isEqual should return false when focused differs', () => {
 test('isEqual should return false when focus differs', () => {
   const oldState = {
     ...createDefaultState(),
-    focused: true,
     focus: 1,
+    focused: true,
   }
   const newState = {
     ...createDefaultState(),
-    focused: true,
     focus: 2,
+    focused: true,
   }
   expect(isEqual(oldState, newState)).toBe(false)
 })

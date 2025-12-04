@@ -6,9 +6,9 @@ import { selectDown } from '../src/parts/SelectDown/SelectDown.ts'
 const createTestState = (): ExplorerState => ({
   ...createDefaultState(),
   items: [
-    { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-    { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
-    { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
+    { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+    { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+    { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
   ],
 })
 
@@ -55,11 +55,11 @@ test('selectDown - at end', () => {
 test('selectDown - last item', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
-    ],
     focusedIndex: 1,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+    ],
   }
   const newState = selectDown(state)
   expect(newState).toBe(state)
@@ -68,11 +68,11 @@ test('selectDown - last item', () => {
 test('selectDown - first item', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
-    ],
     focusedIndex: 0,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+    ],
   }
   const newState = selectDown(state)
   expect(newState.items[0].selected).toBe(true)
@@ -82,12 +82,12 @@ test('selectDown - first item', () => {
 test.skip('selectDown - multiple items with selection', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: true },
-      { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
-    ],
     focusedIndex: 0,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: true, type: 0 },
+      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
+    ],
   }
   const newState = selectDown(state)
   expect(newState.items[0].selected).toBe(false)
@@ -98,12 +98,12 @@ test.skip('selectDown - multiple items with selection', () => {
 test('selectDown - multiple items with selection at bottom', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
-      { name: 'c', type: 0, path: '/c', depth: 1, selected: true },
-    ],
     focusedIndex: 1,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+      { depth: 1, name: 'c', path: '/c', selected: true, type: 0 },
+    ],
   }
   const newState = selectDown(state)
   expect(newState.items[0].selected).toBe(false)
@@ -114,12 +114,12 @@ test('selectDown - multiple items with selection at bottom', () => {
 test.skip('selectDown - multiple items with multiple selections', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: true },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: true },
-      { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
-    ],
     focusedIndex: 0,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: true, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: true, type: 0 },
+      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
+    ],
   }
   const newState = selectDown(state)
   expect(newState.items[0].selected).toBe(false)

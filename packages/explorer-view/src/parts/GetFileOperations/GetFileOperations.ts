@@ -9,10 +9,10 @@ export const getFileOperations = (root: string, uploadTree: any): readonly FileO
     for (const [path, value] of Object.entries(tree)) {
       const fullPath = currentPath ? join2(currentPath, path) : path
       if (typeof value === 'object') {
-        operations.push({ type: FileOperationType.CreateFolder, path: join2(root, fullPath) })
+        operations.push({ path: join2(root, fullPath), type: FileOperationType.CreateFolder })
         processTree(value, fullPath)
       } else if (typeof value === 'string') {
-        operations.push({ type: FileOperationType.CreateFile, path: join2(root, fullPath), text: value })
+        operations.push({ path: join2(root, fullPath), text: value, type: FileOperationType.CreateFile })
       }
     }
   }

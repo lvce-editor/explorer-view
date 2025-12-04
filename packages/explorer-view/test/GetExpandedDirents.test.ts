@@ -10,16 +10,16 @@ test('getExpandedDirents - empty array', () => {
 
 test('getExpandedDirents - no expanded items', () => {
   const items: readonly ExplorerItem[] = [
-    { type: Directory, name: 'folder1', path: '/folder1', depth: 0, selected: false },
-    { type: File, name: 'file1.txt', path: '/file1.txt', depth: 0, selected: false },
+    { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: Directory },
+    { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
   ]
   expect(getExpandedDirents(items)).toHaveLength(0)
 })
 
 test('getExpandedDirents - with expanded items', () => {
   const items: readonly ExplorerItem[] = [
-    { type: DirectoryExpanded, name: 'folder1', path: '/folder1', depth: 0, selected: false },
-    { type: File, name: 'file1.txt', path: '/file1.txt', depth: 0, selected: false },
+    { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
+    { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
   ]
   const result = getExpandedDirents(items)
   expect(result).toHaveLength(1)

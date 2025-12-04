@@ -8,8 +8,8 @@ test.skip('handleClickAt - left click without shift', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
+      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
     ],
   }
   const result = await handleClickAt(state, false, LeftClick, false, false, 0, 0)
@@ -20,8 +20,8 @@ test.skip('handleClickAt - shift click with no selection', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
+      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
     ],
   }
   const result = await handleClickAt(state, false, LeftClick, false, true, 0, 0)
@@ -32,9 +32,9 @@ test('handleClickAt - shift click with existing selection', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: true },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
-      { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
+      { depth: 1, name: 'a', path: '/a', selected: true, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
     ],
   }
   const result = await handleClickAt(state, false, LeftClick, false, true, 0, 0)
@@ -61,8 +61,8 @@ test.skip('handleClickAt - shift click with no selection', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
+      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
     ],
   }
   const result = await handleClickAt(state, false, LeftClick, false, true, 0, 0)
@@ -73,9 +73,9 @@ test('handleClickAt - shift click with existing selection', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: true },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
-      { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
+      { depth: 1, name: 'a', path: '/a', selected: true, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
     ],
   }
   const result = await handleClickAt(state, false, LeftClick, false, true, 0, 0)

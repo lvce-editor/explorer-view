@@ -9,11 +9,11 @@ import { handleClickSymLink } from '../src/parts/HandleClickSymlink/HandleClickS
 test('handleClickSymLink - file symlink', async () => {
   const state: ExplorerState = createDefaultState()
   const dirent: ExplorerItem = {
-    path: '/test/symlink',
-    name: 'symlink',
-    type: DirentType.Symlink,
     depth: 0,
+    name: 'symlink',
+    path: '/test/symlink',
     selected: false,
+    type: DirentType.Symlink,
   }
   const index = 0
 
@@ -41,11 +41,11 @@ test('handleClickSymLink - file symlink', async () => {
 test('handleClickSymLink - unsupported type', async () => {
   const state: ExplorerState = createDefaultState()
   const dirent: ExplorerItem = {
-    path: '/test/symlink',
-    name: 'symlink',
-    type: DirentType.Symlink,
     depth: 0,
+    name: 'symlink',
+    path: '/test/symlink',
     selected: false,
+    type: DirentType.Symlink,
   }
   const index = 0
 

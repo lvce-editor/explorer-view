@@ -1,7 +1,7 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
 export const selectUp = (state: ExplorerState): ExplorerState => {
-  const { items, focusedIndex } = state
+  const { focusedIndex, items } = state
   const firstSelectedIndex = items.findIndex((item) => item.selected)
   const targetIndex = firstSelectedIndex === -1 ? focusedIndex : firstSelectedIndex
   if (targetIndex <= 0) {

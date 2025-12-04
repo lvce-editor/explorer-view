@@ -10,24 +10,24 @@ test('computeExplorerRenamedDirentUpdate - basic rename', () => {
   const newUri = '/parent/new'
   const children: ExplorerItem[] = [
     {
-      name: 'child1',
-      type: 1,
-      path: '/parent/child1',
       depth: 1,
-      selected: false,
-      posInSet: 1,
-      setSize: 2,
       icon: '',
+      name: 'child1',
+      path: '/parent/child1',
+      posInSet: 1,
+      selected: false,
+      setSize: 2,
+      type: 1,
     },
     {
-      name: 'child2',
-      type: 1,
-      path: '/parent/child2',
       depth: 1,
-      selected: false,
-      posInSet: 2,
-      setSize: 2,
       icon: '',
+      name: 'child2',
+      path: '/parent/child2',
+      posInSet: 2,
+      selected: false,
+      setSize: 2,
+      type: 1,
     },
   ]
   const tree: Tree = {
@@ -70,14 +70,14 @@ test('computeExplorerRenamedDirentUpdate - deep nested rename', () => {
   const newUri = '/new'
   const children: ExplorerItem[] = [
     {
-      name: 'old',
-      type: 1,
-      path: '/old',
       depth: 1,
-      selected: false,
-      posInSet: 1,
-      setSize: 1,
       icon: '',
+      name: 'old',
+      path: '/old',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: 1,
     },
   ]
   const tree: Tree = {

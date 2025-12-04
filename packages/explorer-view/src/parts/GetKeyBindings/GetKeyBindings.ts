@@ -5,118 +5,118 @@ import type { KeyBinding } from '../KeyBinding/KeyBinding.ts'
 export const getKeyBindings = (): readonly KeyBinding[] => {
   return [
     {
-      key: KeyModifier.Shift | KeyCode.UpArrow,
       command: 'Explorer.selectUp',
+      key: KeyModifier.Shift | KeyCode.UpArrow,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyModifier.Shift | KeyCode.DownArrow,
       command: 'Explorer.selectDown',
+      key: KeyModifier.Shift | KeyCode.DownArrow,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyCode.RightArrow,
       command: 'Explorer.handleArrowRight',
+      key: KeyCode.RightArrow,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyCode.LeftArrow,
       command: 'Explorer.handleArrowLeft',
+      key: KeyCode.LeftArrow,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyCode.Home,
       command: 'Explorer.focusFirst',
+      key: KeyCode.Home,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyCode.End,
       command: 'Explorer.focusLast',
+      key: KeyCode.End,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyCode.UpArrow,
       command: 'Explorer.focusPrevious',
+      key: KeyCode.UpArrow,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyCode.DownArrow,
       command: 'Explorer.focusNext',
+      key: KeyCode.DownArrow,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyModifier.CtrlCmd | KeyCode.Star,
       command: 'Explorer.expandAll',
+      key: KeyModifier.CtrlCmd | KeyCode.Star,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyModifier.Alt | KeyCode.RightArrow,
       command: 'Explorer.expandRecursively',
+      key: KeyModifier.Alt | KeyCode.RightArrow,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyModifier.CtrlCmd | KeyCode.LeftArrow,
       command: 'Explorer.collapseAll',
+      key: KeyModifier.CtrlCmd | KeyCode.LeftArrow,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyModifier.CtrlCmd | KeyCode.KeyV,
       command: 'Explorer.handlePaste',
+      key: KeyModifier.CtrlCmd | KeyCode.KeyV,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyModifier.CtrlCmd | KeyCode.KeyC,
       command: 'Explorer.handleCopy',
+      key: KeyModifier.CtrlCmd | KeyCode.KeyC,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyModifier.CtrlCmd | KeyCode.KeyX,
       command: 'Explorer.handleCut',
+      key: KeyModifier.CtrlCmd | KeyCode.KeyX,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyCode.F2,
       command: 'Explorer.renameDirent',
+      key: KeyCode.F2,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyCode.Escape,
       command: 'Explorer.cancelEdit',
+      key: KeyCode.Escape,
       when: WhenExpression.FocusExplorerEditBox,
     },
     {
-      key: KeyCode.Enter,
       command: 'Explorer.acceptEdit',
+      key: KeyCode.Enter,
       when: WhenExpression.FocusExplorerEditBox,
     },
     {
-      key: KeyCode.Delete,
       command: 'Explorer.removeDirent',
+      key: KeyCode.Delete,
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyCode.Escape,
       command: 'Explorer.focusNone',
-      when: WhenExpression.FocusExplorer,
-    },
-    {
-      key: KeyCode.Space,
-      command: 'Explorer.handleClickCurrentButKeepFocus',
-      when: WhenExpression.FocusExplorer,
-    },
-    {
-      key: KeyCode.Enter,
-      command: 'Explorer.handleClickCurrent',
-      when: WhenExpression.FocusExplorer,
-    },
-    {
       key: KeyCode.Escape,
-      command: 'Explorer.handleEscape',
       when: WhenExpression.FocusExplorer,
     },
     {
-      key: KeyModifier.CtrlCmd | KeyCode.KeyA,
+      command: 'Explorer.handleClickCurrentButKeepFocus',
+      key: KeyCode.Space,
+      when: WhenExpression.FocusExplorer,
+    },
+    {
+      command: 'Explorer.handleClickCurrent',
+      key: KeyCode.Enter,
+      when: WhenExpression.FocusExplorer,
+    },
+    {
+      command: 'Explorer.handleEscape',
+      key: KeyCode.Escape,
+      when: WhenExpression.FocusExplorer,
+    },
+    {
       command: 'Explorer.selectAll',
+      key: KeyModifier.CtrlCmd | KeyCode.KeyA,
       when: WhenExpression.FocusExplorer,
     },
   ]

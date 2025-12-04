@@ -16,24 +16,24 @@ const handleFileIcons = (requests: readonly any[]): readonly string[] => {
 
 test('newDirent sets focus and updates state when no item is focused', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return '/new/path'
+    'FileSystem.getPathSeparator'() {
+      return '/'
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
+    'Focus.setFocus'() {},
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'(...params: any[]) {
+      return handleFileIcons(params[0])
     },
     'Preferences.get'() {
       return false
     },
-    'IconTheme.getFolderIcon'() {
-      return ''
-    },
-    'Focus.setFocus'() {},
-    'IconTheme.getIcons'(...params: any[]) {
-      return handleFileIcons(params[0])
+    'Workspace.getPath'() {
+      return '/new/path'
     },
   })
   const mockState: ExplorerState = {
@@ -48,10 +48,10 @@ test('newDirent sets focus and updates state when no item is focused', async () 
   expect(result).toEqual({
     ...mockState,
     editingIndex: 0,
-    focusedIndex: 0,
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
+    focusedIndex: 0,
     items: [
       {
         depth: 0,
@@ -69,17 +69,11 @@ test('newDirent sets focus and updates state when no item is focused', async () 
 
 test('newDirent handles directory click when focused item is a directory', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return '/new/path'
-    },
-    'FileSystem.readDirWithFileTypes'() {
-      return []
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'Preferences.get'() {
-      return false
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
     'Focus.setFocus'() {},
     'IconTheme.getFolderIcon'() {
@@ -88,11 +82,17 @@ test('newDirent handles directory click when focused item is a directory', async
     'IconTheme.getIcons'(...params: any[]) {
       return handleFileIcons(params[0])
     },
+    'Preferences.get'() {
+      return false
+    },
+    'Workspace.getPath'() {
+      return '/new/path'
+    },
   })
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false }],
+    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Directory }],
   }
   const mockEditingType = 1
 
@@ -100,12 +100,13 @@ test('newDirent handles directory click when focused item is a directory', async
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
   expect(result).toEqual({
     ...mockState,
-    visibleExplorerItems: expect.anything(),
     editingIndex: 1,
-    focusedIndex: 1,
     editingType: mockEditingType,
+    editingValue: '',
+    focus: 2,
+    focusedIndex: 1,
     items: [
-      { name: 'test', type: DirentType.Directory, path: '/test', depth: 0, selected: false, setSize: 1 },
+      { depth: 0, name: 'test', path: '/test', selected: false, setSize: 1, type: DirentType.Directory },
       {
         depth: 1,
         icon: '',
@@ -117,40 +118,39 @@ test('newDirent handles directory click when focused item is a directory', async
         type: DirentType.EditingFile,
       },
     ],
-    editingValue: '',
-    focus: 2,
+    visibleExplorerItems: expect.anything(),
   })
 })
 
 test('newDirent updates state when focused item is not a directory', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return '/new/path'
+    'FileSystem.getPathSeparator'() {
+      return '/'
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
+    'Focus.setFocus'() {},
     'IconTheme.getFileIcon'() {
       return ''
     },
     'IconTheme.getFolderIcon'() {
       return ''
     },
+    'IconTheme.getIcons'(...params: any[]) {
+      return handleFileIcons(params[0])
+    },
     'Preferences.get'() {
       return false
     },
-    'Focus.setFocus'() {},
-    'IconTheme.getIcons'(...params: any[]) {
-      return handleFileIcons(params[0])
+    'Workspace.getPath'() {
+      return '/new/path'
     },
   })
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
   }
   const mockEditingType = 1
 
@@ -158,19 +158,18 @@ test('newDirent updates state when focused item is not a directory', async () =>
   expect(mockRpc.invocations).toEqual([])
   expect(result).toEqual({
     ...mockState,
-    visibleExplorerItems: expect.anything(),
     editingIndex: 1,
-    focusedIndex: 1,
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
+    focusedIndex: 1,
     items: [
       {
-        name: 'test.txt',
-        type: DirentType.File,
-        path: '/test.txt',
         depth: 0,
+        name: 'test.txt',
+        path: '/test.txt',
         selected: false,
+        type: DirentType.File,
       },
       {
         depth: 0,
@@ -183,5 +182,6 @@ test('newDirent updates state when focused item is not a directory', async () =>
         type: DirentType.EditingFile,
       },
     ],
+    visibleExplorerItems: expect.anything(),
   })
 })

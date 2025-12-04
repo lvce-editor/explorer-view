@@ -8,26 +8,20 @@ import { newFile } from '../src/parts/NewFile/NewFile.ts'
 
 test('newFile', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return '/new/path'
+    'FileSystem.getPathSeparator'() {
+      return '/'
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
+    'Focus.setFocus'() {
+      return undefined
     },
     'IconTheme.getFileIcon'() {
       return ''
     },
     'IconTheme.getFolderIcon'() {
       return ''
-    },
-    'Preferences.get'() {
-      return false
-    },
-    'Focus.setFocus'() {
-      return undefined
     },
     'IconTheme.getIcons'(requests: readonly any[]) {
       return requests.map((param) => {
@@ -37,11 +31,17 @@ test('newFile', async () => {
         return `file-icon`
       })
     },
+    'Preferences.get'() {
+      return false
+    },
+    'Workspace.getPath'() {
+      return '/new/path'
+    },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'testfolder', type: DirentType.Directory, path: '/testfolder', depth: 0, selected: false }],
+    items: [{ depth: 0, name: 'testfolder', path: '/testfolder', selected: false, type: DirentType.Directory }],
     maxLineY: 1,
   }
 
@@ -49,31 +49,31 @@ test('newFile', async () => {
   expect(result).toEqual({
     ...state,
     editingIndex: 1,
-    focusedIndex: 1,
     editingType: ExplorerEditingType.CreateFile,
-    visibleExplorerItems: expect.anything(),
+    editingValue: '',
+    focus: 2,
+    focusedIndex: 1,
     items: [
       {
         depth: 0,
         name: 'testfolder',
         path: '/testfolder',
         selected: false,
-        type: 3,
         setSize: 1,
+        type: 3,
       },
       {
         depth: 1,
         icon: '',
         name: '',
-        type: DirentType.EditingFile,
         path: '/testfolder',
-        selected: false,
         posInSet: 1,
+        selected: false,
         setSize: 2,
+        type: DirentType.EditingFile,
       },
     ],
-    editingValue: '',
-    focus: 2,
+    visibleExplorerItems: expect.anything(),
   })
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/testfolder']])
 })

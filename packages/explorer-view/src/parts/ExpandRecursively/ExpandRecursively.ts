@@ -4,13 +4,13 @@ import * as GetChildDirentsRecursively from '../GetChildDirentsRecursively/GetCh
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 
 export const expandRecursively = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { items, focusedIndex, pathSeparator, root } = state
+  const { focusedIndex, items, pathSeparator, root } = state
   const dirent =
     focusedIndex < 0
       ? {
-          type: DirentType.Directory,
-          path: root,
           depth: 0,
+          path: root,
+          type: DirentType.Directory,
         }
       : items[focusedIndex]
   if (dirent.type !== DirentType.Directory && dirent.type !== DirentType.DirectoryExpanding && dirent.type !== DirentType.DirectoryExpanded) {

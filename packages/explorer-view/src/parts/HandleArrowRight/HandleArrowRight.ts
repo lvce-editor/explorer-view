@@ -5,7 +5,7 @@ import * as HandleClickDirectory from '../HandleClickDirectory/HandleClickDirect
 import * as HandleClickSymlink from '../HandleClickSymlink/HandleClickSymlink.ts'
 
 export const handleArrowRight = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { items, focusedIndex } = state
+  const { focusedIndex, items } = state
   if (focusedIndex === -1) {
     return state
   }

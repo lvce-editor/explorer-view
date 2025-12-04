@@ -9,11 +9,11 @@ import { removeDirent } from '../src/parts/RemoveDirent/RemoveDirent.ts'
 
 test('removeDirent - removes focused item', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.remove'() {
-      return
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
+    },
+    'FileSystem.remove'() {
+      return
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -28,9 +28,9 @@ test('removeDirent - removes focused item', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false }],
-    focusedIndex: 0,
     confirmDelete: false,
+    focusedIndex: 0,
+    items: [{ depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File }],
   }
 
   const result = await removeDirent(state)
@@ -44,11 +44,11 @@ test('removeDirent - removes focused item', async () => {
 
 test('removeDirent - removes multiple selected items', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.remove'() {
-      return
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
+    },
+    'FileSystem.remove'() {
+      return
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -63,12 +63,12 @@ test('removeDirent - removes multiple selected items', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: true },
-      { name: 'file2.txt', type: File, path: '/file2.txt', depth: 0, selected: true },
-    ],
-    focusedIndex: 0,
     confirmDelete: false,
+    focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: true, type: File },
+      { depth: 0, name: 'file2.txt', path: '/file2.txt', selected: true, type: File },
+    ],
   }
 
   const result = await removeDirent(state)
@@ -83,11 +83,11 @@ test('removeDirent - removes multiple selected items', async () => {
 
 test('removeDirent - removes focused item and selected items', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.remove'() {
-      return
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
+    },
+    'FileSystem.remove'() {
+      return
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -102,13 +102,13 @@ test('removeDirent - removes focused item and selected items', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false },
-      { name: 'file2.txt', type: File, path: '/file2.txt', depth: 0, selected: true },
-      { name: 'file3.txt', type: File, path: '/file3.txt', depth: 0, selected: true },
-    ],
-    focusedIndex: 0,
     confirmDelete: false,
+    focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
+      { depth: 0, name: 'file2.txt', path: '/file2.txt', selected: true, type: File },
+      { depth: 0, name: 'file3.txt', path: '/file3.txt', selected: true, type: File },
+    ],
   }
 
   const result = await removeDirent(state)
@@ -124,11 +124,11 @@ test('removeDirent - removes focused item and selected items', async () => {
 
 test('remove file', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.remove'() {
-      return
-    },
     'FileSystem.readDirWithFileTypes'() {
       return [{ name: 'folder1', type: DirentType.Directory }]
+    },
+    'FileSystem.remove'() {
+      return
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -143,12 +143,12 @@ test('remove file', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'folder1', type: Directory, path: '/folder1', depth: 0, selected: false },
-      { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false },
-    ],
-    focusedIndex: 1,
     confirmDelete: false,
+    focusedIndex: 1,
+    items: [
+      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: Directory },
+      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
+    ],
   }
 
   const result = await removeDirent(state)
@@ -163,11 +163,11 @@ test('remove file', async () => {
 
 test('remove folder with children', async () => {
   RendererWorker.registerMockRpc({
-    'FileSystem.remove'() {
-      return
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
+    },
+    'FileSystem.remove'() {
+      return
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -182,13 +182,13 @@ test('remove folder with children', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/',
-    items: [
-      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
-      { name: 'file1.txt', type: File, path: '/folder1/file1.txt', depth: 1, selected: false },
-    ],
-    focusedIndex: 0,
     confirmDelete: false,
+    focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
+      { depth: 1, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: File },
+    ],
+    root: '/',
   }
 
   const result = await removeDirent(state)
@@ -198,9 +198,6 @@ test('remove folder with children', async () => {
 
 test('remove file from expanded folder', async () => {
   RendererWorker.registerMockRpc({
-    'FileSystem.remove'() {
-      return
-    },
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/') {
         return [{ name: 'folder1', type: DirentType.Directory }]
@@ -209,6 +206,9 @@ test('remove file from expanded folder', async () => {
         return []
       }
       return []
+    },
+    'FileSystem.remove'() {
+      return
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -223,12 +223,12 @@ test('remove file from expanded folder', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
-      { name: 'file1.txt', type: File, path: '/folder1/file1.txt', depth: 1, selected: false },
-    ],
-    focusedIndex: 1,
     confirmDelete: false,
+    focusedIndex: 1,
+    items: [
+      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
+      { depth: 1, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: File },
+    ],
   }
 
   const result = await removeDirent(state)
@@ -243,11 +243,11 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
     'ConfirmPrompt.prompt'(_message?: string) {
       return true
     },
-    'FileSystem.remove'() {
-      return
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
+    },
+    'FileSystem.remove'() {
+      return
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -262,9 +262,9 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false }],
-    focusedIndex: 0,
     confirmDelete: false,
+    focusedIndex: 0,
+    items: [{ depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File }],
   }
 
   const result = await removeDirent(state)
@@ -281,12 +281,12 @@ test.skip('removeDirent - with confirmation enabled and user cancels', async () 
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: true },
-      { name: 'file2.txt', type: File, path: '/file2.txt', depth: 0, selected: true },
-    ],
-    focusedIndex: 0,
     confirmDelete: false,
+    focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: true, type: File },
+      { depth: 0, name: 'file2.txt', path: '/file2.txt', selected: true, type: File },
+    ],
   }
 
   const result = await removeDirent(state)
@@ -302,11 +302,11 @@ test('removeDirent - shows error message when file operation fails', async () =>
     'ConfirmPrompt.prompt'(message?: string) {
       return confirmFn(message)
     },
-    'FileSystem.remove'() {
-      throw new Error('Permission denied')
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
+    },
+    'FileSystem.remove'() {
+      throw new Error('Permission denied')
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -321,9 +321,9 @@ test('removeDirent - shows error message when file operation fails', async () =>
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false }],
-    focusedIndex: 0,
     confirmDelete: false,
+    focusedIndex: 0,
+    items: [{ depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File }],
   }
 
   const result = await removeDirent(state)
@@ -346,11 +346,11 @@ test('removeDirent - shows error message for multiple files when operation fails
     'ConfirmPrompt.prompt'(message?: string) {
       return confirmFn(message)
     },
-    'FileSystem.remove'() {
-      throw new Error('Access denied')
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
+    },
+    'FileSystem.remove'() {
+      throw new Error('Access denied')
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -365,12 +365,12 @@ test('removeDirent - shows error message for multiple files when operation fails
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: true },
-      { name: 'file2.txt', type: File, path: '/file2.txt', depth: 0, selected: true },
-    ],
-    focusedIndex: 0,
     confirmDelete: false,
+    focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: true, type: File },
+      { depth: 0, name: 'file2.txt', path: '/file2.txt', selected: true, type: File },
+    ],
   }
 
   const result = await removeDirent(state)
@@ -387,11 +387,11 @@ test('removeDirent - shows error message for multiple files when operation fails
 
 test('removeDirent - continues normally when no error occurs', async () => {
   RendererWorker.registerMockRpc({
-    'FileSystem.remove'() {
-      return
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
+    },
+    'FileSystem.remove'() {
+      return
     },
     'IconTheme.getFileIcon'() {
       return ''
@@ -406,9 +406,9 @@ test('removeDirent - continues normally when no error occurs', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false }],
-    focusedIndex: 0,
     confirmDelete: false,
+    focusedIndex: 0,
+    items: [{ depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File }],
   }
 
   const result = await removeDirent(state)

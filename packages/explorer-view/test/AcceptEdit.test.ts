@@ -12,14 +12,12 @@ test.skip('acceptEdit - rename', async () => {
   FileSystem.rename.mockImplementation(() => {})
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
-    focusedIndex: 0,
-    top: 0,
-    height: 600,
     deltaY: 0,
-    minLineY: 1,
-    maxLineY: 2,
-    root: '/test',
-    pathSeparator: PathSeparatorType.Slash,
+    editingIndex: 0,
+    editingType: ExplorerEditingType.Rename,
+    editingValue: 'b.txt',
+    focusedIndex: 0,
+    height: 600,
     items: [
       {
         depth: 1,
@@ -31,9 +29,11 @@ test.skip('acceptEdit - rename', async () => {
         type: DirentType.File,
       },
     ],
-    editingIndex: 0,
-    editingType: ExplorerEditingType.Rename,
-    editingValue: 'b.txt',
+    maxLineY: 2,
+    minLineY: 1,
+    pathSeparator: PathSeparatorType.Slash,
+    root: '/test',
+    top: 0,
   }
   expect(await ViewletExplorerAcceptEdit.acceptEdit(state)).toMatchObject({
     items: [
@@ -57,14 +57,12 @@ test.skip('acceptEdit - rename - nested file', async () => {
   FileSystem.rename.mockImplementation(() => {})
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
-    focusedIndex: 0,
-    top: 0,
-    height: 600,
     deltaY: 0,
-    minLineY: 1,
-    maxLineY: 2,
-    root: '/test',
-    pathSeparator: PathSeparatorType.Slash,
+    editingIndex: 1,
+    editingType: ExplorerEditingType.Rename,
+    editingValue: 'c.txt',
+    focusedIndex: 0,
+    height: 600,
     items: [
       {
         depth: 1,
@@ -85,11 +83,14 @@ test.skip('acceptEdit - rename - nested file', async () => {
         type: DirentType.File,
       },
     ],
-    editingIndex: 1,
-    editingType: ExplorerEditingType.Rename,
-    editingValue: 'c.txt',
+    maxLineY: 2,
+    minLineY: 1,
+    pathSeparator: PathSeparatorType.Slash,
+    root: '/test',
+    top: 0,
   }
   expect(await ViewletExplorerAcceptEdit.acceptEdit(state)).toMatchObject({
+    focusedIndex: 1,
     items: [
       {
         depth: 1,
@@ -110,7 +111,6 @@ test.skip('acceptEdit - rename - nested file', async () => {
         type: DirentType.File,
       },
     ],
-    focusedIndex: 1,
   })
 })
 
@@ -119,14 +119,12 @@ test.skip('acceptEdit - create - insert folder', async () => {
   FileSystem.mkdir.mockImplementation(() => {})
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
-    focusedIndex: -1,
-    top: 0,
-    height: 600,
     deltaY: 0,
-    minLineY: 1,
-    maxLineY: 2,
-    root: '/test',
-    pathSeparator: PathSeparatorType.Slash,
+    editingIndex: 0,
+    editingType: ExplorerEditingType.CreateFolder,
+    editingValue: 'c',
+    focusedIndex: -1,
+    height: 600,
     items: [
       {
         depth: 1,
@@ -156,11 +154,14 @@ test.skip('acceptEdit - create - insert folder', async () => {
         type: DirentType.Directory,
       },
     ],
-    editingIndex: 0,
-    editingType: ExplorerEditingType.CreateFolder,
-    editingValue: 'c',
+    maxLineY: 2,
+    minLineY: 1,
+    pathSeparator: PathSeparatorType.Slash,
+    root: '/test',
+    top: 0,
   }
   expect(await ViewletExplorerAcceptEdit.acceptEdit(state)).toMatchObject({
+    focusedIndex: 2,
     items: [
       {
         depth: 1,
@@ -199,6 +200,5 @@ test.skip('acceptEdit - create - insert folder', async () => {
         type: DirentType.Directory,
       },
     ],
-    focusedIndex: 2,
   })
 })

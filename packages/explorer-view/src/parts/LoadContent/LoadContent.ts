@@ -26,7 +26,7 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
-  const { useChevrons, confirmDelete, sourceControlDecorations } = await GetSettings.getSettings()
+  const { confirmDelete, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
   // TODO path separator could be restored from saved state

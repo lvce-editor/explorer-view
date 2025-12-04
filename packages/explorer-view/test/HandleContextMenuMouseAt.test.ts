@@ -11,12 +11,12 @@ test('handleContextMenuMouseAt', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    uid: 1,
     focusedIndex: 0,
+    itemHeight: 20,
+    minLineY: 0,
+    uid: 1,
     x: 0,
     y: 0,
-    minLineY: 0,
-    itemHeight: 20,
   }
   const result = await HandleContextMenuMouseAt.handleContextMenuMouseAt(state, 100, 200)
   expect(mockRpc.invocations).toEqual([['ContextMenu.show2', 1, 4, 100, 200, { menuId: 4 }]])

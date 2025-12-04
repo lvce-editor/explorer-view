@@ -28,11 +28,11 @@ test('revealItem - item found', async () => {
     ...createDefaultState(),
     items: [
       {
-        name: 'test',
-        type: 1,
-        path: 'test',
         depth: 0,
+        name: 'test',
+        path: 'test',
         selected: false,
+        type: 1,
       },
     ],
   }

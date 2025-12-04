@@ -29,18 +29,18 @@ test.skip('handleBlur - when editing, keeps state unchanged', async () => {
   })
   const state: ExplorerState = {
     ...createDefaultState(),
-    editingType: ExplorerEditingType.CreateFile,
     editingIndex: 0,
+    editingType: ExplorerEditingType.CreateFile,
+    editingValue: 'created.txt',
     items: [
       {
-        type: DirentType.File,
         depth: 0,
         name: '1',
         path: '1',
         selected: false,
+        type: DirentType.File,
       },
     ],
-    editingValue: 'created.txt',
   }
   const newState = await handleBlur(state)
   expect(newState).toEqual({
@@ -59,12 +59,12 @@ test.skip('handleBlur - when editing, keeps state unchanged', async () => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.getPathSeparator'],
     ['FileSystem.writeFile', '1/created.txt', ''],
-    ['IconTheme.getFileIcon', { name: '1', type: DirentType.File, path: '1', depth: 0, selected: false }],
+    ['IconTheme.getFileIcon', { depth: 0, name: '1', path: '1', selected: false, type: DirentType.File }],
     [
       'IconTheme.getIcons',
       [
-        { name: '1', type: DirentType.File, path: '1', depth: 0, selected: false },
-        { name: 'created.txt', type: DirentType.File, path: '1/created.txt', depth: 0, selected: false },
+        { depth: 0, name: '1', path: '1', selected: false, type: DirentType.File },
+        { depth: 0, name: 'created.txt', path: '1/created.txt', selected: false, type: DirentType.File },
       ],
     ],
   ])

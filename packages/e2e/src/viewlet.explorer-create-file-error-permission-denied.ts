@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-error-permission-denied'
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, expect, Locator, Extension }) => {
+export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Locator, Workspace }) => {
   // arrange
   const uri = import.meta.resolve('../fixtures/sample.file-system-provider-create-file-error-permission-denied')
   await Extension.addWebExtension(uri)

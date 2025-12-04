@@ -4,12 +4,12 @@ export const getRenameSelectionRange = (name: string): Selection => {
   const dotIndex = name.lastIndexOf('.')
   if (dotIndex === -1) {
     return {
-      start: 0,
       end: name.length,
+      start: 0,
     }
   }
   return {
-    start: 0,
     end: dotIndex,
+    start: 0,
   }
 }

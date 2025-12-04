@@ -13,11 +13,11 @@ test.skip('handleArrowRightDirectoryExpanded - last item', () => {
 test('handleArrowRightDirectoryExpanded - next item has higher depth', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { path: '/a', name: 'a', type: 1, depth: 0, selected: false },
-      { path: '/b', name: 'b', type: 1, depth: 1, selected: false },
-    ],
     focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'a', path: '/a', selected: false, type: 1 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 1 },
+    ],
   }
   const dirent = { depth: 0 }
   const result = handleArrowRightDirectoryExpanded(state, dirent)
@@ -27,11 +27,11 @@ test('handleArrowRightDirectoryExpanded - next item has higher depth', () => {
 test('handleArrowRightDirectoryExpanded - next item has same depth', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { path: '/a', name: 'a', type: 1, depth: 0, selected: false },
-      { path: '/b', name: 'b', type: 1, depth: 0, selected: false },
-    ],
     focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'a', path: '/a', selected: false, type: 1 },
+      { depth: 0, name: 'b', path: '/b', selected: false, type: 1 },
+    ],
   }
   const dirent = { depth: 0 }
   const result = handleArrowRightDirectoryExpanded(state, dirent)

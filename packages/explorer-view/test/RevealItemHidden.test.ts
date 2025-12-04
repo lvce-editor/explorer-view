@@ -9,12 +9,12 @@ test('revealItemHidden - reveals hidden item', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/root') {
-        return [{ name: 'folder1', isDirectory: true, type: DirentType.File, path: '/root/folder1' }]
+        return [{ isDirectory: true, name: 'folder1', path: '/root/folder1', type: DirentType.File }]
       }
       if (path === '/root/folder1') {
         return [
-          { name: 'file1.txt', isDirectory: false, type: DirentType.File, path: '/root/folder1/file1.txt' },
-          { name: 'file2.txt', isDirectory: false, type: DirentType.File, path: '/root/folder1/file2.txt' },
+          { isDirectory: false, name: 'file1.txt', path: '/root/folder1/file1.txt', type: DirentType.File },
+          { isDirectory: false, name: 'file2.txt', path: '/root/folder1/file2.txt', type: DirentType.File },
         ]
       }
       return []

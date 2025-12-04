@@ -7,8 +7,8 @@ test('renderDragData - no items', () => {
   const oldState: ExplorerState = createDefaultState()
   const newState: ExplorerState = {
     ...oldState,
-    items: [],
     focusedIndex: 0,
+    items: [],
     uid: 123,
   }
   const result = renderDragData(oldState, newState)

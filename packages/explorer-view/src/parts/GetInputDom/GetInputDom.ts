@@ -12,11 +12,10 @@ export const getInputDom = (isEditing: boolean, hasEditingError: boolean): reado
   const ariaLabel = ExplorerStrings.typeAFileName()
   return [
     {
-      type: VirtualDomElements.Input,
       ariaLabel: ariaLabel,
       autocapitalize: 'off',
-      autocorrect: 'off',
       autocomplete: 'off',
+      autocorrect: 'off',
       childCount: 0,
       className: getInputClassName(hasEditingError),
       id: 'ExplorerInput',
@@ -25,6 +24,7 @@ export const getInputDom = (isEditing: boolean, hasEditingError: boolean): reado
       onClick: DomEventListenerFunctions.HandleInputClick,
       onInput: DomEventListenerFunctions.HandleEditingInput,
       spellcheck: 'false',
+      type: VirtualDomElements.Input,
     },
   ]
 }

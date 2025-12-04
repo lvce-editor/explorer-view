@@ -10,13 +10,13 @@ export const cancelEditCreate = async (state: ExplorerState, keepFocus: boolean)
   const newFocusedIndex = getFocusedIndexCancel(items, editingIndex)
   return {
     ...state,
-    items: filteredItems,
-    focusedIndex: newFocusedIndex,
-    focused: keepFocus,
-    editingIndex: -1,
-    editingValue: '',
     editingErrorMessage: '',
+    editingIndex: -1,
     editingType: ExplorerEditingType.None,
+    editingValue: '',
     focus: FocusId.List,
+    focused: keepFocus,
+    focusedIndex: newFocusedIndex,
+    items: filteredItems,
   }
 }

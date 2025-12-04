@@ -41,15 +41,15 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
   const newFocusedIndex = getIndex(newDirents, newUri)
   return {
     ...state,
-    editingIndex: -1,
-    editingValue: '',
-    editingType: ExplorerEditingType.None,
     editingIcon: '',
-    focusedIndex: newFocusedIndex,
-    focused: true,
-    focus: FocusId.List,
-    items: newDirents,
+    editingIndex: -1,
     editingSelectionEnd: 0,
     editingSelectionStart: 0,
+    editingType: ExplorerEditingType.None,
+    editingValue: '',
+    focus: FocusId.List,
+    focused: true,
+    focusedIndex: newFocusedIndex,
+    items: newDirents,
   }
 }

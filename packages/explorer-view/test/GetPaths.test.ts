@@ -10,8 +10,8 @@ test('getPaths - empty array', () => {
 
 test('getPaths - with items', () => {
   const items: readonly ExplorerItem[] = [
-    { type: Directory, name: 'folder1', path: '/folder1', depth: 0, selected: false },
-    { type: File, name: 'file1.txt', path: '/file1.txt', depth: 0, selected: false },
+    { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: Directory },
+    { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
   ]
   const result = getPaths(items)
   expect(result).toHaveLength(2)

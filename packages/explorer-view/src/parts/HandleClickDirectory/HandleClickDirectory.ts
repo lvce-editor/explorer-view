@@ -29,9 +29,9 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
 
   return {
     ...state,
+    focus: FocusId.List,
     focused: keepFocus,
     focusedIndex: newIndex,
     items: newDirents,
-    focus: FocusId.List,
   }
 }

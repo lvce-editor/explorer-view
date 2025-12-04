@@ -12,19 +12,19 @@ test('cancelEdit', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
-    editingValue: 'test.txt',
     editingType: ExplorerEditingType.CreateFile,
+    editingValue: 'test.txt',
   }
 
   const result = await cancelEdit(state)
   expect(result).toEqual({
     ...state,
-    focusedIndex: -1,
-    focused: true,
     editingIndex: -1,
-    editingValue: '',
     editingType: ExplorerEditingType.None,
+    editingValue: '',
     focus: FocusId.List,
+    focused: true,
+    focusedIndex: -1,
   })
   expect(mockRpc.invocations).toEqual([])
 })
@@ -38,8 +38,8 @@ test('cancelEdit - removes editing items', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
-    editingValue: 'test.txt',
     editingType: ExplorerEditingType.CreateFile,
+    editingValue: 'test.txt',
     items: [
       {
         depth: 0,
@@ -47,9 +47,9 @@ test('cancelEdit - removes editing items', async () => {
         name: 'file1.txt',
         path: '/file1.txt',
         posInSet: 1,
+        selected: false,
         setSize: 1,
         type: DirentType.File,
-        selected: false,
       },
       {
         depth: 0,
@@ -57,9 +57,9 @@ test('cancelEdit - removes editing items', async () => {
         name: 'test.txt',
         path: '/test.txt',
         posInSet: 2,
+        selected: false,
         setSize: 1,
         type: DirentType.EditingFile,
-        selected: false,
       },
       {
         depth: 0,
@@ -67,9 +67,9 @@ test('cancelEdit - removes editing items', async () => {
         name: 'newfolder',
         path: '/newfolder',
         posInSet: 3,
+        selected: false,
         setSize: 1,
         type: DirentType.EditingFolder,
-        selected: false,
       },
     ],
   }
@@ -79,13 +79,13 @@ test('cancelEdit - removes editing items', async () => {
   expect(result.items[0].type).toBe(DirentType.File)
   expect(result).toEqual({
     ...state,
-    items: [state.items[0]],
-    focusedIndex: 1,
-    focused: true,
     editingIndex: -1,
-    editingValue: '',
     editingType: ExplorerEditingType.None,
+    editingValue: '',
     focus: FocusId.List,
+    focused: true,
+    focusedIndex: 1,
+    items: [state.items[0]],
   })
   expect(mockRpc.invocations).toEqual([])
 })
@@ -99,15 +99,15 @@ test('cancelEdit - rename file', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 0,
-    editingValue: 'test.txt',
     editingType: ExplorerEditingType.Rename,
+    editingValue: 'test.txt',
     items: [
       {
-        name: 'test.txt',
-        type: DirentType.EditingFile,
-        path: '/test.txt',
         depth: 0,
+        name: 'test.txt',
+        path: '/test.txt',
         selected: false,
+        type: DirentType.EditingFile,
       },
     ],
   }
@@ -115,21 +115,21 @@ test('cancelEdit - rename file', async () => {
   const result = await cancelEdit(state)
   expect(result).toEqual({
     ...state,
+    editingIndex: -1,
+    editingType: ExplorerEditingType.None,
+    editingValue: '',
+    focus: FocusId.List,
+    focused: true,
+    focusedIndex: 0,
     items: [
       {
-        name: 'test.txt',
-        type: DirentType.File,
-        path: '/test.txt',
         depth: 0,
+        name: 'test.txt',
+        path: '/test.txt',
         selected: false,
+        type: DirentType.File,
       },
     ],
-    focusedIndex: 0,
-    focused: true,
-    editingIndex: -1,
-    editingValue: '',
-    editingType: ExplorerEditingType.None,
-    focus: FocusId.List,
   })
   expect(mockRpc.invocations).toEqual([])
 })
@@ -143,15 +143,15 @@ test('cancelEdit - rename folder', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 0,
-    editingValue: 'test',
     editingType: ExplorerEditingType.Rename,
+    editingValue: 'test',
     items: [
       {
-        name: 'test',
-        type: DirentType.EditingFolder,
-        path: '/test',
         depth: 0,
+        name: 'test',
+        path: '/test',
         selected: false,
+        type: DirentType.EditingFolder,
       },
     ],
   }
@@ -159,21 +159,21 @@ test('cancelEdit - rename folder', async () => {
   const result = await cancelEdit(state)
   expect(result).toEqual({
     ...state,
+    editingIndex: -1,
+    editingType: ExplorerEditingType.None,
+    editingValue: '',
+    focus: FocusId.List,
+    focused: true,
+    focusedIndex: 0,
     items: [
       {
-        name: 'test',
-        type: DirentType.Directory,
-        path: '/test',
         depth: 0,
+        name: 'test',
+        path: '/test',
         selected: false,
+        type: DirentType.Directory,
       },
     ],
-    focusedIndex: 0,
-    focused: true,
-    editingIndex: -1,
-    editingValue: '',
-    editingType: ExplorerEditingType.None,
-    focus: FocusId.List,
   })
   expect(mockRpc.invocations).toEqual([])
 })
@@ -187,22 +187,22 @@ test('cancelEdit - create file', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
-    editingValue: 'test.txt',
     editingType: ExplorerEditingType.CreateFile,
+    editingValue: 'test.txt',
     items: [
       {
-        name: 'file1.txt',
-        type: DirentType.File,
-        path: '/file1.txt',
         depth: 0,
+        name: 'file1.txt',
+        path: '/file1.txt',
         selected: false,
+        type: DirentType.File,
       },
       {
-        name: 'test.txt',
-        type: DirentType.EditingFile,
-        path: '/test.txt',
         depth: 0,
+        name: 'test.txt',
+        path: '/test.txt',
         selected: false,
+        type: DirentType.EditingFile,
       },
     ],
   }
@@ -212,13 +212,13 @@ test('cancelEdit - create file', async () => {
   expect(result.items[0].type).toBe(DirentType.File)
   expect(result).toEqual({
     ...state,
-    items: [state.items[0]],
-    focusedIndex: 1,
-    focused: true,
     editingIndex: -1,
-    editingValue: '',
     editingType: ExplorerEditingType.None,
+    editingValue: '',
     focus: FocusId.List,
+    focused: true,
+    focusedIndex: 1,
+    items: [state.items[0]],
   })
   expect(mockRpc.invocations).toEqual([])
 })

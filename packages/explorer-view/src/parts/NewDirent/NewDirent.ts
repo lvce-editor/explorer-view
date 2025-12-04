@@ -21,7 +21,7 @@ const getFittingIndex = (dirents: readonly ExplorerItem[], startIndex: number): 
 
 export const newDirent = async (state: ExplorerState, editingType: number): Promise<ExplorerState> => {
   // TODO do it like vscode, select position between folders and files
-  const { root, focusedIndex, items } = state
+  const { focusedIndex, items, root } = state
   const index = getFittingIndex(items, focusedIndex)
   const direntType = GetNewDirentType.getNewDirentType(editingType)
   const newDirents = await GetNewDirentsForNewDirent.getNewDirentsForNewDirent(items, index, direntType, root)

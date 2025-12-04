@@ -5,55 +5,55 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('canBeDroppedInto - directory', () => {
   const item: ExplorerItem = {
-    name: 'directory',
-    type: DirentType.Directory,
-    path: '/directory',
     depth: 0,
+    name: 'directory',
+    path: '/directory',
     selected: false,
+    type: DirentType.Directory,
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(true)
 })
 
 test('canBeDroppedInto - directory expanded', () => {
   const item: ExplorerItem = {
-    name: 'directory',
-    type: DirentType.DirectoryExpanded,
-    path: '/directory',
     depth: 0,
+    name: 'directory',
+    path: '/directory',
     selected: false,
+    type: DirentType.DirectoryExpanded,
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(true)
 })
 
 test('canBeDroppedInto - directory expanding', () => {
   const item: ExplorerItem = {
-    name: 'directory',
-    type: DirentType.DirectoryExpanding,
-    path: '/directory',
     depth: 0,
+    name: 'directory',
+    path: '/directory',
     selected: false,
+    type: DirentType.DirectoryExpanding,
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(true)
 })
 
 test('canBeDroppedInto - file', () => {
   const item: ExplorerItem = {
-    name: 'file.txt',
-    type: DirentType.File,
-    path: '/file.txt',
     depth: 0,
+    name: 'file.txt',
+    path: '/file.txt',
     selected: false,
+    type: DirentType.File,
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(false)
 })
 
 test('canBeDroppedInto - unknown type', () => {
   const item: ExplorerItem = {
-    name: 'unknown',
-    type: 999_999,
-    path: '/unknown',
     depth: 0,
+    name: 'unknown',
+    path: '/unknown',
     selected: false,
+    type: 999_999,
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(false)
 })

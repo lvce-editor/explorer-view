@@ -10,25 +10,25 @@ test('saveState - returns correct saved state', () => {
   const oldState = createDefaultState()
   const newState: ExplorerState = {
     ...oldState,
-    items: [
-      { name: 'test', type: DirentType.DirectoryExpanded, path: '/test', depth: 0, selected: false },
-      { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 1, selected: false },
-    ],
-    root: '/',
     deltaY: 0,
-    minLineY: 0,
+    items: [
+      { depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.DirectoryExpanded },
+      { depth: 1, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File },
+    ],
     maxLineY: 100,
+    minLineY: 0,
+    root: '/',
   }
   ExplorerStates.set(uid, oldState, newState)
 
   const result = saveState(newState)
 
   expect(result).toEqual({
-    expandedPaths: ['/test'],
-    root: '/',
-    minLineY: 0,
-    maxLineY: 100,
     deltaY: 0,
+    expandedPaths: ['/test'],
+    maxLineY: 100,
+    minLineY: 0,
+    root: '/',
   })
 })
 
@@ -37,21 +37,21 @@ test('saveState - handles empty items', () => {
   const oldState = createDefaultState()
   const newState: ExplorerState = {
     ...oldState,
-    items: [],
-    root: '/',
     deltaY: 0,
-    minLineY: 0,
+    items: [],
     maxLineY: 0,
+    minLineY: 0,
+    root: '/',
   }
   ExplorerStates.set(uid, oldState, newState)
 
   const result = saveState(newState)
 
   expect(result).toEqual({
-    expandedPaths: [],
-    root: '/',
-    minLineY: 0,
-    maxLineY: 0,
     deltaY: 0,
+    expandedPaths: [],
+    maxLineY: 0,
+    minLineY: 0,
+    root: '/',
   })
 })

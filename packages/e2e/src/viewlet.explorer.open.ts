@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'explorer.open'
 
-export const test: Test = async ({ FileSystem, Workspace, SideBar, Locator, expect }) => {
+export const test: Test = async ({ expect, FileSystem, Locator, SideBar, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/test.css`, `abc`)

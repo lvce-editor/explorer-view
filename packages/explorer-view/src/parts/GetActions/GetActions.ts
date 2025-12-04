@@ -9,28 +9,28 @@ export const getActions = (root: string): readonly ViewletAction[] => {
   }
   return [
     {
-      type: ActionType.Button,
-      id: ViewletExplorerStrings.newFile(),
-      icon: MaskIcon.NewFile,
       command: 'newFile',
+      icon: MaskIcon.NewFile,
+      id: ViewletExplorerStrings.newFile(),
+      type: ActionType.Button,
     },
     {
-      type: ActionType.Button,
-      id: ViewletExplorerStrings.newFolder(),
-      icon: MaskIcon.NewFolder,
       command: 'newFolder',
+      icon: MaskIcon.NewFolder,
+      id: ViewletExplorerStrings.newFolder(),
+      type: ActionType.Button,
     },
     {
-      type: ActionType.Button,
-      id: ViewletExplorerStrings.refresh(),
-      icon: MaskIcon.Refresh,
       command: 'refresh',
+      icon: MaskIcon.Refresh,
+      id: ViewletExplorerStrings.refresh(),
+      type: ActionType.Button,
     },
     {
-      type: ActionType.Button,
-      id: ViewletExplorerStrings.collapseAll(),
-      icon: MaskIcon.CollapseAll,
       command: 'collapseAll',
+      icon: MaskIcon.CollapseAll,
+      id: ViewletExplorerStrings.collapseAll(),
+      type: ActionType.Button,
     },
   ]
 }

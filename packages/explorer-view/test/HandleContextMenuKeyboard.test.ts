@@ -12,10 +12,10 @@ test('handleContextMenuKeyboard', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 2,
+    itemHeight: 20,
+    minLineY: 0,
     x: 100,
     y: 200,
-    minLineY: 0,
-    itemHeight: 20,
   }
   const result = await HandleContextMenuKeyboard.handleContextMenuKeyboard(state)
   expect(mockRpc.invocations).toEqual([['ContextMenu.show2', 1, 4, 100, 260, { menuId: 4 }]])

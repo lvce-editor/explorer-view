@@ -8,13 +8,6 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 test('acceptCreateFile', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.createFile'() {},
-    'FileSystem.writeFile'() {},
-    'IconTheme.getFolderIcon'() {
-      return 'folder-icon'
-    },
-    'IconTheme.getIcons'() {
-      return ['folder-icon']
-    },
     'FileSystem.readDirWithFileTypes'(...params: any[]) {
       const path = params[0]
       if (path === '/test') {
@@ -22,22 +15,29 @@ test('acceptCreateFile', async () => {
       }
       return []
     },
+    'FileSystem.writeFile'() {},
+    'IconTheme.getFolderIcon'() {
+      return 'folder-icon'
+    },
+    'IconTheme.getIcons'() {
+      return ['folder-icon']
+    },
   })
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/test',
-    editingValue: 'test.txt',
     editingIndex: 0,
+    editingValue: 'test.txt',
     items: [
       {
-        name: 'test',
-        type: 1,
-        path: 'test',
         depth: 0,
+        name: 'test',
+        path: 'test',
         selected: false,
+        type: 1,
       },
     ],
+    root: '/test',
   }
   const newState = await acceptCreateFile(state)
   expect(newState.editingIndex).toBe(-1)

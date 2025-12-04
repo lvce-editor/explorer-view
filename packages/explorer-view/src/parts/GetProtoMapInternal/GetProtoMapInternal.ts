@@ -18,14 +18,14 @@ export const getProtoMapInternal = (
     const item = items[i]
     const path = join2(root, item.name)
     const displayDirent: ExplorerItem = {
-      name: item.name,
-      posInSet: i + 1,
-      setSize: items.length,
       depth,
-      type: restoreDirentType(item.type, path, expandedPaths),
-      path,
       icon: '',
+      name: item.name,
+      path,
+      posInSet: i + 1,
       selected: false,
+      setSize: items.length,
+      type: restoreDirentType(item.type, path, expandedPaths),
     }
     const children = getProtoMapInternal(path, pathToDirents, expandedPaths, depth + 1)
     protoMap.push(displayDirent, ...children)

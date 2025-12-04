@@ -6,17 +6,17 @@ test('renderItems - basic', () => {
   const oldState = createDefaultState()
   const newState = {
     ...createDefaultState(),
-    width: 500,
     focused: true,
     items: [
       {
-        name: 'test',
-        type: 1,
-        path: '/test',
         depth: 0,
+        name: 'test',
+        path: '/test',
         selected: false,
+        type: 1,
       },
     ],
+    width: 500,
   }
   const result = renderItems(oldState, newState)
   expect(result[0]).toBe('Viewlet.setDom2')
@@ -27,17 +27,17 @@ test('renderItems - narrow width', () => {
   const oldState = createDefaultState()
   const newState = {
     ...createDefaultState(),
-    width: 400,
     focused: true,
     items: [
       {
-        name: 'test',
-        type: 1,
-        path: '/test',
         depth: 0,
+        name: 'test',
+        path: '/test',
         selected: false,
+        type: 1,
       },
     ],
+    width: 400,
   }
   const result = renderItems(oldState, newState)
   expect(result[0]).toBe('Viewlet.setDom2')

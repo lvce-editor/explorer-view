@@ -64,21 +64,21 @@ export const getVisibleExplorerItems = (
     }
     visible.push({
       ...item,
-      posInSet: item.posInSet ?? i + 1,
-      setSize: item.setSize ?? items.length,
-      isEditing: isEditing,
-      hasEditingError: isEditing && Boolean(editingErrorMessage),
-      icon,
-      indent,
       ariaExpanded,
       chevron,
-      id,
       className,
-      isCut,
-      isIgnored,
-      index: i,
       // @ts-ignore
       decoration,
+      hasEditingError: isEditing && Boolean(editingErrorMessage),
+      icon,
+      id,
+      indent,
+      index: i,
+      isCut,
+      isEditing: isEditing,
+      isIgnored,
+      posInSet: item.posInSet ?? i + 1,
+      setSize: item.setSize ?? items.length,
     })
   }
   return visible

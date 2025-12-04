@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-copy-and-paste-folder-error'
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, ClipBoard }) => {
+export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()

@@ -6,18 +6,18 @@ export const scrollInto = (index: number, minLineY: number, maxLineY: number): S
   const largerHalf = diff - smallerHalf
   if (index < minLineY) {
     return {
-      newMinLineY: index - smallerHalf,
       newMaxLineY: index + largerHalf,
+      newMinLineY: index - smallerHalf,
     }
   }
   if (index >= maxLineY) {
     return {
-      newMinLineY: index - smallerHalf,
       newMaxLineY: index + largerHalf,
+      newMinLineY: index - smallerHalf,
     }
   }
   return {
-    newMinLineY: minLineY,
     newMaxLineY: maxLineY,
+    newMinLineY: minLineY,
   }
 }

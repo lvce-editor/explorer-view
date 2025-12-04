@@ -14,12 +14,12 @@ export const treeToArrayInternal = (map: Tree, root: string, items: ExplorerItem
     const absolutePath = join2(root, childPath)
     items.push({
       depth,
-      posInSet: i + 1,
-      setSize: count,
       icon: '',
-      path: absolutePath,
-      selected: false,
       name: child.name,
+      path: absolutePath,
+      posInSet: i + 1,
+      selected: false,
+      setSize: count,
       type: child.type,
     })
     treeToArrayInternal(map, root, items, childPath, depth + 1)

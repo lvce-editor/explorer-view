@@ -5,10 +5,10 @@ import { sendMessagePortToFileSystemWorker } from '../src/parts/SendMessagePortT
 test('sendMessagePortToFileSystemWorker calls RendererWorker.sendMessagePortToFileSystemWorker with correct parameters', async () => {
   const { port1 } = new MessageChannel()
   const mockRpc = RendererWorker.registerMockRpc({
-    'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
+    'FileSystem.handleMessagePort'() {
       return undefined
     },
-    'FileSystem.handleMessagePort'() {
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
       return undefined
     },
   })
@@ -25,10 +25,10 @@ test('sendMessagePortToFileSystemWorker handles different port types', async () 
   const { port1: port2a } = new MessageChannel()
 
   const mockRpc = RendererWorker.registerMockRpc({
-    'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
+    'FileSystem.handleMessagePort'() {
       return undefined
     },
-    'FileSystem.handleMessagePort'() {
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
       return undefined
     },
   })
@@ -46,11 +46,11 @@ test('sendMessagePortToFileSystemWorker propagates errors from RendererWorker', 
   const { port1 } = new MessageChannel()
 
   const mockRpc = RendererWorker.registerMockRpc({
-    'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
-      throw new Error('RPC call failed')
-    },
     'FileSystem.handleMessagePort'() {
       return undefined
+    },
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
+      throw new Error('RPC call failed')
     },
   })
 
@@ -64,10 +64,10 @@ test('sendMessagePortToFileSystemWorker returns void when successful', async () 
   const { port1 } = new MessageChannel()
 
   RendererWorker.registerMockRpc({
-    'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
+    'FileSystem.handleMessagePort'() {
       return undefined
     },
-    'FileSystem.handleMessagePort'() {
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToFileSystemWorker'() {
       return undefined
     },
   })

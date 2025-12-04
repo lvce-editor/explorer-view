@@ -7,32 +7,32 @@ import * as ViewletExplorerFocusPrevious from '../src/parts/FocusPrevious/FocusP
 test('focusPrevious', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/home/test-user/test-path',
     focusedIndex: 1,
     height: 600,
     items: [
       {
+        depth: 0,
         name: 'index.css',
-        type: DirentType.File,
         path: '/index.css',
-        depth: 0,
         selected: false,
-      },
-      {
-        name: 'index.html',
         type: DirentType.File,
-        path: '/index.html',
-        depth: 0,
-        selected: false,
       },
       {
-        name: 'test-folder',
-        type: DirentType.Directory,
-        path: '/test-folder',
         depth: 0,
+        name: 'index.html',
+        path: '/index.html',
         selected: false,
+        type: DirentType.File,
+      },
+      {
+        depth: 0,
+        name: 'test-folder',
+        path: '/test-folder',
+        selected: false,
+        type: DirentType.Directory,
       },
     ],
+    root: '/home/test-user/test-path',
   }
   expect(ViewletExplorerFocusPrevious.focusPrevious(state)).toMatchObject({
     focusedIndex: 0,
@@ -42,32 +42,32 @@ test('focusPrevious', () => {
 test('focusPrevious - at start', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/home/test-user/test-path',
     focusedIndex: 0,
     height: 600,
     items: [
       {
+        depth: 0,
         name: 'index.css',
-        type: DirentType.File,
         path: '/index.css',
-        depth: 0,
         selected: false,
-      },
-      {
-        name: 'index.html',
         type: DirentType.File,
-        path: '/index.html',
-        depth: 0,
-        selected: false,
       },
       {
-        name: 'test-folder',
-        type: DirentType.Directory,
-        path: '/test-folder',
         depth: 0,
+        name: 'index.html',
+        path: '/index.html',
         selected: false,
+        type: DirentType.File,
+      },
+      {
+        depth: 0,
+        name: 'test-folder',
+        path: '/test-folder',
+        selected: false,
+        type: DirentType.Directory,
       },
     ],
+    root: '/home/test-user/test-path',
   }
   expect(ViewletExplorerFocusPrevious.focusPrevious(state)).toMatchObject({
     focusedIndex: 0,
@@ -77,32 +77,32 @@ test('focusPrevious - at start', () => {
 test('focusPrevious - when no focus', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/home/test-user/test-path',
     focusedIndex: -1,
     height: 600,
     items: [
       {
+        depth: 0,
         name: 'index.css',
-        type: DirentType.File,
         path: '/index.css',
-        depth: 0,
         selected: false,
-      },
-      {
-        name: 'index.html',
         type: DirentType.File,
-        path: '/index.html',
-        depth: 0,
-        selected: false,
       },
       {
-        name: 'test-folder',
-        type: DirentType.Directory,
-        path: '/test-folder',
         depth: 0,
+        name: 'index.html',
+        path: '/index.html',
         selected: false,
+        type: DirentType.File,
+      },
+      {
+        depth: 0,
+        name: 'test-folder',
+        path: '/test-folder',
+        selected: false,
+        type: DirentType.Directory,
       },
     ],
+    root: '/home/test-user/test-path',
   }
   expect(ViewletExplorerFocusPrevious.focusPrevious(state)).toMatchObject({
     focusedIndex: 2,
@@ -112,10 +112,10 @@ test('focusPrevious - when no focus', () => {
 test('focusPrevious - when no focus and no dirents', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: '/home/test-user/test-path',
     focusedIndex: -1,
     height: 600,
     items: [],
+    root: '/home/test-user/test-path',
   }
   expect(ViewletExplorerFocusPrevious.focusPrevious(state)).toMatchObject({
     focusedIndex: -1,

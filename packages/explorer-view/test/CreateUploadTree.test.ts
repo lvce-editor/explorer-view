@@ -3,8 +3,6 @@ import { createUploadTree } from '../src/parts/CreateUploadTree/CreateUploadTree
 
 test('createUploadTree with files', async (): Promise<void> => {
   const fileHandle = {
-    kind: 'file',
-    name: 'test.txt',
     async getFile(): Promise<{ text(): Promise<string> }> {
       return {
         async text(): Promise<string> {
@@ -13,6 +11,8 @@ test('createUploadTree with files', async (): Promise<void> => {
       }
     },
     isSameEntry: async (): Promise<boolean> => false,
+    kind: 'file',
+    name: 'test.txt',
   } as FileSystemHandle
 
   const result = await createUploadTree('root', [fileHandle])
@@ -23,8 +23,6 @@ test('createUploadTree with files', async (): Promise<void> => {
 
 test('createUploadTree with directories', async (): Promise<void> => {
   const fileHandle = {
-    kind: 'file',
-    name: 'test.txt',
     async getFile(): Promise<{ text(): Promise<string> }> {
       return {
         async text(): Promise<string> {
@@ -33,9 +31,12 @@ test('createUploadTree with directories', async (): Promise<void> => {
       }
     },
     isSameEntry: async (): Promise<boolean> => false,
+    kind: 'file',
+    name: 'test.txt',
   } as FileSystemHandle
 
   const directoryHandle = {
+    isSameEntry: async (): Promise<boolean> => false,
     kind: 'directory',
     name: 'dir',
     values(): { [Symbol.asyncIterator](): AsyncGenerator<FileSystemHandle> } {
@@ -45,7 +46,6 @@ test('createUploadTree with directories', async (): Promise<void> => {
         },
       }
     },
-    isSameEntry: async (): Promise<boolean> => false,
   } as FileSystemHandle
 
   const result = await createUploadTree('root', [directoryHandle])
@@ -58,8 +58,6 @@ test('createUploadTree with directories', async (): Promise<void> => {
 
 test('createUploadTree with mixed content', async (): Promise<void> => {
   const fileHandle1 = {
-    kind: 'file',
-    name: 'test1.txt',
     async getFile(): Promise<{ text(): Promise<string> }> {
       return {
         async text(): Promise<string> {
@@ -68,11 +66,11 @@ test('createUploadTree with mixed content', async (): Promise<void> => {
       }
     },
     isSameEntry: async (): Promise<boolean> => false,
+    kind: 'file',
+    name: 'test1.txt',
   } as FileSystemHandle
 
   const fileHandle2 = {
-    kind: 'file',
-    name: 'test2.txt',
     async getFile(): Promise<{ text(): Promise<string> }> {
       return {
         async text(): Promise<string> {
@@ -81,9 +79,12 @@ test('createUploadTree with mixed content', async (): Promise<void> => {
       }
     },
     isSameEntry: async (): Promise<boolean> => false,
+    kind: 'file',
+    name: 'test2.txt',
   } as FileSystemHandle
 
   const directoryHandle = {
+    isSameEntry: async (): Promise<boolean> => false,
     kind: 'directory',
     name: 'dir',
     values(): { [Symbol.asyncIterator](): AsyncGenerator<FileSystemHandle> } {
@@ -93,14 +94,13 @@ test('createUploadTree with mixed content', async (): Promise<void> => {
         },
       }
     },
-    isSameEntry: async (): Promise<boolean> => false,
   } as FileSystemHandle
 
   const result = await createUploadTree('root', [fileHandle1, directoryHandle])
   expect(result).toEqual({
-    'test1.txt': 'file content 1',
     dir: {
       'test2.txt': 'file content 2',
     },
+    'test1.txt': 'file content 1',
   })
 })

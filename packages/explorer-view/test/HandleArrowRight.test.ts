@@ -17,8 +17,8 @@ test('handleArrowRight - no focused item', async () => {
 test('handleArrowRight - file', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ type: DirentType.File, name: 'test.txt', path: '/test.txt', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
   }
   const result = await handleArrowRight(state)
   expect(result).toBe(state)
@@ -32,8 +32,8 @@ test.skip('handleArrowRight - directory', async () => {
   })
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ type: DirentType.Directory, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Directory }],
   }
   const result = await handleArrowRight(state)
   expect(result).not.toBe(state)
@@ -43,8 +43,8 @@ test.skip('handleArrowRight - directory', async () => {
 test('handleArrowRight - symlink file', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ type: DirentType.SymLinkFile, name: 'test.txt', path: '/test.txt', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.SymLinkFile }],
   }
   const result = await handleArrowRight(state)
   expect(result).toBe(state)
@@ -58,8 +58,8 @@ test.skip('handleArrowRight - symlink folder', async () => {
   })
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ type: DirentType.SymLinkFolder, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.SymLinkFolder }],
   }
   const result = await handleArrowRight(state)
   expect(result).not.toBe(state)
@@ -74,8 +74,8 @@ test.skip('handleArrowRight - directory expanded', async () => {
   })
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ type: DirentType.DirectoryExpanded, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.DirectoryExpanded }],
   }
   const result = await handleArrowRight(state)
   expect(result).not.toBe(state)
@@ -93,8 +93,8 @@ test.skip('handleArrowRight - symlink', async () => {
   })
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ type: DirentType.Symlink, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Symlink }],
   }
   const result = await handleArrowRight(state)
   expect(result).not.toBe(state)
@@ -104,8 +104,8 @@ test.skip('handleArrowRight - symlink', async () => {
 test('handleArrowRight - invalid type', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ type: 999, name: 'test', path: '/test', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: 999 }],
   }
   await expect(handleArrowRight(state)).rejects.toThrow('unsupported file type 999')
 })

@@ -10,9 +10,9 @@ export const getErrorMessageDom = (errorMessage: string): readonly VirtualDomNod
 
   return [
     {
-      type: VirtualDomElements.Div,
-      className: MergeClassNames.mergeClassNames(ClassNames.ExplorerErrorMessage),
       childCount: 1,
+      className: MergeClassNames.mergeClassNames(ClassNames.ExplorerErrorMessage),
+      type: VirtualDomElements.Div,
     },
     text(errorMessage),
   ]
