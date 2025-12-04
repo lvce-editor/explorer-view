@@ -13,9 +13,9 @@ export const getSettings = async (): Promise<Settings> => {
   const sourceControlDecorationsRaw = await RendererWorker.invoke('Preferences.get', 'explorer.sourceControlDecorations')
   const sourceControlDecorations = sourceControlDecorationsRaw === false ? false : true
   return {
-    useChevrons,
     confirmDelete,
     confirmPaste,
     sourceControlDecorations,
+    useChevrons,
   }
 }

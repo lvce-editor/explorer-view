@@ -12,8 +12,8 @@ test('writeText', async () => {
 
 test('readNativeFiles', async () => {
   const expectedResult = {
-    type: 'copy',
     files: ['/test/file1.txt', '/test/file2.txt'],
+    type: 'copy',
   }
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {

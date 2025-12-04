@@ -10,32 +10,32 @@ import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 export const getExplorerWelcomeVirtualDom = (isWide: boolean): readonly VirtualDomNode[] => {
   return [
     {
-      type: VirtualDomElements.Div,
+      childCount: 1,
       className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
       tabIndex: 0,
-      childCount: 1,
-    },
-    {
       type: VirtualDomElements.Div,
-      className: ClassNames.Welcome,
-      childCount: 2,
     },
     {
-      type: VirtualDomElements.P,
-      className: ClassNames.WelcomeMessage,
+      childCount: 2,
+      className: ClassNames.Welcome,
+      type: VirtualDomElements.Div,
+    },
+    {
       childCount: 1,
+      className: ClassNames.WelcomeMessage,
+      type: VirtualDomElements.P,
     },
     text(ExplorerStrings.youHaveNotYetOpenedAFolder()),
     {
-      type: VirtualDomElements.Button,
+      childCount: 1,
       className: MergeClassNames.mergeClassNames(
         ClassNames.Button,
         ClassNames.ButtonPrimary,
         isWide ? ClassNames.ButtonWide : ClassNames.ButtonNarrow,
       ),
       name: InputName.OpenFolder,
-      childCount: 1,
       onClick: DomEventListenerFunctions.HandleClickOpenFolder,
+      type: VirtualDomElements.Button,
     },
     text(ExplorerStrings.openFolder()),
   ]

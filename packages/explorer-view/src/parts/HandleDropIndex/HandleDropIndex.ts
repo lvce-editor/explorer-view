@@ -35,7 +35,7 @@ const handleDropIntoFolder = async (
   files: readonly File[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
-  const { pathSeparator, items } = state
+  const { items, pathSeparator } = state
   // @ts-ignore
   for (const file of fileHandles) {
     // TODO path basename
@@ -49,8 +49,8 @@ const handleDropIntoFolder = async (
   // TODO update maxlineY
   return {
     ...state,
-    items: mergedDirents,
     dropTargets: [],
+    items: mergedDirents,
   }
 }
 

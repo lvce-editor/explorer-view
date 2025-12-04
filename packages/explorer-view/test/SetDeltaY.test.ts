@@ -55,11 +55,11 @@ test('should clamp deltaY to max scroll value', async () => {
     },
   })
   const items: ExplorerItem[] = Array.from({ length: 20 }, (_, i) => ({
-    name: `file${i}`,
-    type: 1,
-    path: `/file${i}`,
     depth: 0,
+    name: `file${i}`,
+    path: `/file${i}`,
     selected: false,
+    type: 1,
   }))
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -84,11 +84,11 @@ test('should update visible items and icons', async () => {
     },
   })
   const items: ExplorerItem[] = Array.from({ length: 20 }, (_, i) => ({
-    name: `file${i}`,
-    type: 1,
-    path: `/file${i}`,
     depth: 0,
+    name: `file${i}`,
+    path: `/file${i}`,
     selected: false,
+    type: 1,
   }))
   const state: ExplorerState = {
     ...createDefaultState(),

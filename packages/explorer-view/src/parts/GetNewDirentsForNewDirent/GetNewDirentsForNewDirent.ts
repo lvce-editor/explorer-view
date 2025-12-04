@@ -9,14 +9,14 @@ export const getNewDirentsForNewDirent = async (
 ): Promise<readonly ExplorerItem[]> => {
   if (items.length === 0 || focusedIndex === -1) {
     const newDirent: ExplorerItem = {
-      name: '',
-      type,
-      path: root,
       depth: 0,
-      selected: false,
-      posInSet: 1,
-      setSize: 1,
       icon: '',
+      name: '',
+      path: root,
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type,
     }
     return [...items, newDirent]
   }

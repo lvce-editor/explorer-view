@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-copy-path-folder'
 
-export const test: Test = async ({ Command, FileSystem, Workspace, Explorer, ClipBoard }) => {
+export const test: Test = async ({ ClipBoard, Command, Explorer, FileSystem, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()

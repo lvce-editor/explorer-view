@@ -6,17 +6,17 @@ import { handleWorkspaceChange } from '../src/parts/HandleWorkspaceChange/Handle
 
 test('should update state with new workspace path and load content', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return '/new/workspace/path'
+    'FileSystem.getPathSeparator'() {
+      return '/'
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'Preferences.get'() {
       return false
+    },
+    'Workspace.getPath'() {
+      return '/new/workspace/path'
     },
   })
 
@@ -54,17 +54,17 @@ test('should update state with new workspace path and load content', async () =>
 
 test('should preserve state properties when updating workspace', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return '/another/workspace'
+    'FileSystem.getPathSeparator'() {
+      return '/'
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'Preferences.get'() {
       return true
+    },
+    'Workspace.getPath'() {
+      return '/another/workspace'
     },
   })
 
@@ -115,20 +115,20 @@ test('should preserve state properties when updating workspace', async () => {
 
 test('should handle workspace path change with existing content', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return '/changed/workspace/path'
-    },
-    'FileSystem.readDirWithFileTypes'() {
-      return [
-        { name: 'file1.txt', isFile: true, isDirectory: false },
-        { name: 'folder1', isFile: false, isDirectory: true },
-      ]
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { isDirectory: false, isFile: true, name: 'file1.txt' },
+        { isDirectory: true, isFile: false, name: 'folder1' },
+      ]
+    },
     'Preferences.get'() {
       return false
+    },
+    'Workspace.getPath'() {
+      return '/changed/workspace/path'
     },
   })
 
@@ -162,17 +162,17 @@ test('should handle workspace path change with existing content', async () => {
 
 test('should handle workspace path change with chevrons enabled', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return '/chevron/workspace'
+    'FileSystem.getPathSeparator'() {
+      return '/'
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'Preferences.get'() {
       return true
+    },
+    'Workspace.getPath'() {
+      return '/chevron/workspace'
     },
   })
 
@@ -204,17 +204,17 @@ test('should handle workspace path change with chevrons enabled', async () => {
 
 test('should handle different path separators', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.getPath'() {
-      return 'C:\\windows\\workspace'
+    'FileSystem.getPathSeparator'() {
+      return '\\'
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
-    'FileSystem.getPathSeparator'() {
-      return '\\'
-    },
     'Preferences.get'() {
       return false
+    },
+    'Workspace.getPath'() {
+      return 'C:\\windows\\workspace'
     },
   })
 

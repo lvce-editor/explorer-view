@@ -11,7 +11,7 @@ test('should upload a file', async () => {
   })
   const state = createDefaultState()
   const file = { name: 'test.txt', text: (): string => 'hello' }
-  const dirents = [{ type: 1, file }]
+  const dirents = [{ file, type: 1 }]
   await handleUpload(state, dirents)
   expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', expect.stringContaining('test.txt'), 'hello']])
 })

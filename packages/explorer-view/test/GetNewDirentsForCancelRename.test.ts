@@ -5,41 +5,41 @@ import { getNewDirentsForCancelRename } from '../src/parts/GetNewDirentsForCance
 test('getNewDirentsForCancelRename - file', () => {
   const items = [
     {
-      name: 'test.txt',
-      type: DirentType.EditingFile,
-      path: '/test.txt',
       depth: 0,
+      name: 'test.txt',
+      path: '/test.txt',
       selected: false,
+      type: DirentType.EditingFile,
     },
   ]
   const result = getNewDirentsForCancelRename(items, 0)
   expect(result).toHaveLength(1)
   expect(result[0]).toEqual({
-    name: 'test.txt',
-    type: DirentType.File,
-    path: '/test.txt',
     depth: 0,
+    name: 'test.txt',
+    path: '/test.txt',
     selected: false,
+    type: DirentType.File,
   })
 })
 
 test('getNewDirentsForCancelRename - folder', () => {
   const items = [
     {
-      name: 'test',
-      type: DirentType.EditingFolder,
-      path: '/test',
       depth: 0,
+      name: 'test',
+      path: '/test',
       selected: false,
+      type: DirentType.EditingFolder,
     },
   ]
   const result = getNewDirentsForCancelRename(items, 0)
   expect(result).toHaveLength(1)
   expect(result[0]).toEqual({
-    name: 'test',
-    type: DirentType.Directory,
-    path: '/test',
     depth: 0,
+    name: 'test',
+    path: '/test',
     selected: false,
+    type: DirentType.Directory,
   })
 })

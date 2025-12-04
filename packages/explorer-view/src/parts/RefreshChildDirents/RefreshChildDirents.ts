@@ -13,11 +13,11 @@ export const refreshChildDirent = async (
   const type = dirent.type === 'directory' ? (isExpandedFolder ? DirentType.DirectoryExpanded : DirentType.Directory) : DirentType.File
 
   const item: ExplorerItem = {
-    name: dirent.name,
-    type,
-    path,
     depth: folder.depth + 1,
+    name: dirent.name,
+    path,
     selected: false,
+    type,
   }
 
   if (isExpandedFolder && dirent.type === 'directory') {

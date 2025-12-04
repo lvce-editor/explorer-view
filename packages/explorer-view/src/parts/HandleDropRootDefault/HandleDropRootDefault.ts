@@ -14,7 +14,7 @@ const getMergedDirents = async (root: string, pathSeparator: string, dirents: re
 }
 
 export const handleDrop = async (state: ExplorerState, fileHandles: readonly FileSystemHandle[], files: readonly File[]): Promise<ExplorerState> => {
-  const { root, pathSeparator, items } = state
+  const { items, pathSeparator, root } = state
   const handled = await UploadFileSystemHandles.uploadFileSystemHandles(root, pathSeparator, fileHandles)
   if (handled) {
     const updated = await Refresh.refresh(state)
@@ -26,7 +26,7 @@ export const handleDrop = async (state: ExplorerState, fileHandles: readonly Fil
   const mergedDirents = await getMergedDirents(root, pathSeparator, items)
   return {
     ...state,
-    items: mergedDirents,
     dropTargets: [],
+    items: mergedDirents,
   }
 }

@@ -26,7 +26,7 @@ export const updateExplorerAfterFileOperations = async (
   state: ExplorerState,
   operations: readonly FileOperation[],
 ): Promise<ExplorerUpdateResult> => {
-  const { editingValue, minLineY, height, itemHeight, fileIconCache, pathSeparator, root, focusedIndex, items } = state
+  const { editingValue, fileIconCache, focusedIndex, height, itemHeight, items, minLineY, pathSeparator, root } = state
   const newFileName = editingValue
   const parentFolder = getParentFolder(items, focusedIndex, root)
   const absolutePath = join2(parentFolder, newFileName)
@@ -47,11 +47,11 @@ export const updateExplorerAfterFileOperations = async (
   const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
 
   return {
-    newItems: dirents,
-    newFocusedIndex,
     newFileIconCache,
+    newFocusedIndex,
     newIcons: icons,
-    newMinLineY: minLineY,
+    newItems: dirents,
     newMaxLineY: maxLineY,
+    newMinLineY: minLineY,
   }
 }

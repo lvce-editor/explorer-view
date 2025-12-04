@@ -11,9 +11,9 @@ export const getFileOperationsCut = (root: string, existingUris: readonly string
     const uniqueName = generateUniqueName(baseName, existingUris, root)
     const newUri = Path.join2(root, uniqueName)
     operations.push({
-      type: FileOperationType.Copy,
       from: file, // TODO ensure file is uri
       path: newUri,
+      type: FileOperationType.Copy,
     })
   }
   return operations

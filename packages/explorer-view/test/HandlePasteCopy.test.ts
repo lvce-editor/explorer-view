@@ -10,34 +10,34 @@ test('should focus on first newly created file after paste copy', async () => {
     'FileSystem.copy'() {
       return undefined
     },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'index.js', type: DirentType.File },
         { name: 'index copy.js', type: DirentType.File },
       ]
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
+    'IconTheme.getIcons'() {
+      return ['', '']
     },
     'Preferences.get'() {
       return false
-    },
-    'IconTheme.getIcons'() {
-      return ['', '']
     },
   })
 
   const initialState: ExplorerState = {
     ...createDefaultState(),
-    root: '/test',
-    items: [{ name: 'index.js', type: DirentType.File, path: '/test/index.js', depth: 0, selected: false }],
     focusedIndex: 0,
+    items: [{ depth: 0, name: 'index.js', path: '/test/index.js', selected: false, type: DirentType.File }],
+    root: '/test',
   }
 
   const nativeFiles = {
-    type: 'copy' as const,
     files: ['/source/index.js'],
     source: 'gnomeCopiedFiles' as const,
+    type: 'copy' as const,
   }
 
   const result = await handlePasteCopy(initialState, nativeFiles)
@@ -58,6 +58,9 @@ test('should handle paste copy with multiple files and focus on first', async ()
     'FileSystem.copy'() {
       return undefined
     },
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1.txt', type: DirentType.File },
@@ -66,31 +69,28 @@ test('should handle paste copy with multiple files and focus on first', async ()
         { name: 'file2 copy.txt', type: DirentType.File },
       ]
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
+    'IconTheme.getIcons'() {
+      return ['', '', '', '']
     },
     'Preferences.get'() {
       return false
-    },
-    'IconTheme.getIcons'() {
-      return ['', '', '', '']
     },
   })
 
   const initialState: ExplorerState = {
     ...createDefaultState(),
-    root: '/test',
-    items: [
-      { name: 'file1.txt', type: DirentType.File, path: '/test/file1.txt', depth: 0, selected: false },
-      { name: 'file2.txt', type: DirentType.File, path: '/test/file2.txt', depth: 0, selected: false },
-    ],
     focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'file1.txt', path: '/test/file1.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'file2.txt', path: '/test/file2.txt', selected: false, type: DirentType.File },
+    ],
+    root: '/test',
   }
 
   const nativeFiles = {
-    type: 'copy' as const,
     files: ['/source/file1.txt', '/source/file2.txt'],
     source: 'gnomeCopiedFiles' as const,
+    type: 'copy' as const,
   }
 
   const result = await handlePasteCopy(initialState, nativeFiles)
@@ -109,31 +109,31 @@ test('should handle paste copy with multiple files and focus on first', async ()
 
 test('should handle paste copy with empty files array', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return []
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'Preferences.get'() {
-      return false
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
     'IconTheme.getIcons'() {
       return []
+    },
+    'Preferences.get'() {
+      return false
     },
   })
 
   const initialState: ExplorerState = {
     ...createDefaultState(),
-    root: '/test',
-    items: [],
     focusedIndex: 0,
+    items: [],
+    root: '/test',
   }
 
   const nativeFiles = {
-    type: 'copy' as const,
     files: [],
     source: 'gnomeCopiedFiles' as const,
+    type: 'copy' as const,
   }
 
   const result = await handlePasteCopy(initialState, nativeFiles)

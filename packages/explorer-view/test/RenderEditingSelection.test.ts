@@ -8,8 +8,8 @@ test('renderEditingSelection', () => {
   const oldState: ExplorerState = createDefaultState()
   const newState: ExplorerState = {
     ...createDefaultState(),
-    editingSelectionStart: 1,
     editingSelectionEnd: 6,
+    editingSelectionStart: 1,
   }
   const result = renderEditingSelection(oldState, newState)
   expect(result).toEqual(['Viewlet.setSelectionByName', newState.uid, InputName.ExplorerInput, 1, 6])

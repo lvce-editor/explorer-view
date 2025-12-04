@@ -5,31 +5,31 @@ import { toCollapsedDirent } from '../src/parts/ToCollapsedDirent/ToCollapsedDir
 
 test('should collapse expanded directory to regular directory', () => {
   const expandedDir: ExplorerItem = {
-    name: 'test-dir',
-    type: DirentType.DirectoryExpanded,
-    path: '/test/test-dir',
     depth: 1,
+    name: 'test-dir',
+    path: '/test/test-dir',
     selected: false,
+    type: DirentType.DirectoryExpanded,
   }
 
   const result = toCollapsedDirent(expandedDir)
 
   expect(result).toEqual({
-    name: 'test-dir',
-    type: DirentType.Directory,
-    path: '/test/test-dir',
     depth: 1,
+    name: 'test-dir',
+    path: '/test/test-dir',
     selected: false,
+    type: DirentType.Directory,
   })
 })
 
 test('should return unchanged item for non-expanded directory', () => {
   const regularDir: ExplorerItem = {
-    name: 'test-dir',
-    type: DirentType.Directory,
-    path: '/test/test-dir',
     depth: 1,
+    name: 'test-dir',
+    path: '/test/test-dir',
     selected: false,
+    type: DirentType.Directory,
   }
 
   const result = toCollapsedDirent(regularDir)
@@ -39,11 +39,11 @@ test('should return unchanged item for non-expanded directory', () => {
 
 test('should return unchanged item for file', () => {
   const file: ExplorerItem = {
-    name: 'test-file.txt',
-    type: DirentType.File,
-    path: '/test/test-file.txt',
     depth: 1,
+    name: 'test-file.txt',
+    path: '/test/test-file.txt',
     selected: false,
+    type: DirentType.File,
   }
 
   const result = toCollapsedDirent(file)
@@ -53,11 +53,11 @@ test('should return unchanged item for file', () => {
 
 test('should return unchanged item for symlink', () => {
   const symlink: ExplorerItem = {
-    name: 'test-symlink',
-    type: DirentType.Symlink,
-    path: '/test/test-symlink',
     depth: 1,
+    name: 'test-symlink',
+    path: '/test/test-symlink',
     selected: false,
+    type: DirentType.Symlink,
   }
 
   const result = toCollapsedDirent(symlink)
@@ -67,26 +67,26 @@ test('should return unchanged item for symlink', () => {
 
 test('should preserve all properties when collapsing expanded directory', () => {
   const expandedDir: ExplorerItem = {
-    name: 'test-dir',
-    type: DirentType.DirectoryExpanded,
-    path: '/test/test-dir',
     depth: 2,
-    selected: true,
-    posInSet: 3,
-    setSize: 5,
     icon: 'folder-icon',
+    name: 'test-dir',
+    path: '/test/test-dir',
+    posInSet: 3,
+    selected: true,
+    setSize: 5,
+    type: DirentType.DirectoryExpanded,
   }
 
   const result = toCollapsedDirent(expandedDir)
 
   expect(result).toEqual({
-    name: 'test-dir',
-    type: DirentType.Directory,
-    path: '/test/test-dir',
     depth: 2,
-    selected: true,
-    posInSet: 3,
-    setSize: 5,
     icon: 'folder-icon',
+    name: 'test-dir',
+    path: '/test/test-dir',
+    posInSet: 3,
+    selected: true,
+    setSize: 5,
+    type: DirentType.Directory,
   })
 })

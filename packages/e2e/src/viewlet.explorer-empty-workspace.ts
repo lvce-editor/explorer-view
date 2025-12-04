@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-empty-workspace'
 
-export const test: Test = async ({ Workspace, Locator, expect }) => {
+export const test: Test = async ({ expect, Locator, Workspace }) => {
   // act
   await Workspace.setPath('')
 

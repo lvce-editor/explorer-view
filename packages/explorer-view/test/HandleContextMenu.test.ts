@@ -6,11 +6,11 @@ import { Keyboard } from '../src/parts/MouseEventType/MouseEventType.ts'
 
 test('handleContextMenu - keyboard', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return []
-    },
     'ContextMenu.show2'() {
       return
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
 
@@ -22,11 +22,11 @@ test('handleContextMenu - keyboard', async () => {
 
 test('handleContextMenu - mouse', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return []
-    },
     'ContextMenu.show2'() {
       return
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
   })
 

@@ -14,10 +14,10 @@ test('getPathParts - single level', () => {
   expect(GetPathParts.getPathParts('/root', '/root/folder', PathSeparatorType.Slash)).toEqual([
     {
       depth: 0,
+      expanded: true,
       path: '/root',
       pathSeparator: '/',
       root: '/root',
-      expanded: true,
     },
   ])
 })
@@ -26,24 +26,24 @@ test('getPathParts - multiple levels', () => {
   expect(GetPathParts.getPathParts('/root', '/root/folder/subfolder/file.txt', PathSeparatorType.Slash)).toEqual([
     {
       depth: 0,
+      expanded: true,
       path: '/root',
       pathSeparator: '/',
       root: '/root',
-      expanded: true,
     },
     {
       depth: 1,
+      expanded: true,
       path: '/root/folder',
       pathSeparator: '/',
       root: '/root',
-      expanded: true,
     },
     {
       depth: 2,
+      expanded: true,
       path: '/root/folder/subfolder',
       pathSeparator: '/',
       root: '/root',
-      expanded: true,
     },
   ])
 })
@@ -56,17 +56,17 @@ test('getPathParts - trailing slash', () => {
   expect(GetPathParts.getPathParts('/root', '/root/folder/', PathSeparatorType.Slash)).toEqual([
     {
       depth: 0,
+      expanded: true,
       path: '/root',
       pathSeparator: '/',
       root: '/root',
-      expanded: true,
     },
     {
       depth: 1,
+      expanded: true,
       path: '/root/folder',
       pathSeparator: '/',
       root: '/root',
-      expanded: true,
     },
   ])
 })
@@ -75,24 +75,24 @@ test('getPathParts - multiple slashes', () => {
   expect(GetPathParts.getPathParts('/root', '/root/folder//subfolder', PathSeparatorType.Slash)).toEqual([
     {
       depth: 0,
+      expanded: true,
       path: '/root',
       pathSeparator: '/',
       root: '/root',
-      expanded: true,
     },
     {
       depth: 1,
+      expanded: true,
       path: '/root/folder',
       pathSeparator: '/',
       root: '/root',
-      expanded: true,
     },
     {
       depth: 2,
+      expanded: true,
       path: '/root/folder/',
       pathSeparator: '/',
       root: '/root',
-      expanded: true,
     },
   ])
 })

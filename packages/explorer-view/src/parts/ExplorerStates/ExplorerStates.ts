@@ -4,7 +4,7 @@ import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
-export const { get, set, registerCommands, getCommandIds, wrapGetter } = ViewletRegistry.create<ExplorerState>()
+export const { get, getCommandIds, registerCommands, set, wrapGetter } = ViewletRegistry.create<ExplorerState>()
 
 interface Fn<T extends any[]> {
   (state: ExplorerState, ...args: T): ExplorerState | Promise<ExplorerState>
@@ -15,20 +15,20 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
     const { newState } = get(id)
     const updatedState = await fn(newState, ...args)
     const {
-      items,
-      minLineY,
-      focusedIndex,
-      editingIndex,
-      editingErrorMessage,
-      useChevrons,
-      dropTargets,
-      editingIcon,
       cutItems,
-      sourceControlIgnoredUris,
+      decorations,
+      dropTargets,
+      editingErrorMessage,
+      editingIcon,
+      editingIndex,
+      fileIconCache,
+      focusedIndex,
       height,
       itemHeight,
-      fileIconCache,
-      decorations,
+      items,
+      minLineY,
+      sourceControlIgnoredUris,
+      useChevrons,
     } = updatedState
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState)
@@ -64,10 +64,10 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
     )
     const finalState: ExplorerState = {
       ...updatedState,
-      visibleExplorerItems,
       fileIconCache: newFileIconCache,
       icons,
       maxLineY,
+      visibleExplorerItems,
     }
     const intermediate2 = get(id)
     set(id, intermediate2.oldState, finalState)

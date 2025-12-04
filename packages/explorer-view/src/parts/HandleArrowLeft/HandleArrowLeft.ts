@@ -4,7 +4,7 @@ import * as FocusParentFolder from '../FocusParentFolder/FocusParentFolder.ts'
 import * as HandleClickDirectoryExpanded from '../HandleClickDirectoryExpanded/HandleClickDirectoryExpanded.ts'
 
 export const handleArrowLeft = (state: ExplorerState): ExplorerState | Promise<ExplorerState> => {
-  const { items, focusedIndex } = state
+  const { focusedIndex, items } = state
   if (focusedIndex === -1) {
     return state
   }

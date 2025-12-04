@@ -6,7 +6,7 @@ export const handleClickFile = async (state: ExplorerState, dirent: ExplorerItem
   await OpenUri.openUri(dirent.path, !keepFocus)
   return {
     ...state,
-    focusedIndex: index,
     focused: keepFocus,
+    focusedIndex: index,
   }
 }

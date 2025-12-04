@@ -16,7 +16,7 @@ import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
 export const acceptCreate = async (state: ExplorerState, newDirentType: number): Promise<ExplorerState> => {
-  const { editingValue, pathSeparator, root, focusedIndex, items } = state
+  const { editingValue, focusedIndex, items, pathSeparator, root } = state
   const newFileName = editingValue
   const siblingFileNames = getSiblingFileNames(items, focusedIndex, root, pathSeparator)
   const editingErrorMessage = ValidateFileName2.validateFileName2(newFileName, siblingFileNames)
@@ -52,10 +52,10 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   await refreshWorkspace()
   return {
     ...state,
-    items: dirents,
     editingIndex: -1,
-    focusedIndex: newFocusedIndex,
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
+    focusedIndex: newFocusedIndex,
+    items: dirents,
   }
 }

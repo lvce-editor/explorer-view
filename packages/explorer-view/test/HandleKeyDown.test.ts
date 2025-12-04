@@ -14,9 +14,9 @@ test.skip('handleKeyDown - with items', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'apple', type: 0, path: '/apple', depth: 0, selected: false },
-      { name: 'banana', type: 0, path: '/banana', depth: 0, selected: false },
-      { name: 'cherry', type: 0, path: '/cherry', depth: 0, selected: false },
+      { depth: 0, name: 'apple', path: '/apple', selected: false, type: 0 },
+      { depth: 0, name: 'banana', path: '/banana', selected: false, type: 0 },
+      { depth: 0, name: 'cherry', path: '/cherry', selected: false, type: 0 },
     ],
   }
   const newState = handleKeyDown(state, 'b')
@@ -28,9 +28,9 @@ test.skip('handleKeyDown - no match', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'apple', type: 0, path: '/apple', depth: 0, selected: false },
-      { name: 'banana', type: 0, path: '/banana', depth: 0, selected: false },
-      { name: 'cherry', type: 0, path: '/cherry', depth: 0, selected: false },
+      { depth: 0, name: 'apple', path: '/apple', selected: false, type: 0 },
+      { depth: 0, name: 'banana', path: '/banana', selected: false, type: 0 },
+      { depth: 0, name: 'cherry', path: '/cherry', selected: false, type: 0 },
     ],
   }
   const newState = handleKeyDown(state, 'x')
@@ -42,9 +42,9 @@ test.skip('handleKeyDown - multiple characters', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'apple', type: 0, path: '/apple', depth: 0, selected: false },
-      { name: 'banana', type: 0, path: '/banana', depth: 0, selected: false },
-      { name: 'cherry', type: 0, path: '/cherry', depth: 0, selected: false },
+      { depth: 0, name: 'apple', path: '/apple', selected: false, type: 0 },
+      { depth: 0, name: 'banana', path: '/banana', selected: false, type: 0 },
+      { depth: 0, name: 'cherry', path: '/cherry', selected: false, type: 0 },
     ],
   }
   let newState = handleKeyDown(state, 'b')

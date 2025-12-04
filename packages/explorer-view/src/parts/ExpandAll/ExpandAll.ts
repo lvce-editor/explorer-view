@@ -3,7 +3,7 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 
 export const expandAll = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { items, focusedIndex, pathSeparator } = state
+  const { focusedIndex, items, pathSeparator } = state
   if (focusedIndex === -1) {
     return state
   }

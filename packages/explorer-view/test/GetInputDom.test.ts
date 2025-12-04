@@ -9,19 +9,19 @@ test('getInputDom - without error', () => {
   const result = getInputDom(true, false)
   expect(result).toEqual([
     {
-      type: VirtualDomElements.Input,
-      className: `ExplorerInputBox`,
-      id: 'ExplorerInput',
-      onInput: DomEventListenerFunctions.HandleEditingInput,
-      onBlur: DomEventListenerFunctions.HandleInputBlur,
-      childCount: 0,
-      name: InputName.ExplorerInput,
       ariaLabel: 'Type file name. Press Enter to confirm or Escape to cancel.',
       autocapitalize: 'off',
-      autocorrect: 'off',
       autocomplete: 'off',
-      spellcheck: 'false',
+      autocorrect: 'off',
+      childCount: 0,
+      className: `ExplorerInputBox`,
+      id: 'ExplorerInput',
+      name: InputName.ExplorerInput,
+      onBlur: DomEventListenerFunctions.HandleInputBlur,
       onClick: DomEventListenerFunctions.HandleInputClick,
+      onInput: DomEventListenerFunctions.HandleEditingInput,
+      spellcheck: 'false',
+      type: VirtualDomElements.Input,
     },
   ])
 })
@@ -30,19 +30,19 @@ test('getInputDom - with error', () => {
   const result = getInputDom(true, true)
   expect(result).toEqual([
     {
-      type: VirtualDomElements.Input,
-      className: expect.stringContaining(ClassNames.InputBox),
-      id: 'ExplorerInput',
-      onInput: DomEventListenerFunctions.HandleEditingInput,
-      onBlur: DomEventListenerFunctions.HandleInputBlur,
-      childCount: 0,
-      name: InputName.ExplorerInput,
       ariaLabel: 'Type file name. Press Enter to confirm or Escape to cancel.',
       autocapitalize: 'off',
-      autocorrect: 'off',
       autocomplete: 'off',
-      spellcheck: 'false',
+      autocorrect: 'off',
+      childCount: 0,
+      className: expect.stringContaining(ClassNames.InputBox),
+      id: 'ExplorerInput',
+      name: InputName.ExplorerInput,
+      onBlur: DomEventListenerFunctions.HandleInputBlur,
       onClick: DomEventListenerFunctions.HandleInputClick,
+      onInput: DomEventListenerFunctions.HandleEditingInput,
+      spellcheck: 'false',
+      type: VirtualDomElements.Input,
     },
   ])
 })

@@ -5,7 +5,7 @@ import * as GetErrorMessagePosition from '../GetErrorMessagePosition/GetErrorMes
 import { getUnique } from '../GetUnique/GetUnique.ts'
 
 export const renderCss = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
-  const { width, items, scrollBarHeight, uid, visibleExplorerItems, itemHeight, focusedIndex, minLineY } = newState
+  const { focusedIndex, itemHeight, items, minLineY, scrollBarHeight, uid, visibleExplorerItems, width } = newState
   const indents = visibleExplorerItems.map((item) => item.indent)
   const uniqueIndents = getUnique(indents)
   const indent = 8
@@ -14,7 +14,7 @@ export const renderCss = (oldState: ExplorerState, newState: ExplorerState): rea
   const defaultPaddingLeft = 0
   const chevronSpace = 22
   const depth = items[focusedIndex]?.depth || 0
-  const { top, left, errorMessageWidth } = GetErrorMessagePosition.getErrorMessagePosition(
+  const { errorMessageWidth, left, top } = GetErrorMessagePosition.getErrorMessagePosition(
     itemHeight,
     focusedIndex,
     minLineY,

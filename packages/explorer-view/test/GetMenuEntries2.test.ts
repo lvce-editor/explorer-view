@@ -17,16 +17,16 @@ test('getMenuEntries2 - root', () => {
 test('getMenuEntries2 - directory', () => {
   const uid = 1
   const item: ExplorerItem = {
-    type: DirentType.Directory,
+    depth: 0,
     name: 'test',
     path: '/test',
-    depth: 0,
     selected: true,
+    type: DirentType.Directory,
   }
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [item],
     focusedIndex: 0,
+    items: [item],
   }
   set(uid, state, state)
   const menuEntries = getMenuEntries2(state)
@@ -36,16 +36,16 @@ test('getMenuEntries2 - directory', () => {
 test('getMenuEntries2 - file', () => {
   const uid = 1
   const item: ExplorerItem = {
-    type: DirentType.File,
+    depth: 0,
     name: 'test.txt',
     path: '/test.txt',
-    depth: 0,
     selected: false,
+    type: DirentType.File,
   }
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [item],
     focusedIndex: 0,
+    items: [item],
   }
   set(uid, state, state)
   const menuEntries = getMenuEntries2(state)

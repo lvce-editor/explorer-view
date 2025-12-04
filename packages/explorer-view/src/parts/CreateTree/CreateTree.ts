@@ -18,7 +18,7 @@ export const createTree = (items: readonly ExplorerItem[], root: string): Tree =
     return dirname
   })
   for (const item of items) {
-    const { type, name, path } = item
+    const { name, path, type } = item
     const relativePath = path.slice(rootLength)
     const dirname = Path.dirname2(relativePath)
     const isExpanded = paths.includes(relativePath)

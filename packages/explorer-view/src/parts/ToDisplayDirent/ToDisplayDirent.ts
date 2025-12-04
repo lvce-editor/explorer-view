@@ -12,13 +12,13 @@ export const toDisplayDirent = (
 ): ExplorerItem => {
   const path = join2(parentPath, rawDirentName)
   return {
-    name: rawDirentName,
-    posInSet: index + 1,
-    setSize: length,
     depth: parentDepth + 1,
-    type: rawDirentType,
-    path, // TODO storing absolute path might be too costly, could also store relative path here
     icon: '',
+    name: rawDirentName,
+    path, // TODO storing absolute path might be too costly, could also store relative path here
+    posInSet: index + 1,
     selected: false,
+    setSize: length,
+    type: rawDirentType,
   }
 }

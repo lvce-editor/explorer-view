@@ -3,11 +3,11 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { sortExplorerItems } from '../src/parts/SortExplorerItems/SortExplorerItems.ts'
 
 const createItem = (name: string, type: number): any => ({
-  name,
-  type,
-  path: `/test/${name}`,
   depth: 1,
+  name,
+  path: `/test/${name}`,
   selected: false,
+  type,
 })
 
 test('sorts folders before files', () => {

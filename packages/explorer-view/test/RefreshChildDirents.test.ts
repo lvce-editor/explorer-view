@@ -13,7 +13,7 @@ test('refreshChildDirents - basic', async () => {
     },
   })
 
-  const folder = { type: Directory, name: 'test', path: '/test', depth: 0, selected: false }
+  const folder = { depth: 0, name: 'test', path: '/test', selected: false, type: Directory }
   const result = await refreshChildDirents(folder, '/', [])
   expect(result).toHaveLength(2)
   expect(result[0].name).toBe('file1.txt')
@@ -38,7 +38,7 @@ test('refreshChildDirents - with expanded folder', async () => {
     },
   })
 
-  const folder = { type: Directory, name: 'test', path: '/test', depth: 0, selected: false }
+  const folder = { depth: 0, name: 'test', path: '/test', selected: false, type: Directory }
   const result = await refreshChildDirents(folder, '/', ['/test/folder1'])
   expect(result).toHaveLength(2)
   expect(result[0].name).toBe('folder1')

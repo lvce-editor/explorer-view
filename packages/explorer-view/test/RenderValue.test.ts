@@ -16,7 +16,7 @@ test('should return empty array when inputSource is User', () => {
 
 test('should return setValue command when focus is Input', () => {
   const oldState = createDefaultState()
-  const newState = { ...oldState, focus: FocusId.Input, editingValue: 'test-value' }
+  const newState = { ...oldState, editingValue: 'test-value', focus: FocusId.Input }
 
   const result = renderValue(oldState, newState)
 
@@ -43,7 +43,7 @@ test('should return empty array when focus is None', () => {
 
 test('should return empty array when inputSource is Script and focus is not Input', () => {
   const oldState = createDefaultState()
-  const newState = { ...oldState, inputSource: InputSource.Script, focus: FocusId.List }
+  const newState = { ...oldState, focus: FocusId.List, inputSource: InputSource.Script }
 
   const result = renderValue(oldState, newState)
 

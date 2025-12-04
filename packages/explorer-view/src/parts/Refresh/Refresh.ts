@@ -6,7 +6,7 @@ import { getProtoMap } from '../GetProtoMap/GetProtoMap.ts'
 import { sortPathDirentsMap } from '../SortPathDirentsMap/SortPathDirentsMap.ts'
 
 export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { root, focusedIndex, items } = state
+  const { focusedIndex, items, root } = state
   const expandedDirents = getExpandedDirents(items)
   const expandedPaths = getPaths(expandedDirents)
   const allPaths = [root, ...expandedPaths]

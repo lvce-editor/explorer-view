@@ -11,22 +11,22 @@ test('should return empty array when no operations provided', () => {
 test('should return empty array when operations contain only non-copy operations', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.CreateFile,
       path: '/home/user/file.txt',
       text: 'content',
+      type: FileOperationType.CreateFile,
     },
     {
-      type: FileOperationType.CreateFolder,
       path: '/home/user/folder',
+      type: FileOperationType.CreateFolder,
     },
     {
-      type: FileOperationType.Rename,
       from: '/home/user/old.txt',
       path: '/home/user/new.txt',
+      type: FileOperationType.Rename,
     },
     {
-      type: FileOperationType.Remove,
       path: '/home/user/delete.txt',
+      type: FileOperationType.Remove,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -36,14 +36,14 @@ test('should return empty array when operations contain only non-copy operations
 test('should return empty array when copy operations are valid', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder2',
+      type: FileOperationType.Copy,
     },
     {
-      type: FileOperationType.Copy,
       from: 'test:///file.txt',
       path: 'test:///copied.txt',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -53,9 +53,9 @@ test('should return empty array when copy operations are valid', () => {
 test('should return error when copying folder into its own subfolder', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder1/subfolder',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -65,9 +65,9 @@ test('should return error when copying folder into its own subfolder', () => {
 test('should return error when copying folder into nested subfolder', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder1/subfolder/nested',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -77,9 +77,9 @@ test('should return error when copying folder into nested subfolder', () => {
 test('should return error with Windows path separators', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder1\\subfolder',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -89,9 +89,9 @@ test('should return error with Windows path separators', () => {
 test('should return empty array when copying file into folder', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///file.txt',
       path: 'test:///folder/file.txt',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -101,9 +101,9 @@ test('should return empty array when copying file into folder', () => {
 test('should return empty array when copying folder to different location', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder2',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -113,9 +113,9 @@ test('should return empty array when copying folder to different location', () =
 test('should return empty array when copying folder to parent directory', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1/subfolder',
       path: 'test:///folder1',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -125,9 +125,9 @@ test('should return empty array when copying folder to parent directory', () => 
 test('should return empty array when paths are exactly the same', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder1',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -137,19 +137,19 @@ test('should return empty array when paths are exactly the same', () => {
 test('should return errors for all invalid operations when multiple operations', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder2', // valid
+      type: FileOperationType.Copy,
     },
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder3',
       path: 'test:///folder3/subfolder', // invalid
+      type: FileOperationType.Copy,
     },
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder4',
       path: 'test:///folder4/nested', // also invalid
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -159,19 +159,19 @@ test('should return errors for all invalid operations when multiple operations',
 test('should handle mixed operation types with invalid copy', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.CreateFile,
       path: 'test:///file.txt',
       text: 'content',
+      type: FileOperationType.CreateFile,
     },
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder1/subfolder', // invalid
+      type: FileOperationType.Copy,
     },
     {
-      type: FileOperationType.Rename,
       from: 'test:///old.txt',
       path: 'test:///new.txt',
+      type: FileOperationType.Rename,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -181,9 +181,9 @@ test('should handle mixed operation types with invalid copy', () => {
 test('should handle paths with trailing separators', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1/',
       path: 'test:///folder1/subfolder/',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -193,9 +193,9 @@ test('should handle paths with trailing separators', () => {
 test('should handle mixed path separators', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder1\\subfolder',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -205,9 +205,9 @@ test('should handle mixed path separators', () => {
 test('should handle relative paths', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder1',
       path: 'test:///folder1/subfolder',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -217,9 +217,9 @@ test('should handle relative paths', () => {
 test('should handle deep nested paths', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///a/b/c/d/e/folder1',
       path: 'test:///a/b/c/d/e/folder1/subfolder',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -229,9 +229,9 @@ test('should handle deep nested paths', () => {
 test('should handle single character folder names', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///a',
       path: 'test:///a/b',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -241,9 +241,9 @@ test('should handle single character folder names', () => {
 test('should handle folder names with special characters', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///folder-name_123',
       path: 'test:///folder-name_123/subfolder',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)
@@ -253,9 +253,9 @@ test('should handle folder names with special characters', () => {
 test('should handle empty folder names', () => {
   const operations: FileOperation[] = [
     {
-      type: FileOperationType.Copy,
       from: 'test:///',
       path: 'test:///subfolder',
+      type: FileOperationType.Copy,
     },
   ]
   const result = ValidateOperations.validateOperations(operations)

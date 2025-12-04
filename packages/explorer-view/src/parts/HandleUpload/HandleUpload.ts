@@ -2,7 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 
 export const handleUpload = async (state: ExplorerState, dirents: readonly any[]): Promise<any> => {
-  const { root, pathSeparator } = state
+  const { pathSeparator, root } = state
   for (const dirent of dirents) {
     // TODO switch
     // TODO symlink might not be possible to be copied

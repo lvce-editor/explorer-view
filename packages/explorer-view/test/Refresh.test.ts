@@ -84,9 +84,9 @@ test('refresh - preserve expanded folder', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
-      { name: 'file1.txt', type: File, path: '/folder1/file1.txt', depth: 1, selected: false },
-      { name: 'file2.txt', type: File, path: '/folder1/file2.txt', depth: 1, selected: false },
+      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
+      { depth: 1, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: File },
+      { depth: 1, name: 'file2.txt', path: '/folder1/file2.txt', selected: false, type: File },
     ],
   }
 
@@ -121,8 +121,8 @@ test('refresh - remove expanded folder that no longer exists', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
-      { name: 'file1.txt', type: File, path: '/folder1/file1.txt', depth: 1, selected: false },
+      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
+      { depth: 1, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: File },
     ],
   }
 
@@ -163,9 +163,9 @@ test('refresh - nested expanded folders', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
-      { name: 'folder2', type: DirectoryExpanded, path: '/folder1/folder2', depth: 1, selected: false },
-      { name: 'file1.txt', type: File, path: '/folder1/folder2/file1.txt', depth: 2, selected: false },
+      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
+      { depth: 1, name: 'folder2', path: '/folder1/folder2', selected: false, type: DirectoryExpanded },
+      { depth: 2, name: 'file1.txt', path: '/folder1/folder2/file1.txt', selected: false, type: File },
     ],
   }
 
@@ -217,11 +217,11 @@ test('refresh - preserve directory types', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
-      { name: 'subfolder', type: DirectoryExpanded, path: '/folder1/subfolder', depth: 1, selected: false },
-      { name: 'file3.txt', type: File, path: '/folder1/subfolder/file3.txt', depth: 2, selected: false },
-      { name: 'file2.txt', type: File, path: '/folder1/file2.txt', depth: 1, selected: false },
-      { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false },
+      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
+      { depth: 1, name: 'subfolder', path: '/folder1/subfolder', selected: false, type: DirectoryExpanded },
+      { depth: 2, name: 'file3.txt', path: '/folder1/subfolder/file3.txt', selected: false, type: File },
+      { depth: 1, name: 'file2.txt', path: '/folder1/file2.txt', selected: false, type: File },
+      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
     ],
   }
 
@@ -274,8 +274,8 @@ test('refresh - check filesystem response', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { name: 'folder1', type: DirectoryExpanded, path: '/folder1', depth: 0, selected: false },
-      { name: 'file1.txt', type: File, path: '/file1.txt', depth: 0, selected: false },
+      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
+      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
     ],
   }
 

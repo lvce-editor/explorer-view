@@ -26,11 +26,8 @@ test('acceptCreate - successful file creation', async () => {
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'IconTheme.getFileIcon'() {
-      return ''
-    },
-    'IconTheme.getIcons'() {
-      return Array(2).fill('')
+    'FileSystem.mkdir'() {
+      return
     },
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === 'memfs:///workspace') {
@@ -41,74 +38,77 @@ test('acceptCreate - successful file creation', async () => {
       }
       throw new Error(`unexpected file read ${path}`)
     },
-    'FileSystem.mkdir'() {
-      return
-    },
     'FileSystem.writeFile'() {
       return
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return Array(2).fill('')
     },
   })
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    root: 'memfs:///workspace',
-    editingValue: 'test.txt',
-    focusedIndex: 0,
     editingIndex: 1,
+    editingValue: 'test.txt',
+    fileIconCache: {},
+    focusedIndex: 0,
+    height: 100,
+    itemHeight: 20,
     items: [
       {
-        name: 'test',
-        type: DirentType.Directory,
-        path: 'memfs:///workspace/test',
         depth: 0,
+        name: 'test',
+        path: 'memfs:///workspace/test',
         selected: false,
+        type: DirentType.Directory,
       },
       {
-        name: 'test.txt',
-        type: DirentType.EditingFile,
-        path: 'memfs:///workspace/test/test.txt',
         depth: 1,
-        posInSet: 1,
-        setSize: 1,
         icon: '',
+        name: 'test.txt',
+        path: 'memfs:///workspace/test/test.txt',
+        posInSet: 1,
         selected: false,
+        setSize: 1,
+        type: DirentType.EditingFile,
       },
     ],
     minLineY: 0,
-    height: 100,
-    itemHeight: 20,
-    fileIconCache: {},
+    root: 'memfs:///workspace',
   }
 
   const result = await acceptCreate(state, DirentType.File)
   expect(result).toEqual({
     ...state,
-    items: [
-      {
-        name: 'test',
-        type: DirentType.DirectoryExpanded,
-        depth: 1,
-        selected: false,
-        icon: '',
-        path: 'memfs:///workspace/test',
-        posInSet: 1,
-        setSize: 1,
-      },
-      {
-        name: 'test.txt',
-        type: DirentType.File,
-        path: 'memfs:///workspace/test/test.txt',
-        depth: 2,
-        posInSet: 1,
-        setSize: 1,
-        icon: '',
-        selected: false,
-      },
-    ],
     editingIndex: -1,
-    focusedIndex: 1,
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
+    focusedIndex: 1,
+    items: [
+      {
+        depth: 1,
+        icon: '',
+        name: 'test',
+        path: 'memfs:///workspace/test',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+        type: DirentType.DirectoryExpanded,
+      },
+      {
+        depth: 2,
+        icon: '',
+        name: 'test.txt',
+        path: 'memfs:///workspace/test/test.txt',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+        type: DirentType.File,
+      },
+    ],
   })
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.mkdir', 'memfs:///workspace/test'],

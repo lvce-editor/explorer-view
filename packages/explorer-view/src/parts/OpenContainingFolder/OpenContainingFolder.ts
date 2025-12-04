@@ -3,7 +3,7 @@ import { getContainingFolder } from '../GetContainingFolder/GetContainingFolder.
 import { openNativeFolder } from '../OpenNativeFolder/OpenNativeFolder.ts'
 
 export const openContainingFolder = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { focusedIndex, root, items, pathSeparator } = state
+  const { focusedIndex, items, pathSeparator, root } = state
   const path = getContainingFolder(root, items, focusedIndex, pathSeparator)
   await openNativeFolder(path)
   return state

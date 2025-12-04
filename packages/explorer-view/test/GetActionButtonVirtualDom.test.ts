@@ -4,10 +4,10 @@ import * as GetActionButtonVirtualDom from '../src/parts/GetActionButtonVirtualD
 
 test('getActionButtonVirtualDom', () => {
   const action = {
-    type: ActionType.Button,
-    id: 'New File',
-    icon: 'NewFile',
     command: 'newFile',
+    icon: 'NewFile',
+    id: 'New File',
+    type: ActionType.Button,
   }
   expect(GetActionButtonVirtualDom.getActionButtonVirtualDom(action)).toEqual([
     {

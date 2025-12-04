@@ -6,11 +6,11 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 test('should adjust scroll when focused index is below minLineY', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    minLineY: 5,
-    maxLineY: 10,
     deltaY: 100,
-    itemHeight: 20,
     height: 100,
+    itemHeight: 20,
+    maxLineY: 10,
+    minLineY: 5,
   }
 
   const result = adjustScrollAfterPaste(state, 2)
@@ -25,11 +25,11 @@ test('should adjust scroll when focused index is below minLineY', () => {
 test('should adjust scroll when focused index is above maxLineY', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    minLineY: 5,
-    maxLineY: 10,
     deltaY: 100,
-    itemHeight: 20,
     height: 100,
+    itemHeight: 20,
+    maxLineY: 10,
+    minLineY: 5,
   }
 
   const result = adjustScrollAfterPaste(state, 15)
@@ -44,11 +44,11 @@ test('should adjust scroll when focused index is above maxLineY', () => {
 test('should not adjust scroll when focused index is within viewport', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    minLineY: 5,
-    maxLineY: 10,
     deltaY: 100,
-    itemHeight: 20,
     height: 100,
+    itemHeight: 20,
+    maxLineY: 10,
+    minLineY: 5,
   }
 
   const result = adjustScrollAfterPaste(state, 7)
@@ -63,11 +63,11 @@ test('should not adjust scroll when focused index is within viewport', () => {
 test('should handle edge case with odd viewport size', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    minLineY: 5,
-    maxLineY: 11, // Odd size: 6 items
     deltaY: 100,
-    itemHeight: 20,
     height: 120,
+    itemHeight: 20,
+    maxLineY: 11, // Odd size: 6 items
+    minLineY: 5,
   }
 
   const result = adjustScrollAfterPaste(state, 2)

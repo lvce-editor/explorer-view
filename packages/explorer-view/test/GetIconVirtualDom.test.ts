@@ -5,18 +5,18 @@ import * as VirtualDomElements from '../src/parts/VirtualDomElements/VirtualDomE
 
 test('getIconVirtualDom - with icon', () => {
   expect(GetIconVirtualDom.getIconVirtualDom('File')).toEqual({
-    type: VirtualDomElements.Div,
+    childCount: 0,
     className: 'MaskIcon MaskIconFile',
     role: AriaRoles.None,
-    childCount: 0,
+    type: VirtualDomElements.Div,
   })
 })
 
 test('getIconVirtualDom - with custom element type', () => {
   expect(GetIconVirtualDom.getIconVirtualDom('Folder', VirtualDomElements.Div)).toEqual({
-    type: VirtualDomElements.Div,
+    childCount: 0,
     className: 'MaskIcon MaskIconFolder',
     role: AriaRoles.None,
-    childCount: 0,
+    type: VirtualDomElements.Div,
   })
 })

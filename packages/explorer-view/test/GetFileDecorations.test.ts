@@ -22,7 +22,7 @@ test('getFileDecorations - returns empty array when no provider IDs', async () =
 })
 
 test.skip('getFileDecorations - returns decorations for single file', async () => {
-  const decorations: FileDecoration[] = [{ uri: 'file:///file1.txt', decoration: 'modified' }]
+  const decorations: FileDecoration[] = [{ decoration: 'modified', uri: 'file:///file1.txt' }]
   const mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return ['git']
@@ -43,8 +43,8 @@ test.skip('getFileDecorations - returns decorations for single file', async () =
 
 test.skip('getFileDecorations - converts paths to URIs', async () => {
   const decorations: FileDecoration[] = [
-    { uri: 'file:///file1.txt', decoration: 'modified' },
-    { uri: 'file:///file2.txt', decoration: 'added' },
+    { decoration: 'modified', uri: 'file:///file1.txt' },
+    { decoration: 'added', uri: 'file:///file2.txt' },
   ]
   const mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
@@ -65,7 +65,7 @@ test.skip('getFileDecorations - converts paths to URIs', async () => {
 })
 
 test.skip('getFileDecorations - handles URIs that are already URIs', async () => {
-  const decorations: FileDecoration[] = [{ uri: 'file:///file1.txt', decoration: 'modified' }]
+  const decorations: FileDecoration[] = [{ decoration: 'modified', uri: 'file:///file1.txt' }]
   const mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return ['git']
@@ -85,7 +85,7 @@ test.skip('getFileDecorations - handles URIs that are already URIs', async () =>
 })
 
 test.skip('getFileDecorations - uses first provider ID when multiple are available', async () => {
-  const decorations: FileDecoration[] = [{ uri: 'file:///file1.txt', decoration: 'modified' }]
+  const decorations: FileDecoration[] = [{ decoration: 'modified', uri: 'file:///file1.txt' }]
   const mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return ['git', 'svn', 'hg']

@@ -24,15 +24,15 @@ export const getNewDirentsAccept = (
         }
   const depth = parentDirent.depth + 1
   const newDirent: ExplorerItem = {
+    depth,
+    icon: '',
+    name: newFileName,
     path: absolutePath,
     // @ts-ignore
     posInSet: -1,
-    setSize: 1,
-    depth,
-    name: newFileName,
-    type: newDirentType,
-    icon: '',
     selected: false,
+    setSize: 1,
+    type: newDirentType,
   }
   // @ts-ignore
   newDirent.icon = ''

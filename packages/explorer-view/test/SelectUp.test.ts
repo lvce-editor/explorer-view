@@ -12,11 +12,11 @@ test('selectUp - first item', () => {
 test('selectUp - second item', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
-    ],
     focusedIndex: 1,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+    ],
   }
   const newState = selectUp(state)
   expect(newState.items[0].selected).toBe(true)
@@ -26,12 +26,12 @@ test('selectUp - second item', () => {
 test.skip('selectUp - multiple items with selection', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: false },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: true },
-      { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
-    ],
     focusedIndex: 2,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: true, type: 0 },
+      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
+    ],
   }
   const newState = selectUp(state)
   expect(newState.items[0].selected).toBe(false)
@@ -42,12 +42,12 @@ test.skip('selectUp - multiple items with selection', () => {
 test('selectUp - multiple items with selection at top', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: true },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: false },
-      { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
-    ],
     focusedIndex: 1,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: true, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
+    ],
   }
   const newState = selectUp(state)
   expect(newState.items[0].selected).toBe(true)
@@ -58,12 +58,12 @@ test('selectUp - multiple items with selection at top', () => {
 test.skip('selectUp - multiple items with multiple selections', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [
-      { name: 'a', type: 0, path: '/a', depth: 1, selected: true },
-      { name: 'b', type: 0, path: '/b', depth: 1, selected: true },
-      { name: 'c', type: 0, path: '/c', depth: 1, selected: false },
-    ],
     focusedIndex: 2,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: true, type: 0 },
+      { depth: 1, name: 'b', path: '/b', selected: true, type: 0 },
+      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
+    ],
   }
   const newState = selectUp(state)
   expect(newState.items[0].selected).toBe(false)

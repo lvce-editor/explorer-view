@@ -1,13 +1,13 @@
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 
 export const resetEditing = {
-  editingIndex: -1,
-  editingValue: '',
-  editingType: ExplorerEditingType.None,
-  editingIcon: '',
   editingErrorMessage: '',
+  editingIcon: '',
+  editingIndex: -1,
   editingSelection: {
-    start: 0,
     end: 0,
+    start: 0,
   },
+  editingType: ExplorerEditingType.None,
+  editingValue: '',
 }

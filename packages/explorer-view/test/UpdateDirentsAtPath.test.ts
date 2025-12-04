@@ -20,8 +20,8 @@ test.skip('updateDirentsAtPath - empty items', () => {
 
 test.skip('updateDirentsAtPath - update existing items', () => {
   const items: readonly ExplorerItem[] = [
-    { name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false, posInSet: 1, setSize: 2, icon: '' },
-    { name: 'file.txt', type: DirentType.File, path: '/test/file.txt', depth: 0, selected: false, posInSet: 2, setSize: 2, icon: '' },
+    { depth: 0, icon: '', name: 'folder', path: '/test/folder', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory },
+    { depth: 0, icon: '', name: 'file.txt', path: '/test/file.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
   ]
   const path = '/test'
   const root = '/test'
@@ -47,8 +47,8 @@ test.skip('updateDirentsAtPath - update existing items', () => {
 
 test.skip('updateDirentsAtPath - nested structure', () => {
   const items: readonly ExplorerItem[] = [
-    { name: 'folder', type: DirentType.Directory, path: '/test/folder', depth: 0, selected: false, posInSet: 1, setSize: 1, icon: '' },
-    { name: 'nested.txt', type: DirentType.File, path: '/test/folder/nested.txt', depth: 1, selected: false, posInSet: 1, setSize: 1, icon: '' },
+    { depth: 0, icon: '', name: 'folder', path: '/test/folder', posInSet: 1, selected: false, setSize: 1, type: DirentType.Directory },
+    { depth: 1, icon: '', name: 'nested.txt', path: '/test/folder/nested.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
   ]
   const path = '/test/folder'
   const root = '/test'

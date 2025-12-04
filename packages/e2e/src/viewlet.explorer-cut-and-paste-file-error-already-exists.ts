@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-cut-and-paste-file-error-already-exists'
 
 export const skip = 1
 
-export const test: Test = async ({ FileSystem, Workspace, Explorer, ClipBoard }) => {
+export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()

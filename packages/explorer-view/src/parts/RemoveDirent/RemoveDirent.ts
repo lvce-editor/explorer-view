@@ -10,7 +10,7 @@ import * as Refresh from '../Refresh/Refresh.ts'
 import { showErrorAlert } from '../ShowErrorAlert/ShowErrorAlert.ts'
 
 export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { items, focusedIndex, confirmDelete } = state
+  const { confirmDelete, focusedIndex, items } = state
   const selectedItems = getSelectedItems(items, focusedIndex)
   if (selectedItems.length === 0) {
     return state
@@ -25,8 +25,8 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   }
   const fileOperations: readonly FileOperation[] = toRemove.map((item) => {
     return {
-      type: FileOperationType.Remove,
       path: item,
+      type: FileOperationType.Remove,
     }
   })
   // TODO use bulk edit and explorer refresh
@@ -38,7 +38,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   const newState = await Refresh.refresh(state)
   return {
     ...newState,
-    focused: true,
     focus: FocusId.List,
+    focused: true,
   }
 }

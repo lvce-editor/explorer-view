@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-ignored-file-decoration-invalid-object'
 
-export const test: Test = async ({ FileSystem, Workspace, Extension, Settings, Locator, expect }) => {
+export const test: Test = async ({ expect, Extension, FileSystem, Locator, Settings, Workspace }) => {
   // arrange
   await Settings.update({
     'explorer.sourceControlDecorations': true,

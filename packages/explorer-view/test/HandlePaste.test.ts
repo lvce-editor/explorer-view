@@ -9,8 +9,8 @@ test('should handle paste with no files (none type)', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
-        type: NativeFileTypes.None,
         files: [],
+        type: NativeFileTypes.None,
       }
     },
   })
@@ -26,22 +26,22 @@ test('should handle paste with copy type', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
-        type: NativeFileTypes.Copy,
         files: ['/source/file1.txt', '/source/file2.txt'],
+        type: NativeFileTypes.Copy,
       }
     },
     'FileSystem.copy'() {},
-    'FileSystem.readDirWithFileTypes'() {
-      return []
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'Preferences.get'() {
-      return false
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
     'IconTheme.getIcons'() {
       return ['']
+    },
+    'Preferences.get'() {
+      return false
     },
   })
 
@@ -63,23 +63,23 @@ test('should handle paste with cut type', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
-        type: NativeFileTypes.Cut,
         files: ['/source/file1.txt', '/source/file2.txt'],
+        type: NativeFileTypes.Cut,
       }
     },
-    'FileSystem.rename'() {},
     'FileSystem.copy'() {},
-    'FileSystem.readDirWithFileTypes'() {
-      return []
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'Preferences.get'() {
-      return false
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
+    'FileSystem.rename'() {},
     'IconTheme.getIcons'() {
       return ['']
+    },
+    'Preferences.get'() {
+      return false
     },
   })
 
@@ -101,22 +101,22 @@ test('should handle paste with multiple files', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
-        type: NativeFileTypes.Copy,
         files: ['/source/file1.txt', '/source/file2.txt', '/source/folder1', '/source/folder2/file3.txt'],
+        type: NativeFileTypes.Copy,
       }
     },
     'FileSystem.copy'() {},
-    'FileSystem.readDirWithFileTypes'() {
-      return []
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'Preferences.get'() {
-      return false
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
     'IconTheme.getIcons'() {
       return ['']
+    },
+    'Preferences.get'() {
+      return false
     },
   })
 
@@ -140,21 +140,21 @@ test('should handle paste with empty files array', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
-        type: NativeFileTypes.Copy,
         files: [],
+        type: NativeFileTypes.Copy,
       }
-    },
-    'FileSystem.readDirWithFileTypes'() {
-      return []
     },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'Preferences.get'() {
-      return false
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
     'IconTheme.getIcons'() {
       return ['']
+    },
+    'Preferences.get'() {
+      return false
     },
   })
 
@@ -171,22 +171,22 @@ test('should preserve state properties when handling paste', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
-        type: NativeFileTypes.Copy,
         files: ['/source/file.txt'],
+        type: NativeFileTypes.Copy,
       }
     },
     'FileSystem.copy'() {},
-    'FileSystem.readDirWithFileTypes'() {
-      return []
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
-    'Preferences.get'() {
-      return false
+    'FileSystem.readDirWithFileTypes'() {
+      return []
     },
     'IconTheme.getIcons'() {
       return ['']
+    },
+    'Preferences.get'() {
+      return false
     },
   })
 

@@ -12,15 +12,15 @@ test('handleCut - with focused dirent', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ name: 'test.txt', type: DirentType.File, path: '/test.txt', depth: 0, selected: false }],
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
   }
   const result = await handleCut(state)
 
   expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', 'cut', ['/test.txt']]])
   expect(result).toEqual({
     ...state,
-    pasteShouldMove: true,
     cutItems: ['/test.txt'],
+    pasteShouldMove: true,
   })
 })
 

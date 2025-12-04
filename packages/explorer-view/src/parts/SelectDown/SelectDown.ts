@@ -12,7 +12,7 @@ const getLastSelectedIndex = (items: readonly ExplorerItem[]): number => {
 }
 
 export const selectDown = (state: ExplorerState): ExplorerState => {
-  const { items, focusedIndex } = state
+  const { focusedIndex, items } = state
   const lastSelectedIndex = getLastSelectedIndex(items)
   const targetIndex = lastSelectedIndex === -1 ? focusedIndex : lastSelectedIndex
   if (targetIndex >= items.length - 1) {
@@ -24,7 +24,7 @@ export const selectDown = (state: ExplorerState): ExplorerState => {
   }))
   return {
     ...state,
-    items: newItems,
     focusedIndex: targetIndex + 1,
+    items: newItems,
   }
 }

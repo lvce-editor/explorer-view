@@ -13,16 +13,16 @@ export const getScrollBarVirtualDom = (scrollBarHeight: number, scrollBarTop: nu
   const translateString = Px.position(0, scrollBarTop)
   return [
     {
-      type: VirtualDomElements.Div,
-      className: MergeClassNames.mergeClassNames(ClassNames.ScrollBar, ClassNames.ScrollBarSmall),
       childCount: 1,
+      className: MergeClassNames.mergeClassNames(ClassNames.ScrollBar, ClassNames.ScrollBarSmall),
+      type: VirtualDomElements.Div,
     },
     {
-      type: VirtualDomElements.Div,
-      className: ClassNames.ScrollBarThumb,
       childCount: 0,
+      className: ClassNames.ScrollBarThumb,
       height: heightString,
       translate: translateString,
+      type: VirtualDomElements.Div,
     },
   ]
 }

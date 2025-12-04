@@ -9,7 +9,7 @@ export const handleClickDirectoryExpanded = async (
   index: number,
   keepFocus: boolean,
 ): Promise<ExplorerState> => {
-  const { minLineY, maxLineY, itemHeight, items } = state
+  const { itemHeight, items, maxLineY, minLineY } = state
   // @ts-ignore
   dirent.type = DirentType.Directory
   // @ts-ignore

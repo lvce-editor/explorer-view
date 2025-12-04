@@ -8,9 +8,9 @@ export const handlePointerDown = (state: ExplorerState, button: number, x: numbe
   if (button === MouseEventType.LeftClick && index === -1) {
     return {
       ...state,
+      focus: FocusId.List,
       focused: true,
       focusedIndex: -1,
-      focus: FocusId.List,
     }
   }
   return state

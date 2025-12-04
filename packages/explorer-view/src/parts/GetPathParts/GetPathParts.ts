@@ -7,11 +7,11 @@ export const getPathParts = (root: string, uri: string, pathSeparator: string): 
   while ((index = uri.indexOf(pathSeparator, index + 1)) !== -1) {
     const partUri = uri.slice(0, index)
     parts.push({
-      path: partUri,
       depth: depth++,
-      root,
-      pathSeparator,
       expanded: true,
+      path: partUri,
+      pathSeparator,
+      root,
     })
   }
   return parts
