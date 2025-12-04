@@ -1,5 +1,5 @@
 export interface RestoredState {
-  readonly root: string
-  readonly minLineY: number
   readonly deltaY: number
+  readonly minLineY: number
+  readonly root: string
 }

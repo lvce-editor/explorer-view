@@ -4,10 +4,10 @@ import type { FileIconCache } from '../FileIconCache/FileIconCache.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 
 export interface ExplorerState {
-  readonly visibleExplorerItems: readonly VisibleExplorerItem[]
   readonly confirmDelete: boolean
   readonly confirmPaste: boolean
   readonly cutItems: readonly string[]
+  readonly decorations: readonly FileDecoration[]
   readonly deltaY: number
   readonly dropTargets: readonly number[]
   readonly editingErrorMessage: string
@@ -47,13 +47,13 @@ export interface ExplorerState {
   readonly root: string
   readonly scrollBarActive: boolean
   readonly scrollBarHeight: number
+  readonly sourceControlDecorations: boolean
   readonly sourceControlIgnoredUris: readonly string[]
   readonly uid: number
   readonly useChevrons: boolean
   readonly version: number
+  readonly visibleExplorerItems: readonly VisibleExplorerItem[]
   readonly width: number
   readonly x: number
   readonly y: number
-  readonly decorations: readonly FileDecoration[]
-  readonly sourceControlDecorations: boolean
 }

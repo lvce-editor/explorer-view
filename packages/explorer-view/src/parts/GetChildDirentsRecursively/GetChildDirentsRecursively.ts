@@ -6,11 +6,9 @@ import * as MakeExpanded from '../MakeExpanded/MakeExpanded.ts'
 // TODO this is very inefficient
 export const getChildDirentsRecursively = async (dirent: ExplorerItem, pathSeparator: string): Promise<readonly ExplorerItem[]> => {
   switch (dirent.type) {
-    case DirentType.File:
-      return [dirent]
     case DirentType.Directory:
-    case DirentType.DirectoryExpanding:
     case DirentType.DirectoryExpanded:
+    case DirentType.DirectoryExpanding:
       const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth)
       const all = [MakeExpanded.makeExpanded(dirent)]
       for (const childDirent of childDirents) {
@@ -18,6 +16,8 @@ export const getChildDirentsRecursively = async (dirent: ExplorerItem, pathSepar
         all.push(...childAll)
       }
       return all
+    case DirentType.File:
+      return [dirent]
     default:
       return []
   }
