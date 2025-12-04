@@ -14,12 +14,12 @@ import { join2 } from '../Path/Path.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 
 export interface ExplorerUpdateResult {
-  readonly newItems: readonly ExplorerItem[]
   readonly newFileIconCache: FileIconCache
-  readonly newIcons: readonly string[]
-  readonly newMinLineY: number
-  readonly newMaxLineY: number
   readonly newFocusedIndex: number
+  readonly newIcons: readonly string[]
+  readonly newItems: readonly ExplorerItem[]
+  readonly newMaxLineY: number
+  readonly newMinLineY: number
 }
 
 export const updateExplorerAfterFileOperations = async (

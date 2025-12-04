@@ -11,15 +11,15 @@ export const handleArrowRight = async (state: ExplorerState): Promise<ExplorerSt
   }
   const dirent = items[focusedIndex]
   switch (dirent.type) {
-    case DirentType.File:
-    case DirentType.SymLinkFile:
-      return state
     case DirentType.Directory:
     case DirentType.SymLinkFolder:
       // @ts-ignore
       return HandleClickDirectory.handleClickDirectory(state, dirent, focusedIndex)
     case DirentType.DirectoryExpanded:
       return HandleArrowRightDirectoryExpanded.handleArrowRightDirectoryExpanded(state, dirent)
+    case DirentType.File:
+    case DirentType.SymLinkFile:
+      return state
     case DirentType.Symlink:
       return HandleClickSymlink.handleClickSymLink(state, dirent, focusedIndex)
     default:

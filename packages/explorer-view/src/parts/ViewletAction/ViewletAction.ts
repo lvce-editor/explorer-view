@@ -1,9 +1,9 @@
 export interface ViewletAction {
-  readonly type: number
-  readonly id: string
-  readonly icon?: string
-  readonly command: string
   readonly badgeText?: string
+  readonly command: string
+  readonly icon?: string
+  readonly id: string
   readonly placeholder?: string
+  readonly type: number
   readonly value?: string
 }

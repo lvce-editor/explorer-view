@@ -10,20 +10,20 @@ import * as RenderValue from '../RenderValue/RenderValue.ts'
 
 export const getRenderer = (diffType: number): Renderer => {
   switch (diffType) {
-    case DiffType.RenderItems:
-      return RenderItems.renderItems
+    case DiffType.RenderCss:
+      return renderCss
+    case DiffType.RenderDragData:
+      return RenderDragData.renderDragData
     case DiffType.RenderFocus:
       return RenderFocus.renderFocus
     case DiffType.RenderFocusContext:
       return RenderFocusContext.renderFocusContext
-    case DiffType.RenderValue:
-      return RenderValue.renderValue
+    case DiffType.RenderItems:
+      return RenderItems.renderItems
     case DiffType.RenderSelection:
       return RenderEditingSelection.renderEditingSelection
-    case DiffType.RenderDragData:
-      return RenderDragData.renderDragData
-    case DiffType.RenderCss:
-      return renderCss
+    case DiffType.RenderValue:
+      return RenderValue.renderValue
     default:
       throw new Error('unknown renderer')
   }

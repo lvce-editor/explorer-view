@@ -25,16 +25,16 @@ import * as HandleClickSymlink from '../HandleClickSymlink/HandleClickSymlink.ts
 
 export const getClickFn = (direntType: number): ClickHandler => {
   switch (direntType) {
-    case DirentType.File:
-    case DirentType.SymLinkFile:
-      return HandleClickFile.handleClickFile
     case DirentType.Directory:
     case DirentType.SymLinkFolder:
       return HandleClickDirectory.handleClickDirectory
-    case DirentType.DirectoryExpanding:
-      return HandleClickDirectoryExpanding.handleClickDirectoryExpanding
     case DirentType.DirectoryExpanded:
       return HandleClickDirectoryExpanded.handleClickDirectoryExpanded
+    case DirentType.DirectoryExpanding:
+      return HandleClickDirectoryExpanding.handleClickDirectoryExpanding
+    case DirentType.File:
+    case DirentType.SymLinkFile:
+      return HandleClickFile.handleClickFile
     case DirentType.Symlink:
       return HandleClickSymlink.handleClickSymLink
     case DirentType.CharacterDevice:

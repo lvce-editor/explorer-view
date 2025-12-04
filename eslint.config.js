@@ -29,6 +29,28 @@ export default [
       'jest/no-identical-title': 'off',
       'unicorn/prefer-single-call': 'off',
       'unicorn/no-immediate-mutation': 'off',
+      'perfectionist/sort-imports': [
+        'error',
+        {
+          type: 'natural',
+          order: 'asc',
+          newlinesBetween: 'never',
+        },
+      ],
+      'perfectionist/sort-interfaces': [
+        'error',
+        {
+          type: 'alphabetical',
+          order: 'asc',
+        },
+      ],
+      'perfectionist/sort-switch-case': [
+        'error',
+        {
+          type: 'alphabetical',
+          order: 'asc',
+        },
+      ],
     },
   },
   {

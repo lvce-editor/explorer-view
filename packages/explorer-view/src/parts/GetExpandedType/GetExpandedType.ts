@@ -5,8 +5,8 @@ export const getExpandedType = (type: number): number => {
   switch (type) {
     case DirentType.Directory:
       return ExpandedType.Collapsed
-    case DirentType.DirectoryExpanding:
     case DirentType.DirectoryExpanded:
+    case DirentType.DirectoryExpanding:
       return ExpandedType.Expanded
     default:
       return ExpandedType.None
