@@ -1,8 +1,11 @@
+export const HandleButtonClick = 18
 export const HandleClick = 1
 export const HandleClickOpenFolder = 2
 export const HandleContextMenu = 3
+export const HandleDragEnd = 19
 export const HandleDragLeave = 4
 export const HandleDragOver = 5
+export const HandleDragStart = 17
 export const HandleDrop = 6
 export const HandleEditingInput = 7
 export const HandleInputBlur = 8
@@ -11,5 +14,3 @@ export const HandleListBlur = 11
 export const HandleListFocus = 12
 export const HandlePointerDown = 14
 export const HandleWheel = 15
-export const HandleDragStart = 17
-export const HandleDragEnd = 18

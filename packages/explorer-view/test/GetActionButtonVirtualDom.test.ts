@@ -7,13 +7,14 @@ test('getActionButtonVirtualDom', () => {
     command: 'newFile',
     icon: 'NewFile',
     id: 'New File',
+    name: 'NewFile',
     type: ActionType.Button,
   }
   expect(GetActionButtonVirtualDom.getActionButtonVirtualDom(action)).toEqual([
     {
       childCount: 1,
       className: 'IconButton',
-      'data-command': 'newFile',
+      name: 'NewFile',
       title: 'New File',
       type: 1,
     },

@@ -10,24 +10,28 @@ test('getActions - with root', () => {
       command: 'newFile',
       icon: MaskIcon.NewFile,
       id: ViewletExplorerStrings.newFile(),
+      name: 'NewFile',
       type: ActionType.Button,
     },
     {
       command: 'newFolder',
       icon: MaskIcon.NewFolder,
       id: ViewletExplorerStrings.newFolder(),
+      name: 'NewFolder',
       type: ActionType.Button,
     },
     {
       command: 'refresh',
       icon: MaskIcon.Refresh,
       id: ViewletExplorerStrings.refresh(),
+      name: 'Refresh',
       type: ActionType.Button,
     },
     {
       command: 'collapseAll',
       icon: MaskIcon.CollapseAll,
       id: ViewletExplorerStrings.collapseAll(),
+      name: 'CollapseAll',
       type: ActionType.Button,
     },
   ])

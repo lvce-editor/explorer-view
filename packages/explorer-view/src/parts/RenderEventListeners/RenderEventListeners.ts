@@ -72,6 +72,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleDragLeave'],
     },
     {
+      name: DomEventListenersFunctions.HandleButtonClick,
+      params: ['handleButtonClick', EventExpression.TargetName],
+    },
+    {
       name: DomEventListenersFunctions.HandleDragEnd,
       params: ['handleDragEnd'],
     },
