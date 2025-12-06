@@ -38,3 +38,4 @@ test('ensureUris - preserves readonly array type', () => {
   // Verify it returns a readonly array
   expect(Object.isFrozen(result) || Array.isArray(result)).toBe(true)
 })
+

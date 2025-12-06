@@ -93,3 +93,4 @@ test('createDecorationMap - handles root path', () => {
     'file:///': 'modified',
   })
 })
+
