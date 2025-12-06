@@ -34,6 +34,7 @@ import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleContextMenuKeyboard from '../HandleContextMenuKeyboard/HandleContextMenuKeyboard.ts'
 import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
 import * as HandleCut from '../HandleCut/HandleCut.ts'
+import { handleDragEnd } from '../HandleDragEnd/HandleDragEnd.ts'
 import * as HandleDragLeave from '../HandleDragLeave/HandleDragLeave.ts'
 import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as HandleDragOverIndex from '../HandleDragOverIndex/HandleDragOverIndex.ts'
@@ -112,6 +113,7 @@ export const commandMap = {
   'Explorer.handleContextMenuKeyboard': WrapCommand.wrapListItemCommand(HandleContextMenuKeyboard.handleContextMenuKeyboard),
   'Explorer.handleCopy': WrapCommand.wrapListItemCommand(HandleCopy.handleCopy),
   'Explorer.handleCut': WrapCommand.wrapListItemCommand(HandleCut.handleCut),
+  'Explorer.handleDragEnd': WrapCommand.wrapListItemCommand(handleDragEnd),
   'Explorer.handleDragLeave': WrapCommand.wrapListItemCommand(HandleDragLeave.handleDragLeave),
   'Explorer.handleDragOver': WrapCommand.wrapListItemCommand(HandleDragOver.handleDragOver),
   'Explorer.handleDragOverIndex': WrapCommand.wrapListItemCommand(HandleDragOverIndex.handleDragOverIndex),

@@ -19,6 +19,7 @@ export const handleDrop = async (
     const paths = await getFilePaths(files, state.platform)
     const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
     const fn = getDropHandler(index)
+    console.log({ fn, index })
     const result = await fn(state, fileHandles, files, paths, index)
     return result
   } catch (error) {
