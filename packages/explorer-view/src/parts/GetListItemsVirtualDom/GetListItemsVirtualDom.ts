@@ -38,6 +38,7 @@ export const getListItemsVirtualDom = (
       onBlur: DomEventListenerFunctions.HandleListBlur,
       onClick: DomEventListenerFunctions.HandleClick,
       onContextMenu: DomEventListenerFunctions.HandleContextMenu,
+      onDragEnd: DomEventListenerFunctions.HandleDragEnd,
       onDragLeave: DomEventListenerFunctions.HandleDragLeave,
       onDragOver: DomEventListenerFunctions.HandleDragOver,
       onDragStart: DomEventListenerFunctions.HandleDragStart,
