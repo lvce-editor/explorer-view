@@ -72,6 +72,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleDragLeave'],
     },
     {
+      name: DomEventListenersFunctions.HandleButtonClick,
+      params: ['handleButtonClick', EventExpression.TargetName],
+    },
+    {
       // @ts-ignore
       dragEffect: 'copyMove',
       name: DomEventListenersFunctions.HandleDragStart,

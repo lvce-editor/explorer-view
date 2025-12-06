@@ -12,3 +12,4 @@ export const HandleListFocus = 12
 export const HandlePointerDown = 14
 export const HandleWheel = 15
 export const HandleDragStart = 17
+export const HandleButtonClick = 18
