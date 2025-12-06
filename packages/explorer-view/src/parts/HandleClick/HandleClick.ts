@@ -19,11 +19,11 @@ import { resetEditing } from '../ResetEditing/ResetEditing.ts'
 // TODO much shared logic with newFolder
 
 export const handleClick = async (state: ExplorerState, index: number, keepFocus = false): Promise<ExplorerState> => {
-  const { items, minLineY } = state
+  const { items } = state
   if (index === -1) {
     return FocusIndex.focusIndex(state, -1)
   }
-  const actualIndex = index + minLineY
+  const actualIndex = index
   const dirent = items[actualIndex]
   if (!dirent) {
     console.warn(`[explorer] dirent at index ${actualIndex} not found`, state)

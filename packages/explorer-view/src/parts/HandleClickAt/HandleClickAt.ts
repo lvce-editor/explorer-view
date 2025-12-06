@@ -18,7 +18,7 @@ export const handleClickAt = async (
     return state
   }
   const index = GetIndexFromPosition.getIndexFromPosition(state, eventX, eventY)
-  if (index === -1) {
+  if (index === -1 || index >= state.items.length) {
     return {
       ...state,
       focused: true,
