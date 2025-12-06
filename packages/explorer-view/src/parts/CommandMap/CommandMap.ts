@@ -25,6 +25,7 @@ import * as GetMouseActions from '../GetMouseActions/GetMouseActions.ts'
 import * as HandleArrowLeft from '../HandleArrowLeft/HandleArrowLeft.ts'
 import * as HandleArrowRight from '../HandleArrowRight/HandleArrowRight.ts'
 import * as HandleBlur from '../HandleBlur/HandleBlur.ts'
+import { handleButtonClick } from '../HandleButtonClick/HandleButtonClick.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleClickAt from '../HandleClickAt/HandleClickAt.ts'
 import * as HandleClickCurrent from '../HandleClickCurrent/HandleClickCurrent.ts'
@@ -104,6 +105,7 @@ export const commandMap = {
   'Explorer.handleArrowLeft': WrapCommand.wrapListItemCommand(HandleArrowLeft.handleArrowLeft),
   'Explorer.handleArrowRight': WrapCommand.wrapListItemCommand(HandleArrowRight.handleArrowRight),
   'Explorer.handleBlur': WrapCommand.wrapListItemCommand(HandleBlur.handleBlur),
+  'Explorer.handleButtonClick': WrapCommand.wrapListItemCommand(handleButtonClick),
   'Explorer.handleClick': WrapCommand.wrapListItemCommand(HandleClick.handleClick),
   'Explorer.handleClickAt': WrapCommand.wrapListItemCommand(HandleClickAt.handleClickAt),
   'Explorer.handleClickCurrent': WrapCommand.wrapListItemCommand(HandleClickCurrent.handleClickCurrent),
