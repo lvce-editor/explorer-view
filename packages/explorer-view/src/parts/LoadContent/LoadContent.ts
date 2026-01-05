@@ -26,6 +26,8 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
+  // @ts-ignore
+  const { assetDir, platform } = state
   const { confirmDelete, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
@@ -48,6 +50,8 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     root,
     restoredDirents.filter((item: any) => item.depth === 1).map((item: any) => item.path),
     sourceControlDecorations,
+    assetDir,
+    platform,
   )
   return {
     ...state,
