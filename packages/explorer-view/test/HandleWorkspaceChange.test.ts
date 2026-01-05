@@ -110,7 +110,7 @@ test('should preserve state properties when updating workspace', async () => {
       ['FileSystem.readDirWithFileTypes', '/another/workspace'],
     ]),
   )
-  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', '/another/workspace']])
+  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', '/another/workspace', undefined, 0]])
 })
 
 test('should handle workspace path change with existing content', async () => {
@@ -199,7 +199,7 @@ test('should handle workspace path change with chevrons enabled', async () => {
       ['FileSystem.readDirWithFileTypes', '/chevron/workspace'],
     ]),
   )
-  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', '/chevron/workspace']])
+  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', '/chevron/workspace', undefined, 0]])
 })
 
 test('should handle different path separators', async () => {
