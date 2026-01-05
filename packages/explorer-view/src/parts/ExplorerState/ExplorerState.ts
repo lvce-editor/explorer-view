@@ -4,6 +4,7 @@ import type { FileIconCache } from '../FileIconCache/FileIconCache.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 
 export interface ExplorerState {
+  readonly assetDir: string
   readonly confirmDelete: boolean
   readonly confirmPaste: boolean
   readonly cutItems: readonly string[]
