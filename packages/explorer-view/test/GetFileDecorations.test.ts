@@ -139,7 +139,7 @@ test('getFileDecorations - returns empty array when getFileDecorations throws', 
   expect(result).toEqual([])
   expect(mockRpc.invocations).toEqual([
     ['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0],
-    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt', '', 0]],
+    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt'], '', 0],
   ])
   expect(consoleErrorSpy).toHaveBeenCalled()
 
@@ -161,6 +161,6 @@ test('getFileDecorations - handles empty URIs array', async () => {
   expect(result).toEqual([])
   expect(mockRpc.invocations).toEqual([
     ['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0],
-    ['SourceControl.getFileDecorations', 'git', [0, '', 0]],
+    ['SourceControl.getFileDecorations', 'git', [], '', 0],
   ])
 })
