@@ -15,8 +15,10 @@ export const create = (
   args: any,
   parentUid: any,
   platform: number = 0,
+  assetDir: string = '',
 ): any => {
   const state: ExplorerState = {
+    assetDir,
     confirmDelete: false,
     confirmPaste: false,
     cutItems: [],
