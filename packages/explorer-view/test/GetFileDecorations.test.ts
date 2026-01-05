@@ -4,7 +4,7 @@ import type { FileDecoration } from '../src/parts/FileDecoration/FileDecoration.
 
 test.skip('getFileDecorations - returns empty array when decorationsEnabled is false', async () => {
   const { getFileDecorations } = await import('../src/parts/GetFileDecorations/GetFileDecorations.ts')
-  const result = await getFileDecorations('file', '/root', ['/file1.txt'], false)
+  const result = await getFileDecorations('file', '/root', ['/file1.txt'], false, '', 0)
   expect(result).toEqual([])
 })
 
@@ -16,9 +16,9 @@ test('getFileDecorations - returns empty array when no provider IDs', async () =
   })
 
   const { getFileDecorations } = await import('../src/parts/GetFileDecorations/GetFileDecorations.ts')
-  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true)
+  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true, '', 0)
   expect(result).toEqual([])
-  expect(mockRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', 'file', '/root']])
+  expect(mockRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0]])
 })
 
 test.skip('getFileDecorations - returns decorations for single file', async () => {
@@ -33,11 +33,11 @@ test.skip('getFileDecorations - returns decorations for single file', async () =
   })
 
   const { getFileDecorations } = await import('../src/parts/GetFileDecorations/GetFileDecorations.ts')
-  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true)
+  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true, '', 0)
   expect(result).toEqual(decorations)
   expect(mockRpc.invocations).toEqual([
-    ['SourceControl.getEnabledProviderIds', 'file', '/root'],
-    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt']],
+    ['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0],
+    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt', '', 0]],
   ])
 })
 
@@ -56,11 +56,11 @@ test.skip('getFileDecorations - converts paths to URIs', async () => {
   })
 
   const { getFileDecorations } = await import('../src/parts/GetFileDecorations/GetFileDecorations.ts')
-  const result = await getFileDecorations('file', '/root', ['/file1.txt', '/file2.txt'], true)
+  const result = await getFileDecorations('file', '/root', ['/file1.txt', '/file2.txt'], true, '', 0)
   expect(result).toEqual(decorations)
   expect(mockRpc.invocations).toEqual([
-    ['SourceControl.getEnabledProviderIds', 'file', '/root'],
-    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt', 'file:///file2.txt']],
+    ['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0],
+    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt', 'file:///file2.txt', '', 0]],
   ])
 })
 
@@ -76,11 +76,11 @@ test.skip('getFileDecorations - handles URIs that are already URIs', async () =>
   })
 
   const { getFileDecorations } = await import('../src/parts/GetFileDecorations/GetFileDecorations.ts')
-  const result = await getFileDecorations('file', '/root', ['file:///file1.txt'], true)
+  const result = await getFileDecorations('file', '/root', ['file:///file1.txt'], true, '', 0)
   expect(result).toEqual(decorations)
   expect(mockRpc.invocations).toEqual([
-    ['SourceControl.getEnabledProviderIds', 'file', '/root'],
-    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt']],
+    ['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0],
+    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt', '', 0]],
   ])
 })
 
@@ -96,11 +96,11 @@ test.skip('getFileDecorations - uses first provider ID when multiple are availab
   })
 
   const { getFileDecorations } = await import('../src/parts/GetFileDecorations/GetFileDecorations.ts')
-  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true)
+  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true, '', 0)
   expect(result).toEqual(decorations)
   expect(mockRpc.invocations).toEqual([
-    ['SourceControl.getEnabledProviderIds', 'file', '/root'],
-    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt']],
+    ['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0],
+    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt', '', 0]],
   ])
 })
 
@@ -114,9 +114,9 @@ test('getFileDecorations - returns empty array when getEnabledProviderIds throws
   const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
   const { getFileDecorations } = await import('../src/parts/GetFileDecorations/GetFileDecorations.ts')
-  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true)
+  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true, '', 0)
   expect(result).toEqual([])
-  expect(mockRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', 'file', '/root']])
+  expect(mockRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0]])
   expect(consoleErrorSpy).toHaveBeenCalled()
 
   consoleErrorSpy.mockRestore()
@@ -135,11 +135,11 @@ test('getFileDecorations - returns empty array when getFileDecorations throws', 
   const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
   const { getFileDecorations } = await import('../src/parts/GetFileDecorations/GetFileDecorations.ts')
-  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true)
+  const result = await getFileDecorations('file', '/root', ['/file1.txt'], true, '', 0)
   expect(result).toEqual([])
   expect(mockRpc.invocations).toEqual([
-    ['SourceControl.getEnabledProviderIds', 'file', '/root'],
-    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt']],
+    ['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0],
+    ['SourceControl.getFileDecorations', 'git', ['file:///file1.txt'], '', 0],
   ])
   expect(consoleErrorSpy).toHaveBeenCalled()
 
@@ -157,10 +157,10 @@ test('getFileDecorations - handles empty URIs array', async () => {
   })
 
   const { getFileDecorations } = await import('../src/parts/GetFileDecorations/GetFileDecorations.ts')
-  const result = await getFileDecorations('file', '/root', [], true)
+  const result = await getFileDecorations('file', '/root', [], true, '', 0)
   expect(result).toEqual([])
   expect(mockRpc.invocations).toEqual([
-    ['SourceControl.getEnabledProviderIds', 'file', '/root'],
-    ['SourceControl.getFileDecorations', 'git', []],
+    ['SourceControl.getEnabledProviderIds', 'file', '/root', '', 0],
+    ['SourceControl.getFileDecorations', 'git', [], '', 0],
   ])
 })
