@@ -7,7 +7,7 @@ import { isNormalItem } from '../IsNormalItem/IsNormalItem.ts'
 export const cancelEditCreate = async (state: ExplorerState, keepFocus: boolean): Promise<ExplorerState> => {
   const { editingIndex, items } = state
   const filteredItems = items.filter(isNormalItem)
-  const newFocusedIndex = getFocusedIndexCancel(items, editingIndex)
+  const newFocusedIndex = getFocusedIndexCancel(filteredItems, editingIndex)
   return {
     ...state,
     editingErrorMessage: '',
