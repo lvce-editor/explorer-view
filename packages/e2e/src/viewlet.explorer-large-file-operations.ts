@@ -39,10 +39,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(renamedFile).toBeVisible()
 
   // Test 3: Delete large file
-  const deleteStartTime = Date.now()
   await Explorer.focusIndex(1) // Focus on copied large file
   await Explorer.removeDirent()
-  const deleteTime = Date.now() - deleteStartTime
 
   // Verify file is deleted
   await expect(copiedFile).not.toBeVisible()
