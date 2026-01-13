@@ -13,7 +13,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Workspace.setPath(tmpDir)
 
   // assert
-  const file1 = Locator('.TreeItem', { hasText: 'file1.txt' })
+  const file1 = Locator('.TreeItem[aria-label="file1.txt"]')
   await expect(file1).toBeVisible()
 
   // act
@@ -21,5 +21,5 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.refresh()
 
   // assert
-  // await expect(file1).toHaveCount(0)
+  await expect(file1).toBeHidden()
 }
