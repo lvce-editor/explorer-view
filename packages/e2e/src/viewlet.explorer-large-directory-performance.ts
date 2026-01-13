@@ -43,8 +43,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(lastItem).toBeVisible()
 
   // Test 7: Test selection performance
-  const selectionStartTime = Date.now()
   await Explorer.focusIndex(0)
   await Explorer.focusIndex(5000)
-  const selectionTime = Date.now() - selectionStartTime
 }
