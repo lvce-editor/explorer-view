@@ -19,28 +19,20 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.expandRecursively()
 
   // Test 1: Copy large file
-  const copyStartTime = Date.now()
   await Explorer.focusIndex(1) // Focus on large-file.txt
   await Explorer.handleCopy()
   await Explorer.focusIndex(0) // Focus on directory root
   await Explorer.handlePaste()
-  const copyTime = Date.now() - copyStartTime
-
-  console.log(`Large file copy time: ${copyTime}ms`)
 
   // Verify copied file exists
   const copiedFile = Locator('.TreeItem', { hasText: 'large-file (1).txt' })
   await expect(copiedFile).toBeVisible()
 
   // Test 2: Rename large file
-  const renameStartTime = Date.now()
   await Explorer.focusIndex(1) // Focus on original large file
   await Explorer.renameDirent()
   await Explorer.updateEditingValue('renamed-large-file.txt')
   await Explorer.acceptEdit()
-  const renameTime = Date.now() - renameStartTime
-
-  console.log(`Large file rename time: ${renameTime}ms`)
 
   // Verify renamed file exists
   const renamedFile = Locator('.TreeItem', { hasText: 'renamed-large-file.txt' })
@@ -52,19 +44,13 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.removeDirent()
   const deleteTime = Date.now() - deleteStartTime
 
-  console.log(`Large file delete time: ${deleteTime}ms`)
-
   // Verify file is deleted
   await expect(copiedFile).not.toBeVisible()
 
   // Test 4: Create new large file
-  const createStartTime = Date.now()
   await Explorer.newFile()
   await Explorer.updateEditingValue('new-large-file.txt')
   await Explorer.acceptEdit()
-  const createTime = Date.now() - createStartTime
-
-  console.log(`Large file creation time: ${createTime}ms`)
 
   // Verify new file exists
   const newFile = Locator('.TreeItem', { hasText: 'new-large-file.txt' })
@@ -75,14 +61,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.refresh()
   await Explorer.expandRecursively()
 
-  const moveStartTime = Date.now()
   await Explorer.focusIndex(2) // Focus on medium-file.txt
   await Explorer.handleCut()
   await Explorer.focusIndex(3) // Focus on subdir
   await Explorer.handlePaste()
-  const moveTime = Date.now() - moveStartTime
-
-  console.log(`Medium file move time: ${moveTime}ms`)
 
   // Verify file moved to subdirectory
   await Explorer.focusIndex(3)

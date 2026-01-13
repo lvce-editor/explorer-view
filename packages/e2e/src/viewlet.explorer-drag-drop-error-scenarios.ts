@@ -28,7 +28,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await expect(errorMessage).toHaveText('Permission denied')
 
   // Test 2: Drop with invalid file handle
-  const invalidId = 999999 // Use number instead of string
+  const invalidId = 999_999 // Use number instead of string
   await Explorer.handleDrop(0, 0, [invalidId], fileList as any)
 
   // Should handle invalid handle gracefully
@@ -51,7 +51,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   // Delete one file after adding to handles to simulate error
   await Command.execute('FileSystemHandle.removeFileHandle', id2)
 
-  await Explorer.handleDrop(0, 0, [id, 999999], fileList2 as any)
+  await Explorer.handleDrop(0, 0, [id, 999_999], fileList2 as any)
 
   // Should handle partial failure gracefully
   await expect(errorMessage).toBeVisible()
