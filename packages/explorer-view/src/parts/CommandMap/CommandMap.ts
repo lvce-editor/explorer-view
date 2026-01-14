@@ -41,6 +41,7 @@ import * as HandleDragOver from '../HandleDragOver/HandleDragOver.ts'
 import * as HandleDragOverIndex from '../HandleDragOverIndex/HandleDragOverIndex.ts'
 import * as HandleDragStart from '../HandleDragStart/HandleDragStart.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
+import { handleDropIndex } from '../HandleDropIndex/HandleDropIndex.ts'
 import { handleEscape } from '../HandleEscape/HandleEscape.ts'
 import * as HandleFocus from '../HandleFocus/HandleFocus.ts'
 import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconThemeChange.ts'
@@ -121,6 +122,7 @@ export const commandMap = {
   'Explorer.handleDragOverIndex': WrapCommand.wrapListItemCommand(HandleDragOverIndex.handleDragOverIndex),
   'Explorer.handleDragStart': WrapCommand.wrapListItemCommand(HandleDragStart.handleDragStart),
   'Explorer.handleDrop': WrapCommand.wrapListItemCommand(HandleDrop.handleDrop),
+  'Explorer.handleDropIndex': WrapCommand.wrapListItemCommand(handleDropIndex),
   'Explorer.handleEscape': WrapCommand.wrapListItemCommand(handleEscape),
   'Explorer.handleFocus': WrapCommand.wrapListItemCommand(HandleFocus.handleFocus),
   'Explorer.handleIconThemeChange': WrapCommand.wrapListItemCommand(HandleIconThemeChange.handleIconThemeChange),
