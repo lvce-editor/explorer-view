@@ -35,7 +35,7 @@ export const newDirent = async (state: ExplorerState, editingType: number): Prom
     editingType,
     editingValue: '',
     focus: FocusId.Input,
-    focusedIndex: editingIndex,
+    focusedIndex: newEditingIndex,
     items: newDirents,
   }
 }
