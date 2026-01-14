@@ -9,19 +9,20 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.handleDragOverIndex(0)
+
+  // act
   const opfsRoot = await navigator.storage.getDirectory()
-  const fileHandle = await opfsRoot.getFileHandle('my first file', {
+  const directoryHandle = await opfsRoot.getDirectoryHandle('my first folder', {
     create: true,
   })
-  const fileHandles = [fileHandle]
+  const fileHandles = [directoryHandle]
   const files = []
   const paths = []
   const index = 0
-
-  // act
   await Command.execute('Explorer.handleDropIndex', fileHandles, files, paths, index)
 
   // assert
-  const newFile = Locator('.TreeItem[aria-label="my first file"]')
-  await expect(newFile).toBeVisible()
+  const newFolder = Locator('.TreeItem[aria-label="my first folder"]')
+  await expect(newFolder).toBeVisible()
+  await expect(newFolder).toHaveAttribute('aria-expanded', 'false')
 }
