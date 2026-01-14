@@ -1,4 +1,3 @@
-import type { DragDataItem } from '../DragDataItem/DragDataItem.ts'
 import { getDragLabel } from '../GetDragLabel/GetDragLabel.ts'
 
 const toUri = (path: string): string => {
@@ -8,9 +7,19 @@ const toUri = (path: string): string => {
   return 'file://' + path
 }
 
-export const getDragData = (urls: readonly string[]): readonly DragDataItem[] => {
+export interface DragInfoItem {
+  readonly data: string
+  readonly type: string
+}
+
+export interface IDragInfoNew {
+  readonly items: readonly DragInfoItem[]
+  readonly label?: string
+}
+
+export const getDragData = (urls: readonly string[]): IDragInfoNew => {
   const data = urls.map(toUri).join('\n')
-  const dragData = [
+  const dragData: readonly DragInfoItem[] = [
     {
       data,
       type: 'text/uri-list',
@@ -20,7 +29,8 @@ export const getDragData = (urls: readonly string[]): readonly DragDataItem[] =>
       type: 'text/plain',
     },
   ]
-  // @ts-ignore
-  dragData.label = getDragLabel(urls)
-  return dragData
+  return {
+    items: dragData,
+    label: getDragLabel(urls),
+  }
 }
