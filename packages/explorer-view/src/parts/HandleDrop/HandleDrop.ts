@@ -14,9 +14,10 @@ export const handleDrop = async (
   fileList: FileList,
 ): Promise<ExplorerState> => {
   try {
+    const { platform } = state
     const files = GetFileArray.getFileArray(fileList)
     const fileHandles = await getFileHandles(fileIds)
-    const paths = await getFilePaths(files, state.platform)
+    const paths = await getFilePaths(files, platform)
     const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
     const fn = getDropHandler(index)
     const result = await fn(state, fileHandles, files, paths, index)
