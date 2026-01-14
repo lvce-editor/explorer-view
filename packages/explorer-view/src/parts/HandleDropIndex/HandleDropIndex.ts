@@ -1,10 +1,10 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
-import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 import * as HandleDropRoot from '../HandleDropRoot/HandleDropRoot.ts'
+import { uploadFileSystemHandles } from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
 const getEndIndex = (items: readonly ExplorerItem[], index: number, dirent: ExplorerItem): number => {
   for (let i = index + 1; i < items.length; i++) {
@@ -36,14 +36,9 @@ const handleDropIntoFolder = async (
   paths: readonly string[],
 ): Promise<ExplorerState> => {
   const { items, pathSeparator } = state
-  // @ts-ignore
-  for (const file of fileHandles) {
-    // TODO path basename
-    const baseName = file.name
-    const to = dirent.path + pathSeparator + baseName
-    // @ts-ignore
-    await FileSystem.copy(file, to)
-  }
+
+  await uploadFileSystemHandles(dirent.path, '/', fileHandles)
+
   const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth)
   const mergedDirents = getMergedDirents(items, index, dirent, childDirents)
   // TODO update maxlineY
