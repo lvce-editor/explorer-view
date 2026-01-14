@@ -42,7 +42,7 @@ test('newFolder', async () => {
     editingType: ExplorerEditingType.CreateFolder,
     editingValue: '',
     focus: 2,
-    focusedIndex: 0,
+    focusedIndex: -1,
     items: [
       {
         depth: 0,
