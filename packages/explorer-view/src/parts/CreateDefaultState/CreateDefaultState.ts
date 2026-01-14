@@ -10,7 +10,7 @@ export const createDefaultState = (): ExplorerState => ({
   dropTargets: [],
   editingErrorMessage: '',
   editingIcon: '',
-  editingIndex: 0,
+  editingIndex: -1,
   editingSelectionEnd: 0,
   editingSelectionStart: 0,
   editingType: 0,
