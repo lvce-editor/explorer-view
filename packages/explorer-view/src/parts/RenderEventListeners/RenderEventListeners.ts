@@ -44,6 +44,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handlePointerDown', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY],
     },
     {
+      name: DomEventListenersFunctions.HandleDoubleClick,
+      params: ['handleDoubleClick', EventExpression.ClientX, EventExpression.ClientY],
+    },
+    {
       name: DomEventListenersFunctions.HandleEditingInput,
       params: ['updateEditingValue', EventExpression.TargetValue],
     },
