@@ -5,7 +5,8 @@ import { isFileHandle } from '../IsFileHandle/IsFileHandle.ts'
 
 export const createUploadTree = async (root: string, fileHandles: readonly FileSystemHandle[]): Promise<any> => {
   const uploadTree = Object.create(null)
-  for (const fileHandle of fileHandles) {
+  const normalized = fileHandles.filter(Boolean)
+  for (const fileHandle of normalized) {
     const { name } = fileHandle
     if (isDirectoryHandle(fileHandle)) {
       const children = await getChildHandles(fileHandle)
