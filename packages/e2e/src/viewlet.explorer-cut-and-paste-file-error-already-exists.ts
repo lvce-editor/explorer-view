@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-cut-and-paste-file-error-already-exists'
 
-export const skip = 1
-
 export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
