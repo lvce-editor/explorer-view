@@ -7,6 +7,9 @@ export const uploadFileSystemHandles = async (
   pathSeparator: string,
   fileSystemHandles: readonly FileSystemHandle[],
 ): Promise<boolean> => {
+  if (fileSystemHandles.length === 0) {
+    return true
+  }
   const uploadTree = await createUploadTree(root, fileSystemHandles)
   const fileOperations = GetFileOperations.getFileOperations(root, uploadTree)
   await ApplyFileOperations.applyFileOperations(fileOperations)
