@@ -18,7 +18,7 @@ test('handleClickSymLink - file symlink', async () => {
   const index = 0
 
   const mockRealPath = '/test/real-file'
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getRealPath'() {
       return mockRealPath
     },
@@ -50,7 +50,7 @@ test('handleClickSymLink - unsupported type', async () => {
   const index = 0
 
   const mockRealPath = '/test/real-file'
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getRealPath'() {
       return mockRealPath
     },

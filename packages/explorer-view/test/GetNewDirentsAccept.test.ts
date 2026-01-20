@@ -5,7 +5,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewDirentsAccept } from '../src/parts/GetNewDirentsAccept/GetNewDirentsAccept.ts'
 
 test('getNewDirentsAccept - create file in root', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       return
     },
@@ -34,7 +34,7 @@ test('getNewDirentsAccept - create file in root', async () => {
 })
 
 test('getNewDirentsAccept - create file in subfolder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       return
     },
@@ -77,7 +77,7 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
 })
 
 test('getNewDirentsAccept - create nested file', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return
     },

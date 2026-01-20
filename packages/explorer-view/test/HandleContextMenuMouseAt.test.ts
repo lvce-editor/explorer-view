@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as HandleContextMenuMouseAt from '../src/parts/HandleContextMenuMouseAt/HandleContextMenuMouseAt.ts'
 
 test('handleContextMenuMouseAt', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ContextMenu.show2'() {},
   })
 

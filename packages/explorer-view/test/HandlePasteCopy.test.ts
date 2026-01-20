@@ -6,7 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handlePasteCopy } from '../src/parts/HandlePasteCopy/HandlePasteCopy.ts'
 
 test('should focus on first newly created file after paste copy', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.copy'() {
       return undefined
     },
@@ -54,7 +54,7 @@ test('should focus on first newly created file after paste copy', async () => {
 })
 
 test('should handle paste copy with multiple files and focus on first', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.copy'() {
       return undefined
     },
@@ -108,7 +108,7 @@ test('should handle paste copy with multiple files and focus on first', async ()
 })
 
 test('should handle paste copy with empty files array', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },

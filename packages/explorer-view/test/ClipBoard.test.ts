@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ClipBoard from '../src/parts/ClipBoard/ClipBoard.ts'
 
 test('writeText', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
   })
   await ClipBoard.writeText('test text')
@@ -15,7 +15,7 @@ test('readNativeFiles', async () => {
     files: ['/test/file1.txt', '/test/file2.txt'],
     type: 'copy',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return expectedResult
     },
@@ -26,7 +26,7 @@ test('readNativeFiles', async () => {
 })
 
 test('writeNativeFiles', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
   })
   await ClipBoard.writeNativeFiles('copy', ['/test/file.txt'])

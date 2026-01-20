@@ -22,7 +22,7 @@ test.skip('acceptCreate - empty file name', async () => {
 })
 
 test('acceptCreate - successful file creation', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },

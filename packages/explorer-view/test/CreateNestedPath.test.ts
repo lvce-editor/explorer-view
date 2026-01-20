@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createNestedPath } from '../src/parts/CreateNestedPath/CreateNestedPath.ts'
 
 test('createNestedPath - creates all directories', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return
     },
@@ -17,7 +17,7 @@ test('createNestedPath - creates all directories', async () => {
 })
 
 test('createNestedPath - handles existing directories', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return Promise.reject(new Error('Directory already exists'))
     },
@@ -31,7 +31,7 @@ test('createNestedPath - handles existing directories', async () => {
 })
 
 test('createNestedPath - propagates other errors', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return Promise.reject(new Error('Permission denied'))
     },

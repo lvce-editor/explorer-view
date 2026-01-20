@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FileSystem from '../src/parts/FileSystem/FileSystem.ts'
 
 test('readDirWithFileTypes', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file.txt', type: 1 },
@@ -21,7 +21,7 @@ test('readDirWithFileTypes', async () => {
 })
 
 test('writeFile', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       return undefined
     },
@@ -32,7 +32,7 @@ test('writeFile', async () => {
 })
 
 test('remove', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.remove'() {
       return undefined
     },
@@ -43,7 +43,7 @@ test('remove', async () => {
 })
 
 test('mkdir', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return undefined
     },
@@ -54,7 +54,7 @@ test('mkdir', async () => {
 })
 
 test('rename', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.rename'() {
       return undefined
     },
@@ -65,7 +65,7 @@ test('rename', async () => {
 })
 
 test('copy', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.copy'() {
       return undefined
     },
@@ -76,7 +76,7 @@ test('copy', async () => {
 })
 
 test('getRealPath', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getRealPath'() {
       return '/real/path'
     },
@@ -88,7 +88,7 @@ test('getRealPath', async () => {
 })
 
 test('getPathSeparator', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },

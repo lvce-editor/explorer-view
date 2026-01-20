@@ -10,7 +10,7 @@ test('getFileHandles', async () => {
   const fileIds = [1, 2, 3]
   const mockFiles = [new MockFileHandle('file1'), new MockFileHandle('file2'), new MockFileHandle('file3')]
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystemHandle.getFileHandles'() {
       return mockFiles
     },

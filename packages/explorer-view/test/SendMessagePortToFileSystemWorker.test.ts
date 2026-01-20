@@ -4,7 +4,7 @@ import { sendMessagePortToFileSystemWorker } from '../src/parts/SendMessagePortT
 
 test('sendMessagePortToFileSystemWorker calls RendererWorker.sendMessagePortToFileSystemWorker with correct parameters', async () => {
   const { port1 } = new MessageChannel()
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.handleMessagePort'() {
       return undefined
     },
@@ -24,7 +24,7 @@ test('sendMessagePortToFileSystemWorker handles different port types', async () 
   const { port1: port1a } = new MessageChannel()
   const { port1: port2a } = new MessageChannel()
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.handleMessagePort'() {
       return undefined
     },
@@ -45,7 +45,7 @@ test('sendMessagePortToFileSystemWorker handles different port types', async () 
 test('sendMessagePortToFileSystemWorker propagates errors from RendererWorker', async () => {
   const { port1 } = new MessageChannel()
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.handleMessagePort'() {
       return undefined
     },

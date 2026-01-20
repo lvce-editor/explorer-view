@@ -8,7 +8,7 @@ import { handleCut } from '../src/parts/HandleCut/HandleCut.ts'
 import { handlePaste } from '../src/parts/HandlePaste/HandlePaste.ts'
 
 test('pasteShouldMove should be true after cut operation', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
   })
 
@@ -25,7 +25,7 @@ test('pasteShouldMove should be true after cut operation', async () => {
 })
 
 test('pasteShouldMove should be false after copy operation', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
   })
 

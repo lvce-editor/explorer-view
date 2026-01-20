@@ -5,7 +5,7 @@ import { handleContextMenu } from '../src/parts/HandleContextMenu/HandleContextM
 import { Keyboard } from '../src/parts/MouseEventType/MouseEventType.ts'
 
 test('handleContextMenu - keyboard', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ContextMenu.show2'() {
       return
     },
@@ -21,7 +21,7 @@ test('handleContextMenu - keyboard', async () => {
 })
 
 test('handleContextMenu - mouse', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ContextMenu.show2'() {
       return
     },

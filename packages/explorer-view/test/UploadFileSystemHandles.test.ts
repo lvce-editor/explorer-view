@@ -35,7 +35,7 @@ class MockFileHandle implements FileSystemHandle {
 }
 
 test('upload single file', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return true
     },
@@ -50,7 +50,7 @@ test('upload single file', async () => {
 })
 
 test('upload directory with files', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return true
     },
@@ -71,7 +71,7 @@ test('upload directory with files', async () => {
 })
 
 test('upload multiple files and directories', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return true
     },

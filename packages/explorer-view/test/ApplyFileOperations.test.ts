@@ -5,7 +5,7 @@ import { applyFileOperations } from '../src/parts/ApplyFileOperations/ApplyFileO
 import * as FileOperationType from '../src/parts/FileOperationType/FileOperationType.ts'
 
 test('should apply empty operations', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {},
     'FileSystem.writeFile'() {},
   })
@@ -15,7 +15,7 @@ test('should apply empty operations', async () => {
 })
 
 test('should create folder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {},
     'FileSystem.writeFile'() {},
   })
@@ -25,7 +25,7 @@ test('should create folder', async () => {
 })
 
 test('should create file', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {},
     'FileSystem.writeFile'() {},
   })
@@ -35,7 +35,7 @@ test('should create file', async () => {
 })
 
 test('should apply multiple operations in sequence', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {},
     'FileSystem.writeFile'() {},
   })

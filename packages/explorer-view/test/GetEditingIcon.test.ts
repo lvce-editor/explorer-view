@@ -5,7 +5,7 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as GetEditingIcon from '../src/parts/GetEditingIcon/GetEditingIcon.ts'
 
 test('getEditingIcon - CreateFile', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'file-icon'
     },
@@ -17,7 +17,7 @@ test('getEditingIcon - CreateFile', async () => {
 })
 
 test('getEditingIcon - CreateFolder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
     },
@@ -29,7 +29,7 @@ test('getEditingIcon - CreateFolder', async () => {
 })
 
 test('getEditingIcon - Rename File', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'file-icon'
     },
@@ -41,7 +41,7 @@ test('getEditingIcon - Rename File', async () => {
 })
 
 test('getEditingIcon - Rename EditingFile', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'file-icon'
     },
@@ -53,7 +53,7 @@ test('getEditingIcon - Rename EditingFile', async () => {
 })
 
 test('getEditingIcon - Rename Directory', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
     },
@@ -65,7 +65,7 @@ test('getEditingIcon - Rename Directory', async () => {
 })
 
 test('getEditingIcon - Rename EditingFolder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
     },
@@ -77,7 +77,7 @@ test('getEditingIcon - Rename EditingFolder', async () => {
 })
 
 test('getEditingIcon - Rename EditingDirectoryExpanded', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
     },
@@ -89,7 +89,7 @@ test('getEditingIcon - Rename EditingDirectoryExpanded', async () => {
 })
 
 test('getEditingIcon - Rename with unsupported dirent type', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.Rename, 'test', DirentType.Symlink)
   expect(result).toBe('')
@@ -97,7 +97,7 @@ test('getEditingIcon - Rename with unsupported dirent type', async () => {
 })
 
 test('getEditingIcon - Rename without dirent type', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.Rename, 'test')
   expect(result).toBe('')
@@ -105,7 +105,7 @@ test('getEditingIcon - Rename without dirent type', async () => {
 })
 
 test('getEditingIcon - None editing type', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
 
   const result = await GetEditingIcon.getEditingIcon(ExplorerEditingType.None, 'test')
   expect(result).toBe('')
@@ -113,7 +113,7 @@ test('getEditingIcon - None editing type', async () => {
 })
 
 test('getEditingIcon - unknown editing type', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
 
   const result = await GetEditingIcon.getEditingIcon(999, 'test')
   expect(result).toBe('')

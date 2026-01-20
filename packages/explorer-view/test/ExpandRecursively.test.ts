@@ -6,7 +6,7 @@ import { Directory, File } from '../src/parts/DirentType/DirentType.ts'
 import { expandRecursively } from '../src/parts/ExpandRecursively/ExpandRecursively.ts'
 
 test.skip('expand root directory', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },
@@ -40,7 +40,7 @@ test.skip('expand root directory', async () => {
 })
 
 test.skip('expand focused directory', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },

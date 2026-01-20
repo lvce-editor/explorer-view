@@ -10,7 +10,7 @@ test('getFilePaths - non-electron platform', async () => {
 })
 
 test('getFilePaths - electron platform', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystemHandle.getFilePathElectron'() {
       return '/path/to/file'
     },
@@ -23,7 +23,7 @@ test('getFilePaths - electron platform', async () => {
 })
 
 test('getFilePaths - multiple files', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystemHandle.getFilePathElectron'() {
       return '/path/to/file'
     },

@@ -14,7 +14,7 @@ test('updateRoot should return same disposed state', async () => {
 test('updateRoot should merge dirents correctly', async () => {
   const state = createDefaultState()
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1', type: 'file' },

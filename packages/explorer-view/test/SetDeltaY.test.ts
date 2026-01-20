@@ -6,7 +6,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { setDeltaY } from '../src/parts/SetDeltaY/SetDeltaY.ts'
 
 test('should not change state when deltaY is the same', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'icon'
     },
@@ -24,7 +24,7 @@ test('should not change state when deltaY is the same', async () => {
 })
 
 test('should clamp deltaY to 0 when negative', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'icon'
     },
@@ -43,7 +43,7 @@ test('should clamp deltaY to 0 when negative', async () => {
 })
 
 test('should clamp deltaY to max scroll value', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'icon'
     },
@@ -72,7 +72,7 @@ test('should clamp deltaY to max scroll value', async () => {
 })
 
 test('should update visible items and icons', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return 'icon'
     },

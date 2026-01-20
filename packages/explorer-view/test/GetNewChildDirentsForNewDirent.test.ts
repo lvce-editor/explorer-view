@@ -4,7 +4,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewChildDirentsForNewDirent } from '../src/parts/GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
 
 test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -41,7 +41,7 @@ test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
 })
 
 test.skip('getNewChildDirentsForNewDirent - directory with existing children', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -118,7 +118,7 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
 })
 
 test.skip('getNewChildDirentsForNewDirent - directory with no children', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -155,7 +155,7 @@ test.skip('getNewChildDirentsForNewDirent - directory with no children', async (
 })
 
 test.skip('getNewChildDirentsForNewDirent - different dirent types', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -232,7 +232,7 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
 })
 
 test.skip('getNewChildDirentsForNewDirent - error case', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       throw new Error('Failed to read directory')
     },

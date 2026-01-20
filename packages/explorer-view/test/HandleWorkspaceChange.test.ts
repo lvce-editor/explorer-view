@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleWorkspaceChange } from '../src/parts/HandleWorkspaceChange/HandleWorkspaceChange.ts'
 
 test('should update state with new workspace path and load content', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },
@@ -53,7 +53,7 @@ test('should update state with new workspace path and load content', async () =>
 })
 
 test('should preserve state properties when updating workspace', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },
@@ -114,7 +114,7 @@ test('should preserve state properties when updating workspace', async () => {
 })
 
 test('should handle workspace path change with existing content', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },
@@ -161,7 +161,7 @@ test('should handle workspace path change with existing content', async () => {
 })
 
 test('should handle workspace path change with chevrons enabled', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },
@@ -203,7 +203,7 @@ test('should handle workspace path change with chevrons enabled', async () => {
 })
 
 test('should handle different path separators', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '\\'
     },

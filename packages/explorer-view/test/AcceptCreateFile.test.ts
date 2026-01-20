@@ -6,7 +6,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('acceptCreateFile', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.createFile'() {},
     'FileSystem.readDirWithFileTypes'(...params: any[]) {
       const path = params[0]

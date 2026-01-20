@@ -5,7 +5,7 @@ import * as ErrorCodes from '../src/parts/ErrorCodes/ErrorCodes.ts'
 import * as ResolveSymbolicLinks from '../src/parts/ResolveSymbolicLinks/ResolveSymbolicLinks.ts'
 
 test('should resolve symbolic links to files', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'(path: string) {
       if (path.includes('symlink-file')) {
         return DirentType.File
@@ -38,7 +38,7 @@ test('should resolve symbolic links to files', async () => {
 })
 
 test('should handle ENOENT errors by returning SymLinkFile type', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'() {
       const enoentError = new Error('File not found') as Error & { code: string }
       enoentError.code = ErrorCodes.ENOENT
@@ -56,7 +56,7 @@ test('should handle ENOENT errors by returning SymLinkFile type', async () => {
 })
 
 test('should handle other errors by returning original dirent', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'() {
       const otherError = new Error('Permission denied') as Error & { code: string }
       otherError.code = 'EACCES'
@@ -84,7 +84,7 @@ test('should handle other errors by returning original dirent', async () => {
 })
 
 test('should handle non-symbolic link dirents without processing', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
 
   const uri = '/test/path'
   const rawDirents = [
@@ -100,7 +100,7 @@ test('should handle non-symbolic link dirents without processing', async () => {
 })
 
 test('should handle empty dirents array', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
 
   const uri = '/test/path'
   const rawDirents: any[] = []
@@ -112,7 +112,7 @@ test('should handle empty dirents array', async () => {
 })
 
 test('should handle mixed dirents with some symlinks and some regular files', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'(path: string) {
       if (path.includes('symlink1')) {
         return DirentType.File
@@ -149,7 +149,7 @@ test('should handle mixed dirents with some symlinks and some regular files', as
 })
 
 test('should handle symlinks that resolve to different types', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.stat'(path: string) {
       if (path.includes('symlink-file')) {
         return DirentType.File

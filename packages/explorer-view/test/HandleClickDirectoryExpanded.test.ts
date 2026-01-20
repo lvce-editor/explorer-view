@@ -67,7 +67,7 @@ test('collapse expanded directory with children', async () => {
 })
 
 test('collapse expanded directory with many items preserves icons', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -114,7 +114,7 @@ test('collapse expanded directory with many items preserves icons', async () => 
 })
 
 test('collapse expanded directory with scroll position adjustment', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },

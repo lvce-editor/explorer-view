@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { confirmPaste } from '../src/parts/ConfirmPaste/ConfirmPaste.ts'
 
 test('confirmPaste returns true when user confirms', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ConfirmPrompt.prompt'() {
       return true
     },
@@ -14,7 +14,7 @@ test('confirmPaste returns true when user confirms', async () => {
 })
 
 test('confirmPaste returns false when user cancels', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ConfirmPrompt.prompt'() {
       return false
     },

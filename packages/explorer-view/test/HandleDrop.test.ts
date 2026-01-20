@@ -57,7 +57,7 @@ class MockFileList implements FileList {
 }
 
 test('handleDrop - successful drop', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -81,7 +81,7 @@ test('handleDrop - successful drop', async () => {
 })
 
 test('handleDrop - error case', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystemHandle.getFileHandles'() {
       throw new Error('test error')
     },
