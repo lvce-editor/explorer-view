@@ -8,7 +8,7 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
 
 test.skip('acceptRename - basic file rename', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'b.txt', type: DirentType.File },
@@ -49,7 +49,7 @@ test.skip('acceptRename - basic file rename', async () => {
 })
 
 test.skip('acceptRename - folder rename', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'folder2', type: DirentType.Directory },
@@ -88,7 +88,7 @@ test.skip('acceptRename - folder rename', async () => {
 })
 
 test.skip('acceptRename - nested file rename', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'b.txt', type: DirentType.File },
@@ -129,7 +129,7 @@ test.skip('acceptRename - nested file rename', async () => {
 })
 
 test.skip('acceptRename - preserves nested items', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [{ name: 'folder2', type: DirentType.Directory }]
     },
@@ -166,7 +166,7 @@ test.skip('acceptRename - preserves nested items', async () => {
 })
 
 test.skip('acceptRename - handles rename error', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.rename'() {
       return Promise.reject(new Error('rename failed'))
     },
@@ -187,7 +187,7 @@ test.skip('acceptRename - handles rename error', async () => {
 })
 
 test.skip('acceptRename - maintains sorting order', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'b.txt', type: DirentType.File },

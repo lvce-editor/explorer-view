@@ -11,7 +11,7 @@ test('copyRelativePath - copies relative path of focused dirent', async (): Prom
     focusedIndex: 0,
     items: [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }],
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
   })
   const result = await copyRelativePath(state)
@@ -21,7 +21,7 @@ test('copyRelativePath - copies relative path of focused dirent', async (): Prom
 
 test('copyRelativePath - returns state when no focused dirent', async (): Promise<void> => {
   const state = createDefaultState()
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
   })
   const result = await copyRelativePath(state)
@@ -35,7 +35,7 @@ test('copyRelativePath - slices first character from path', async (): Promise<vo
     focusedIndex: 0,
     items: [{ depth: 0, name: 'file.txt', path: '/single', selected: false, type: DirentType.File }],
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
   })
   await copyRelativePath(state)
@@ -48,7 +48,7 @@ test('copyRelativePath - handles nested paths correctly', async (): Promise<void
     focusedIndex: 0,
     items: [{ depth: 0, name: 'file.txt', path: '/a/b/c/file.txt', selected: false, type: DirentType.File }],
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
   })
   await copyRelativePath(state)
@@ -61,7 +61,7 @@ test('copyRelativePath - returns state after writing to clipboard', async (): Pr
     focusedIndex: 0,
     items: [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }],
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
   })
   const result = await copyRelativePath(state)

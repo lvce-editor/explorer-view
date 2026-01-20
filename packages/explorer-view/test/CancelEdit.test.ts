@@ -8,7 +8,7 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 
 test('cancelEdit', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
   const state: ExplorerState = {
     ...createDefaultState(),
     editingIndex: 1,
@@ -30,7 +30,7 @@ test('cancelEdit', async () => {
 })
 
 test('cancelEdit - removes editing items', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
     },
@@ -91,7 +91,7 @@ test('cancelEdit - removes editing items', async () => {
 })
 
 test('cancelEdit - rename file', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
     },
@@ -135,7 +135,7 @@ test('cancelEdit - rename file', async () => {
 })
 
 test('cancelEdit - rename folder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
     },
@@ -179,7 +179,7 @@ test('cancelEdit - rename folder', async () => {
 })
 
 test('cancelEdit - create file', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return []
     },

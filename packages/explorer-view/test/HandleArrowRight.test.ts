@@ -25,7 +25,7 @@ test('handleArrowRight - file', async () => {
 })
 
 test.skip('handleArrowRight - directory', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -51,7 +51,7 @@ test('handleArrowRight - symlink file', async () => {
 })
 
 test.skip('handleArrowRight - symlink folder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -67,7 +67,7 @@ test.skip('handleArrowRight - symlink folder', async () => {
 })
 
 test.skip('handleArrowRight - directory expanded', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -83,7 +83,7 @@ test.skip('handleArrowRight - directory expanded', async () => {
 })
 
 test.skip('handleArrowRight - symlink', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getRealPath'() {
       return '/real/path'
     },

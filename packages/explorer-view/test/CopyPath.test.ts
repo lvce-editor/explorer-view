@@ -6,7 +6,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('copyPath - writes absolute path of focused dirent to clipboard', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'(text: string) {
       return
     },
@@ -25,7 +25,7 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
 })
 
 test('copyPath - does nothing when no focused dirent', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {
       return
     },

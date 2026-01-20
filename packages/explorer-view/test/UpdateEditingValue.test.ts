@@ -8,7 +8,7 @@ import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import { updateEditingValue } from '../src/parts/UpdateEditingValue/UpdateEditingValue.ts'
 
 test('updateEditingValue - updates state with new value', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
@@ -25,7 +25,7 @@ test('updateEditingValue - updates state with new value', async () => {
 })
 
 test('updateEditingValue - updates state with new value and input source', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
@@ -42,7 +42,7 @@ test('updateEditingValue - updates state with new value and input source', async
 })
 
 test('updateEditingValue - updates file icon', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
@@ -62,7 +62,7 @@ test('updateEditingValue - updates file icon', async () => {
 })
 
 test('updateEditingValue - updates folder icon', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
@@ -82,7 +82,7 @@ test('updateEditingValue - updates folder icon', async () => {
 })
 
 test('updateEditingValue - updates file icon when renaming file', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
@@ -104,7 +104,7 @@ test('updateEditingValue - updates file icon when renaming file', async () => {
 })
 
 test('updateEditingValue - updates folder icon when renaming folder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },
@@ -126,7 +126,7 @@ test('updateEditingValue - updates folder icon when renaming folder', async () =
 })
 
 test('updateEditingValue - preserves other state properties', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
     },

@@ -6,7 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleCut } from '../src/parts/HandleCut/HandleCut.ts'
 
 test('handleCut - with focused dirent', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
   })
   const state: ExplorerState = {
@@ -25,7 +25,7 @@ test('handleCut - with focused dirent', async () => {
 })
 
 test('handleCut - without focused dirent', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,

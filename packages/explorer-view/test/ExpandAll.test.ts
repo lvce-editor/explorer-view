@@ -6,7 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { expandAll } from '../src/parts/ExpandAll/ExpandAll.ts'
 
 test('expandAll - no focused item', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1', path: '/dir1/file1', type: DirentType.File },
@@ -33,7 +33,7 @@ test('expandAll - no focused item', async () => {
 })
 
 test('expandAll - expand directories at same depth', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1', path: '/dir1/file1', type: DirentType.File },

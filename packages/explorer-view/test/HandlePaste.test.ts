@@ -6,7 +6,7 @@ import { handlePaste } from '../src/parts/HandlePaste/HandlePaste.ts'
 import * as NativeFileTypes from '../src/parts/NativeFileTypes/NativeFileTypes.ts'
 
 test('should handle paste with no files (none type)', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
         files: [],
@@ -23,7 +23,7 @@ test('should handle paste with no files (none type)', async () => {
 })
 
 test('should handle paste with copy type', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
         files: ['/source/file1.txt', '/source/file2.txt'],
@@ -60,7 +60,7 @@ test('should handle paste with copy type', async () => {
 })
 
 test('should handle paste with cut type', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
         files: ['/source/file1.txt', '/source/file2.txt'],
@@ -98,7 +98,7 @@ test('should handle paste with cut type', async () => {
 })
 
 test('should handle paste with multiple files', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
         files: ['/source/file1.txt', '/source/file2.txt', '/source/folder1', '/source/folder2/file3.txt'],
@@ -137,7 +137,7 @@ test('should handle paste with multiple files', async () => {
 })
 
 test('should handle paste with empty files array', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
         files: [],
@@ -168,7 +168,7 @@ test('should handle paste with empty files array', async () => {
 })
 
 test('should preserve state properties when handling paste', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return {
         files: ['/source/file.txt'],

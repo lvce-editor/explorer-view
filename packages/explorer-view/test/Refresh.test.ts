@@ -7,7 +7,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { refresh } from '../src/parts/Refresh/Refresh.ts'
 
 test('refresh - empty state', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -30,7 +30,7 @@ test('refresh - empty state', async () => {
 })
 
 test('refresh - with top level items', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1', type: DirentType.File },
@@ -57,7 +57,7 @@ test('refresh - with top level items', async () => {
 })
 
 test('refresh - preserve expanded folder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(_path: string) {
       if (_path === '/') {
         return [{ name: 'folder1', type: DirentType.Directory }]
@@ -103,7 +103,7 @@ test('refresh - preserve expanded folder', async () => {
 })
 
 test('refresh - remove expanded folder that no longer exists', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [{ name: 'file1.txt', type: DirentType.File }]
     },
@@ -136,7 +136,7 @@ test('refresh - remove expanded folder that no longer exists', async () => {
 })
 
 test('refresh - nested expanded folders', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/') {
         return [{ name: 'folder1', type: DirentType.Directory }]
@@ -184,7 +184,7 @@ test('refresh - nested expanded folders', async () => {
 })
 
 test('refresh - preserve directory types', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/') {
         return [
@@ -246,7 +246,7 @@ test('refresh - preserve directory types', async () => {
 
 test('refresh - check filesystem response', async () => {
   const methodCalls: string[] = []
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {
       methodCalls.push('FileSystem.readDirWithFileTypes')
       if (path === '/') {

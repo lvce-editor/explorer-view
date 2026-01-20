@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { openUri } from '../src/parts/OpenUri/OpenUri.ts'
 
 test('openUri calls ParentRpc.invoke with correct parameters', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {},
   })
   const mockUri = 'file:///test.txt'
@@ -13,7 +13,7 @@ test('openUri calls ParentRpc.invoke with correct parameters', async () => {
 })
 
 test('openUri calls ParentRpc.invoke with focus false', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {},
   })
   const mockUri = 'file:///test.txt'

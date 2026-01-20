@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleWheel } from '../src/parts/HandleWheel/HandleWheel.ts'
 
 test('handleWheel calls SetDeltaY with correct delta', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -32,7 +32,7 @@ test('handleWheel calls SetDeltaY with correct delta', async () => {
 })
 
 test('handleWheel with negative delta', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },

@@ -4,7 +4,7 @@ import { sendMessagePortToIconThemeWorker } from '../src/parts/SendMessagePortTo
 
 test('sendMessagePortToIconThemeWorker calls RendererWorker.sendMessagePortToIconThemeWorker with correct parameters', async () => {
   const { port1 } = new MessageChannel()
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.handleMessagePort'() {
       return undefined
     },
@@ -24,7 +24,7 @@ test('sendMessagePortToIconThemeWorker handles different port types', async () =
   const { port1: port1a } = new MessageChannel()
   const { port1: port2a } = new MessageChannel()
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.handleMessagePort'() {
       return undefined
     },
@@ -45,7 +45,7 @@ test('sendMessagePortToIconThemeWorker handles different port types', async () =
 test('sendMessagePortToIconThemeWorker propagates errors from RendererWorker', async () => {
   const { port1 } = new MessageChannel()
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'IconTheme.handleMessagePort'() {
       return undefined
     },

@@ -4,7 +4,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleClickOpenFolder } from '../src/parts/HandleClickOpenFolder/HandleClickOpenFolder.ts'
 
 test('handleClickOpenFolder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Dialog.openFolder'() {
       return
     },

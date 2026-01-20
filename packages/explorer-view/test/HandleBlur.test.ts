@@ -13,7 +13,7 @@ test('handleBlur - when not editing, sets focused to false', async () => {
 })
 
 test.skip('handleBlur - when editing, keeps state unchanged', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
     },

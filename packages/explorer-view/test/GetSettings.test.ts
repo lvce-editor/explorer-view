@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { getSettings } from '../src/parts/GetSettings/GetSettings.ts'
 
 test('getSettings - useChevrons true', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'() {
       return undefined
     },
@@ -24,7 +24,7 @@ test('getSettings - useChevrons true', async () => {
 })
 
 test('getSettings - useChevrons false', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'(settingName: string) {
       if (settingName === 'explorer.useChevrons') {
         return false
@@ -54,7 +54,7 @@ test('getSettings - useChevrons false', async () => {
 })
 
 test('getSettings - useChevrons undefined', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'() {
       return undefined
     },

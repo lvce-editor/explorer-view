@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { confirmDelete } from '../src/parts/ConfirmDelete/ConfirmDelete.ts'
 
 test('confirmDelete - single file', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ConfirmPrompt.prompt'() {
       return true
     },
@@ -14,7 +14,7 @@ test('confirmDelete - single file', async () => {
 })
 
 test('confirmDelete - multiple files', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ConfirmPrompt.prompt'() {
       return false
     },

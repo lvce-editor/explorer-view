@@ -4,7 +4,7 @@ import { Directory, DirectoryExpanded } from '../src/parts/DirentType/DirentType
 import { refreshChildDirents } from '../src/parts/RefreshChildDirents/RefreshChildDirents.ts'
 
 test('refreshChildDirents - basic', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'file1.txt', type: 'file' },
@@ -26,7 +26,7 @@ test('refreshChildDirents - basic', async () => {
 })
 
 test('refreshChildDirents - with expanded folder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path?: string) {
       if (path === '/test') {
         return [{ name: 'folder1', type: 'directory' }]

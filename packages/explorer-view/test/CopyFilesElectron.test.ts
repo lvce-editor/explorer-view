@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { copyFilesElectron } from '../src/parts/CopyFilesElectron/CopyFilesElectron.ts'
 
 test('copyFilesElectron', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.copy'() {
       return undefined
     },

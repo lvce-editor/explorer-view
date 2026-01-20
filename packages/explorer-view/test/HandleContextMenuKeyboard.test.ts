@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as HandleContextMenuKeyboard from '../src/parts/HandleContextMenuKeyboard/HandleContextMenuKeyboard.ts'
 
 test('handleContextMenuKeyboard', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ContextMenu.show2'() {},
   })
 

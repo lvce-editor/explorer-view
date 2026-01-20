@@ -8,7 +8,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { removeDirent } from '../src/parts/RemoveDirent/RemoveDirent.ts'
 
 test('removeDirent - removes focused item', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -43,7 +43,7 @@ test('removeDirent - removes focused item', async () => {
 })
 
 test('removeDirent - removes multiple selected items', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -82,7 +82,7 @@ test('removeDirent - removes multiple selected items', async () => {
 })
 
 test('removeDirent - removes focused item and selected items', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -123,7 +123,7 @@ test('removeDirent - removes focused item and selected items', async () => {
 })
 
 test('remove file', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [{ name: 'folder1', type: DirentType.Directory }]
     },
