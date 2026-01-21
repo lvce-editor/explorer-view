@@ -13,5 +13,8 @@ export const handlePointerDown = (state: ExplorerState, button: number, x: numbe
       focusedIndex: -1,
     }
   }
-  return state
+  return {
+    ...state,
+    isPointerDown: true,
+  }
 }
