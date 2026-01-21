@@ -1,4 +1,4 @@
-import { type Rpc, TransferMessagePortRpcParent } from '@lvce-editor/rpc'
+import { type Rpc, LazyTransferMessagePortRpcParent } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { VError } from '@lvce-editor/verror'
 
@@ -8,7 +8,7 @@ const send = (port: MessagePort): Promise<void> => {
 
 export const createIconThemeWorkerRpc = async (): Promise<Rpc> => {
   try {
-    const rpc = await TransferMessagePortRpcParent.create({
+    const rpc = await LazyTransferMessagePortRpcParent.create({
       commandMap: {},
       send,
     })
