@@ -20,7 +20,11 @@ export const handleDrop = async (
   paths: readonly string[],
 ): Promise<ExplorerState> => {
   const { items, pathSeparator, root } = state
-  await copyFilesElectron(root, fileHandles, files, paths)
+  try {
+    await copyFilesElectron(root, fileHandles, files, paths)
+  } catch (error) {
+    throw new Error(`Failed to drop files: ${error}`)
+  }
   const mergedDirents = await getMergedDirents(root, pathSeparator, items)
   return {
     ...state,

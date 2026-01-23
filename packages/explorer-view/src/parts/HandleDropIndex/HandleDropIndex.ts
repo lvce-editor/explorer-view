@@ -74,6 +74,9 @@ export const handleDropIndex = async (
 ): Promise<ExplorerState> => {
   const { items } = state
   const dirent = items[index]
+  if (!dirent) {
+    return state
+  }
   // TODO if it is a file, drop into the folder of the file
   // TODO if it is a folder, drop into the folder
   // TODO if it is a symlink, read symlink and determine if file can be dropped
