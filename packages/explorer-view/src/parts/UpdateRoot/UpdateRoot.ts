@@ -9,7 +9,6 @@ export const updateRoot = async (state1: ExplorerState): Promise<ExplorerState> 
     return state1
   }
   // const file = nativeFiles.files[0]
-  // @ts-ignore
   const topLevelDirents = await getTopLevelDirents(state1.root, state1.pathSeparator, [])
   // const state2 = Viewlet.getState('Explorer')
   // // TODO what if root changes while reading directories?

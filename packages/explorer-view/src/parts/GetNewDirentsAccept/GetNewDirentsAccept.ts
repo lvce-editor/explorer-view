@@ -28,7 +28,6 @@ export const getNewDirentsAccept = (
     icon: '',
     name: newFileName,
     path: absolutePath,
-    // @ts-ignore
     posInSet: -1,
     selected: false,
     setSize: 1,
@@ -57,7 +56,6 @@ export const getNewDirentsAccept = (
       posInSet = dirent.posInSet + 1
       // @ts-ignore
       setSize = dirent.setSize + 1
-      // @ts-ignore
       insertIndex = i
     }
     // @ts-ignore

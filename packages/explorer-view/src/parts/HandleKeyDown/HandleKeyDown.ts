@@ -23,7 +23,6 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
     clearTimeout(timeout)
   }
 
-  // @ts-ignore
   timeout = setTimeout(async () => {
     await RendererWorker.invoke('Explorer.cancelTypeAhead')
   }, focusWordTimeout)

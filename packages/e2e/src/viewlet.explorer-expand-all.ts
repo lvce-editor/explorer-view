@@ -21,7 +21,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.focusFirst()
 
   // act
-  // @ts-ignore
   await Explorer.expandAll()
 
   // assert

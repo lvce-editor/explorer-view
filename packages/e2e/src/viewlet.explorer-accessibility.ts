@@ -29,7 +29,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   const titleLanguages = '/languages'
   const treeItemLanguages = Locator(`.TreeItem[title$="${titleLanguages}"]`)
-  // @ts-ignore
   await expect(treeItemLanguages).toHaveAttribute('tabindex', null)
   await expect(treeItemLanguages).toHaveAttribute('role', 'treeitem')
   await expect(treeItemLanguages).toHaveAttribute('aria-level', '1')
@@ -39,7 +38,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   const titleSampleFolder = '/sample-folder'
   const treeItemSampleFolder = Locator(`.TreeItem[title$="${titleSampleFolder}"]`)
-  // @ts-ignore
   await expect(treeItemSampleFolder).toHaveAttribute('tabindex', null)
   await expect(treeItemSampleFolder).toHaveAttribute('role', 'treeitem')
   await expect(treeItemSampleFolder).toHaveAttribute('aria-level', '1')
@@ -49,7 +47,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   const titleTest = '/test.txt'
   const treeItemTestTxt = Locator(`.TreeItem[title$="${titleTest}"]`)
-  // @ts-ignore
   await expect(treeItemTestTxt).toHaveAttribute('tabindex', null)
   await expect(treeItemTestTxt).toHaveAttribute('aria-level', '1')
   await expect(treeItemTestTxt).toHaveAttribute('aria-posinset', '3')
@@ -64,7 +61,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   const titleIndexHtml = '/languages/index.html'
   const treeItemIndexHtml = Locator(`.TreeItem[title$="${titleIndexHtml}"]`)
-  // @ts-ignore
   await expect(treeItemIndexHtml).toHaveAttribute('tabindex', null)
   await expect(treeItemIndexHtml).toHaveAttribute('aria-level', '2')
   await expect(treeItemIndexHtml).toHaveAttribute('aria-posinset', '1')

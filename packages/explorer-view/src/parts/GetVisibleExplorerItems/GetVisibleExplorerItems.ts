@@ -67,7 +67,6 @@ export const getVisibleExplorerItems = (
       ariaExpanded,
       chevron,
       className,
-      // @ts-ignore
       decoration,
       hasEditingError: isEditing && Boolean(editingErrorMessage),
       icon,

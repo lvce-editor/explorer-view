@@ -18,7 +18,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(explorer).toHaveClass('DropTarget')
 
   // act
-  // @ts-ignore
   await Explorer.handleDragLeave()
 
   // assert

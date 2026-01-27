@@ -2,9 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-delete-file-error'
 
-// @ts-ignore
-export const test: Test = async ({ Dialog, expect, Explorer, Extension, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Dialog, expect: _expect, Explorer, Extension, FileSystem, Locator: _Locator, Workspace }) => {
   // arrange
+  // @ts-ignore
   let _message: string = ''
   // @ts-ignore
   await Dialog.mockConfirm((message: string) => {
