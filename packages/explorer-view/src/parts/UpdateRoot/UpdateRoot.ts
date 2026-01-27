@@ -4,6 +4,7 @@ import { mergeDirents } from '../MergeDirents/MergeDirents.ts'
 
 // TODO add lots of tests for this
 export const updateRoot = async (state1: ExplorerState): Promise<ExplorerState> => {
+  // @ts-ignore
   if (state1.disposed) {
     return state1
   }

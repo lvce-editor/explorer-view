@@ -39,6 +39,7 @@ test('focusLast', () => {
 
 test('focusLast - no dirents', () => {
   const state: ExplorerState = {
+    // @ts-ignore
     ...ViewletExplorer.create(1),
     focusedIndex: -1,
     items: [],

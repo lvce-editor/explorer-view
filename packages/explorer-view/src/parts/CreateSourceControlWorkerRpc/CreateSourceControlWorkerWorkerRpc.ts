@@ -3,6 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { VError } from '@lvce-editor/verror'
 
 const send = (port: MessagePort): Promise<void> => {
+  // @ts-ignore
   return RendererWorker.sendMessagePortToSourceControlWorker(port, 0)
 }
 

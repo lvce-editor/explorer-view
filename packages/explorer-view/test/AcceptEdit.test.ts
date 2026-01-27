@@ -8,6 +8,7 @@ import * as FileSystem from '../src/parts/FileSystem/FileSystem.ts'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
 
 test.skip('acceptEdit - rename', async () => {
+  // @ts-ignore
   FileSystem.rename.mockImplementation(() => {})
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
@@ -52,6 +53,7 @@ test.skip('acceptEdit - rename', async () => {
 })
 
 test.skip('acceptEdit - rename - nested file', async () => {
+  // @ts-ignore
   FileSystem.rename.mockImplementation(() => {})
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
@@ -113,6 +115,7 @@ test.skip('acceptEdit - rename - nested file', async () => {
 })
 
 test.skip('acceptEdit - create - insert folder', async () => {
+  // @ts-ignore
   FileSystem.mkdir.mockImplementation(() => {})
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),

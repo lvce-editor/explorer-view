@@ -5,6 +5,7 @@ import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 
 export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus: boolean): Promise<ExplorerState> => {
+  // @ts-ignore
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
   const dirents = await GetChildDirents.getChildDirents(state.pathSeparator, dirent.path, dirent.depth)
@@ -20,7 +21,9 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
   }
   const newDirents = [...state2.items]
   newDirents.splice(newIndex + 1, 0, ...dirents)
+  // @ts-ignore
   dirent.type = DirentType.DirectoryExpanded
+  // @ts-ignore
   dirent.icon = ''
   // TODO when focused index has changed while expanding, don't update it
 

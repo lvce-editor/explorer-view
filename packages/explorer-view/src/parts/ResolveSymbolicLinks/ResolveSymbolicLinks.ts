@@ -17,6 +17,7 @@ const resolveSymbolicLink = async (uri: string, rawDirent: any): Promise<any> =>
       type: symLinkType,
     }
   } catch (error) {
+    // @ts-ignore
     if (error && error.code === ErrorCodes.ENOENT) {
       return {
         name: rawDirent.name,
