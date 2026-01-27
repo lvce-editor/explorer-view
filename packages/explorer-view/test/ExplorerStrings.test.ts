@@ -62,7 +62,7 @@ test('filesExplorer', () => {
 })
 
 test('youHaveNotYetOpenedAFolder', () => {
-  expect(ExplorerStrings.youHaveNotYetOpenedAFolder()).toBe('You have not yet opened a folder')
+  expect(ExplorerStrings.youHaveNotYetOpenedAFolder()).toBe('You have not yet opened a folder.')
 })
 
 test('openFolder', () => {
