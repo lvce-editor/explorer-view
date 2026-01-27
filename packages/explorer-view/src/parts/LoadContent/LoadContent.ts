@@ -26,7 +26,6 @@ const getSavedRoot = (savedState: any, workspacePath: any): any => {
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
-  // @ts-ignore
   const { assetDir, platform } = state
   const { confirmDelete, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()

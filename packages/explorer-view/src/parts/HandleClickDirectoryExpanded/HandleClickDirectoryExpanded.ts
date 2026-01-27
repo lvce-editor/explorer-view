@@ -10,9 +10,7 @@ export const handleClickDirectoryExpanded = async (
   keepFocus: boolean,
 ): Promise<ExplorerState> => {
   const { itemHeight, items, maxLineY, minLineY } = state
-  // @ts-ignore
   dirent.type = DirentType.Directory
-  // @ts-ignore
   dirent.icon = ''
   const endIndex = GetParentEndIndex.getParentEndIndex(items, index)
   const removeCount = endIndex - index - 1

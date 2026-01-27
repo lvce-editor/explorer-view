@@ -28,13 +28,11 @@ export const getNewDirentsAccept = (
     icon: '',
     name: newFileName,
     path: absolutePath,
-    // @ts-ignore
     posInSet: -1,
     selected: false,
     setSize: 1,
     type: newDirentType,
   }
-  // @ts-ignore
   newDirent.icon = ''
   let insertIndex = focusedIndex
   let deltaPosInSet = 0
@@ -53,21 +51,14 @@ export const getNewDirentsAccept = (
       deltaPosInSet = 1 - 1
       break
     } else {
-      // @ts-ignore
       posInSet = dirent.posInSet + 1
-      // @ts-ignore
       setSize = dirent.setSize + 1
-      // @ts-ignore
       insertIndex = i
     }
-    // @ts-ignore
     dirent.setSize++
-    // @ts-ignore
     dirent.posInSet += deltaPosInSet
   }
-  // @ts-ignore
   newDirent.setSize = setSize
-  // @ts-ignore
   newDirent.posInSet = posInSet
   const newItems = [...items]
   newItems.splice(insertIndex + 1, 0, newDirent)

@@ -71,7 +71,6 @@ test('handleArrowLeft - expanded directory', () => {
     items: [
       {
         depth: 0,
-        // @ts-ignore
         expanded: true,
         level: 0,
         name: 'test',
