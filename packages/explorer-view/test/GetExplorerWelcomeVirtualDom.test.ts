@@ -22,7 +22,7 @@ test('getExplorerWelcomeVirtualDom - wide', () => {
     },
     {
       childCount: 0,
-      text: 'You have not yet opened a folder',
+      text: 'You have not yet opened a folder.',
       type: 12,
     },
     {
@@ -60,7 +60,7 @@ test('getExplorerWelcomeVirtualDom - narrow', () => {
     },
     {
       childCount: 0,
-      text: 'You have not yet opened a folder',
+      text: 'You have not yet opened a folder.',
       type: 12,
     },
     {

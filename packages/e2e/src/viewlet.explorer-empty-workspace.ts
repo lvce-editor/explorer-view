@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Locator, Workspace }) => {
   await expect(welcome).toBeVisible()
   const welcomeMessage = Locator('.Explorer .WelcomeMessage')
   await expect(welcomeMessage).toBeVisible()
-  await expect(welcomeMessage).toHaveText('You have not yet opened a folder')
+  await expect(welcomeMessage).toHaveText('You have not yet opened a folder.')
   const openFolderButton = Locator('.Explorer .Button')
   await expect(openFolderButton).toBeVisible()
   await expect(openFolderButton).toHaveText('Open folder')
