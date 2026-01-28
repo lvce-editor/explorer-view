@@ -30,6 +30,7 @@ export const createDefaultState = (): ExplorerState => ({
   height: 100,
   hoverIndex: 0,
   icons: [],
+  initial: false,
   inputSource: 0,
   isPointerDown: false,
   itemHeight: 20,

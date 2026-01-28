@@ -47,6 +47,7 @@ export const create = (
     height,
     hoverIndex: -1,
     icons: [],
+    initial: false,
     inputSource: 0,
     isPointerDown: false,
     itemHeight: Height.ListItem,

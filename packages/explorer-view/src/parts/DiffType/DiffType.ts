@@ -6,3 +6,4 @@ export const RenderValue = 8
 export const RenderSelection = 9
 export const RenderDragData = 10
 export const RenderCss = 11
+export const RenderIncremental = 12
