@@ -17,7 +17,7 @@ export const modules = [
 ]
 
 export const numbers = [
-  DiffType.RenderItems,
+  DiffType.RenderIncremental,
   DiffType.RenderFocus,
   DiffType.RenderFocusContext,
   DiffType.RenderValue,
