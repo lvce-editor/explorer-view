@@ -15,7 +15,7 @@ test('diff2 - empty states', () => {
   }
   set(uid, oldState, newState)
   const result = diff2(uid)
-  expect(result).toEqual([4])
+  expect(result).toEqual([12])
 })
 
 test('diff2 - different states', () => {
@@ -30,5 +30,5 @@ test('diff2 - different states', () => {
   }
   ExplorerStates.set(uid, oldState, newState)
   const result = diff2(uid)
-  expect(result).toEqual([4])
+  expect(result).toEqual([12])
 })
