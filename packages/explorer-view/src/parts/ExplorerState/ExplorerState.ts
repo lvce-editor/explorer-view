@@ -33,6 +33,7 @@ export interface ExplorerState {
   readonly height: number
   readonly hoverIndex: number
   readonly icons: readonly string[]
+  readonly initial: boolean
   readonly inputSource: number
   readonly isPointerDown: boolean
   readonly itemHeight: number
