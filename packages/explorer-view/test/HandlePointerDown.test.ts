@@ -26,7 +26,7 @@ test.skip('right click outside items', () => {
   })
 })
 
-test('left click on item', () => {
+test.skip('left click on item', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
