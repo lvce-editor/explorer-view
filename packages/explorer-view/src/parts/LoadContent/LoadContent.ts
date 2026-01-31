@@ -58,7 +58,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     decorations,
     deltaY,
     excluded,
-    initial: true,
+    initial: false,
     items: restoredDirents,
     maxIndent: 10,
     minLineY,
