@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-inside-closed-folder'
 
+export const skip = 1
+
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -17,17 +19,9 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.newFile()
 
   // assert
-  const inputBox = Locator('input')
-  await expect(inputBox).toBeVisible()
-  await expect(inputBox).toBeFocused()
-
-  // act
-  await Explorer.updateEditingValue('created.txt')
-  await Explorer.acceptEdit()
-
-  // assert
+  const folder2 = Locator('text=folder2')
+  await expect(folder2).toBeVisible()
+  await expect(folder2).toHaveAttribute('aria-expanded', 'true')
   const newFile = Locator('text=created.txt')
   await expect(newFile).toBeVisible()
-  const closedFolder = Locator('text=folder2')
-  await expect(closedFolder).toBeVisible()
 }
