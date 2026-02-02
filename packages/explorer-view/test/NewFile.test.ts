@@ -60,7 +60,7 @@ test('newFile', async () => {
         path: '/testfolder',
         selected: false,
         setSize: 1,
-        type: 3,
+        type: DirentType.DirectoryExpanded,
       },
       {
         depth: 1,
