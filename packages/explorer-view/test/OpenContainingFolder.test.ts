@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { openContainingFolder } from '../src/parts/OpenContainingFolder/OpenContainingFolder.ts'
 
 test('openContainingFolder', async () => {
-  const mockRpc = RpcRendererWorker.registerMockRpc({
+  using mockRpc = RpcRendererWorker.registerMockRpc({
     'OpenNativeFolder.openNativeFolder'() {},
   })
   const mockState: ExplorerState = {
