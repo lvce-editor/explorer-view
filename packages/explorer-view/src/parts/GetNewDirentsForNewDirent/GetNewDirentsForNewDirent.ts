@@ -1,5 +1,5 @@
-import * as DirentType from '../DirentType/DirentType.ts'
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
+import * as DirentType from '../DirentType/DirentType.ts'
 import { getNewChildDirentsForNewDirent } from '../GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
 
 export const getNewDirentsForNewDirent = async (
