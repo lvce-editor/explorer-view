@@ -1,3 +1,4 @@
+import * as DirentType from '../DirentType/DirentType.ts'
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import { getNewChildDirentsForNewDirent } from '../GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
 
@@ -35,9 +36,14 @@ export const getNewDirentsForNewDirent = async (
   const itemsBeforeParent = items.slice(0, parentIndex)
   const itemsAfterChildren = items.slice(parentIndex + updatedChildren.length)
 
-  const updatedParent = {
+  let updatedParent = {
     ...items[parentIndex],
     setSize: (items[parentIndex]?.setSize || 0) + 1,
+  }
+
+  // If the parent is a closed Directory, expand it
+  if (updatedParent.type === DirentType.Directory) {
+    updatedParent = { ...updatedParent, type: DirentType.DirectoryExpanded }
   }
 
   return [...itemsBeforeParent, updatedParent, ...updatedChildren, ...itemsAfterChildren]
