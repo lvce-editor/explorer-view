@@ -14,6 +14,9 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
   const wrappedCommand = async (id: number, ...args: T): Promise<void> => {
     const { newState } = get(id)
     const updatedState = await fn(newState, ...args)
+    if (newState === updatedState) {
+      return
+    }
     const {
       cutItems,
       decorations,
