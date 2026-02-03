@@ -106,7 +106,7 @@ test('newDirent handles directory click when focused item is a directory', async
     focus: 2,
     focusedIndex: 1,
     items: [
-      { depth: 0, name: 'test', path: '/test', selected: false, setSize: 1, type: DirentType.Directory },
+      { depth: 0, name: 'test', path: '/test', selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
       {
         depth: 1,
         icon: '',
@@ -184,4 +184,41 @@ test('newDirent updates state when focused item is not a directory', async () =>
     ],
     visibleExplorerItems: expect.anything(),
   })
+})
+
+test('newDirent expands a closed folder when creating a file inside it', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'Focus.setFocus'() {},
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'(...params: any[]) {
+      return handleFileIcons(params[0])
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Workspace.getPath'() {
+      return '/new/path'
+    },
+  })
+  const mockState: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    items: [{ depth: 0, name: 'folder', path: '/folder', selected: false, type: DirentType.Directory }],
+  }
+  const mockEditingType = 1
+
+  const result = await newDirent(mockState, mockEditingType)
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/folder']])
+  // The folder should be expanded (type changed to DirectoryExpanded)
+  expect(result.items[0].type).toBe(DirentType.DirectoryExpanded)
+  expect(result.editingIndex).toBe(1)
+  expect(result.items[1].type).toBe(DirentType.EditingFile)
 })

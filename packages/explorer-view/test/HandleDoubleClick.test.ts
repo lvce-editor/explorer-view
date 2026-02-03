@@ -64,7 +64,7 @@ test('handleDoubleClick - double click on empty area creates new file', async ()
         path: '/testfolder',
         selected: false,
         setSize: 1,
-        type: 3,
+        type: DirentType.DirectoryExpanded,
       },
       {
         depth: 1,
@@ -179,7 +179,7 @@ test('handleDoubleClick - double click on empty area with scrolled state creates
         path: '/testfolder',
         selected: false,
         setSize: 1,
-        type: 3,
+        type: DirentType.DirectoryExpanded,
       },
       {
         depth: 1,
