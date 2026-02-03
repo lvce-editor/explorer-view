@@ -4,7 +4,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleUpload } from '../src/parts/HandleUpload/HandleUpload.ts'
 
 test('should upload a file', async () => {
-  const mockRpc = RpcRendererWorker.registerMockRpc({
+  using mockRpc = RpcRendererWorker.registerMockRpc({
     'FileSystem.writeFile'(...args: any[]) {
       // Mock implementation
     },
@@ -17,7 +17,7 @@ test('should upload a file', async () => {
 })
 
 test('should do nothing for empty dirents', async () => {
-  const mockRpc = RpcRendererWorker.registerMockRpc({})
+  using mockRpc = RpcRendererWorker.registerMockRpc({})
   const state = createDefaultState()
   await handleUpload(state, [])
   expect(mockRpc.invocations).toEqual([])

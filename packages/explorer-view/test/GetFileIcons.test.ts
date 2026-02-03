@@ -6,7 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as GetFileIcons from '../src/parts/GetFileIcons/GetFileIcons.ts'
 
 test('getFileIcons - empty dirents', async () => {
-  const mockRpc = IconThemeWorker.registerMockRpc({})
+  using mockRpc = IconThemeWorker.registerMockRpc({})
 
   const result = await GetFileIcons.getFileIcons([], {})
   expect(result).toEqual({
@@ -17,7 +17,7 @@ test('getFileIcons - empty dirents', async () => {
 })
 
 test('getFileIcons - all cached', async () => {
-  const mockRpc = IconThemeWorker.registerMockRpc({})
+  using mockRpc = IconThemeWorker.registerMockRpc({})
 
   const dirents: readonly ExplorerItem[] = [
     { depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File },
@@ -41,7 +41,7 @@ test('getFileIcons - none cached', async () => {
     { depth: 0, name: 'b', path: '/b', selected: false, type: DirentType.Directory },
   ]
 
-  const mockRpc = IconThemeWorker.registerMockRpc({
+  using mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['file-icon', 'folder-icon']
     },
@@ -76,7 +76,7 @@ test('getFileIcons - mixed cache', async () => {
     '/a.txt': 'cached-a',
   }
 
-  const mockRpc = IconThemeWorker.registerMockRpc({
+  using mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getIcons'() {
       return ['folder-icon', 'file-icon']
     },

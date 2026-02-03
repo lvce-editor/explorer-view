@@ -9,7 +9,7 @@ test.skip('getFileDecorations - returns empty array when decorationsEnabled is f
 })
 
 test('getFileDecorations - returns empty array when no provider IDs', async () => {
-  const mockRpc = SourceControlWorker.registerMockRpc({
+  using mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return []
     },
@@ -23,7 +23,7 @@ test('getFileDecorations - returns empty array when no provider IDs', async () =
 
 test.skip('getFileDecorations - returns decorations for single file', async () => {
   const decorations: FileDecoration[] = [{ decoration: 'modified', uri: 'file:///file1.txt' }]
-  const mockRpc = SourceControlWorker.registerMockRpc({
+  using mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return ['git']
     },
@@ -46,7 +46,7 @@ test.skip('getFileDecorations - converts paths to URIs', async () => {
     { decoration: 'modified', uri: 'file:///file1.txt' },
     { decoration: 'added', uri: 'file:///file2.txt' },
   ]
-  const mockRpc = SourceControlWorker.registerMockRpc({
+  using mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return ['git']
     },
@@ -66,7 +66,7 @@ test.skip('getFileDecorations - converts paths to URIs', async () => {
 
 test.skip('getFileDecorations - handles URIs that are already URIs', async () => {
   const decorations: FileDecoration[] = [{ decoration: 'modified', uri: 'file:///file1.txt' }]
-  const mockRpc = SourceControlWorker.registerMockRpc({
+  using mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return ['git']
     },
@@ -86,7 +86,7 @@ test.skip('getFileDecorations - handles URIs that are already URIs', async () =>
 
 test.skip('getFileDecorations - uses first provider ID when multiple are available', async () => {
   const decorations: FileDecoration[] = [{ decoration: 'modified', uri: 'file:///file1.txt' }]
-  const mockRpc = SourceControlWorker.registerMockRpc({
+  using mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return ['git', 'svn', 'hg']
     },
@@ -105,7 +105,7 @@ test.skip('getFileDecorations - uses first provider ID when multiple are availab
 })
 
 test('getFileDecorations - returns empty array when getEnabledProviderIds throws', async () => {
-  const mockRpc = SourceControlWorker.registerMockRpc({
+  using mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       throw new Error('Provider error')
     },
@@ -123,7 +123,7 @@ test('getFileDecorations - returns empty array when getEnabledProviderIds throws
 })
 
 test('getFileDecorations - returns empty array when getFileDecorations throws', async () => {
-  const mockRpc = SourceControlWorker.registerMockRpc({
+  using mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return ['git']
     },
@@ -147,7 +147,7 @@ test('getFileDecorations - returns empty array when getFileDecorations throws', 
 })
 
 test('getFileDecorations - handles empty URIs array', async () => {
-  const mockRpc = SourceControlWorker.registerMockRpc({
+  using mockRpc = SourceControlWorker.registerMockRpc({
     'SourceControl.getEnabledProviderIds'() {
       return ['git']
     },

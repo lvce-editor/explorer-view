@@ -5,7 +5,7 @@ import * as CreateDefaultState from '../src/parts/CreateDefaultState/CreateDefau
 import * as UpdateIcons from '../src/parts/UpdateIcons/UpdateIcons.ts'
 
 test('updateIcons - should update icons for visible items', async () => {
-  const mockRpc = IconThemeWorker.registerMockRpc({
+  using mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ['icon1', 'icon2']
     },
@@ -47,7 +47,7 @@ test('updateIcons - should update icons for visible items', async () => {
 })
 
 test('updateIcons - should handle empty visible items', async () => {
-  const mockRpc = IconThemeWorker.registerMockRpc({
+  using mockRpc = IconThemeWorker.registerMockRpc({
     'IconTheme.getFileIcon'() {
       return ['icon1', 'icon2']
     },

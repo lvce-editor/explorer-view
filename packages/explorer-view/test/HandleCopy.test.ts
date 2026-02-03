@@ -6,7 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleCopy } from '../src/parts/HandleCopy/HandleCopy.ts'
 
 test('handleCopy - with focused dirent', async () => {
-  const mockRpc = RpcRendererWorker.registerMockRpc({
+  using mockRpc = RpcRendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
   })
   const state: ExplorerState = {
@@ -24,7 +24,7 @@ test('handleCopy - with focused dirent', async () => {
 })
 
 test('handleCopy - without focused dirent', async () => {
-  const mockRpc = RpcRendererWorker.registerMockRpc({
+  using mockRpc = RpcRendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
   })
   const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
