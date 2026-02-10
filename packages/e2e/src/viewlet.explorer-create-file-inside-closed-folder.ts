@@ -19,9 +19,9 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.newFile()
 
   // assert
-  const folder2 = Locator('text=folder2')
+  const folder2 = Locator('.Explorer').locator('text=folder2')
   await expect(folder2).toBeVisible()
   await expect(folder2).toHaveAttribute('aria-expanded', 'true')
-  const newFile = Locator('text=created.txt')
+  const newFile = Locator('.Explorer').locator('text=created.txt')
   await expect(newFile).toBeVisible()
 }

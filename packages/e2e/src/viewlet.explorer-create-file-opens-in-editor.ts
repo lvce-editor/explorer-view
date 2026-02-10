@@ -24,7 +24,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.acceptEdit()
 
   // assert - file is visible in explorer
-  const newFile = Locator('text=new-file.txt')
+  const newFile = Locator('.Explorer').locator('text=new-file.txt')
   await expect(newFile).toBeVisible()
 
   // assert - input should be hidden after accepting

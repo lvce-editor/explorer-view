@@ -17,7 +17,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox1).toBeFocused()
   await Explorer.updateEditingValue('Müller.txt')
   await Explorer.acceptEdit()
-  const newFile1 = Locator('text=Müller.txt')
+  const newFile1 = Locator('.Explorer').locator('text=Müller.txt')
   await expect(newFile1).toBeVisible()
 
   // Test 2: Create file with French characters
@@ -27,7 +27,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox2).toBeFocused()
   await Explorer.updateEditingValue('Français.txt')
   await Explorer.acceptEdit()
-  const newFile2 = Locator('text=Français.txt')
+  const newFile2 = Locator('.Explorer').locator('text=Français.txt')
   await expect(newFile2).toBeVisible()
 
   // Test 3: Create file with Spanish characters
@@ -37,7 +37,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox3).toBeFocused()
   await Explorer.updateEditingValue('Niño.txt')
   await Explorer.acceptEdit()
-  const newFile3 = Locator('text=Niño.txt')
+  const newFile3 = Locator('.Explorer').locator('text=Niño.txt')
   await expect(newFile3).toBeVisible()
 
   // Test 4: Create file with Russian characters
@@ -47,7 +47,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox4).toBeFocused()
   await Explorer.updateEditingValue('Русский.txt')
   await Explorer.acceptEdit()
-  const newFile4 = Locator('text=Русский.txt')
+  const newFile4 = Locator('.Explorer').locator('text=Русский.txt')
   await expect(newFile4).toBeVisible()
 
   // Test 5: Create file with Chinese characters
@@ -57,7 +57,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox5).toBeFocused()
   await Explorer.updateEditingValue('中文.txt')
   await Explorer.acceptEdit()
-  const newFile5 = Locator('text=中文.txt')
+  const newFile5 = Locator('.Explorer').locator('text=中文.txt')
   await expect(newFile5).toBeVisible()
 
   // Test 6: Create file with Japanese characters
@@ -67,7 +67,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox6).toBeFocused()
   await Explorer.updateEditingValue('こんにちは.txt')
   await Explorer.acceptEdit()
-  const newFile6 = Locator('text=こんにちは.txt')
+  const newFile6 = Locator('.Explorer').locator('text=こんにちは.txt')
   await expect(newFile6).toBeVisible()
 
   // Test 7: Create file with Korean characters
@@ -77,7 +77,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox7).toBeFocused()
   await Explorer.updateEditingValue('안녕하세요.txt')
   await Explorer.acceptEdit()
-  const newFile7 = Locator('text=안녕하세요.txt')
+  const newFile7 = Locator('.Explorer').locator('text=안녕하세요.txt')
   await expect(newFile7).toBeVisible()
 
   // Test 8: Create file with Arabic characters
@@ -87,7 +87,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox8).toBeFocused()
   await Explorer.updateEditingValue('العربية.txt')
   await Explorer.acceptEdit()
-  const newFile8 = Locator('text=العربية.txt')
+  const newFile8 = Locator('.Explorer').locator('text=العربية.txt')
   await expect(newFile8).toBeVisible()
 
   // Test 9: Create file with Hebrew characters
@@ -97,6 +97,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox9).toBeFocused()
   await Explorer.updateEditingValue('עברית.txt')
   await Explorer.acceptEdit()
-  const newFile9 = Locator('text=עברית.txt')
+  const newFile9 = Locator('.Explorer').locator('text=עברית.txt')
   await expect(newFile9).toBeVisible()
 }
