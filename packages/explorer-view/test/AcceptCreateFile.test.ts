@@ -7,7 +7,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('acceptCreateFile', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.createFile'() { },
+    'FileSystem.createFile'() {},
     'FileSystem.readDirWithFileTypes'(...params: any[]) {
       const path = params[0]
       if (path === '/test') {
@@ -15,14 +15,14 @@ test('acceptCreateFile', async () => {
       }
       return []
     },
-    'FileSystem.writeFile'() { },
+    'FileSystem.writeFile'() {},
     'IconTheme.getFolderIcon'() {
       return 'folder-icon'
     },
     'IconTheme.getIcons'() {
       return ['folder-icon']
     },
-    'Main.openUri'() { },
+    'Main.openUri'() {},
   })
 
   const state: ExplorerState = {
