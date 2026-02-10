@@ -47,7 +47,7 @@ test('acceptCreate - successful file creation', async () => {
     'IconTheme.getIcons'() {
       return Array(2).fill('')
     },
-    'Main.openUri'() {},
+    'Main.openUri'() { },
   })
 
   const state: ExplorerState = {
@@ -147,7 +147,7 @@ test('acceptCreate - successful folder creation does not open uri', async () => 
     'IconTheme.getIcons'() {
       return Array(2).fill('')
     },
-    'Main.openUri'() {},
+    'Main.openUri'() { },
   })
 
   const state: ExplorerState = {

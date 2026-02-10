@@ -52,11 +52,11 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   const newFocusedIndex = GetIndex.getIndex(newItems, absolutePath)
 
   await refreshWorkspace()
-  
+
   if (newDirentType === DirentType.File) {
     await openUri(absolutePath, true)
   }
-  
+
   return {
     ...state,
     editingIndex: -1,
