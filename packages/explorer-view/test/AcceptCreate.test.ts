@@ -47,6 +47,7 @@ test('acceptCreate - successful file creation', async () => {
     'IconTheme.getIcons'() {
       return Array(2).fill('')
     },
+    'Main.openUri'() {},
   })
 
   const state: ExplorerState = {
@@ -116,5 +117,73 @@ test('acceptCreate - successful file creation', async () => {
     ['FileSystem.readDirWithFileTypes', 'memfs:///workspace'],
     ['FileSystem.readDirWithFileTypes', 'memfs:///workspace/test'],
     ['Layout.handleWorkspaceRefresh'],
+    ['Main.openUri', 'memfs:///workspace/test/test.txt', true],
   ])
+})
+
+test('acceptCreate - successful folder creation does not open uri', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'FileSystem.mkdir'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === 'memfs:///workspace') {
+        return [{ name: 'test', type: DirentType.Directory }]
+      }
+      if (path === 'memfs:///workspace/test') {
+        return [{ name: 'newfolder', type: DirentType.Directory }]
+      }
+      throw new Error(`unexpected file read ${path}`)
+    },
+    'FileSystem.writeFile'() {
+      return
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return Array(2).fill('')
+    },
+    'Main.openUri'() {},
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 1,
+    editingValue: 'newfolder',
+    fileIconCache: {},
+    focusedIndex: 0,
+    height: 100,
+    itemHeight: 20,
+    items: [
+      {
+        depth: 0,
+        name: 'test',
+        path: 'memfs:///workspace/test',
+        selected: false,
+        type: DirentType.Directory,
+      },
+      {
+        depth: 1,
+        icon: '',
+        name: 'newfolder',
+        path: 'memfs:///workspace/test/newfolder',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+        type: DirentType.EditingFolder,
+      },
+    ],
+    minLineY: 0,
+    root: 'memfs:///workspace',
+  }
+
+  const result = await acceptCreate(state, DirentType.Directory)
+  expect(result.editingIndex).toBe(-1)
+  expect(result.editingType).toBe(ExplorerEditingType.None)
+  expect(mockRpc.invocations).toContainEqual(['FileSystem.mkdir', 'memfs:///workspace/test/newfolder'])
+  expect(mockRpc.invocations).not.toContainEqual(['Main.openUri', expect.any(String), expect.any(Boolean)])
 })
