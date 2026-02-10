@@ -27,6 +27,7 @@ export default [
       'jest/no-identical-title': 'off',
       'unicorn/prefer-single-call': 'off',
       'unicorn/no-immediate-mutation': 'off',
+      'unicorn/empty-brace-spaces': 'off',
     },
   },
   {

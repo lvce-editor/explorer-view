@@ -24,6 +24,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.acceptEdit()
 
   // assert
-  const newFile = Locator('text=my file with spaces.txt')
+  const newFile = Locator('.Explorer').locator('text=my file with spaces.txt')
   await expect(newFile).toBeVisible()
 }

@@ -38,7 +38,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.acceptEdit()
 
   // assert - file should be created in folder b
-  const newFile = Locator('text=file-in-b.txt')
+  const newFile = Locator('.Explorer').locator('text=file-in-b.txt')
   await expect(newFile).toBeVisible()
 
   // assert - no input should be visible after accepting

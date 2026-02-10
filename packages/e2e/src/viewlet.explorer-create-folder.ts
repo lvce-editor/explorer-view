@@ -24,6 +24,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.acceptEdit()
 
   // assert
-  const newFolder = Locator('text=folder')
+  const newFolder = Locator('.Explorer').locator('text=folder')
   await expect(newFolder).toBeVisible()
 }

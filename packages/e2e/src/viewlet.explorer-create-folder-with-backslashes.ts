@@ -11,6 +11,6 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   await Workspace.setPath(tmpDir)
 
   // assert
-  const newFolder = Locator('text=\\eee\\')
+  const newFolder = Locator('.Explorer').locator('text=\\eee\\')
   await expect(newFolder).toBeVisible()
 }

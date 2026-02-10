@@ -22,6 +22,7 @@ test('acceptCreateFile', async () => {
     'IconTheme.getIcons'() {
       return ['folder-icon']
     },
+    'Main.openUri'() {},
   })
 
   const state: ExplorerState = {
@@ -42,5 +43,9 @@ test('acceptCreateFile', async () => {
   const newState = await acceptCreateFile(state)
   expect(newState.editingIndex).toBe(-1)
   expect(newState.editingType).toBe(0)
-  expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', 'test/test.txt', ''], ['Layout.handleWorkspaceRefresh']])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.writeFile', 'test/test.txt', ''],
+    ['Layout.handleWorkspaceRefresh'],
+    ['Main.openUri', 'test/test.txt', true],
+  ])
 })
