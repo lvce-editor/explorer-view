@@ -3,7 +3,10 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 
 export const renderItems = (oldState: ExplorerState, newState: ExplorerState): any => {
-  const { deltaY, dropTargets, editingErrorMessage, focused, focusedIndex, height, itemHeight, items, root, width } = newState
+  const { deltaY, dropTargets, editingErrorMessage, focused, focusedIndex, height, initial, itemHeight, items, root, width } = newState
+  if (initial) {
+    return [ViewletCommand.SetDom2, []]
+  }
   const visibleDirents = newState.visibleExplorerItems
   const isWide = width > 450
   const contentHeight = items.length * itemHeight
