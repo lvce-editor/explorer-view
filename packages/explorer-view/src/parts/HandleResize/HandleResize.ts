@@ -2,7 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetExplorerMaxLineY from '../GetMaxLineY/GetMaxLineY.ts'
 import * as GetScrollBarSize from '../GetScrollBarSize/GetScrollBarSize.ts'
 
-interface Dimensions {
+export interface Dimensions {
   readonly height: number
   readonly width: number
 }
