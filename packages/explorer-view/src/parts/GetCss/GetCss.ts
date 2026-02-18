@@ -6,6 +6,7 @@ const getIndentRule = (indent: number): string => {
 
 export const getCss = (
   scrollBarHeight: number,
+  scrollBarTop: number,
   uniqueIndents: readonly number[],
   errorMessageLeft: number,
   errorMessageTop: number,
@@ -14,9 +15,14 @@ export const getCss = (
   const rules = [
     `.Explorer {
   --ScrollBarThumbHeight: ${scrollBarHeight}px;
+  --ScrollBarThumbTop: ${scrollBarTop}px;
   --ErrorMessageTop: ${errorMessageTop}px;
   --ErrorMessageLeft: ${errorMessageLeft}px;
   --ErrorMessageWidth: ${errorMessageWidth}px;
+}
+.Explorer .ScrollBarThumb {
+  height: var(--ScrollBarThumbHeight);
+  translate: 0px var(--ScrollBarThumbTop);
 }`,
     ...uniqueIndents.map(getIndentRule),
   ]

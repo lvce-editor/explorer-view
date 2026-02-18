@@ -2,11 +2,14 @@ import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getCss } from '../GetCss/GetCss.ts'
 import * as GetErrorMessagePosition from '../GetErrorMessagePosition/GetErrorMessagePosition.ts'
+import { getScrollBarTop } from '../GetScrollBarTop/GetScrollBarTop.ts'
 import { getUniqueIndents } from '../GetUniqueIndents/GetUniqueIndents.ts'
 
 export const renderCss = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
-  const { focusedIndex, itemHeight, items, minLineY, scrollBarHeight, uid, visibleExplorerItems, width } = newState
+  const { deltaY, focusedIndex, height, itemHeight, items, minLineY, scrollBarHeight, uid, visibleExplorerItems, width } = newState
   const uniqueIndents = getUniqueIndents(visibleExplorerItems)
+  const contentHeight = items.length * itemHeight
+  const scrollBarTop = scrollBarHeight > 0 ? getScrollBarTop(height, contentHeight, deltaY) : 0
   const indent = 8
   const padding = 10
   const fileIconWidth = 16
@@ -23,6 +26,6 @@ export const renderCss = (oldState: ExplorerState, newState: ExplorerState): rea
     padding + defaultPaddingLeft + chevronSpace,
     width,
   )
-  const css = getCss(scrollBarHeight, uniqueIndents, left, top, errorMessageWidth)
+  const css = getCss(scrollBarHeight, scrollBarTop, uniqueIndents, left, top, errorMessageWidth)
   return [ViewletCommand.SetCss, uid, css]
 }
