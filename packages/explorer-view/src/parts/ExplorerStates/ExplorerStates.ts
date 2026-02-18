@@ -39,6 +39,8 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
     if (
       items === intermediate.newState.items &&
       minLineY === intermediate.newState.minLineY &&
+      height === intermediate.newState.height &&
+      itemHeight === intermediate.newState.itemHeight &&
       editingIcon === intermediate.newState.editingIcon &&
       cutItems === intermediate.newState.cutItems &&
       editingErrorMessage === intermediate.newState.editingErrorMessage &&
