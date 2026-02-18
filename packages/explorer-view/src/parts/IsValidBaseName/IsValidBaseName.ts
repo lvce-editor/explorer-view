@@ -31,7 +31,7 @@ export function isValidBasename(name: string | null | undefined, isWindowsOS: bo
     return false // check for names starting with ../
   }
 
-  if (isWindowsOS && name[name.length - 1] === '.') {
+  if (isWindowsOS && name.at(-1) === '.') {
     return false // Windows: file cannot end with a "."
   }
 
