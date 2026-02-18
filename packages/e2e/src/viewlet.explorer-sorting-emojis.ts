@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-sorting-emojis'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -26,7 +24,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   await expect(treeItems).toHaveCount(10)
   await expect(treeItems.nth(0)).toHaveText('⚡ lightning.txt')
   await expect(treeItems.nth(1)).toHaveText('🌈 rainbow.txt')
-  await expect(treeItems.nth(2)).toHaveText('⭐ star.txt')
+  await expect(treeItems.nth(2)).toHaveText('🌟 star.txt')
   await expect(treeItems.nth(3)).toHaveText('🎯 target.txt')
   await expect(treeItems.nth(4)).toHaveText('💎 diamond.txt')
   await expect(treeItems.nth(5)).toHaveText('💡 idea.txt')
