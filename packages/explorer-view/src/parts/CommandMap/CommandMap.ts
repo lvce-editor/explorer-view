@@ -52,6 +52,7 @@ import * as HandleInputKeyDown from '../HandleInputKeyDown/HandleInputKeyDown.ts
 import * as HandleKeyDown from '../HandleKeyDown/HandleKeyDown.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
+import * as HandleResize from '../HandleResize/HandleResize.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as HandleWheel from '../HandleWheel/HandleWheel.ts'
 import * as HandleWorkspaceChange from '../HandleWorkspaceChange/HandleWorkspaceChange.ts'
@@ -134,6 +135,7 @@ export const commandMap = {
   'Explorer.handleKeyDown': WrapCommand.wrapListItemCommand(HandleKeyDown.handleKeyDown),
   'Explorer.handlePaste': WrapCommand.wrapListItemCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapListItemCommand(HandlePointerDown.handlePointerDown),
+  'Explorer.handleResize': WrapCommand.wrapListItemCommand(HandleResize.handleResize),
   'Explorer.handleUpload': WrapCommand.wrapListItemCommand(HandleUpload.handleUpload),
   'Explorer.handleWheel': WrapCommand.wrapListItemCommand(HandleWheel.handleWheel),
   'Explorer.handleWorkspaceChange': WrapCommand.wrapListItemCommand(HandleWorkspaceChange.handleWorkspaceChange),
