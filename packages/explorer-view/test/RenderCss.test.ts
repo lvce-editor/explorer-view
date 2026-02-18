@@ -16,7 +16,7 @@ test('renderCss - basic with empty visibleExplorerItems', () => {
     'Viewlet.setCss',
     123,
     `.Explorer {
-  --ScrollBarThumbHeight: 20px;
+  --ScrollBarThumbHeight: 0px;
   --ScrollBarThumbTop: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
@@ -62,7 +62,7 @@ test('renderCss - with single visibleExplorerItem', () => {
     'Viewlet.setCss',
     456,
     `.Explorer {
-  --ScrollBarThumbHeight: 15px;
+  --ScrollBarThumbHeight: 0px;
   --ScrollBarThumbTop: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
@@ -149,7 +149,7 @@ test('renderCss - with multiple visibleExplorerItems with different indents', ()
     'Viewlet.setCss',
     789,
     `.Explorer {
-  --ScrollBarThumbHeight: 25px;
+  --ScrollBarThumbHeight: 0px;
   --ScrollBarThumbTop: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
@@ -239,7 +239,7 @@ test('renderCss - with duplicate indents should only generate unique indent clas
     'Viewlet.setCss',
     999,
     `.Explorer {
-  --ScrollBarThumbHeight: 30px;
+  --ScrollBarThumbHeight: 0px;
   --ScrollBarThumbTop: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
