@@ -1,7 +1,7 @@
 import * as ViewletRegistry from '@lvce-editor//viewlet-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as GetExplorerMaxLineY from '../GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as GetExplorerMaxLineY from '../GetMaxLineY/GetMaxLineY.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 
 export const { get, getCommandIds, registerCommands, set, wrapGetter } = ViewletRegistry.create<ExplorerState>()

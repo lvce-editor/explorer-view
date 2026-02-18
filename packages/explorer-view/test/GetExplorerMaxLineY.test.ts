@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import * as GetExplorerMaxLineY from '../src/parts/GetExplorerMaxLineY/GetExplorerMaxLineY.ts'
+import * as GetExplorerMaxLineY from '../src/parts/GetMaxLineY/GetMaxLineY.ts'
 
 test('getExplorerMaxLineY - basic functionality', () => {
   expect(GetExplorerMaxLineY.getExplorerMaxLineY(0, 100, 20, 10)).toBe(6)
