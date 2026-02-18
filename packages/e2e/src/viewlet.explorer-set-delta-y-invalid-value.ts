@@ -14,10 +14,10 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
 
   // act
   await Command.execute('Explorer.setDeltaY', 'invalid')
-  
+
   // assert
   await expect(file00).toBeVisible()
-  
+
   await Explorer.focusIndex(29)
 
   // assert
