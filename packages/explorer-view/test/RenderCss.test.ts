@@ -17,9 +17,14 @@ test('renderCss - basic with empty visibleExplorerItems', () => {
     123,
     `.Explorer {
   --ScrollBarThumbHeight: 20px;
+  --ScrollBarThumbTop: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
+}
+.ScrollBarThumb {
+  height: var(--ScrollBarThumbHeight);
+  translate: 0px var(--ScrollBarThumbTop);
 }`,
   ])
 })
@@ -58,9 +63,14 @@ test('renderCss - with single visibleExplorerItem', () => {
     456,
     `.Explorer {
   --ScrollBarThumbHeight: 15px;
+  --ScrollBarThumbTop: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
+}
+.ScrollBarThumb {
+  height: var(--ScrollBarThumbHeight);
+  translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-10 {
   padding-left: 10px;
@@ -140,9 +150,14 @@ test('renderCss - with multiple visibleExplorerItems with different indents', ()
     789,
     `.Explorer {
   --ScrollBarThumbHeight: 25px;
+  --ScrollBarThumbTop: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
+}
+.ScrollBarThumb {
+  height: var(--ScrollBarThumbHeight);
+  translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-0 {
   padding-left: 0px;
@@ -225,9 +240,14 @@ test('renderCss - with duplicate indents should only generate unique indent clas
     999,
     `.Explorer {
   --ScrollBarThumbHeight: 30px;
+  --ScrollBarThumbTop: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
+}
+.ScrollBarThumb {
+  height: var(--ScrollBarThumbHeight);
+  translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-10 {
   padding-left: 10px;
@@ -272,9 +292,14 @@ test('renderCss - with zero scrollBarHeight', () => {
     111,
     `.Explorer {
   --ScrollBarThumbHeight: 0px;
+  --ScrollBarThumbTop: 0px;
   --ErrorMessageTop: 20px;
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
+}
+.ScrollBarThumb {
+  height: var(--ScrollBarThumbHeight);
+  translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-5 {
   padding-left: 5px;
