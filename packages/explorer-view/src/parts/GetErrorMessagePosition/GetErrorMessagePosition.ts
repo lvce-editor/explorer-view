@@ -1,8 +1,4 @@
-export interface Position {
-  readonly errorMessageWidth: number
-  readonly left: number
-  readonly top: number
-}
+import type { Position } from './Position.ts'
 
 export const getErrorMessagePosition = (
   itemHeight: number,
