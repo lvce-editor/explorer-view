@@ -18,5 +18,5 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     contentHeight,
     editingErrorMessage,
   )
-  return [ViewletCommand.SetDom2, dom]
+  return [ViewletCommand.SetDom2, newState.uid, dom]
 }

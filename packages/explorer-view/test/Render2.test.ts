@@ -15,6 +15,7 @@ test('render2 - basic', () => {
   expect(result).toEqual([
     [
       'Viewlet.setDom2',
+      1,
       [
         {
           childCount: 1,
