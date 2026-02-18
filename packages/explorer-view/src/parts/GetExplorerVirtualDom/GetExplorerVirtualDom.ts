@@ -6,7 +6,6 @@ import * as GetErrorMessageDom from '../GetErrorMessageDom/GetErrorMessageDom.ts
 import * as GetExplorerWelcomeVirtualDom from '../GetExplorerWelcomeVirtualDom/GetExplorerWelcomeVirtualDom.ts'
 import * as GetListItemsVirtualDom from '../GetListItemsVirtualDom/GetListItemsVirtualDom.ts'
 import * as GetScrollBarSize from '../GetScrollBarSize/GetScrollBarSize.ts'
-import { getScrollBarTop } from '../GetScrollBarTop/GetScrollBarTop.ts'
 import * as GetScrollBarVirtualDom from '../GetScrollBarVirtualDom/GetScrollBarVirtualDom.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
@@ -31,15 +30,13 @@ export const getExplorerVirtualDom = (
   dropTargets: readonly number[],
   height: number,
   contentHeight: number,
-  scrollTop: number,
   errorMessage: string,
 ): readonly VirtualDomNode[] => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
   }
   const scrollBarHeight = GetScrollBarSize.getScrollBarSize(height, contentHeight, 20)
-  const scrollBarTop = getScrollBarTop(height, contentHeight, scrollTop)
-  const scrollBarDom = GetScrollBarVirtualDom.getScrollBarVirtualDom(scrollBarHeight, scrollBarTop)
+  const scrollBarDom = GetScrollBarVirtualDom.getScrollBarVirtualDom(scrollBarHeight)
   const errorDom = GetErrorMessageDom.getErrorMessageDom(errorMessage)
   const childCount = getChildCount(scrollBarDom.length, errorDom.length)
   const parentNode: VirtualDomNode = {
