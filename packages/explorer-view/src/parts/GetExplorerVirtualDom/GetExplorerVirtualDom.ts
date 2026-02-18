@@ -30,7 +30,6 @@ export const getExplorerVirtualDom = (
   dropTargets: readonly number[],
   height: number,
   contentHeight: number,
-  scrollTop: number,
   errorMessage: string,
 ): readonly VirtualDomNode[] => {
   if (!root) {

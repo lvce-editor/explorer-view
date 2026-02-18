@@ -1,8 +1,4 @@
-const getIndentRule = (indent: number): string => {
-  return `.Indent-${indent} {
-  padding-left: ${indent}px;
-}`
-}
+import { getIndentRule } from '../GetIndentRule/GetIndentRule.ts'
 
 export const getCss = (
   scrollBarHeight: number,
