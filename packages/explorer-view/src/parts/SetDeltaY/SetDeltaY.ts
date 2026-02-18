@@ -1,6 +1,9 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
 export const setDeltaY = async (state: ExplorerState, deltaY: number): Promise<ExplorerState> => {
+  if (!Number.isFinite(deltaY)) {
+    return state
+  }
   const { height, itemHeight, items } = state
   if (deltaY < 0) {
     deltaY = 0

@@ -11,6 +11,9 @@ export const getNewDropTargets = (state: ExplorerState, index: number): readonly
     return dropTargetFull
   }
   const item = items[index]
+  if (!item) {
+    return dropTargetFull
+  }
   if (!CanBeDroppedInto.canBeDroppedInto(item)) {
     const startIndex = getParentStartIndex(items, index)
     const endIndex = getParentEndIndex(items, index)
