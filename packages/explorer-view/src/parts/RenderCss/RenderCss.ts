@@ -2,12 +2,11 @@ import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getCss } from '../GetCss/GetCss.ts'
 import * as GetErrorMessagePosition from '../GetErrorMessagePosition/GetErrorMessagePosition.ts'
-import { getUnique } from '../GetUnique/GetUnique.ts'
+import { getUniqueIndents } from '../GetUniqueIndents/GetUniqueIndents.ts'
 
 export const renderCss = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
   const { focusedIndex, itemHeight, items, minLineY, scrollBarHeight, uid, visibleExplorerItems, width } = newState
-  const indents = visibleExplorerItems.map((item) => item.indent)
-  const uniqueIndents = getUnique(indents)
+  const uniqueIndents = getUniqueIndents(visibleExplorerItems)
   const indent = 8
   const padding = 10
   const fileIconWidth = 16
