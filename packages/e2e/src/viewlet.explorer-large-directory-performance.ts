@@ -7,7 +7,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
 
   // Create 10,000 files in the directory
-  const numbers = [...Array(10_000)].map((_, index) => index)
+  const numbers = Array.from(Array(10_000), (_, index) => index)
   await Promise.all(
     numbers.map((number) => {
       return FileSystem.writeFile(`${tmpDir}/file${number.toString().padStart(4, '0')}.txt`, `content ${number}`)
