@@ -43,3 +43,68 @@ test('renderItems - narrow width', () => {
   expect(result[0]).toBe('Viewlet.setDom2')
   expect(result[1]).toBeDefined()
 })
+
+test('renderItems - load error message', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...createDefaultState(),
+    errorCode: 'EACCES',
+    errorMessage: 'permission was denied',
+    focused: true,
+    hasError: true,
+    items: [
+      {
+        depth: 0,
+        name: 'test',
+        path: '/test',
+        selected: false,
+        type: 1,
+      },
+    ],
+    root: '/workspace',
+  }
+  const result = renderItems(oldState, newState)
+  const dom = result[2]
+  expect(dom).not.toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        className: 'ListItems',
+      }),
+    ]),
+  )
+  expect(dom).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        text: 'Could not open folder due to permission was denied (error code: EACCES).',
+      }),
+    ]),
+  )
+})
+
+test('renderItems - editing and load error messages are both passed and load error mode is used', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...createDefaultState(),
+    editingErrorMessage: 'file already exists',
+    errorCode: 'EACCES',
+    errorMessage: 'permission was denied',
+    hasError: true,
+    root: '/workspace',
+  }
+  const result = renderItems(oldState, newState)
+  const dom = result[2]
+  expect(dom).not.toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        className: 'ListItems',
+      }),
+    ]),
+  )
+  expect(dom).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        text: 'Could not open folder due to permission was denied (error code: EACCES).',
+      }),
+    ]),
+  )
+})

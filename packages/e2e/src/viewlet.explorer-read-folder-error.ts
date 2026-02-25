@@ -2,9 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-read-folder-error'
 
-export const skip = 1
-
-export const test: Test = async ({ Command, Extension, FileSystem, SideBar, Workspace }) => {
+export const test: Test = async ({ Command, expect, Extension, FileSystem, Locator, SideBar, Workspace }) => {
   // arrange
   const uri = import.meta.resolve('../fixtures/sample-file-system-provider-read-folder-error')
   await Extension.addWebExtension(uri)
@@ -19,5 +17,7 @@ export const test: Test = async ({ Command, Extension, FileSystem, SideBar, Work
   await Command.execute('Layout.showSideBar')
 
   // assert
-  // TODO verify error message is displayed
+  const error = Locator('.Explorer div') // TODO should have class
+  await expect(error).toBeVisible()
+  await expect(error).toHaveText(`Could not open folder due to Failed to execute file system provider: FileNotFoundError: File not found.`)
 }
