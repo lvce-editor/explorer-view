@@ -18,6 +18,8 @@ export interface ExplorerState {
   readonly editingSelectionStart: number
   readonly editingType: number
   readonly editingValue: string
+  readonly errorCode: string
+  readonly errorMessage: string
   readonly errorMessageLeft: number
   readonly errorMessageTop: number
   readonly errorMessageWidth: number
@@ -30,6 +32,7 @@ export interface ExplorerState {
   readonly focusWord: string
   readonly focusWordTimeout: number
   readonly handleOffset: number
+  readonly hasError: boolean
   readonly height: number
   readonly hoverIndex: number
   readonly icons: readonly string[]
