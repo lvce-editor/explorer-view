@@ -5,10 +5,20 @@ import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetErrorMessageDom from '../GetErrorMessageDom/GetErrorMessageDom.ts'
 import * as GetExplorerWelcomeVirtualDom from '../GetExplorerWelcomeVirtualDom/GetExplorerWelcomeVirtualDom.ts'
 import * as GetListItemsVirtualDom from '../GetListItemsVirtualDom/GetListItemsVirtualDom.ts'
+import * as GetLoadErrorVirtualDom from '../GetLoadErrorVirtualDom/GetLoadErrorVirtualDom.ts'
 import * as GetScrollBarSize from '../GetScrollBarSize/GetScrollBarSize.ts'
 import * as GetScrollBarVirtualDom from '../GetScrollBarVirtualDom/GetScrollBarVirtualDom.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
+
+const getParentNode = (childCount: number): VirtualDomNode => {
+  return {
+    childCount,
+    className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
+    role: AriaRoles.None,
+    type: VirtualDomElements.Div,
+  }
+}
 
 const getChildCount = (scrollBarDomLength: number, errorDomLength: number): number => {
   let childCount = 1
@@ -30,21 +40,20 @@ export const getExplorerVirtualDom = (
   dropTargets: readonly number[],
   height: number,
   contentHeight: number,
-  errorMessage: string,
+  editingErrorMessage: string,
+  loadErrorMessage: string,
 ): readonly VirtualDomNode[] => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
   }
+  if (loadErrorMessage) {
+    return GetLoadErrorVirtualDom.getLoadErrorVirtualDom(loadErrorMessage)
+  }
   const scrollBarHeight = GetScrollBarSize.getScrollBarSize(height, contentHeight, 20)
   const scrollBarDom = GetScrollBarVirtualDom.getScrollBarVirtualDom(scrollBarHeight)
-  const errorDom = GetErrorMessageDom.getErrorMessageDom(errorMessage)
+  const errorDom = GetErrorMessageDom.getErrorMessageDom(editingErrorMessage)
   const childCount = getChildCount(scrollBarDom.length, errorDom.length)
-  const parentNode: VirtualDomNode = {
-    childCount,
-    className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
-    role: AriaRoles.None,
-    type: VirtualDomElements.Div,
-  }
+  const parentNode = getParentNode(childCount)
   const dom: readonly VirtualDomNode[] = [
     parentNode,
     ...GetListItemsVirtualDom.getListItemsVirtualDom(visibleItems, focusedIndex, focused, dropTargets),

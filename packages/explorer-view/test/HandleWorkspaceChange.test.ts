@@ -243,3 +243,51 @@ test('should handle different path separators', async () => {
   )
   expect(mockSourceControlRpc.invocations).toEqual([])
 })
+
+test('should set load error state when reading folder fails', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      const error = Object.assign(new Error('Permission denied'), {
+        code: 'EACCES',
+      })
+      throw error
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Workspace.getPath'() {
+      return '/restricted/workspace'
+    },
+  })
+
+  const mockSourceControlRpc = SourceControlWorker.registerMockRpc({
+    'SourceControl.getEnabledProviderIds'() {
+      return []
+    },
+  })
+
+  const initialState: ExplorerState = createDefaultState()
+  const result = await handleWorkspaceChange(initialState)
+
+  expect(result.root).toBe('/restricted/workspace')
+  expect(result.hasError).toBe(true)
+  expect(result.errorCode).toBe('EACCES')
+  expect(result.errorMessage).toBe('permission was denied')
+  expect(result.items).toEqual([])
+  expect(mockRpc.invocations).toEqual(
+    expect.arrayContaining([
+      ['Workspace.getPath'],
+      ['Preferences.get', 'explorer.useChevrons'],
+      ['Preferences.get', 'explorer.confirmdelete'],
+      ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'explorer.sourceControlDecorations'],
+      ['Workspace.getPath'],
+      ['FileSystem.getPathSeparator', '/restricted/workspace'],
+      ['FileSystem.readDirWithFileTypes', '/restricted/workspace'],
+    ]),
+  )
+  expect(mockSourceControlRpc.invocations).toEqual([])
+})

@@ -7,6 +7,9 @@ export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boole
   return (
     oldState.deltaY === newState.deltaY &&
     oldState.editingErrorMessage === newState.editingErrorMessage &&
+    oldState.hasError === newState.hasError &&
+    oldState.errorMessage === newState.errorMessage &&
+    oldState.errorCode === newState.errorCode &&
     oldState.errorMessageLeft === newState.errorMessageLeft &&
     oldState.errorMessageTop === newState.errorMessageTop &&
     oldState.maxIndent === newState.maxIndent &&
