@@ -51,7 +51,7 @@ class MockFileList implements FileList {
 
   [index: number]: File
 
-  [Symbol.iterator](): Iterator<File> {
+  [Symbol.iterator](): ArrayIterator<File> {
     return this.files[Symbol.iterator]()
   }
 }
