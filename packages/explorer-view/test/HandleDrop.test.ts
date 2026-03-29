@@ -51,6 +51,7 @@ class MockFileList implements FileList {
 
   [index: number]: File
 
+  // @ts-ignore
   [Symbol.iterator](): Iterator<File> {
     return this.files[Symbol.iterator]()
   }
@@ -72,6 +73,7 @@ test('handleDrop - successful drop', async () => {
   const state = createDefaultState()
   const fileList = new MockFileList([new MockFile('test.txt', '/test.txt')])
 
+  // @ts-ignore
   const result = await handleDrop(state, 0, 0, [1], fileList)
   expect(result).toBeDefined()
   expect(mockRpc.invocations).toEqual([
@@ -90,6 +92,7 @@ test('handleDrop - error case', async () => {
   const state = createDefaultState()
   const fileList = new MockFileList([new MockFile('test.txt', '/test.txt')])
 
+  // @ts-ignore
   await expect(handleDrop(state, 0, 0, [1], fileList)).rejects.toThrow(new Error('Failed to drop files: test error'))
   expect(mockRpc.invocations).toEqual([['FileSystemHandle.getFileHandles', [1]]])
 })
