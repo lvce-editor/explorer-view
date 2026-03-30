@@ -44,7 +44,7 @@ export const getExplorerVirtualDom = (
   loadErrorMessage: string,
 ): readonly VirtualDomNode[] => {
   if (!root) {
-    return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide)
+    return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide, dropTargets)
   }
   if (loadErrorMessage) {
     return GetLoadErrorVirtualDom.getLoadErrorVirtualDom(loadErrorMessage)

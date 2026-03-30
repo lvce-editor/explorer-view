@@ -1,17 +1,26 @@
 import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { dropTargetFull } from '../DropTargetFull/DropTargetFull.ts'
 import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as InputName from '../InputName/InputName.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
-export const getExplorerWelcomeVirtualDom = (isWide: boolean): readonly VirtualDomNode[] => {
+const getClassName = (dropTargets: readonly number[]): string => {
+  const extraClassName = dropTargets === dropTargetFull ? ClassNames.ExplorerDropTarget : ClassNames.Empty
+  return MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer, extraClassName)
+}
+
+export const getExplorerWelcomeVirtualDom = (isWide: boolean, dropTargets: readonly number[]): readonly VirtualDomNode[] => {
   return [
     {
       childCount: 1,
-      className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
+      className: getClassName(dropTargets),
+      onDragLeave: DomEventListenerFunctions.HandleDragLeave,
+      onDragOver: DomEventListenerFunctions.HandleDragOver,
+      onDrop: DomEventListenerFunctions.HandleDrop,
       tabIndex: 0,
       type: VirtualDomElements.Div,
     },
