@@ -10,7 +10,7 @@ interface DroppedFile {
 type DroppedArgs = readonly DroppedFile[] | readonly FileSystemDirectoryHandle[]
 
 const isDroppedFile = (item: DroppedFile | FileSystemDirectoryHandle): item is DroppedFile => {
-  return item.kind === 'file' && 'value' in item && item.value instanceof FileSystemFileHandle
+  return item.kind === 'file' && 'value' in item && item.value instanceof FileSystemHandle
 }
 
 const getFileSystemHandlesNormalized = (fileSystemHandles: DroppedArgs): readonly FileSystemHandle[] => {
