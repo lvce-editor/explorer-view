@@ -117,8 +117,7 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
 })
 
 test('handleDropRootDefault ignores dropped file when workspace is empty', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
-  })
+  using mockRpc = RendererWorker.registerMockRpc({})
   const state: ExplorerState = {
     ...createDefaultState(),
     root: '',
