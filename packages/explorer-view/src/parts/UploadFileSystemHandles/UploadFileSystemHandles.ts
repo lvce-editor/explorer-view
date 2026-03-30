@@ -2,15 +2,35 @@ import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations
 import { createUploadTree } from '../CreateUploadTree/CreateUploadTree.ts'
 import * as GetFileOperations from '../GetFileOperations/GetFileOperations.ts'
 
-export const uploadFileSystemHandles = async (
-  root: string,
-  pathSeparator: string,
-  fileSystemHandles: readonly FileSystemHandle[],
-): Promise<boolean> => {
+interface DroppedFile {
+  readonly kind: 'file'
+  readonly value: FileSystemFileHandle
+}
+
+type DroppedArgs = readonly DroppedFile[] | readonly FileSystemHandle[]
+
+const isDroppedFile = (item: DroppedFile | FileSystemHandle): item is DroppedFile => {
+  return item.kind === 'file' && 'value' in item && item.value instanceof FileSystemHandle
+}
+
+const getFileSystemHandlesNormalized = (fileSystemHandles: DroppedArgs): readonly FileSystemHandle[] => {
+  const normalized: FileSystemHandle[] = []
+  for (const item of fileSystemHandles) {
+    if (isDroppedFile(item)) {
+      normalized.push(item.value)
+    } else {
+      normalized.push(item)
+    }
+  }
+  return normalized
+}
+
+export const uploadFileSystemHandles = async (root: string, pathSeparator: string, fileSystemHandles: DroppedArgs): Promise<boolean> => {
   if (fileSystemHandles.length === 0) {
     return true
   }
-  const uploadTree = await createUploadTree(root, fileSystemHandles)
+  const fileSystemHandlesNormalized = getFileSystemHandlesNormalized(fileSystemHandles)
+  const uploadTree = await createUploadTree(root, fileSystemHandlesNormalized)
   const fileOperations = GetFileOperations.getFileOperations(root, uploadTree)
   await ApplyFileOperations.applyFileOperations(fileOperations)
 
