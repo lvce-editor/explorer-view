@@ -118,9 +118,6 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
 
 test('handleDropRootDefault ignores dropped file when workspace is empty', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return []
-    },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -136,7 +133,7 @@ test('handleDropRootDefault ignores dropped file when workspace is empty', async
   expect(result.root).toBe('')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toEqual([])
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '']])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('handleDropRootDefault opens dropped folder as workspace when file and folder are dropped into empty workspace', async () => {
