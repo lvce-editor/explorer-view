@@ -1,5 +1,8 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
+import { isDirectoryHandle } from '../IsDirectoryHandle/IsDirectoryHandle.ts'
+import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
 import * as UploadFileSystemHandles from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
@@ -13,8 +16,39 @@ const getMergedDirents = async (root: string, pathSeparator: string, dirents: re
   return mergedDirents
 }
 
+const getDroppedDirectoryWorkspacePath = (fileHandle: FileSystemDirectoryHandle): string => {
+  return `html://${fileHandle.name}`
+}
+
+const openDroppedDirectoryAsWorkspace = async (state: ExplorerState, fileHandle: FileSystemDirectoryHandle): Promise<ExplorerState> => {
+  const path = getDroppedDirectoryWorkspacePath(fileHandle)
+  await RendererWorker.invoke('PersistentFileHandle.addHandle', fileHandle.name, fileHandle)
+  await RendererWorker.invoke('Workspace.setPath', path)
+  const updated = await LoadContent.loadContent(state, undefined)
+  return {
+    ...updated,
+    dropTargets: [],
+  }
+}
+
+const getFirstDroppedDirectory = (state: ExplorerState, fileHandles: readonly FileSystemHandle[]): FileSystemDirectoryHandle | undefined => {
+  if (state.root !== '') {
+    return undefined
+  }
+  for (const fileHandle of fileHandles) {
+    if (isDirectoryHandle(fileHandle)) {
+      return fileHandle
+    }
+  }
+  return undefined
+}
+
 export const handleDrop = async (state: ExplorerState, fileHandles: readonly FileSystemHandle[], files: readonly File[]): Promise<ExplorerState> => {
   const { items, pathSeparator, root } = state
+  const droppedDirectory = getFirstDroppedDirectory(state, fileHandles)
+  if (droppedDirectory) {
+    return openDroppedDirectoryAsWorkspace(state, droppedDirectory)
+  }
   const handled = await UploadFileSystemHandles.uploadFileSystemHandles(root, pathSeparator, fileHandles)
   if (handled) {
     const updated = await Refresh.refresh(state)

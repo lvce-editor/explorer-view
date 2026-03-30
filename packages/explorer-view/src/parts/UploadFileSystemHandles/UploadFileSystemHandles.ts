@@ -7,9 +7,9 @@ interface DroppedFile {
   readonly value: FileSystemFileHandle
 }
 
-type DroppedArgs = readonly DroppedFile[] | readonly FileSystemDirectoryHandle[]
+type DroppedArgs = readonly DroppedFile[] | readonly FileSystemHandle[]
 
-const isDroppedFile = (item: DroppedFile | FileSystemDirectoryHandle): item is DroppedFile => {
+const isDroppedFile = (item: DroppedFile | FileSystemHandle): item is DroppedFile => {
   return item.kind === 'file' && 'value' in item && item.value instanceof FileSystemHandle
 }
 
