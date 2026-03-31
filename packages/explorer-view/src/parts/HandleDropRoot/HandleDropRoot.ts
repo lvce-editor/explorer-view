@@ -1,10 +1,11 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import type { DroppedArgs } from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 import * as HandleDropRootDefault from '../HandleDropRootDefault/HandleDropRootDefault.ts'
 import * as HandleDropRootElectron from '../HandleDropRootElectron/HandleDropRootElectron.ts'
 import * as PlatformType from '../PlatformType/PlatformType.ts'
 
 interface DropHandler {
-  (state: ExplorerState, fileHandles: readonly FileSystemHandle[], files: readonly File[], paths: readonly string[]): Promise<ExplorerState>
+  (state: ExplorerState, fileHandles: DroppedArgs, files: readonly File[], paths: readonly string[]): Promise<ExplorerState>
 }
 
 const getModule = (isElectron: boolean): DropHandler => {
@@ -16,7 +17,7 @@ const getModule = (isElectron: boolean): DropHandler => {
 
 export const handleDropRoot = async (
   state: ExplorerState,
-  fileHandles: readonly FileSystemHandle[],
+  fileHandles: DroppedArgs,
   files: readonly File[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
