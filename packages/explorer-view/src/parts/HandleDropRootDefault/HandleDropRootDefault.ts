@@ -45,17 +45,18 @@ const getFirstDroppedDirectory = (state: ExplorerState, fileHandles: DroppedArgs
   return undefined
 }
 
-const shouldIgnoreDroppedHandles = (state: ExplorerState, fileHandles: DroppedArgs): boolean => {
-  return state.root === '' && fileHandles.length > 0 && !getFirstDroppedDirectory(state, fileHandles)
-}
-
-export const handleDrop = async (state: ExplorerState, fileHandles: DroppedArgs, files: readonly File[]): Promise<ExplorerState> => {
+export const handleDrop = async (
+  state: ExplorerState,
+  fileHandles: DroppedArgs,
+  files: readonly File[],
+  paths: readonly string[],
+): Promise<ExplorerState> => {
   const { items, pathSeparator, root } = state
   const droppedDirectory = getFirstDroppedDirectory(state, fileHandles)
   if (droppedDirectory) {
     return openDroppedDirectoryAsWorkspace(state, droppedDirectory)
   }
-  if (shouldIgnoreDroppedHandles(state, fileHandles)) {
+  if (root === '') {
     return {
       ...state,
       dropTargets: [],
