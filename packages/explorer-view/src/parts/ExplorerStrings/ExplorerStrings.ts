@@ -61,6 +61,10 @@ export const refresh = (): string => {
   return I18nString.i18nString(UiStrings.RefreshExplorer)
 }
 
+export const removeFolderFromWorkspace = (): string => {
+  return I18nString.i18nString(UiStrings.RemoveFolderFromWorkspace)
+}
+
 export const collapseAll = (): string => {
   return I18nString.i18nString(UiStrings.CollapseAllFoldersInExplorer)
 }

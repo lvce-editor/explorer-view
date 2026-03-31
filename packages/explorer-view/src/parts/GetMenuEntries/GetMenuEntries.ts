@@ -83,6 +83,13 @@ const menuEntryDelete: MenuEntry = {
   label: ViewletExplorerStrings.deleteItem(),
 }
 
+const menuEntryRemoveFolderFromWorkspace: MenuEntry = {
+  command: 'Workspace.close',
+  flags: MenuItemFlags.None,
+  id: 'removeFolderFromWorkspace',
+  label: ViewletExplorerStrings.removeFolderFromWorkspace(),
+}
+
 const ALL_ENTRIES: readonly MenuEntry[] = [
   menuEntryNewFile,
   menuEntryNewFolder,
@@ -135,8 +142,8 @@ const getMenuEntriesDefault = (): readonly MenuEntry[] => {
   return ALL_ENTRIES
 }
 
-const getMenuEntriesRoot = (): readonly MenuEntry[] => {
-  return [
+const getMenuEntriesRoot = (root: string): readonly MenuEntry[] => {
+  const entries: MenuEntry[] = [
     menuEntryNewFile,
     menuEntryNewFolder,
     menuEntryOpenContainingFolder,
@@ -147,12 +154,16 @@ const getMenuEntriesRoot = (): readonly MenuEntry[] => {
     menuEntryCopyPath,
     menuEntryCopyRelativePath,
   ]
+  if (root) {
+    entries.push(MenuEntrySeparator.menuEntrySeparator, menuEntryRemoveFolderFromWorkspace)
+  }
+  return entries
 }
 
 export const getMenuEntries = (state: ExplorerState): readonly MenuEntry[] => {
   const focusedDirent = getFocusedDirent(state)
   if (!focusedDirent) {
-    return getMenuEntriesRoot()
+    return getMenuEntriesRoot(state.root)
   }
   switch (focusedDirent.type) {
     case DirentType.Directory:
