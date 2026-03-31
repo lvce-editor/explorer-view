@@ -24,9 +24,9 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
   expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', '/test/file.txt']])
 })
 
-test('copyPath - does nothing when no focused dirent', async () => {
+test('copyPath - writes workspace path when no focused dirent', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'ClipBoard.writeText'() {
+    'ClipBoard.writeText'(text: string) {
       return
     },
   })
@@ -35,10 +35,31 @@ test('copyPath - does nothing when no focused dirent', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [],
+    root: 'memfs:///workspace',
   }
 
   const result = await copyPath(state)
 
   expect(result).toBe(state)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', 'memfs:///workspace']])
+})
+
+test('copyPath - writes workspace path when focused index is out of bounds', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.writeText'(text: string) {
+      return
+    },
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 2,
+    items: [{ depth: 0, name: 'file.txt', path: 'memfs:///workspace/file.txt', selected: false, type: DirentType.File }],
+    root: 'memfs:///workspace',
+  }
+
+  const result = await copyPath(state)
+
+  expect(result).toBe(state)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', 'memfs:///workspace']])
 })
