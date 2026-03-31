@@ -42,12 +42,13 @@ export const getExplorerVirtualDom = (
   contentHeight: number,
   editingErrorMessage: string,
   loadErrorMessage: string,
+  showOpenAnotherFolderButton: boolean,
 ): readonly VirtualDomNode[] => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide, dropTargets)
   }
   if (loadErrorMessage) {
-    return GetLoadErrorVirtualDom.getLoadErrorVirtualDom(loadErrorMessage)
+    return GetLoadErrorVirtualDom.getLoadErrorVirtualDom(loadErrorMessage, isWide, showOpenAnotherFolderButton)
   }
   const scrollBarHeight = GetScrollBarSize.getScrollBarSize(height, contentHeight, 20)
   const scrollBarDom = GetScrollBarVirtualDom.getScrollBarVirtualDom(scrollBarHeight)

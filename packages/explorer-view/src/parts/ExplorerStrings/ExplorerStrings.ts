@@ -85,6 +85,10 @@ export const openFolder = (): string => {
   return I18nString.i18nString(UiStrings.OpenFolder)
 }
 
+export const openAnotherFolder = (): string => {
+  return I18nString.i18nString(UiStrings.OpenAnotherFolder)
+}
+
 export const noFolderOpen = (): string => {
   return I18nString.i18nString(UiStrings.NoFolderOpen)
 }

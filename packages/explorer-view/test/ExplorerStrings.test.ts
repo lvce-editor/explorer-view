@@ -69,6 +69,10 @@ test('openFolder', () => {
   expect(ExplorerStrings.openFolder()).toBe('Open folder')
 })
 
+test('openAnotherFolder', () => {
+  expect(ExplorerStrings.openAnotherFolder()).toBe('Open another folder')
+})
+
 test('noFolderOpen', () => {
   expect(ExplorerStrings.noFolderOpen()).toBe('No Folder Open')
 })
