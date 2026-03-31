@@ -13,5 +13,5 @@ export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace })
   await Explorer.copyPath()
 
   // assert
-  await ClipBoard.shouldHaveText('')
+  await ClipBoard.shouldHaveText('memfs:///workspace')
 }
