@@ -1,5 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import type { DroppedArgs } from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
@@ -31,7 +32,7 @@ const handleDropIntoFolder = async (
   state: ExplorerState,
   dirent: ExplorerItem,
   index: number,
-  fileHandles: readonly FileSystemHandle[],
+  fileHandles: DroppedArgs,
   files: readonly File[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
@@ -53,7 +54,7 @@ const handleDropIntoFile = (
   state: ExplorerState,
   dirent: ExplorerItem,
   index: number,
-  fileHandles: readonly FileSystemHandle[],
+  fileHandles: DroppedArgs,
   files: readonly File[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
@@ -67,7 +68,7 @@ const handleDropIntoFile = (
 
 export const handleDropIndex = async (
   state: ExplorerState,
-  fileHandles: readonly FileSystemHandle[],
+  fileHandles: DroppedArgs,
   files: readonly File[],
   paths: readonly string[],
   index: number,

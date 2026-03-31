@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { DroppedFileItem } from '../src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts'
 import { uploadFileSystemHandles } from '../src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
 class MockFileHandle implements FileSystemHandle {
@@ -34,6 +35,13 @@ class MockFileHandle implements FileSystemHandle {
   }
 }
 
+const asDroppedFileItem = (fileHandle: MockFileHandle): DroppedFileItem => {
+  return {
+    kind: 'file',
+    value: fileHandle as FileSystemFileHandle,
+  }
+}
+
 test('upload single file', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
@@ -45,6 +53,21 @@ test('upload single file', async () => {
   })
   const fileHandle = new MockFileHandle('file', 'test.txt', 'content')
   const result = await uploadFileSystemHandles('/', '/', [fileHandle])
+  expect(result).toBe(true)
+  expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', '/test.txt', 'content']])
+})
+
+test('upload single dropped file item', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.mkdir'() {
+      return true
+    },
+    'FileSystem.writeFile'() {
+      return true
+    },
+  })
+  const fileHandle = new MockFileHandle('file', 'test.txt', 'content')
+  const result = await uploadFileSystemHandles('/', '/', [asDroppedFileItem(fileHandle)])
   expect(result).toBe(true)
   expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', '/test.txt', 'content']])
 })

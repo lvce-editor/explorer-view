@@ -2,25 +2,36 @@ import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations
 import { createUploadTree } from '../CreateUploadTree/CreateUploadTree.ts'
 import * as GetFileOperations from '../GetFileOperations/GetFileOperations.ts'
 
-interface DroppedFile {
+export interface DroppedFileItem {
   readonly kind: 'file'
   readonly value: FileSystemFileHandle
 }
 
-type DroppedArgs = readonly DroppedFile[] | readonly FileSystemHandle[]
+export type DroppedItem = DroppedFileItem | FileSystemHandle
+export type DroppedArgs = readonly DroppedFileItem[] | readonly FileSystemHandle[]
 
-const isDroppedFile = (item: DroppedFile | FileSystemHandle): item is DroppedFile => {
-  return item.kind === 'file' && 'value' in item && item.value instanceof FileSystemHandle
+export const isDroppedFile = (item: DroppedItem): item is DroppedFileItem => {
+  return item.kind === 'file' && 'value' in item
+}
+
+export const getFileSystemHandle = (item: DroppedItem): FileSystemHandle => {
+  if (isDroppedFile(item)) {
+    return item.value
+  }
+  return item
+}
+
+export const getDroppedName = (item: DroppedItem): string => {
+  if (isDroppedFile(item)) {
+    return item.value.name
+  }
+  return item.name
 }
 
 const getFileSystemHandlesNormalized = (fileSystemHandles: DroppedArgs): readonly FileSystemHandle[] => {
   const normalized: FileSystemHandle[] = []
   for (const item of fileSystemHandles) {
-    if (isDroppedFile(item)) {
-      normalized.push(item.value)
-    } else {
-      normalized.push(item)
-    }
+    normalized.push(getFileSystemHandle(item))
   }
   return normalized
 }

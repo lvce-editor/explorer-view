@@ -1,5 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import type { DroppedArgs } from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 import { copyFilesElectron } from '../CopyFilesElectron/CopyFilesElectron.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 
@@ -15,7 +16,7 @@ const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Pr
 
 export const handleDrop = async (
   state: ExplorerState,
-  fileHandles: readonly FileSystemHandle[],
+  fileHandles: DroppedArgs,
   files: readonly File[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
