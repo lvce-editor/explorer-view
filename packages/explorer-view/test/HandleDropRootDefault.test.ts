@@ -1,6 +1,7 @@
 import { test, expect } from '@jest/globals'
 import { RendererWorker, SourceControlWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
+import type { DroppedArgs } from '../src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleDrop } from '../src/parts/HandleDropRootDefault/HandleDropRootDefault.ts'
 
@@ -38,8 +39,9 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
     kind: 'directory',
     name: 'dropped-folder',
   } as FileSystemDirectoryHandle
+  const fileHandles: DroppedArgs = [fileHandle]
 
-  const result = await handleDrop(state, [fileHandle], [])
+  const result = await handleDrop(state, fileHandles, [], [])
 
   expect(result.root).toBe('html://dropped-folder')
   expect(result.dropTargets).toEqual([])
@@ -96,8 +98,9 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
     kind: 'directory',
     name: 'second-folder',
   } as FileSystemDirectoryHandle
+  const fileHandles: DroppedArgs = [firstFolderHandle, secondFolderHandle]
 
-  const result = await handleDrop(state, [firstFolderHandle, secondFolderHandle], [])
+  const result = await handleDrop(state, fileHandles, [], [])
 
   expect(result.root).toBe('html://first-folder')
   expect(result.dropTargets).toEqual([])
@@ -126,8 +129,9 @@ test('handleDropRootDefault ignores dropped file when workspace is empty', async
     kind: 'file',
     name: 'dropped-file.txt',
   } as FileSystemFileHandle
+  const fileHandles: DroppedArgs = [fileHandle]
 
-  const result = await handleDrop(state, [fileHandle], [])
+  const result = await handleDrop(state, fileHandles, [], [])
 
   expect(result.root).toBe('')
   expect(result.dropTargets).toEqual([])
@@ -173,8 +177,9 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
     kind: 'directory',
     name: 'dropped-folder',
   } as FileSystemDirectoryHandle
+  const fileHandles: DroppedArgs = [fileHandle, directoryHandle]
 
-  const result = await handleDrop(state, [fileHandle, directoryHandle], [])
+  const result = await handleDrop(state, fileHandles, [], [])
 
   expect(result.root).toBe('html://dropped-folder')
   expect(result.dropTargets).toEqual([])
