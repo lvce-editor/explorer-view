@@ -49,6 +49,12 @@ export const handleDrop = async (state: ExplorerState, fileHandles: readonly Fil
   if (droppedDirectory) {
     return openDroppedDirectoryAsWorkspace(state, droppedDirectory)
   }
+  if (root === '') {
+    return {
+      ...state,
+      dropTargets: [],
+    }
+  }
   const handled = await UploadFileSystemHandles.uploadFileSystemHandles(root, pathSeparator, fileHandles)
   if (handled) {
     const updated = await Refresh.refresh(state)
