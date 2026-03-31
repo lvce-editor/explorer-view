@@ -2,6 +2,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { isDirectoryHandle } from '../IsDirectoryHandle/IsDirectoryHandle.ts'
+import type { DroppedArgs } from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
 import * as UploadFileSystemHandles from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
@@ -31,11 +32,12 @@ const openDroppedDirectoryAsWorkspace = async (state: ExplorerState, fileHandle:
   }
 }
 
-const getFirstDroppedDirectory = (state: ExplorerState, fileHandles: readonly FileSystemHandle[]): FileSystemDirectoryHandle | undefined => {
+const getFirstDroppedDirectory = (state: ExplorerState, fileHandles: DroppedArgs): FileSystemDirectoryHandle | undefined => {
   if (state.root !== '') {
     return undefined
   }
-  for (const fileHandle of fileHandles) {
+  for (const item of fileHandles) {
+    const fileHandle = UploadFileSystemHandles.getFileSystemHandle(item)
     if (isDirectoryHandle(fileHandle)) {
       return fileHandle
     }
@@ -43,7 +45,12 @@ const getFirstDroppedDirectory = (state: ExplorerState, fileHandles: readonly Fi
   return undefined
 }
 
-export const handleDrop = async (state: ExplorerState, fileHandles: readonly FileSystemHandle[], files: readonly File[]): Promise<ExplorerState> => {
+export const handleDrop = async (
+  state: ExplorerState,
+  fileHandles: DroppedArgs,
+  files: readonly File[],
+  paths: readonly string[],
+): Promise<ExplorerState> => {
   const { items, pathSeparator, root } = state
   const droppedDirectory = getFirstDroppedDirectory(state, fileHandles)
   if (droppedDirectory) {
