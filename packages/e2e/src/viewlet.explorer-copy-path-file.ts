@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-copy-path-file'
 
-export const test: Test = async ({ ClipBoard, Command, Explorer, FileSystem, Workspace }) => {
+export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
@@ -13,7 +13,7 @@ export const test: Test = async ({ ClipBoard, Command, Explorer, FileSystem, Wor
   await Explorer.focusIndex(1)
 
   // act
-  await Command.execute('Explorer.copyPath')
+  await Explorer.copyPath()
 
   // assert
   await ClipBoard.shouldHaveText('memfs:///workspace/a/b.txt')
