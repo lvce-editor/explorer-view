@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import { copyFilesElectron } from '../src/parts/CopyFilesElectron/CopyFilesElectron.ts'
 import type { DroppedArgs } from '../src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts'
+import { copyFilesElectron } from '../src/parts/CopyFilesElectron/CopyFilesElectron.ts'
 
 test('copyFilesElectron', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
