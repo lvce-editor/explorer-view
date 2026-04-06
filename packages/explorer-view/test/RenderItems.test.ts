@@ -1,5 +1,6 @@
 import { test, expect } from '@jest/globals'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { renderItems } from '../src/parts/RenderItems/RenderItems.ts'
 
 test('renderItems - basic', () => {
@@ -104,6 +105,35 @@ test('renderItems - editing and load error messages are both passed and load err
     expect.arrayContaining([
       expect.objectContaining({
         text: 'Could not open folder due to permission was denied (error code: EACCES).',
+      }),
+    ]),
+  )
+})
+
+test('renderItems - missing folder load error shows friendly message and button', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...createDefaultState(),
+    errorCode: 'ENOENT',
+    errorMessage: 'the folder does not exist',
+    hasError: true,
+    root: '/workspace/missing-folder',
+    width: 500,
+  }
+  const result = renderItems(oldState, newState)
+  const dom = result[2]
+  expect(dom).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        text: 'Could not open "/workspace/missing-folder" because the folder does not exist. It may have been moved or deleted.',
+      }),
+      expect.objectContaining({
+        className: 'Button ButtonPrimary ButtonWide',
+        name: 'OpenFolder',
+        onClick: DomEventListenerFunctions.HandleClickOpenFolder,
+      }),
+      expect.objectContaining({
+        text: 'Open another folder',
       }),
     ]),
   )

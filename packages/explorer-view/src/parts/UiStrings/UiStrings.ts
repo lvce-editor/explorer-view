@@ -18,6 +18,7 @@ export const LeadingOrTrailingWhitespaceDetected = 'Leading or trailing whitespa
 export const NewFile = 'New File...'
 export const NewFolder = 'New Folder...'
 export const NoFolderOpen = 'No Folder Open'
+export const OpenAnotherFolder = 'Open another folder'
 export const OpenContainingFolder = 'Open Containing Folder'
 export const OpenFolder = 'Open folder'
 export const OpenInIntegratedTerminal = 'Open in integrated Terminal'

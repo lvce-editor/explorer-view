@@ -9,6 +9,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
   const isWide = width > 450
   const contentHeight = items.length * itemHeight
   const loadErrorMessage = GetLoadErrorMessage.getLoadErrorMessage(newState)
+  const showOpenAnotherFolderButton = GetLoadErrorMessage.shouldShowOpenAnotherFolderButton(newState)
   if (initial) {
     return [ViewletCommand.SetDom2, newState.uid, []]
   }
@@ -23,6 +24,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     contentHeight,
     editingErrorMessage,
     loadErrorMessage,
+    showOpenAnotherFolderButton,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

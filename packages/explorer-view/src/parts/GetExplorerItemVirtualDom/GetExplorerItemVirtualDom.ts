@@ -7,6 +7,13 @@ import * as GetInputDom from '../GetInputDom/GetInputDom.ts'
 import * as GetLabelDom from '../GetLabelDom/GetLabelDom.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
+const getTitle = (path: string): string => {
+  if (path.startsWith('file://')) {
+    return path.slice('file://'.length)
+  }
+  return path
+}
+
 export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
   const { ariaExpanded, chevron, className, depth, hasEditingError, icon, id, index, isCut, isEditing, isIgnored, name, path, posInSet, setSize } =
     item
@@ -25,7 +32,7 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly V
       draggable: true,
       id,
       role: AriaRoles.TreeItem,
-      title: path,
+      title: getTitle(path),
       type: VirtualDomElements.Div,
     },
     ...chevronDom,
