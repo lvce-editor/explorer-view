@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drop-folder-with-files'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/new`)
@@ -23,7 +23,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const index = 0
 
   // act
-  await Command.execute('Explorer.handleDropIndex', fileHandles, files, paths, index)
+  await Explorer.handleDropIndex(fileHandles, files, paths, index)
   await Explorer.expandRecursively()
 
   // assert

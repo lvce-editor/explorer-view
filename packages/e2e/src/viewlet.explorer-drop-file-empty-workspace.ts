@@ -2,14 +2,14 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drop-file-empty-workspace'
 
-export const test: Test = async ({ Command, expect, Explorer, Locator, Workspace }) => {
+export const test: Test = async ({ FileSystem, expect, Explorer, Locator, Workspace }) => {
   // arrange
   await Workspace.setPath('')
   const opfsRoot = await navigator.storage.getDirectory()
   const fileHandle = await opfsRoot.getFileHandle('dropped-file.txt', {
     create: true,
   })
-  const id = await Command.execute('FileSystemHandle.addFileHandle', fileHandle)
+  const id = (await FileSystem.addFileHandle(fileHandle)) as unknown as number
   const welcomeMessage = Locator('.Explorer .WelcomeMessage')
   const treeItems = Locator('.TreeItem')
 

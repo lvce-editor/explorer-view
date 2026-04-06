@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drop-file-and-folder-empty-workspace'
 
-export const test: Test = async ({ Command, expect, Explorer, Locator, Workspace }) => {
+export const test: Test = async ({ FileSystem, expect, Explorer, Locator, Workspace }) => {
   // arrange
   await Workspace.setPath('')
   const opfsRoot = await navigator.storage.getDirectory()
@@ -18,8 +18,8 @@ export const test: Test = async ({ Command, expect, Explorer, Locator, Workspace
   const writable = await nestedFileHandle.createWritable({ keepExistingData: false })
   await writable.write('folder')
   await writable.close()
-  const fileId = await Command.execute('FileSystemHandle.addFileHandle', fileHandle)
-  const directoryId = await Command.execute('FileSystemHandle.addFileHandle', directoryHandle)
+  const fileId = (await FileSystem.addFileHandle(fileHandle)) as unknown as number
+  const directoryId = (await FileSystem.addFileHandle(directoryHandle)) as unknown as number
   const welcomeMessage = Locator('.Explorer .WelcomeMessage')
   const nestedFile = Locator('.TreeItem[aria-label="folder-inside.txt"]')
   const droppedFile = Locator('.TreeItem[aria-label="dropped-file.txt"]')

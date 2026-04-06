@@ -2,7 +2,7 @@ import { type Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-handle-drop'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -15,7 +15,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   })
   const file = await fileHandle.getFile()
   const fileList = [file]
-  const id = await Command.execute('FileSystemHandle.addFileHandle', fileHandle)
+  const id = (await FileSystem.addFileHandle(fileHandle)) as unknown as number
 
   // act
   await Explorer.handleDrop(0, 0, [id], fileList)

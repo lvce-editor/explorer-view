@@ -19,7 +19,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const fileHandle = await directory.getFileHandle('test-file.txt', { create: true })
   const file = await fileHandle.getFile()
   const fileList = [file]
-  const id = await Command.execute('FileSystemHandle.addFileHandle', fileHandle)
+  const id = (await FileSystem.addFileHandle(fileHandle)) as unknown as number
 
   // Try to drop on read-only directory
   await Explorer.handleDrop(2, 0, [id], fileList as any)
@@ -48,7 +48,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const fileHandle2 = await directory.getFileHandle('test-file2.txt', { create: true })
   const file2 = await fileHandle2.getFile()
   const fileList2 = [file, file2]
-  const id2 = await Command.execute('FileSystemHandle.addFileHandle', fileHandle2)
+  const id2 = (await FileSystem.addFileHandle(fileHandle2)) as unknown as number
 
   // Delete one file after adding to handles to simulate error
   await Command.execute('FileSystemHandle.removeFileHandle', id2)

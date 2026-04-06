@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-set-delta-y-invalid-value'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   for (let i = 0; i < 30; i++) {
@@ -13,7 +13,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const file00 = Locator('.TreeItem', { hasText: 'file-00.txt' })
 
   // act
-  await Command.execute('Explorer.setDeltaY', 'invalid')
+  await Explorer.setDeltaY('invalid' as any)
 
   // assert
   await expect(file00).toBeVisible()
