@@ -36,7 +36,6 @@ export const getNewDirentsAccept = (
   // @ts-ignore
   newDirent.icon = ''
   let insertIndex = focusedIndex
-  let deltaPosInSet = 0
   let posInSet = 1
   let setSize = 1
   let i = Math.max(focusedIndex, -1) + 1
@@ -49,7 +48,6 @@ export const getNewDirentsAccept = (
     const compareResult = CompareDirent.compareDirent(dirent, newDirent)
     if (compareResult === 1) {
       insertIndex = i - 1
-      deltaPosInSet = 1 - 1
       break
     } else {
       // @ts-ignore
@@ -60,8 +58,6 @@ export const getNewDirentsAccept = (
     }
     // @ts-ignore
     dirent.setSize++
-    // @ts-ignore
-    dirent.posInSet += deltaPosInSet
   }
   // @ts-ignore
   newDirent.setSize = setSize
