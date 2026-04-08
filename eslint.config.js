@@ -30,6 +30,7 @@ export default [
       'unicorn/empty-brace-spaces': 'off',
       '@typescript-eslint/only-throw-error': 'off',
       '@typescript-eslint/await-thenable': 'off',
+      '@typescript-eslint/no-import-type-side-effects': 'error',
     },
   },
   {
