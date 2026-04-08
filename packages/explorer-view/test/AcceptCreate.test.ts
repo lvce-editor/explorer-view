@@ -184,6 +184,11 @@ test('acceptCreate - successful folder creation does not open uri', async () => 
   const result = await acceptCreate(state, DirentType.Directory)
   expect(result.editingIndex).toBe(-1)
   expect(result.editingType).toBe(ExplorerEditingType.None)
-  expect(mockRpc.invocations).toContainEqual(['FileSystem.mkdir', 'memfs:///workspace/test/newfolder'])
-  expect(mockRpc.invocations).not.toContainEqual(['Main.openUri', expect.any(String), expect.any(Boolean)])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.mkdir', 'memfs:///workspace/test'],
+    ['FileSystem.mkdir', 'memfs:///workspace/test/newfolder'],
+    ['FileSystem.readDirWithFileTypes', 'memfs:///workspace'],
+    ['FileSystem.readDirWithFileTypes', 'memfs:///workspace/test'],
+    ['Layout.handleWorkspaceRefresh'],
+  ])
 })
