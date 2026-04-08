@@ -17,7 +17,7 @@ export const test: Test = async ({ expect, Extension, FileSystem, Layout, Locato
   await Layout.showSideBar()
 
   // assert
-  const error = Locator('.Explorer div') // TODO should have class
+  const error = Locator('.Explorer .WelcomeMessage')
   await expect(error).toBeVisible()
   await expect(error).toHaveText(`Could not open folder due to Failed to execute file system provider: FileNotFoundError: File not found.`)
 }
