@@ -84,7 +84,7 @@ test('cancelEdit - removes editing items', async () => {
     editingValue: '',
     focus: FocusId.List,
     focused: true,
-    focusedIndex: 1,
+    focusedIndex: 0,
     items: [state.items[0]],
   })
   expect(mockRpc.invocations).toEqual([])
@@ -217,7 +217,7 @@ test('cancelEdit - create file', async () => {
     editingValue: '',
     focus: FocusId.List,
     focused: true,
-    focusedIndex: 1,
+    focusedIndex: 0,
     items: [state.items[0]],
   })
   expect(mockRpc.invocations).toEqual([])
