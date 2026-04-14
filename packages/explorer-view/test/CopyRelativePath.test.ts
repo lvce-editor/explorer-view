@@ -55,6 +55,21 @@ test('copyRelativePath - handles nested paths correctly', async (): Promise<void
   expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', 'a/b/c/file.txt']])
 })
 
+test('copyRelativePath - strips workspace root prefix from runtime paths', async (): Promise<void> => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    items: [{ depth: 0, name: 'file.txt', path: 'memfs:///workspace/a/b.txt', selected: false, type: DirentType.File }],
+    pathSeparator: '/',
+    root: 'memfs:///workspace',
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.writeText'() {},
+  })
+  await copyRelativePath(state)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', 'a/b.txt']])
+})
+
 test('copyRelativePath - returns state after writing to clipboard', async (): Promise<void> => {
   const state: ExplorerState = {
     ...createDefaultState(),
