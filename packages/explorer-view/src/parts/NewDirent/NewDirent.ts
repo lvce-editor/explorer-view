@@ -12,7 +12,7 @@ const isFolder = (direntType: number): boolean => {
 const getFittingIndex = (dirents: readonly ExplorerItem[], startIndex: number): number => {
   for (let i = startIndex; i >= 0; i--) {
     const dirent = dirents[i]
-    if (isFolder(dirent.type)) {
+    if (dirent && isFolder(dirent.type)) {
       return i
     }
   }
