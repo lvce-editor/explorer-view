@@ -8,5 +8,8 @@ export const cancelEditInternal = async (state: ExplorerState, keepFocus: boolea
   if (editingType === ExplorerEditingType.Rename) {
     return cancelEditRename(state, keepFocus)
   }
+  if (editingType === ExplorerEditingType.None) {
+    return state
+  }
   return cancelEditCreate(state, keepFocus)
 }

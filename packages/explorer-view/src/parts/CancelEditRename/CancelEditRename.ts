@@ -8,6 +8,7 @@ export const cancelEditRename = (state: ExplorerState, keepFocus: boolean): Expl
   const { editingIndex, items } = state
   const newItems = getNewDirentsForCancelRename(items, editingIndex)
   const newFocusedIndex = getFocusedIndexCancel(items, editingIndex)
+  console.log('cancelEditRename', { editingIndex, keepFocus, newFocusedIndex })
   return {
     ...state,
     editingErrorMessage: '',

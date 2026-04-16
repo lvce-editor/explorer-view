@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-file-cancel'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -18,6 +16,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // assert
   const explorer = Locator('.Explorer')
+  const listItems = explorer.locator('.ListItems')
   const inputBox = explorer.locator('input')
   await expect(inputBox).toBeVisible()
   await expect(inputBox).toBeFocused()
@@ -27,11 +26,11 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // assert
   await expect(inputBox).toBeHidden()
+  await expect(listItems).toBeFocused()
+  await expect(listItems).toHaveAttribute('aria-activedescendant', 'TreeItemActive')
 
   const file2 = Locator('.TreeItem', { hasText: 'file2.txt' })
   await expect(file2).toBeVisible()
-
-  // TODO
-  // await expect(explorer).toBeFocused()
+  await expect(file2).toHaveClass('TreeItem TreeItemActive Indent-20')
   await expect(file2).toHaveId('TreeItemActive')
 }
