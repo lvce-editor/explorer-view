@@ -59,6 +59,7 @@ export const create = (
     maxLineY: 0,
     minLineY: 0,
     parentUid,
+    pendingFocusedIndex: -1,
     pasteShouldMove: false,
     pathSeparator: PathSeparatorType.Slash,
     platform,

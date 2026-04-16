@@ -42,6 +42,7 @@ export const createDefaultState = (): ExplorerState => ({
   maxLineY: 0,
   minLineY: 0,
   parentUid: 0,
+  pendingFocusedIndex: -1,
   pasteShouldMove: false,
   pathSeparator: '/',
   platform: 0,

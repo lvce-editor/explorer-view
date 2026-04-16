@@ -45,6 +45,7 @@ export interface ExplorerState {
   readonly maxLineY: number
   readonly minLineY: number
   readonly parentUid: number
+  readonly pendingFocusedIndex: number
   readonly pasteShouldMove: boolean
   readonly pathSeparator: string
   readonly platform: number
