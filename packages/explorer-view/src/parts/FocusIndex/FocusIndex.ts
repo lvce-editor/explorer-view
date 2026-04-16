@@ -13,6 +13,7 @@ export const focusIndex = (state: ExplorerState, index: number): ExplorerState =
         focused: true,
         focusedIndex: index,
         items: newItems,
+        pendingFocusedIndex: -1,
       }
     }
     const diff = maxLineY - minLineY
@@ -23,6 +24,7 @@ export const focusIndex = (state: ExplorerState, index: number): ExplorerState =
       items: newItems,
       maxLineY: index + diff,
       minLineY: index,
+      pendingFocusedIndex: -1,
     }
   }
   if (index >= maxLineY) {
@@ -34,6 +36,7 @@ export const focusIndex = (state: ExplorerState, index: number): ExplorerState =
       items: newItems,
       maxLineY: index + 1,
       minLineY: index + 1 - diff,
+      pendingFocusedIndex: -1,
     }
   }
   return {
@@ -41,5 +44,6 @@ export const focusIndex = (state: ExplorerState, index: number): ExplorerState =
     focused: true,
     focusedIndex: index,
     items: newItems,
+    pendingFocusedIndex: -1,
   }
 }
