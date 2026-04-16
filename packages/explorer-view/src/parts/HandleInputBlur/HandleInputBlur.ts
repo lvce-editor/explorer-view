@@ -4,7 +4,6 @@ import { cancelEditInternal } from '../CancelEditInternal/CancelEditInternal.ts'
 
 export const handleInputBlur = async (state: ExplorerState): Promise<ExplorerState> => {
   const { editingErrorMessage, editingIndex, editingValue } = state
-  console.log('handleInputBlur', { editingErrorMessage, editingIndex, editingValue })
 
   if (editingIndex === -1) {
     return state

@@ -3,7 +3,6 @@ import { focusIndex } from '../FocusIndex/FocusIndex.ts'
 
 export const focusNone = (state: ExplorerState): ExplorerState => {
   const { focusedIndex } = state
-  console.log('focusNone', { focusedIndex })
   if (focusedIndex === -1) {
     return state
   }
