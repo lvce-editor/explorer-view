@@ -23,6 +23,7 @@ export const handleClickAt = async (
       ...state,
       focused: true,
       focusedIndex: -1,
+      pendingFocusedIndex: -1,
       // TODO mark all items as not selected
     }
   }

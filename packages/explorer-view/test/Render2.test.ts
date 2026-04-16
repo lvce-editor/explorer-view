@@ -24,7 +24,7 @@ test('render2 - basic', () => {
           type: 4,
         },
         {
-          ariaActiveDescendant: 'TreeItemActive',
+          ariaActivedescendant: 'TreeItemActive',
           ariaLabel: 'Files Explorer',
           childCount: 0,
           className: 'ListItems',

@@ -138,3 +138,55 @@ test('renderItems - missing folder load error shows friendly message and button'
     ]),
   )
 })
+
+test('renderItems - uses pending focused index for active descendant during focus handoff', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...createDefaultState(),
+    focused: true,
+    focusedIndex: -1,
+    items: [
+      {
+        depth: 0,
+        name: 'test',
+        path: '/test',
+        selected: false,
+        type: 1,
+      },
+    ],
+    pendingFocusedIndex: 0,
+    root: '/workspace',
+    visibleExplorerItems: [
+      {
+        ariaExpanded: undefined,
+        chevron: 0,
+        className: 'TreeItem TreeItemActive Indent-20',
+        depth: 0,
+        hasEditingError: false,
+        icon: 'file',
+        id: 'TreeItemActive',
+        indent: 20,
+        index: 0,
+        isCut: false,
+        isEditing: false,
+        isIgnored: false,
+        name: 'test',
+        path: '/test',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+      },
+    ],
+    width: 500,
+  }
+  const result = renderItems(oldState, newState)
+  const dom = result[2]
+  expect(dom).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        ariaActivedescendant: 'TreeItemActive',
+        className: 'ListItems',
+      }),
+    ]),
+  )
+})

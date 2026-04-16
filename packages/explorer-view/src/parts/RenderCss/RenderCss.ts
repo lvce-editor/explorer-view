@@ -1,6 +1,7 @@
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getCss } from '../GetCss/GetCss.ts'
+import { getEffectiveFocusedIndex } from '../GetEffectiveFocusedIndex/GetEffectiveFocusedIndex.ts'
 import * as GetErrorMessagePosition from '../GetErrorMessagePosition/GetErrorMessagePosition.ts'
 import { getScrollBarSize } from '../GetScrollBarSize/GetScrollBarSize.ts'
 import { getScrollBarTop } from '../GetScrollBarTop/GetScrollBarTop.ts'
@@ -8,6 +9,7 @@ import { getUniqueIndents } from '../GetUniqueIndents/GetUniqueIndents.ts'
 
 export const renderCss = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
   const { deltaY, focusedIndex, height, itemHeight, items, minLineY, uid, visibleExplorerItems, width } = newState
+  const effectiveFocusedIndex = getEffectiveFocusedIndex(focusedIndex, newState.pendingFocusedIndex)
   const uniqueIndents = getUniqueIndents(visibleExplorerItems)
   const contentHeight = items.length * itemHeight
   const scrollBarTop = getScrollBarTop(height, contentHeight, deltaY)
@@ -17,10 +19,10 @@ export const renderCss = (oldState: ExplorerState, newState: ExplorerState): rea
   const fileIconWidth = 16
   const defaultPaddingLeft = 0
   const chevronSpace = 22
-  const depth = items[focusedIndex]?.depth || 0
+  const depth = items[effectiveFocusedIndex]?.depth || 0
   const { errorMessageWidth, left, top } = GetErrorMessagePosition.getErrorMessagePosition(
     itemHeight,
-    focusedIndex,
+    effectiveFocusedIndex,
     minLineY,
     depth,
     indent,

@@ -1,5 +1,6 @@
 import * as ViewletRegistry from '@lvce-editor//viewlet-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import { getEffectiveFocusedIndex } from '../GetEffectiveFocusedIndex/GetEffectiveFocusedIndex.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetExplorerMaxLineY from '../GetMaxLineY/GetMaxLineY.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
@@ -52,11 +53,12 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
     }
     const visible = items.slice(minLineY, maxLineY)
     const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
+    const effectiveFocusedIndex = getEffectiveFocusedIndex(focusedIndex, updatedState.pendingFocusedIndex)
     const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
       items,
       minLineY,
       maxLineY,
-      focusedIndex,
+      effectiveFocusedIndex,
       editingIndex,
       editingErrorMessage,
       icons,

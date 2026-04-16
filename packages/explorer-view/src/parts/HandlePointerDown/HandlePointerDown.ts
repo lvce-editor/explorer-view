@@ -11,6 +11,7 @@ export const handlePointerDown = (state: ExplorerState, button: number, x: numbe
       focus: FocusId.List,
       focused: true,
       focusedIndex: -1,
+      pendingFocusedIndex: -1,
     }
   }
   return state

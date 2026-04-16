@@ -8,7 +8,7 @@ export const handleFocus = async (state: ExplorerState): Promise<ExplorerState> 
       ...state,
       focus: FocusId.List,
       focused: true,
-      focusedIndex: state.focusedIndex === -1 ? pendingFocusedIndex : state.focusedIndex,
+      focusedIndex: pendingFocusedIndex,
       pendingFocusedIndex: -1,
     }
   }

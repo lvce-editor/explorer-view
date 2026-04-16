@@ -22,7 +22,7 @@ test('basic item', () => {
     selected: false,
     setSize: 2,
   }
-  const dom = getExplorerItemVirtualDom(item)
+  const dom = getExplorerItemVirtualDom(item, -1)
   expect(dom).toHaveLength(4)
   expect(dom[0].type).toBe(4)
   expect(dom[0].role).toBe('treeitem')
@@ -50,7 +50,7 @@ test('file uri item removes file scheme from title', () => {
     selected: false,
     setSize: 2,
   }
-  const dom = getExplorerItemVirtualDom(item)
+  const dom = getExplorerItemVirtualDom(item, -1)
   expect(dom[0].title).toBe('/test.txt')
 })
 
@@ -74,7 +74,7 @@ test('non-file uri item keeps scheme in title', () => {
     selected: false,
     setSize: 2,
   }
-  const dom = getExplorerItemVirtualDom(item)
+  const dom = getExplorerItemVirtualDom(item, -1)
   expect(dom[0].title).toBe('memfs:///test.txt')
 })
 
@@ -98,7 +98,7 @@ test('item with chevron', () => {
     selected: false,
     setSize: 2,
   }
-  const dom = getExplorerItemVirtualDom(item)
+  const dom = getExplorerItemVirtualDom(item, -1)
   expect(dom).toHaveLength(5)
   expect(dom[0].type).toBe(4)
   expect(dom[0].role).toBe('treeitem')
@@ -125,7 +125,7 @@ test('item in editing state', () => {
     selected: false,
     setSize: 2,
   }
-  const dom = getExplorerItemVirtualDom(item)
+  const dom = getExplorerItemVirtualDom(item, -1)
   expect(dom).toHaveLength(3)
   expect(dom[0].type).toBe(4)
   expect(dom[0].role).toBe('treeitem')
@@ -151,8 +151,37 @@ test('item with error', () => {
     selected: false,
     setSize: 2,
   }
-  const dom = getExplorerItemVirtualDom(item)
+  const dom = getExplorerItemVirtualDom(item, -1)
   expect(dom).toHaveLength(3)
   expect(dom[0].type).toBe(4)
   expect(dom[0].role).toBe('treeitem')
+})
+
+test('focused item gets active class and id', () => {
+  const item: VisibleExplorerItem = {
+    ariaExpanded: undefined,
+    chevron: 0,
+    className: 'TreeItem Indent-12',
+    depth: 1,
+    hasEditingError: false,
+    icon: 'file',
+    id: undefined,
+    indent: 12,
+    index: 1,
+    isCut: false,
+    isEditing: false,
+    isIgnored: false,
+    name: 'test.txt',
+    path: '/test.txt',
+    posInSet: 2,
+    selected: false,
+    setSize: 3,
+  }
+  const dom = getExplorerItemVirtualDom(item, 1)
+  expect(dom[0]).toEqual(
+    expect.objectContaining({
+      className: 'TreeItem TreeItemActive Indent-12',
+      id: 'TreeItemActive',
+    }),
+  )
 })

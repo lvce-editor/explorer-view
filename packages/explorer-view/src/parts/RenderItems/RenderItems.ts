@@ -1,10 +1,12 @@
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import { getEffectiveFocusedIndex } from '../GetEffectiveFocusedIndex/GetEffectiveFocusedIndex.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetLoadErrorMessage from '../GetLoadErrorMessage/GetLoadErrorMessage.ts'
 
 export const renderItems = (oldState: ExplorerState, newState: ExplorerState): any => {
   const { dropTargets, editingErrorMessage, focused, focusedIndex, height, initial, itemHeight, items, root, width } = newState
+  const effectiveFocusedIndex = getEffectiveFocusedIndex(focusedIndex, newState.pendingFocusedIndex)
   const visibleDirents = newState.visibleExplorerItems
   const isWide = width > 450
   const contentHeight = items.length * itemHeight
@@ -15,7 +17,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
   }
   const dom = GetExplorerVirtualDom.getExplorerVirtualDom(
     visibleDirents,
-    focusedIndex,
+    effectiveFocusedIndex,
     root,
     isWide,
     focused,
