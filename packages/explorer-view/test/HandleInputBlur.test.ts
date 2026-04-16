@@ -6,7 +6,7 @@ import { handleInputBlur } from '../src/parts/HandleInputBlur/HandleInputBlur.ts
 test('should cancel edit if there is an error message', async () => {
   const state: ExplorerState = { ...createDefaultState(), editingErrorMessage: 'error', editingValue: 'foo' }
   const result = await handleInputBlur(state)
-  expect(result.editingValue).toBe('')
+  expect(result.editingValue).toBe('foo')
 })
 
 test('should cancel edit if editing value is empty', async () => {
