@@ -19,6 +19,7 @@ export const create = (
 ): any => {
   const state: ExplorerState = {
     assetDir,
+    compareSourceUri: '',
     confirmDelete: false,
     confirmPaste: false,
     cutItems: [],
