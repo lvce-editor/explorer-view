@@ -3,6 +3,7 @@ import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as CancelEdit from '../CancelEdit/CancelEdit.ts'
 import * as CancelTypeAhead from '../CancelTypeAhead/CancelTypeAhead.ts'
 import * as CollapseAll from '../CollapseAll/CollapseAll.ts'
+import * as CompareWithSelected from '../CompareWithSelected/CompareWithSelected.ts'
 import * as CopyPath from '../CopyPath/CopyPath.ts'
 import * as CopyRelativePath from '../CopyRelativePath/CopyRelativePath.ts'
 import * as Create2 from '../Create2/Create2.ts'
@@ -73,6 +74,7 @@ import * as RevealItem from '../RevealItem/RevealItem.ts'
 import * as SaveState from '../SaveState/SaveState.ts'
 import * as SelectAll from '../SelectAll/SelectAll.ts'
 import * as SelectDown from '../SelectDown/SelectDown.ts'
+import * as SelectForCompare from '../SelectForCompare/SelectForCompare.ts'
 import * as SelectIndices from '../SelectIndices/SelectIndices.ts'
 import * as SelectUp from '../SelectUp/SelectUp.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
@@ -85,6 +87,7 @@ export const commandMap = {
   'Explorer.cancelEdit': WrapCommand.wrapListItemCommand(CancelEdit.cancelEdit),
   'Explorer.cancelTypeAhead': WrapCommand.wrapListItemCommand(CancelTypeAhead.cancelTypeAhead),
   'Explorer.collapseAll': WrapCommand.wrapListItemCommand(CollapseAll.collapseAll),
+  'Explorer.compareWithSelected': WrapCommand.wrapListItemCommand(CompareWithSelected.compareWithSelected),
   'Explorer.copyPath': WrapCommand.wrapListItemCommand(CopyPath.copyPath),
   'Explorer.copyRelativePath': WrapCommand.wrapListItemCommand(CopyRelativePath.copyRelativePath),
   'Explorer.create': Create.create,
@@ -157,6 +160,7 @@ export const commandMap = {
   'Explorer.saveState': WrapCommand.wrapGetter(SaveState.saveState),
   'Explorer.selectAll': WrapCommand.wrapListItemCommand(SelectAll.selectAll),
   'Explorer.selectDown': WrapCommand.wrapListItemCommand(SelectDown.selectDown),
+  'Explorer.selectForCompare': WrapCommand.wrapListItemCommand(SelectForCompare.selectForCompare),
   'Explorer.selectIndices': WrapCommand.wrapListItemCommand(SelectIndices.setSelectedIndices),
   'Explorer.selectUp': WrapCommand.wrapListItemCommand(SelectUp.selectUp),
   'Explorer.setDeltaY': WrapCommand.wrapListItemCommand(SetDeltaY.setDeltaY),

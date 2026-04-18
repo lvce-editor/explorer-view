@@ -5,6 +5,7 @@ import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorer
 
 export interface ExplorerState {
   readonly assetDir: string
+  readonly compareSourceUri: string
   readonly confirmDelete: boolean
   readonly confirmPaste: boolean
   readonly cutItems: readonly string[]

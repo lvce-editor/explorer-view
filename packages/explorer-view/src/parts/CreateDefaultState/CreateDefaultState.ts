@@ -2,6 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
 export const createDefaultState = (): ExplorerState => ({
   assetDir: '',
+  compareSourceUri: '',
   confirmDelete: false,
   confirmPaste: false,
   cutItems: [],

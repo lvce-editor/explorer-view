@@ -69,6 +69,20 @@ const menuEntryCopyRelativePath: MenuEntry = {
   label: ViewletExplorerStrings.copyRelativePath(),
 }
 
+const menuEntrySelectForCompare: MenuEntry = {
+  command: 'Explorer.selectForCompare',
+  flags: MenuItemFlags.RestoreFocus,
+  id: 'selectForCompare',
+  label: ViewletExplorerStrings.selectForCompare(),
+}
+
+const menuEntryCompareWithSelected: MenuEntry = {
+  command: 'Explorer.compareWithSelected',
+  flags: MenuItemFlags.RestoreFocus,
+  id: 'compareWithSelected',
+  label: ViewletExplorerStrings.compareWithSelected(),
+}
+
 const menuEntryRename: MenuEntry = {
   command: 'Explorer.renameDirent',
   flags: MenuItemFlags.None,
@@ -133,6 +147,27 @@ const getMenuEntriesFile = (): readonly MenuEntry[] => {
     menuEntryCopyPath,
     menuEntryCopyRelativePath,
     MenuEntrySeparator.menuEntrySeparator,
+    menuEntrySelectForCompare,
+    MenuEntrySeparator.menuEntrySeparator,
+    menuEntryRename,
+    menuEntryDelete,
+  ]
+}
+
+const getMenuEntriesFileCompareWithSelected = (): readonly MenuEntry[] => {
+  return [
+    menuEntryOpenContainingFolder,
+    menuEntryOpenInIntegratedTerminal,
+    MenuEntrySeparator.menuEntrySeparator,
+    menuEntryCut,
+    menuEntryCopy,
+    menuEntryPaste,
+    MenuEntrySeparator.menuEntrySeparator,
+    menuEntryCopyPath,
+    menuEntryCopyRelativePath,
+    MenuEntrySeparator.menuEntrySeparator,
+    menuEntryCompareWithSelected,
+    MenuEntrySeparator.menuEntrySeparator,
     menuEntryRename,
     menuEntryDelete,
   ]
@@ -169,6 +204,9 @@ export const getMenuEntries = (state: ExplorerState): readonly MenuEntry[] => {
     case DirentType.Directory:
       return getMenuEntriesDirectory()
     case DirentType.File:
+      if (state.compareSourceUri && state.compareSourceUri !== focusedDirent.path) {
+        return getMenuEntriesFileCompareWithSelected()
+      }
       return getMenuEntriesFile()
     default:
       return getMenuEntriesDefault()
