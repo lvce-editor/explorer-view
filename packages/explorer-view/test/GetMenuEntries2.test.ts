@@ -51,3 +51,44 @@ test('getMenuEntries2 - file', () => {
   const menuEntries = getMenuEntries2(state)
   expect(menuEntries.length).toBeGreaterThan(0)
 })
+
+test('getMenuEntries2 - file shows select for compare by default', () => {
+  const uid = 1
+  const item: ExplorerItem = {
+    depth: 0,
+    name: 'test.txt',
+    path: '/test.txt',
+    selected: false,
+    type: DirentType.File,
+  }
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    items: [item],
+  }
+  set(uid, state, state)
+  const menuEntries = getMenuEntries2(state)
+  expect(menuEntries.some((entry) => entry.id === 'selectForCompare')).toBe(true)
+  expect(menuEntries.some((entry) => entry.id === 'compareWithSelected')).toBe(false)
+})
+
+test('getMenuEntries2 - file shows compare with selected for different file', () => {
+  const uid = 1
+  const item: ExplorerItem = {
+    depth: 0,
+    name: 'test.txt',
+    path: '/test.txt',
+    selected: false,
+    type: DirentType.File,
+  }
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    compareSourceUri: '/other.txt',
+    focusedIndex: 0,
+    items: [item],
+  }
+  set(uid, state, state)
+  const menuEntries = getMenuEntries2(state)
+  expect(menuEntries.some((entry) => entry.id === 'compareWithSelected')).toBe(true)
+  expect(menuEntries.some((entry) => entry.id === 'selectForCompare')).toBe(false)
+})

@@ -41,6 +41,14 @@ export const copyRelativePath = (): string => {
   return I18nString.i18nString(UiStrings.CopyRelativePath)
 }
 
+export const compareWithSelected = (): string => {
+  return I18nString.i18nString(UiStrings.CompareWithSelected)
+}
+
+export const selectForCompare = (): string => {
+  return I18nString.i18nString(UiStrings.SelectForCompare)
+}
+
 export const rename = (): string => {
   return I18nString.i18nString(UiStrings.Rename)
 }
