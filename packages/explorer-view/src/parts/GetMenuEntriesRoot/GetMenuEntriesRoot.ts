@@ -1,5 +1,4 @@
 import type { MenuEntry } from '../MenuEntry/MenuEntry.ts'
-import * as MenuEntrySeparator from '../MenuEntrySeparator/MenuEntrySeparator.ts'
 import {
   menuEntryCopyPath,
   menuEntryCopyRelativePath,
@@ -10,6 +9,7 @@ import {
   menuEntryPaste,
   menuEntryRemoveFolderFromWorkspace,
 } from '../GetMenuEntriesShared/GetMenuEntriesShared.ts'
+import * as MenuEntrySeparator from '../MenuEntrySeparator/MenuEntrySeparator.ts'
 
 export const getMenuEntriesRoot = (root: string): readonly MenuEntry[] => {
   const entries: MenuEntry[] = [
