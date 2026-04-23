@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, Explorer, Locator, Workspace }) => {
   const treeItems = Locator('.TreeItem')
 
   // act
-  await Explorer.handleDrop(5000, 5000, [], [] as any)
+  await Explorer.handleDrop(5000, 5000, [], [])
 
   // assert
   await expect(welcomeMessage).toBeVisible()

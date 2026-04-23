@@ -19,7 +19,7 @@ export const test: Test = async ({ Command, expect, Explorer, Locator, Workspace
   const welcomeMessage = Locator('.Explorer .WelcomeMessage')
 
   // act
-  await Explorer.handleDrop(5000, 5000, [id], [] as any)
+  await Explorer.handleDrop(5000, 5000, [id], [])
 
   // assert
   await expect(welcomeMessage).toBeHidden()

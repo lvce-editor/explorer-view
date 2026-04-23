@@ -25,7 +25,7 @@ export const test: Test = async ({ Command, expect, Explorer, Locator, Workspace
   const droppedFile = Locator('.TreeItem[aria-label="dropped-file.txt"]')
 
   // act
-  await Explorer.handleDrop(5000, 5000, [fileId, directoryId], [] as any)
+  await Explorer.handleDrop(5000, 5000, [fileId, directoryId], [])
 
   // assert
   await expect(welcomeMessage).toBeHidden()

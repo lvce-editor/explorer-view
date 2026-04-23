@@ -31,7 +31,7 @@ export const test: Test = async ({ Command, expect, Explorer, Locator, Workspace
   const secondNestedFile = Locator('.TreeItem[aria-label="second-inside.txt"]')
 
   // act
-  await Explorer.handleDrop(5000, 5000, [firstId, secondId], [] as any)
+  await Explorer.handleDrop(5000, 5000, [firstId, secondId], [])
 
   // assert
   await expect(welcomeMessage).toBeHidden()
