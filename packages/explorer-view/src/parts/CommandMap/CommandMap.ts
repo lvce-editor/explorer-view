@@ -157,6 +157,7 @@ export const commandMap = {
   'Explorer.renderActions2': RenderActions2.renderActions,
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
   'Explorer.restoreState': RestoreState.restoreState,
+  'Explorer.reveal': WrapCommand.wrapListItemCommand(RevealItem.revealItem),
   'Explorer.revealItem': WrapCommand.wrapListItemCommand(RevealItem.revealItem),
 
   'Explorer.saveState': WrapCommand.wrapGetter(SaveState.saveState),

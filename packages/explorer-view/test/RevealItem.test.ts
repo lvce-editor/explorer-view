@@ -17,6 +17,22 @@ test('revealItem - item not found', async () => {
   expect(mockRpc.invocations).toEqual([])
 })
 
+test('revealItem - uri outside root', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    root: '/root',
+  }
+  const newState = await revealItem(state, 'non-existent:///some-file.txt')
+  expect(newState).toEqual(state)
+  expect(mockRpc.invocations).toEqual([])
+})
+
 test('revealItem - item found', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
