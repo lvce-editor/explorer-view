@@ -33,6 +33,7 @@ import * as HandleClickCurrent from '../HandleClickCurrent/HandleClickCurrent.ts
 import * as HandleClickCurrentButKeepFocus from '../HandleClickCurrentButKeepFocus/HandleClickCurrentButKeepFocus.ts'
 import * as HandleClickOpenFolder from '../HandleClickOpenFolder/HandleClickOpenFolder.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
+import * as HandleContextMenuWelcome from '../HandleContextMenuWelcome/HandleContextMenuWelcome.ts'
 import * as HandleContextMenuKeyboard from '../HandleContextMenuKeyboard/HandleContextMenuKeyboard.ts'
 import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
 import * as HandleCut from '../HandleCut/HandleCut.ts'
@@ -118,6 +119,7 @@ export const commandMap = {
   'Explorer.handleClickCurrentButKeepFocus': WrapCommand.wrapListItemCommand(HandleClickCurrentButKeepFocus.handleClickCurrentButKeepFocus),
   'Explorer.handleClickOpenFolder': WrapCommand.wrapListItemCommand(HandleClickOpenFolder.handleClickOpenFolder),
   'Explorer.handleContextMenu': WrapCommand.wrapListItemCommand(HandleContextMenu.handleContextMenu),
+  'Explorer.handleContextMenuWelcome': WrapCommand.wrapListItemCommand(HandleContextMenuWelcome.handleContextMenuWelcome),
   'Explorer.handleContextMenuKeyboard': WrapCommand.wrapListItemCommand(HandleContextMenuKeyboard.handleContextMenuKeyboard),
   'Explorer.handleCopy': WrapCommand.wrapListItemCommand(HandleCopy.handleCopy),
   'Explorer.handleCut': WrapCommand.wrapListItemCommand(HandleCut.handleCut),

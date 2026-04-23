@@ -8,6 +8,7 @@ test('getExplorerWelcomeVirtualDom - wide', () => {
     {
       childCount: 1,
       className: 'Viewlet Explorer',
+      onContextMenu: DomEventListenerFunctions.HandleContextMenuWelcome,
       onDragLeave: DomEventListenerFunctions.HandleDragLeave,
       onDragOver: DomEventListenerFunctions.HandleDragOver,
       onDrop: DomEventListenerFunctions.HandleDrop,
@@ -49,6 +50,7 @@ test('getExplorerWelcomeVirtualDom - narrow', () => {
     {
       childCount: 1,
       className: 'Viewlet Explorer',
+      onContextMenu: DomEventListenerFunctions.HandleContextMenuWelcome,
       onDragLeave: DomEventListenerFunctions.HandleDragLeave,
       onDragOver: DomEventListenerFunctions.HandleDragOver,
       onDrop: DomEventListenerFunctions.HandleDrop,
@@ -90,6 +92,7 @@ test('getExplorerWelcomeVirtualDom - drop target', () => {
     {
       childCount: 1,
       className: 'Viewlet Explorer DropTarget',
+      onContextMenu: DomEventListenerFunctions.HandleContextMenuWelcome,
       onDragLeave: DomEventListenerFunctions.HandleDragLeave,
       onDragOver: DomEventListenerFunctions.HandleDragOver,
       onDrop: DomEventListenerFunctions.HandleDrop,
