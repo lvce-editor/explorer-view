@@ -18,6 +18,7 @@ export const getExplorerWelcomeVirtualDom = (isWide: boolean, dropTargets: reado
     {
       childCount: 1,
       className: getClassName(dropTargets),
+      onContextMenu: DomEventListenerFunctions.HandleContextMenuWelcome,
       onDragLeave: DomEventListenerFunctions.HandleDragLeave,
       onDragOver: DomEventListenerFunctions.HandleDragOver,
       onDrop: DomEventListenerFunctions.HandleDrop,
