@@ -22,7 +22,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const id = await Command.execute('FileSystemHandle.addFileHandle', fileHandle)
 
   // Try to drop on read-only directory
-  await Explorer.handleDrop(2, 0, [id], fileList as any)
+  await Explorer.handleDrop(2, 0, [id], fileList)
 
   // Should show error message
   const errorMessage = Locator('.ErrorMessage')
@@ -31,14 +31,14 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
 
   // Test 2: Drop with invalid file handle
   const invalidId = 999_999 // Use number instead of string
-  await Explorer.handleDrop(0, 0, [invalidId], fileList as any)
+  await Explorer.handleDrop(0, 0, [invalidId], fileList)
 
   // Should handle invalid handle gracefully
   await expect(errorMessage).toBeVisible()
 
   // Test 3: Drop file on itself (same location)
   await Command.execute('FileSystem.setReadOnly', `${tmpDir}/readonly-dir`, false)
-  await Explorer.handleDrop(0, 0, [id], fileList as any)
+  await Explorer.handleDrop(0, 0, [id], fileList)
 
   // Should handle or show appropriate message
   const fileItem = Locator('.TreeItem', { hasText: 'test-file.txt' })
@@ -53,13 +53,13 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   // Delete one file after adding to handles to simulate error
   await Command.execute('FileSystemHandle.removeFileHandle', id2)
 
-  await Explorer.handleDrop(0, 0, [id, 999_999], fileList2 as any)
+  await Explorer.handleDrop(0, 0, [id, 999_999], fileList2)
 
   // Should handle partial failure gracefully
   await expect(errorMessage).toBeVisible()
 
   // Test 5: Drop on non-existent target
-  await Explorer.handleDrop(999, 0, [id], fileList as any)
+  await Explorer.handleDrop(999, 0, [id], fileList)
 
   // Should handle invalid target gracefully
   await expect(errorMessage).toBeVisible()
