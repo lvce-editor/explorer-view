@@ -28,7 +28,7 @@ export const updateExplorerAfterFileOperations = async (
 ): Promise<ExplorerUpdateResult> => {
   const { editingValue, fileIconCache, focusedIndex, height, itemHeight, items, minLineY, pathSeparator, root } = state
   const newFileName = editingValue
-  const parentFolder = getParentFolder(items, focusedIndex, root)
+  const parentFolder = getParentFolder(items, focusedIndex, root, pathSeparator)
   const absolutePath = join2(parentFolder, newFileName)
 
   // TODO based on operations, find out which paths need to be updated

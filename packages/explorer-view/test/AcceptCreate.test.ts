@@ -192,3 +192,83 @@ test('acceptCreate - successful folder creation does not open uri', async () => 
     ['Layout.handleWorkspaceRefresh'],
   ])
 })
+
+test('acceptCreate - nested folder creation uses the file parent when a file is focused', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'FileSystem.mkdir'() {
+      return
+    },
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === 'memfs:///workspace') {
+        return [
+          { name: 'a', type: DirentType.Directory },
+          { name: 'file1.txt', type: DirentType.File },
+        ]
+      }
+      if (path === 'memfs:///workspace/a') {
+        return [{ name: 'b', type: DirentType.Directory }]
+      }
+      if (path === 'memfs:///workspace/a/b') {
+        return [{ name: 'c', type: DirentType.Directory }]
+      }
+      throw new Error(`unexpected file read ${path}`)
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return Array(5).fill('')
+    },
+    'Main.openUri'() {},
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 1,
+    editingValue: 'a/b/c',
+    fileIconCache: {},
+    focusedIndex: 0,
+    height: 100,
+    itemHeight: 20,
+    items: [
+      {
+        depth: 0,
+        icon: '',
+        name: 'file1.txt',
+        path: 'memfs:///workspace/file1.txt',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+        type: DirentType.File,
+      },
+      {
+        depth: 0,
+        icon: '',
+        name: '',
+        path: 'memfs:///workspace',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+        type: DirentType.EditingFolder,
+      },
+    ],
+    minLineY: 0,
+    pathSeparator: '/',
+    root: 'memfs:///workspace',
+  }
+
+  await acceptCreate(state, DirentType.Directory)
+
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.mkdir', 'memfs:///workspace/a'],
+    ['FileSystem.mkdir', 'memfs:///workspace/a/b'],
+    ['FileSystem.mkdir', 'memfs:///workspace/a/b/c'],
+    ['FileSystem.readDirWithFileTypes', 'memfs:///workspace'],
+    ['FileSystem.readDirWithFileTypes', 'memfs:///workspace/a'],
+    ['FileSystem.readDirWithFileTypes', 'memfs:///workspace/a/b'],
+    ['Layout.handleWorkspaceRefresh'],
+  ])
+})

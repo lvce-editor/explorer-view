@@ -12,7 +12,7 @@ export const getNewDirentsAccept = (
   newDirentType: number,
 ): NewDirentsAcceptResult => {
   const newFileName = editingValue
-  const parentFolder = getParentFolder(items, focusedIndex, root)
+  const parentFolder = getParentFolder(items, focusedIndex, root, pathSeparator)
   const absolutePath = [parentFolder, newFileName].join(pathSeparator)
 
   const parentDirent =
