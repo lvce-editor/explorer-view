@@ -7,12 +7,6 @@ import { loadContent } from '../src/parts/LoadContent/LoadContent.ts'
 
 test('loadContent clamps restored deltaY to 0 when content is shorter after reload', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Preferences.get'() {
-      return false
-    },
-    'Workspace.getPath'() {
-      return '/workspace'
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
@@ -21,6 +15,12 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
         { name: 'folder1', type: Directory },
         { name: 'folder2', type: Directory },
       ]
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Workspace.getPath'() {
+      return '/workspace'
     },
   })
   const state: ExplorerState = createDefaultState()
@@ -73,12 +73,6 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
 
 test('loadContent clamps restored deltaY to maxDeltaY when content is still scrollable', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Preferences.get'() {
-      return false
-    },
-    'Workspace.getPath'() {
-      return '/workspace'
-    },
     'FileSystem.getPathSeparator'() {
       return '/'
     },
@@ -93,6 +87,12 @@ test('loadContent clamps restored deltaY to maxDeltaY when content is still scro
         { name: 'file7', type: File },
         { name: 'file8', type: File },
       ]
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Workspace.getPath'() {
+      return '/workspace'
     },
   })
   const state: ExplorerState = createDefaultState()
