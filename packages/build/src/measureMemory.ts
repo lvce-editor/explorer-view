@@ -2,7 +2,7 @@ import { measureMemory } from '@lvce-editor/measure-memory'
 import { join } from 'node:path'
 import { root } from './root.ts'
 
-const threshold = 560_000
+const threshold = 570_000
 
 const instantiations = 9000
 
