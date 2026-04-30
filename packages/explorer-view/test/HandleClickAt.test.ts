@@ -45,7 +45,7 @@ test('handleClickAt - non left click', async () => {
   const state: ExplorerState = createDefaultState()
   const shiftKey = false
   const ctrlKey = false
-  const result = await handleClickAt(state, false, 2, shiftKey, ctrlKey, 0, 0)
+  const result = await handleClickAt(state, false, 2, ctrlKey, shiftKey, 0, 0)
   expect(result).toBe(state)
 })
 
@@ -53,7 +53,7 @@ test('handleClickAt - left click', async () => {
   const state: ExplorerState = createDefaultState()
   const shiftKey = false
   const ctrlKey = false
-  const result = await handleClickAt(state, false, LeftClick, shiftKey, ctrlKey, 0, 0)
+  const result = await handleClickAt(state, false, LeftClick, ctrlKey, shiftKey, 0, 0)
   expect(result).toBeDefined()
 })
 
