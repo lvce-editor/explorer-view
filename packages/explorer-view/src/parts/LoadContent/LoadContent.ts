@@ -1,81 +1,28 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetFileDecorations from '../GetFileDecorations/GetFileDecorations.ts'
+import * as GetErrorCode from '../GetErrorCode/GetErrorCode.ts'
+import * as GetErrorMessage from '../GetErrorMessage/GetErrorMessage.ts'
+import * as GetExcluded from '../GetExcluded/GetExcluded.ts'
+import * as GetFriendlyErrorMessage from '../GetFriendlyErrorMessage/GetFriendlyErrorMessage.ts'
+import * as GetPathSeparator from '../GetPathSeparator/GetPathSeparator.ts'
+import * as GetRestoredDeltaY from '../GetRestoredDeltaY/GetRestoredDeltaY.ts'
 import { getScheme } from '../GetScheme/GetScheme.ts'
 import * as GetSettings from '../GetSettings/GetSettings.ts'
+import * as GetSavedRoot from '../GetSavedRoot/GetSavedRoot.ts'
 import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
-
-const getPathSeparator = (root: any): any => {
-  return FileSystem.getPathSeparator(root)
-}
-
-const getExcluded = (): any => {
-  const excludedObject = {}
-  const excluded = []
-  for (const [key, value] of Object.entries(excludedObject)) {
-    if (value) {
-      excluded.push(key)
-    }
-  }
-  return excluded
-}
-
-const getSavedRoot = (savedState: any, workspacePath: any): any => {
-  return workspacePath
-}
-
-const getErrorCode = (error: unknown): string => {
-  if (error && typeof error === 'object' && 'code' in error && typeof error.code === 'string') {
-    return error.code
-  }
-  return ''
-}
-
-const getErrorMessage = (error: unknown): string => {
-  if (error instanceof Error) {
-    return error.message
-  }
-  if (typeof error === 'string') {
-    return error
-  }
-  return 'Unknown error'
-}
-
-const getFriendlyErrorMessage = (errorMessage: string, errorCode: string): string => {
-  switch (errorCode) {
-    case 'EACCES':
-    case 'EPERM':
-      return 'permission was denied'
-    case 'EBUSY':
-      return 'the folder is currently in use'
-    case 'ENOENT':
-      return 'the folder does not exist'
-    case 'ENOTDIR':
-      return 'the path is not a folder'
-    default:
-      return errorMessage || 'an unexpected error occurred'
-  }
-}
-
-const getRestoredDeltaY = (savedState: any): number => {
-  if (savedState && typeof savedState.deltaY === 'number') {
-    return savedState.deltaY
-  }
-  return 0
-}
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
   const { assetDir, height, itemHeight, platform } = state
   const { confirmDelete, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
-  const root = getSavedRoot(savedState, workspacePath)
+  const root = GetSavedRoot.getSavedRoot(savedState, workspacePath)
   try {
     // TODO path separator could be restored from saved state
-    const pathSeparator = await getPathSeparator(root) // TODO only load path separator once
-    const excluded = getExcluded()
+    const pathSeparator = await GetPathSeparator.getPathSeparator(root) // TODO only load path separator once
+    const excluded = GetExcluded.getExcluded()
     const restoredDirents = await RestoreExpandedState.restoreExpandedState(savedState, root, pathSeparator, excluded)
-    const rawDeltaY = getRestoredDeltaY(savedState)
+    const rawDeltaY = GetRestoredDeltaY.getRestoredDeltaY(savedState)
     const maxDeltaY = Math.max(restoredDirents.length * itemHeight - height, 0)
     const deltaY = Math.min(Math.max(rawDeltaY, 0), maxDeltaY)
     const minLineY = Math.round(deltaY / itemHeight)
@@ -107,8 +54,8 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       useChevrons,
     }
   } catch (error) {
-    const errorCode = getErrorCode(error)
-    const errorMessage = getFriendlyErrorMessage(getErrorMessage(error), errorCode)
+    const errorCode = GetErrorCode.getErrorCode(error)
+    const errorMessage = GetFriendlyErrorMessage.getFriendlyErrorMessage(GetErrorMessage.getErrorMessage(error), errorCode)
     return {
       ...state,
       confirmDelete,
