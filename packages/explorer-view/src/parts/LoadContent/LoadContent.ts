@@ -58,8 +58,15 @@ const getFriendlyErrorMessage = (errorMessage: string, errorCode: string): strin
   }
 }
 
+const getRestoredDeltaY = (savedState: any): number => {
+  if (savedState && typeof savedState.deltaY === 'number') {
+    return savedState.deltaY
+  }
+  return 0
+}
+
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
-  const { assetDir, platform } = state
+  const { assetDir, height, itemHeight, platform } = state
   const { confirmDelete, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = getSavedRoot(savedState, workspacePath)
@@ -68,14 +75,10 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     const pathSeparator = await getPathSeparator(root) // TODO only load path separator once
     const excluded = getExcluded()
     const restoredDirents = await RestoreExpandedState.restoreExpandedState(savedState, root, pathSeparator, excluded)
-    let minLineY = 0
-    if (savedState && typeof savedState.minLineY === 'number') {
-      minLineY = savedState.minLineY
-    }
-    let deltaY = 0
-    if (savedState && typeof savedState.deltaY === 'number') {
-      deltaY = savedState.deltaY
-    }
+    const rawDeltaY = getRestoredDeltaY(savedState)
+    const maxDeltaY = Math.max(restoredDirents.length * itemHeight - height, 0)
+    const deltaY = Math.min(Math.max(rawDeltaY, 0), maxDeltaY)
+    const minLineY = Math.round(deltaY / itemHeight)
 
     const scheme = getScheme(root)
     const decorations = await GetFileDecorations.getFileDecorations(
