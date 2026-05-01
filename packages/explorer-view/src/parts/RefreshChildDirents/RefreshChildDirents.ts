@@ -10,7 +10,10 @@ export const refreshChildDirent = async (
 ): Promise<readonly ExplorerItem[]> => {
   const path = folder.path.endsWith(pathSeparator) ? `${folder.path}${dirent.name}` : `${folder.path}${pathSeparator}${dirent.name}`
   const isExpandedFolder = expandedFolders.includes(path)
-  const type = dirent.type === 'directory' ? (isExpandedFolder ? DirentType.DirectoryExpanded : DirentType.Directory) : DirentType.File
+  let type = DirentType.File
+  if (dirent.type === 'directory') {
+    type = isExpandedFolder ? DirentType.DirectoryExpanded : DirentType.Directory
+  }
 
   const item: ExplorerItem = {
     depth: folder.depth + 1,
