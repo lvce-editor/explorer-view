@@ -4,8 +4,8 @@
 
 // Reference: https://en.wikipedia.org/wiki/Filename
 const WINDOWS_INVALID_FILE_CHARS = /[\\/:\*\?"<>\|]/g
-const UNIX_INVALID_FILE_CHARS = /[/]/g
-const WINDOWS_FORBIDDEN_NAMES = /^(con|prn|aux|clock\$|nul|lpt[0-9]|com[0-9])(\.(.*?))?$/i
+const UNIX_INVALID_FILE_CHARS = /\//g
+const WINDOWS_FORBIDDEN_NAMES = /^(con|prn|aux|clock\$|nul|lpt\d|com\d)(\.(.*?))?$/i
 
 export function isValidBasename(name: string | null | undefined, isWindowsOS: boolean): boolean {
   const invalidFileChars = isWindowsOS ? WINDOWS_INVALID_FILE_CHARS : UNIX_INVALID_FILE_CHARS
