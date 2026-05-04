@@ -45,6 +45,12 @@ export const getVisibleExplorerItems = (
   for (let i = minLineY; i < Math.min(maxLineY, items.length); i++) {
     const item = items[i]
     let chevron = GetChevronType.getChevronType(item.type, useChevrons)
+    const isEditing = i === editingIndex
+    let icon = icons[iconIndex++]
+    if (isEditing) {
+      icon = editingIcon
+      chevron = getEditingChevron(item.type)
+    }
     const isFocused = i === focusedIndex
     const id = isFocused ? 'TreeItemActive' : undefined
     const isSelected = item.selected
@@ -56,12 +62,6 @@ export const getVisibleExplorerItems = (
     const className = getTreeItemClassName(isSelected, isFocused, isDropping, useChevrons, indent, decoration)
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]
-    const isEditing = i === editingIndex
-    let icon = icons[iconIndex++]
-    if (isEditing) {
-      icon = editingIcon
-      chevron = getEditingChevron(item.type)
-    }
     visible.push({
       ...item,
       ariaExpanded,
