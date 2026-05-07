@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleClickAtRangeSelection from '../HandleClickAtRangeSelection/HandleClickAtRangeSelection.ts'
@@ -19,12 +20,7 @@ export const handleClickAt = async (
   }
   const index = GetIndexFromPosition.getIndexFromPosition(state, eventX, eventY)
   if (index === -1 || index >= state.items.length) {
-    return {
-      ...state,
-      focused: true,
-      focusedIndex: -1,
-      // TODO mark all items as not selected
-    }
+    return FocusIndex.focusIndex(state, -1)
   }
   if (shiftKey) {
     return HandleClickAtRangeSelection.handleClickAtRangeSelection(state, index)

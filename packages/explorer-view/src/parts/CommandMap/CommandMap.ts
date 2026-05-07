@@ -34,6 +34,7 @@ import * as HandleClickCurrentButKeepFocus from '../HandleClickCurrentButKeepFoc
 import * as HandleClickOpenFolder from '../HandleClickOpenFolder/HandleClickOpenFolder.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import * as HandleContextMenuKeyboard from '../HandleContextMenuKeyboard/HandleContextMenuKeyboard.ts'
+import * as HandleContextMenuWelcome from '../HandleContextMenuWelcome/HandleContextMenuWelcome.ts'
 import * as HandleCopy from '../HandleCopy/HandleCopy.ts'
 import * as HandleCut from '../HandleCut/HandleCut.ts'
 import { handleDoubleClick } from '../HandleDoubleClick/HandleDoubleClick.ts'
@@ -119,6 +120,7 @@ export const commandMap = {
   'Explorer.handleClickOpenFolder': WrapCommand.wrapListItemCommand(HandleClickOpenFolder.handleClickOpenFolder),
   'Explorer.handleContextMenu': WrapCommand.wrapListItemCommand(HandleContextMenu.handleContextMenu),
   'Explorer.handleContextMenuKeyboard': WrapCommand.wrapListItemCommand(HandleContextMenuKeyboard.handleContextMenuKeyboard),
+  'Explorer.handleContextMenuWelcome': WrapCommand.wrapListItemCommand(HandleContextMenuWelcome.handleContextMenuWelcome),
   'Explorer.handleCopy': WrapCommand.wrapListItemCommand(HandleCopy.handleCopy),
   'Explorer.handleCut': WrapCommand.wrapListItemCommand(HandleCut.handleCut),
   'Explorer.handleDoubleClick': WrapCommand.wrapListItemCommand(handleDoubleClick),
@@ -155,6 +157,7 @@ export const commandMap = {
   'Explorer.renderActions2': RenderActions2.renderActions,
   'Explorer.renderEventListeners': RenderEventListeners.renderEventListeners,
   'Explorer.restoreState': RestoreState.restoreState,
+  'Explorer.reveal': WrapCommand.wrapListItemCommand(RevealItem.revealItem),
   'Explorer.revealItem': WrapCommand.wrapListItemCommand(RevealItem.revealItem),
 
   'Explorer.saveState': WrapCommand.wrapGetter(SaveState.saveState),

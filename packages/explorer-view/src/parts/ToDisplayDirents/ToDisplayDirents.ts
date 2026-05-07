@@ -13,12 +13,7 @@ export const toDisplayDirents = (
 ): readonly ExplorerItem[] => {
   rawDirents = SortExplorerItems.sortExplorerItems(rawDirents)
   const result: ExplorerItem[] = []
-  const visibleItems = rawDirents.filter((item) => {
-    if (excluded.includes(item.name)) {
-      return false
-    }
-    return true
-  })
+  const visibleItems = rawDirents.filter((item) => !excluded.includes(item.name))
   const count = visibleItems.length
   for (let i = 0; i < visibleItems.length; i++) {
     const rawDirent = visibleItems[i]

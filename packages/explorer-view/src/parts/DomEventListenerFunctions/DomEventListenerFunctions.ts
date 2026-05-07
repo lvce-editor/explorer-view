@@ -2,6 +2,7 @@ export const HandleButtonClick = 18
 export const HandleClick = 1
 export const HandleClickOpenFolder = 2
 export const HandleContextMenu = 3
+export const HandleContextMenuWelcome = 20
 export const HandleDragEnd = 19
 export const HandleDragLeave = 4
 export const HandleDragOver = 5

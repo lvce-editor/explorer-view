@@ -3,8 +3,5 @@ type ObjectWithProperty<Options extends string> = {
 }
 
 export const hasProperty = <K extends string, T>(object: unknown, key: K): object is ObjectWithProperty<K> => {
-  if (!object || typeof object !== 'object' || !(key in object)) {
-    return false
-  }
-  return true
+  return !!object && typeof object === 'object' && key in object
 }
