@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-many-files-repeated-focus-jumps'
 
-const totalFiles = 2_000
+const totalFiles = 2000
 const batchSize = 250
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
@@ -20,7 +20,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   }
   await Workspace.setPath(tmpDir)
 
-  const indices = [0, 250, 1_999, 125, 1_500, 1, 1_998]
+  const indices = [0, 250, 1999, 125, 1500, 1, 1998]
 
   for (const index of indices) {
     const fileName = `file-${index.toString().padStart(4, '0')}.txt`
