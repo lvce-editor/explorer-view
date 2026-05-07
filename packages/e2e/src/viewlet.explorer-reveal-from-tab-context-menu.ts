@@ -24,7 +24,6 @@ export const test: Test = async ({ Command, ContextMenu, expect, Explorer, FileS
   await Main.openUri(secondFile)
   const tab = Locator('.MainTab[title$="b.txt"]')
   await expect(tab).toBeVisible()
-  await tab.click()
 
   // act
   await Command.execute('Main.handleTabContextMenu', 0, 0, 0)
