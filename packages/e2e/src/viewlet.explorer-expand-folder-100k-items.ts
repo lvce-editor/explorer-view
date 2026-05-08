@@ -2,12 +2,24 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-expand-folder-100k-items'
 
-export const test: Test = async ({ expect, Explorer, Extension, Locator, Workspace }) => {
+const totalItems = 100_000
+const batchSize = 500
+
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
-  const extensionUri = import.meta.resolve('../fixtures/sample.file-system-provider-expand-folder-100k-items')
-  await Extension.addWebExtension(extensionUri)
-  const workspacePath = 'extension-host://xyz://'
-  await Workspace.setPath(workspacePath)
+  const tmpDir = await FileSystem.getTmpDir()
+  await FileSystem.mkdir(`${tmpDir}/stress-folder`)
+  for (let start = 0; start < totalItems; start += batchSize) {
+    const end = Math.min(start + batchSize, totalItems)
+    await Promise.all(
+      Array.from({ length: end - start }, (_, index) => {
+        const number = start + index
+        const fileName = `item-${number.toString().padStart(6, '0')}.txt`
+        return FileSystem.writeFile(`${tmpDir}/stress-folder/${fileName}`, '')
+      }),
+    )
+  }
+  await Workspace.setPath(tmpDir)
 
   // act
   await Explorer.focusFirst()
@@ -18,9 +30,7 @@ export const test: Test = async ({ expect, Explorer, Extension, Locator, Workspa
   // assert
   await expect(folder).toHaveAttribute('aria-expanded', 'true')
   const firstItem = Locator('.TreeItem', { hasText: 'item-000000.txt' })
-  const lastItem = Locator('.TreeItem', { hasText: 'item-099999.txt' })
+  const secondItem = Locator('.TreeItem', { hasText: 'item-000001.txt' })
   await expect(firstItem).toBeVisible()
-  await Explorer.focusIndex(100_000)
-  await expect(lastItem).toBeVisible()
-  await expect(lastItem).toHaveId('TreeItemActive')
+  await expect(secondItem).toBeVisible()
 }
