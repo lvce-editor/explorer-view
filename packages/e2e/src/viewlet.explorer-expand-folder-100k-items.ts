@@ -1,7 +1,7 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-expand-folder-100k-items'
-export const skip = 1
+// export const skip = 1
 
 const totalItems = 100_000
 const batchSize = 500
