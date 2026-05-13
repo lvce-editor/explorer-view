@@ -17,6 +17,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // assert
   const treeItems = Locator('.TreeItem')
+  const firstTreeItem = treeItems.nth(0)
   await expect(treeItems).toHaveCount(1)
-  await expect(treeItems.nth(0)).toHaveText('a')
+  await expect(firstTreeItem).toHaveText('a')
 }

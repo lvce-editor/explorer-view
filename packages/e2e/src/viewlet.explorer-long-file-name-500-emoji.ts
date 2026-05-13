@@ -15,6 +15,7 @@ export const test: Test = async ({ expect, Extension, FileSystem, Locator, Works
 
   // assert
   const treeItems = Locator('.TreeItem')
+  const firstTreeItem = treeItems.nth(0)
   await expect(treeItems).toHaveCount(1)
-  await expect(treeItems.nth(0)).toContainText(fileName)
+  await expect(firstTreeItem).toContainText(fileName)
 }
