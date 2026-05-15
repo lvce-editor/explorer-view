@@ -10,5 +10,3 @@ cd explorer-view &&
 npm ci &&
 npm test
 ```
-
-<!--  -->
