@@ -17,7 +17,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // assert
   const after = Locator('.TreeItem[aria-label="after.txt"]')
+  const treeItems = Locator('.TreeItem')
   await expect(before).toBeHidden()
   await expect(after).toBeVisible()
-  await expect(Locator('.TreeItem')).toHaveCount(1)
+  await expect(treeItems).toHaveCount(1)
 }
