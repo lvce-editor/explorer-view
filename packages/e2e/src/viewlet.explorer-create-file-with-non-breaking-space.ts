@@ -20,7 +20,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox).toBeFocused()
 
   // act
-  const fileName = `my\u00A0file.txt`
+  const fileName = 'my\u{A0}file.txt'
   await Explorer.updateEditingValue(fileName)
   await Explorer.acceptEdit()
 

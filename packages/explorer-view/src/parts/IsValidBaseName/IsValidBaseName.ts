@@ -6,14 +6,14 @@
 const WINDOWS_INVALID_FILE_CHARS = /[\\/:\*\?"<>\|]/g
 const UNIX_INVALID_FILE_CHARS = /\//g
 const WINDOWS_FORBIDDEN_NAMES = /^(con|prn|aux|clock\$|nul|lpt\d|com\d)(\.(.*?))?$/i
+const RESERVED_NAMES = ['.', '..', '...']
 
 export function isValidBasename(name: string | null | undefined, isWindowsOS: boolean): boolean {
-  const invalidFileChars = isWindowsOS ? WINDOWS_INVALID_FILE_CHARS : UNIX_INVALID_FILE_CHARS
-
   if (!name || name.length === 0 || /^\s+$/.test(name)) {
     return false // require a name that is not just whitespace
   }
 
+  const invalidFileChars = isWindowsOS ? WINDOWS_INVALID_FILE_CHARS : UNIX_INVALID_FILE_CHARS
   invalidFileChars.lastIndex = 0 // the holy grail of software development
   if (invalidFileChars.test(name)) {
     return false // check for certain invalid file characters
@@ -23,7 +23,7 @@ export function isValidBasename(name: string | null | undefined, isWindowsOS: bo
     return false // check for certain invalid file names
   }
 
-  if (name === '.' || name === '..' || name === '...') {
+  if (RESERVED_NAMES.includes(name)) {
     return false // check for reserved values
   }
 

@@ -2,7 +2,7 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 
 const isFolder = (direntType: number): boolean => {
-  return direntType === DirentType.Directory || direntType === DirentType.DirectoryExpanded || direntType === DirentType.SymLinkFolder
+  return [DirentType.Directory, DirentType.DirectoryExpanded, DirentType.SymLinkFolder].includes(direntType)
 }
 
 export const getFittingIndex = (dirents: readonly ExplorerItem[], startIndex: number): number => {

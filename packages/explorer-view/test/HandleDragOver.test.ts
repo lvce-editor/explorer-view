@@ -24,6 +24,6 @@ test('handleDragOver - returns new state when drop targets change', () => {
 
 test.skip('handleDragOver - throws error for invalid coordinates', () => {
   const state = createDefaultState()
-  expect(() => handleDragOver(state, Number.NaN, 100)).toThrow()
-  expect(() => handleDragOver(state, 100, Number.NaN)).toThrow()
+  expect(() => handleDragOver(state, NaN, 100)).toThrow()
+  expect(() => handleDragOver(state, 100, NaN)).toThrow()
 })
