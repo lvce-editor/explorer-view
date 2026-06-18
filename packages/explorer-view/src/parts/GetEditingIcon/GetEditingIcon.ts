@@ -10,7 +10,7 @@ export const getEditingIcon = async (editingType: number, value: string, direntT
     if (direntType === DirentType.File || direntType === DirentType.EditingFile) {
       return Rpc.invoke('IconTheme.getFileIcon', { name: value })
     }
-    if ([DirentType.Directory, DirentType.EditingFolder, DirentType.EditingDirectoryExpanded].includes(direntType)) {
+    if (direntType !== undefined && [DirentType.Directory, DirentType.EditingFolder, DirentType.EditingDirectoryExpanded].includes(direntType)) {
       return Rpc.invoke('IconTheme.getFolderIcon', { name: value })
     }
   }
