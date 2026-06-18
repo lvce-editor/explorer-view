@@ -11,14 +11,17 @@ test('handleCopy - with focused dirent', async () => {
   })
   const state: ExplorerState = {
     ...createDefaultState(),
+    cutItems: ['/test.txt'],
     focusedIndex: 0,
     items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    pasteShouldMove: true,
   }
   const result = await handleCopy(state)
 
   expect(mockRpc.invocations).toEqual(expect.arrayContaining([['ClipBoard.writeNativeFiles', 'copy', ['/test.txt']]]))
   expect(result).toEqual({
     ...state,
+    cutItems: [],
     pasteShouldMove: false,
   })
 })

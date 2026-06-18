@@ -16,6 +16,7 @@ export const handleCopy = async (state: ExplorerState): Promise<ExplorerState> =
   await ClipBoard.writeNativeFiles('copy', files)
   return {
     ...state,
+    cutItems: [],
     pasteShouldMove: false,
   }
 }
