@@ -54,3 +54,15 @@ test('orders deeply nested items correctly', () => {
   ]
   expect(orderDirents(input)).toEqual(expected)
 })
+
+test('orders subtree whose root is deeper than top level', () => {
+  const input: readonly ExplorerItem[] = [
+    { depth: 3, name: 'file1', path: '/folder1/subfolder/file1', selected: false, type: 1 },
+    { depth: 2, name: 'subfolder', path: '/folder1/subfolder', selected: false, type: 2 },
+  ]
+  const expected = [
+    { depth: 2, name: 'subfolder', path: '/folder1/subfolder', selected: false, type: 2 },
+    { depth: 3, name: 'file1', path: '/folder1/subfolder/file1', selected: false, type: 1 },
+  ]
+  expect(orderDirents(input)).toEqual(expected)
+})

@@ -30,10 +30,11 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(file1).toHaveText('a')
   const file2 = Locator('.TreeItem').nth(1)
   await expect(file2).toHaveText('d')
+  await expect(file2).toHaveAttribute('aria-expanded', 'true')
+  await expect(file2).toHaveId('TreeItemActive')
   const file3 = Locator('.TreeItem').nth(2)
   await expect(file3).toHaveText('c')
+  await expect(file3).toHaveAttribute('title', `${tmpDir}/a/d/c`)
   const file4 = Locator('.TreeItem').nth(3)
   await expect(file4).toHaveText('file1.txt')
-
-  // TODO folder d should be expanded
 }
