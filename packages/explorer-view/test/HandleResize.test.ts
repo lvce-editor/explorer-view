@@ -58,6 +58,6 @@ test('handleResize clamps deltaY when viewport gets larger', () => {
 
 test('handleResize returns same state for invalid dimensions', () => {
   const state: ExplorerState = createDefaultState()
-  const result = handleResize(state, { height: Number.NaN, width: 200 })
+  const result = handleResize(state, { height: NaN, width: 200 })
   expect(result).toBe(state)
 })

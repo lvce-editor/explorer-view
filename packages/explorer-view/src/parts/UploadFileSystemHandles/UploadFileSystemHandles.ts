@@ -29,11 +29,7 @@ export const getDroppedName = (item: DroppedItem): string => {
 }
 
 const getFileSystemHandlesNormalized = (fileSystemHandles: DroppedArgs): readonly FileSystemHandle[] => {
-  const normalized: FileSystemHandle[] = []
-  for (const item of fileSystemHandles) {
-    normalized.push(getFileSystemHandle(item))
-  }
-  return normalized
+  return Array.from(fileSystemHandles, getFileSystemHandle)
 }
 
 export const uploadFileSystemHandles = async (root: string, pathSeparator: string, fileSystemHandles: DroppedArgs): Promise<boolean> => {

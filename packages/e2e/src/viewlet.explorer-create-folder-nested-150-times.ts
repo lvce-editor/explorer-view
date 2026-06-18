@@ -48,6 +48,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     if (!hasFolder) {
       throw new Error(`Expected ${JSON.stringify(currentPath)} to contain ${JSON.stringify(folderName)} but got ${JSON.stringify(dirents)}`)
     }
-    currentPath = `${currentPath}/${folderName}`
+    currentPath += `/${folderName}`
   }
 }
