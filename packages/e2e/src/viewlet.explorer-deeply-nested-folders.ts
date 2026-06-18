@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   let currentPath = tmpDir
   for (let i = 0; i < depth; i++) {
-    currentPath = `${currentPath}/a`
+    currentPath += '/a'
     await FileSystem.mkdir(currentPath)
   }
   await FileSystem.writeFile(`${currentPath}/deep-file.txt`, 'deep')

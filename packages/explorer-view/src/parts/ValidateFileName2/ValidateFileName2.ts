@@ -14,7 +14,7 @@ export const validateFileName2 = (name: string, siblingFileNames: readonly strin
   }
 
   // Disallow reserved directory names
-  if (name === '.' || name === '..' || name === '...') {
+  if (['.', '..', '...'].includes(name)) {
     return ExplorerStrings.theNameIsNotValid()
   }
 

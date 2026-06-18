@@ -10,7 +10,7 @@ export const applyFileOperations = async (operations: readonly FileOperation[]):
     }
     return ''
   } catch (error) {
-    console.error(new VError(error, `Failed to apply file operations`))
+    console.error(new VError(error, 'Failed to apply file operations'))
     return `${error}`
   }
 }

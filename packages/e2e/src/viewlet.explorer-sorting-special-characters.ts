@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   await FileSystem.writeFile(`${tmpDir}/&file.txt`, '')
   await FileSystem.writeFile(`${tmpDir}/#file.txt`, '')
   await FileSystem.writeFile(`${tmpDir}/+file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/$file.txt`, '')
+  await FileSystem.writeFile(`${tmpDir}/${'$'}file.txt`, '')
 
   // act
   await Workspace.setPath(tmpDir)

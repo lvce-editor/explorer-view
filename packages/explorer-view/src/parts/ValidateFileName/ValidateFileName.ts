@@ -42,7 +42,7 @@ export function ltrim(haystack: string, needle: string): string {
   let offset = 0
 
   while (haystack.indexOf(needle, offset) === offset) {
-    offset = offset + needleLen
+    offset += needleLen
   }
   return haystack.slice(Math.max(0, offset))
 }
@@ -119,8 +119,7 @@ export function validateFileName(name: string, existingName: string, siblingFile
 
   if (name !== existingName) {
     // Do not allow to overwrite existing file
-    const child = siblingFileNames.find((sibling) => sibling === name)
-    if (child) {
+    if (siblingFileNames.some((sibling) => sibling === name)) {
       return {
         content: ExplorerStrings.fileOrFolderAlreadyExists(name),
         severity: Severity.Error,

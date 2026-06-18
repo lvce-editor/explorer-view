@@ -4,7 +4,7 @@ import { cancelTypeAhead } from '../CancelTypeAhead/CancelTypeAhead.ts'
 import { filterByFocusWord } from '../FilterByFocusWord/FilterByFocusWord.ts'
 import { isAscii } from '../IsAscii/IsAscii.ts'
 
-let timeout: number | undefined
+const typeAheadTimeout: { value?: number } = {}
 
 export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState => {
   const { focusedIndex, focusWord, focusWordTimeout, items } = state
@@ -19,11 +19,11 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
   const itemNames = items.map((item) => item.name)
   const matchingIndex = filterByFocusWord(itemNames, focusedIndex, newFocusWord)
 
-  if (timeout) {
-    clearTimeout(timeout)
+  if (typeAheadTimeout.value) {
+    clearTimeout(typeAheadTimeout.value)
   }
 
-  timeout = setTimeout(async () => {
+  typeAheadTimeout.value = setTimeout(async () => {
     await RendererWorker.invoke('Explorer.cancelTypeAhead')
   }, focusWordTimeout)
 

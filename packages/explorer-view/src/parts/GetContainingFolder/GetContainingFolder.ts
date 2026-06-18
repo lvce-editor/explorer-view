@@ -5,6 +5,6 @@ export const getContainingFolder = (root: string, dirents: readonly any[], focus
   const dirent = dirents[focusedIndex]
   const direntPath = dirent.path
   const direntParentPath = direntPath.slice(0, -(dirent.name.length + 1))
-  const path = `${direntParentPath}`
+  const path = direntParentPath
   return path
 }

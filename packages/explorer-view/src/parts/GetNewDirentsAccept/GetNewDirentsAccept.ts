@@ -49,13 +49,12 @@ export const getNewDirentsAccept = (
     if (compareResult === 1) {
       insertIndex = i - 1
       break
-    } else {
-      // @ts-ignore
-      posInSet = dirent.posInSet + 1
-      // @ts-ignore
-      setSize = dirent.setSize + 1
-      insertIndex = i
     }
+    // @ts-ignore
+    posInSet = dirent.posInSet + 1
+    // @ts-ignore
+    setSize = dirent.setSize + 1
+    insertIndex = i
     // @ts-ignore
     dirent.setSize++
   }

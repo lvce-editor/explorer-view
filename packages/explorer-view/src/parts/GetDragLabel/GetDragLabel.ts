@@ -4,5 +4,5 @@ export const getDragLabel = (urls: readonly string[]): string => {
   if (urls.length === 1) {
     return getBaseName('/', urls[0])
   }
-  return `${urls.length}`
+  return String(urls.length)
 }
