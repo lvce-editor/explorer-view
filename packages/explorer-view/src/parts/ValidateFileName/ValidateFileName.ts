@@ -117,13 +117,11 @@ export function validateFileName(name: string, existingName: string, siblingFile
 
   const names = coalesce(name.split(/[\\/]/))
 
-  if (name !== existingName) {
-    // Do not allow to overwrite existing file
-    if (siblingFileNames.some((sibling) => sibling === name)) {
-      return {
-        content: ExplorerStrings.fileOrFolderAlreadyExists(name),
-        severity: Severity.Error,
-      }
+  // Do not allow to overwrite existing file
+  if (name !== existingName && siblingFileNames.includes(name)) {
+    return {
+      content: ExplorerStrings.fileOrFolderAlreadyExists(name),
+      severity: Severity.Error,
     }
   }
 

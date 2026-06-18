@@ -5,16 +5,10 @@ export const name = 'viewlet.explorer-sorting-special-characters'
 export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/-file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/!file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/(file).txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/[file].txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/{file}.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/@file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/&file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/#file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/+file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/${'$'}file.txt`, '')
+  const fileNames = ['-file.txt', '!file.txt', '(file).txt', '[file].txt', '{file}.txt', '@file.txt', '&file.txt', '#file.txt', '+file.txt', '$file.txt']
+  for (const fileName of fileNames) {
+    await FileSystem.writeFile(`${tmpDir}/${fileName}`, '')
+  }
 
   // act
   await Workspace.setPath(tmpDir)
