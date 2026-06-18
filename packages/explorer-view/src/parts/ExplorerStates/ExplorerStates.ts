@@ -10,6 +10,25 @@ interface Fn<T extends any[]> {
   (state: ExplorerState, ...args: T): ExplorerState | Promise<ExplorerState>
 }
 
+const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: ExplorerState): boolean => {
+  return (
+    oldState.items === newState.items &&
+    oldState.minLineY === newState.minLineY &&
+    oldState.height === newState.height &&
+    oldState.itemHeight === newState.itemHeight &&
+    oldState.focusedIndex === newState.focusedIndex &&
+    oldState.editingIndex === newState.editingIndex &&
+    oldState.editingIcon === newState.editingIcon &&
+    oldState.cutItems === newState.cutItems &&
+    oldState.editingErrorMessage === newState.editingErrorMessage &&
+    oldState.dropTargets === newState.dropTargets &&
+    oldState.fileIconCache === newState.fileIconCache &&
+    oldState.decorations === newState.decorations &&
+    oldState.useChevrons === newState.useChevrons &&
+    oldState.sourceControlIgnoredUris === newState.sourceControlIgnoredUris
+  )
+}
+
 export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, ...args: T) => Promise<void>) => {
   const wrappedCommand = async (id: number, ...args: T): Promise<void> => {
     const { newState } = get(id)
@@ -35,21 +54,10 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
     } = updatedState
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState)
-    const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
-    if (
-      items === intermediate.newState.items &&
-      minLineY === intermediate.newState.minLineY &&
-      height === intermediate.newState.height &&
-      itemHeight === intermediate.newState.itemHeight &&
-      editingIcon === intermediate.newState.editingIcon &&
-      cutItems === intermediate.newState.cutItems &&
-      editingErrorMessage === intermediate.newState.editingErrorMessage &&
-      dropTargets === intermediate.newState.dropTargets &&
-      fileIconCache === intermediate.newState.fileIconCache &&
-      decorations === intermediate.newState.decorations
-    ) {
+    if (hasSameVisibleExplorerItemInputs(intermediate.newState, updatedState)) {
       return
     }
+    const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
     const visible = items.slice(minLineY, maxLineY)
     const { icons, newFileIconCache } = await GetFileIcons.getFileIcons(visible, fileIconCache)
     const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
