@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-reveal-nested-file-collapsed'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   const nestedFilePath = `${tmpDir}/a/b/c.txt`
@@ -20,8 +20,12 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Command.execute('Explorer.reveal', nestedFilePath)
 
   // assert
-  await expect(folderA).toHaveAttribute('aria-expanded', 'true')
-  await expect(folderB).toHaveAttribute('aria-expanded', 'true')
   await expect(nestedFile).toBeVisible()
+  await expect(nestedFile).toHaveId('TreeItemActive')
+  await Explorer.focusIndex(0)
+  await expect(folderA).toHaveAttribute('aria-expanded', 'true')
+  await Explorer.focusIndex(1)
+  await expect(folderB).toHaveAttribute('aria-expanded', 'true')
+  await Explorer.focusIndex(2)
   await expect(nestedFile).toHaveId('TreeItemActive')
 }
