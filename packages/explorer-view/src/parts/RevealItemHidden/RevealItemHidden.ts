@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as DirentType from '../DirentType/DirentType.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { getPathPartsChildren } from '../GetPathPartsChildren/GetPathPartsChildren.ts'
@@ -19,7 +20,17 @@ export const revealItemHidden = async (state: ExplorerState, uri: string): Promi
   const pathPartsChildrenFlat = pathPartsChildren.flat()
   const orderedPathParts = orderDirents(pathPartsChildrenFlat)
   const mergedDirents = mergeVisibleWithHiddenItems(items, orderedPathParts)
-  const index = getIndex(mergedDirents, uri)
+  const expandedPaths = new Set(pathPartsToReveal.map((pathPart) => pathPart.path))
+  const newDirents = mergedDirents.map((item) => {
+    if (expandedPaths.has(item.path) && item.type === DirentType.Directory) {
+      return {
+        ...item,
+        type: DirentType.DirectoryExpanded,
+      }
+    }
+    return item
+  })
+  const index = getIndex(newDirents, uri)
   if (index === -1) {
     throw new Error(`File not found in explorer ${uri}`)
   }
@@ -28,7 +39,7 @@ export const revealItemHidden = async (state: ExplorerState, uri: string): Promi
     ...state,
     focused: true,
     focusedIndex: index,
-    items: mergedDirents,
+    items: newDirents,
     maxLineY: newMaxLineY,
     minLineY: newMinLineY,
   }
