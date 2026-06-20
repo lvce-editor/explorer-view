@@ -25,9 +25,10 @@ export const updateDirentsAtPath = (
     .toSorted(CompareDirent.compareDirent)
 
   const tree = createTree(items, root)
+  const relativePath = path.slice(root.length)
   const updatedTree = {
     ...tree,
-    [path]: sortedDirents,
+    [relativePath]: sortedDirents,
   }
   const newItems = treeToArray(updatedTree, root)
   return newItems
