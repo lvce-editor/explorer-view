@@ -46,6 +46,13 @@ test('sorts numeric names correctly', () => {
   expect(sorted[2].name).toBe('10')
 })
 
+test('sorts names with leading numbers and text consistently', () => {
+  const items = [createItem('10file.txt', DirentType.File), createItem('1file.txt', DirentType.File)]
+  const sorted = sortExplorerItems(items)
+  expect(sorted[0].name).toBe('1file.txt')
+  expect(sorted[1].name).toBe('10file.txt')
+})
+
 test('handles mixed types and names', () => {
   const items = [
     createItem('file2', DirentType.File),
