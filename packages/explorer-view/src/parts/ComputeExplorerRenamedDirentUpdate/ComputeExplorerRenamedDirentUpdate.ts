@@ -19,10 +19,11 @@ export const computeExplorerRenamedDirentUpdate = (
   const oldItems = tree[relativeOldPath] || []
   update[relativeNewUri] = oldItems
   for (const [key, value] of Object.entries(tree)) {
-    if (key.startsWith(`${relativeOldPath}/`)) {
-      const newKey = relativeNewUri + key.slice(relativeOldPath.length)
-      update[newKey] = value
+    if (!key.startsWith(`${relativeOldPath}/`)) {
+      continue
     }
+    const newKey = relativeNewUri + key.slice(relativeOldPath.length)
+    update[newKey] = value
   }
   return update
 }
