@@ -42,8 +42,8 @@ test('acceptRename - renames file and refreshes parent children', async () => {
       { depth: 1, icon: '', name: 'a.txt', path: '/test/a.txt', posInSet: 1, selected: false, setSize: 2, type: DirentType.File },
       { depth: 1, icon: '', name: 'c.txt', path: '/test/c.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
     ],
-    root: '/test',
     pathSeparator: PathSeparatorType.Slash,
+    root: '/test',
   }
 
   const result = await acceptRename(state)
