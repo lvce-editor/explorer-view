@@ -17,4 +17,7 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   // assert
   const compareWithSelected = Locator('text=Compare with Selected')
   await expect(compareWithSelected).toBeVisible()
+  await ContextMenu.selectItem('Compare with Selected')
+  const diffEditor = Locator('.DiffEditor')
+  await expect(diffEditor).toBeVisible()
 }
