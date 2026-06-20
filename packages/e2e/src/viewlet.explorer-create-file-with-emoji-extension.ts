@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-with-emoji-extension'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -26,6 +24,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.acceptEdit()
 
   // assert
-  const newFile = Locator('.Explorer').locator('text=created.😀')
+  const newFile = Locator('.TreeItem[aria-label="created.😀"]')
   await expect(newFile).toBeVisible()
 }

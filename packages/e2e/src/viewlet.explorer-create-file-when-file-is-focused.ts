@@ -24,6 +24,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.acceptEdit()
 
   // assert
-  const newFile = Locator('.Explorer').locator('text=created.txt')
+  const newFile = Locator('.TreeItem[aria-label="created.txt"]')
   await expect(newFile).toBeVisible()
 }
