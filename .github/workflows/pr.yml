@@ -35,6 +35,10 @@ jobs:
       - run: npm test
       - run: npm run type-check
       - run: npm run lint
+      - name: install playwright system dependencies
+        working-directory: ./packages/e2e
+        if: runner.os == 'Linux'
+        run: sudo npx playwright install-deps chromium firefox
       - name: install playwright dependencies
         working-directory: ./packages/e2e
         run: npx playwright install chromium firefox
