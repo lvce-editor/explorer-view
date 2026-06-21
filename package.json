@@ -9,6 +9,9 @@
     "build:watch": "./packages/build/node_modules/.bin/esbuild --format=esm --bundle --external:node:buffer --external:electron --external:ws --external:node:worker_threads --watch packages/explorer-view/src/explorerViewWorkerMain.ts --outfile=.tmp/dist/dist/explorerViewWorkerMain.js",
     "dev": "node packages/build/src/dev.ts",
     "e2e": "cd packages/e2e && npm run e2e",
+    "e2e:firefox": "cd packages/e2e && npm run e2e:firefox",
+    "e2e:firefox:headless": "cd packages/e2e && npm run e2e:firefox:headless",
+    "e2e:headless": "cd packages/e2e && npm run e2e:headless",
     "format": "prettier --write .",
     "postinstall": "lerna bootstrap --ci",
     "lint": "eslint . && prettier --check .",
@@ -24,7 +27,7 @@
   },
   "devDependencies": {
     "@lerna/legacy-package-management": "^8.2.4",
-    "@lvce-editor/eslint-config": "^12.3.0",
+    "@lvce-editor/eslint-config": "^13.3.0",
     "eslint": "^10.2.0",
     "lerna": "^8.2.4",
     "prettier": "^3.8.4",

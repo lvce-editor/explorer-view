@@ -2,6 +2,7 @@ import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { revealItem } from '../src/parts/RevealItem/RevealItem.ts'
 
 test('revealItem - item not found', async () => {
@@ -55,4 +56,34 @@ test('revealItem - item found', async () => {
   const newState = await revealItem(state, 'test')
   expect(newState.items[0].path).toBe('test')
   expect(mockRpc.invocations).toEqual([])
+})
+
+test('revealItem - reveals hidden item inside root', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(uri: string) {
+      if (uri === '/workspace') {
+        return [{ name: 'src', type: DirentType.Directory }]
+      }
+      if (uri === '/workspace/src') {
+        return [{ name: 'index.ts', type: DirentType.File }]
+      }
+      throw new Error(`unexpected read ${uri}`)
+    },
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    maxLineY: 5,
+    root: '/workspace',
+  }
+  const newState = await revealItem(state, '/workspace/src/index.ts')
+  expect(newState.focusedIndex).toBe(1)
+  expect(newState.items).toEqual([
+    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
+    { depth: 2, icon: '', name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+  ])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/workspace'],
+    ['FileSystem.readDirWithFileTypes', '/workspace/src'],
+  ])
 })

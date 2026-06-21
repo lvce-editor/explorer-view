@@ -4,8 +4,53 @@ import * as ViewletExplorerAcceptEdit from '../src/parts/AcceptEdit/AcceptEdit.t
 import * as ViewletExplorer from '../src/parts/Create/Create.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
+import * as ExplorerStrings from '../src/parts/ExplorerStrings/ExplorerStrings.ts'
 import * as FileSystem from '../src/parts/FileSystem/FileSystem.ts'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
+
+test('acceptEdit - default returns state', async () => {
+  const state: ExplorerState = {
+    ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
+    editingType: ExplorerEditingType.None,
+  }
+  expect(await ViewletExplorerAcceptEdit.acceptEdit(state)).toBe(state)
+})
+
+test('acceptEdit - create file validates empty name', async () => {
+  const state: ExplorerState = {
+    ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
+    editingType: ExplorerEditingType.CreateFile,
+    editingValue: '',
+  }
+  expect(await ViewletExplorerAcceptEdit.acceptEdit(state)).toEqual({
+    ...state,
+    editingErrorMessage: ExplorerStrings.fileOrFolderNameMustBeProvided(),
+  })
+})
+
+test('acceptEdit - create folder validates empty name', async () => {
+  const state: ExplorerState = {
+    ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
+    editingType: ExplorerEditingType.CreateFolder,
+    editingValue: '',
+  }
+  expect(await ViewletExplorerAcceptEdit.acceptEdit(state)).toEqual({
+    ...state,
+    editingErrorMessage: ExplorerStrings.fileOrFolderNameMustBeProvided(),
+  })
+})
+
+test('acceptEdit - rename validates empty name', async () => {
+  const state: ExplorerState = {
+    ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
+    editingType: ExplorerEditingType.Rename,
+    editingValue: '',
+  }
+  expect(await ViewletExplorerAcceptEdit.acceptEdit(state)).toEqual({
+    ...state,
+    editingErrorMessage: ExplorerStrings.fileOrFolderNameMustBeProvided(),
+  })
+})
 
 test.skip('acceptEdit - rename', async () => {
   // @ts-ignore
