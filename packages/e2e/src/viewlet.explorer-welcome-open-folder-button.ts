@@ -14,4 +14,3 @@ export const test: Test = async ({ Command, expect, Locator, Workspace }) => {
   // act
   await Command.execute('Explorer.handleClickOpenFolder')
 }
-
