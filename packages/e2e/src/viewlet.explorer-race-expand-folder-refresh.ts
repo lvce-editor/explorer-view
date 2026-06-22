@@ -26,5 +26,6 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
 
   // At most 5 items (folder + 3 children + root.txt)
   const treeItems = Locator('.TreeItem')
-  await expect(treeItems.nth(5)).toBeHidden()
+  const sixthItem = treeItems.nth(5)
+  await expect(sixthItem).toBeHidden()
 }

@@ -25,5 +25,6 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
 
   // At most 2 items (file2.txt + file3.txt) — file1 should be gone
   const treeItems = Locator('.TreeItem')
-  await expect(treeItems.nth(2)).toBeHidden()
+  const thirdItem = treeItems.nth(2)
+  await expect(thirdItem).toBeHidden()
 }

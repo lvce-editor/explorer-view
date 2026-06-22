@@ -21,9 +21,11 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
 
   // At most 2 tree items (file1.txt + possibly editing row)
   const treeItems = Locator('.TreeItem')
-  await expect(treeItems.nth(2)).toBeHidden()
+  const thirdItem = treeItems.nth(2)
+  await expect(thirdItem).toBeHidden()
 
   // input should be hidden (blur cancelled empty input) or at most 1 input
   const inputBox = Locator('input')
-  await expect(inputBox.nth(1)).toBeHidden()
+  const secondInput = inputBox.nth(1)
+  await expect(secondInput).toBeHidden()
 }

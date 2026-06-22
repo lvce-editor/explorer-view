@@ -20,5 +20,6 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
 
   // At most 2 tree items (file1.txt + possibly an editing row)
   const treeItems = Locator('.TreeItem')
-  await expect(treeItems.nth(2)).toBeHidden()
+  const thirdItem = treeItems.nth(2)
+  await expect(thirdItem).toBeHidden()
 }

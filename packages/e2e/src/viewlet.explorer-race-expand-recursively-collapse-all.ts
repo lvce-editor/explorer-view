@@ -26,5 +26,6 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   // Verify no orphaned children — if d.txt is visible, its parents (a, b, c) must also be visible
   const dItems = Locator('.TreeItem[aria-label="d.txt"]')
   // d.txt may or may not be visible — if visible, assert parents are visible too
-  await expect(dItems.nth(1)).toBeHidden()
+  const secondD = dItems.nth(1)
+  await expect(secondD).toBeHidden()
 }

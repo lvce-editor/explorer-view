@@ -31,5 +31,6 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
 
   // d.txt should not appear more than once
   const dItems = Locator('.TreeItem[aria-label="d.txt"]')
-  await expect(dItems.nth(1)).toBeHidden()
+  const secondD = dItems.nth(1)
+  await expect(secondD).toBeHidden()
 }

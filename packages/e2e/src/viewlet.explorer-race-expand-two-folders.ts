@@ -31,5 +31,6 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await expect(firstItem).toHaveText('folder-a')
 
   // At most 6 items (2 folders + 2 children each)
-  await expect(treeItems.nth(6)).toBeHidden()
+  const seventhItem = treeItems.nth(6)
+  await expect(seventhItem).toBeHidden()
 }
