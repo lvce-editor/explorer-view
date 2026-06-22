@@ -5,11 +5,13 @@ import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorer
 
 export interface ExplorerState {
   readonly assetDir: string
+  readonly chevronSpace: number
   readonly compareSourceUri: string
   readonly confirmDelete: boolean
   readonly confirmPaste: boolean
   readonly cutItems: readonly string[]
   readonly decorations: readonly FileDecoration[]
+  readonly defaultPaddingLeft: number
   readonly deltaY: number
   readonly dropTargets: readonly number[]
   readonly editingErrorMessage: string
@@ -26,6 +28,7 @@ export interface ExplorerState {
   readonly errorMessageWidth: number
   readonly excluded: readonly any[]
   readonly fileIconCache: FileIconCache
+  readonly fileIconWidth: number
   readonly finalDeltaY: number
   readonly focus: number
   readonly focused: boolean
@@ -37,6 +40,7 @@ export interface ExplorerState {
   readonly height: number
   readonly hoverIndex: number
   readonly icons: readonly string[]
+  readonly indent: number
   readonly initial: boolean
   readonly inputSource: number
   readonly isPointerDown: boolean
@@ -45,6 +49,7 @@ export interface ExplorerState {
   readonly maxIndent: number
   readonly maxLineY: number
   readonly minLineY: number
+  readonly padding: number
   readonly parentUid: number
   readonly pasteShouldMove: boolean
   readonly pathSeparator: string

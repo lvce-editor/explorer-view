@@ -7,16 +7,26 @@ import { getScrollBarTop } from '../GetScrollBarTop/GetScrollBarTop.ts'
 import { getUniqueIndents } from '../GetUniqueIndents/GetUniqueIndents.ts'
 
 export const renderCss = (oldState: ExplorerState, newState: ExplorerState): readonly any[] => {
-  const { deltaY, focusedIndex, height, itemHeight, items, minLineY, uid, visibleExplorerItems, width } = newState
+  const {
+    chevronSpace,
+    defaultPaddingLeft,
+    deltaY,
+    fileIconWidth,
+    focusedIndex,
+    height,
+    indent,
+    itemHeight,
+    items,
+    minLineY,
+    padding,
+    uid,
+    visibleExplorerItems,
+    width,
+  } = newState
   const uniqueIndents = getUniqueIndents(visibleExplorerItems)
   const contentHeight = items.length * itemHeight
   const scrollBarTop = getScrollBarTop(height, contentHeight, deltaY)
   const scrollBarHeight = getScrollBarSize(height, contentHeight, 20)
-  const indent = 8
-  const padding = 10
-  const fileIconWidth = 16
-  const defaultPaddingLeft = 0
-  const chevronSpace = 22
   const depth = items[focusedIndex]?.depth || 0
   const { errorMessageWidth, left, top } = GetErrorMessagePosition.getErrorMessagePosition(
     itemHeight,
