@@ -1,8 +1,8 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-create-folder-double-click-empty-space'
+export const name = 'viewlet.explorer-create-file-double-click-empty-space'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -18,11 +18,10 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await expect(inputBox).toBeFocused()
 
   // act
-  await Explorer.updateEditingValue('test-folder')
+  await Explorer.updateEditingValue('test-file.txt')
   await Explorer.acceptEdit()
 
   // assert
-  const newFolder = Locator('.Explorer').locator('text=test-folder')
-  await expect(newFolder).toBeVisible()
-  await expect(newFolder).toHaveAttribute('aria-expanded', 'false')
+  const newFile = Locator('.TreeItem[aria-label="test-file.txt"]')
+  await expect(newFile).toBeVisible()
 }
