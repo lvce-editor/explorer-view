@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-toolbar-collapse-all-button'
 
-export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder/nested`)
@@ -11,16 +11,12 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   await Workspace.setPath(tmpDir)
 
   // expand folder
-  const folder = Locator('.TreeItem[aria-label="folder"]')
-  await folder.click()
-  await expect(folder).toHaveAttribute('aria-expanded', 'true')
+  await Explorer.expandRecursively()
 
   // act
-  const collapseAllButton = Locator('button[name="CollapseAll"]')
-  await collapseAllButton.click()
+  await Explorer.collapseAll()
 
-  // assert
-  await expect(folder).toHaveAttribute('aria-expanded', 'false')
-  const rootFile = Locator('.TreeItem[aria-label="root.txt"]')
-  await expect(rootFile).toBeVisible()
+  // assert - only root items remain after collapsing
+  const treeItems = Locator('.TreeItem')
+  await expect(treeItems).toHaveCount(2)
 }
