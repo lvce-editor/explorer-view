@@ -14,9 +14,11 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.handleDoubleClick', 20, 100), Command.execute('Explorer.refresh')])
 
   // assert: explorer should be stable — no crash, no duplicate items
+  // file1.txt should always be visible
+  const file1 = Locator('.TreeItem[aria-label="file1.txt"]')
+  await expect(file1).toBeVisible()
+
+  // At most 2 tree items (file1.txt + possibly an editing row)
   const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // At minimum we should have 1 tree item (the file). If the input survived refresh, up to 2.
-  expect(itemCount).toBeGreaterThanOrEqual(1)
-  expect(itemCount).toBeLessThanOrEqual(2)
+  await expect(treeItems.nth(2)).toBeHidden()
 }

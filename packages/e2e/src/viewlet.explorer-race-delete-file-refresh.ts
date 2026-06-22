@@ -17,12 +17,13 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.removeDirent'), Command.execute('Explorer.refresh')])
 
   // assert: explorer should be stable — no crash, no stale references
-  const file1 = Locator('.TreeItem[aria-label="file1.txt"]')
-  // file1 should be hidden (deleted)
-  await expect(file1).toBeHidden()
+  // file2.txt and file3.txt should always be visible
+  const file2 = Locator('.TreeItem[aria-label="file2.txt"]')
+  const file3 = Locator('.TreeItem[aria-label="file3.txt"]')
+  await expect(file2).toBeVisible()
+  await expect(file3).toBeVisible()
 
+  // At most 2 items (file2.txt + file3.txt) — file1 should be gone
   const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // Should have 2 items: file2.txt and file3.txt
-  expect(itemCount).toBe(2)
+  await expect(treeItems.nth(2)).toBeHidden()
 }

@@ -16,12 +16,18 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.acceptEdit'), Command.execute('Explorer.refresh')])
 
   // assert: explorer should be stable — no crash, no duplicate items
-  // The file should exist on disk (either acceptEdit or refresh may have picked it up)
-  const exists = await FileSystem.exists(`${tmpDir}/created.txt`)
-  expect(exists).toBe(true)
+  // The file should exist on disk (created by acceptEdit)
+  await FileSystem.shouldHaveFile(`${tmpDir}/created.txt`, '')
 
+  // file1.txt should always be visible
+  const file1 = Locator('.TreeItem[aria-label="file1.txt"]')
+  await expect(file1).toBeVisible()
+
+  // created.txt should be visible (either from acceptEdit or from refresh picking it up)
+  const created = Locator('.TreeItem[aria-label="created.txt"]')
+  await expect(created).toBeVisible()
+
+  // At most 2 items — no extras
   const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // Should have 2 items: file1.txt and created.txt
-  expect(itemCount).toBe(2)
+  await expect(treeItems.nth(2)).toBeHidden()
 }

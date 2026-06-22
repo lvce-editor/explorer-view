@@ -16,10 +16,15 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.acceptEdit'), Command.execute('Explorer.cancelEdit')])
 
   // assert: explorer should be stable — no crash
-  // The file either exists (accept won) or does not (cancel won)
+  // file1.txt should always be visible
+  const file1 = Locator('.TreeItem[aria-label="file1.txt"]')
+  await expect(file1).toBeVisible()
+
+  // At most 2 tree items (file1.txt + possibly created.txt or editing row)
   const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // If accept won: 2 items (file1.txt + created.txt). If cancel won: 1 item (file1.txt)
-  expect(itemCount).toBeGreaterThanOrEqual(1)
-  expect(itemCount).toBeLessThanOrEqual(2)
+  await expect(treeItems.nth(2)).toBeHidden()
+
+  // input should be hidden (edit was either accepted or cancelled)
+  const inputBox = Locator('input')
+  await expect(inputBox).toBeHidden()
 }

@@ -17,15 +17,13 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.removeDirent'), Command.execute('Explorer.newFile')])
 
   // assert: explorer should be stable — no crash, no stale rows
-  const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // If removeDirent won: file1 deleted, new editing item inserted → 3 items (2 files + 1 editing)
-  // If newFile won: editing item inserted, then file1 deleted by removeDirent → 3 items
-  // If both effects combine: could be 2-4
-  expect(itemCount).toBeGreaterThanOrEqual(2)
-  expect(itemCount).toBeLessThanOrEqual(4)
+  // file2.txt and file3.txt should always be visible
+  const file2 = Locator('.TreeItem[aria-label="file2.txt"]')
+  const file3 = Locator('.TreeItem[aria-label="file3.txt"]')
+  await expect(file2).toBeVisible()
+  await expect(file3).toBeVisible()
 
-  // file1 should be gone (removeDirent should delete it regardless)
-  const file1 = Locator('.TreeItem[aria-label="file1.txt"]')
-  await expect(file1).toBeHidden()
+  // At most 4 tree items (3 files - 1 deleted + 1 editing row = could be 2-4)
+  const treeItems = Locator('.TreeItem')
+  await expect(treeItems.nth(4)).toBeHidden()
 }

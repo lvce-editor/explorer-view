@@ -15,13 +15,15 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   // act: acceptEdit and handleInputBlur both try to accept the same edit concurrently
   await Promise.all([Command.execute('Explorer.acceptEdit'), Command.execute('Explorer.handleInputBlur')])
 
-  // assert: explorer should be stable — no crash, file created exactly once
-  const exists = await FileSystem.exists(`${tmpDir}/created.txt`)
-  expect(exists).toBe(true)
+  // assert: explorer should be stable — no crash
+  // The file should exist on disk (if created before or by acceptEdit)
+  await FileSystem.shouldHaveFile(`${tmpDir}/created.txt`, '')
 
+  // At most 1 created.txt in the tree
   const created = Locator('.TreeItem[aria-label="created.txt"]')
   await expect(created).toHaveCount(1)
 
+  // input should be hidden after accept/blur
   const inputBox = Locator('input')
   await expect(inputBox).toBeHidden()
 }
