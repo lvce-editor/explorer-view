@@ -4,7 +4,7 @@ import { cancelTypeAhead } from '../CancelTypeAhead/CancelTypeAhead.ts'
 import { filterByFocusWord } from '../FilterByFocusWord/FilterByFocusWord.ts'
 import { isAscii } from '../IsAscii/IsAscii.ts'
 
-const typeAheadTimeout: { value?: number } = {}
+const typeAheadTimeout: { value?: ReturnType<typeof setTimeout> } = {}
 
 export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState => {
   const { focusedIndex, focusWord, focusWordTimeout, items } = state
@@ -23,8 +23,8 @@ export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState 
     clearTimeout(typeAheadTimeout.value)
   }
 
-  typeAheadTimeout.value = setTimeout(async () => {
-    await RendererWorker.invoke('Explorer.cancelTypeAhead')
+  typeAheadTimeout.value = setTimeout(() => {
+    void RendererWorker.invoke('Explorer.cancelTypeAhead')
   }, focusWordTimeout)
 
   if (matchingIndex === -1) {

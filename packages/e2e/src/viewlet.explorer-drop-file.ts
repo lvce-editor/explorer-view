@@ -14,8 +14,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     create: true,
   })
   const fileHandles = [fileHandle]
-  const files = []
-  const paths = []
+  const files: File[] = []
+  const paths: string[] = []
   const index = 0
 
   // act
