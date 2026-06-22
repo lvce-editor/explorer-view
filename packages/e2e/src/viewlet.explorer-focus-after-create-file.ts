@@ -1,8 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-create-file-blur'
-
-export const skip = 1
+export const name = 'viewlet.explorer-focus-after-create-file'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
@@ -12,17 +10,11 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // act
   await Explorer.newFile()
+  await Explorer.updateEditingValue('new-file.txt')
+  await Explorer.acceptEdit()
 
-  // assert
-  const inputBox = Locator('input')
-  await expect(inputBox).toBeVisible()
-  await expect(inputBox).toBeFocused()
-
-  // act
-  await Explorer.updateEditingValue('created.txt')
-  await Explorer.handleInputBlur()
-
-  // assert
-  const newFile = Locator('.Explorer').locator('text=created.txt')
+  // assert - the new file should be visible and focused
+  const newFile = Locator('.TreeItem[aria-label="new-file.txt"]')
   await expect(newFile).toBeVisible()
+  await expect(newFile).toHaveId('TreeItemActive')
 }

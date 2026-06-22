@@ -1,8 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-create-file-with-newline'
-
-export const skip = 1
+export const name = 'viewlet.explorer-focus-after-rename'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
@@ -10,22 +8,17 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'content 2')
   await FileSystem.writeFile(`${tmpDir}/file3.txt`, 'content 3')
-
   await Workspace.setPath(tmpDir)
 
-  // act
-  await Explorer.newFile()
-
-  // assert
-  const inputBox = Locator('input')
-  await expect(inputBox).toBeVisible()
-  await expect(inputBox).toBeFocused()
+  await Explorer.focusIndex(1)
 
   // act
-  await Explorer.updateEditingValue('file\nwith\nnewline.txt')
+  await Explorer.renameDirent()
+  await Explorer.updateEditingValue('renamed-file.txt')
   await Explorer.acceptEdit()
 
-  // assert
-  const newFile = Locator('.Explorer').locator('text=file\nwith\nnewline.txt')
-  await expect(newFile).toBeVisible()
+  // assert - the renamed file should be visible and focused
+  const renamedFile = Locator('.TreeItem[aria-label="renamed-file.txt"]')
+  await expect(renamedFile).toBeVisible()
+  await expect(renamedFile).toHaveId('TreeItemActive')
 }

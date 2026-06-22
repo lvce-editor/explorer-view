@@ -1,8 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-context-menu-select-for-compare'
-
-export const skip = 1
+export const name = 'viewlet.explorer-context-menu-rename-file'
 
 export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
@@ -10,16 +8,21 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'content 2')
   await Workspace.setPath(tmpDir)
-  await Explorer.openContextMenu(0)
-  await ContextMenu.selectItem('Select for Compare')
 
   // act
   await Explorer.openContextMenu(1)
+  await ContextMenu.selectItem('Rename')
 
   // assert
-  const compareWithSelected = Locator('text=Compare with Selected')
-  await expect(compareWithSelected).toBeVisible()
-  await ContextMenu.selectItem('Compare with Selected')
-  const diffEditor = Locator('.DiffEditor')
-  await expect(diffEditor).toBeVisible()
+  const inputBox = Locator('input')
+  await expect(inputBox).toBeVisible()
+  await expect(inputBox).toBeFocused()
+
+  // act
+  await Explorer.updateEditingValue('renamed.txt')
+  await Explorer.acceptEdit()
+
+  // assert
+  const renamedFile = Locator('.TreeItem[aria-label="renamed.txt"]')
+  await expect(renamedFile).toBeVisible()
 }

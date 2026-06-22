@@ -1,8 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-create-file-blur'
-
-export const skip = 1
+export const name = 'viewlet.explorer-toolbar-new-file-button'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
@@ -12,15 +10,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // act
   await Explorer.newFile()
-
-  // assert
-  const inputBox = Locator('input')
-  await expect(inputBox).toBeVisible()
-  await expect(inputBox).toBeFocused()
-
-  // act
   await Explorer.updateEditingValue('created.txt')
-  await Explorer.handleInputBlur()
+  await Explorer.acceptEdit()
 
   // assert
   const newFile = Locator('.Explorer').locator('text=created.txt')
