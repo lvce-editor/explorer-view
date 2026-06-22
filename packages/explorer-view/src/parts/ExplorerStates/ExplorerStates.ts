@@ -53,7 +53,7 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
       useChevrons,
     } = updatedState
     const intermediate = get(id)
-    set(id, intermediate.oldState, updatedState)
+    set(id, intermediate.oldState, updatedState, intermediate.scheduledState)
     if (hasSameVisibleExplorerItemInputs(intermediate.newState, updatedState)) {
       return
     }
