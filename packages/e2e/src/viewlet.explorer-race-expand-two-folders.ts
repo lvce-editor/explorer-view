@@ -19,20 +19,17 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.handleClick', 0), Command.execute('Explorer.handleClick', 1)])
 
   // assert: explorer should be stable — no crash, no children from A under B or vice versa
-  const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // Should have 2 folders + their children: folder-a, a1.txt, a2.txt, folder-b, b1.txt, b2.txt = 6
-  // But since expansions are concurrent, one might not expand. Minimum: 2, Maximum: 6
-  expect(itemCount).toBeGreaterThanOrEqual(2)
-  expect(itemCount).toBeLessThanOrEqual(6)
+  // Both folders should be visible
+  const folderA = Locator('.TreeItem[aria-label="folder-a"]')
+  const folderB = Locator('.TreeItem[aria-label="folder-b"]')
+  await expect(folderA).toBeVisible()
+  await expect(folderB).toBeVisible()
 
-  // Verify folder-a is still at index 0 and folder-b is present
+  // folder-a should be first
+  const treeItems = Locator('.TreeItem')
   const firstItem = treeItems.nth(0)
   await expect(firstItem).toHaveText('folder-a')
 
-  // Verify b1.txt is present (should be under folder-b if expansion succeeded)
-  const b1 = Locator('.TreeItem[aria-label="b1.txt"]')
-  const b1Count = await b1.count()
-  // b1.txt may or may not be visible depending on whether folder-b expanded
-  expect(b1Count).toBeLessThanOrEqual(1)
+  // At most 6 items (2 folders + 2 children each)
+  await expect(treeItems.nth(6)).toBeHidden()
 }

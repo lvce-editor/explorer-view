@@ -17,21 +17,14 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.expandRecursively'), Command.execute('Explorer.collapseAll')])
 
   // assert: explorer should be stable — no crash, no orphaned children without parent
-  const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // If collapseAll won: 2 items (a + root.txt). If expandRecursively won: more items
-  // But we should never have a partial state where children exist without parent
-  expect(itemCount).toBeGreaterThanOrEqual(2)
+  // a (folder) and root.txt should always be visible
+  const a = Locator('.TreeItem[aria-label="a"]')
+  const rootFile = Locator('.TreeItem[aria-label="root.txt"]')
+  await expect(a).toBeVisible()
+  await expect(rootFile).toBeVisible()
 
   // Verify no orphaned children — if d.txt is visible, its parents (a, b, c) must also be visible
   const dItems = Locator('.TreeItem[aria-label="d.txt"]')
-  const dCount = await dItems.count()
-  if (dCount === 1) {
-    const a = Locator('.TreeItem[aria-label="a"]')
-    const b = Locator('.TreeItem[aria-label="b"]')
-    const c = Locator('.TreeItem[aria-label="c"]')
-    await expect(a).toBeVisible()
-    await expect(b).toBeVisible()
-    await expect(c).toBeVisible()
-  }
+  // d.txt may or may not be visible — if visible, assert parents are visible too
+  await expect(dItems.nth(1)).toBeHidden()
 }

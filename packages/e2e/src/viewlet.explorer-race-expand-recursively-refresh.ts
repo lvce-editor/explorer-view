@@ -19,13 +19,17 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.expandRecursively'), Command.execute('Explorer.refresh')])
 
   // assert: explorer should be stable — no crash, no duplicate items
-  const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // At minimum: root folder + root.txt + folder-1 + folder-2 + subfolder a = 5
-  // At maximum: full expansion = a, b, c, d.txt + others
-  expect(itemCount).toBeGreaterThanOrEqual(4)
-  // d.txt could appear if expansion succeeded; verify it's not duplicated
+  // root folder items should always be visible
+  const a = Locator('.TreeItem[aria-label="a"]')
+  const rootFile = Locator('.TreeItem[aria-label="root.txt"]')
+  const f1 = Locator('.TreeItem[aria-label="folder-1"]')
+  const f2 = Locator('.TreeItem[aria-label="folder-2"]')
+  await expect(a).toBeVisible()
+  await expect(rootFile).toBeVisible()
+  await expect(f1).toBeVisible()
+  await expect(f2).toBeVisible()
+
+  // d.txt should not appear more than once
   const dItems = Locator('.TreeItem[aria-label="d.txt"]')
-  const dCount = await dItems.count()
-  expect(dCount).toBeLessThanOrEqual(1)
+  await expect(dItems.nth(1)).toBeHidden()
 }

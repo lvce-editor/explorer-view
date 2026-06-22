@@ -18,13 +18,13 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.handleClick', 0), Command.execute('Explorer.refresh')])
 
   // assert: explorer should be stable — no crash, no duplicate children
+  // folder and root.txt should always be visible
   const folder = Locator('.TreeItem[aria-label="folder"]')
+  const rootFile = Locator('.TreeItem[aria-label="root.txt"]')
   await expect(folder).toBeVisible()
+  await expect(rootFile).toBeVisible()
 
+  // At most 5 items (folder + 3 children + root.txt)
   const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // After refresh + expand, should have folder (expanded or not) + root.txt + possible children
-  // Minimum: folder + root.txt = 2 items (if not expanded). Maximum: folder + 3 children + root.txt = 5
-  expect(itemCount).toBeGreaterThanOrEqual(2)
-  expect(itemCount).toBeLessThanOrEqual(5)
+  await expect(treeItems.nth(5)).toBeHidden()
 }

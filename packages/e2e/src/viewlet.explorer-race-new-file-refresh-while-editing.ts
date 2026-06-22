@@ -16,14 +16,15 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Promise.all([Command.execute('Explorer.newFile'), Command.execute('Explorer.refresh')])
 
   // assert: explorer should be stable — no crash, no duplicate inputs
-  const inputBox = Locator('input')
-  const inputCount = await inputBox.count()
-  // If refresh cancelled the edit, input is hidden; otherwise 1 input
-  expect(inputCount).toBeLessThanOrEqual(1)
+  // file1.txt should always be visible
+  const file1 = Locator('.TreeItem[aria-label="file1.txt"]')
+  await expect(file1).toBeVisible()
 
+  // At most 2 tree items (file1.txt + possibly editing row)
   const treeItems = Locator('.TreeItem')
-  const itemCount = await treeItems.count()
-  // At minimum 1 item (file1.txt), at most 2 (file1.txt + editing row)
-  expect(itemCount).toBeGreaterThanOrEqual(1)
-  expect(itemCount).toBeLessThanOrEqual(2)
+  await expect(treeItems.nth(2)).toBeHidden()
+
+  // At most 1 input box
+  const inputBox = Locator('input')
+  await expect(inputBox.nth(1)).toBeHidden()
 }
