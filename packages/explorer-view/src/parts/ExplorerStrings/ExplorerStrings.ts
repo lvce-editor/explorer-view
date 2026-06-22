@@ -131,6 +131,12 @@ export const fileOrFolderAlreadyExists = (name: string): string => {
   })
 }
 
+export const cannotCopyFolderIntoSubfolderOfItself = (folderName: string): string => {
+  return I18nString.i18nString(UiStrings.CannotCopyFolderIntoSubfolderOfItself, {
+    PH1: folderName,
+  })
+}
+
 export const theNameIsNotValid = (): string => {
   return I18nString.i18nString(UiStrings.TheNameIsNotValid)
 }

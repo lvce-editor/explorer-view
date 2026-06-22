@@ -18,8 +18,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await writable.write('hello world')
   await writable.close()
   const fileHandles = [directoryHandle]
-  const files = []
-  const paths = []
+  const files: File[] = []
+  const paths: string[] = []
   const index = 0
 
   // act

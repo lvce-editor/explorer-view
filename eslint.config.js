@@ -35,24 +35,12 @@ export default [
       '@typescript-eslint/only-throw-error': 'off',
       '@typescript-eslint/await-thenable': 'off',
       '@typescript-eslint/no-import-type-side-effects': 'error',
-      'regex/hoist-regex': 'off',
     },
   },
   {
     files: ['**/*.test.ts'],
     rules: {
       '@typescript-eslint/unbound-method': 'off',
-    },
-  },
-  {
-    files: ['**/tsconfig.json'],
-    rules: {
-      'tsconfig/allow-importing-ts-extensions': 'off',
-      'tsconfig/dont-skip-lib-check': 'off',
-      'tsconfig/exact-optional-property-types': 'off',
-      'tsconfig/force-consistent-casing-in-file-names': 'off',
-      'tsconfig/no-implicit-any': 'off',
-      'tsconfig/no-unchecked-side-effect-imports': 'off',
     },
   },
   ...actions.default,

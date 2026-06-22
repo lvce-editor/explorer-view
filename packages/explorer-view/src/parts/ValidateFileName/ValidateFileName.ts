@@ -7,6 +7,9 @@ import { hasLeadingOrTrailingWhitespace } from '../HasLeadingOrTrailingWhitespac
 import { isValidBasename } from '../IsValidBaseName/IsValidBaseName.ts'
 import * as Severity from '../Severity/Severity.ts'
 
+const WHITESPACE_ONLY = /^\s+$/
+const PATH_SEPARATOR = /[\\/]/
+
 /**
  * @returns New array with all falsy values removed. The original array IS NOT modified.
  */
@@ -100,7 +103,7 @@ export function validateFileName(name: string, existingName: string, siblingFile
   name = getWellFormedFileName(name)
 
   // Name not provided
-  if (!name || name.length === 0 || /^\s+$/.test(name)) {
+  if (!name || name.length === 0 || WHITESPACE_ONLY.test(name)) {
     return {
       content: ExplorerStrings.fileOrFolderNameMustBeProvided(),
       severity: Severity.Error,
@@ -115,7 +118,7 @@ export function validateFileName(name: string, existingName: string, siblingFile
     }
   }
 
-  const names = coalesce(name.split(/[\\/]/))
+  const names = coalesce(name.split(PATH_SEPARATOR))
 
   // Do not allow to overwrite existing file
   if (name !== existingName && siblingFileNames.includes(name)) {

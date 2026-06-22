@@ -1,3 +1,4 @@
+import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as Path from '../Path/Path.ts'
 
 const trimTrailingPathSeparators = (path: string): string => {
@@ -18,7 +19,7 @@ export const validateFolderCopy = (sourcePath: string, targetPath: string): stri
     // Extract folder name using the appropriate path separator
     const pathSeparator = normalizedSource.includes('\\') ? '\\' : '/'
     const folderName = Path.getBaseName(pathSeparator, normalizedSource)
-    return `Cannot copy folder ${folderName} into a subfolder of itself`
+    return ExplorerStrings.cannotCopyFolderIntoSubfolderOfItself(folderName)
   }
 
   return null

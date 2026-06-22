@@ -1,9 +1,10 @@
 const RE_CHARACTERS = /^[a-zA-Z.-]+$/
 const RE_LEADING_DIGITS = /^\d+/
+const RE_LEADING_ZEROES = /^0+/
 
 const compareLeadingDigits = (a: string, b: string): number => {
-  const normalizedA = a.replace(/^0+/, '') || '0'
-  const normalizedB = b.replace(/^0+/, '') || '0'
+  const normalizedA = a.replace(RE_LEADING_ZEROES, '') || '0'
+  const normalizedB = b.replace(RE_LEADING_ZEROES, '') || '0'
   if (normalizedA.length !== normalizedB.length) {
     return normalizedA.length - normalizedB.length
   }
