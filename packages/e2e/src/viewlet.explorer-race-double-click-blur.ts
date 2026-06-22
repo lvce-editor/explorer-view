@@ -19,7 +19,6 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   const treeItems = Locator('.TreeItem')
   // Either input is hidden (blur cancelled it) or visible (double-click created it)
   const inputCount = await inputBox.count()
-  const itemCount = await treeItems.count()
   // input visible → 2 tree items (1 file + 1 editing), input hidden → 1 tree item
   if (inputCount === 0) {
     await expect(treeItems).toHaveCount(1)
