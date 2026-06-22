@@ -33,8 +33,6 @@ export const getNewDirentsAccept = (
     setSize: 1,
     type: newDirentType,
   }
-  // @ts-ignore
-  newDirent.icon = ''
   let insertIndex = focusedIndex
   let posInSet = 1
   let setSize = 1

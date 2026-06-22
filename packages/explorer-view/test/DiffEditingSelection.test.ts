@@ -10,7 +10,7 @@ test('diffEditingSelection - returns undefined when selection is the same', () =
     editingSelectionStart: 0,
   }
   const result = diffEditingSelection(state, 0, 5)
-  expect(result).toBe(undefined)
+  expect(result).toBeUndefined()
 })
 
 test('diffEditingSelection - returns new selection when different', () => {

@@ -7,12 +7,13 @@ export const handleUpload = async (state: ExplorerState, dirents: readonly any[]
     // TODO switch
     // TODO symlink might not be possible to be copied
     // TODO create folder if type is 2
-    if (dirent.type === /* File */ 1) {
-      // TODO reading text might be inefficient for binary files
-      // but not sure how else to send them via jsonrpc
-      const content = await dirent.file.text()
-      const absolutePath = [root, dirent.file.name].join(pathSeparator)
-      await FileSystem.writeFile(absolutePath, content)
+    if (dirent.type !== /* File */ 1) {
+      continue
     }
+    // TODO reading text might be inefficient for binary files
+    // but not sure how else to send them via jsonrpc
+    const content = await dirent.file.text()
+    const absolutePath = [root, dirent.file.name].join(pathSeparator)
+    await FileSystem.writeFile(absolutePath, content)
   }
 }

@@ -3,6 +3,32 @@ import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { updateDirentsAtPath } from '../src/parts/UpdateDirentsAtPath/UpdateDirentsAtPath.ts'
 
+test('updateDirentsAtPath - replaces root children', () => {
+  const items: readonly ExplorerItem[] = [
+    { depth: 1, icon: '', name: 'old.txt', path: '/workspace/old.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+  ]
+  const result = updateDirentsAtPath(items, '/workspace', '/workspace', [
+    { name: 'b.txt', type: DirentType.File },
+    { name: 'src', type: DirentType.Directory },
+  ])
+  expect(result).toEqual([
+    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory },
+    { depth: 1, icon: '', name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
+  ])
+})
+
+test('updateDirentsAtPath - replaces nested children', () => {
+  const items: readonly ExplorerItem[] = [
+    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
+    { depth: 2, icon: '', name: 'old.ts', path: '/workspace/src/old.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+  ]
+  const result = updateDirentsAtPath(items, '/workspace/src', '/workspace', [{ name: 'index.ts', type: DirentType.File }])
+  expect(result).toEqual([
+    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
+    { depth: 2, icon: '', name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+  ])
+})
+
 test.skip('updateDirentsAtPath - empty items', () => {
   const items: readonly ExplorerItem[] = []
   const path = '/test'

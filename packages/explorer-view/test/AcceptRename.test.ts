@@ -5,7 +5,61 @@ import { acceptRename } from '../src/parts/AcceptRename/AcceptRename.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
+import * as ExplorerStrings from '../src/parts/ExplorerStrings/ExplorerStrings.ts'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
+
+test('acceptRename - validates empty name', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingType: ExplorerEditingType.Rename,
+    editingValue: '',
+  }
+  expect(await acceptRename(state)).toEqual({
+    ...state,
+    editingErrorMessage: ExplorerStrings.fileOrFolderNameMustBeProvided(),
+  })
+})
+
+test('acceptRename - renames file and refreshes parent children', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'b.txt', type: DirentType.File },
+        { name: 'c.txt', type: DirentType.File },
+      ]
+    },
+    'FileSystem.rename'() {
+      return
+    },
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingType: ExplorerEditingType.Rename,
+    editingValue: 'b.txt',
+    items: [
+      { depth: 1, icon: '', name: 'a.txt', path: '/test/a.txt', posInSet: 1, selected: false, setSize: 2, type: DirentType.File },
+      { depth: 1, icon: '', name: 'c.txt', path: '/test/c.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
+    ],
+    pathSeparator: PathSeparatorType.Slash,
+    root: '/test',
+  }
+
+  const result = await acceptRename(state)
+  expect(result.editingIndex).toBe(-1)
+  expect(result.editingType).toBe(ExplorerEditingType.None)
+  expect(result.editingValue).toBe('')
+  expect(result.focusedIndex).toBe(0)
+  expect(result.items).toEqual([
+    { depth: 1, icon: '', name: 'b.txt', path: '/test/b.txt', posInSet: 1, selected: false, setSize: 2, type: DirentType.File },
+    { depth: 1, icon: '', name: 'c.txt', path: '/test/c.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
+  ])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],
+    ['FileSystem.readDirWithFileTypes', '/test'],
+  ])
+})
 
 test.skip('acceptRename - basic file rename', async () => {
   using mockRpc = RendererWorker.registerMockRpc({

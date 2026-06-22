@@ -16,8 +16,8 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
     create: true,
   })
   const fileHandles = [directoryHandle]
-  const files = []
-  const paths = []
+  const files: File[] = []
+  const paths: string[] = []
   const index = 0
   await Command.execute('Explorer.handleDropIndex', fileHandles, files, paths, index)
 

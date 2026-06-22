@@ -1,10 +1,10 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
-import { isTopLevel } from '../IsTopLevel/IsTopLevel.ts'
 
 export const orderDirents = (dirents: readonly ExplorerItem[]): readonly ExplorerItem[] => {
   if (dirents.length === 0) {
     return dirents
   }
+  const minDepth = Math.min(...dirents.map((dirent) => dirent.depth))
 
   const withDeepChildren = (parent: ExplorerItem, processed: Set<string>): ExplorerItem[] => {
     if (processed.has(parent.path)) {
@@ -21,7 +21,7 @@ export const orderDirents = (dirents: readonly ExplorerItem[]): readonly Explore
     return [parent, ...children]
   }
 
-  const topLevelDirents = dirents.filter(isTopLevel)
+  const topLevelDirents = dirents.filter((dirent) => dirent.depth === minDepth)
   const processed = new Set<string>()
   const ordered = topLevelDirents.flatMap((dirent) => withDeepChildren(dirent, processed))
   return ordered

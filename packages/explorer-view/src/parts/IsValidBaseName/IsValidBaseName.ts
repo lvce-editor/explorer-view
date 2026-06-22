@@ -6,10 +6,11 @@
 const WINDOWS_INVALID_FILE_CHARS = /[\\/:\*\?"<>\|]/g
 const UNIX_INVALID_FILE_CHARS = /\//g
 const WINDOWS_FORBIDDEN_NAMES = /^(con|prn|aux|clock\$|nul|lpt\d|com\d)(\.(.*?))?$/i
+const WHITESPACE_ONLY = /^\s+$/
 const RESERVED_NAMES = ['.', '..', '...']
 
 export function isValidBasename(name: string | null | undefined, isWindowsOS: boolean): boolean {
-  if (!name || name.length === 0 || /^\s+$/.test(name)) {
+  if (!name || name.length === 0 || WHITESPACE_ONLY.test(name)) {
     return false // require a name that is not just whitespace
   }
 
@@ -39,9 +40,5 @@ export function isValidBasename(name: string | null | undefined, isWindowsOS: bo
     return false // Windows: file cannot end with a whitespace
   }
 
-  if (name.length > 255) {
-    return false // most file systems do not allow files > 255 length
-  }
-
-  return true
+  return name.length <= 255 // most file systems do not allow files > 255 length
 }

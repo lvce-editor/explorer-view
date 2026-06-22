@@ -34,6 +34,35 @@ test('revealItemHidden - reveals hidden item', async () => {
   ])
 })
 
+test('revealItemHidden - expands visible ancestor folder', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/root/folder1') {
+        return [{ name: 'file1.txt', type: DirentType.File }]
+      }
+      return []
+    },
+  })
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [
+      {
+        depth: 1,
+        name: 'folder1',
+        path: '/root/folder1',
+        selected: false,
+        type: DirentType.Directory,
+      },
+    ],
+    root: '/root',
+  }
+  const newState = await revealItemHidden(state, '/root/folder1/file1.txt')
+  expect(newState.items[0].type).toBe(DirentType.DirectoryExpanded)
+  expect(newState.items[1].path).toBe('/root/folder1/file1.txt')
+  expect(newState.focusedIndex).toBe(1)
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/folder1']])
+})
+
 test('revealItemHidden - returns same state for empty path parts', async () => {
   using mockRpc = RendererWorker.registerMockRpc({})
   const state = createDefaultState()

@@ -38,15 +38,15 @@ test('createDecorationMap - handles URIs that are already URIs', () => {
 test('createDecorationMap - handles empty array', () => {
   const decorations: readonly any[] = []
   const result = createDecorationMap(decorations)
-  expect(result).toEqual({})
-  expect(Object.getPrototypeOf(result)).toBe(null)
+  expect(Object.keys(result)).toHaveLength(0)
+  expect(Object.getPrototypeOf(result)).toBeNull()
 })
 
 test('createDecorationMap - uses Object.create(null) for prototype-less map', () => {
   const decorations = [{ decoration: 'modified', uri: '/home/user/file.txt' }]
   const result = createDecorationMap(decorations)
-  expect(Object.getPrototypeOf(result)).toBe(null)
-  expect('toString' in result).toBe(false)
+  expect(Object.getPrototypeOf(result)).toBeNull()
+  expect(result).not.toHaveProperty('toString')
 })
 
 test('createDecorationMap - handles mixed paths and URIs', () => {

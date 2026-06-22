@@ -1,4 +1,5 @@
 export const CollapseAllFoldersInExplorer = 'Collapse All Folders in Explorer'
+export const CannotCopyFolderIntoSubfolderOfItself = 'Cannot copy folder {PH1} into a subfolder of itself'
 export const Copy = 'Copy'
 export const CopyPath = 'Copy Path'
 export const CopyRelativePath = 'Copy Relative Path'

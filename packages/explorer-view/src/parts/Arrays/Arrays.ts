@@ -3,9 +3,5 @@ export const lastIndex = (array: readonly any[]): number => {
 }
 
 export const fromAsync = async (asyncIterable: any): Promise<readonly any[]> => {
-  const children = []
-  for await (const value of asyncIterable) {
-    children.push(value)
-  }
-  return children
+  return Array.fromAsync(asyncIterable)
 }
