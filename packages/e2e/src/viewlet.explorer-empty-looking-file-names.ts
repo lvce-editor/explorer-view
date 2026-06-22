@@ -3,11 +3,11 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 export const name = 'viewlet.explorer-empty-looking-file-names'
 
 const fileNames = [
-  '\u180E', // Mongolian vowel separator
-  '\u200B', // zero-width space
-  '\u200C', // zero-width non-joiner
+  '\u{180E}', // Mongolian vowel separator
+  '\u{200B}', // zero-width space
+  '\u{200C}', // zero-width non-joiner
   ' ',
-  '\u00A0', // non-breaking space
+  '\u{00A0}', // non-breaking space
 ]
 
 export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => {
