@@ -1,4 +1,4 @@
-import * as ViewletRegistry from '@lvce-editor//viewlet-registry'
+import * as ViewletRegistry from '@lvce-editor/viewlet-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetExplorerMaxLineY from '../GetMaxLineY/GetMaxLineY.ts'
