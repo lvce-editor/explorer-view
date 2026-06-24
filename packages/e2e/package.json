@@ -9,6 +9,8 @@
     "e2e:firefox": "npm run patch:playwright-firefox-worker-websocket && node ./node_modules/@lvce-editor/test-with-playwright/bin/test-with-playwright.js --only-extension=. --test-path=. --browser=firefox --resuse-page",
     "e2e:firefox:headless": "npm run patch:playwright-firefox-worker-websocket && node ./node_modules/@lvce-editor/test-with-playwright/bin/test-with-playwright.js --only-extension=. --test-path=. --browser=firefox --headless --resuse-page",
     "e2e:headless": "node ./node_modules/@lvce-editor/test-with-playwright/bin/test-with-playwright.js --only-extension=. --test-path=. --headless --resuse-page",
+    "e2e:webkit": "node ./node_modules/@lvce-editor/test-with-playwright/bin/test-with-playwright.js --only-extension=. --test-path=. --browser=webkit --resuse-page",
+    "e2e:webkit:headless": "node ./node_modules/@lvce-editor/test-with-playwright/bin/test-with-playwright.js --only-extension=. --test-path=. --browser=webkit --headless --resuse-page",
     "patch:playwright-firefox-worker-websocket": "node ./scripts/patch-playwright-firefox-worker-websocket.js",
     "type-check": "tsc"
   },
