@@ -10,7 +10,7 @@ const instantiationsPath = join(root, 'packages', 'explorer-view')
 
 const workerPath = join(root, '.tmp/dist/dist/explorerViewWorkerMain.js')
 
-const playwrightPath = import.meta.resolve('playwright/index.mjs')
+const playwrightPath = import.meta.resolve('../../e2e/node_modules/playwright/index.mjs')
 
 await measureMemory({
   playwrightPath,
