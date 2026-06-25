@@ -10,7 +10,7 @@ export interface DroppedFileItem {
 export type DroppedItem = DroppedFileItem | FileSystemHandle
 export type DroppedArgs = readonly DroppedFileItem[] | readonly FileSystemHandle[]
 
-export const isDroppedFile = (item: DroppedItem): item is DroppedFileItem => {
+const isDroppedFile = (item: DroppedItem): item is DroppedFileItem => {
   return item.kind === 'file' && 'value' in item
 }
 

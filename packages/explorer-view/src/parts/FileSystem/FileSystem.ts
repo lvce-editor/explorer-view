@@ -20,10 +20,6 @@ export const stat = async (dirent: string): Promise<any> => {
   return FileSystemWorker.invoke('FileSystem.stat', dirent)
 }
 
-export const createFile = async (uri: string): Promise<void> => {
-  return FileSystemWorker.invoke('FileSystem.writeFile', uri, '')
-}
-
 export const writeFile = async (uri: string, content: string): Promise<void> => {
   return FileSystemWorker.invoke('FileSystem.writeFile', uri, content)
 }

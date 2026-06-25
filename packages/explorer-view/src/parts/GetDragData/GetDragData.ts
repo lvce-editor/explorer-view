@@ -7,7 +7,7 @@ const toUri = (path: string): string => {
   return 'file://' + path
 }
 
-export interface DragInfoItem {
+interface DragInfoItem {
   readonly data: string
   readonly type: string
 }
