@@ -75,6 +75,7 @@ export const create = (
     sourceControlDecorations: false,
     sourceControlIgnoredUris: [],
     uid: id,
+    undoStack: [],
     useChevrons: false,
     version: 0,
     visibleExplorerItems: [],

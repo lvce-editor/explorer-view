@@ -75,6 +75,11 @@ export const getKeyBindings = (): readonly KeyBinding[] => {
       when: WhenExpression.FocusExplorer,
     },
     {
+      command: 'Explorer.undo',
+      key: KeyModifier.CtrlCmd | KeyCode.KeyZ,
+      when: WhenExpression.FocusExplorer,
+    },
+    {
       command: 'Explorer.renameDirent',
       key: KeyCode.F2,
       when: WhenExpression.FocusExplorer,

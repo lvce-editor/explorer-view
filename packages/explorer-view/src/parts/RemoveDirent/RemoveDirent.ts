@@ -6,11 +6,13 @@ import * as FileOperationType from '../FileOperationType/FileOperationType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import { getPaths } from '../GetPaths/GetPaths.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
+import { getUndoOperationsForDelete } from '../GetUndoOperationsForDelete/GetUndoOperationsForDelete.ts'
+import { pushUndoStack } from '../PushUndoStack/PushUndoStack.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
 import { showErrorAlert } from '../ShowErrorAlert/ShowErrorAlert.ts'
 
 export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { confirmDelete, focusedIndex, items } = state
+  const { confirmDelete, focusedIndex, items, pathSeparator } = state
   const selectedItems = getSelectedItems(items, focusedIndex)
   if (selectedItems.length === 0) {
     return state
@@ -29,6 +31,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
       type: FileOperationType.Remove,
     }
   })
+  const undoOperations = await getUndoOperationsForDelete(selectedItems, pathSeparator)
   // TODO use bulk edit and explorer refresh
   const errorMessage = await ApplyFileOperations.applyFileOperations(fileOperations)
   if (errorMessage) {
@@ -37,7 +40,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   }
   const newState = await Refresh.refresh(state)
   return {
-    ...newState,
+    ...pushUndoStack(newState, undoOperations),
     focus: FocusId.List,
     focused: true,
   }

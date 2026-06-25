@@ -80,6 +80,7 @@ import * as SelectIndices from '../SelectIndices/SelectIndices.ts'
 import * as SelectUp from '../SelectUp/SelectUp.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 import * as ToggleIndividualSelection from '../ToggleIndividualSelection/ToggleIndividualSelection.ts'
+import * as Undo from '../Undo/Undo.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 
@@ -170,6 +171,7 @@ export const commandMap = {
   'Explorer.setSelectedIndices': WrapCommand.wrapListItemCommand(SelectIndices.setSelectedIndices),
   'Explorer.terminate': terminate,
   'Explorer.toggleIndividualSelection': WrapCommand.wrapListItemCommand(ToggleIndividualSelection.toggleIndividualSelection),
+  'Explorer.undo': WrapCommand.wrapListItemCommand(Undo.undo),
   'Explorer.updateEditingValue': WrapCommand.wrapListItemCommand(UpdateEditingValue.updateEditingValue),
 
   'Explorer.updateIcons': WrapCommand.wrapListItemCommand(UpdateIcons.updateIcons),

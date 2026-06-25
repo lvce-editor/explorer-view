@@ -1,6 +1,7 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { FileDecoration } from '../FileDecoration/FileDecoration.ts'
 import type { FileIconCache } from '../FileIconCache/FileIconCache.ts'
+import type { FileOperation } from '../FileOperation/FileOperation.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 
 export interface ExplorerState {
@@ -61,6 +62,7 @@ export interface ExplorerState {
   readonly sourceControlDecorations: boolean
   readonly sourceControlIgnoredUris: readonly string[]
   readonly uid: number
+  readonly undoStack: readonly (readonly FileOperation[])[]
   readonly useChevrons: boolean
   readonly version: number
   readonly visibleExplorerItems: readonly VisibleExplorerItem[]

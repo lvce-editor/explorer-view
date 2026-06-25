@@ -2,12 +2,10 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "workspaces": {
     ".": {
-      "project": ["*.js"],
-      "ignoreDependencies": ["@lerna/legacy-package-management"]
+      "project": ["*.js"]
     },
     "packages/build": {
-      "project": ["src/**/*.ts"],
-      "ignoreDependencies": ["@lvce-editor/verror", "esbuild", "playwright"]
+      "project": ["src/**/*.ts"]
     },
     "packages/e2e": {
       "entry": ["src/**/*.ts", "scripts/*.js", "fixtures/**/main.js"],
@@ -15,44 +13,7 @@
     },
     "packages/explorer-view": {
       "entry": ["test/**/*.test.ts"],
-      "project": ["src/**/*.ts", "test/**/*.ts"],
-      "ignoreDependencies": ["@lvce-editor/list"],
-      "ignoreFiles": [
-        "src/parts/DragDataItem/DragDataItem.ts",
-        "src/parts/FocusKey/FocusKey.ts",
-        "src/parts/GetFileOperationsCut/GetFileOperationsCut.ts",
-        "src/parts/GetFolderIcon/GetFolderIcon.ts",
-        "src/parts/GetMouseAction/GetMouseAction.ts",
-        "src/parts/GetPathPartsFromFileOperations/GetPathPartsFromFileOperations.ts",
-        "src/parts/HasLeadingOrTrailingWhitespace/HasLeadingOrTrailingWhitespace.ts",
-        "src/parts/IconTheme/IconTheme.ts",
-        "src/parts/IsValidBaseName/IsValidBaseName.ts",
-        "src/parts/KeyCode/KeyCode.ts",
-        "src/parts/KeyModifier/KeyModifier.ts",
-        "src/parts/Px/Px.ts",
-        "src/parts/RpcId/RpcId.ts",
-        "src/parts/RpcRegistry/RpcRegistry.ts",
-        "src/parts/SetFocus/SetFocus.ts",
-        "src/parts/Severity/Severity.ts",
-        "src/parts/Timeout/Timeout.ts",
-        "src/parts/UpdateExplorerAfterFileOperations/UpdateExplorerAfterFileOperations.ts",
-        "src/parts/ValidateFileName/ValidateFileName.ts",
-        "src/parts/ValidateFileNameResult/ValidateFileNameResult.ts"
-      ],
-      "ignoreIssues": {
-        "src/parts/Character/Character.ts": ["exports"],
-        "src/parts/ContextMenuProps/ContextMenuProps.ts": ["types"],
-        "src/parts/DiffType/DiffType.ts": ["exports"],
-        "src/parts/DirentType/DirentType.ts": ["exports"],
-        "src/parts/ExplorerStrings/ExplorerStrings.ts": ["exports"],
-        "src/parts/FileOperation/FileOperation.ts": ["types"],
-        "src/parts/FileSystem/FileSystem.ts": ["exports"],
-        "src/parts/GetDragData/GetDragData.ts": ["types"],
-        "src/parts/PlatformType/PlatformType.ts": ["exports"],
-        "src/parts/RefreshChildDirents/RefreshChildDirents.ts": ["exports"],
-        "src/parts/UiStrings/UiStrings.ts": ["exports"],
-        "src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts": ["exports"]
-      }
+      "project": ["src/**/*.ts", "test/**/*.ts"]
     },
     "packages/server": {
       "project": ["src/**/*.js"]

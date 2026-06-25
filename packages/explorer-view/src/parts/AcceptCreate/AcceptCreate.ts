@@ -3,9 +3,11 @@ import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
+import { getExistingPaths } from '../GetExistingPaths/GetExistingPaths.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetFileOperationsCreate from '../GetFileOperationsCreate/GetFileOperationsCreate.ts'
 import * as GetIndex from '../GetIndex/GetIndex.ts'
+import { getUndoOperationsForCreate } from '../GetUndoOperationsForCreate/GetUndoOperationsForCreate.ts'
 import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
 import { getPathParts } from '../GetPathParts/GetPathParts.ts'
 import { getPathPartsChildren } from '../GetPathPartsChildren/GetPathPartsChildren.ts'
@@ -13,6 +15,7 @@ import { getSiblingFileNames } from '../GetSiblingFileNames/GetSiblingFileNames.
 import { mergeTrees } from '../MergeTrees/MergeTrees.ts'
 import { openUri } from '../OpenUri/OpenUri.ts'
 import { join2 } from '../Path/Path.ts'
+import { pushUndoStack } from '../PushUndoStack/PushUndoStack.ts'
 import { refreshWorkspace } from '../RefreshWorkspace/RefreshWorkspace.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
@@ -31,6 +34,7 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   const parentFolder = getParentFolder(items, focusedIndex, root, pathSeparator)
   const absolutePath = join2(parentFolder, newFileName)
   const operations = GetFileOperationsCreate.getFileOperationsCreate(editingValue, newDirentType, pathSeparator, absolutePath, root)
+  const existingPaths = await getExistingPaths(operations)
   const createErrorMessage = await ApplyFileOperations.applyFileOperations(operations)
   if (createErrorMessage) {
     return {
@@ -56,13 +60,14 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   if (newDirentType === DirentType.File) {
     await openUri(absolutePath, true)
   }
+  const undoOperations = getUndoOperationsForCreate(operations, existingPaths)
 
-  return {
+  return pushUndoStack({
     ...state,
     editingIndex: -1,
     editingType: ExplorerEditingType.None,
     focus: FocusId.List,
     focusedIndex: newFocusedIndex,
     items: dirents,
-  }
+  }, undoOperations)
 }

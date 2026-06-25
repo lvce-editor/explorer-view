@@ -6,8 +6,10 @@ import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType
 import * as FocusId from '../FocusId/FocusId.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import * as GetFileOperationsRename from '../GetFileOperationsRename/GetFileOperationsRename.ts'
+import { getUndoOperationsForRename } from '../GetUndoOperationsForRename/GetUndoOperationsForRename.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
 import { dirname2, join2 } from '../Path/Path.ts'
+import { pushUndoStack } from '../PushUndoStack/PushUndoStack.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import { updateTree2 } from '../UpdateTree2/UpdateTree2.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
@@ -39,7 +41,8 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
   const newTree = updateTree2(tree, update)
   const newDirents = treeToArray(newTree, root)
   const newFocusedIndex = getIndex(newDirents, newUri)
-  return {
+  const undoOperations = getUndoOperationsForRename(operations)
+  return pushUndoStack({
     ...state,
     editingIcon: '',
     editingIndex: -1,
@@ -51,5 +54,5 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     focused: true,
     focusedIndex: newFocusedIndex,
     items: newDirents,
-  }
+  }, undoOperations)
 }

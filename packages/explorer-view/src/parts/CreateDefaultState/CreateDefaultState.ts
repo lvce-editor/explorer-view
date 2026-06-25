@@ -58,6 +58,7 @@ export const createDefaultState = (): ExplorerState => ({
   sourceControlDecorations: false,
   sourceControlIgnoredUris: [],
   uid: 1,
+  undoStack: [],
   useChevrons: false,
   version: 1,
   visibleExplorerItems: [],
