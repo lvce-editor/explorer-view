@@ -1,10 +1,26 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drag-autoscroll-long-list'
-export const skip = 1
 
-export const test: Test = async () => {
-  // TODO arrange: create a long Explorer list with source and target items far apart.
-  // TODO act: drag near the top or bottom edge until Explorer autoscrolls.
-  // TODO assert: the list scrolls, the drop target updates, and the drop completes correctly.
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+  // arrange
+  const tmpDir = await FileSystem.getTmpDir()
+  await FileSystem.mkdir(`${tmpDir}/target`)
+  for (let i = 0; i < 80; i++) {
+    await FileSystem.writeFile(`${tmpDir}/file-${i.toString().padStart(2, '0')}.txt`, '')
+  }
+  await Workspace.setPath(tmpDir)
+  const opfsRoot = await navigator.storage.getDirectory()
+  const fileHandle = await opfsRoot.getFileHandle('file-79.txt', { create: true })
+
+  // act
+  await Explorer.focusIndex(80)
+  await Explorer.handleDragOverIndex(0)
+  await Explorer.handleDropIndex([fileHandle], [], [], 0)
+
+  // assert
+  const target = Locator('.TreeItem[aria-label="target"]')
+  const moved = Locator(`.TreeItem[title="${tmpDir}/target/file-79.txt"]`)
+  await expect(target).toHaveAttribute('aria-expanded', 'true')
+  await expect(moved).toBeVisible()
 }

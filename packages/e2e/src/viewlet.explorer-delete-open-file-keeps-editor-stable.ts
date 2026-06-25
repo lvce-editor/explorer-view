@@ -1,10 +1,26 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-delete-open-file-keeps-editor-stable'
-export const skip = 1
 
-export const test: Test = async () => {
-  // TODO arrange: create a file, open it from Explorer, and focus the Explorer row.
-  // TODO act: delete the open file from Explorer.
-  // TODO assert: the Explorer row is removed and the editor remains in a stable missing-file state.
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+  // arrange
+  const tmpDir = await FileSystem.getTmpDir()
+  await FileSystem.writeFile(`${tmpDir}/open.txt`, 'content')
+  await FileSystem.writeFile(`${tmpDir}/other.txt`, 'other')
+  await Workspace.setPath(tmpDir)
+  await Explorer.focusIndex(0)
+  await Explorer.clickCurrent()
+  const tab = Locator('[title*="open.txt"]').first()
+  await expect(tab).toBeVisible()
+  await Explorer.focusIndex(0)
+
+  // act
+  await Explorer.removeDirent()
+
+  // assert
+  const deleted = Locator('.TreeItem[aria-label="open.txt"]')
+  const other = Locator('.TreeItem[aria-label="other.txt"]')
+  await expect(deleted).toBeHidden()
+  await expect(other).toBeVisible()
+  await expect(tab).toBeVisible()
 }
