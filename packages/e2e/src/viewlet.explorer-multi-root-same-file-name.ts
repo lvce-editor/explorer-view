@@ -4,7 +4,6 @@ export const name = 'viewlet.explorer-multi-root-same-file-name'
 export const skip = 1
 
 export const test: Test = async () => {
-  // TODO arrange: open two workspace roots that both contain README.md.
-  // TODO act: rename or delete README.md in one root.
-  // TODO assert: the operation affects only the targeted root and leaves the other README.md unchanged.
+  // Deferred: Explorer and the e2e Workspace helper currently expose a single root via Workspace.setPath(path).
+  // Implement this when product and harness support opening multiple workspace roots.
 }

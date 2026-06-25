@@ -4,7 +4,6 @@ export const name = 'viewlet.explorer-multi-root-copy-relative-path'
 export const skip = 1
 
 export const test: Test = async () => {
-  // TODO arrange: open two workspace roots with nested files.
-  // TODO act: copy relative path from a nested file in the second root.
-  // TODO assert: clipboard contains the path relative to the second root, not the first root.
+  // Deferred: Explorer and the e2e Workspace helper currently expose a single root via Workspace.setPath(path).
+  // Implement this when product and harness support opening multiple workspace roots.
 }
