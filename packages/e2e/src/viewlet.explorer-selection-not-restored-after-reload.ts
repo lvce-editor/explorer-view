@@ -17,9 +17,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // assert
   const treeItems = Locator('.TreeItem')
-  const a = Locator('.TreeItem[aria-label="a.txt"]')
-  const b = Locator('.TreeItem[aria-label="b.txt"]')
+  const activeItems = Locator('.TreeItemActive')
   await expect(treeItems).toHaveCount(3)
-  await expect(a).not.toHaveClass('TreeItemActive')
-  await expect(b).not.toHaveClass('TreeItemActive')
+  await expect(activeItems).toHaveCount(0)
 }
