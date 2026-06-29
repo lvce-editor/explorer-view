@@ -16,7 +16,7 @@
     "e2e:webkit:headless": "cd packages/e2e && npm run e2e:webkit:headless",
     "format": "prettier --write .",
     "postinstall": "lerna bootstrap --ci",
-    "lint": "eslint . && prettier --check .",
+    "lint": "eslint . && prettier --check . && knip --no-config-hints",
     "measure": "cd packages/build && npm run measure",
     "measure:visible": "cd packages/build && npm run measure:visible",
     "test": "lerna run test",
@@ -29,10 +29,14 @@
   },
   "devDependencies": {
     "@lerna/legacy-package-management": "^8.2.4",
-    "@lvce-editor/eslint-config": "^13.5.0",
+    "@lvce-editor/eslint-config": "^13.6.0",
+    "@lvce-editor/eslint-plugin-github-actions": "^13.6.0",
+    "@lvce-editor/eslint-plugin-regex": "^13.6.0",
+    "@lvce-editor/eslint-plugin-tsconfig": "^13.6.0",
     "eslint": "^10.2.0",
+    "knip": "^6.23.0",
     "lerna": "^8.2.4",
-    "prettier": "^3.8.4",
+    "prettier": "^3.9.1",
     "typescript": "^6.0.3"
   }
 }

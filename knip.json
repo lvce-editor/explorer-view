@@ -1,0 +1,24 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "project": ["*.js"],
+      "ignoreDependencies": ["@lerna/legacy-package-management"]
+    },
+    "packages/build": {
+      "project": ["src/**/*.ts"],
+      "ignoreDependencies": ["esbuild", "playwright"]
+    },
+    "packages/e2e": {
+      "entry": ["src/**/*.ts", "scripts/*.js", "fixtures/**/main.js"],
+      "project": ["src/**/*.ts", "scripts/*.js", "fixtures/**/*.js"]
+    },
+    "packages/explorer-view": {
+      "entry": ["test/**/*.test.ts"],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
+    },
+    "packages/server": {
+      "project": ["src/**/*.js"]
+    }
+  }
+}

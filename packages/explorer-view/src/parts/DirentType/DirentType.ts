@@ -15,7 +15,3 @@ export const Unknown = 12
 export const EditingFile = File + DELTA_EDITING
 export const EditingFolder = Directory + DELTA_EDITING
 export const EditingDirectoryExpanded = DirectoryExpanded + DELTA_EDITING
-export const EditingUnknown = Unknown + DELTA_EDITING
-export const EditingSymLinkFile = SymLinkFile + DELTA_EDITING
-export const EditingSymLinkFolder = SymLinkFolder + DELTA_EDITING
-export const EditingSymLinkUnknown = Symlink + DELTA_EDITING

@@ -2,7 +2,7 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 
-export const refreshChildDirent = async (
+const refreshChildDirent = async (
   folder: ExplorerItem,
   dirent: any,
   pathSeparator: string,
