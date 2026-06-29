@@ -4,7 +4,5 @@ export const name = 'viewlet.explorer-unicode-normalization-names'
 export const skip = 1
 
 export const test: Test = async () => {
-  // TODO arrange: create visually similar NFC and NFD file names.
-  // TODO act: open, select, and rename each file through Explorer.
-  // TODO assert: both entries remain distinct and operations target the intended file.
+  // Deferred: the current memfs-backed e2e filesystem normalizes NFC/NFD names to one entry, so distinct-name behavior cannot be asserted here.
 }
