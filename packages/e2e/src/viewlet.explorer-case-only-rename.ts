@@ -1,10 +1,26 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-case-only-rename'
-export const skip = 1
 
-export const test: Test = async () => {
-  // TODO arrange: create file.txt and focus it in Explorer.
-  // TODO act: rename file.txt to File.txt.
-  // TODO assert: only one row exists, focus is preserved, and the file exists under the new casing.
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+  // arrange
+  const tmpDir = await FileSystem.getTmpDir()
+  await FileSystem.writeFile(`${tmpDir}/file.txt`, 'content')
+  await Workspace.setPath(tmpDir)
+  await Explorer.focusFirst()
+
+  // act
+  await Explorer.renameDirent()
+  await Explorer.updateEditingValue('File.txt')
+  await Explorer.acceptEdit()
+
+  // assert
+  const renamed = Locator('.TreeItem[aria-label="File.txt"]')
+  const old = Locator('.TreeItem[aria-label="file.txt"]')
+  const treeItems = Locator('.TreeItem')
+  await expect(treeItems).toHaveCount(1)
+  await expect(renamed).toBeVisible()
+  await expect(renamed).toHaveId('TreeItemActive')
+  await expect(old).toBeHidden()
+  await FileSystem.shouldHaveFile(`${tmpDir}/File.txt`, 'content')
 }
