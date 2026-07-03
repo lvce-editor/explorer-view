@@ -2,11 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-zero-width-file-names'
 
-const fileNames = [
-  'a\u200Bb.txt',
-  'a\u200Cb.txt',
-  'a\u200Db.txt',
-]
+const fileNames = ['a\u{200B}b.txt', 'a\u{200C}b.txt', 'a\u{200D}b.txt']
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange

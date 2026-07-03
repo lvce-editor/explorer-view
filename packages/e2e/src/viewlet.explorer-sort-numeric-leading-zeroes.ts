@@ -16,8 +16,12 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   // assert
   const treeItems = Locator('.TreeItem')
   await expect(treeItems).toHaveCount(4)
-  await expect(treeItems.nth(0)).toHaveText('file001.txt')
-  await expect(treeItems.nth(1)).toHaveText('file01.txt')
-  await expect(treeItems.nth(2)).toHaveText('file1.txt')
-  await expect(treeItems.nth(3)).toHaveText('file10.txt')
+  const firstTreeItem = treeItems.nth(0)
+  const secondTreeItem = treeItems.nth(1)
+  const thirdTreeItem = treeItems.nth(2)
+  const fourthTreeItem = treeItems.nth(3)
+  await expect(firstTreeItem).toHaveText('file001.txt')
+  await expect(secondTreeItem).toHaveText('file01.txt')
+  await expect(thirdTreeItem).toHaveText('file1.txt')
+  await expect(fourthTreeItem).toHaveText('file10.txt')
 }

@@ -2,8 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rtl-bidi-file-names'
 
-const rtlName = '\u05e9\u05dc\u05d5\u05dd.txt'
-const bidiName = 'abc\u202etxt'
+const rtlName = '\u{05E9}\u{05DC}\u{05D5}\u{05DD}.txt'
+const bidiName = 'abc\u{202E}txt'
 
 export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
@@ -17,11 +17,11 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
   await Explorer.focusIndex(1)
   await Explorer.copyPath()
   await Explorer.renameDirent()
-  await Explorer.updateEditingValue('\u05e9\u05dc\u05d5\u05dd-renamed.txt')
+  await Explorer.updateEditingValue('\u{05E9}\u{05DC}\u{05D5}\u{05DD}-renamed.txt')
   await Explorer.acceptEdit()
 
   // assert
-  const renamed = Locator('.TreeItem[aria-label="\u05e9\u05dc\u05d5\u05dd-renamed.txt"]')
+  const renamed = Locator('.TreeItem[aria-label="\u{05E9}\u{05DC}\u{05D5}\u{05DD}-renamed.txt"]')
   const bidi = Locator('.TreeItem').nth(0)
   await ClipBoard.shouldHaveText(`${tmpDir}/${rtlName}`)
   await expect(bidi).toHaveAttribute('aria-label', bidiName)
