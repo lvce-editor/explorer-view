@@ -4,4 +4,8 @@ import * as RenderEventListeners from '../src/parts/RenderEventListeners/RenderE
 test('renderEventListeners', () => {
   const eventListeners = RenderEventListeners.renderEventListeners()
   expect(eventListeners).toBeDefined()
+  expect(eventListeners).toContainEqual({
+    name: 21,
+    params: ['handleKeyDown', 'event.defaultPrevented', 'event.key'],
+  })
 })

@@ -5,7 +5,7 @@ export const filterByFocusWord = (items: readonly string[], focusedIndex: number
 
   const matches: number[] = []
   for (let i = 0; i < items.length; i++) {
-    if (items[i].toLowerCase().includes(focusWord)) {
+    if (items[i].toLowerCase().startsWith(focusWord)) {
       matches.push(i)
     }
   }

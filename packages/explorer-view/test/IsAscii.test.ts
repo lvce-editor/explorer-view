@@ -7,8 +7,8 @@ test('isAscii - lowercase ascii', () => {
 })
 
 test('isAscii - uppercase ascii', () => {
-  expect(isAscii('A')).toBe(false)
-  expect(isAscii('Z')).toBe(false)
+  expect(isAscii('A')).toBe(true)
+  expect(isAscii('Z')).toBe(true)
 })
 
 test('isAscii - non-ascii', () => {
