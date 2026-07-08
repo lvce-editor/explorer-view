@@ -31,3 +31,15 @@ test('updateIconCache - immutability', () => {
   expect(result).not.toBe(cache)
   expect(cache).toEqual({ existing: 'icon' })
 })
+
+test('updateIconCache - expanded folder', () => {
+  const cache: FileIconCache = {
+    '/test/packages': 'folder-icon',
+  }
+  const requests: readonly IconRequest[] = [{ expanded: true, name: 'packages', path: '/test/packages', type: DirentType.DirectoryExpanded }]
+  const newIcons: readonly string[] = ['folder-icon-open']
+  expect(UpdateIconCache.updateIconCache(cache, requests, newIcons)).toEqual({
+    '/test/packages': 'folder-icon',
+    '/test/packages#expanded': 'folder-icon-open',
+  })
+})
