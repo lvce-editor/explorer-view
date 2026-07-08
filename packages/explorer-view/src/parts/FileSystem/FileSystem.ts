@@ -12,6 +12,10 @@ export const getPathSeparator = async (root: string): Promise<string> => {
   return FileSystemWorker.invoke('FileSystem.getPathSeparator', root)
 }
 
+export const isReadonly = async (root: string): Promise<boolean> => {
+  return FileSystemWorker.invoke('FileSystem.isReadonly', root)
+}
+
 export const getRealPath = async (path: string): Promise<string> => {
   return FileSystemWorker.invoke('FileSystem.getRealPath', path)
 }

@@ -44,6 +44,7 @@ export interface ExplorerState {
   readonly initial: boolean
   readonly inputSource: number
   readonly isPointerDown: boolean
+  readonly isReadonly: boolean
   readonly itemHeight: number
   readonly items: readonly ExplorerItem[]
   readonly maxIndent: number

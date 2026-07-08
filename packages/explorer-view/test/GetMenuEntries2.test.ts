@@ -5,6 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { set } from '../src/parts/ExplorerStates/ExplorerStates.ts'
 import { getMenuEntries2 } from '../src/parts/GetMenuEntries2/GetMenuEntries2.ts'
+import * as MenuItemFlags from '../src/parts/MenuItemFlags/MenuItemFlags.ts'
 
 test('getMenuEntries2 - root', () => {
   const uid = 1
@@ -91,4 +92,28 @@ test('getMenuEntries2 - file shows compare with selected for different file', ()
   const menuEntries = getMenuEntries2(state)
   expect(menuEntries.some((entry) => entry.id === 'compareWithSelected')).toBe(true)
   expect(menuEntries.some((entry) => entry.id === 'selectForCompare')).toBe(false)
+})
+
+test('getMenuEntries2 - file disables rename when file system is readonly', () => {
+  const item: ExplorerItem = {
+    depth: 0,
+    name: 'test.txt',
+    path: '/test.txt',
+    selected: false,
+    type: DirentType.File,
+  }
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    isReadonly: true,
+    items: [item],
+  }
+  const menuEntries = getMenuEntries2(state)
+  const renameEntry = menuEntries.find((entry) => entry.id === 'rename')
+  expect(renameEntry).toEqual({
+    command: 'Explorer.renameDirent',
+    flags: MenuItemFlags.Disabled,
+    id: 'rename',
+    label: 'Rename',
+  })
 })
