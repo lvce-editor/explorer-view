@@ -90,6 +90,11 @@ const menuEntryRename: MenuEntry = {
   label: ViewletExplorerStrings.rename(),
 }
 
+const menuEntryRenameDisabled: MenuEntry = {
+  ...menuEntryRename,
+  flags: MenuItemFlags.Disabled,
+}
+
 const menuEntryDelete: MenuEntry = {
   command: 'Explorer.removeDirent',
   flags: MenuItemFlags.None,
@@ -104,23 +109,6 @@ const menuEntryRemoveFolderFromWorkspace: MenuEntry = {
   label: ViewletExplorerStrings.removeFolderFromWorkspace(),
 }
 
-const ALL_ENTRIES: readonly MenuEntry[] = [
-  menuEntryNewFile,
-  menuEntryNewFolder,
-  menuEntryOpenContainingFolder,
-  menuEntryOpenInIntegratedTerminal,
-  MenuEntrySeparator.menuEntrySeparator,
-  menuEntryCut,
-  menuEntryCopy,
-  menuEntryPaste,
-  MenuEntrySeparator.menuEntrySeparator,
-  menuEntryCopyPath,
-  menuEntryCopyRelativePath,
-  MenuEntrySeparator.menuEntrySeparator,
-  menuEntryRename,
-  menuEntryDelete,
-]
-
 // TODO there are two possible ways of getting the focused dirent of explorer
 // 1. directly access state of explorer (bad because it directly accesses state of another component)
 // 2. expose getFocusedDirent method in explorer (bad because explorer code should not know about for menuEntriesExplorer, which needs that method)
@@ -131,11 +119,33 @@ const getFocusedDirent = (explorerState: ExplorerState): ExplorerItem | undefine
   return explorerState.items[explorerState.focusedIndex]
 }
 
-const getMenuEntriesDirectory = (): readonly MenuEntry[] => {
-  return ALL_ENTRIES
+const getMenuEntryRename = (state: ExplorerState): MenuEntry => {
+  if (state.isReadonly) {
+    return menuEntryRenameDisabled
+  }
+  return menuEntryRename
 }
 
-const getMenuEntriesFile = (): readonly MenuEntry[] => {
+const getMenuEntriesDirectory = (state: ExplorerState): readonly MenuEntry[] => {
+  return [
+    menuEntryNewFile,
+    menuEntryNewFolder,
+    menuEntryOpenContainingFolder,
+    menuEntryOpenInIntegratedTerminal,
+    MenuEntrySeparator.menuEntrySeparator,
+    menuEntryCut,
+    menuEntryCopy,
+    menuEntryPaste,
+    MenuEntrySeparator.menuEntrySeparator,
+    menuEntryCopyPath,
+    menuEntryCopyRelativePath,
+    MenuEntrySeparator.menuEntrySeparator,
+    getMenuEntryRename(state),
+    menuEntryDelete,
+  ]
+}
+
+const getMenuEntriesFile = (state: ExplorerState): readonly MenuEntry[] => {
   return [
     menuEntryOpenContainingFolder,
     menuEntryOpenInIntegratedTerminal,
@@ -149,12 +159,12 @@ const getMenuEntriesFile = (): readonly MenuEntry[] => {
     MenuEntrySeparator.menuEntrySeparator,
     menuEntrySelectForCompare,
     MenuEntrySeparator.menuEntrySeparator,
-    menuEntryRename,
+    getMenuEntryRename(state),
     menuEntryDelete,
   ]
 }
 
-const getMenuEntriesFileCompareWithSelected = (): readonly MenuEntry[] => {
+const getMenuEntriesFileCompareWithSelected = (state: ExplorerState): readonly MenuEntry[] => {
   return [
     menuEntryOpenContainingFolder,
     menuEntryOpenInIntegratedTerminal,
@@ -168,13 +178,13 @@ const getMenuEntriesFileCompareWithSelected = (): readonly MenuEntry[] => {
     MenuEntrySeparator.menuEntrySeparator,
     menuEntryCompareWithSelected,
     MenuEntrySeparator.menuEntrySeparator,
-    menuEntryRename,
+    getMenuEntryRename(state),
     menuEntryDelete,
   ]
 }
 
-const getMenuEntriesDefault = (): readonly MenuEntry[] => {
-  return ALL_ENTRIES
+const getMenuEntriesDefault = (state: ExplorerState): readonly MenuEntry[] => {
+  return getMenuEntriesDirectory(state)
 }
 
 const getMenuEntriesRoot = (root: string): readonly MenuEntry[] => {
@@ -202,13 +212,13 @@ export const getMenuEntries = (state: ExplorerState): readonly MenuEntry[] => {
   }
   switch (focusedDirent.type) {
     case DirentType.Directory:
-      return getMenuEntriesDirectory()
+      return getMenuEntriesDirectory(state)
     case DirentType.File:
       if (state.compareSourceUri && state.compareSourceUri !== focusedDirent.path) {
-        return getMenuEntriesFileCompareWithSelected()
+        return getMenuEntriesFileCompareWithSelected(state)
       }
-      return getMenuEntriesFile()
+      return getMenuEntriesFile(state)
     default:
-      return getMenuEntriesDefault()
+      return getMenuEntriesDefault(state)
   }
 }

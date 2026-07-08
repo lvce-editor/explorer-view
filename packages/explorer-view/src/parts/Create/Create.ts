@@ -58,6 +58,7 @@ export const create = (
     initial: true,
     inputSource: 0,
     isPointerDown: false,
+    isReadonly: false,
     itemHeight: Height.ListItem,
     items: [],
     maxIndent: 0,

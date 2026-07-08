@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetErrorCode from '../GetErrorCode/GetErrorCode.ts'
 import * as GetErrorMessage from '../GetErrorMessage/GetErrorMessage.ts'
 import * as GetExcluded from '../GetExcluded/GetExcluded.ts'
@@ -19,7 +20,10 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
   const root = GetSavedRoot.getSavedRoot(savedState, workspacePath)
   try {
     // TODO path separator could be restored from saved state
-    const pathSeparator = await GetPathSeparator.getPathSeparator(root) // TODO only load path separator once
+    const [pathSeparator, isReadonly] = await Promise.all([
+      GetPathSeparator.getPathSeparator(root), // TODO only load path separator once
+      FileSystem.isReadonly(root),
+    ])
     const excluded = GetExcluded.getExcluded()
     const restoredDirents = await RestoreExpandedState.restoreExpandedState(savedState, root, pathSeparator, excluded)
     const rawDeltaY = GetRestoredDeltaY.getRestoredDeltaY(savedState)
@@ -46,6 +50,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       excluded,
       hasError: false,
       initial: false,
+      isReadonly,
       items: restoredDirents,
       maxIndent: 10,
       minLineY,
@@ -63,6 +68,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       errorMessage,
       hasError: true,
       initial: false,
+      isReadonly: false,
       items: [],
       root,
       useChevrons,

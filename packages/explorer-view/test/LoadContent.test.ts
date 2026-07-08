@@ -10,6 +10,9 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
     'FileSystem.getPathSeparator'() {
       return '/'
     },
+    'FileSystem.isReadonly'() {
+      return false
+    },
     'FileSystem.readDirWithFileTypes'() {
       return [
         { name: 'folder1', type: Directory },
@@ -67,6 +70,7 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', '/workspace'],
+    ['FileSystem.isReadonly', '/workspace'],
     ['FileSystem.readDirWithFileTypes', '/workspace'],
   ])
 })
@@ -75,6 +79,9 @@ test('loadContent clamps restored deltaY to maxDeltaY when content is still scro
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return true
     },
     'FileSystem.readDirWithFileTypes'() {
       return [
@@ -106,10 +113,12 @@ test('loadContent clamps restored deltaY to maxDeltaY when content is still scro
 
   expect({
     deltaY: result.deltaY,
+    isReadonly: result.isReadonly,
     items: result.items,
     minLineY: result.minLineY,
   }).toEqual({
     deltaY: 60,
+    isReadonly: true,
     items: [
       { depth: 1, icon: '', name: 'file1', path: '/workspace/file1', posInSet: 1, setSize: 8, type: File },
       { depth: 1, icon: '', name: 'file2', path: '/workspace/file2', posInSet: 2, setSize: 8, type: File },
@@ -129,6 +138,7 @@ test('loadContent clamps restored deltaY to maxDeltaY when content is still scro
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', '/workspace'],
+    ['FileSystem.isReadonly', '/workspace'],
     ['FileSystem.readDirWithFileTypes', '/workspace'],
   ])
 })

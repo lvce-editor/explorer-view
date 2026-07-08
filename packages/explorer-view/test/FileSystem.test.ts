@@ -98,3 +98,15 @@ test('getPathSeparator', async () => {
   expect(result).toBe('/')
   expect(mockRpc.invocations).toEqual([['FileSystem.getPathSeparator', '/']])
 })
+
+test('isReadonly', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.isReadonly'() {
+      return true
+    },
+  })
+
+  const result = await FileSystem.isReadonly('/test')
+  expect(result).toBe(true)
+  expect(mockRpc.invocations).toEqual([['FileSystem.isReadonly', '/test']])
+})
