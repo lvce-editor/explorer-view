@@ -6,8 +6,11 @@ import { isAscii } from '../IsAscii/IsAscii.ts'
 
 const typeAheadTimeout: { value?: ReturnType<typeof setTimeout> } = {}
 
-export const handleKeyDown = (state: ExplorerState, key: string): ExplorerState => {
+export const handleKeyDown = (state: ExplorerState, defaultPrevented: boolean, key: string): ExplorerState => {
   const { focusedIndex, focusWord, focusWordTimeout, items } = state
+  if (defaultPrevented) {
+    return state
+  }
   if (focusWord && key === '') {
     return cancelTypeAhead(state)
   }
