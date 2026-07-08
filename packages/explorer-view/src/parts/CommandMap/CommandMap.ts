@@ -23,6 +23,7 @@ import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetMenuEntries2 from '../GetMenuEntries2/GetMenuEntries2.ts'
 import * as GetMenuEntries from '../GetMenuEntries/GetMenuEntries.ts'
 import * as GetMouseActions from '../GetMouseActions/GetMouseActions.ts'
+import * as GetTitle from '../GetTitle/GetTitle.ts'
 import * as HandleArrowLeft from '../HandleArrowLeft/HandleArrowLeft.ts'
 import * as HandleArrowRight from '../HandleArrowRight/HandleArrowRight.ts'
 import * as HandleBlur from '../HandleBlur/HandleBlur.ts'
@@ -109,6 +110,7 @@ export const commandMap = {
   'Explorer.getMenuEntries': GetMenuEntries.getMenuEntries,
   'Explorer.getMenuEntries2': WrapCommand.wrapGetter(GetMenuEntries2.getMenuEntries2),
   'Explorer.getMouseActions': GetMouseActions.getMouseActions,
+  'Explorer.getTitle': WrapCommand.wrapGetter(GetTitle.getTitle),
   'Explorer.handleArrowLeft': WrapCommand.wrapListItemCommand(HandleArrowLeft.handleArrowLeft),
   'Explorer.handleArrowRight': WrapCommand.wrapListItemCommand(HandleArrowRight.handleArrowRight),
   'Explorer.handleBlur': WrapCommand.wrapListItemCommand(HandleBlur.handleBlur),
