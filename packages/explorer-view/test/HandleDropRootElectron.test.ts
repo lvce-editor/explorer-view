@@ -51,6 +51,7 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', '/home/simon/dotfiles'],

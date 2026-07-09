@@ -20,6 +20,18 @@ test('readDirWithFileTypes', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
 })
 
+test('readFile', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return 'content'
+    },
+  })
+
+  const result = await FileSystem.readFile('/test/file.txt')
+  expect(result).toBe('content')
+  expect(mockRpc.invocations).toEqual([['FileSystem.readFile', '/test/file.txt']])
+})
+
 test('writeFile', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {

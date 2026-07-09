@@ -49,6 +49,7 @@ export const create = (
     focusedIndex: -1,
     focusWord: '',
     focusWordTimeout: 800,
+    gitIgnoreDecorations: false,
     handleOffset: 0,
     hasError: false,
     height,

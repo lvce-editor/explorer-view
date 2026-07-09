@@ -5,6 +5,7 @@ import * as GetErrorMessage from '../GetErrorMessage/GetErrorMessage.ts'
 import * as GetExcluded from '../GetExcluded/GetExcluded.ts'
 import * as GetFileDecorations from '../GetFileDecorations/GetFileDecorations.ts'
 import * as GetFriendlyErrorMessage from '../GetFriendlyErrorMessage/GetFriendlyErrorMessage.ts'
+import * as GetGitIgnoredUris from '../GetGitIgnoredUris/GetGitIgnoredUris.ts'
 import * as GetPathSeparator from '../GetPathSeparator/GetPathSeparator.ts'
 import * as GetRestoredDeltaY from '../GetRestoredDeltaY/GetRestoredDeltaY.ts'
 import * as GetSavedRoot from '../GetSavedRoot/GetSavedRoot.ts'
@@ -15,7 +16,7 @@ import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedSt
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
   const { assetDir, height, itemHeight, platform } = state
-  const { confirmDelete, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
+  const { confirmDelete, gitIgnoreDecorations, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = GetSavedRoot.getSavedRoot(savedState, workspacePath)
   try {
@@ -40,6 +41,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       assetDir,
       platform,
     )
+    const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, restoredDirents, pathSeparator, gitIgnoreDecorations)
     return {
       ...state,
       confirmDelete,
@@ -48,6 +50,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       errorCode: '',
       errorMessage: '',
       excluded,
+      gitIgnoreDecorations,
       hasError: false,
       initial: false,
       isReadonly,
@@ -56,6 +59,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       minLineY,
       pathSeparator,
       root,
+      sourceControlIgnoredUris,
       useChevrons,
     }
   } catch (error) {
@@ -66,6 +70,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       confirmDelete,
       errorCode,
       errorMessage,
+      gitIgnoreDecorations,
       hasError: true,
       initial: false,
       isReadonly: false,
