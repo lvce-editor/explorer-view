@@ -5,7 +5,7 @@ import * as GetFittingIndex from '../GetFittingIndex/GetFittingIndex.ts'
 import * as GetNewDirentsForNewDirent from '../GetNewDirentsForNewDirent/GetNewDirentsForNewDirent.ts'
 import * as GetNewDirentType from '../GetNewDirentType/GetNewDirentType.ts'
 
-export const newDirent = async (state: ExplorerState, editingType: number): Promise<ExplorerState> => {
+export const newDirent = async (state: ExplorerState, editingType: number, editingIcon = ''): Promise<ExplorerState> => {
   // TODO do it like vscode, select position between folders and files
   const { editingIndex, focusedIndex, items, root } = state
   if (editingIndex !== -1) {
@@ -17,6 +17,7 @@ export const newDirent = async (state: ExplorerState, editingType: number): Prom
   const newEditingIndex = newDirents.findIndex((item) => item.type === DirentType.EditingFile || item.type === DirentType.EditingFolder)
   return {
     ...state,
+    editingIcon,
     editingIndex: newEditingIndex,
     editingType,
     editingValue: '',
