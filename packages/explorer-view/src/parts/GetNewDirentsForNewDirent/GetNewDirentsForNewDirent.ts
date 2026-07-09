@@ -19,6 +19,9 @@ export const getNewDirentsForNewDirent = async (
       setSize: 1,
       type,
     }
+    if (type === DirentType.EditingFolder) {
+      return [newDirent, ...items]
+    }
     return [...items, newDirent]
   }
 

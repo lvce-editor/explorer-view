@@ -17,7 +17,7 @@ test('newFolder', async () => {
       return undefined
     },
     'IconTheme.getFolderIcon'() {
-      return ''
+      return 'folder-icon'
     },
     'IconTheme.getIcons'() {
       return ['']
@@ -38,6 +38,7 @@ test('newFolder', async () => {
   const result = await newFolder(mockState)
   expect(result).toEqual({
     ...mockState,
+    editingIcon: 'folder-icon',
     editingIndex: 0,
     editingType: ExplorerEditingType.CreateFolder,
     editingValue: '',
@@ -56,5 +57,5 @@ test('newFolder', async () => {
       },
     ],
   })
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: '' }]])
 })
