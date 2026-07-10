@@ -18,7 +18,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const file1 = Locator('.TreeItem').nth(0)
   await expect(file1).toHaveClass('TreeItemActive')
   const file2 = Locator('.TreeItem').nth(1)
-  await expect(file2).toHaveClass('TreeItem')
+  await expect(file2).toHaveClass('TreeItemActive')
   const file3 = Locator('.TreeItem').nth(2)
-  await expect(file3).not.toHaveClass('TreeItemActive')
+  await expect(file3).toHaveClass('TreeItemActive')
 }
