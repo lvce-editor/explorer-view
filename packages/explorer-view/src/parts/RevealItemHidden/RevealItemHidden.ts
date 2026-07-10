@@ -10,13 +10,13 @@ import { scrollInto } from '../ScrollInto/ScrollInto.ts'
 
 // TODO maybe just insert items into explorer and refresh whole explorer
 export const revealItemHidden = async (state: ExplorerState, uri: string): Promise<ExplorerState> => {
-  const { items, maxLineY, minLineY, pathSeparator, root } = state
+  const { excluded, items, maxLineY, minLineY, pathSeparator, root } = state
   const pathParts = getPathParts(root, uri, pathSeparator)
   if (pathParts.length === 0) {
     return state
   }
   const pathPartsToReveal = getPathPartsToReveal(root, pathParts, items)
-  const pathPartsChildren = await getPathPartsChildren(pathPartsToReveal)
+  const pathPartsChildren = await getPathPartsChildren(pathPartsToReveal, excluded, root)
   const pathPartsChildrenFlat = pathPartsChildren.flat()
   const orderedPathParts = orderDirents(pathPartsChildrenFlat)
   const mergedDirents = mergeVisibleWithHiddenItems(items, orderedPathParts)
