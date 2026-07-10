@@ -1,7 +1,8 @@
 import * as DirentType from '../DirentType/DirentType.ts'
+import { isExcluded } from '../IsExcluded/IsExcluded.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
-export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pathSeparator: any): readonly any[] => {
+export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pathSeparator: any, root: string = path): readonly any[] => {
   let children = map[path]
   if (!children) {
     return []
@@ -11,7 +12,8 @@ export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: 
   const visible = []
   const displayRoot = path.endsWith(pathSeparator) ? path : path + pathSeparator
   for (const child of children) {
-    if (excluded.includes(child.name)) {
+    const childPath = displayRoot + child.name
+    if (isExcluded(root, childPath, excluded)) {
       continue
     }
     visible.push(child)
@@ -31,7 +33,7 @@ export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: 
         setSize: visibleLength,
         type: DirentType.DirectoryExpanded,
       })
-      dirents.push(...getSavedChildDirents(map, childPath, depth + 1, excluded, pathSeparator))
+      dirents.push(...getSavedChildDirents(map, childPath, depth + 1, excluded, pathSeparator, root))
     } else {
       dirents.push({
         depth,

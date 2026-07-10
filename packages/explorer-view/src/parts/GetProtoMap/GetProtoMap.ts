@@ -6,6 +6,7 @@ export const getProtoMap = (
   root: string,
   pathToDirents: Record<string, readonly RawDirent[]>,
   expandedPaths: readonly string[],
+  excluded: readonly string[] = [],
 ): readonly ExplorerItem[] => {
-  return getProtoMapInternal(root, pathToDirents, expandedPaths, 1)
+  return getProtoMapInternal(root, pathToDirents, expandedPaths, 1, excluded, root)
 }

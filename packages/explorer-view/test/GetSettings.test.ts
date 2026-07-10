@@ -12,6 +12,7 @@ test('getSettings - useChevrons true', async () => {
   expect(settings).toEqual({
     confirmDelete: false,
     confirmPaste: false,
+    excluded: [],
     sourceControlDecorations: true,
     useChevrons: true,
   })
@@ -19,13 +20,14 @@ test('getSettings - useChevrons true', async () => {
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
   ])
 })
 
 test('getSettings - useChevrons false', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Preferences.get'(settingName: string) {
+    'Preferences.get'(settingName: string): unknown {
       if (settingName === 'explorer.useChevrons') {
         return false
       }
@@ -35,6 +37,9 @@ test('getSettings - useChevrons false', async () => {
       if (settingName === 'explorer.sourceControlDecorations') {
         return false
       }
+      if (settingName === 'files.exclude') {
+        return { '**/.git': true, '**/*.tmp': false }
+      }
       return undefined
     },
   })
@@ -42,6 +47,7 @@ test('getSettings - useChevrons false', async () => {
   expect(settings).toEqual({
     confirmDelete: false,
     confirmPaste: false,
+    excluded: ['**/.git'],
     sourceControlDecorations: false,
     useChevrons: false,
   })
@@ -49,6 +55,7 @@ test('getSettings - useChevrons false', async () => {
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
   ])
 })
@@ -63,6 +70,7 @@ test('getSettings - useChevrons undefined', async () => {
   expect(settings).toEqual({
     confirmDelete: false,
     confirmPaste: false,
+    excluded: [],
     sourceControlDecorations: true,
     useChevrons: true,
   })
@@ -70,6 +78,7 @@ test('getSettings - useChevrons undefined', async () => {
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
   ])
 })

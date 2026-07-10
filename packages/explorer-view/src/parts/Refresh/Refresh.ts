@@ -6,13 +6,13 @@ import { getProtoMap } from '../GetProtoMap/GetProtoMap.ts'
 import { sortPathDirentsMap } from '../SortPathDirentsMap/SortPathDirentsMap.ts'
 
 export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { focusedIndex, items, root } = state
+  const { excluded, focusedIndex, items, root } = state
   const expandedDirents = getExpandedDirents(items)
   const expandedPaths = getPaths(expandedDirents)
   const allPaths = [root, ...expandedPaths]
   const pathToDirents = await getPathDirentsMap(allPaths)
   const sortedPathDirents = sortPathDirentsMap(pathToDirents)
-  const newItems = getProtoMap(root, sortedPathDirents, expandedPaths)
+  const newItems = getProtoMap(root, sortedPathDirents, expandedPaths, excluded)
   let newFocusedIndex = focusedIndex
   if (focusedIndex >= newItems.length) {
     newFocusedIndex = newItems.length - 1
