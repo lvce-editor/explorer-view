@@ -63,6 +63,52 @@ test('revealItemHidden - expands visible ancestor folder', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/folder1']])
 })
 
+test('revealItemHidden - inserts revealed descendants before the next visible sibling', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/root/folder1') {
+        return [{ name: 'nested', type: DirentType.Directory }]
+      }
+      if (path === '/root/folder1/nested') {
+        return [{ name: 'file1.txt', type: DirentType.File }]
+      }
+      return []
+    },
+  })
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    items: [
+      {
+        depth: 1,
+        name: 'folder1',
+        path: '/root/folder1',
+        selected: false,
+        type: DirentType.Directory,
+      },
+      {
+        depth: 1,
+        name: 'sibling.txt',
+        path: '/root/sibling.txt',
+        selected: false,
+        type: DirentType.File,
+      },
+    ],
+    root: '/root',
+  }
+  const newState = await revealItemHidden(state, '/root/folder1/nested/file1.txt')
+  expect(newState.items.map((item) => item.path)).toEqual([
+    '/root/folder1',
+    '/root/folder1/nested',
+    '/root/folder1/nested/file1.txt',
+    '/root/sibling.txt',
+  ])
+  expect(newState.focusedIndex).toBe(2)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/root/folder1'],
+    ['FileSystem.readDirWithFileTypes', '/root/folder1/nested'],
+  ])
+})
+
 test('revealItemHidden - returns same state for empty path parts', async () => {
   using mockRpc = RendererWorker.registerMockRpc({})
   const state = createDefaultState()
