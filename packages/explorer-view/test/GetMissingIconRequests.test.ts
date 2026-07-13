@@ -30,3 +30,15 @@ test('getMissingIconRequests - some missing', () => {
     { name: 'file2.txt', path: '/test/file2.txt', type: DirentType.File },
   ])
 })
+
+test('getMissingIconRequests - expanded folder cached separately', () => {
+  const dirents: readonly ExplorerItem[] = [
+    { depth: 0, name: 'packages', path: '/test/packages', selected: false, type: DirentType.DirectoryExpanded },
+  ]
+  const cache: FileIconCache = {
+    '/test/packages': 'folder-icon',
+  }
+  expect(GetMissingIconRequests.getMissingIconRequests(dirents, cache)).toEqual([
+    { expanded: true, name: 'packages', path: '/test/packages', type: DirentType.DirectoryExpanded },
+  ])
+})

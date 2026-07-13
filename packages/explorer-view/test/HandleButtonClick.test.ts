@@ -47,6 +47,9 @@ test('handleButtonClick - NewFolder', async () => {
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
+    'IconTheme.getFolderIcon'() {
+      return 'folder-icon'
+    },
   })
 
   const state: ExplorerState = {
@@ -56,6 +59,7 @@ test('handleButtonClick - NewFolder', async () => {
   }
   const newState = await handleButtonClick(state, InputName.NewFolder)
   expect(newState.editingType).toBe(ExplorerEditingType.CreateFolder)
+  expect(newState.editingIcon).toBe('folder-icon')
   expect(newState.editingIndex).toBeGreaterThanOrEqual(0)
   expect(newState.editingValue).toBe('')
 })

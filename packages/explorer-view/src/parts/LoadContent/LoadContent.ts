@@ -1,9 +1,10 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetErrorCode from '../GetErrorCode/GetErrorCode.ts'
 import * as GetErrorMessage from '../GetErrorMessage/GetErrorMessage.ts'
-import * as GetExcluded from '../GetExcluded/GetExcluded.ts'
 import * as GetFileDecorations from '../GetFileDecorations/GetFileDecorations.ts'
 import * as GetFriendlyErrorMessage from '../GetFriendlyErrorMessage/GetFriendlyErrorMessage.ts'
+import * as GetGitIgnoredUris from '../GetGitIgnoredUris/GetGitIgnoredUris.ts'
 import * as GetPathSeparator from '../GetPathSeparator/GetPathSeparator.ts'
 import * as GetRestoredDeltaY from '../GetRestoredDeltaY/GetRestoredDeltaY.ts'
 import * as GetSavedRoot from '../GetSavedRoot/GetSavedRoot.ts'
@@ -14,13 +15,15 @@ import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedSt
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
   const { assetDir, height, itemHeight, platform } = state
-  const { confirmDelete, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
+  const { confirmDelete, excluded, gitIgnoreDecorations, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = GetSavedRoot.getSavedRoot(savedState, workspacePath)
   try {
     // TODO path separator could be restored from saved state
-    const pathSeparator = await GetPathSeparator.getPathSeparator(root) // TODO only load path separator once
-    const excluded = GetExcluded.getExcluded()
+    const [pathSeparator, isReadonly] = await Promise.all([
+      GetPathSeparator.getPathSeparator(root), // TODO only load path separator once
+      FileSystem.isReadonly(root),
+    ])
     const restoredDirents = await RestoreExpandedState.restoreExpandedState(savedState, root, pathSeparator, excluded)
     const rawDeltaY = GetRestoredDeltaY.getRestoredDeltaY(savedState)
     const maxDeltaY = Math.max(restoredDirents.length * itemHeight - height, 0)
@@ -36,6 +39,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       assetDir,
       platform,
     )
+    const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, restoredDirents, pathSeparator, gitIgnoreDecorations)
     return {
       ...state,
       confirmDelete,
@@ -44,13 +48,16 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       errorCode: '',
       errorMessage: '',
       excluded,
+      gitIgnoreDecorations,
       hasError: false,
       initial: false,
+      isReadonly,
       items: restoredDirents,
       maxIndent: 10,
       minLineY,
       pathSeparator,
       root,
+      sourceControlIgnoredUris,
       useChevrons,
     }
   } catch (error) {
@@ -61,8 +68,10 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       confirmDelete,
       errorCode,
       errorMessage,
+      gitIgnoreDecorations,
       hasError: true,
       initial: false,
+      isReadonly: false,
       items: [],
       root,
       useChevrons,

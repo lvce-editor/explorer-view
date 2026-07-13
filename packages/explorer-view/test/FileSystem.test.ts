@@ -20,6 +20,18 @@ test('readDirWithFileTypes', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
 })
 
+test('readFile', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return 'content'
+    },
+  })
+
+  const result = await FileSystem.readFile('/test/file.txt')
+  expect(result).toBe('content')
+  expect(mockRpc.invocations).toEqual([['FileSystem.readFile', '/test/file.txt']])
+})
+
 test('writeFile', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
@@ -97,4 +109,16 @@ test('getPathSeparator', async () => {
   const result = await FileSystem.getPathSeparator('/')
   expect(result).toBe('/')
   expect(mockRpc.invocations).toEqual([['FileSystem.getPathSeparator', '/']])
+})
+
+test('isReadonly', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.isReadonly'() {
+      return true
+    },
+  })
+
+  const result = await FileSystem.isReadonly('/test')
+  expect(result).toBe(true)
+  expect(mockRpc.invocations).toEqual([['FileSystem.isReadonly', '/test']])
 })

@@ -17,6 +17,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleBlur'],
     },
     {
+      name: DomEventListenersFunctions.HandleKeyDown,
+      params: ['handleKeyDown', EventExpression.DefaultPrevented, EventExpression.Key],
+    },
+    {
       name: DomEventListenersFunctions.HandleClick,
       params: [
         'handleClickAt',

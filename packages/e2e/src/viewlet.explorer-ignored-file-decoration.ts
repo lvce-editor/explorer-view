@@ -2,16 +2,12 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-ignored-file-decoration'
 
-export const skip = 1
-
-export const test: Test = async ({ expect, Extension, FileSystem, Locator, Settings, Workspace }) => {
+export const test: Test = async ({ expect, FileSystem, Locator, Settings, Workspace }) => {
   // arrange
   await Settings.update({
-    'explorer.sourceControlDecorations': true,
+    'explorer.gitIgnoreDecorations': true,
   })
-  const uri = import.meta.resolve('../fixtures/sample.source-control-decoration')
-  await Extension.addWebExtension(uri)
-  const tmpDir = 'extension-host://xyz://'
+  const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/a`, '')
   await FileSystem.writeFile(`${tmpDir}/b`, '')
   await FileSystem.writeFile(`${tmpDir}/.gitignore`, 'a')
@@ -21,6 +17,10 @@ export const test: Test = async ({ expect, Extension, FileSystem, Locator, Setti
 
   // assert
   const a = Locator('.TreeItem[aria-label="a"]')
+  const b = Locator('.TreeItem[aria-label="b"]')
+  const aLabel = a.locator('.Label')
+  const bLabel = b.locator('.Label')
   await expect(a).toBeVisible()
-  await expect(a).toHaveClass('decoration-ignored')
+  await expect(aLabel).toHaveClass('LabelCut')
+  await expect(bLabel).toHaveJSProperty('className', 'Label')
 }

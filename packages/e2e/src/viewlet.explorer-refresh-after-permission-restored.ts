@@ -4,7 +4,5 @@ export const name = 'viewlet.explorer-refresh-after-permission-restored'
 export const skip = 1
 
 export const test: Test = async () => {
-  // TODO arrange: use a provider or fixture that first denies folder access.
-  // TODO act: restore permission and refresh Explorer.
-  // TODO assert: the folder recovers from the error state and renders its children.
+  // Deferred: the e2e runner does not register the FileSystemProvider.setError hook needed to simulate permission restoration.
 }

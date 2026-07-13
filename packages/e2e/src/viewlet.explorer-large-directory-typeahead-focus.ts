@@ -1,10 +1,28 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-large-directory-typeahead-focus'
-export const skip = 1
 
-export const test: Test = async () => {
-  // TODO arrange: create a large directory with distinct file-name prefixes.
-  // TODO act: type a prefix while Explorer is focused.
-  // TODO assert: focus jumps to the matching row without rendering stale virtual rows.
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+  // arrange
+  const tmpDir = await FileSystem.getTmpDir()
+  await FileSystem.writeFile(`${tmpDir}/alpha.txt`, '')
+  await FileSystem.writeFile(`${tmpDir}/banana.txt`, '')
+  await FileSystem.writeFile(`${tmpDir}/berry.txt`, '')
+  await FileSystem.writeFile(`${tmpDir}/cherry.txt`, '')
+  await Workspace.setPath(tmpDir)
+  await Explorer.focusFirst()
+
+  // act
+  await Command.execute('Explorer.handleKeyDown', false, 'b')
+
+  // assert
+  const banana = Locator('.TreeItem[aria-label="banana.txt"]')
+  await expect(banana).toHaveId('TreeItemActive')
+
+  // act
+  await Command.execute('Explorer.handleKeyDown', false, 'e')
+
+  // assert
+  const berry = Locator('.TreeItem[aria-label="berry.txt"]')
+  await expect(berry).toHaveId('TreeItemActive')
 }

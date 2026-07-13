@@ -12,8 +12,8 @@ const mergeDirents = (oldDirents: readonly ExplorerItem[], newDirents: readonly 
   return newDirents
 }
 
-const getMergedDirents = async (root: any, pathSeparator: any, dirents: any): Promise<any> => {
-  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, root, 0)
+const getMergedDirents = async (root: any, pathSeparator: any, dirents: any, excluded: readonly string[]): Promise<any> => {
+  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, root, 0, excluded, root)
   const mergedDirents = mergeDirents(dirents, childDirents)
   return mergedDirents
 }
@@ -46,7 +46,7 @@ export const handleDrop = async (
   files: readonly File[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
-  const { items, pathSeparator, root } = state
+  const { excluded, items, pathSeparator, root } = state
   const droppedDirectoryPath = getFirstDroppedDirectoryPath(state, fileHandles, paths)
   if (droppedDirectoryPath) {
     return openDroppedDirectoryAsWorkspace(state, droppedDirectoryPath)
@@ -58,7 +58,7 @@ export const handleDrop = async (
     }
   }
   await copyFilesElectron(root, fileHandles, files, paths)
-  const mergedDirents = await getMergedDirents(root, pathSeparator, items)
+  const mergedDirents = await getMergedDirents(root, pathSeparator, items, excluded)
   return {
     ...state,
     dropTargets: [],

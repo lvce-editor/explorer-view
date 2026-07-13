@@ -39,6 +39,20 @@ test('requestFileIcons - folder icons', async () => {
   expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ name: 'folder', type: 2 }]]])
 })
 
+test('requestFileIcons - expanded folder icons', async () => {
+  const requests = [{ expanded: true, name: 'folder', path: '/test/folder', type: DirentType.DirectoryExpanded }]
+
+  using mockRpc = IconThemeWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return ['folder-icon-open']
+    },
+  })
+
+  const result = await RequestFileIcons.requestFileIcons(requests)
+  expect(result).toEqual(['folder-icon-open'])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ expanded: true, name: 'folder', type: 2 }]]])
+})
+
 test('requestFileIcons - mixed requests', async () => {
   const requests = [
     { name: 'file.txt', path: '/test/file.txt', type: DirentType.File },

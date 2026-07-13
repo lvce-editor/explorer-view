@@ -10,6 +10,9 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
     'FileSystem.getPathSeparator'() {
       return '/'
     },
+    'FileSystem.isReadonly'() {
+      return false
+    },
     'FileSystem.readDirWithFileTypes'() {
       return [{ isDirectory: false, isFile: true, name: 'inside.txt' }]
     },
@@ -48,9 +51,12 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'files.exclude'],
+    ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', '/home/simon/dotfiles'],
+    ['FileSystem.isReadonly', '/home/simon/dotfiles'],
     ['FileSystem.readDirWithFileTypes', '/home/simon/dotfiles'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])

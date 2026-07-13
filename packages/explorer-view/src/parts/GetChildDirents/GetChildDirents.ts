@@ -8,6 +8,7 @@ export const getChildDirents = async (
   parentDirentPath: string,
   parentDirentDepth: number,
   excluded: readonly string[] = [],
+  root: string = parentDirentPath,
 ): Promise<readonly ExplorerItem[]> => {
   Assert.string(pathSeparator)
   // TODO use event/actor based code instead, this is impossible to cancel right now
@@ -17,6 +18,6 @@ export const getChildDirents = async (
   // and more typesafe than Command.execute
   // and more performant
   const rawDirents = await getChildDirentsRaw(parentDirentPath)
-  const displayDirents = ToDisplayDirents.toDisplayDirents(pathSeparator, rawDirents, parentDirentPath, parentDirentDepth, excluded)
+  const displayDirents = ToDisplayDirents.toDisplayDirents(pathSeparator, rawDirents, parentDirentPath, parentDirentDepth, excluded, false, root)
   return displayDirents
 }

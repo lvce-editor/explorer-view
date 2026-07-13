@@ -10,6 +10,9 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
     'FileSystem.getPathSeparator'() {
       return '/'
     },
+    'FileSystem.isReadonly'() {
+      return false
+    },
     'FileSystem.readDirWithFileTypes'() {
       return [{ isDirectory: false, isFile: true, name: 'inside.txt' }]
     },
@@ -52,9 +55,12 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'files.exclude'],
+    ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', 'html://dropped-folder'],
+    ['FileSystem.isReadonly', 'html://dropped-folder'],
     ['FileSystem.readDirWithFileTypes', 'html://dropped-folder'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])
@@ -64,6 +70,9 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return false
     },
     'FileSystem.readDirWithFileTypes'() {
       return [{ isDirectory: false, isFile: true, name: 'inside.txt' }]
@@ -111,9 +120,12 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'files.exclude'],
+    ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', 'html://first-folder'],
+    ['FileSystem.isReadonly', 'html://first-folder'],
     ['FileSystem.readDirWithFileTypes', 'html://first-folder'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])
@@ -143,6 +155,9 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return false
     },
     'FileSystem.readDirWithFileTypes'() {
       return [{ isDirectory: false, isFile: true, name: 'folder-inside.txt' }]
@@ -190,9 +205,12 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'files.exclude'],
+    ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', 'html://dropped-folder'],
+    ['FileSystem.isReadonly', 'html://dropped-folder'],
     ['FileSystem.readDirWithFileTypes', 'html://dropped-folder'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])

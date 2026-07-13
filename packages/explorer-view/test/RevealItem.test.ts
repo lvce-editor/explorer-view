@@ -5,6 +5,20 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { revealItem } from '../src/parts/RevealItem/RevealItem.ts'
 
+test('revealItem - excluded uri leaves state unchanged', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    excluded: ['**/.git'],
+    focused: true,
+    focusedIndex: 0,
+    items: [{ depth: 1, name: 'visible.txt', path: '/root/visible.txt', selected: false, type: DirentType.File }],
+    pathSeparator: '/',
+    root: '/root',
+  }
+
+  await expect(revealItem(state, '/root/.git/config')).resolves.toBe(state)
+})
+
 test('revealItem - item not found', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {

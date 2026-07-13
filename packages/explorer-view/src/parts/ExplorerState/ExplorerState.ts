@@ -26,7 +26,7 @@ export interface ExplorerState {
   readonly errorMessageLeft: number
   readonly errorMessageTop: number
   readonly errorMessageWidth: number
-  readonly excluded: readonly any[]
+  readonly excluded: readonly string[]
   readonly fileIconCache: FileIconCache
   readonly fileIconWidth: number
   readonly finalDeltaY: number
@@ -35,6 +35,7 @@ export interface ExplorerState {
   readonly focusedIndex: number
   readonly focusWord: string
   readonly focusWordTimeout: number
+  readonly gitIgnoreDecorations: boolean
   readonly handleOffset: number
   readonly hasError: boolean
   readonly height: number
@@ -44,6 +45,7 @@ export interface ExplorerState {
   readonly initial: boolean
   readonly inputSource: number
   readonly isPointerDown: boolean
+  readonly isReadonly: boolean
   readonly itemHeight: number
   readonly items: readonly ExplorerItem[]
   readonly maxIndent: number

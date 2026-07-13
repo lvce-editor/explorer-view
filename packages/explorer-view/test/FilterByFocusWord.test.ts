@@ -11,6 +11,11 @@ test('filterByFocusWord - no match', () => {
   expect(filterByFocusWord(items, -1, 'x')).toBe(-1)
 })
 
+test('filterByFocusWord - only matches from the start of the name', () => {
+  const items = ['apple', 'snap', 'banana']
+  expect(filterByFocusWord(items, -1, 'a')).toBe(0)
+})
+
 test('filterByFocusWord - cycle through matches', () => {
   const items = ['apple', 'banana', 'berry']
   // First match

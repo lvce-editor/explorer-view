@@ -4,7 +4,5 @@ export const name = 'viewlet.explorer-copy-folder-name-collision-generates-uniqu
 export const skip = 1
 
 export const test: Test = async () => {
-  // TODO arrange: create a folder with child files and copy it through Explorer.
-  // TODO act: paste the folder into a location where its name already exists.
-  // TODO assert: Explorer creates a uniquely named folder and preserves the copied children.
+  // Deferred: folder copy/drop name-collision handling does not currently generate unique "copy" names.
 }

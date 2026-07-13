@@ -9,6 +9,9 @@ test('should update state with new workspace path and load content', async () =>
     'FileSystem.getPathSeparator'() {
       return '/'
     },
+    'FileSystem.isReadonly'() {
+      return false
+    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -44,18 +47,69 @@ test('should update state with new workspace path and load content', async () =>
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'files.exclude'],
+    ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', '/new/workspace/path'],
+    ['FileSystem.isReadonly', '/new/workspace/path'],
     ['FileSystem.readDirWithFileTypes', '/new/workspace/path'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])
+})
+
+test('should restore saved state for the new workspace', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return false
+    },
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/restored/workspace') {
+        return [{ isDirectory: true, isFile: false, name: 'src' }]
+      }
+      if (path === '/restored/workspace/src') {
+        return [{ isDirectory: false, isFile: true, name: 'index.ts' }]
+      }
+      return []
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Workspace.getPath'() {
+      return '/restored/workspace'
+    },
+  })
+
+  SourceControlWorker.registerMockRpc({
+    'SourceControl.getEnabledProviderIds'() {
+      return []
+    },
+  })
+
+  const initialState: ExplorerState = createDefaultState()
+  const savedState = {
+    deltaY: 0,
+    expandedPaths: ['/restored/workspace/src'],
+    root: '/restored/workspace',
+  }
+  const result = await handleWorkspaceChange(initialState, '/restored/workspace', savedState)
+
+  expect(result.root).toBe('/restored/workspace')
+  expect(result.items.map((item) => item.path)).toContain('/restored/workspace/src')
+  expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', '/restored/workspace'])
+  expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', '/restored/workspace/src'])
 })
 
 test('should preserve state properties when updating workspace', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return false
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
@@ -104,9 +158,12 @@ test('should preserve state properties when updating workspace', async () => {
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'files.exclude'],
+      ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/another/workspace'],
+      ['FileSystem.isReadonly', '/another/workspace'],
       ['FileSystem.readDirWithFileTypes', '/another/workspace'],
     ]),
   )
@@ -117,6 +174,9 @@ test('should handle workspace path change with existing content', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return false
     },
     'FileSystem.readDirWithFileTypes'() {
       return [
@@ -151,9 +211,12 @@ test('should handle workspace path change with existing content', async () => {
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'files.exclude'],
+      ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/changed/workspace/path'],
+      ['FileSystem.isReadonly', '/changed/workspace/path'],
       ['FileSystem.readDirWithFileTypes', '/changed/workspace/path'],
     ]),
   )
@@ -164,6 +227,9 @@ test('should handle workspace path change with chevrons enabled', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return false
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
@@ -193,9 +259,12 @@ test('should handle workspace path change with chevrons enabled', async () => {
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'files.exclude'],
+      ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/chevron/workspace'],
+      ['FileSystem.isReadonly', '/chevron/workspace'],
       ['FileSystem.readDirWithFileTypes', '/chevron/workspace'],
     ]),
   )
@@ -206,6 +275,9 @@ test('should handle different path separators', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '\\'
+    },
+    'FileSystem.isReadonly'() {
+      return false
     },
     'FileSystem.readDirWithFileTypes'() {
       return []
@@ -235,9 +307,12 @@ test('should handle different path separators', async () => {
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'files.exclude'],
+      ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', 'C:\\windows\\workspace'],
+      ['FileSystem.isReadonly', 'C:\\windows\\workspace'],
       ['FileSystem.readDirWithFileTypes', 'C:\\windows\\workspace'],
     ]),
   )
@@ -248,6 +323,9 @@ test('should set load error state when reading folder fails', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
       return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return false
     },
     'FileSystem.readDirWithFileTypes'() {
       const error = Object.assign(new Error('Permission denied'), {
@@ -283,9 +361,12 @@ test('should set load error state when reading folder fails', async () => {
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
+      ['Preferences.get', 'files.exclude'],
+      ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/restricted/workspace'],
+      ['FileSystem.isReadonly', '/restricted/workspace'],
       ['FileSystem.readDirWithFileTypes', '/restricted/workspace'],
     ]),
   )

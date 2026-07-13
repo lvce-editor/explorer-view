@@ -236,3 +236,56 @@ test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async ()
   ])
   expect(mockRpc.invocations).toEqual([])
 })
+
+test('getNewDirentsForNewDirent - top-level new folder is inserted first', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+  })
+
+  const defaultState = createDefaultState()
+  const state: ExplorerState = {
+    ...defaultState,
+    focusedIndex: -1,
+    items: [
+      {
+        depth: 0,
+        icon: '',
+        name: 'file1.txt',
+        path: '/root/file1.txt',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+        type: DirentType.File,
+      },
+    ],
+  }
+  const root = '/root'
+
+  const result = await getNewDirentsForNewDirent(state.items, state.focusedIndex, DirentType.EditingFolder, root)
+
+  expect(result).toEqual([
+    {
+      depth: 0,
+      icon: '',
+      name: '',
+      path: '/root',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: DirentType.EditingFolder,
+    },
+    {
+      depth: 0,
+      icon: '',
+      name: 'file1.txt',
+      path: '/root/file1.txt',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: DirentType.File,
+    },
+  ])
+  expect(mockRpc.invocations).toEqual([])
+})

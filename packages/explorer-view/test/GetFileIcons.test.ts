@@ -101,3 +101,29 @@ test('getFileIcons - mixed cache', async () => {
     ],
   ])
 })
+
+test('getFileIcons - expanded folder uses expanded request and cache entry', async () => {
+  const dirents: readonly ExplorerItem[] = [
+    { depth: 0, name: 'packages', path: '/packages', selected: false, type: DirentType.Directory },
+    { depth: 0, name: 'packages', path: '/packages', selected: false, type: DirentType.DirectoryExpanded },
+  ]
+  const cache: FileIconCache = {
+    '/packages': 'folder-packages',
+  }
+
+  using mockRpc = IconThemeWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return ['folder-packages-open']
+    },
+  })
+
+  const result = await GetFileIcons.getFileIcons(dirents, cache)
+  expect(result).toEqual({
+    icons: ['folder-packages', 'folder-packages-open'],
+    newFileIconCache: {
+      '/packages': 'folder-packages',
+      '/packages#expanded': 'folder-packages-open',
+    },
+  })
+  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ expanded: true, name: 'packages', type: 2 }]]])
+})

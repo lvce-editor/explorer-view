@@ -1,5 +1,6 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
+import { isExcluded } from '../IsExcluded/IsExcluded.ts'
 import { join2 } from '../Path/Path.ts'
 
 export const getNewChildDirentsForNewDirent = async (
@@ -7,19 +8,22 @@ export const getNewChildDirentsForNewDirent = async (
   depth: number,
   parentPath: string,
   direntType: number,
+  excluded: readonly string[] = [],
+  root: string = parentPath,
 ): Promise<readonly ExplorerItem[]> => {
   // Get existing children or query them if they don't exist
   let existingChildren = items.filter((item) => item.depth === depth && item.path.startsWith(parentPath))
   if (existingChildren.length === 0) {
     const childDirents = await FileSystem.readDirWithFileTypes(parentPath)
-    existingChildren = childDirents.map((dirent: { name: string; type: number }, index: number) => ({
+    const visibleChildDirents = childDirents.filter((dirent: { name: string }) => !isExcluded(root, join2(parentPath, dirent.name), excluded))
+    existingChildren = visibleChildDirents.map((dirent: { name: string; type: number }, index: number) => ({
       depth,
       icon: '',
       name: dirent.name,
       path: join2(parentPath, dirent.name),
       posInSet: index + 1,
       selected: false,
-      setSize: childDirents.length,
+      setSize: visibleChildDirents.length,
       type: dirent.type,
     }))
   }
