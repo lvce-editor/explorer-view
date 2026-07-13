@@ -145,7 +145,7 @@ export const commandMap = {
   'Explorer.handleResize': WrapCommand.wrapListItemCommand(HandleResize.handleResize),
   'Explorer.handleUpload': WrapCommand.wrapListItemCommand(HandleUpload.handleUpload),
   'Explorer.handleWheel': WrapCommand.wrapListItemCommand(HandleWheel.handleWheel),
-  'Explorer.handleWorkspaceChange': WrapCommand.wrapListItemCommand(HandleWorkspaceChange.handleWorkspaceChange),
+  'Explorer.handleWorkspaceChange': WrapCommand.wrapListItemCommandImmediate(HandleWorkspaceChange.handleWorkspaceChange),
   'Explorer.handleWorkspaceRefresh': WrapCommand.wrapListItemCommandImmediate(handleWorkspaceRefresh),
   'Explorer.initialize': Initialize.initialize,
   'Explorer.loadContent': WrapCommand.wrapListItemCommand(LoadContent.loadContent),

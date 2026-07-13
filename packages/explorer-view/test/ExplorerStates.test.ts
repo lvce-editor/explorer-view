@@ -101,3 +101,27 @@ test('wrapListItemCommand continues after a command fails', async () => {
   const { newState } = ExplorerStates.get(uid)
   expect(newState.editingValue).toBe('next')
 })
+
+test('wrapListItemCommandImmediate allows a callback while a queued command is running', async () => {
+  const uid = 9004
+  const state = createDefaultState()
+  const immediate = ExplorerStates.wrapListItemCommandImmediate(async (currentState) => {
+    return {
+      ...currentState,
+      editingValue: 'callback',
+    }
+  })
+  const queued = ExplorerStates.wrapListItemCommand(async (currentState) => {
+    await immediate(uid)
+    return {
+      ...currentState,
+      editingValue: 'queued',
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  await queued(uid)
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.editingValue).toBe('queued')
+})
