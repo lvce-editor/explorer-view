@@ -12,28 +12,22 @@ interface Fn<T extends any[]> {
 
 const commandQueues = new Map<number, Promise<void>>()
 
-const runQueuedCommand = async (previousCommand: Promise<void>, command: () => Promise<void>): Promise<void> => {
-  await previousCommand
-  await command()
-}
-
-const settleCommand = async (command: Promise<void>): Promise<void> => {
+const runQueuedCommand = async (previousCommand: Promise<void> | undefined, command: () => Promise<void>): Promise<void> => {
   try {
-    await command
+    await previousCommand
   } catch {
     // Keep the queue usable after returning the error to the command caller
   }
+  await command()
 }
 
 const enqueueCommand = async (id: number, command: () => Promise<void>): Promise<void> => {
-  const previousCommand = commandQueues.get(id) || Promise.resolve()
-  const currentCommand = runQueuedCommand(previousCommand, command)
-  const settledCommand = settleCommand(currentCommand)
-  commandQueues.set(id, settledCommand)
+  const currentCommand = runQueuedCommand(commandQueues.get(id), command)
+  commandQueues.set(id, currentCommand)
   try {
     await currentCommand
   } finally {
-    if (commandQueues.get(id) === settledCommand) {
+    if (commandQueues.get(id) === currentCommand) {
       commandQueues.delete(id)
     }
   }
