@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-reveal-collapsed-folder-preserves-order'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   const nestedFilePath = `${tmpDir}/a/b/c.txt`
@@ -10,21 +10,23 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await FileSystem.writeFile(nestedFilePath, 'content')
   await FileSystem.writeFile(`${tmpDir}/z.txt`, 'content')
   await Workspace.setPath(tmpDir)
-  const treeItems = Locator('.TreeItem')
-  await expect(treeItems).toHaveCount(2)
-  const folderA = treeItems.nth(0)
-  const folderB = treeItems.nth(1)
-  const nestedFile = treeItems.nth(2)
-  const rootFile = treeItems.nth(3)
+  const folderA = Locator('.TreeItem[aria-label="a"]')
+  const folderB = Locator('.TreeItem[aria-label="b"]')
+  const nestedFile = Locator('.TreeItem[aria-label="c.txt"]')
+  const rootFile = Locator('.TreeItem[aria-label="z.txt"]')
+  await expect(folderA).toBeVisible()
+  await expect(folderB).toBeHidden()
+  await expect(nestedFile).toBeHidden()
+  await expect(rootFile).toBeVisible()
 
   // act
   await Command.execute('Explorer.reveal', nestedFilePath)
 
   // assert
-  await expect(treeItems).toHaveCount(4)
-  await expect(folderA).toHaveText('a')
-  await expect(folderB).toHaveText('b')
-  await expect(nestedFile).toHaveText('c.txt')
+  await expect(folderA).toBeVisible()
+  await expect(folderB).toBeVisible()
+  await expect(nestedFile).toBeVisible()
   await expect(nestedFile).toHaveId('TreeItemActive')
-  await expect(rootFile).toHaveText('z.txt')
+  await Explorer.focusIndex(3)
+  await expect(rootFile).toHaveId('TreeItemActive')
 }
