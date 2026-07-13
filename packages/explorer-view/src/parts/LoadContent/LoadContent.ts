@@ -2,7 +2,6 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as GetErrorCode from '../GetErrorCode/GetErrorCode.ts'
 import * as GetErrorMessage from '../GetErrorMessage/GetErrorMessage.ts'
-import * as GetExcluded from '../GetExcluded/GetExcluded.ts'
 import * as GetFileDecorations from '../GetFileDecorations/GetFileDecorations.ts'
 import * as GetFriendlyErrorMessage from '../GetFriendlyErrorMessage/GetFriendlyErrorMessage.ts'
 import * as GetGitIgnoredUris from '../GetGitIgnoredUris/GetGitIgnoredUris.ts'
@@ -16,7 +15,7 @@ import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedSt
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
   const { assetDir, height, itemHeight, platform } = state
-  const { confirmDelete, gitIgnoreDecorations, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
+  const { confirmDelete, excluded, gitIgnoreDecorations, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = GetSavedRoot.getSavedRoot(savedState, workspacePath)
   try {
@@ -25,7 +24,6 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       GetPathSeparator.getPathSeparator(root), // TODO only load path separator once
       FileSystem.isReadonly(root),
     ])
-    const excluded = GetExcluded.getExcluded()
     const restoredDirents = await RestoreExpandedState.restoreExpandedState(savedState, root, pathSeparator, excluded)
     const rawDeltaY = GetRestoredDeltaY.getRestoredDeltaY(savedState)
     const maxDeltaY = Math.max(restoredDirents.length * itemHeight - height, 0)

@@ -19,7 +19,7 @@ const createDirents = (
       map[path] = children.value
     }
   }
-  dirents.push(...getSavedChildDirents(map, root, 1, excluded, pathSeparator))
+  dirents.push(...getSavedChildDirents(map, root, 1, excluded, pathSeparator, root))
   return dirents
 }
 

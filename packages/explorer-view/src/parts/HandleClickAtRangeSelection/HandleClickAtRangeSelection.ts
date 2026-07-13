@@ -2,12 +2,17 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as HandleRangeSelection from '../HandleRangeSelection/HandleRangeSelection.ts'
 
 export const handleClickAtRangeSelection = async (state: ExplorerState, index: number): Promise<ExplorerState> => {
-  const { items } = state
+  const { focusedIndex, items } = state
   const firstSelectedIndex = items.findIndex((item) => item.selected)
-  if (firstSelectedIndex === -1) {
-    return HandleRangeSelection.handleRangeSelection(state, index, index)
+  let anchorIndex = firstSelectedIndex
+  if (anchorIndex === -1) {
+    anchorIndex = focusedIndex === -1 ? index : focusedIndex
   }
-  const min = Math.min(firstSelectedIndex, index)
-  const max = Math.min(firstSelectedIndex, index)
-  return HandleRangeSelection.handleRangeSelection(state, min, max)
+  const min = Math.min(anchorIndex, index)
+  const max = Math.max(anchorIndex, index)
+  const newState = HandleRangeSelection.handleRangeSelection(state, min, max)
+  return {
+    ...newState,
+    focusedIndex: index,
+  }
 }

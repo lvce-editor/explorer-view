@@ -1,8 +1,10 @@
-export const getExcluded = (): string[] => {
-  const excludedObject = {}
-  const excluded = []
+export const getExcluded = (excludedObject: unknown): string[] => {
+  if (!excludedObject || typeof excludedObject !== 'object' || Array.isArray(excludedObject)) {
+    return []
+  }
+  const excluded: string[] = []
   for (const [key, value] of Object.entries(excludedObject)) {
-    if (value) {
+    if (value === true) {
       excluded.push(key)
     }
   }

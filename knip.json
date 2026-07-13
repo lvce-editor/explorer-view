@@ -15,7 +15,8 @@
     },
     "packages/explorer-view": {
       "entry": ["test/**/*.test.ts"],
-      "project": ["src/**/*.ts", "test/**/*.ts"]
+      "project": ["src/**/*.ts", "test/**/*.ts"],
+      "ignoreDependencies": ["jest"]
     },
     "packages/server": {
       "project": ["src/**/*.js"]

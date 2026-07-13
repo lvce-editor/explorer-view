@@ -1,5 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { Settings } from '../Settings/Settings.ts'
+import { getExcluded } from '../GetExcluded/GetExcluded.ts'
 
 export const getSettings = async (): Promise<Settings> => {
   // TODO don't return false always
@@ -10,6 +11,8 @@ export const getSettings = async (): Promise<Settings> => {
   const confirmDelete = confirmDeleteRaw === false ? false : false
   const confirmPasteRaw = await RendererWorker.invoke('Preferences.get', 'explorer.confirmpaste')
   const confirmPaste = confirmPasteRaw === false ? false : false
+  const excludedRaw = await RendererWorker.invoke('Preferences.get', 'files.exclude')
+  const excluded = getExcluded(excludedRaw)
   const gitIgnoreDecorationsRaw = await RendererWorker.invoke('Preferences.get', 'explorer.gitIgnoreDecorations')
   const gitIgnoreDecorations = gitIgnoreDecorationsRaw === false ? false : true
   const sourceControlDecorationsRaw = await RendererWorker.invoke('Preferences.get', 'explorer.sourceControlDecorations')
@@ -17,6 +20,7 @@ export const getSettings = async (): Promise<Settings> => {
   return {
     confirmDelete,
     confirmPaste,
+    excluded,
     gitIgnoreDecorations,
     sourceControlDecorations,
     useChevrons,

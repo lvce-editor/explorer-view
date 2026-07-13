@@ -50,4 +50,37 @@ export default [
       'github-actions/permissions': 'off',
     },
   },
+  {
+    files: ['packages/e2e/**/*.ts'],
+    rules: {
+      'e2e/prefer-filesystem-set-files': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+      '@typescript-eslint/no-redundant-type-constituents': 'off',
+    },
+  },
+  {
+    files: ['**/*.test.ts'],
+    rules: {
+      'jest/no-disabled-tests': 'off',
+    },
+  },
+  {
+    files: ['.devcontainer/devcontainer.json'],
+    rules: {
+      'devcontainer/require-desktop-lite-feature': 'off',
+      'devcontainer/allowed-image': 'off',
+    },
+  },
+  {
+    files: ['package.json'],
+    rules: {
+      'package-json/valid-main': 'off',
+    },
+  },
+  {
+    files: ['packages/explorer-view/src/parts/HandleKeyDown/HandleKeyDown.ts'],
+    rules: {
+      'sonarjs/void-use': 'off',
+    },
+  },
 ]
