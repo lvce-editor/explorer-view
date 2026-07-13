@@ -53,3 +53,51 @@ test('wrapListItemCommand recomputes visible items when focus changes', async ()
   expect(newState.visibleExplorerItems[0].id).toBeUndefined()
   expect(newState.visibleExplorerItems[1].id).toBe('TreeItemActive')
 })
+
+test('wrapListItemCommand runs concurrent commands in invocation order', async () => {
+  const uid = 9002
+  const state = createDefaultState()
+  const firstCommandStarted = Promise.withResolvers<void>()
+  const releaseFirstCommand = Promise.withResolvers<void>()
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, value: string) => {
+    if (value === 'first') {
+      firstCommandStarted.resolve()
+      await releaseFirstCommand.promise
+    }
+    return {
+      ...currentState,
+      editingValue: value,
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  const firstCommand = wrapped(uid, 'first')
+  await firstCommandStarted.promise
+  const secondCommand = wrapped(uid, 'second')
+  releaseFirstCommand.resolve()
+  await Promise.all([firstCommand, secondCommand])
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.editingValue).toBe('second')
+})
+
+test('wrapListItemCommand continues after a command fails', async () => {
+  const uid = 9003
+  const state = createDefaultState()
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, value: string) => {
+    if (value === 'fail') {
+      throw new Error('Failed command')
+    }
+    return {
+      ...currentState,
+      editingValue: value,
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  await expect(wrapped(uid, 'fail')).rejects.toThrow(new Error('Failed command'))
+  await wrapped(uid, 'next')
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.editingValue).toBe('next')
+})

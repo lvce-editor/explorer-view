@@ -10,6 +10,35 @@ interface Fn<T extends any[]> {
   (state: ExplorerState, ...args: T): ExplorerState | Promise<ExplorerState>
 }
 
+const commandQueues = new Map<number, Promise<void>>()
+
+const runQueuedCommand = async (previousCommand: Promise<void>, command: () => Promise<void>): Promise<void> => {
+  await previousCommand
+  await command()
+}
+
+const settleCommand = async (command: Promise<void>): Promise<void> => {
+  try {
+    await command
+  } catch {
+    // Keep the queue usable after returning the error to the command caller
+  }
+}
+
+const enqueueCommand = async (id: number, command: () => Promise<void>): Promise<void> => {
+  const previousCommand = commandQueues.get(id) || Promise.resolve()
+  const currentCommand = runQueuedCommand(previousCommand, command)
+  const settledCommand = settleCommand(currentCommand)
+  commandQueues.set(id, settledCommand)
+  try {
+    await currentCommand
+  } finally {
+    if (commandQueues.get(id) === settledCommand) {
+      commandQueues.delete(id)
+    }
+  }
+}
+
 const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: ExplorerState): boolean => {
   return (
     oldState.items === newState.items &&
@@ -30,7 +59,7 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
 }
 
 export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, ...args: T) => Promise<void>) => {
-  const wrappedCommand = async (id: number, ...args: T): Promise<void> => {
+  const runCommand = async (id: number, ...args: T): Promise<void> => {
     const { newState } = get(id)
     const updatedState = await fn(newState, ...args)
     if (newState === updatedState) {
@@ -84,6 +113,11 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
     }
     const intermediate2 = get(id)
     set(id, intermediate2.oldState, finalState)
+  }
+  const wrappedCommand = async (id: number, ...args: T): Promise<void> => {
+    await enqueueCommand(id, async () => {
+      await runCommand(id, ...args)
+    })
   }
   return wrappedCommand
 }
