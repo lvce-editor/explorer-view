@@ -14,18 +14,21 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const folderB = Locator('.TreeItem[aria-label="b"]')
   const nestedFile = Locator('.TreeItem[aria-label="c.txt"]')
   const rootFile = Locator('.TreeItem[aria-label="z.txt"]')
-  await expect(folderA).toBeVisible()
+  await Explorer.focusIndex(0)
+  await expect(folderA).toHaveId('TreeItemActive')
   await expect(folderB).toBeHidden()
   await expect(nestedFile).toBeHidden()
-  await expect(rootFile).toBeVisible()
 
   // act
   await Command.execute('Explorer.reveal', nestedFilePath)
 
   // assert
-  await expect(folderA).toBeVisible()
-  await expect(folderB).toBeVisible()
-  await expect(nestedFile).toBeVisible()
+  await expect(nestedFile).toHaveId('TreeItemActive')
+  await Explorer.focusIndex(0)
+  await expect(folderA).toHaveId('TreeItemActive')
+  await Explorer.focusIndex(1)
+  await expect(folderB).toHaveId('TreeItemActive')
+  await Explorer.focusIndex(2)
   await expect(nestedFile).toHaveId('TreeItemActive')
   await Explorer.focusIndex(3)
   await expect(rootFile).toHaveId('TreeItemActive')
