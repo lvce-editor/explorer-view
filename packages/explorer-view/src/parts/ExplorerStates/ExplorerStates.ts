@@ -58,7 +58,7 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
   )
 }
 
-export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, ...args: T) => Promise<void>) => {
+const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
   const runCommand = async (id: number, ...args: T): Promise<void> => {
     const { newState } = get(id)
     const updatedState = await fn(newState, ...args)
@@ -114,10 +114,21 @@ export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, .
     const intermediate2 = get(id)
     set(id, intermediate2.oldState, finalState)
   }
+  if (!queued) {
+    return runCommand
+  }
   const wrappedCommand = async (id: number, ...args: T): Promise<void> => {
     await enqueueCommand(id, async () => {
       await runCommand(id, ...args)
     })
   }
   return wrappedCommand
+}
+
+export const wrapListItemCommand = <T extends any[]>(fn: Fn<T>): ((id: number, ...args: T) => Promise<void>) => {
+  return wrapListItemCommandInternal(fn, true)
+}
+
+export const wrapListItemCommandImmediate = <T extends any[]>(fn: Fn<T>): ((id: number, ...args: T) => Promise<void>) => {
+  return wrapListItemCommandInternal(fn, false)
 }
