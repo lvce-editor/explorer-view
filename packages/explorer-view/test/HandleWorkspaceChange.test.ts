@@ -58,6 +58,51 @@ test('should update state with new workspace path and load content', async () =>
   expect(mockSourceControlRpc.invocations).toEqual([])
 })
 
+test('should restore saved state for the new workspace', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return false
+    },
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/restored/workspace') {
+        return [{ isDirectory: true, isFile: false, name: 'src' }]
+      }
+      if (path === '/restored/workspace/src') {
+        return [{ isDirectory: false, isFile: true, name: 'index.ts' }]
+      }
+      return []
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Workspace.getPath'() {
+      return '/restored/workspace'
+    },
+  })
+
+  SourceControlWorker.registerMockRpc({
+    'SourceControl.getEnabledProviderIds'() {
+      return []
+    },
+  })
+
+  const initialState: ExplorerState = createDefaultState()
+  const savedState = {
+    deltaY: 0,
+    expandedPaths: ['/restored/workspace/src'],
+    root: '/restored/workspace',
+  }
+  const result = await handleWorkspaceChange(initialState, '/restored/workspace', savedState)
+
+  expect(result.root).toBe('/restored/workspace')
+  expect(result.items.map((item) => item.path)).toContain('/restored/workspace/src')
+  expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', '/restored/workspace'])
+  expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', '/restored/workspace/src'])
+})
+
 test('should preserve state properties when updating workspace', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
