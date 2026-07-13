@@ -13,12 +13,15 @@ export const getSettings = async (): Promise<Settings> => {
   const confirmPaste = confirmPasteRaw === false ? false : false
   const excludedRaw = await RendererWorker.invoke('Preferences.get', 'files.exclude')
   const excluded = getExcluded(excludedRaw)
+  const gitIgnoreDecorationsRaw = await RendererWorker.invoke('Preferences.get', 'explorer.gitIgnoreDecorations')
+  const gitIgnoreDecorations = gitIgnoreDecorationsRaw === false ? false : true
   const sourceControlDecorationsRaw = await RendererWorker.invoke('Preferences.get', 'explorer.sourceControlDecorations')
   const sourceControlDecorations = sourceControlDecorationsRaw === false ? false : true
   return {
     confirmDelete,
     confirmPaste,
     excluded,
+    gitIgnoreDecorations,
     sourceControlDecorations,
     useChevrons,
   }

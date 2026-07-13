@@ -8,6 +8,10 @@ export const readDirWithFileTypes = async (uri: string): Promise<readonly any[]>
   return FileSystemWorker.invoke('FileSystem.readDirWithFileTypes', uri)
 }
 
+export const readFile = async (uri: string): Promise<string> => {
+  return FileSystemWorker.invoke('FileSystem.readFile', uri)
+}
+
 export const getPathSeparator = async (root: string): Promise<string> => {
   return FileSystemWorker.invoke('FileSystem.getPathSeparator', root)
 }

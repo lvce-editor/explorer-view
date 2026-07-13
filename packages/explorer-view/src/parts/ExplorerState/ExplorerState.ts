@@ -35,6 +35,7 @@ export interface ExplorerState {
   readonly focusedIndex: number
   readonly focusWord: string
   readonly focusWordTimeout: number
+  readonly gitIgnoreDecorations: boolean
   readonly handleOffset: number
   readonly hasError: boolean
   readonly height: number
