@@ -57,7 +57,7 @@ jobs:
       - name: install playwright webkit dependency
         working-directory: ./packages/e2e
         run: npx playwright install webkit
-        if: runner.os == 'Linux' && steps.npm-cache.outputs.cache-hit != 'true'
+        if: runner.os == 'Linux'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e
