@@ -1,5 +1,4 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
-import { setExcludes } from './_setExcludes.ts'
 
 export const name = 'viewlet.explorer-files-exclude-aria-top-level'
 
@@ -8,7 +7,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   await FileSystem.writeFile(`${tmpDir}/a.txt`, '')
   await FileSystem.writeFile(`${tmpDir}/b.tmp`, '')
   await FileSystem.writeFile(`${tmpDir}/c.txt`, '')
-  await setExcludes(Settings, { '**/*.tmp': true })
+  await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
   await Workspace.setPath(tmpDir)
 
   const a = Locator('.TreeItem[aria-label="a.txt"]')

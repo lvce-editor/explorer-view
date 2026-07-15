@@ -1,5 +1,4 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
-import { defaultExcludes, setExcludes } from './_setExcludes.ts'
 
 export const name = 'viewlet.explorer-files-exclude-case-sensitive'
 
@@ -7,7 +6,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/Thumbs.db`, '')
   await FileSystem.writeFile(`${tmpDir}/thumbs.db`, '')
-  await setExcludes(Settings, defaultExcludes)
+  await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
   await Workspace.setPath(tmpDir)
 
   const excludedFile = Locator('.TreeItem[aria-label="Thumbs.db"]')

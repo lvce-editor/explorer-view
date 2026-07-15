@@ -1,5 +1,4 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
-import { setExcludes } from './_setExcludes.ts'
 
 export const name = 'viewlet.explorer-files-exclude-extension-glob'
 
@@ -8,7 +7,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   await FileSystem.mkdir(`${tmpDir}/dist`)
   await FileSystem.writeFile(`${tmpDir}/dist/app.js`, '')
   await FileSystem.writeFile(`${tmpDir}/dist/app.js.map`, '')
-  await setExcludes(Settings, { '**/*.map': true })
+  await Settings.update({ 'files.exclude': { '**/*.map': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
 

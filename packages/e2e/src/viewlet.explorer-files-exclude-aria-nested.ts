@@ -1,5 +1,4 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
-import { setExcludes } from './_setExcludes.ts'
 
 export const name = 'viewlet.explorer-files-exclude-aria-nested'
 
@@ -9,7 +8,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   await FileSystem.writeFile(`${tmpDir}/folder/a.txt`, '')
   await FileSystem.writeFile(`${tmpDir}/folder/b.tmp`, '')
   await FileSystem.writeFile(`${tmpDir}/folder/c.txt`, '')
-  await setExcludes(Settings, { '**/*.tmp': true })
+  await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
 
