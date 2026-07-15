@@ -1,5 +1,4 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
-import { defaultExcludes, setExcludes } from './_setExcludes.ts'
 
 export const name = 'viewlet.explorer-files-exclude-reveal-descendant'
 
@@ -7,7 +6,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/project/.git`)
   await FileSystem.writeFile(`${tmpDir}/project/.git/config`, '')
-  await setExcludes(Settings, defaultExcludes)
+  await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   const project = Locator('.TreeItem[aria-label="project"]')

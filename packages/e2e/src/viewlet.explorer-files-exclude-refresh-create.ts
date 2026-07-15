@@ -1,12 +1,11 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
-import { setExcludes } from './_setExcludes.ts'
 
 export const name = 'viewlet.explorer-files-exclude-refresh-create'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/visible.txt`, '')
-  await setExcludes(Settings, { '**/*.tmp': true })
+  await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
   await Workspace.setPath(tmpDir)
   await FileSystem.writeFile(`${tmpDir}/created.tmp`, '')
   await Explorer.refresh()

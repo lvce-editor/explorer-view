@@ -1,5 +1,4 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
-import { defaultExcludes, setExcludes } from './_setExcludes.ts'
 
 export const name = 'viewlet.explorer-files-exclude-ds-store-nested'
 
@@ -8,7 +7,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   await FileSystem.mkdir(`${tmpDir}/images`)
   await FileSystem.writeFile(`${tmpDir}/images/.DS_Store`, '')
   await FileSystem.writeFile(`${tmpDir}/images/photo.png`, '')
-  await setExcludes(Settings, defaultExcludes)
+  await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
 

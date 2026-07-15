@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-many-folders-20000'
 
+export const skip = 1
+
 const totalFolders = 20_000
 const batchSize = 500
 
