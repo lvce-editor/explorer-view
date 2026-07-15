@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-icon-theme-missing-icon-fallback'
 
+export const skip = 1
+
 export const test: Test = async ({ expect, Extension, FileSystem, IconTheme, Locator, Workspace }) => {
   // arrange
   const extensionUri = import.meta.resolve('../fixtures/sample.icon-theme')

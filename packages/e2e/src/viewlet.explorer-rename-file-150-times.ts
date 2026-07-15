@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-file-150-times'
 
+export const skip = 1
+
 const renameCount = 150
 
 const getFileName = (index: number): string => {

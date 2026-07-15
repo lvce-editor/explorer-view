@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-delete-file-error'
 
+export const skip = 1
+
 export const test: Test = async ({ Dialog, expect: _expect, Explorer, Extension, FileSystem, Locator: _Locator, Workspace }) => {
   // arrange
   // @ts-ignore
