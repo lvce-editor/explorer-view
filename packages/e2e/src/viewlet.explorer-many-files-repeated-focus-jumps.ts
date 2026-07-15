@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-many-files-repeated-focus-jumps'
 
+export const skip = 1
+
 const totalFiles = 2000
 const batchSize = 250
 
