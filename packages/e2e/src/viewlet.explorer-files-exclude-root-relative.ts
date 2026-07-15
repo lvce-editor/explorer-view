@@ -1,5 +1,4 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
-import { setExcludes } from './_setExcludes.ts'
 
 export const name = 'viewlet.explorer-files-exclude-root-relative'
 
@@ -7,7 +6,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/src/generated`)
   await FileSystem.mkdir(`${tmpDir}/packages/src/generated`)
-  await setExcludes(Settings, { 'src/generated': true })
+  await Settings.update({ 'files.exclude': { 'src/generated': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
 

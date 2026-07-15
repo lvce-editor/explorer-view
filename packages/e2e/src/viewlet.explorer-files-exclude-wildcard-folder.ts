@@ -1,5 +1,4 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
-import { setExcludes } from './_setExcludes.ts'
 
 export const name = 'viewlet.explorer-files-exclude-wildcard-folder'
 
@@ -8,7 +7,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   await FileSystem.mkdir(`${tmpDir}/cache-linux`)
   await FileSystem.mkdir(`${tmpDir}/cache-windows`)
   await FileSystem.mkdir(`${tmpDir}/cached`)
-  await setExcludes(Settings, { '**/cache-*': true })
+  await Settings.update({ 'files.exclude': { '**/cache-*': true } })
   await Workspace.setPath(tmpDir)
 
   const linuxCache = Locator('.TreeItem[aria-label="cache-linux"]')

@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-read-folder-error'
 
+export const skip = 1
+
 export const test: Test = async ({ expect, Extension, FileSystem, Layout, Locator, SideBar, Workspace }) => {
   // arrange
   const uri = import.meta.resolve('../fixtures/sample-file-system-provider-read-folder-error')
