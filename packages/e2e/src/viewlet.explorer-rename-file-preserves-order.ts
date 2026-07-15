@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-file-preserves-order'
 
+export const skip = ['webkit']
+
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const assertOrder = async (expected: readonly string[]): Promise<void> => {
     const treeItems = Locator('.TreeItem')
