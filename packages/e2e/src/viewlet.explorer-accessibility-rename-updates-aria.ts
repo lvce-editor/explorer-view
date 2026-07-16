@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-accessibility-rename-updates-aria'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -20,8 +18,12 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // assert
   const a = Locator('.TreeItem[aria-label="a.txt"]')
   const b = Locator('.TreeItem[aria-label="b.txt"]')
+  const c = Locator('.TreeItem[aria-label="c.txt"]')
   await expect(a).toHaveAttribute('aria-posinset', '1')
+  await expect(a).toHaveAttribute('aria-setsize', '2')
+  await expect(b).toHaveAttribute('aria-level', '1')
   await expect(b).toHaveAttribute('aria-posinset', '2')
   await expect(b).toHaveAttribute('aria-setsize', '2')
   await expect(b).toHaveId('TreeItemActive')
+  await expect(c).toBeHidden()
 }
