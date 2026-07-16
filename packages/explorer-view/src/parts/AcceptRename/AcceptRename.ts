@@ -3,6 +3,7 @@ import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations
 import { computeExplorerRenamedDirentUpdate } from '../ComputeExplorerRenamedDirentUpdate/ComputeExplorerRenamedDirentUpdate.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
+import * as FileSystem from '../FileSystem/FileSystem.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import * as GetFileOperationsRename from '../GetFileOperationsRename/GetFileOperationsRename.ts'
@@ -22,6 +23,25 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     }
   }
   const renamedDirent = items[editingIndex]
+  const oldUri = renamedDirent.path
+  const dirname = dirname2(oldUri)
+  let siblingNames: readonly string[]
+  try {
+    const siblingDirents = await FileSystem.readDirWithFileTypes(dirname)
+    siblingNames = siblingDirents.filter((dirent) => dirent.name !== renamedDirent.name).map((dirent) => dirent.name)
+  } catch (error) {
+    return {
+      ...state,
+      editingErrorMessage: String(error),
+    }
+  }
+  const collisionErrorMessage = ValidateFileName2.validateFileName2(editingValue, siblingNames)
+  if (collisionErrorMessage) {
+    return {
+      ...state,
+      editingErrorMessage: collisionErrorMessage,
+    }
+  }
   const operations = GetFileOperationsRename.getFileOperationsRename(renamedDirent.path, editingValue)
   const renameErrorMessage = await ApplyFileOperations.applyFileOperations(operations)
   if (renameErrorMessage) {
@@ -30,8 +50,6 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
       editingErrorMessage: renameErrorMessage,
     }
   }
-  const oldUri = renamedDirent.path
-  const dirname = dirname2(oldUri)
   const newUri = join2(dirname, editingValue)
   const children = await getChildDirents(pathSeparator, dirname, renamedDirent.depth - 1, excluded, root)
   const tree = createTree(items, root)
