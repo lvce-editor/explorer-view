@@ -94,7 +94,7 @@ test('getMenuEntries2 - file shows compare with selected for different file', ()
   expect(menuEntries.some((entry) => entry.id === 'selectForCompare')).toBe(false)
 })
 
-test('getMenuEntries2 - file disables rename when file system is readonly', () => {
+test('getMenuEntries2 - file disables write operations when file system is readonly', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
@@ -109,11 +109,42 @@ test('getMenuEntries2 - file disables rename when file system is readonly', () =
     items: [item],
   }
   const menuEntries = getMenuEntries2(state)
-  const renameEntry = menuEntries.find((entry) => entry.id === 'rename')
-  expect(renameEntry).toEqual({
-    command: 'Explorer.renameDirent',
-    flags: MenuItemFlags.Disabled,
-    id: 'rename',
-    label: 'Rename',
-  })
+  const writeEntryIds = ['cut', 'paste', 'rename', 'delete']
+  for (const id of writeEntryIds) {
+    expect(menuEntries.find((entry) => entry.id === id)?.flags).toBe(MenuItemFlags.Disabled)
+  }
+})
+
+test('getMenuEntries2 - directory disables write operations when file system is readonly', () => {
+  const item: ExplorerItem = {
+    depth: 0,
+    name: 'test',
+    path: '/test',
+    selected: false,
+    type: DirentType.Directory,
+  }
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    isReadonly: true,
+    items: [item],
+  }
+  const menuEntries = getMenuEntries2(state)
+  const writeEntryIds = ['newFile', 'newFolder', 'cut', 'paste', 'rename', 'delete']
+  for (const id of writeEntryIds) {
+    expect(menuEntries.find((entry) => entry.id === id)?.flags).toBe(MenuItemFlags.Disabled)
+  }
+})
+
+test('getMenuEntries2 - root disables write operations when file system is readonly', () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    isReadonly: true,
+    root: '/test',
+  }
+  const menuEntries = getMenuEntries2(state)
+  const writeEntryIds = ['newFile', 'newFolder', 'paste']
+  for (const id of writeEntryIds) {
+    expect(menuEntries.find((entry) => entry.id === id)?.flags).toBe(MenuItemFlags.Disabled)
+  }
 })

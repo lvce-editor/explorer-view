@@ -73,6 +73,9 @@ export const handleDropIndex = async (
   paths: readonly string[],
   index: number,
 ): Promise<ExplorerState> => {
+  if (state.isReadonly) {
+    return state
+  }
   const { items } = state
   const dirent = items[index]
   // TODO if it is a file, drop into the folder of the file

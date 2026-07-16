@@ -3,6 +3,9 @@ import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 
 export const handleCut = async (state: ExplorerState): Promise<ExplorerState> => {
+  if (state.isReadonly) {
+    return state
+  }
   // TODO handle multiple files
   // TODO if not file is selected, what happens?
   const { focusedIndex, items } = state

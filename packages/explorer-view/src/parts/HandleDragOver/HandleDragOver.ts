@@ -6,6 +6,9 @@ import { handleDragOverIndex } from '../HandleDragOverIndex/HandleDragOverIndex.
 export const handleDragOver = (state: ExplorerState, x: number, y: number): ExplorerState => {
   Assert.number(x)
   Assert.number(y)
+  if (state.isReadonly) {
+    return state
+  }
   const index = getIndexFromPosition(state, x, y)
   return handleDragOverIndex(state, index)
 }
