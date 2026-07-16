@@ -11,9 +11,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Main, 
   await Main.openUri(pinnedFile)
   await Explorer.handleClick(0)
 
-  const tab = Locator('.MainTab[title$="pinned.txt"]')
+  const tab = Locator('.MainTab:not(.MainTabPreview)[title$="pinned.txt"]')
   const tabs = Locator('.MainTab')
   await expect(tab).toBeVisible()
-  await expect(tab).not.toHaveClass('MainTabPreview')
   await expect(tabs).toHaveCount(1)
 }
