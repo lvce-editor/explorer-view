@@ -30,6 +30,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // assert - file should be opened in editor (check for editor tab or editor view)
   // The file should be opened, which means there should be an editor tab or editor content visible
-  const editorTab = Locator('[title*="new-file.txt"]').first()
+  const editorTab = Locator('.MainTab:not(.MainTabPreview)[title$="new-file.txt"]')
   await expect(editorTab).toBeVisible()
 }
