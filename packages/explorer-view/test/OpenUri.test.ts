@@ -22,13 +22,25 @@ test('openUri calls ParentRpc.invoke with focus false', async () => {
   expect(mockRpc.invocations).toEqual([['Main.openUri', mockUri, mockFocus]])
 })
 
-test('openUri passes preview options to the main area', async () => {
+test('openUri opens preview files through the main area input API', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Main.openUri'() {},
+    'Main.openInput'() {},
   })
   const mockUri = 'file:///test.txt'
   await openUri(mockUri, true, {
     preview: true,
   })
-  expect(mockRpc.invocations).toEqual([['Main.openUri', mockUri, true, { preview: true }]])
+  expect(mockRpc.invocations).toEqual([
+    [
+      'Main.openInput',
+      {
+        editorInput: {
+          type: 'editor',
+          uri: mockUri,
+        },
+        focu: true,
+        preview: true,
+      },
+    ],
+  ])
 })

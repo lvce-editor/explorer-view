@@ -36,4 +36,7 @@ if (!content.includes(occurrence)) {
 const newContent = content.replace(occurrence, replacement)
 await writeFile(rendererWorkerPath, newContent)
 
+const explorerWorkerPath = join(root, 'dist', commitHash, 'packages', 'explorer-worker', 'dist', 'explorerViewWorkerMain.js')
+await cp(workerPath, explorerWorkerPath)
+
 await cp(join(root, 'dist'), join(root, '.tmp', 'static'), { recursive: true })
