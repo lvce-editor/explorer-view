@@ -26,7 +26,7 @@ const dirents = await readdir(serverStaticPath)
 const commitHash = dirents.find(isCommitHash) || ''
 const rendererWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'renderer-worker', 'dist', 'rendererWorkerMain.js')
 
-const content = await readFile(rendererWorkerMainPath, 'utf-8')
+let content = await readFile(rendererWorkerMainPath, 'utf-8')
 
 const remoteUrl = getRemoteUrl(workerPath)
 if (!content.includes('// const explorerWorkerUrl = ')) {
@@ -34,8 +34,86 @@ if (!content.includes('// const explorerWorkerUrl = ')) {
   const replacement = `// const explorerWorkerUrl = \`\${assetDir}/packages/explorer-worker/dist/explorerViewWorkerMain.js\`;
 const explorerWorkerUrl = \`${remoteUrl}\`;`
 
-  const newContent = content.replace(occurrence, replacement)
-  await writeFile(rendererWorkerMainPath, newContent)
+  content = content.replace(occurrence, replacement)
+  await writeFile(rendererWorkerMainPath, content)
+}
+
+const duplicateDynamicCommandOccurrence = `const updateDynamic = (commands, key, fn) => {
+  const keyIndex = commands.findIndex(command => command[0] === key);`
+const duplicateDynamicCommandReplacement = `const updateDynamic = (commands, key, fn) => {
+  const matchingCommands = commands.filter(command => command[0] === key);
+  if (matchingCommands.length > 1) {
+    throw new Error(\`[flaky-e2e-debug] duplicate dynamic commands for \${key}: \${JSON.stringify(matchingCommands)}\`);
+  }
+  const keyIndex = commands.findIndex(command => command[0] === key);`
+
+if (!content.includes(duplicateDynamicCommandReplacement)) {
+  if (!content.includes(duplicateDynamicCommandOccurrence)) {
+    throw new Error('renderer worker dynamic command occurrence not found')
+  }
+  content = content.replace(duplicateDynamicCommandOccurrence, duplicateDynamicCommandReplacement)
+  await writeFile(rendererWorkerMainPath, content)
+}
+
+const explorerWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'explorer-worker', 'dist', 'explorerViewWorkerMain.js')
+const explorerWorkerContent = await readFile(explorerWorkerMainPath, 'utf-8')
+const explorerRenderOccurrence = `const render2 = (uid, diffResult) => {
+  const {
+    oldState,
+    scheduledState
+  } = get(uid);
+  set(uid, scheduledState, scheduledState);`
+const explorerRenderReplacement = `const render2 = (uid, diffResult) => {
+  const {
+    oldState,
+    scheduledState
+  } = get(uid);
+  const currentDiffResult = diff(oldState, scheduledState);
+  if (JSON.stringify(diffResult) !== JSON.stringify(currentDiffResult)) {
+    throw new Error(\`[flaky-e2e-debug] stale bundled explorer diff: \${JSON.stringify({
+      currentDiffResult,
+      diffResult,
+      oldItemNames: oldState.items.slice(0, 20).map(item => item.name),
+      scheduledItemNames: scheduledState.items.slice(0, 20).map(item => item.name),
+      uid
+    })}\`);
+  }
+  set(uid, scheduledState, scheduledState);`
+
+if (!explorerWorkerContent.includes(explorerRenderReplacement)) {
+  if (!explorerWorkerContent.includes(explorerRenderOccurrence)) {
+    throw new Error('explorer worker render occurrence not found')
+  }
+  await writeFile(explorerWorkerMainPath, explorerWorkerContent.replace(explorerRenderOccurrence, explorerRenderReplacement))
+}
+
+const rendererProcessMainPath = join(serverStaticPath, commitHash, 'packages', 'renderer-process', 'dist', 'rendererProcessMain.js')
+const rendererProcessContent = await readFile(rendererProcessMainPath, 'utf-8')
+const executeCommandsOccurrence = `const executeCommands = commands => {
+  for (const [command, ...args] of commands) {
+    const fn = getFn(command);
+    // @ts-ignore
+    fn(...args);
+  }
+};`
+const executeCommandsReplacement = `const executeCommands = commands => {
+  for (let index = 0; index < commands.length; index++) {
+    const [command, ...args] = commands[index];
+    try {
+      const fn = getFn(command);
+      // @ts-ignore
+      fn(...args);
+    } catch (error) {
+      throw new Error(\`[flaky-e2e-debug] renderer command failed at index \${index}: \${JSON.stringify(commands)}\`, { cause: error });
+    }
+  }
+};`
+
+if (!rendererProcessContent.includes(executeCommandsReplacement)) {
+  if (!rendererProcessContent.includes(executeCommandsOccurrence)) {
+    throw new Error('renderer process execute commands occurrence not found')
+  }
+  await writeFile(rendererProcessMainPath, rendererProcessContent.replace(executeCommandsOccurrence, executeCommandsReplacement))
 }
 
 const testWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'test-worker', 'dist', 'testWorkerMain.js')
