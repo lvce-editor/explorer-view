@@ -2,8 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-delete-open-file-keeps-editor-stable'
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
+  await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/open.txt`, 'content')
   await FileSystem.writeFile(`${tmpDir}/other.txt`, 'other')
