@@ -77,6 +77,15 @@ test('getFileOperationsCopy - empty existingUris', () => {
   expect(result).toEqual([{ from: '/source/file.txt', path: '/test/file.txt', type: FileOperationType.Copy }])
 })
 
+test('getFileOperationsCopy - copies workspace file into focused folder', () => {
+  const root = '/test'
+  const existingUris = ['/test/source', '/test/source/file.txt', '/test/target']
+  const files = ['/test/source/file.txt']
+
+  const result = getFileOperationsCopy(root, existingUris, files, '/test/target')
+  expect(result).toEqual([{ from: '/test/source/file.txt', path: '/test/target/file.txt', type: FileOperationType.Copy }])
+})
+
 test('getFileOperationsCopy - empty files', () => {
   const root = '/test'
   const existingUris = ['/test/existing.txt']

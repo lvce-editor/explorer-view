@@ -17,7 +17,7 @@ export const getFileOperationsCopy = (
       operations.push({
         from: file,
         path: Path.join2(focusedUri, baseName),
-        type: FileOperationType.Rename,
+        type: FileOperationType.Copy,
       })
     } else {
       const uniqueName = generateUniqueName(baseName, existingUris, root)
