@@ -11,8 +11,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   }
   await Workspace.setPath(tmpDir)
   const file00 = Locator('.TreeItem', { hasText: 'file-00.txt' })
+  const file23 = Locator('.TreeItem', { hasText: 'file-23.txt' })
   const file50 = Locator('.TreeItem', { hasText: 'file-50.txt' })
   const file99 = Locator('.TreeItem', { hasText: 'file-99.txt' })
+  const list = Locator('.ListItems')
 
   // act
   await Explorer.focusFirst()
@@ -20,6 +22,27 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // assert
   await expect(file00).toBeVisible()
   await expect(file00).toHaveId('TreeItemActive')
+
+  // act
+  await list.dispatchEvent('wheel', {
+    bubbles: true,
+    deltaMode: 0,
+    deltaY: 500,
+  } as unknown as string)
+
+  // assert
+  await expect(file00).toBeHidden()
+  await expect(file23).toBeVisible()
+
+  // act
+  await list.dispatchEvent('wheel', {
+    bubbles: true,
+    deltaMode: 0,
+    deltaY: -500,
+  } as unknown as string)
+
+  // assert
+  await expect(file00).toBeVisible()
 
   // act
   await Explorer.focusIndex(50)
