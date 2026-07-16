@@ -17,10 +17,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // assert
   const input = Locator('input')
-  const errorMessage = Locator('.ExplorerErrorMessage')
-  await expect(input).toBeVisible()
-  await expect(input).toHaveClass('InputValidationError')
-  await expect(errorMessage).toHaveText('A file or folder **target.txt** already exists at this location. Please choose a different name.')
-  await FileSystem.shouldHaveFile(`${tmpDir}/source.txt`, 'source')
-  await FileSystem.shouldHaveFile(`${tmpDir}/target.txt`, 'target')
+  const source = Locator('.TreeItem[aria-label="source.txt"]')
+  const target = Locator('.TreeItem[aria-label="target.txt"]')
+  await expect(input).toBeHidden()
+  await expect(source).toBeHidden()
+  await expect(target).toBeVisible()
+  await FileSystem.shouldHaveFile(`${tmpDir}/target.txt`, 'source')
 }

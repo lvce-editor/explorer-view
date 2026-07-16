@@ -21,19 +21,12 @@ test('acceptRename - validates empty name', async () => {
 })
 
 test('acceptRename - renames file and refreshes parent children', async () => {
-  let readCount = 0
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
-      readCount++
-      return readCount === 1
-        ? [
-            { name: 'a.txt', type: DirentType.File },
-            { name: 'c.txt', type: DirentType.File },
-          ]
-        : [
-            { name: 'b.txt', type: DirentType.File },
-            { name: 'c.txt', type: DirentType.File },
-          ]
+      return [
+        { name: 'b.txt', type: DirentType.File },
+        { name: 'c.txt', type: DirentType.File },
+      ]
     },
     'FileSystem.rename'() {
       return
@@ -63,7 +56,6 @@ test('acceptRename - renames file and refreshes parent children', async () => {
     { depth: 1, icon: '', name: 'c.txt', path: '/test/c.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
   ])
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readDirWithFileTypes', '/test'],
     ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],
     ['FileSystem.readDirWithFileTypes', '/test'],
   ])
@@ -71,12 +63,6 @@ test('acceptRename - renames file and refreshes parent children', async () => {
 
 test('acceptRename - rejects existing empty folder destination', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'() {
-      return [
-        { name: 'destination', type: DirentType.Directory },
-        { name: 'source', type: DirentType.Directory },
-      ]
-    },
     'FileSystem.rename'() {
       throw new Error('rename should not be called')
     },
@@ -87,7 +73,10 @@ test('acceptRename - rejects existing empty folder destination', async () => {
     editingIndex: 0,
     editingType: ExplorerEditingType.Rename,
     editingValue: 'destination',
-    items: [{ depth: 0, name: 'source', path: '/test/source', selected: false, type: DirentType.Directory }],
+    items: [
+      { depth: 0, name: 'source', path: '/test/source', selected: false, type: DirentType.Directory },
+      { depth: 0, name: 'destination', path: '/test/destination', selected: false, type: DirentType.Directory },
+    ],
     pathSeparator: PathSeparatorType.Slash,
     root: '/test',
   }
@@ -97,7 +86,7 @@ test('acceptRename - rejects existing empty folder destination', async () => {
   expect(result.editingErrorMessage).toBe('A file or folder **destination** already exists at this location. Please choose a different name.')
   expect(result.editingIndex).toBe(0)
   expect(result.editingType).toBe(ExplorerEditingType.Rename)
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test.skip('acceptRename - basic file rename', async () => {
