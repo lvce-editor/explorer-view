@@ -90,16 +90,25 @@ const menuEntryRename: MenuEntry = {
   label: ViewletExplorerStrings.rename(),
 }
 
-const menuEntryRenameDisabled: MenuEntry = {
-  ...menuEntryRename,
-  flags: MenuItemFlags.Disabled,
-}
-
 const menuEntryDelete: MenuEntry = {
   command: 'Explorer.removeDirent',
   flags: MenuItemFlags.None,
   id: 'delete',
   label: ViewletExplorerStrings.deleteItem(),
+}
+
+const disable = (entry: MenuEntry): MenuEntry => {
+  return {
+    ...entry,
+    flags: MenuItemFlags.Disabled,
+  }
+}
+
+const getWritableEntry = (state: ExplorerState, entry: MenuEntry): MenuEntry => {
+  if (state.isReadonly) {
+    return disable(entry)
+  }
+  return entry
 }
 
 const menuEntryRemoveFolderFromWorkspace: MenuEntry = {
@@ -119,29 +128,22 @@ const getFocusedDirent = (explorerState: ExplorerState): ExplorerItem | undefine
   return explorerState.items[explorerState.focusedIndex]
 }
 
-const getMenuEntryRename = (state: ExplorerState): MenuEntry => {
-  if (state.isReadonly) {
-    return menuEntryRenameDisabled
-  }
-  return menuEntryRename
-}
-
 const getMenuEntriesDirectory = (state: ExplorerState): readonly MenuEntry[] => {
   return [
-    menuEntryNewFile,
-    menuEntryNewFolder,
+    getWritableEntry(state, menuEntryNewFile),
+    getWritableEntry(state, menuEntryNewFolder),
     menuEntryOpenContainingFolder,
     menuEntryOpenInIntegratedTerminal,
     MenuEntrySeparator.menuEntrySeparator,
-    menuEntryCut,
+    getWritableEntry(state, menuEntryCut),
     menuEntryCopy,
-    menuEntryPaste,
+    getWritableEntry(state, menuEntryPaste),
     MenuEntrySeparator.menuEntrySeparator,
     menuEntryCopyPath,
     menuEntryCopyRelativePath,
     MenuEntrySeparator.menuEntrySeparator,
-    getMenuEntryRename(state),
-    menuEntryDelete,
+    getWritableEntry(state, menuEntryRename),
+    getWritableEntry(state, menuEntryDelete),
   ]
 }
 
@@ -150,17 +152,17 @@ const getMenuEntriesFile = (state: ExplorerState): readonly MenuEntry[] => {
     menuEntryOpenContainingFolder,
     menuEntryOpenInIntegratedTerminal,
     MenuEntrySeparator.menuEntrySeparator,
-    menuEntryCut,
+    getWritableEntry(state, menuEntryCut),
     menuEntryCopy,
-    menuEntryPaste,
+    getWritableEntry(state, menuEntryPaste),
     MenuEntrySeparator.menuEntrySeparator,
     menuEntryCopyPath,
     menuEntryCopyRelativePath,
     MenuEntrySeparator.menuEntrySeparator,
     menuEntrySelectForCompare,
     MenuEntrySeparator.menuEntrySeparator,
-    getMenuEntryRename(state),
-    menuEntryDelete,
+    getWritableEntry(state, menuEntryRename),
+    getWritableEntry(state, menuEntryDelete),
   ]
 }
 
@@ -169,17 +171,17 @@ const getMenuEntriesFileCompareWithSelected = (state: ExplorerState): readonly M
     menuEntryOpenContainingFolder,
     menuEntryOpenInIntegratedTerminal,
     MenuEntrySeparator.menuEntrySeparator,
-    menuEntryCut,
+    getWritableEntry(state, menuEntryCut),
     menuEntryCopy,
-    menuEntryPaste,
+    getWritableEntry(state, menuEntryPaste),
     MenuEntrySeparator.menuEntrySeparator,
     menuEntryCopyPath,
     menuEntryCopyRelativePath,
     MenuEntrySeparator.menuEntrySeparator,
     menuEntryCompareWithSelected,
     MenuEntrySeparator.menuEntrySeparator,
-    getMenuEntryRename(state),
-    menuEntryDelete,
+    getWritableEntry(state, menuEntryRename),
+    getWritableEntry(state, menuEntryDelete),
   ]
 }
 
@@ -187,14 +189,15 @@ const getMenuEntriesDefault = (state: ExplorerState): readonly MenuEntry[] => {
   return getMenuEntriesDirectory(state)
 }
 
-const getMenuEntriesRoot = (root: string): readonly MenuEntry[] => {
+const getMenuEntriesRoot = (state: ExplorerState): readonly MenuEntry[] => {
+  const { root } = state
   const entries: MenuEntry[] = [
-    menuEntryNewFile,
-    menuEntryNewFolder,
+    getWritableEntry(state, menuEntryNewFile),
+    getWritableEntry(state, menuEntryNewFolder),
     menuEntryOpenContainingFolder,
     menuEntryOpenInIntegratedTerminal,
     MenuEntrySeparator.menuEntrySeparator,
-    menuEntryPaste,
+    getWritableEntry(state, menuEntryPaste),
     MenuEntrySeparator.menuEntrySeparator,
     menuEntryCopyPath,
     menuEntryCopyRelativePath,
@@ -208,7 +211,7 @@ const getMenuEntriesRoot = (root: string): readonly MenuEntry[] => {
 export const getMenuEntries = (state: ExplorerState): readonly MenuEntry[] => {
   const focusedDirent = getFocusedDirent(state)
   if (!focusedDirent) {
-    return getMenuEntriesRoot(state.root)
+    return getMenuEntriesRoot(state)
   }
   switch (focusedDirent.type) {
     case DirentType.Directory:

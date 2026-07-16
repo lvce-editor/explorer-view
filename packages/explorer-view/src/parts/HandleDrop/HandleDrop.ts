@@ -13,6 +13,9 @@ export const handleDrop = async (
   fileIds: readonly number[],
   fileList: FileList,
 ): Promise<ExplorerState> => {
+  if (state.isReadonly) {
+    return state
+  }
   try {
     const { platform } = state
     const files = GetFileArray.getFileArray(fileList)

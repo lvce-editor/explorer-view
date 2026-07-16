@@ -5,7 +5,7 @@ import * as GetActionsVirtualDom from '../GetActionsVirtualDom/GetActionsVirtual
 
 export const renderActions = (uid: number): readonly VirtualDomNode[] => {
   const { newState } = ExplorerStates.get(uid)
-  const actions = ViewletExplorerActions.getActions(newState.root)
+  const actions = ViewletExplorerActions.getActions(newState.root, newState.isReadonly)
   const dom = GetActionsVirtualDom.getActionsVirtualDom(actions)
   return dom
 }
