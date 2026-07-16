@@ -48,11 +48,17 @@ jobs:
       - name: install playwright system dependencies
         working-directory: ./packages/e2e
         if: runner.os == 'Linux'
-        run: sudo npx playwright install-deps chromium firefox
+        run: sudo npx playwright install-deps chromium firefox webkit
       - name: install playwright dependencies
         working-directory: ./packages/e2e
         run: npx playwright install chromium firefox
         if: steps.npm-cache.outputs.cache-hit != 'true'
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: install playwright webkit dependency
+        working-directory: ./packages/e2e
+        run: npx playwright install webkit
+        if: runner.os == 'Linux'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e
@@ -63,6 +69,12 @@ jobs:
       - name: e2e firefox
         working-directory: ./packages/e2e
         run: npm run e2e:firefox:headless
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: e2e webkit
+        working-directory: ./packages/e2e
+        run: npm run e2e:webkit:headless
+        if: runner.os == 'Linux'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: measure

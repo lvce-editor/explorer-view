@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drop-two-folders-empty-workspace'
 
+export const skip = ['webkit']
+
 export const test: Test = async ({ Command, expect, Explorer, Locator, Workspace }) => {
   // arrange
   await Workspace.setPath('')
