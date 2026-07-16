@@ -20,8 +20,10 @@ export const test: Test = async ({ ClipBoard, ContextMenu, expect, Explorer, Fil
   await ContextMenu.selectItem('Paste')
 
   // assert
-  const file1 = Locator('.TreeItem').nth(0)
-  await expect(file1).toHaveText('a')
-  const file2 = Locator('.TreeItem').nth(1)
-  await expect(file2).toHaveText('file.txt')
+  const sourceFile = Locator(`.TreeItem[title="${tmpDir}/a/file.txt"]`)
+  await expect(sourceFile).toBeVisible()
+  const copiedFile = Locator(`.TreeItem[title="${tmpDir}/file.txt"]`)
+  await expect(copiedFile).toBeVisible()
+  await FileSystem.shouldHaveFile(`${tmpDir}/a/file.txt`, 'content')
+  await FileSystem.shouldHaveFile(`${tmpDir}/file.txt`, 'content')
 }
