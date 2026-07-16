@@ -216,7 +216,7 @@ test('updateEditingValue - real-time validation during folder creation', async (
   expect(result2.editingErrorMessage).toBe('')
 })
 
-test('updateEditingValue - no validation during rename', async () => {
+test('updateEditingValue - allows current name during rename', async () => {
   RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {
       return `file-${params.name}`
@@ -244,7 +244,50 @@ test('updateEditingValue - no validation during rename', async () => {
     ],
   }
 
-  // During rename, file existence validation should not apply
   const result = await updateEditingValue(state, 'existing-file.txt')
   expect(result.editingErrorMessage).toBe('')
+})
+
+test('updateEditingValue - validates sibling collision during rename', async () => {
+  RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'(params: any) {
+      return `file-${params.name}`
+    },
+    'IconTheme.getFolderIcon'(params: any) {
+      return `folder-${params.name}`
+    },
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingType: ExplorerEditingType.Rename,
+    focusedIndex: 0,
+    items: [
+      {
+        depth: 0,
+        icon: '',
+        name: 'source',
+        path: '/root/source',
+        posInSet: 0,
+        selected: false,
+        setSize: 2,
+        type: DirentType.Directory,
+      },
+      {
+        depth: 0,
+        icon: '',
+        name: 'destination',
+        path: '/root/destination',
+        posInSet: 1,
+        selected: false,
+        setSize: 2,
+        type: DirentType.Directory,
+      },
+    ],
+  }
+
+  const result = await updateEditingValue(state, 'destination')
+
+  expect(result.editingErrorMessage).toBe('A file or folder **destination** already exists at this location. Please choose a different name.')
 })
