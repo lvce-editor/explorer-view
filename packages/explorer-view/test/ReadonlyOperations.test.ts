@@ -19,16 +19,16 @@ const state: ExplorerState = {
 }
 
 test.each([
-  ['accept edit', () => acceptEdit(state)],
-  ['create file', () => newFile(state)],
-  ['create folder', () => newFolder(state)],
-  ['cut', () => handleCut(state)],
-  ['delete', () => removeDirent(state)],
-  ['drop', () => handleDrop(state, 0, 0, [], undefined as any)],
-  ['drop at index', () => handleDropIndex(state, [], [], [], 0)],
-  ['paste', () => handlePaste(state)],
-  ['rename', () => renameDirent(state)],
-  ['upload', () => handleUpload(state, [])],
+  ['accept edit', (): Promise<ExplorerState> => acceptEdit(state)],
+  ['create file', (): Promise<ExplorerState> => newFile(state)],
+  ['create folder', (): Promise<ExplorerState> => newFolder(state)],
+  ['cut', (): Promise<ExplorerState> => handleCut(state)],
+  ['delete', (): Promise<ExplorerState> => removeDirent(state)],
+  ['drop', (): Promise<ExplorerState> => handleDrop(state, 0, 0, [], undefined as any)],
+  ['drop at index', (): Promise<ExplorerState> => handleDropIndex(state, [], [], [], 0)],
+  ['paste', (): Promise<ExplorerState> => handlePaste(state)],
+  ['rename', (): Promise<ExplorerState> => renameDirent(state)],
+  ['upload', (): Promise<ExplorerState> => handleUpload(state, [])],
 ])('readonly explorer ignores %s', async (name, operation) => {
   expect(await operation()).toBe(state)
 })
