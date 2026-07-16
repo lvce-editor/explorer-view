@@ -25,7 +25,7 @@ test('handleClickSymLink - file symlink', async () => {
     'FileSystem.stat'() {
       return DirentType.File
     },
-    'Main.openUri'() {
+    'Main.openInput'() {
       return undefined
     },
   })
@@ -34,7 +34,17 @@ test('handleClickSymLink - file symlink', async () => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.getRealPath', '/test/symlink'],
     ['FileSystem.stat', '/test/real-file'],
-    ['Main.openUri', '/test/symlink', true, { preview: true }],
+    [
+      'Main.openInput',
+      {
+        editorInput: {
+          type: 'editor',
+          uri: '/test/symlink',
+        },
+        focu: true,
+        preview: true,
+      },
+    ],
   ])
 })
 
