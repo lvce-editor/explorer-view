@@ -2,6 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-readonly-disables-write-operations'
 
+// Deferred: the browser e2e runner cannot currently activate custom file system provider fixtures.
+export const skip = 1
+
 export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Locator, Workspace }) => {
   // arrange
   const uri = import.meta.resolve('../fixtures/sample.file-system-provider-readonly')
