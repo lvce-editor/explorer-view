@@ -31,7 +31,6 @@ test('acceptRename - renames file and refreshes parent children', async () => {
     'FileSystem.rename'() {
       return
     },
-    'Main.handleUriChange'() {},
   })
 
   const state: ExplorerState = {
@@ -58,7 +57,6 @@ test('acceptRename - renames file and refreshes parent children', async () => {
   ])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],
-    ['Main.handleUriChange', '/test/a.txt', '/test/b.txt'],
     ['FileSystem.readDirWithFileTypes', '/test'],
   ])
 })

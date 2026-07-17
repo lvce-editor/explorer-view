@@ -1,4 +1,3 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 import { computeExplorerRenamedDirentUpdate } from '../ComputeExplorerRenamedDirentUpdate/ComputeExplorerRenamedDirentUpdate.ts'
@@ -36,7 +35,6 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
       editingErrorMessage: renameErrorMessage,
     }
   }
-  await RendererWorker.invoke('Main.handleUriChange', oldUri, newUri)
   const children = await getChildDirents(pathSeparator, dirname, renamedDirent.depth - 1, excluded, root)
   const tree = createTree(items, root)
   const update = computeExplorerRenamedDirentUpdate(root, dirname, oldUri, children, tree, newUri)
