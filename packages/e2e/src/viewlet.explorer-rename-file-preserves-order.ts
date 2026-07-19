@@ -2,15 +2,27 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-file-preserves-order'
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
 
   const assertOrder = async (expected: readonly string[]): Promise<void> => {
-    const treeItems = Locator('.TreeItem')
-    await expect(treeItems).toHaveCount(expected.length)
-    for (let i = 0; i < expected.length; i++) {
-      const treeItem = treeItems.nth(i)
-      await expect(treeItem).toHaveText(expected[i])
+    try {
+      const treeItems = Locator('.TreeItem')
+      await expect(treeItems).toHaveCount(expected.length)
+      for (let i = 0; i < expected.length; i++) {
+        const treeItem = treeItems.nth(i)
+        await expect(treeItem).toHaveText(expected[i])
+      }
+    } catch (error) {
+      const [explorerState, fileSystemDirents] = await Promise.all([Command.execute('Explorer.getDebugState'), FileSystem.readDir(tmpDir)])
+      throw new Error(
+        `[flaky-e2e-debug] rename order mismatch: ${JSON.stringify({
+          expected,
+          explorerState,
+          fileSystemDirents,
+        })}`,
+        { cause: error },
+      )
     }
   }
 
