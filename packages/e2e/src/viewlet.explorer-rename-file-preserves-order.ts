@@ -5,11 +5,11 @@ export const name = 'viewlet.explorer-rename-file-preserves-order'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const assertOrder = async (expected: readonly string[]): Promise<void> => {
     const treeItems = Locator('.TreeItem')
-    await expect(treeItems).toHaveCount(expected.length)
     for (let i = 0; i < expected.length; i++) {
       const treeItem = treeItems.nth(i)
       await expect(treeItem).toHaveText(expected[i])
     }
+    await expect(treeItems).toHaveCount(expected.length)
   }
 
   // arrange
@@ -20,6 +20,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.writeFile(`${tmpDir}/eslint.config.js`, '')
   await FileSystem.writeFile(`${tmpDir}/package.json`, '')
   await Workspace.setPath(tmpDir)
+  await Explorer.refresh()
 
   const initialOrder = ['.nvmrc', 'LICENSE', 'README.md', 'eslint.config.js', 'package.json']
   const renamedOrder = ['.nvmrc', 'LICENSE', 'eslint.config.js', 'package.json', 'readme2.md']
