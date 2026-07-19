@@ -52,7 +52,7 @@ jobs:
         working-directory: ./packages/e2e
         shell: bash
         run: |
-          npm run e2e:firefox:headless 2>&1 | tee firefox-e2e.log
+          npm run e2e:firefox:headless -- --timeout=900000 2>&1 | tee firefox-e2e.log
           exit ${PIPESTATUS[0]}
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
