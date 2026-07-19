@@ -24,5 +24,6 @@ export const updateEditingValue = async (state: ExplorerState, value: string, in
     editingErrorMessage,
     editingIcon,
     editingValue: value,
+    inputSource,
   }
 }

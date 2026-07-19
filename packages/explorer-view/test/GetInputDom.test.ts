@@ -6,7 +6,7 @@ import * as InputName from '../src/parts/InputName/InputName.ts'
 import * as VirtualDomElements from '../src/parts/VirtualDomElements/VirtualDomElements.ts'
 
 test('getInputDom - without error', () => {
-  const result = getInputDom(true, false)
+  const result = getInputDom(true, false, 7)
   expect(result).toEqual([
     {
       ariaLabel: 'Type file name. Press Enter to confirm or Escape to cancel.',
@@ -15,6 +15,7 @@ test('getInputDom - without error', () => {
       autocorrect: 'off',
       childCount: 0,
       className: `ExplorerInputBox`,
+      'data-editingSessionId': 7,
       id: 'ExplorerInput',
       name: InputName.ExplorerInput,
       onBlur: DomEventListenerFunctions.HandleInputBlur,
@@ -27,7 +28,7 @@ test('getInputDom - without error', () => {
 })
 
 test('getInputDom - with error', () => {
-  const result = getInputDom(true, true)
+  const result = getInputDom(true, true, 8)
   expect(result).toEqual([
     {
       ariaLabel: 'Type file name. Press Enter to confirm or Escape to cancel.',
@@ -36,6 +37,7 @@ test('getInputDom - with error', () => {
       autocorrect: 'off',
       childCount: 0,
       className: expect.stringContaining(ClassNames.InputBox),
+      'data-editingSessionId': 8,
       id: 'ExplorerInput',
       name: InputName.ExplorerInput,
       onBlur: DomEventListenerFunctions.HandleInputBlur,

@@ -33,6 +33,7 @@ export const create = (
     editingIndex: -1,
     editingSelectionEnd: 0,
     editingSelectionStart: 0,
+    editingSessionId: 0,
     editingType: ExplorerEditingType.None,
     editingValue: '',
     errorCode: '',

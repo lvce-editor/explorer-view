@@ -8,4 +8,8 @@ test('renderEventListeners', () => {
     name: 21,
     params: ['handleKeyDown', 'event.defaultPrevented', 'event.key'],
   })
+  expect(eventListeners).toContainEqual({
+    name: 8,
+    params: ['handleInputBlur', 'event.target.dataset.editingSessionId'],
+  })
 })

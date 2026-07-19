@@ -3,6 +3,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 export const name = 'viewlet.explorer-rename-file-preserves-order'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+  const tmpDir = await FileSystem.getTmpDir()
+
   const assertOrder = async (expected: readonly string[]): Promise<void> => {
     const treeItems = Locator('.TreeItem')
     for (let i = 0; i < expected.length; i++) {
@@ -13,7 +15,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   }
 
   // arrange
-  const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/.nvmrc`, '')
   await FileSystem.writeFile(`${tmpDir}/LICENSE`, '')
   await FileSystem.writeFile(`${tmpDir}/README.md`, '')
