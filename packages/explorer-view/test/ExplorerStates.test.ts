@@ -2,7 +2,10 @@ import { expect, test } from '@jest/globals'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
+import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 import * as GetVisibleExplorerItems from '../src/parts/GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
+import * as InputSource from '../src/parts/InputSource/InputSource.ts'
+import * as Render2 from '../src/parts/Render2/Render2.ts'
 
 test('wrapListItemCommand recomputes visible items when focus changes', async () => {
   const uid = 9001
@@ -100,6 +103,32 @@ test('wrapListItemCommand continues after a command fails', async () => {
 
   const { newState } = ExplorerStates.get(uid)
   expect(newState.editingValue).toBe('next')
+})
+
+test('wrapListItemCommand preserves user input when a pending render commits', async () => {
+  const uid = 9005
+  const state = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingSessionId: 1,
+    editingValue: 'old.txt',
+    focus: FocusId.Input,
+    inputSource: InputSource.Script,
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+    return {
+      ...currentState,
+      editingValue: 'new.txt',
+      inputSource: InputSource.User,
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid)
+  Render2.render2(uid, [])
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.editingValue).toBe('new.txt')
 })
 
 test('wrapListItemCommandImmediate allows a callback while a queued command is running', async () => {
