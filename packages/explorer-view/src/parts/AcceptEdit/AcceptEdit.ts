@@ -9,7 +9,7 @@ export const acceptEdit = async (state: ExplorerState, inputSource: number = Inp
   if (state.isReadonly) {
     return state
   }
-  const { editingType } = state
+  const { editingType, inputSource: currentInputSource } = state
   let newState: ExplorerState
   switch (editingType) {
     case ExplorerEditingType.CreateFile:
@@ -26,6 +26,6 @@ export const acceptEdit = async (state: ExplorerState, inputSource: number = Inp
   }
   return {
     ...newState,
-    inputSource: state.inputSource === InputSource.User ? inputSource : state.inputSource,
+    inputSource: currentInputSource === InputSource.User ? inputSource : currentInputSource,
   }
 }
