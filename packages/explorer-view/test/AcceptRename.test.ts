@@ -61,6 +61,25 @@ test('acceptRename - renames file and refreshes parent children', async () => {
   ])
 })
 
+test('acceptRename - unchanged name does not invoke the file system', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({})
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingType: ExplorerEditingType.Rename,
+    editingValue: 'a.txt',
+    items: [{ depth: 0, name: 'a.txt', path: '/test/a.txt', selected: false, type: DirentType.EditingFile }],
+  }
+
+  const result = await acceptRename(state)
+
+  expect(result.editingIndex).toBe(-1)
+  expect(result.editingType).toBe(ExplorerEditingType.None)
+  expect(result.focused).toBe(true)
+  expect(result.items[0].type).toBe(DirentType.File)
+  expect(mockRpc.invocations).toEqual([])
+})
+
 test('acceptRename - rejects existing empty folder destination', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.rename'() {

@@ -40,6 +40,7 @@ test('newFolder', async () => {
     ...mockState,
     editingIcon: 'folder-icon',
     editingIndex: 0,
+    editingSessionId: 1,
     editingType: ExplorerEditingType.CreateFolder,
     editingValue: '',
     focus: 2,

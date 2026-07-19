@@ -49,6 +49,7 @@ test('newFile', async () => {
   expect(result).toEqual({
     ...state,
     editingIndex: 1,
+    editingSessionId: 1,
     editingType: ExplorerEditingType.CreateFile,
     editingValue: '',
     focus: 2,

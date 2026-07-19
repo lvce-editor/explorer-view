@@ -14,7 +14,7 @@ const getTitle = (path: string): string => {
   return path
 }
 
-export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
+export const getExplorerItemVirtualDom = (item: VisibleExplorerItem, editingSessionId = 0): readonly VirtualDomNode[] => {
   const { ariaExpanded, chevron, className, depth, hasEditingError, icon, id, index, isCut, isEditing, isIgnored, name, path, posInSet, setSize } =
     item
   const chevronDom = GetChevronVirtualDom.getChevronVirtualDom(chevron)
@@ -36,7 +36,7 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly V
     },
     ...chevronDom,
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
-    ...GetInputDom.getInputDom(isEditing, hasEditingError),
+    ...GetInputDom.getInputDom(isEditing, hasEditingError, editingSessionId),
     ...GetLabelDom.getLabelDom(isEditing, name, isCut || isIgnored),
   ]
 }

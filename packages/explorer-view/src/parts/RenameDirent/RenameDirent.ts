@@ -9,7 +9,7 @@ export const renameDirent = async (state: ExplorerState): Promise<ExplorerState>
   if (state.isReadonly) {
     return state
   }
-  const { focusedIndex, icons, items, minLineY } = state
+  const { editingSessionId, focusedIndex, icons, items, minLineY } = state
   if (items.length === 0) {
     return state
   }
@@ -22,6 +22,7 @@ export const renameDirent = async (state: ExplorerState): Promise<ExplorerState>
     editingIndex: focusedIndex,
     editingSelectionEnd: end,
     editingSelectionStart: start,
+    editingSessionId: editingSessionId + 1,
     editingType: ExplorerEditingType.Rename,
     editingValue: item.name,
     focus: FocusId.Input,

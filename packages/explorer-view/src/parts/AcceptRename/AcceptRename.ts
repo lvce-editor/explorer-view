@@ -1,5 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
+import { cancelEditRename } from '../CancelEditRename/CancelEditRename.ts'
 import { computeExplorerRenamedDirentUpdate } from '../ComputeExplorerRenamedDirentUpdate/ComputeExplorerRenamedDirentUpdate.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
@@ -28,16 +29,7 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
   const dirname = dirname2(oldUri)
   const newUri = join2(dirname, editingValue)
   if (oldUri === newUri) {
-    throw new Error(
-      `[flaky-e2e-debug] duplicate same-path rename: ${JSON.stringify({
-        editingIndex,
-        editingValue,
-        focusedIndex: state.focusedIndex,
-        itemNames: items.map((item) => item.name),
-        newUri,
-        oldUri,
-      })}`,
-    )
+    return cancelEditRename(state, true)
   }
   const operations = GetFileOperationsRename.getFileOperationsRename(renamedDirent.path, editingValue)
   const renameErrorMessage = await ApplyFileOperations.applyFileOperations(operations)

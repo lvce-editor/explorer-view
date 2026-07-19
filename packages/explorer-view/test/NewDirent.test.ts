@@ -48,6 +48,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
   expect(result).toEqual({
     ...mockState,
     editingIndex: 0,
+    editingSessionId: 1,
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
@@ -101,6 +102,7 @@ test('newDirent handles directory click when focused item is a directory', async
   expect(result).toEqual({
     ...mockState,
     editingIndex: 1,
+    editingSessionId: 1,
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
@@ -159,6 +161,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
   expect(result).toEqual({
     ...mockState,
     editingIndex: 1,
+    editingSessionId: 1,
     editingType: mockEditingType,
     editingValue: '',
     focus: 2,
