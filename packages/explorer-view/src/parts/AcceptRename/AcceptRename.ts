@@ -27,6 +27,18 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
   const oldUri = renamedDirent.path
   const dirname = dirname2(oldUri)
   const newUri = join2(dirname, editingValue)
+  if (oldUri === newUri) {
+    throw new Error(
+      `[flaky-e2e-debug] duplicate same-path rename: ${JSON.stringify({
+        editingIndex,
+        editingValue,
+        focusedIndex: state.focusedIndex,
+        itemNames: items.map((item) => item.name),
+        newUri,
+        oldUri,
+      })}`,
+    )
+  }
   const operations = GetFileOperationsRename.getFileOperationsRename(renamedDirent.path, editingValue)
   const renameErrorMessage = await ApplyFileOperations.applyFileOperations(operations)
   if (renameErrorMessage) {

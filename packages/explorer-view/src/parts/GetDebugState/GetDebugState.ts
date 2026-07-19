@@ -18,7 +18,7 @@ export const getDebugState = (state: ExplorerState): Readonly<Record<string, unk
     visibleExplorerItems: state.visibleExplorerItems.map((item) => ({
       depth: item.depth,
       name: item.name,
-      type: item.type,
+      path: item.path,
     })),
   }
 }
