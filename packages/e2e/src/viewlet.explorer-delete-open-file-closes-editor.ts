@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-delete-open-file-keeps-editor-stable'
+export const name = 'viewlet.explorer-delete-open-file-closes-editor'
 
 export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
@@ -23,5 +23,5 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
   const other = Locator('.TreeItem[aria-label="other.txt"]')
   await expect(deleted).toBeHidden()
   await expect(other).toBeVisible()
-  await expect(tab).toBeVisible()
+  await expect(tab).toBeHidden()
 }

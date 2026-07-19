@@ -13,7 +13,7 @@ export const handleDrop = async (
   fileIds: readonly number[],
   fileList: FileList,
 ): Promise<ExplorerState> => {
-  if (state.isReadonly) {
+  if (state.isReadonly && state.root !== '') {
     return state
   }
   try {

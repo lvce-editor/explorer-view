@@ -3,7 +3,7 @@ import * as GetNewDropTargets from '../GetNewDropTargets/GetNewDropTargets.ts'
 import * as IsEqual from '../IsEqual/IsEqual.ts'
 
 export const handleDragOverIndex = (state: ExplorerState, index: number): ExplorerState => {
-  if (state.isReadonly) {
+  if (state.isReadonly && state.root !== '') {
     return state
   }
   const { dropTargets } = state

@@ -21,7 +21,7 @@ export const handleDropRoot = async (
   files: readonly File[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
-  if (state.isReadonly) {
+  if (state.isReadonly && state.root !== '') {
     return state
   }
   const isElectron = state.platform === PlatformType.Electron
