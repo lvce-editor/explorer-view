@@ -5,6 +5,7 @@ import { dropTargetFull } from '../DropTargetFull/DropTargetFull.ts'
 import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as InputName from '../InputName/InputName.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
+import * as TabIndex from '../TabIndex/TabIndex.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
@@ -22,7 +23,7 @@ export const getExplorerWelcomeVirtualDom = (isWide: boolean, dropTargets: reado
       onDragLeave: DomEventListenerFunctions.HandleDragLeave,
       onDragOver: DomEventListenerFunctions.HandleDragOver,
       onDrop: DomEventListenerFunctions.HandleDrop,
-      tabIndex: 0,
+      tabIndex: TabIndex.Focusable,
       type: VirtualDomElements.Div,
     },
     {

@@ -5,6 +5,9 @@ import { acceptRename } from '../AcceptRename/AcceptRename.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 
 export const acceptEdit = async (state: ExplorerState): Promise<ExplorerState> => {
+  if (state.isReadonly) {
+    return state
+  }
   const { editingType } = state
   switch (editingType) {
     case ExplorerEditingType.CreateFile:

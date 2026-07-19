@@ -5,7 +5,7 @@ import * as GetActions from '../src/parts/GetActions/GetActions.ts'
 import * as MaskIcon from '../src/parts/MaskIcon/MaskIcon.ts'
 
 test('getActions - with root', () => {
-  expect(GetActions.getActions('/test-root')).toEqual([
+  expect(GetActions.getActions('/test-root', false)).toEqual([
     {
       command: 'newFile',
       icon: MaskIcon.NewFile,
@@ -38,5 +38,24 @@ test('getActions - with root', () => {
 })
 
 test('getActions - no root', () => {
-  expect(GetActions.getActions('')).toEqual([])
+  expect(GetActions.getActions('', false)).toEqual([])
+})
+
+test('getActions - readonly root hides create actions', () => {
+  expect(GetActions.getActions('/test-root', true)).toEqual([
+    {
+      command: 'refresh',
+      icon: MaskIcon.Refresh,
+      id: ViewletExplorerStrings.refresh(),
+      name: 'Refresh',
+      type: ActionType.Button,
+    },
+    {
+      command: 'collapseAll',
+      icon: MaskIcon.CollapseAll,
+      id: ViewletExplorerStrings.collapseAll(),
+      name: 'CollapseAll',
+      type: ActionType.Button,
+    },
+  ])
 })

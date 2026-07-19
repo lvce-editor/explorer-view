@@ -20,7 +20,6 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly V
   const chevronDom = GetChevronVirtualDom.getChevronVirtualDom(chevron)
   return [
     {
-      ariaDescription: '',
       ariaExpanded,
       ariaLabel: name,
       ariaLevel: depth,

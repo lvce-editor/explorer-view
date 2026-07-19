@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { root } from './root.ts'
 
-const sharedProcessPath = join(root, 'packages', 'server', 'node_modules', '@lvce-editor', 'shared-process', 'index.js')
+const sharedProcessPath = join(root, 'node_modules', '@lvce-editor', 'shared-process', 'index.js')
 
 const sharedProcessUrl = pathToFileURL(sharedProcessPath).toString()
 
@@ -35,5 +35,8 @@ if (!content.includes(occurrence)) {
 }
 const newContent = content.replace(occurrence, replacement)
 await writeFile(rendererWorkerPath, newContent)
+
+const explorerWorkerPath = join(root, 'dist', commitHash, 'packages', 'explorer-worker', 'dist', 'explorerViewWorkerMain.js')
+await cp(workerPath, explorerWorkerPath)
 
 await cp(join(root, 'dist'), join(root, '.tmp', 'static'), { recursive: true })

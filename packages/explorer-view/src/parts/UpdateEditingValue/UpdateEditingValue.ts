@@ -1,6 +1,7 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import { getEditingIcon } from '../GetEditingIcon/GetEditingIcon.ts'
+import { getRenameSiblingFileNames } from '../GetRenameSiblingFileNames/GetRenameSiblingFileNames.ts'
 import { getSiblingFileNames } from '../GetSiblingFileNames/GetSiblingFileNames.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
@@ -13,6 +14,8 @@ export const updateEditingValue = async (state: ExplorerState, value: string, in
   let siblingFileNames: readonly string[] = []
   if (editingType === ExplorerEditingType.CreateFile || editingType === ExplorerEditingType.CreateFolder) {
     siblingFileNames = getSiblingFileNames(items, focusedIndex, root, pathSeparator)
+  } else if (editingType === ExplorerEditingType.Rename) {
+    siblingFileNames = getRenameSiblingFileNames(items, editingIndex, pathSeparator)
   }
 
   const editingErrorMessage = ValidateFileName2.validateFileName2(value, siblingFileNames)
