@@ -4,6 +4,7 @@ import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetGitIgnoredUris from '../GetGitIgnoredUris/GetGitIgnoredUris.ts'
 import * as GetExplorerMaxLineY from '../GetMaxLineY/GetMaxLineY.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
+import * as InputSource from '../InputSource/InputSource.ts'
 
 export const { get, getCommandIds, registerCommands, set, wrapGetter } = ViewletRegistry.create<ExplorerState>()
 
@@ -42,6 +43,7 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
     oldState.itemHeight === newState.itemHeight &&
     oldState.focusedIndex === newState.focusedIndex &&
     oldState.editingIndex === newState.editingIndex &&
+    oldState.editingSessionId === newState.editingSessionId &&
     oldState.editingIcon === newState.editingIcon &&
     oldState.cutItems === newState.cutItems &&
     oldState.editingErrorMessage === newState.editingErrorMessage &&
@@ -92,6 +94,9 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState, intermediate.scheduledState)
     if (hasSameVisibleExplorerItemInputs(intermediate.newState, updatedState)) {
+      if (updatedState.inputSource === InputSource.User) {
+        set(id, intermediate.oldState, updatedState)
+      }
       return
     }
     const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)

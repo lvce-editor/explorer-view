@@ -1,5 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
+import { cancelEditRename } from '../CancelEditRename/CancelEditRename.ts'
 import { computeExplorerRenamedDirentUpdate } from '../ComputeExplorerRenamedDirentUpdate/ComputeExplorerRenamedDirentUpdate.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
@@ -27,6 +28,9 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
   const oldUri = renamedDirent.path
   const dirname = dirname2(oldUri)
   const newUri = join2(dirname, editingValue)
+  if (oldUri === newUri) {
+    return cancelEditRename(state, true)
+  }
   const operations = GetFileOperationsRename.getFileOperationsRename(renamedDirent.path, editingValue)
   const renameErrorMessage = await ApplyFileOperations.applyFileOperations(operations)
   if (renameErrorMessage) {

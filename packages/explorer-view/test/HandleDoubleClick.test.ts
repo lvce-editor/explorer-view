@@ -53,6 +53,7 @@ test('handleDoubleClick - double click on empty area creates new file', async ()
   expect(result).toEqual({
     ...state,
     editingIndex: 1,
+    editingSessionId: 1,
     editingType: ExplorerEditingType.CreateFile,
     editingValue: '',
     focus: 2,
@@ -191,6 +192,7 @@ test('handleDoubleClick - double click on empty area with scrolled state creates
   expect(result).toEqual({
     ...state,
     editingIndex: 1,
+    editingSessionId: 1,
     editingType: ExplorerEditingType.CreateFile,
     editingValue: '',
     focus: 2,

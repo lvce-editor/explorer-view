@@ -38,6 +38,7 @@ test('updateEditingValue - updates state with new value and input source', async
   const result = await updateEditingValue(state, newValue, InputSource.User)
   expect(result.editingValue).toBe(newValue)
   expect(result.editingIcon).toBe('')
+  expect(result.inputSource).toBe(InputSource.User)
   expect(mockRpc.invocations).toEqual([])
 })
 

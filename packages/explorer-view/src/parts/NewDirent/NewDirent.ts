@@ -7,7 +7,7 @@ import * as GetNewDirentType from '../GetNewDirentType/GetNewDirentType.ts'
 
 export const newDirent = async (state: ExplorerState, editingType: number, editingIcon = ''): Promise<ExplorerState> => {
   // TODO do it like vscode, select position between folders and files
-  const { editingIndex, excluded, focusedIndex, items, root } = state
+  const { editingIndex, editingSessionId, excluded, focusedIndex, items, root } = state
   if (editingIndex !== -1) {
     return state
   }
@@ -19,6 +19,7 @@ export const newDirent = async (state: ExplorerState, editingType: number, editi
     ...state,
     editingIcon,
     editingIndex: newEditingIndex,
+    editingSessionId: editingSessionId + 1,
     editingType,
     editingValue: '',
     focus: FocusId.Input,

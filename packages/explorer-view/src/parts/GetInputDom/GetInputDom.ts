@@ -5,7 +5,7 @@ import { getInputClassName } from '../GetInputClassName/GetInputClassName.ts'
 import * as InputName from '../InputName/InputName.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
-export const getInputDom = (isEditing: boolean, hasEditingError: boolean): readonly VirtualDomNode[] => {
+export const getInputDom = (isEditing: boolean, hasEditingError: boolean, editingSessionId: number): readonly VirtualDomNode[] => {
   if (!isEditing) {
     return []
   }
@@ -18,6 +18,7 @@ export const getInputDom = (isEditing: boolean, hasEditingError: boolean): reado
       autocorrect: 'off',
       childCount: 0,
       className: getInputClassName(hasEditingError),
+      'data-editingSessionId': editingSessionId,
       id: 'ExplorerInput',
       name: InputName.ExplorerInput,
       onBlur: DomEventListenerFunctions.HandleInputBlur,
