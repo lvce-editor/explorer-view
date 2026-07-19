@@ -20,6 +20,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.writeFile(`${tmpDir}/eslint.config.js`, '')
   await FileSystem.writeFile(`${tmpDir}/package.json`, '')
   await Workspace.setPath(tmpDir)
+  await Explorer.refresh()
 
   const initialOrder = ['.nvmrc', 'LICENSE', 'README.md', 'eslint.config.js', 'package.json']
   const renamedOrder = ['.nvmrc', 'LICENSE', 'eslint.config.js', 'package.json', 'readme2.md']
