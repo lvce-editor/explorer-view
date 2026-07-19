@@ -5,6 +5,31 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { Directory, File } from '../src/parts/DirentType/DirentType.ts'
 import { loadContent } from '../src/parts/LoadContent/LoadContent.ts'
 
+test('loadContent keeps empty workspaces writable', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return true
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'Preferences.get'() {
+      return false
+    },
+    'Workspace.getPath'() {
+      return ''
+    },
+  })
+
+  const result = await loadContent(createDefaultState(), undefined)
+
+  expect(result.isReadonly).toBe(false)
+  expect(mockRpc.invocations).not.toContainEqual(['FileSystem.isReadonly', ''])
+})
+
 test('loadContent applies files.exclude before computing aria metadata', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.getPathSeparator'() {
