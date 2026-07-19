@@ -42,6 +42,7 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
     oldState.itemHeight === newState.itemHeight &&
     oldState.focusedIndex === newState.focusedIndex &&
     oldState.editingIndex === newState.editingIndex &&
+    oldState.editingSessionId === newState.editingSessionId &&
     oldState.editingIcon === newState.editingIcon &&
     oldState.cutItems === newState.cutItems &&
     oldState.editingErrorMessage === newState.editingErrorMessage &&

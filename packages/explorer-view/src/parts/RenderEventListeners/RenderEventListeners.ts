@@ -6,7 +6,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
       name: DomEventListenersFunctions.HandleInputBlur,
-      params: ['handleInputBlur'],
+      params: ['handleInputBlur', 'event.target.dataset.editingSessionId'],
     },
     {
       name: DomEventListenersFunctions.HandleListFocus,

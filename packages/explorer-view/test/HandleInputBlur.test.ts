@@ -4,19 +4,47 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleInputBlur } from '../src/parts/HandleInputBlur/HandleInputBlur.ts'
 
 test('should cancel edit if there is an error message', async () => {
-  const state: ExplorerState = { ...createDefaultState(), editingErrorMessage: 'error', editingValue: 'foo' }
+  const state: ExplorerState = { ...createDefaultState(), editingErrorMessage: 'error', editingIndex: 0, editingValue: 'foo' }
   const result = await handleInputBlur(state)
-  expect(result.editingValue).toBe('foo')
+  expect(result.editingIndex).toBe(-1)
 })
 
 test('should cancel edit if editing value is empty', async () => {
-  const state: ExplorerState = { ...createDefaultState(), editingErrorMessage: '', editingValue: '' }
+  const state: ExplorerState = { ...createDefaultState(), editingErrorMessage: '', editingIndex: 0, editingValue: '' }
   const result = await handleInputBlur(state)
-  expect(result.editingValue).toBe('')
+  expect(result.editingIndex).toBe(-1)
 })
 
 test('should accept edit if no error and value present', async () => {
-  const state: ExplorerState = { ...createDefaultState(), editingErrorMessage: '', editingType: 0, editingValue: 'foo' }
+  const state: ExplorerState = { ...createDefaultState(), editingErrorMessage: '', editingIndex: 0, editingType: 0, editingValue: 'foo' }
   const result = await handleInputBlur(state)
   expect(result.editingValue).toBe('foo')
+})
+
+test('should ignore blur from an older editing session', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingErrorMessage: 'error',
+    editingIndex: 0,
+    editingSessionId: 2,
+    editingValue: 'foo',
+  }
+
+  const result = await handleInputBlur(state, '1')
+
+  expect(result).toBe(state)
+})
+
+test('should handle blur from the current editing session', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingErrorMessage: 'error',
+    editingIndex: 0,
+    editingSessionId: 2,
+    editingValue: 'foo',
+  }
+
+  const result = await handleInputBlur(state, '2')
+
+  expect(result.editingIndex).toBe(-1)
 })

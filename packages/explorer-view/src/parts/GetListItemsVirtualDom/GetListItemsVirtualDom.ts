@@ -29,6 +29,7 @@ export const getListItemsVirtualDom = (
   focusedIndex: number,
   focused: boolean,
   dropTargets: readonly number[],
+  editingSessionId = 0,
 ): readonly VirtualDomNode[] => {
   const dom: readonly VirtualDomNode[] = [
     {
@@ -53,7 +54,7 @@ export const getListItemsVirtualDom = (
       type: VirtualDomElements.Div,
       // onKeyDown: DomEventListenerFunctions.HandleListKeyDown,
     },
-    ...visibleItems.flatMap(GetExplorerItemVirtualDom.getExplorerItemVirtualDom),
+    ...visibleItems.flatMap((item) => GetExplorerItemVirtualDom.getExplorerItemVirtualDom(item, editingSessionId)),
   ]
   return dom
 }
