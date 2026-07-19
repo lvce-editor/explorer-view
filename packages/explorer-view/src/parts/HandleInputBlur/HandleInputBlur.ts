@@ -1,6 +1,7 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { acceptEdit } from '../AcceptEdit/AcceptEdit.ts'
 import { cancelEditInternal } from '../CancelEditInternal/CancelEditInternal.ts'
+import * as InputSource from '../InputSource/InputSource.ts'
 
 export const handleInputBlur = async (state: ExplorerState, editingSessionId?: string): Promise<ExplorerState> => {
   const { editingErrorMessage, editingIndex, editingSessionId: currentEditingSessionId, editingValue } = state
@@ -13,5 +14,5 @@ export const handleInputBlur = async (state: ExplorerState, editingSessionId?: s
   if (editingErrorMessage || !editingValue) {
     return cancelEditInternal(state, false)
   }
-  return acceptEdit(state)
+  return acceptEdit(state, InputSource.User)
 }

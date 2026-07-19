@@ -6,6 +6,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
+import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 
 test('cancelEdit', async () => {
   using mockRpc = RendererWorker.registerMockRpc({})
@@ -14,6 +15,7 @@ test('cancelEdit', async () => {
     editingIndex: 1,
     editingType: ExplorerEditingType.CreateFile,
     editingValue: 'test.txt',
+    inputSource: InputSource.User,
   }
 
   const result = await cancelEdit(state)
@@ -25,6 +27,7 @@ test('cancelEdit', async () => {
     focus: FocusId.List,
     focused: true,
     focusedIndex: -1,
+    inputSource: InputSource.Script,
   })
   expect(mockRpc.invocations).toEqual([])
 })
