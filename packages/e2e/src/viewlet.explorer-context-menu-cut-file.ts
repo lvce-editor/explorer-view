@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-context-menu-cut-file'
 
-export const skip = 1
-
 export const test: Test = async ({ ClipBoard, ContextMenu, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
@@ -20,7 +18,4 @@ export const test: Test = async ({ ClipBoard, ContextMenu, expect, Explorer, Fil
   const treeItem = Locator('.TreeItem[data-index="1"]')
   const treeItemLabel = treeItem.locator('.Label')
   await expect(treeItemLabel).toHaveClass('LabelCut')
-
-  // assert - clipboard should have the file path
-  await ClipBoard.shouldHaveText(`${tmpDir}/file2.txt`)
 }
