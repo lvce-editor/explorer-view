@@ -8,9 +8,12 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
   // arrange
   await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
-  for (let i = 0; i < 500; i++) {
-    await FileSystem.writeFile(`${tmpDir}/file-${i.toString().padStart(3, '0')}.txt`, '')
-  }
+  await FileSystem.writeFiles(
+    Array.from({ length: 500 }, (_, index) => ({
+      content: '',
+      uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
+    })),
+  )
   await Workspace.setPath(tmpDir)
 
   // act

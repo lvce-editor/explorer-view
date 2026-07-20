@@ -5,9 +5,12 @@ export const name = 'viewlet.explorer-new-file-in-expanded-folder-scrolls-into-v
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  for (let i = 0; i < 40; i++) {
-    await FileSystem.writeFile(`${tmpDir}/file-${i.toString().padStart(2, '0')}.txt`, '')
-  }
+  await FileSystem.writeFiles(
+    Array.from({ length: 40 }, (_, index) => ({
+      content: '',
+      uri: `${tmpDir}/file-${index.toString().padStart(2, '0')}.txt`,
+    })),
+  )
   await FileSystem.mkdir(`${tmpDir}/target-folder`)
   await FileSystem.writeFile(`${tmpDir}/target-folder/existing.txt`, '')
   await Workspace.setPath(tmpDir)

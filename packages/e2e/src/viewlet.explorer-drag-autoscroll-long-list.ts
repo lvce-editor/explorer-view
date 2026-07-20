@@ -6,9 +6,12 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/target`)
-  for (let i = 0; i < 80; i++) {
-    await FileSystem.writeFile(`${tmpDir}/file-${i.toString().padStart(2, '0')}.txt`, '')
-  }
+  await FileSystem.writeFiles(
+    Array.from({ length: 80 }, (_, index) => ({
+      content: '',
+      uri: `${tmpDir}/file-${index.toString().padStart(2, '0')}.txt`,
+    })),
+  )
   await Workspace.setPath(tmpDir)
   const opfsRoot = await navigator.storage.getDirectory()
   const fileHandle = await opfsRoot.getFileHandle('file-79.txt', { create: true })
