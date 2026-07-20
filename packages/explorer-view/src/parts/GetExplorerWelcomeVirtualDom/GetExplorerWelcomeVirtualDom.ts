@@ -9,6 +9,18 @@ import * as TabIndex from '../TabIndex/TabIndex.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.ts'
 
+const welcomeNode: VirtualDomNode = {
+  childCount: 2,
+  className: ClassNames.Welcome,
+  type: VirtualDomElements.Div,
+}
+
+const welcomeMessageNode: VirtualDomNode = {
+  childCount: 1,
+  className: ClassNames.WelcomeMessage,
+  type: VirtualDomElements.P,
+}
+
 const getClassName = (dropTargets: readonly number[]): string => {
   const extraClassName = dropTargets === dropTargetFull ? ClassNames.ExplorerDropTarget : ClassNames.Empty
   return MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer, extraClassName)
@@ -26,16 +38,8 @@ export const getExplorerWelcomeVirtualDom = (isWide: boolean, dropTargets: reado
       tabIndex: TabIndex.Focusable,
       type: VirtualDomElements.Div,
     },
-    {
-      childCount: 2,
-      className: ClassNames.Welcome,
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: ClassNames.WelcomeMessage,
-      type: VirtualDomElements.P,
-    },
+    welcomeNode,
+    welcomeMessageNode,
     text(ExplorerStrings.youHaveNotYetOpenedAFolder()),
     {
       childCount: 1,

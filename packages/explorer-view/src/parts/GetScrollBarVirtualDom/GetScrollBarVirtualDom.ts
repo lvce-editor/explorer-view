@@ -3,6 +3,12 @@ import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
+const scrollBarThumbNode: VirtualDomNode = {
+  childCount: 0,
+  className: ClassNames.ScrollBarThumb,
+  type: VirtualDomElements.Div,
+}
+
 export const getScrollBarVirtualDom = (scrollBarHeight: number): readonly VirtualDomNode[] => {
   const shouldShowScrollbar = scrollBarHeight > 0
   if (!shouldShowScrollbar) {
@@ -14,10 +20,6 @@ export const getScrollBarVirtualDom = (scrollBarHeight: number): readonly Virtua
       className: MergeClassNames.mergeClassNames(ClassNames.ScrollBar, ClassNames.ScrollBarSmall),
       type: VirtualDomElements.Div,
     },
-    {
-      childCount: 0,
-      className: ClassNames.ScrollBarThumb,
-      type: VirtualDomElements.Div,
-    },
+    scrollBarThumbNode,
   ]
 }
