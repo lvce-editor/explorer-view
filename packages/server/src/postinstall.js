@@ -40,11 +40,11 @@ const explorerWorkerUrl = \`${remoteUrl}\`;`
 
 const testWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'test-worker', 'dist', 'testWorkerMain.js')
 const testWorkerContent = await readFile(testWorkerMainPath, 'utf-8')
-const resetOccurrence = `    await invoke('Layout.reset');`
-const resetReplacement = `    await invoke('FileSystem.remove', 'memfs:///workspace');
-    await invoke('Layout.reset');
-    await invoke('Layout.hideSideBar');
-    await invoke('Layout.showSideBar');`
+const resetOccurrence = `    await invoke$1('Layout.reset');`
+const resetReplacement = `    await invoke$1('FileSystem.remove', 'memfs:///workspace');
+    await invoke$1('Layout.reset');
+    await invoke$1('Layout.hideSideBar');
+    await invoke$1('Layout.showSideBar');`
 
 if (!testWorkerContent.includes(resetReplacement)) {
   if (!testWorkerContent.includes(resetOccurrence)) {
