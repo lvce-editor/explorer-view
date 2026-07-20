@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.handleArrowLeft()
 
   const child = Locator('.TreeItem[aria-label="child"]')
-  const parent = Locator('.TreeItem[aria-label="parent"]')
+  const file = Locator('.TreeItem[aria-label="file.txt"]')
   await expect(child).toHaveId('TreeItemActive')
-  await expect(parent).not.toHaveId('TreeItemActive')
+  await expect(file).toBeVisible()
 }

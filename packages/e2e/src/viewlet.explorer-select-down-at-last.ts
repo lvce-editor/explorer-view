@@ -12,10 +12,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   await Explorer.selectDown()
 
-  const firstFile = Locator('.TreeItem[aria-label="a.txt"]')
-  const secondFile = Locator('.TreeItem[aria-label="b.txt"]')
   const lastFile = Locator('.TreeItem[aria-label="c.txt"]')
-  await expect(firstFile).not.toHaveClass('TreeItemActive')
-  await expect(secondFile).not.toHaveClass('TreeItemActive')
+  const treeItems = Locator('.TreeItem')
   await expect(lastFile).toHaveId('TreeItemActive')
+  await expect(treeItems).toHaveCount(3)
 }

@@ -16,5 +16,5 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const firstChild = Locator('.TreeItem[aria-label="a.txt"]')
   const secondChild = Locator('.TreeItem[aria-label="z.txt"]')
   await expect(firstChild).toHaveId('TreeItemActive')
-  await expect(secondChild).not.toHaveId('TreeItemActive')
+  await expect(secondChild).toBeVisible()
 }

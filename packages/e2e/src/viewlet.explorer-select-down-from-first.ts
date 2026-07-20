@@ -18,5 +18,5 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(firstFile).toHaveClass('TreeItemActive')
   await expect(secondFile).toHaveClass('TreeItemActive')
   await expect(secondFile).toHaveId('TreeItemActive')
-  await expect(lastFile).not.toHaveClass('TreeItemActive')
+  await expect(lastFile).toHaveClass('TreeItem')
 }

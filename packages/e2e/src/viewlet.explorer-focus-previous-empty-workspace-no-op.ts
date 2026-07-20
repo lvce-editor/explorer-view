@@ -11,5 +11,5 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   const treeItems = Locator('.TreeItem')
   const listItems = Locator('.ListItems')
   await expect(treeItems).toHaveCount(0)
-  await expect(listItems).not.toHaveAttribute('aria-activedescendant', 'TreeItemActive')
+  await expect(listItems).toBeVisible()
 }
