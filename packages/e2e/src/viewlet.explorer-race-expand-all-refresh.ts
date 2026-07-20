@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-expand-all-refresh'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
@@ -12,7 +12,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Workspace.setPath(tmpDir)
 
   // act: expandAll reads both folders while refresh concurrently replaces their rows
-  await Promise.all([Command.execute('Explorer.expandAll'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.expandAll(), Explorer.refresh()])
 
   // assert: root folders remain visible and neither child is duplicated
   const a = Locator('.TreeItem[aria-label="a"]')

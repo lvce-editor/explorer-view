@@ -2,17 +2,17 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-focus-next-refresh'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'content 2')
   await FileSystem.writeFile(`${tmpDir}/file3.txt`, 'content 3')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.focusIndex', 0)
+  await Explorer.focusIndex(0)
 
   // act: focusNext moves focus to next item, refresh rebuilds tree — both fire concurrently
-  await Promise.all([Command.execute('Explorer.focusNext'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.focusNext(), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no stale focus
   // All files should be visible

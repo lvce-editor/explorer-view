@@ -2,17 +2,17 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-copy-refresh'
 
-export const test: Test = async ({ ClipBoard, Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'content 2')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.focusIndex', 0)
+  await Explorer.focusIndex(0)
 
   // act: handleCopy captures the focused item while refresh concurrently replaces that item
-  await Promise.all([Command.execute('Explorer.handleCopy'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.handleCopy(), Explorer.refresh()])
 
   // assert: both files remain visible exactly once
   const file1 = Locator('.TreeItem[aria-label="file1.txt"]')

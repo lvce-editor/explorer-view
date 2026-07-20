@@ -2,13 +2,13 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-focus-previous-single-item-no-op'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/only.txt`, '')
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
 
-  await Command.execute('Explorer.focusPrevious')
+  await Explorer.focusPrevious()
 
   const onlyFile = Locator('.TreeItem[aria-label="only.txt"]')
   const treeItems = Locator('.TreeItem')

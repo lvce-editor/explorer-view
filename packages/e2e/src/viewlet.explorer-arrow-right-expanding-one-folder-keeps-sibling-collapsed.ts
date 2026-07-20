@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-arrow-right-expanding-one-folder-keeps-sibling-collapsed'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.mkdir(`${tmpDir}/b`)
@@ -11,7 +11,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
 
-  await Command.execute('Explorer.handleArrowRight')
+  await Explorer.handleArrowRight()
 
   const firstFolder = Locator('.TreeItem[aria-label="a"]')
   const secondFolder = Locator('.TreeItem[aria-label="b"]')

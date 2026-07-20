@@ -4,12 +4,12 @@ export const name = 'viewlet.explorer-symlink-folder-expand-collapse'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/real-folder`)
   await FileSystem.writeFile(`${tmpDir}/real-folder/file.txt`, '')
-  await Command.execute('FileSystem.symlink', `${tmpDir}/real-folder`, `${tmpDir}/linked-folder`)
+  await FileSystem.symlink(`${tmpDir}/real-folder`, `${tmpDir}/linked-folder`)
   await Workspace.setPath(tmpDir)
 
   // act

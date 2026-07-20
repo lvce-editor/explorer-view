@@ -24,8 +24,6 @@ export const test: Test = async ({ Explorer, FileSystem, Workspace }) => {
   // const files = []
   // const paths = []
   // const index = 0
-  // await Command.execute('Explorer.handleDropIndex', fileHandles, files, paths, index)
-  // await Explorer.handleDrop()
-
+  // await Explorer.handleDropIndex(fileHandles, files, paths, index)
   // TODO drop file into folder and verify it is moved
 }

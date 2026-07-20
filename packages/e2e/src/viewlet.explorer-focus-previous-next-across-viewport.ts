@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-focus-previous-next-across-viewport'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   for (let i = 0; i < 120; i++) {
@@ -12,7 +12,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
 
   // act
   await Explorer.focusIndex(90)
-  await Command.execute('Explorer.focusPrevious')
+  await Explorer.focusPrevious()
   await Explorer.focusNext()
 
   // assert

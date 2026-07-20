@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-double-click-blur'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -10,7 +10,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
 
   // act: double-click on empty space creates input (with empty value),
   // handleInputBlur with empty value cancels — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handleDoubleClick', 20, 100), Command.execute('Explorer.handleInputBlur')])
+  await Promise.all([Explorer.handleDoubleClick(20, 100), Explorer.handleInputBlur()])
 
   // assert: explorer should be stable — no crash, no duplicate items
   // file1.txt should always be visible

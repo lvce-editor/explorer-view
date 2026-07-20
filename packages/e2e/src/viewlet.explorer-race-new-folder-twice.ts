@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-new-folder-twice'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -10,7 +10,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Workspace.setPath(tmpDir)
 
   // act: two newFolder commands concurrently try to insert an editing row
-  await Promise.all([Command.execute('Explorer.newFolder'), Command.execute('Explorer.newFolder')])
+  await Promise.all([Explorer.newFolder(), Explorer.newFolder()])
 
   // assert: the editing guard permits only one row and one input
   const treeItems = Locator('.TreeItem')

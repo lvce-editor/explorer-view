@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-welcome-open-folder-button'
 
-export const test: Test = async ({ Command, expect, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, Locator, Workspace }) => {
   // arrange
   await Workspace.setPath('')
 
@@ -12,5 +12,5 @@ export const test: Test = async ({ Command, expect, Locator, Workspace }) => {
   await expect(openFolderButton).toHaveText('Open folder')
 
   // act
-  await Command.execute('Explorer.handleClickOpenFolder')
+  await Explorer.handleClickOpenFolder()
 }

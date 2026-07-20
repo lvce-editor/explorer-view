@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-expand-two-folders'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder-a`)
@@ -14,7 +14,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Workspace.setPath(tmpDir)
 
   // act: click both folders concurrently to expand them — async expansions race
-  await Promise.all([Command.execute('Explorer.handleClick', 0), Command.execute('Explorer.handleClick', 1)])
+  await Promise.all([Explorer.handleClick(0), Explorer.handleClick(1)])
 
   // assert: explorer should be stable — no crash, no children from A under B or vice versa
   // Both folders should be visible

@@ -2,17 +2,17 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-delete-file-new-file'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'content 2')
   await FileSystem.writeFile(`${tmpDir}/file3.txt`, 'content 3')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.focusIndex', 0)
+  await Explorer.focusIndex(0)
 
   // act: removeDirent deletes the focused file, newFile inserts an editing item — both fire concurrently
-  await Promise.all([Command.execute('Explorer.removeDirent'), Command.execute('Explorer.newFile')])
+  await Promise.all([Explorer.removeDirent(), Explorer.newFile()])
 
   // assert: explorer should be stable — no crash, no stale rows
   // file2.txt and file3.txt should always be visible

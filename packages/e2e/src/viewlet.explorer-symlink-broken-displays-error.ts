@@ -4,10 +4,10 @@ export const name = 'viewlet.explorer-symlink-broken-displays-error'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await Command.execute('FileSystem.symlink', `${tmpDir}/missing.txt`, `${tmpDir}/broken.txt`)
+  await FileSystem.symlink(`${tmpDir}/missing.txt`, `${tmpDir}/broken.txt`)
   await Workspace.setPath(tmpDir)
 
   // act

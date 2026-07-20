@@ -2,16 +2,16 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-blur-refresh'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.newFile')
-  await Command.execute('Explorer.updateEditingValue', 'created.txt')
+  await Explorer.newFile()
+  await Explorer.updateEditingValue('created.txt')
 
   // act: blur auto-accepts the edit (creates file), refresh rebuilds the tree — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handleInputBlur'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.handleInputBlur(), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash
   // The file should exist on disk (created by blur auto-accept)

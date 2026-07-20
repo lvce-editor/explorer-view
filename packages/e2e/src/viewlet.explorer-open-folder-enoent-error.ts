@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-open-folder-enoent-error'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, SideBar, Workspace }) => {
+export const test: Test = async ({ expect, FileSystem, Layout, Locator, SideBar, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   const missingFolder = `${tmpDir}/missing-folder`
@@ -12,7 +12,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, SideBar
   await SideBar.hide()
 
   // act
-  await Command.execute('Layout.showSideBar')
+  await Layout.showSideBar()
 
   // assert
   const error = Locator('.Explorer .WelcomeMessage')

@@ -2,14 +2,14 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-arrow-left-expanded-top-level-folder-keeps-root-sibling-visible'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
   await FileSystem.writeFile(`${tmpDir}/folder/child.txt`, '')
   await FileSystem.writeFile(`${tmpDir}/root.txt`, '')
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
-  await Command.execute('Explorer.handleArrowRight')
+  await Explorer.handleArrowRight()
 
   await Explorer.handleArrowLeft()
 

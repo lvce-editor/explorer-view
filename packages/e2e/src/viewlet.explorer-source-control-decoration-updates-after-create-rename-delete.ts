@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-source-control-decoration-updates-after-cr
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Explorer, Extension, FileSystem, Locator, Settings, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Locator, Settings, Workspace }) => {
   // arrange
   await Settings.update({
     'explorer.sourceControlDecorations': true,
@@ -20,7 +20,7 @@ export const test: Test = async ({ Command, expect, Explorer, Extension, FileSys
   await Explorer.newFile()
   await Explorer.updateEditingValue('ignored.txt')
   await Explorer.acceptEdit()
-  await Command.execute('FileSystem.rename', `${tmpDir}/ignored.txt`, `${tmpDir}/ignored-renamed.txt`)
+  await FileSystem.rename(`${tmpDir}/ignored.txt`, `${tmpDir}/ignored-renamed.txt`)
   await FileSystem.remove(`${tmpDir}/tracked.txt`)
   await Explorer.refresh()
 

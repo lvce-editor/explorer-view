@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-race-paste-twice'
 
 export const skip = 1
 
-export const test: Test = async ({ ClipBoard, Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
@@ -12,13 +12,13 @@ export const test: Test = async ({ ClipBoard, Command, expect, FileSystem, Locat
   await FileSystem.writeFile(`${tmpDir}/a/file.txt`, 'content')
   await FileSystem.mkdir(`${tmpDir}/b`)
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.expandRecursively')
-  await Command.execute('Explorer.focusIndex', 1)
-  await Command.execute('Explorer.handleCopy')
-  await Command.execute('Explorer.focusIndex', 2)
+  await Explorer.expandRecursively()
+  await Explorer.focusIndex(1)
+  await Explorer.handleCopy()
+  await Explorer.focusIndex(2)
 
   // act: two paste commands concurrently copy the same source into the same target
-  await Promise.all([Command.execute('Explorer.handlePaste'), Command.execute('Explorer.handlePaste')])
+  await Promise.all([Explorer.handlePaste(), Explorer.handlePaste()])
 
   // assert: source and target remain stable without duplicate tree rows for one URI
   const a = Locator('.TreeItem[aria-label="a"]')

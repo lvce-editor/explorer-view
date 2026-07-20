@@ -2,16 +2,16 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-escape-update-editing-value'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.newFile')
-  await Command.execute('Explorer.updateEditingValue', 'draft.txt')
+  await Explorer.newFile()
+  await Explorer.updateEditingValue('draft.txt')
 
-  // act: cancelEdit cancels the edit, updateEditingValue tries to set a value on cancelled edit — both fire concurrently
-  await Promise.all([Command.execute('Explorer.cancelEdit'), Command.execute('Explorer.updateEditingValue', 'other.txt')])
+  // act: handleEscape cancels the edit, updateEditingValue tries to set a value on cancelled edit — both fire concurrently
+  await Promise.all([Explorer.handleEscape(), Explorer.updateEditingValue('other.txt')])
 
   // assert: explorer should be stable — no crash, no stale editing state
   // file1.txt should always be visible

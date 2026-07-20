@@ -2,16 +2,16 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-accept-edit-blur'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.newFile')
-  await Command.execute('Explorer.updateEditingValue', 'created.txt')
+  await Explorer.newFile()
+  await Explorer.updateEditingValue('created.txt')
 
   // act: acceptEdit and handleInputBlur both try to accept the same edit concurrently
-  await Promise.all([Command.execute('Explorer.acceptEdit'), Command.execute('Explorer.handleInputBlur')])
+  await Promise.all([Explorer.acceptEdit(), Explorer.handleInputBlur()])
 
   // assert: explorer should be stable — no crash
   // The file should exist on disk (if created before or by acceptEdit)

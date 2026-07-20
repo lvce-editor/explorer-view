@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-race-paste-refresh'
 
 export const skip = 1
 
-export const test: Test = async ({ ClipBoard, Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
@@ -13,13 +13,13 @@ export const test: Test = async ({ ClipBoard, Command, expect, FileSystem, Locat
   await FileSystem.writeFile(`${tmpDir}/a/f2.txt`, 'f2')
   await FileSystem.mkdir(`${tmpDir}/b`)
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.expandRecursively')
-  await Command.execute('Explorer.focusIndex', 1)
-  await Command.execute('Explorer.handleCopy')
-  await Command.execute('Explorer.focusIndex', 3)
+  await Explorer.expandRecursively()
+  await Explorer.focusIndex(1)
+  await Explorer.handleCopy()
+  await Explorer.focusIndex(3)
 
   // act: handlePaste pastes the copied file into folder b, refresh rebuilds the tree — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handlePaste'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.handlePaste(), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no duplicate items
   // folder a and folder b should always be visible
