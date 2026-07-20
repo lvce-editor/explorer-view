@@ -9,8 +9,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Workspace.setPath(tmpDir)
   await Explorer.newFile()
 
-  // act: handleEscape cancels the editing row, newFile tries to start a new one — both fire concurrently
-  await Promise.all([Explorer.handleEscape(), Explorer.newFile()])
+  // act: cancelEdit cancels the editing row, newFile tries to start a new one — both fire concurrently
+  await Promise.all([Explorer.cancelEdit(), Explorer.newFile()])
 
   // assert: explorer should be stable — no crash, no duplicate inputs
   // file1.txt should always be visible

@@ -10,8 +10,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.newFile()
   await Explorer.updateEditingValue('created.txt')
 
-  // act: handleEscape cancels the inline edit, acceptEdit tries to accept it — both fire concurrently
-  await Promise.all([Explorer.handleEscape(), Explorer.acceptEdit()])
+  // act: cancelEdit cancels the inline edit, acceptEdit tries to accept it — both fire concurrently
+  await Promise.all([Explorer.cancelEdit(), Explorer.acceptEdit()])
 
   // assert: explorer should be stable — no crash, no duplicate items
   // file1.txt should always be visible

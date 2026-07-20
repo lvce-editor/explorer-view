@@ -10,8 +10,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.newFile()
   await Explorer.updateEditingValue('draft.txt')
 
-  // act: handleEscape cancels the edit, updateEditingValue tries to set a value on cancelled edit — both fire concurrently
-  await Promise.all([Explorer.handleEscape(), Explorer.updateEditingValue('other.txt')])
+  // act: cancelEdit cancels the edit, updateEditingValue tries to set a value on cancelled edit — both fire concurrently
+  await Promise.all([Explorer.cancelEdit(), Explorer.updateEditingValue('other.txt')])
 
   // assert: explorer should be stable — no crash, no stale editing state
   // file1.txt should always be visible
