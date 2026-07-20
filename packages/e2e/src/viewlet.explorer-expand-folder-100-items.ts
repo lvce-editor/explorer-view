@@ -6,10 +6,12 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/stress-folder`)
-  for (let index = 0; index < 100; index++) {
-    const fileName = `item-${index.toString().padStart(5, '0')}.txt`
-    await FileSystem.writeFile(`${tmpDir}/stress-folder/${fileName}`, '')
-  }
+  await FileSystem.writeFiles(
+    Array.from({ length: 100 }, (_, index) => ({
+      content: '',
+      uri: `${tmpDir}/stress-folder/item-${index.toString().padStart(5, '0')}.txt`,
+    })),
+  )
   await Workspace.setPath(tmpDir)
 
   // act

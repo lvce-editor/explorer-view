@@ -7,9 +7,12 @@ export const skip = 1
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  for (let i = 0; i < 200; i++) {
-    await FileSystem.writeFile(`${tmpDir}/file-${i.toString().padStart(3, '0')}.txt`, '')
-  }
+  await FileSystem.writeFiles(
+    Array.from({ length: 200 }, (_, index) => ({
+      content: '',
+      uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
+    })),
+  )
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(150)
   const savedState = await Explorer.saveState()

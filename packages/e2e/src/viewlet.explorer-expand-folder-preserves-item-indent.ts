@@ -9,9 +9,12 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/packages/extension/src/parts/GetErrorMessage`)
   await FileSystem.mkdir(`${tmpDir}/packages/extension/src/parts/GithubClient/HelperBotClient`)
   await FileSystem.writeFile(`${tmpDir}/packages/extension/src/parts/GithubClient/GithubClient.ts`, '')
-  for (let index = 0; index < 50; index++) {
-    await FileSystem.writeFile(`${tmpDir}/root-${index.toString().padStart(2, '0')}.txt`, '')
-  }
+  await FileSystem.writeFiles(
+    Array.from({ length: 50 }, (_, index) => ({
+      content: '',
+      uri: `${tmpDir}/root-${index.toString().padStart(2, '0')}.txt`,
+    })),
+  )
   await Workspace.setPath(tmpDir)
   await Explorer.focusFirst()
 
