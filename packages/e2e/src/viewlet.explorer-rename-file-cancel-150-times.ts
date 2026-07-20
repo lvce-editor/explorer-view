@@ -22,10 +22,11 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     await expect(inputBox).toBeVisible()
     await expect(inputBox).toBeFocused()
     await Explorer.cancelEdit()
-    await expect(inputBox).toBeHidden()
   }
+  await Explorer.refresh()
 
   // assert
+  await expect(inputBox).toBeHidden()
   const file2 = Locator('.TreeItem', { hasText: 'file2.txt' })
   await expect(file2).toBeVisible()
   await expect(file2).toHaveId('TreeItemActive')

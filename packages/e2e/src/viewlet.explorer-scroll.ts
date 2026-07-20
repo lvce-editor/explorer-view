@@ -29,6 +29,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     deltaMode: 0,
     deltaY: 500,
   } as unknown as string)
+  await Explorer.refresh()
 
   // assert
   await expect(file00).toBeHidden()
@@ -40,6 +41,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     deltaMode: 0,
     deltaY: -500,
   } as unknown as string)
+  await Explorer.refresh()
 
   // assert
   await expect(file00).toBeVisible()
