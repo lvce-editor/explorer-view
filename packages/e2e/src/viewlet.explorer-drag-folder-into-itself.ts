@@ -4,13 +4,13 @@ export const name = 'viewlet.explorer-drag-folder-into-itself'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
   await FileSystem.writeFile(`${tmpDir}/folder/file.txt`, '')
   await Workspace.setPath(tmpDir)
-  const folderHandle = await Command.execute('FileSystemHandle.getDirectoryHandle', `${tmpDir}/folder`)
+  const folderHandle = await FileSystem.getDirectoryHandle(`${tmpDir}/folder`)
   await Explorer.focusFirst()
 
   // act

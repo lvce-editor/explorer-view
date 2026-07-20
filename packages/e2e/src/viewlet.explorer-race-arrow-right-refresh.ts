@@ -2,17 +2,17 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-arrow-right-refresh'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
   await FileSystem.writeFile(`${tmpDir}/folder/f1.txt`, 'f1')
   await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.focusIndex', 0)
+  await Explorer.focusIndex(0)
 
   // act: handleArrowRight expands the focused folder, refresh rebuilds the tree — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handleArrowRight'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.handleArrowRight(), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no duplicate children
   // folder and root.txt should always be visible

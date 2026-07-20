@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-files-exclude-reveal-descendant'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/project/.git`)
   await FileSystem.writeFile(`${tmpDir}/project/.git/config`, '')
@@ -12,7 +12,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const project = Locator('.TreeItem[aria-label="project"]')
   const config = Locator('.TreeItem[aria-label="config"]')
   const explorer = Locator('.Explorer')
-  await Command.execute('Explorer.reveal', `${tmpDir}/project/.git/config`)
+  await Explorer.reveal(`${tmpDir}/project/.git/config`)
 
   await expect(explorer).toBeVisible()
   await expect(config).toBeHidden()

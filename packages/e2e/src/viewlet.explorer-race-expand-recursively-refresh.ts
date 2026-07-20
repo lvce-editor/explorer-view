@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-expand-recursively-refresh'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a/b/c`)
@@ -11,10 +11,10 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await FileSystem.mkdir(`${tmpDir}/folder-2`)
   await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.focusIndex', 0)
+  await Explorer.focusIndex(0)
 
   // act: expandRecursively reads children recursively, refresh rebuilds tree — both fire concurrently
-  await Promise.all([Command.execute('Explorer.expandRecursively'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.expandRecursively(), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no duplicate items
   // root folder items should always be visible

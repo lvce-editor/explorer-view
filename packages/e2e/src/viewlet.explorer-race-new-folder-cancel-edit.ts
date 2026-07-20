@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-new-folder-cancel-edit'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -10,7 +10,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Workspace.setPath(tmpDir)
 
   // act: newFolder inserts an editing row while cancelEdit concurrently tries to remove it
-  await Promise.all([Command.execute('Explorer.newFolder'), Command.execute('Explorer.cancelEdit')])
+  await Promise.all([Explorer.newFolder(), Explorer.cancelEdit()])
 
   // assert: existing rows remain stable and at most one editing row survives
   const file1 = Locator('.TreeItem[aria-label="file1.txt"]')

@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-focus-none'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -11,12 +11,12 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Workspace.setPath(tmpDir)
 
   // focus a file
-  await Command.execute('Explorer.focusIndex', 1)
+  await Explorer.focusIndex(1)
   const file2 = Locator('.TreeItem').nth(1)
   await expect(file2).toHaveId('TreeItemActive')
 
   // act
-  await Command.execute('Explorer.focusNone')
+  await Explorer.focusNone()
 
   // assert - no item should have the active id
   const activeItem = Locator('#TreeItemActive')

@@ -2,17 +2,17 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-collapse-all-refresh'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
   await FileSystem.writeFile(`${tmpDir}/folder/child.txt`, 'child')
   await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.expandRecursively')
+  await Explorer.expandRecursively()
 
   // act: collapseAll removes expanded children while refresh concurrently rebuilds the tree
-  await Promise.all([Command.execute('Explorer.collapseAll'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.collapseAll(), Explorer.refresh()])
 
   // assert: top-level items remain stable and no child is duplicated
   const folder = Locator('.TreeItem[aria-label="folder"]')

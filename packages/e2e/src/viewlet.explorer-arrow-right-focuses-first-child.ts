@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-arrow-right-focuses-first-child'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
@@ -12,7 +12,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await Explorer.clickCurrent()
 
   // act
-  await Command.execute('Explorer.handleArrowRight')
+  await Explorer.handleArrowRight()
 
   // assert
   const folder = Locator('.TreeItem[aria-label="folder"]')

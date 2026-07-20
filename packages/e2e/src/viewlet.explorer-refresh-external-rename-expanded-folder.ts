@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-refresh-external-rename-expanded-folder'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/before`)
@@ -13,7 +13,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await Explorer.expandRecursively()
 
   // act
-  await Command.execute('FileSystem.rename', `${tmpDir}/before`, `${tmpDir}/after`)
+  await FileSystem.rename(`${tmpDir}/before`, `${tmpDir}/after`)
   await Explorer.refresh()
 
   // assert

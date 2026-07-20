@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-reveal-collapsed-folder-preserves-order'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   const nestedFilePath = `${tmpDir}/a/b/c.txt`
@@ -20,7 +20,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await expect(nestedFile).toBeHidden()
 
   // act
-  await Command.execute('Explorer.reveal', nestedFilePath)
+  await Explorer.reveal(nestedFilePath)
 
   // assert
   await expect(nestedFile).toHaveId('TreeItemActive')

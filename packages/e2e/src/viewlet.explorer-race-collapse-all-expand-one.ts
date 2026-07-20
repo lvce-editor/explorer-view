@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-collapse-all-expand-one'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
@@ -10,10 +10,10 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await FileSystem.writeFile(`${tmpDir}/a/f1.txt`, 'f1')
   await FileSystem.writeFile(`${tmpDir}/b/f2.txt`, 'f2')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.expandRecursively')
+  await Explorer.expandRecursively()
 
   // act: collapseAll collapses the tree, handleClick on folder a expands it — both fire concurrently
-  await Promise.all([Command.execute('Explorer.collapseAll'), Command.execute('Explorer.handleClick', 0)])
+  await Promise.all([Explorer.collapseAll(), Explorer.handleClick(0)])
 
   // assert: explorer should be stable — no crash, no orphaned children
   // folder a and folder b should always be visible

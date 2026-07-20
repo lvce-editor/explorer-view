@@ -2,17 +2,14 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-double-click-empty-space'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await Workspace.setPath(tmpDir)
 
   // act
-  await Promise.all([
-    Command.execute('Explorer.handleClickAt', false, 0, false, false, 20, 100),
-    Command.execute('Explorer.handleDoubleClick', 20, 100),
-  ])
+  await Promise.all([Explorer.handleClickAt(false, 0, false, false, 20, 100), Explorer.handleDoubleClick(20, 100)])
 
   // assert
   const inputBox = Locator('.Explorer input')

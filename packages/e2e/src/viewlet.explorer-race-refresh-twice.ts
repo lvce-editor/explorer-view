@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-refresh-twice'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -11,7 +11,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Workspace.setPath(tmpDir)
 
   // act: two concurrent refresh calls — both rebuild the tree
-  await Promise.all([Command.execute('Explorer.refresh'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.refresh(), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no duplicate items
   // All files should be visible

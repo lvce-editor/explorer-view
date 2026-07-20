@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-reveal-from-tab-context-menu'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, ContextMenu, expect, Explorer, FileSystem, Locator, Main, Workspace }) => {
+export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Locator, Main, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   const firstFile = `${tmpDir}/a.txt`
@@ -26,7 +26,7 @@ export const test: Test = async ({ Command, ContextMenu, expect, Explorer, FileS
   await expect(tab).toBeVisible()
 
   // act
-  await Command.execute('Main.handleTabContextMenu', 0, 0, 0)
+  await Main.handleTabContextMenu(0, 0, 0)
   const closeMenuItem = Locator('text=Close').first()
   await expect(closeMenuItem).toBeVisible()
   await ContextMenu.selectItem('Reveal in Explorer')

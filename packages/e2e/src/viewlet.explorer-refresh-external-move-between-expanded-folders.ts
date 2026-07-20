@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-refresh-external-move-between-expanded-folders'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
@@ -12,7 +12,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await Explorer.expandRecursively()
 
   // act
-  await Command.execute('FileSystem.rename', `${tmpDir}/a/file.txt`, `${tmpDir}/b/file.txt`)
+  await FileSystem.rename(`${tmpDir}/a/file.txt`, `${tmpDir}/b/file.txt`)
   await Explorer.refresh()
 
   // assert

@@ -2,16 +2,16 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-rename-twice'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/a.txt`, 'a')
   await FileSystem.writeFile(`${tmpDir}/b.txt`, 'b')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.focusIndex', 0)
+  await Explorer.focusIndex(0)
 
   // act: two concurrent renameDirent calls on the same focused item
-  await Promise.all([Command.execute('Explorer.renameDirent'), Command.execute('Explorer.renameDirent')])
+  await Promise.all([Explorer.renameDirent(), Explorer.renameDirent()])
 
   // assert: explorer should be stable — no crash, no duplicate inputs
   // a.txt and b.txt should always be visible

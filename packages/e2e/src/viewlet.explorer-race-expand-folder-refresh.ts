@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-expand-folder-refresh'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
@@ -13,7 +13,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await Workspace.setPath(tmpDir)
 
   // act: click folder to expand (async reads children), refresh rebuilds tree — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handleClick', 0), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.handleClick(0), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no duplicate children
   // folder and root.txt should always be visible

@@ -2,17 +2,17 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-expand-recursively-collapse-all'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a/b/c`)
   await FileSystem.writeFile(`${tmpDir}/a/b/c/d.txt`, 'd')
   await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.focusIndex', 0)
+  await Explorer.focusIndex(0)
 
   // act: expandRecursively unfolds the tree, collapseAll collapses it — both fire concurrently
-  await Promise.all([Command.execute('Explorer.expandRecursively'), Command.execute('Explorer.collapseAll')])
+  await Promise.all([Explorer.expandRecursively(), Explorer.collapseAll()])
 
   // assert: explorer should be stable — no crash, no orphaned children without parent
   // a (folder) and root.txt should always be visible

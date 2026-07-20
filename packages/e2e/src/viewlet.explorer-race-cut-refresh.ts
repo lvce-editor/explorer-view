@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-cut-refresh'
 
-export const test: Test = async ({ ClipBoard, Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
@@ -11,11 +11,11 @@ export const test: Test = async ({ ClipBoard, Command, expect, FileSystem, Locat
   await FileSystem.writeFile(`${tmpDir}/a/f2.txt`, 'f2')
   await FileSystem.mkdir(`${tmpDir}/b`)
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.expandRecursively')
-  await Command.execute('Explorer.focusIndex', 1)
+  await Explorer.expandRecursively()
+  await Explorer.focusIndex(1)
 
   // act: handleCut marks f1.txt with cut decoration, refresh rebuilds the tree — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handleCut'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.handleCut(), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no stale cut decorations
   // folder a and folder b should always be visible

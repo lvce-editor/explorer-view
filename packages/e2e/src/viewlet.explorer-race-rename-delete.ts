@@ -2,16 +2,16 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-rename-delete'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/a.txt`, 'a')
   await FileSystem.writeFile(`${tmpDir}/b.txt`, 'b')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.focusIndex', 0)
+  await Explorer.focusIndex(0)
 
   // act: renameDirent starts inline rename on a.txt, removeDirent deletes a.txt — both fire concurrently
-  await Promise.all([Command.execute('Explorer.renameDirent'), Command.execute('Explorer.removeDirent')])
+  await Promise.all([Explorer.renameDirent(), Explorer.removeDirent()])
 
   // assert: explorer should be stable — no crash, no stale references to deleted item
   // b.txt should always be visible

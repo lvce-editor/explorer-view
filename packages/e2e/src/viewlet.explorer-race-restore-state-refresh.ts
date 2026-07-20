@@ -2,18 +2,18 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-restore-state-refresh'
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
   await FileSystem.writeFile(`${tmpDir}/folder/f1.txt`, 'f1')
   await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.handleClick', 0)
-  await Command.execute('Explorer.saveState')
+  await Explorer.handleClick(0)
+  await Explorer.saveState()
 
   // act: restoreState restores saved expand/scroll state, refresh rebuilds the tree — both fire concurrently
-  await Promise.all([Command.execute('Explorer.restoreState'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.restoreState(), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no corrupt state
   // folder and root.txt should always be visible
