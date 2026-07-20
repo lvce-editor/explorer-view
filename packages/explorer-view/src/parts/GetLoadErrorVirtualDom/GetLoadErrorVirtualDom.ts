@@ -8,6 +8,12 @@ import * as InputName from '../InputName/InputName.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
+const welcomeMessageNode: VirtualDomNode = {
+  childCount: 1,
+  className: ClassNames.WelcomeMessage,
+  type: VirtualDomElements.P,
+}
+
 const getParentNode = (childCount: number): VirtualDomNode => {
   return {
     childCount,
@@ -29,11 +35,7 @@ export const getLoadErrorVirtualDom = (
       className: ClassNames.Welcome,
       type: VirtualDomElements.Div,
     },
-    {
-      childCount: 1,
-      className: ClassNames.WelcomeMessage,
-      type: VirtualDomElements.P,
-    },
+    welcomeMessageNode,
     text(loadErrorMessage),
   ]
   const buttonDom = showOpenAnotherFolderButton
