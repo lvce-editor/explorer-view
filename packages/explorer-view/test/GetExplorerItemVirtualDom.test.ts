@@ -27,7 +27,32 @@ test('basic item', () => {
   expect(dom[0].type).toBe(4)
   expect(dom[0].role).toBe('treeitem')
   expect(dom[0].ariaLabel).toBe('test.txt')
+  expect(dom[0].ariaSelected).toBeUndefined()
   expect(dom[0].title).toBe('/test.txt')
+})
+
+test('selected item', () => {
+  const item: VisibleExplorerItem = {
+    ariaExpanded: undefined,
+    chevron: 0,
+    className: 'TreeItemActive',
+    depth: 1,
+    hasEditingError: false,
+    icon: 'file',
+    id: '1',
+    indent: 0,
+    index: 0,
+    isCut: false,
+    isEditing: false,
+    isIgnored: false,
+    name: 'test.txt',
+    path: '/test.txt',
+    posInSet: 1,
+    selected: true,
+    setSize: 2,
+  }
+  const dom = getExplorerItemVirtualDom(item)
+  expect(dom[0].ariaSelected).toBe('true')
 })
 
 test('file uri item removes file scheme from title', () => {
