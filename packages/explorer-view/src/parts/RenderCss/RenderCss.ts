@@ -25,8 +25,8 @@ export const renderCss = (oldState: ExplorerState, newState: ExplorerState): rea
   } = newState
   const uniqueIndents = getUniqueIndents(visibleExplorerItems)
   const contentHeight = items.length * itemHeight
-  const scrollBarTop = getScrollBarTop(height, contentHeight, deltaY)
   const scrollBarHeight = getScrollBarSize(height, contentHeight, 20)
+  const scrollBarTop = getScrollBarTop(height, contentHeight, deltaY, scrollBarHeight)
   const depth = items[focusedIndex]?.depth || 0
   const { errorMessageWidth, left, top } = GetErrorMessagePosition.getErrorMessagePosition(
     itemHeight,
