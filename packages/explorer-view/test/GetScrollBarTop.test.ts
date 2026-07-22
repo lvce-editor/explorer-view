@@ -6,11 +6,11 @@ test('getScrollBarTop - no scrollbar', () => {
 })
 
 test('getScrollBarTop - invalid content height', () => {
-  expect(getScrollBarTop(100, Number.NaN, 0, 0)).toBe(0)
+  expect(getScrollBarTop(100, NaN, 0, 0)).toBe(0)
 })
 
 test('getScrollBarTop - invalid scroll top', () => {
-  expect(getScrollBarTop(100, 200, Number.NaN, 50)).toBe(0)
+  expect(getScrollBarTop(100, 200, NaN, 50)).toBe(0)
 })
 
 test('getScrollBarTop - top', () => {
