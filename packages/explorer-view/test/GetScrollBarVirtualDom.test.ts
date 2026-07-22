@@ -12,6 +12,7 @@ test('getScrollBarVirtualDom - renders scrollbar', () => {
     {
       childCount: 1,
       className: 'ScrollBar ScrollBarSmall',
+      onPointerDown: 24,
       type: 4,
     },
     {

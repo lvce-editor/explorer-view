@@ -56,6 +56,9 @@ import * as HandleKeyDown from '../HandleKeyDown/HandleKeyDown.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleResize from '../HandleResize/HandleResize.ts'
+import { handleScrollBarCaptureLost } from '../HandleScrollBarCaptureLost/HandleScrollBarCaptureLost.ts'
+import { handleScrollBarClick } from '../HandleScrollBarClick/HandleScrollBarClick.ts'
+import { handleScrollBarMove } from '../HandleScrollBarMove/HandleScrollBarMove.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as HandleWheel from '../HandleWheel/HandleWheel.ts'
 import * as HandleWorkspaceChange from '../HandleWorkspaceChange/HandleWorkspaceChange.ts'
@@ -143,6 +146,9 @@ export const commandMap = {
   'Explorer.handlePaste': WrapCommand.wrapListItemCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapListItemCommand(HandlePointerDown.handlePointerDown),
   'Explorer.handleResize': WrapCommand.wrapListItemCommand(HandleResize.handleResize),
+  'Explorer.handleScrollBarCaptureLost': WrapCommand.wrapListItemCommand(handleScrollBarCaptureLost),
+  'Explorer.handleScrollBarClick': WrapCommand.wrapListItemCommand(handleScrollBarClick),
+  'Explorer.handleScrollBarMove': WrapCommand.wrapListItemCommand(handleScrollBarMove),
   'Explorer.handleUpload': WrapCommand.wrapListItemCommand(HandleUpload.handleUpload),
   'Explorer.handleWheel': WrapCommand.wrapListItemCommand(HandleWheel.handleWheel),
   'Explorer.handleWorkspaceChange': WrapCommand.wrapListItemCommandImmediate(HandleWorkspaceChange.handleWorkspaceChange),

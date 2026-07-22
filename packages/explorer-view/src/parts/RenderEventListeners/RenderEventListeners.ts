@@ -48,6 +48,20 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handlePointerDown', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY],
     },
     {
+      name: DomEventListenersFunctions.HandleScrollBarPointerDown,
+      params: ['handleScrollBarClick', EventExpression.ClientY],
+      preventDefault: true,
+      trackPointerEvents: [DomEventListenersFunctions.HandleScrollBarMove, DomEventListenersFunctions.HandleScrollBarPointerCaptureLost],
+    },
+    {
+      name: DomEventListenersFunctions.HandleScrollBarMove,
+      params: ['handleScrollBarMove', EventExpression.ClientY],
+    },
+    {
+      name: DomEventListenersFunctions.HandleScrollBarPointerCaptureLost,
+      params: ['handleScrollBarCaptureLost'],
+    },
+    {
       name: DomEventListenersFunctions.HandleDoubleClick,
       params: ['handleDoubleClick', EventExpression.ClientX, EventExpression.ClientY],
     },
