@@ -1,9 +1,11 @@
 import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 import * as GetVisibleExplorerItems from '../src/parts/GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
+import * as HandleClickFile from '../src/parts/HandleClickFile/HandleClickFile.ts'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as Render2 from '../src/parts/Render2/Render2.ts'
 
@@ -82,6 +84,51 @@ test('wrapListItemCommand runs concurrent commands in invocation order', async (
 
   const { newState } = ExplorerStates.get(uid)
   expect(newState.editingValue).toBe('second')
+})
+
+test('wrapListItemCommand remains responsive while a file is opening', async () => {
+  const uid = 9006
+  const editorOpeningStarted = Promise.withResolvers<void>()
+  const editorOpened = Promise.withResolvers<void>()
+  using _mockRpc = RendererWorker.registerMockRpc({
+    async 'Main.openInput'() {
+      editorOpeningStarted.resolve()
+      await editorOpened.promise
+    },
+  })
+  const state = {
+    ...createDefaultState(),
+    items: [{ depth: 0, name: 'test.ts', path: '/test.ts', selected: false, type: DirentType.File }],
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, action: string) => {
+    if (action === 'open') {
+      return HandleClickFile.handleClickFile(currentState, currentState.items[0], 0)
+    }
+    return {
+      ...currentState,
+      editingValue: 'expanded',
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  const openCommand = wrapped(uid, 'open')
+  await editorOpeningStarted.promise
+  const nextCommand = wrapped(uid, 'expand')
+  const waitForNextCommand = async (): Promise<string> => {
+    await nextCommand
+    return 'completed'
+  }
+  const nextCommandResult = await Promise.race([
+    waitForNextCommand(),
+    new Promise<string>((resolve) => {
+      setTimeout(resolve, 100, 'blocked')
+    }),
+  ])
+  editorOpened.resolve()
+  await Promise.all([openCommand, nextCommand])
+
+  expect(nextCommandResult).toBe('completed')
+  expect(ExplorerStates.get(uid).newState.editingValue).toBe('expanded')
 })
 
 test('wrapListItemCommand continues after a command fails', async () => {

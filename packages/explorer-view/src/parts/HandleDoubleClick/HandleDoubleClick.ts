@@ -13,7 +13,7 @@ export const handleDoubleClick = async (state: ExplorerState, eventX: number, ev
   const item = state.items[index]
   const type = normalizeDirentType(item.type)
   if (type === DirentType.File || type === DirentType.SymLinkFile) {
-    await OpenUri.openUri(item.path, true)
+    OpenUri.openUriBackground(item.path, true)
   }
   return state
 }
