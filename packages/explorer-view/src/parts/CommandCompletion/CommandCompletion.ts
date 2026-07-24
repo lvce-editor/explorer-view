@@ -1,18 +1,14 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
-const commandCompletion = Symbol('commandCompletion')
-
-interface StateWithCommandCompletion extends ExplorerState {
-  readonly [commandCompletion]: Promise<void>
-}
-
-export const get = (state: ExplorerState): Promise<void> | undefined => {
-  return (state as StateWithCommandCompletion)[commandCompletion]
-}
+const commandCompletions = new WeakMap<ExplorerState, Promise<void>>()
 
 export const set = (state: ExplorerState, completion: Promise<void>): ExplorerState => {
-  Object.defineProperty(state, commandCompletion, {
-    value: completion,
-  })
+  commandCompletions.set(state, completion)
   return state
+}
+
+export const take = (state: ExplorerState): Promise<void> | undefined => {
+  const completion = commandCompletions.get(state)
+  commandCompletions.delete(state)
+  return completion
 }

@@ -82,9 +82,8 @@ const maybeUpdateGitIgnoredUris = async (oldState: ExplorerState, newState: Expl
 const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
   const runCommand = async (id: number, ...args: T): Promise<CommandRunResult> => {
     const { newState } = get(id)
-    const rawUpdatedStateWithCompletion = await fn(newState, ...args)
-    const completion = CommandCompletion.get(rawUpdatedStateWithCompletion)
-    const rawUpdatedState = completion ? { ...rawUpdatedStateWithCompletion } : rawUpdatedStateWithCompletion
+    const rawUpdatedState = await fn(newState, ...args)
+    const completion = CommandCompletion.take(rawUpdatedState)
     if (newState === rawUpdatedState) {
       return {
         completion,

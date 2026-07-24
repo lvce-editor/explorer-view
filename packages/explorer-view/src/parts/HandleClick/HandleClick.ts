@@ -36,7 +36,7 @@ export const handleClick = async (state: ExplorerState, index: number, keepFocus
   if (newState.editingIndex === -1) {
     return newState
   }
-  const completion = CommandCompletion.get(newState)
+  const completion = CommandCompletion.take(newState)
   const finalState = {
     ...newState,
     ...resetEditing,
