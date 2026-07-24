@@ -111,7 +111,13 @@ test('wrapListItemCommand remains responsive while a file is opening', async () 
   })
 
   ExplorerStates.set(uid, state, state)
+  let openCommandCompleted = false
   const openCommand = wrapped(uid, 'open')
+  const trackOpenCommand = async (): Promise<void> => {
+    await openCommand
+    openCommandCompleted = true
+  }
+  const trackedOpenCommand = trackOpenCommand()
   await editorOpeningStarted.promise
   const nextCommand = wrapped(uid, 'expand')
   const waitForNextCommand = async (): Promise<string> => {
@@ -124,10 +130,12 @@ test('wrapListItemCommand remains responsive while a file is opening', async () 
       setTimeout(resolve, 100, 'blocked')
     }),
   ])
+  expect(openCommandCompleted).toBe(false)
   editorOpened.resolve()
-  await Promise.all([openCommand, nextCommand])
+  await Promise.all([trackedOpenCommand, nextCommand])
 
   expect(nextCommandResult).toBe('completed')
+  expect(openCommandCompleted).toBe(true)
   expect(ExplorerStates.get(uid).newState.editingValue).toBe('expanded')
 })
 

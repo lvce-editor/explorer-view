@@ -18,7 +18,3 @@ export const openUri = async (uri: string, focus: boolean, options?: OpenUriOpti
   }
   await RendererWorker.openUri(uri, /* focus */ focus)
 }
-
-export const openUriBackground = (uri: string, focus: boolean, options?: OpenUriOptions): void => {
-  void openUri(uri, focus, options).catch(console.error)
-}

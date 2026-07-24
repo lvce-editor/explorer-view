@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import { newFile } from '../NewFile/NewFile.ts'
@@ -13,7 +14,7 @@ export const handleDoubleClick = async (state: ExplorerState, eventX: number, ev
   const item = state.items[index]
   const type = normalizeDirentType(item.type)
   if (type === DirentType.File || type === DirentType.SymLinkFile) {
-    OpenUri.openUriBackground(item.path, true)
+    return CommandCompletion.set(state, OpenUri.openUri(item.path, true))
   }
   return state
 }

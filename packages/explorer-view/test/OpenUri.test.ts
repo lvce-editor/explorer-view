@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import { openUri, openUriBackground } from '../src/parts/OpenUri/OpenUri.ts'
+import { openUri } from '../src/parts/OpenUri/OpenUri.ts'
 
 test('openUri calls ParentRpc.invoke with correct parameters', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
@@ -43,33 +43,4 @@ test('openUri opens preview files through the main area input API', async () => 
       },
     ],
   ])
-})
-
-test('openUriBackground returns while the editor is still opening', () => {
-  const editorOpened = Promise.withResolvers<void>()
-  using mockRpc = RendererWorker.registerMockRpc({
-    'Main.openInput'() {
-      return editorOpened.promise
-    },
-  })
-
-  const result = openUriBackground('file:///test.ts', true, {
-    preview: true,
-  })
-
-  expect(result).toBeUndefined()
-  expect(mockRpc.invocations).toEqual([
-    [
-      'Main.openInput',
-      {
-        editorInput: {
-          type: 'editor',
-          uri: 'file:///test.ts',
-        },
-        focu: true,
-        preview: true,
-      },
-    ],
-  ])
-  editorOpened.resolve()
 })
