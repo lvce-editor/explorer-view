@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-new-file-with-no-workspace'
 
-export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   const firstWorkspace = `${tmpDir}/first-workspace`
@@ -15,8 +15,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   await Workspace.setPath('')
 
   // act
-  const newFileButton = Locator('button[name="NewFile"]')
-  await newFileButton.click()
+  await Explorer.newFile()
   await Workspace.setPath(secondWorkspace)
 
   // assert
