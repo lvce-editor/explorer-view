@@ -78,3 +78,14 @@ test('newFile', async () => {
   })
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/testfolder']])
 })
+
+test('newFile - no workspace', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    root: '',
+  }
+
+  const result = await newFile(state)
+
+  expect(result).toBe(state)
+})

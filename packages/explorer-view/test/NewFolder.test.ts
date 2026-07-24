@@ -60,3 +60,14 @@ test('newFolder', async () => {
   })
   expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: '' }]])
 })
+
+test('newFolder - no workspace', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    root: '',
+  }
+
+  const result = await newFolder(state)
+
+  expect(result).toBe(state)
+})
