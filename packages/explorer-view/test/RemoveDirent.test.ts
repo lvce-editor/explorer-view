@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
 import { jest } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { DialogWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { Directory, DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
@@ -239,10 +239,12 @@ test('remove file from expanded folder', async () => {
 })
 
 test.skip('removeDirent - with confirmation enabled and user confirms', async () => {
-  RendererWorker.registerMockRpc({
+  DialogWorker.registerMockRpc({
     'ConfirmPrompt.prompt'(_message?: string) {
       return true
     },
+  })
+  RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -273,7 +275,7 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
 })
 
 test.skip('removeDirent - with confirmation enabled and user cancels', async () => {
-  RendererWorker.registerMockRpc({
+  DialogWorker.registerMockRpc({
     'ConfirmPrompt.prompt'(_message?: string) {
       return false
     },
@@ -298,10 +300,12 @@ test('removeDirent - shows error message when file operation fails', async () =>
   const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
   const confirmFn = jest.fn()
   confirmFn.mockImplementation(() => true)
-  RendererWorker.registerMockRpc({
+  DialogWorker.registerMockRpc({
     'ConfirmPrompt.prompt'(message?: string) {
       return confirmFn(message)
     },
+  })
+  RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -342,10 +346,12 @@ test('removeDirent - shows error message for multiple files when operation fails
   const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
   const confirmFn = jest.fn()
   confirmFn.mockImplementation(() => true)
-  RendererWorker.registerMockRpc({
+  DialogWorker.registerMockRpc({
     'ConfirmPrompt.prompt'(message?: string) {
       return confirmFn(message)
     },
+  })
+  RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
     },

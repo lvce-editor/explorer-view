@@ -1,9 +1,9 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { DialogWorker } from '@lvce-editor/rpc-registry'
 import { confirmPaste } from '../src/parts/ConfirmPaste/ConfirmPaste.ts'
 
 test('confirmPaste returns true when user confirms', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = DialogWorker.registerMockRpc({
     'ConfirmPrompt.prompt'() {
       return true
     },
@@ -14,7 +14,7 @@ test('confirmPaste returns true when user confirms', async () => {
 })
 
 test('confirmPaste returns false when user cancels', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = DialogWorker.registerMockRpc({
     'ConfirmPrompt.prompt'() {
       return false
     },
