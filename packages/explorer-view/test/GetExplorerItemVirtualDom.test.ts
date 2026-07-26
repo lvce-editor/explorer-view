@@ -11,7 +11,7 @@ test('basic item', () => {
     hasEditingError: false,
     icon: 'file',
     id: '1',
-    indent: 0,
+    indent: 34,
     index: 0,
     isCut: false,
     isEditing: false,
@@ -28,6 +28,7 @@ test('basic item', () => {
   expect(dom[0].role).toBe('treeitem')
   expect(dom[0].ariaLabel).toBe('test.txt')
   expect(dom[0].ariaSelected).toBeUndefined()
+  expect(dom[0].paddingLeft).toBe(34)
   expect(dom[0].title).toBe('/test.txt')
 })
 
