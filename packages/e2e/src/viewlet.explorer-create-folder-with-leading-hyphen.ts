@@ -1,5 +1,17 @@
-import { createFolderNameTest } from './_name-test.ts'
+import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-folder-with-leading-hyphen'
 
-export const test = createFolderNameTest('-draft')
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+  const tmpDir = await FileSystem.getTmpDir()
+  await Workspace.setPath(tmpDir)
+
+  await Explorer.newFolder()
+  await Explorer.updateEditingValue('-draft')
+  await Explorer.acceptEdit()
+
+  const folder = Locator('.TreeItem[aria-label="-draft"]')
+  await expect(folder).toBeVisible()
+  await expect(folder).toHaveAttribute('aria-expanded', 'false')
+  await expect(folder).toHaveId('TreeItemActive')
+}

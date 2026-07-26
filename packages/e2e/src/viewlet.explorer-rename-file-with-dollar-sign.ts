@@ -1,5 +1,20 @@
-import { renameFileNameTest } from './_name-test.ts'
+import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-file-with-dollar-sign'
 
-export const test = renameFileNameTest('price$1.txt')
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+  const tmpDir = await FileSystem.getTmpDir()
+  await FileSystem.writeFile(`${tmpDir}/file.txt`, '')
+  await Workspace.setPath(tmpDir)
+  await Explorer.focusFirst()
+
+  await Explorer.renameDirent()
+  await Explorer.updateEditingValue('price$1.txt')
+  await Explorer.acceptEdit()
+
+  const original = Locator('.TreeItem[aria-label="file.txt"]')
+  const renamed = Locator('.TreeItem[aria-label="price$1.txt"]')
+  await expect(original).toBeHidden()
+  await expect(renamed).toBeVisible()
+  await expect(renamed).toHaveId('TreeItemActive')
+}

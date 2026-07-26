@@ -1,5 +1,17 @@
-import { createFolderNameTest } from './_name-test.ts'
+import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-folder-with-percent-sign'
 
-export const test = createFolderNameTest('progress100%')
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+  const tmpDir = await FileSystem.getTmpDir()
+  await Workspace.setPath(tmpDir)
+
+  await Explorer.newFolder()
+  await Explorer.updateEditingValue('progress100%')
+  await Explorer.acceptEdit()
+
+  const folder = Locator('.TreeItem[aria-label="progress100%"]')
+  await expect(folder).toBeVisible()
+  await expect(folder).toHaveAttribute('aria-expanded', 'false')
+  await expect(folder).toHaveId('TreeItemActive')
+}
