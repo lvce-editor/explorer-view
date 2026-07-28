@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { confirmDelete } from '../src/parts/ConfirmDelete/ConfirmDelete.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('confirmDelete - single file', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
