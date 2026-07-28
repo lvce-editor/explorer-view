@@ -21,7 +21,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   const toRemove = getPaths(selectedItems)
 
   if (confirmDelete) {
-    const confirmed = await ConfirmDelete.confirmDelete(toRemove)
+    const confirmed = await ConfirmDelete.confirmDelete(selectedItems)
     if (!confirmed) {
       return state
     }
