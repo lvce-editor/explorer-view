@@ -4,6 +4,10 @@ export const name = 'viewlet.explorer-context-menu-open-in-integrated-terminal'
 
 export const skip = 1
 
+const hasTerminalWithCwd = (states: any, expectedCwd: string): boolean => {
+  return Object.values(states).some(({ cwd }: any) => cwd === expectedCwd)
+}
+
 export const test: Test = async ({ Command, ContextMenu, expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   // arrange
   await Settings.update({
@@ -28,8 +32,8 @@ export const test: Test = async ({ Command, ContextMenu, expect, Explorer, FileS
   await expect(terminal).toBeVisible()
   await expect(terminalInput).toBeFocused()
   const states = await Command.execute('Viewlet.getAllStates')
-  const terminalState = Object.values(states).find((state: any) => state.cwd === 'memfs:///workspace/folder')
-  if (!terminalState) {
+  const hasExpectedTerminal = hasTerminalWithCwd(states, 'memfs:///workspace/folder')
+  if (!hasExpectedTerminal) {
     throw new Error('Expected a terminal in memfs:///workspace/folder')
   }
 }
