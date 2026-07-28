@@ -68,6 +68,7 @@ import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as NewFile from '../NewFile/NewFile.ts'
 import * as NewFolder from '../NewFolder/NewFolder.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
+import * as OpenInIntegratedTerminal from '../OpenInIntegratedTerminal/OpenInIntegratedTerminal.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
@@ -158,6 +159,7 @@ export const commandMap = {
   'Explorer.newFile': WrapCommand.wrapListItemCommand(NewFile.newFile),
   'Explorer.newFolder': WrapCommand.wrapListItemCommand(NewFolder.newFolder),
   'Explorer.openContainingFolder': WrapCommand.wrapListItemCommand(OpenContainingFolder.openContainingFolder),
+  'Explorer.openInIntegratedTerminal': WrapCommand.wrapListItemCommand(OpenInIntegratedTerminal.openInIntegratedTerminal),
   'Explorer.refresh': WrapCommand.wrapListItemCommand(Refresh.refresh),
   'Explorer.removeDirent': WrapCommand.wrapListItemCommand(RemoveDirent.removeDirent),
   'Explorer.renameDirent': WrapCommand.wrapListItemCommand(RenameDirent.renameDirent),
