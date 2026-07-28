@@ -10,6 +10,7 @@ import { handlePaste } from '../src/parts/HandlePaste/HandlePaste.ts'
 test('pasteShouldMove should be true after cut operation', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
+    'Focus.setFocus'() {},
   })
 
   const state: ExplorerState = {
@@ -21,7 +22,10 @@ test('pasteShouldMove should be true after cut operation', async () => {
   const result = await handleCut(state)
 
   expect(result.pasteShouldMove).toBe(true)
-  expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', 'cut', ['/test.txt']]])
+  expect(mockRpc.invocations).toEqual([
+    ['ClipBoard.writeNativeFiles', 'cut', ['/test.txt']],
+    ['Focus.setFocus', 13],
+  ])
 })
 
 test('pasteShouldMove should be false after copy operation', async () => {
