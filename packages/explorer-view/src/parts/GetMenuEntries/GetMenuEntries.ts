@@ -28,7 +28,7 @@ const menuEntryOpenContainingFolder: MenuEntry = {
 }
 
 const menuEntryOpenInIntegratedTerminal: MenuEntry = {
-  command: /* TODO */ '-1',
+  command: 'Explorer.openInIntegratedTerminal',
   flags: MenuItemFlags.None,
   id: 'openInIntegratedTerminal',
   label: ViewletExplorerStrings.openInIntegratedTerminal(),
