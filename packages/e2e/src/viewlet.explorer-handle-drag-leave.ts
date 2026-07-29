@@ -21,5 +21,5 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.handleDragLeave()
 
   // assert
-  // TODO
+  await expect(explorer).not.toHaveClass('DropTarget')
 }
