@@ -9,8 +9,8 @@
     "e2e:firefox": "npm run patch:playwright-firefox-worker-websocket && test-with-playwright --only-extension=. --test-path=. --browser=firefox --reuse-page",
     "e2e:firefox:headless": "npm run patch:playwright-firefox-worker-websocket && test-with-playwright --only-extension=. --test-path=. --browser=firefox --headless --reuse-page",
     "e2e:headless": "test-with-playwright --only-extension=. --test-path=. --headless --reuse-page",
-    "e2e:webkit": "test-with-playwright --only-extension=. --test-path=. --browser=webkit --reuse-page",
-    "e2e:webkit:headless": "test-with-playwright --only-extension=. --test-path=. --browser=webkit --headless --reuse-page",
+    "e2e:webkit": "test-with-playwright --only-extension=. --test-path=. --browser=webkit",
+    "e2e:webkit:headless": "test-with-playwright --only-extension=. --test-path=. --browser=webkit --headless",
     "patch:playwright-firefox-worker-websocket": "node ./scripts/patch-playwright-firefox-worker-websocket.js",
     "type-check": "tsc"
   },

@@ -63,7 +63,7 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e webkit
         working-directory: ./packages/e2e
-        run: npm run e2e:webkit:headless
+        run: npm run e2e:webkit:headless -- --timeout=2100000
         if: runner.os == 'Linux'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
