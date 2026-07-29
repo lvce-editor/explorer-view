@@ -4,13 +4,13 @@ export const name = 'viewlet.explorer-read-folder-error-recovers-after-refresh'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
   await FileSystem.writeFile(`${tmpDir}/folder/file.txt`, '')
   await Workspace.setPath(tmpDir)
-  await Command.execute('FileSystemProvider.setError', true)
+  await FileSystem.setProviderError(true)
 
   // act
   await Explorer.focusFirst()
@@ -21,7 +21,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await expect(error).toBeVisible()
 
   // act
-  await Command.execute('FileSystemProvider.setError', false)
+  await FileSystem.setProviderError(false)
   await Explorer.refresh()
   await Explorer.expandRecursively()
 

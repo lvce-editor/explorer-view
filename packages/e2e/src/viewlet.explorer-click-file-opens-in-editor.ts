@@ -13,6 +13,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.handleClick(1)
 
   // assert - the file should be opened in the editor
-  const editorTab = Locator('[title*="file2.txt"]').first()
+  const editorTab = Locator('.MainTab[title$="file2.txt"]')
   await expect(editorTab).toBeVisible()
+  await expect(editorTab).toHaveClass('MainTabPreview')
+  await expect(editorTab).toHaveCSS('font-style', 'italic')
 }

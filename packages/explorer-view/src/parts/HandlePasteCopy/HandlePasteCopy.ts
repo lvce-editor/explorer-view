@@ -2,8 +2,11 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import type { NativeFilesResult } from '../NativeFilesResult/NativeFilesResult.ts'
 import * as AdjustScrollAfterPaste from '../AdjustScrollAfterPaste/AdjustScrollAfterPaste.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
+import * as FileSystem from '../FileSystem/FileSystem.ts'
 import { getFileOperationsCopy } from '../GetFileOperationsCopy/GetFileOperationsCopy.ts'
 import { getIndex } from '../GetIndex/GetIndex.ts'
+import { getParentFolder } from '../GetParentFolder/GetParentFolder.ts'
+import * as Path from '../Path/Path.ts'
 import { refresh } from '../Refresh/Refresh.ts'
 
 export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeFilesResult): Promise<ExplorerState> => {
@@ -14,10 +17,11 @@ export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeF
   // TODO what if folder is big and it takes a long time
 
   // TODO use file operations and bulk edit
-  const { focusedIndex, items, root } = state
-  const focusedUri = items[focusedIndex]?.path || root
-  const existingUris = items.map((item) => item.path)
-  const operations = getFileOperationsCopy(root, existingUris, nativeFiles.files, focusedUri)
+  const { focusedIndex, items, pathSeparator, root } = state
+  const targetUri = getParentFolder(items, focusedIndex, root, pathSeparator)
+  const targetDirents = await FileSystem.readDirWithFileTypes(targetUri)
+  const existingUris = targetDirents.map((dirent) => Path.join2(targetUri, dirent.name))
+  const operations = getFileOperationsCopy(targetUri, existingUris, nativeFiles.files)
   // TODO handle error?
   await ApplyFileOperations.applyFileOperations(operations)
 

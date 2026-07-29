@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-race-paste-delete'
 
 export const skip = 1
 
-export const test: Test = async ({ ClipBoard, Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
@@ -13,14 +13,14 @@ export const test: Test = async ({ ClipBoard, Command, expect, FileSystem, Locat
   await FileSystem.writeFile(`${tmpDir}/a/f2.txt`, 'f2')
   await FileSystem.mkdir(`${tmpDir}/b`)
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.expandRecursively')
-  await Command.execute('Explorer.focusIndex', 1)
-  await Command.execute('Explorer.handleCopy')
+  await Explorer.expandRecursively()
+  await Explorer.focusIndex(1)
+  await Explorer.handleCopy()
   // focus folder b (index 3 after expand: a[0], f1[1], f2[2], b[3])
-  await Command.execute('Explorer.focusIndex', 3)
+  await Explorer.focusIndex(3)
 
   // act: handlePaste pastes into folder b, removeDirent deletes folder b — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handlePaste'), Command.execute('Explorer.removeDirent')])
+  await Promise.all([Explorer.handlePaste(), Explorer.removeDirent()])
 
   // assert: explorer should be stable — no crash, no orphaned pasted items
   // folder a should always be visible

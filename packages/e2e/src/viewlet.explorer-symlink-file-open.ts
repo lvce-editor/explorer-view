@@ -4,11 +4,11 @@ export const name = 'viewlet.explorer-symlink-file-open'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/target.txt`, 'target content')
-  await Command.execute('FileSystem.symlink', `${tmpDir}/target.txt`, `${tmpDir}/link.txt`)
+  await FileSystem.symlink(`${tmpDir}/target.txt`, `${tmpDir}/link.txt`)
   await Workspace.setPath(tmpDir)
 
   // act

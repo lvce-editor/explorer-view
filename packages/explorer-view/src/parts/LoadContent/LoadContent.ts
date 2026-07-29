@@ -22,7 +22,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     // TODO path separator could be restored from saved state
     const [pathSeparator, isReadonly] = await Promise.all([
       GetPathSeparator.getPathSeparator(root), // TODO only load path separator once
-      FileSystem.isReadonly(root),
+      root === '' ? false : FileSystem.isReadonly(root),
     ])
     const restoredDirents = await RestoreExpandedState.restoreExpandedState(savedState, root, pathSeparator, excluded)
     const rawDeltaY = GetRestoredDeltaY.getRestoredDeltaY(savedState)

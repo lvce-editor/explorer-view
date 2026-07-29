@@ -1,8 +1,13 @@
 import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
+import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 import * as GetVisibleExplorerItems from '../src/parts/GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
+import * as HandleClickFile from '../src/parts/HandleClickFile/HandleClickFile.ts'
+import * as InputSource from '../src/parts/InputSource/InputSource.ts'
+import * as Render2 from '../src/parts/Render2/Render2.ts'
 
 test('wrapListItemCommand recomputes visible items when focus changes', async () => {
   const uid = 9001
@@ -81,6 +86,59 @@ test('wrapListItemCommand runs concurrent commands in invocation order', async (
   expect(newState.editingValue).toBe('second')
 })
 
+test('wrapListItemCommand remains responsive while a file is opening', async () => {
+  const uid = 9006
+  const editorOpeningStarted = Promise.withResolvers<void>()
+  const editorOpened = Promise.withResolvers<void>()
+  using _mockRpc = RendererWorker.registerMockRpc({
+    async 'Main.openInput'() {
+      editorOpeningStarted.resolve()
+      await editorOpened.promise
+    },
+  })
+  const state = {
+    ...createDefaultState(),
+    items: [{ depth: 0, name: 'test.ts', path: '/test.ts', selected: false, type: DirentType.File }],
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, action: string) => {
+    if (action === 'open') {
+      return HandleClickFile.handleClickFile(currentState, currentState.items[0], 0)
+    }
+    return {
+      ...currentState,
+      editingValue: 'expanded',
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  let openCommandCompleted = false
+  const openCommand = wrapped(uid, 'open')
+  const trackOpenCommand = async (): Promise<void> => {
+    await openCommand
+    openCommandCompleted = true
+  }
+  const trackedOpenCommand = trackOpenCommand()
+  await editorOpeningStarted.promise
+  const nextCommand = wrapped(uid, 'expand')
+  const waitForNextCommand = async (): Promise<string> => {
+    await nextCommand
+    return 'completed'
+  }
+  const nextCommandResult = await Promise.race([
+    waitForNextCommand(),
+    new Promise<string>((resolve) => {
+      setTimeout(resolve, 100, 'blocked')
+    }),
+  ])
+  expect(openCommandCompleted).toBe(false)
+  editorOpened.resolve()
+  await Promise.all([trackedOpenCommand, nextCommand])
+
+  expect(nextCommandResult).toBe('completed')
+  expect(openCommandCompleted).toBe(true)
+  expect(ExplorerStates.get(uid).newState.editingValue).toBe('expanded')
+})
+
 test('wrapListItemCommand continues after a command fails', async () => {
   const uid = 9003
   const state = createDefaultState()
@@ -100,6 +158,32 @@ test('wrapListItemCommand continues after a command fails', async () => {
 
   const { newState } = ExplorerStates.get(uid)
   expect(newState.editingValue).toBe('next')
+})
+
+test('wrapListItemCommand preserves user input when a pending render commits', async () => {
+  const uid = 9005
+  const state = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingSessionId: 1,
+    editingValue: 'old.txt',
+    focus: FocusId.Input,
+    inputSource: InputSource.Script,
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+    return {
+      ...currentState,
+      editingValue: 'new.txt',
+      inputSource: InputSource.User,
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid)
+  Render2.render2(uid, [])
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.editingValue).toBe('new.txt')
 })
 
 test('wrapListItemCommandImmediate allows a callback while a queued command is running', async () => {

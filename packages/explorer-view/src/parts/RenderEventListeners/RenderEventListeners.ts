@@ -6,7 +6,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
       name: DomEventListenersFunctions.HandleInputBlur,
-      params: ['handleInputBlur'],
+      params: ['handleInputBlur', 'event.target.dataset.editingSessionId'],
     },
     {
       name: DomEventListenersFunctions.HandleListFocus,
@@ -46,6 +46,20 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     {
       name: DomEventListenersFunctions.HandlePointerDown,
       params: ['handlePointerDown', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY],
+    },
+    {
+      name: DomEventListenersFunctions.HandleScrollBarPointerDown,
+      params: ['handleScrollBarClick', EventExpression.ClientY],
+      preventDefault: true,
+      trackPointerEvents: [DomEventListenersFunctions.HandleScrollBarMove, DomEventListenersFunctions.HandleScrollBarPointerCaptureLost],
+    },
+    {
+      name: DomEventListenersFunctions.HandleScrollBarMove,
+      params: ['handleScrollBarMove', EventExpression.ClientY],
+    },
+    {
+      name: DomEventListenersFunctions.HandleScrollBarPointerCaptureLost,
+      params: ['handleScrollBarCaptureLost'],
     },
     {
       name: DomEventListenersFunctions.HandleDoubleClick,

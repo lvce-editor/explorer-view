@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-files-exclude-reveal-folder'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/.git`)
   await FileSystem.writeFile(`${tmpDir}/visible.txt`, '')
@@ -12,7 +12,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   const visible = Locator('.TreeItem[aria-label="visible.txt"]')
   const gitFolder = Locator('.TreeItem[aria-label=".git"]')
   const explorer = Locator('.Explorer')
-  await Command.execute('Explorer.reveal', `${tmpDir}/.git`)
+  await Explorer.reveal(`${tmpDir}/.git`)
 
   await expect(explorer).toBeVisible()
   await expect(gitFolder).toBeHidden()

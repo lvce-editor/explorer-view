@@ -5,10 +5,12 @@ export const name = 'viewlet.explorer-set-delta-y-invalid-value'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  for (let i = 0; i < 30; i++) {
-    const fileName = `file-${i.toString().padStart(2, '0')}.txt`
-    await FileSystem.writeFile(`${tmpDir}/${fileName}`, '')
-  }
+  await FileSystem.writeFiles(
+    Array.from({ length: 30 }, (_, index) => ({
+      content: '',
+      uri: `${tmpDir}/file-${index.toString().padStart(2, '0')}.txt`,
+    })),
+  )
   await Workspace.setPath(tmpDir)
   const file00 = Locator('.TreeItem', { hasText: 'file-00.txt' })
 

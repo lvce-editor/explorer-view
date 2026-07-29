@@ -7,6 +7,7 @@ import { dropTargetFull } from '../DropTargetFull/DropTargetFull.ts'
 import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 import * as GetExplorerItemVirtualDom from '../GetExplorerItemVirtualDom/GetExplorerItemVirtualDom.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
+import * as TabIndex from '../TabIndex/TabIndex.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
 const getActiveDescendant = (focusedIndex: number): string | undefined => {
@@ -28,6 +29,7 @@ export const getListItemsVirtualDom = (
   focusedIndex: number,
   focused: boolean,
   dropTargets: readonly number[],
+  editingSessionId = 0,
 ): readonly VirtualDomNode[] => {
   const dom: readonly VirtualDomNode[] = [
     {
@@ -48,11 +50,11 @@ export const getListItemsVirtualDom = (
       onPointerDown: DomEventListenerFunctions.HandlePointerDown,
       onWheel: DomEventListenerFunctions.HandleWheel,
       role: AriaRoles.Tree,
-      tabIndex: 0,
+      tabIndex: TabIndex.Focusable,
       type: VirtualDomElements.Div,
       // onKeyDown: DomEventListenerFunctions.HandleListKeyDown,
     },
-    ...visibleItems.flatMap(GetExplorerItemVirtualDom.getExplorerItemVirtualDom),
+    ...visibleItems.flatMap((item) => GetExplorerItemVirtualDom.getExplorerItemVirtualDom(item, editingSessionId)),
   ]
   return dom
 }

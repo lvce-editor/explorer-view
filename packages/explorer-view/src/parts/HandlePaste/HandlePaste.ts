@@ -5,6 +5,9 @@ import * as HandlePasteCut from '../HandlePasteCut/HandlePasteCut.ts'
 import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.ts'
 
 export const handlePaste = async (state: ExplorerState): Promise<ExplorerState> => {
+  if (state.isReadonly) {
+    return state
+  }
   const nativeFiles = await ClipBoard.readNativeFiles()
   if (!nativeFiles) {
     return state

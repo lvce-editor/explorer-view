@@ -6,6 +6,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as ExplorerStrings from '../src/parts/ExplorerStrings/ExplorerStrings.ts'
 import * as FileSystem from '../src/parts/FileSystem/FileSystem.ts'
+import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as PathSeparatorType from '../src/parts/PathSeparatorType/PathSeparatorType.ts'
 
 test('acceptEdit - default returns state', async () => {
@@ -50,6 +51,28 @@ test('acceptEdit - rename validates empty name', async () => {
     ...state,
     editingErrorMessage: ExplorerStrings.fileOrFolderNameMustBeProvided(),
   })
+})
+
+test('acceptEdit - uses the provided input source', async () => {
+  const state: ExplorerState = {
+    ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
+    editingType: ExplorerEditingType.Rename,
+    editingValue: '',
+    inputSource: InputSource.User,
+  }
+  const result = await ViewletExplorerAcceptEdit.acceptEdit(state, InputSource.User)
+  expect(result.inputSource).toBe(InputSource.User)
+})
+
+test('acceptEdit - restores script input source for commands', async () => {
+  const state: ExplorerState = {
+    ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
+    editingType: ExplorerEditingType.Rename,
+    editingValue: '',
+    inputSource: InputSource.User,
+  }
+  const result = await ViewletExplorerAcceptEdit.acceptEdit(state)
+  expect(result.inputSource).toBe(InputSource.Script)
 })
 
 test.skip('acceptEdit - rename', async () => {

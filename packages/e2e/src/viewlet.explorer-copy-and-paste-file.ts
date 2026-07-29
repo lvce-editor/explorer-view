@@ -20,12 +20,8 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
   await Explorer.handlePaste()
 
   // assert
-  const file1 = Locator('.TreeItem').nth(0)
-  await expect(file1).toHaveText('a')
-  await expect(file1).toHaveAttribute('aria-expanded', 'true')
-  const file3 = Locator('.TreeItem').nth(1)
-  await expect(file3).toHaveText('b')
-  await expect(file3).toHaveAttribute('aria-expanded', 'false') // TODO should be true
-  const file4 = Locator('.TreeItem').nth(2)
-  await expect(file4).toHaveText('file.txt')
+  const copiedFile = Locator(`.TreeItem[title="${tmpDir}/file.txt"]`)
+  await expect(copiedFile).toBeVisible()
+  await FileSystem.shouldHaveFile(`${tmpDir}/a/file.txt`, 'content')
+  await FileSystem.shouldHaveFile(`${tmpDir}/file.txt`, 'content')
 }

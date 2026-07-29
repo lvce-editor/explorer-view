@@ -16,6 +16,7 @@ export const createDefaultState = (): ExplorerState => ({
   editingIndex: -1,
   editingSelectionEnd: 0,
   editingSelectionStart: 0,
+  editingSessionId: 0,
   editingType: 0,
   editingValue: '',
   errorCode: '',

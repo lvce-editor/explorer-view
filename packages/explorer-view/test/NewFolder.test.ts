@@ -40,6 +40,7 @@ test('newFolder', async () => {
     ...mockState,
     editingIcon: 'folder-icon',
     editingIndex: 0,
+    editingSessionId: 1,
     editingType: ExplorerEditingType.CreateFolder,
     editingValue: '',
     focus: 2,
@@ -58,4 +59,15 @@ test('newFolder', async () => {
     ],
   })
   expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: '' }]])
+})
+
+test('newFolder - no workspace', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    root: '',
+  }
+
+  const result = await newFolder(state)
+
+  expect(result).toBe(state)
 })

@@ -5,6 +5,7 @@ import * as actions from '@lvce-editor/eslint-plugin-github-actions'
 
 export default [
   ...config.default,
+  ...config.recommendedVirtualDom,
   ...regex.default,
   ...tsconfig.default,
   {
@@ -41,6 +42,19 @@ export default [
     files: ['**/*.test.ts'],
     rules: {
       '@typescript-eslint/unbound-method': 'off',
+      'virtual-dom/no-object-attribute-values': 'off',
+      'virtual-dom/no-raw-text-children': 'off',
+      'virtual-dom/prefer-constants': 'off',
+      'virtual-dom/prefer-merge-class-names': 'off',
+      'virtual-dom/prefer-state-destructuring': 'off',
+    },
+  },
+  {
+    files: [
+      'packages/explorer-view/src/parts/{AcceptEdit,CompareWithSelected,CopyPath,CopyRelativePath,Create,Focus,FocusParentFolder,GetFocusedFile,GetLoadErrorMessage,GetMenuEntries,HandleClickAt,HandleClickCurrent,HandleClickCurrentButKeepFocus,HandleClickDirectory,HandleContextMenuKeyboard,HandleCut,HandleDoubleClick,HandleDragOver,HandleDragOverIndex,HandleDrop,HandleDropIndex,HandleDropRoot,HandleDropRootDefault,HandleDropRootElectron,HandleFocus,HandlePaste,HandleResize,HandleUpload,HandleWheel,NewFile,NewFolder,RemoveDirent,RenameDirent,SetDeltaY}/**/*.ts',
+    ],
+    rules: {
+      'virtual-dom/prefer-state-destructuring': 'off',
     },
   },
   ...actions.default,

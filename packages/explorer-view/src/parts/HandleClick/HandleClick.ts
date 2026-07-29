@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
 import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as GetClickFn from '../GetClickFn/GetClickFn.ts'
 import { normalizeDirentType } from '../NormalizeDirentType/NormalizeDirentType.ts'
@@ -35,10 +36,12 @@ export const handleClick = async (state: ExplorerState, index: number, keepFocus
   if (newState.editingIndex === -1) {
     return newState
   }
-  return {
+  const completion = CommandCompletion.take(newState)
+  const finalState = {
     ...newState,
     ...resetEditing,
   }
+  return completion ? CommandCompletion.set(finalState, completion) : finalState
 }
 
 // export const handleBlur=()=>{}

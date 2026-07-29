@@ -8,4 +8,22 @@ test('renderEventListeners', () => {
     name: 21,
     params: ['handleKeyDown', 'event.defaultPrevented', 'event.key'],
   })
+  expect(eventListeners).toContainEqual({
+    name: 8,
+    params: ['handleInputBlur', 'event.target.dataset.editingSessionId'],
+  })
+  expect(eventListeners).toContainEqual({
+    name: 24,
+    params: ['handleScrollBarClick', 'event.clientY'],
+    preventDefault: true,
+    trackPointerEvents: [22, 23],
+  })
+  expect(eventListeners).toContainEqual({
+    name: 22,
+    params: ['handleScrollBarMove', 'event.clientY'],
+  })
+  expect(eventListeners).toContainEqual({
+    name: 23,
+    params: ['handleScrollBarCaptureLost'],
+  })
 })

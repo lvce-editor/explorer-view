@@ -13,8 +13,8 @@
   "scripts": {
     "build:watch": "cd ../../ && npm run build:watch",
     "dev": "cd ../../ && npm run dev",
-    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --detectOpenHandles --forceExit",
-    "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch"
+    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --detectOpenHandles --forceExit",
+    "test:watch": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --watch"
   },
   "jest": {
     "injectGlobals": false,
@@ -47,14 +47,14 @@
   "devDependencies": {
     "@jest/globals": "^30.4.1",
     "@lvce-editor/assert": "^1.7.0",
-    "@lvce-editor/constants": "^5.19.0",
-    "@lvce-editor/i18n": "^2.4.0",
-    "@lvce-editor/rpc": "^6.8.0",
-    "@lvce-editor/rpc-registry": "^9.34.0",
+    "@lvce-editor/constants": "^5.23.0",
+    "@lvce-editor/i18n": "^2.6.0",
+    "@lvce-editor/rpc": "^6.11.0",
+    "@lvce-editor/rpc-registry": "^9.42.0",
     "@lvce-editor/verror": "^1.7.0",
-    "@lvce-editor/viewlet-registry": "^5.4.0",
-    "@lvce-editor/virtual-dom-worker": "^11.5.0",
+    "@lvce-editor/viewlet-registry": "^5.5.0",
+    "@lvce-editor/virtual-dom-worker": "^11.9.3",
     "jest": "^30.4.2",
-    "ts-jest": "^29.4.11"
+    "ts-jest": "^29.4.12"
   }
 }

@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-race-expand-delete-child'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
@@ -13,11 +13,11 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
   await Workspace.setPath(tmpDir)
   // focus f1.txt (index 1 after expand)
-  await Command.execute('Explorer.expandRecursively')
-  await Command.execute('Explorer.focusIndex', 1)
+  await Explorer.expandRecursively()
+  await Explorer.focusIndex(1)
 
   // act: handleClick on folder a toggles expand/collapse, removeDirent deletes f1.txt — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handleClick', 0), Command.execute('Explorer.removeDirent')])
+  await Promise.all([Explorer.handleClick(0), Explorer.removeDirent()])
 
   // assert: explorer should be stable — no crash, no stale rows
   // folder a and root.txt should always be visible

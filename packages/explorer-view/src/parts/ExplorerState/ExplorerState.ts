@@ -19,6 +19,7 @@ export interface ExplorerState {
   readonly editingIndex: number
   readonly editingSelectionEnd: number
   readonly editingSelectionStart: number
+  readonly editingSessionId: number
   readonly editingType: number
   readonly editingValue: string
   readonly errorCode: string

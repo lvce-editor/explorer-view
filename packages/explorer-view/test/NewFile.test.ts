@@ -49,6 +49,7 @@ test('newFile', async () => {
   expect(result).toEqual({
     ...state,
     editingIndex: 1,
+    editingSessionId: 1,
     editingType: ExplorerEditingType.CreateFile,
     editingValue: '',
     focus: 2,
@@ -76,4 +77,15 @@ test('newFile', async () => {
     visibleExplorerItems: expect.anything(),
   })
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/testfolder']])
+})
+
+test('newFile - no workspace', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    root: '',
+  }
+
+  const result = await newFile(state)
+
+  expect(result).toBe(state)
 })

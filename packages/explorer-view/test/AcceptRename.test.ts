@@ -61,6 +61,53 @@ test('acceptRename - renames file and refreshes parent children', async () => {
   ])
 })
 
+test('acceptRename - unchanged name does not invoke the file system', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({})
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingType: ExplorerEditingType.Rename,
+    editingValue: 'a.txt',
+    items: [{ depth: 0, name: 'a.txt', path: '/test/a.txt', selected: false, type: DirentType.EditingFile }],
+  }
+
+  const result = await acceptRename(state)
+
+  expect(result.editingIndex).toBe(-1)
+  expect(result.editingType).toBe(ExplorerEditingType.None)
+  expect(result.focused).toBe(true)
+  expect(result.items[0].type).toBe(DirentType.File)
+  expect(mockRpc.invocations).toEqual([])
+})
+
+test('acceptRename - rejects existing empty folder destination', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.rename'() {
+      throw new Error('rename should not be called')
+    },
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingType: ExplorerEditingType.Rename,
+    editingValue: 'destination',
+    items: [
+      { depth: 0, name: 'source', path: '/test/source', selected: false, type: DirentType.Directory },
+      { depth: 0, name: 'destination', path: '/test/destination', selected: false, type: DirentType.Directory },
+    ],
+    pathSeparator: PathSeparatorType.Slash,
+    root: '/test',
+  }
+
+  const result = await acceptRename(state)
+
+  expect(result.editingErrorMessage).toBe('A file or folder **destination** already exists at this location. Please choose a different name.')
+  expect(result.editingIndex).toBe(0)
+  expect(result.editingType).toBe(ExplorerEditingType.Rename)
+  expect(mockRpc.invocations).toEqual([])
+})
+
 test.skip('acceptRename - basic file rename', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {

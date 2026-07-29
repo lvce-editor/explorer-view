@@ -10,7 +10,7 @@ test('getSettings - useChevrons true', async () => {
   })
   const settings = await getSettings()
   expect(settings).toEqual({
-    confirmDelete: false,
+    confirmDelete: true,
     confirmPaste: false,
     excluded: [],
     gitIgnoreDecorations: true,
@@ -50,7 +50,7 @@ test('getSettings - useChevrons false', async () => {
   })
   const settings = await getSettings()
   expect(settings).toEqual({
-    confirmDelete: false,
+    confirmDelete: true,
     confirmPaste: false,
     excluded: ['**/.git'],
     gitIgnoreDecorations: false,
@@ -75,13 +75,34 @@ test('getSettings - useChevrons undefined', async () => {
   })
   const settings = await getSettings()
   expect(settings).toEqual({
-    confirmDelete: false,
+    confirmDelete: true,
     confirmPaste: false,
     excluded: [],
     gitIgnoreDecorations: true,
     sourceControlDecorations: true,
     useChevrons: true,
   })
+  expect(mockRpc.invocations).toEqual([
+    ['Preferences.get', 'explorer.useChevrons'],
+    ['Preferences.get', 'explorer.confirmdelete'],
+    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'files.exclude'],
+    ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+    ['Preferences.get', 'explorer.sourceControlDecorations'],
+  ])
+})
+
+test('getSettings - confirmDelete false', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.get'(settingName: string): unknown {
+      if (settingName === 'explorer.confirmdelete') {
+        return false
+      }
+      return undefined
+    },
+  })
+  const settings = await getSettings()
+  expect(settings.confirmDelete).toBe(false)
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],

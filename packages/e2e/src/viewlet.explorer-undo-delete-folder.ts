@@ -4,8 +4,9 @@ export const name = 'viewlet.explorer-undo-delete-folder'
 
 export const skip = 1
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
+  await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
   await FileSystem.writeFile(`${tmpDir}/folder/nested.txt`, 'content')

@@ -4,20 +4,20 @@ export const name = 'viewlet.explorer-race-drop-refresh'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.writeFile(`${tmpDir}/a/f1.txt`, 'f1')
   await FileSystem.mkdir(`${tmpDir}/b`)
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.expandRecursively')
+  await Explorer.expandRecursively()
   // drag f1.txt over folder b
-  await Command.execute('Explorer.focusIndex', 1)
-  await Command.execute('Explorer.handleDragOverIndex', 2)
+  await Explorer.focusIndex(1)
+  await Explorer.handleDragOverIndex(2)
 
   // act: handleDrop drops the dragged file, refresh rebuilds the tree — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handleDrop'), Command.execute('Explorer.refresh')])
+  await Promise.all([Explorer.handleDrop(0, 0, [], []), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no duplicate items
   // folder a and folder b should always be visible

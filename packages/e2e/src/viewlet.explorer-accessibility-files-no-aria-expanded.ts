@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-accessibility-files-no-aria-expanded'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -14,8 +12,12 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.expandRecursively()
 
   // assert
+  const folder = Locator('.TreeItem[aria-label="folder"]')
   const rootFile = Locator('.TreeItem[aria-label="root.txt"]')
   const nestedFile = Locator('.TreeItem[aria-label="nested.txt"]')
+  await expect(folder).toHaveAttribute('aria-expanded', 'true')
+  await expect(rootFile).toHaveAttribute('role', 'treeitem')
   await expect(rootFile).toHaveAttribute('aria-expanded', null)
+  await expect(nestedFile).toHaveAttribute('role', 'treeitem')
   await expect(nestedFile).toHaveAttribute('aria-expanded', null)
 }

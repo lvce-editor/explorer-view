@@ -10,6 +10,9 @@ import * as Refresh from '../Refresh/Refresh.ts'
 import { showErrorAlert } from '../ShowErrorAlert/ShowErrorAlert.ts'
 
 export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
+  if (state.isReadonly) {
+    return state
+  }
   const { confirmDelete, focusedIndex, items } = state
   const selectedItems = getSelectedItems(items, focusedIndex)
   if (selectedItems.length === 0) {
@@ -18,7 +21,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   const toRemove = getPaths(selectedItems)
 
   if (confirmDelete) {
-    const confirmed = await ConfirmDelete.confirmDelete(toRemove)
+    const confirmed = await ConfirmDelete.confirmDelete(selectedItems)
     if (!confirmed) {
       return state
     }

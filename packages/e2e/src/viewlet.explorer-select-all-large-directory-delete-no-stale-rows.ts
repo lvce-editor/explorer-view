@@ -4,12 +4,16 @@ export const name = 'viewlet.explorer-select-all-large-directory-delete-no-stale
 
 export const skip = 1
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
+  await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
-  for (let i = 0; i < 500; i++) {
-    await FileSystem.writeFile(`${tmpDir}/file-${i.toString().padStart(3, '0')}.txt`, '')
-  }
+  await FileSystem.writeFiles(
+    Array.from({ length: 500 }, (_, index) => ({
+      content: '',
+      uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
+    })),
+  )
   await Workspace.setPath(tmpDir)
 
   // act

@@ -3,7 +3,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 export const name = 'viewlet.explorer-copy-paste-error-scenarios'
 export const skip = 1
 
-export const test: Test = async ({ ClipBoard, Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
@@ -16,7 +16,7 @@ export const test: Test = async ({ ClipBoard, Command, expect, Explorer, FileSys
   await Explorer.focusIndex(1)
 
   // Test 1: Copy file to read-only directory
-  await Command.execute('FileSystem.setReadOnly', `${tmpDir}/target`, true)
+  await FileSystem.setReadOnly(`${tmpDir}/target`, true)
   await Explorer.handleCopy()
   await Explorer.focusIndex(2)
   await Explorer.handlePaste()
@@ -31,9 +31,9 @@ export const test: Test = async ({ ClipBoard, Command, expect, Explorer, FileSys
   await expect(errorMessage).toBeVisible()
 
   // Test 3: Copy non-existent file (simulate file deletion after copy)
-  await Command.execute('FileSystem.setReadOnly', `${tmpDir}/target`, false)
+  await FileSystem.setReadOnly(`${tmpDir}/target`, false)
   await Explorer.handleCopy()
-  await Command.execute('FileSystem.deleteFile', `${tmpDir}/source/file.txt`)
+  await FileSystem.deleteFile(`${tmpDir}/source/file.txt`)
   await Explorer.focusIndex(2)
   await Explorer.handlePaste()
 

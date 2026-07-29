@@ -6,7 +6,10 @@ import { getRenameSelectionRange } from '../GetRenameSelectionRange/GetRenameSel
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const renameDirent = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { focusedIndex, icons, items, minLineY } = state
+  if (state.isReadonly) {
+    return state
+  }
+  const { editingSessionId, focusedIndex, icons, items, minLineY } = state
   if (items.length === 0) {
     return state
   }
@@ -19,6 +22,7 @@ export const renameDirent = async (state: ExplorerState): Promise<ExplorerState>
     editingIndex: focusedIndex,
     editingSelectionEnd: end,
     editingSelectionStart: start,
+    editingSessionId: editingSessionId + 1,
     editingType: ExplorerEditingType.Rename,
     editingValue: item.name,
     focus: FocusId.Input,

@@ -53,6 +53,7 @@ test('should handle paste with copy type', async () => {
   expect(result).toHaveProperty('icons')
   expect(mockRpc.invocations).toEqual([
     ['ClipBoard.readNativeFiles'],
+    ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.copy', '/source/file1.txt', '/file1.txt'],
     ['FileSystem.copy', '/source/file2.txt', '/file2.txt'],
     ['FileSystem.readDirWithFileTypes', '/'],
@@ -91,6 +92,7 @@ test('should handle paste with cut type', async () => {
   expect(result).toHaveProperty('icons')
   expect(mockRpc.invocations).toEqual([
     ['ClipBoard.readNativeFiles'],
+    ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.copy', '/source/file1.txt', '/file1.txt'],
     ['FileSystem.copy', '/source/file2.txt', '/file2.txt'],
     ['FileSystem.readDirWithFileTypes', '/'],
@@ -128,6 +130,7 @@ test('should handle paste with multiple files', async () => {
   expect(result).toHaveProperty('icons')
   expect(mockRpc.invocations).toEqual([
     ['ClipBoard.readNativeFiles'],
+    ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.copy', '/source/file1.txt', '/file1.txt'],
     ['FileSystem.copy', '/source/file2.txt', '/file2.txt'],
     ['FileSystem.copy', '/source/folder1', '/folder1'],
@@ -164,7 +167,11 @@ test('should handle paste with empty files array', async () => {
   expect(result).toBeDefined()
   expect(result).toHaveProperty('items')
   expect(result).toHaveProperty('icons')
-  expect(mockRpc.invocations).toEqual([['ClipBoard.readNativeFiles'], ['FileSystem.readDirWithFileTypes', '/']])
+  expect(mockRpc.invocations).toEqual([
+    ['ClipBoard.readNativeFiles'],
+    ['FileSystem.readDirWithFileTypes', '/'],
+    ['FileSystem.readDirWithFileTypes', '/'],
+  ])
 })
 
 test('should preserve state properties when handling paste', async () => {
@@ -198,6 +205,7 @@ test('should preserve state properties when handling paste', async () => {
   expect(result).toHaveProperty('icons')
   expect(mockRpc.invocations).toEqual([
     ['ClipBoard.readNativeFiles'],
+    ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.copy', '/source/file.txt', '/file.txt'],
     ['FileSystem.readDirWithFileTypes', '/'],
   ])

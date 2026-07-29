@@ -53,6 +53,7 @@ test('handleDoubleClick - double click on empty area creates new file', async ()
   expect(result).toEqual({
     ...state,
     editingIndex: 1,
+    editingSessionId: 1,
     editingType: ExplorerEditingType.CreateFile,
     editingValue: '',
     focus: 2,
@@ -96,6 +97,29 @@ test('handleDoubleClick - double click on item returns same state', async () => 
   // Double click on item (position that matches an item)
   const result = await handleDoubleClick(state, 0, 10)
   expect(result).toBe(state)
+})
+
+test.each([
+  ['file', DirentType.File],
+  ['symlinked file', DirentType.SymLinkFile],
+])('handleDoubleClick - double click on %s opens it permanently', async (_name, type) => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.openUri'() {},
+  })
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    itemHeight: 20,
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type }],
+    maxLineY: 1,
+    minLineY: 0,
+    y: 0,
+  }
+
+  const result = await handleDoubleClick(state, 0, 10)
+
+  expect(result).toBe(state)
+  expect(mockRpc.invocations).toEqual([['Main.openUri', '/test.txt', true]])
 })
 
 test('handleDoubleClick - double click on item with multiple items returns same state', async () => {
@@ -168,6 +192,7 @@ test('handleDoubleClick - double click on empty area with scrolled state creates
   expect(result).toEqual({
     ...state,
     editingIndex: 1,
+    editingSessionId: 1,
     editingType: ExplorerEditingType.CreateFile,
     editingValue: '',
     focus: 2,

@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-cut-folder-into-expanded-folder'
 
-export const skip = 1
-
 export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()

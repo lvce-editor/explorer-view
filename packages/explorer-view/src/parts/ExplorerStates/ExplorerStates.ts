@@ -1,9 +1,11 @@
 import * as ViewletRegistry from '@lvce-editor/viewlet-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
 import * as GetGitIgnoredUris from '../GetGitIgnoredUris/GetGitIgnoredUris.ts'
 import * as GetExplorerMaxLineY from '../GetMaxLineY/GetMaxLineY.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
+import * as InputSource from '../InputSource/InputSource.ts'
 
 export const { get, getCommandIds, registerCommands, set, wrapGetter } = ViewletRegistry.create<ExplorerState>()
 
@@ -13,25 +15,36 @@ interface Fn<T extends any[]> {
 
 const commandQueues = new Map<number, Promise<void>>()
 
-const runQueuedCommand = async (previousCommand: Promise<void> | undefined, command: () => Promise<void>): Promise<void> => {
+interface CommandRunResult {
+  readonly completion: Promise<void> | undefined
+}
+
+const runQueuedCommand = async (previousCommand: Promise<void> | undefined, command: () => Promise<CommandRunResult>): Promise<CommandRunResult> => {
+  await previousCommand
+  return command()
+}
+
+const waitForStateCommand = async (command: Promise<CommandRunResult>): Promise<void> => {
   try {
-    await previousCommand
+    await command
   } catch {
     // Keep the queue usable after returning the error to the command caller
   }
-  await command()
 }
 
-const enqueueCommand = async (id: number, command: () => Promise<void>): Promise<void> => {
-  const currentCommand = runQueuedCommand(commandQueues.get(id), command)
-  commandQueues.set(id, currentCommand)
+const enqueueCommand = async (id: number, command: () => Promise<CommandRunResult>): Promise<void> => {
+  const stateCommand = runQueuedCommand(commandQueues.get(id), command)
+  const queuedStateCommand = waitForStateCommand(stateCommand)
+  commandQueues.set(id, queuedStateCommand)
+  let result: CommandRunResult
   try {
-    await currentCommand
+    result = await stateCommand
   } finally {
-    if (commandQueues.get(id) === currentCommand) {
+    if (commandQueues.get(id) === queuedStateCommand) {
       commandQueues.delete(id)
     }
   }
+  await result.completion
 }
 
 const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: ExplorerState): boolean => {
@@ -42,6 +55,7 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
     oldState.itemHeight === newState.itemHeight &&
     oldState.focusedIndex === newState.focusedIndex &&
     oldState.editingIndex === newState.editingIndex &&
+    oldState.editingSessionId === newState.editingSessionId &&
     oldState.editingIcon === newState.editingIcon &&
     oldState.cutItems === newState.cutItems &&
     oldState.editingErrorMessage === newState.editingErrorMessage &&
@@ -66,11 +80,14 @@ const maybeUpdateGitIgnoredUris = async (oldState: ExplorerState, newState: Expl
 }
 
 const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
-  const runCommand = async (id: number, ...args: T): Promise<void> => {
+  const runCommand = async (id: number, ...args: T): Promise<CommandRunResult> => {
     const { newState } = get(id)
     const rawUpdatedState = await fn(newState, ...args)
+    const completion = CommandCompletion.take(rawUpdatedState)
     if (newState === rawUpdatedState) {
-      return
+      return {
+        completion,
+      }
     }
     const updatedState = await maybeUpdateGitIgnoredUris(newState, rawUpdatedState)
     const {
@@ -92,7 +109,12 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState, intermediate.scheduledState)
     if (hasSameVisibleExplorerItemInputs(intermediate.newState, updatedState)) {
-      return
+      if (updatedState.inputSource === InputSource.User) {
+        set(id, intermediate.oldState, updatedState)
+      }
+      return {
+        completion,
+      }
     }
     const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
     const visible = items.slice(minLineY, maxLineY)
@@ -121,14 +143,18 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     }
     const intermediate2 = get(id)
     set(id, intermediate2.oldState, finalState)
+    return {
+      completion,
+    }
   }
   if (!queued) {
-    return runCommand
+    return async (id: number, ...args: T): Promise<void> => {
+      const result = await runCommand(id, ...args)
+      await result.completion
+    }
   }
   const wrappedCommand = async (id: number, ...args: T): Promise<void> => {
-    await enqueueCommand(id, async () => {
-      await runCommand(id, ...args)
-    })
+    await enqueueCommand(id, () => runCommand(id, ...args))
   }
   return wrappedCommand
 }

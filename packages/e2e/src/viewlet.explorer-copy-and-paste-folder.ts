@@ -2,11 +2,12 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-copy-and-paste-folder'
 
-export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
-  const tmpDir = await FileSystem.getTmpDir()
+  const tmpDir = await FileSystem.getTmpDir({ scheme: 'file' })
   await FileSystem.mkdir(`${tmpDir}/a`)
+  await FileSystem.writeFile(`${tmpDir}/a/file.txt`, 'content')
   await FileSystem.mkdir(`${tmpDir}/b`)
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
@@ -14,15 +15,11 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
 
   // act
   await Explorer.handleCopy()
-  await Explorer.focusIndex(1)
+  await Explorer.focusIndex(2)
   await Explorer.handlePaste()
   await Explorer.expandAll()
 
   // assert
-  const file1 = Locator('.TreeItem').nth(0)
-  await expect(file1).toHaveText('b')
-  await expect(file1).toHaveAttribute('aria-expanded', 'true')
-  const file2 = Locator('.TreeItem').nth(1)
-  await expect(file2).toHaveText('a')
-  // await expect(file1).toHaveAttribute('aria-expanded', 'false')
+  await FileSystem.shouldHaveFile(`${tmpDir}/a/file.txt`, 'content')
+  await FileSystem.shouldHaveFile(`${tmpDir}/b/a/file.txt`, 'content')
 }

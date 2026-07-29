@@ -5,9 +5,12 @@ export const name = 'viewlet.explorer-shift-range-after-scroll-and-refresh'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  for (let i = 0; i < 120; i++) {
-    await FileSystem.writeFile(`${tmpDir}/file-${i.toString().padStart(3, '0')}.txt`, '')
-  }
+  await FileSystem.writeFiles(
+    Array.from({ length: 120 }, (_, index) => ({
+      content: '',
+      uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
+    })),
+  )
   await Workspace.setPath(tmpDir)
   await Explorer.selectIndices([10, 11, 12, 13, 14, 15])
   await Explorer.focusIndex(90)

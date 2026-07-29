@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-file-invalid-escape-keeps-focus'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -15,7 +13,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // act
   await Explorer.updateEditingValue('')
   await Explorer.acceptEdit()
-  await Explorer.handleEscape()
+  await Explorer.cancelEdit()
 
   // assert
   const file = Locator('.TreeItem[aria-label="file.txt"]')

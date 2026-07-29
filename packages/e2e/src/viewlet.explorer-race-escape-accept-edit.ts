@@ -2,18 +2,16 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-escape-accept-edit'
 
-export const skip = 1
-
-export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   await Workspace.setPath(tmpDir)
-  await Command.execute('Explorer.newFile')
-  await Command.execute('Explorer.updateEditingValue', 'created.txt')
+  await Explorer.newFile()
+  await Explorer.updateEditingValue('created.txt')
 
-  // act: handleEscape cancels the inline edit, acceptEdit tries to accept it — both fire concurrently
-  await Promise.all([Command.execute('Explorer.handleEscape'), Command.execute('Explorer.acceptEdit')])
+  // act: cancelEdit cancels the inline edit, acceptEdit tries to accept it — both fire concurrently
+  await Promise.all([Explorer.cancelEdit(), Explorer.acceptEdit()])
 
   // assert: explorer should be stable — no crash, no duplicate items
   // file1.txt should always be visible

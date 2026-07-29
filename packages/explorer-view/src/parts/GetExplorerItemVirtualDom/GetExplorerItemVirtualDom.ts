@@ -14,30 +14,49 @@ const getTitle = (path: string): string => {
   return path
 }
 
-export const getExplorerItemVirtualDom = (item: VisibleExplorerItem): readonly VirtualDomNode[] => {
-  const { ariaExpanded, chevron, className, depth, hasEditingError, icon, id, index, isCut, isEditing, isIgnored, name, path, posInSet, setSize } =
-    item
+export const getExplorerItemVirtualDom = (item: VisibleExplorerItem, editingSessionId = 0): readonly VirtualDomNode[] => {
+  const {
+    ariaExpanded,
+    chevron,
+    className,
+    depth,
+    hasEditingError,
+    icon,
+    id,
+    indent,
+    index,
+    isCut,
+    isEditing,
+    isIgnored,
+    name,
+    path,
+    posInSet,
+    selected,
+    setSize,
+  } = item
   const chevronDom = GetChevronVirtualDom.getChevronVirtualDom(chevron)
   return [
     {
-      ariaDescription: '',
       ariaExpanded,
       ariaLabel: name,
       ariaLevel: depth,
       ariaPosInSet: posInSet,
+      ariaSelected: selected ? 'true' : undefined,
       ariaSetSize: setSize,
       childCount: 2 + chevronDom.length,
       className,
       'data-index': index,
       draggable: true,
       id,
+      // Keep the item aligned even when the generated indent stylesheet is applied late.
+      paddingLeft: indent,
       role: AriaRoles.TreeItem,
       title: getTitle(path),
       type: VirtualDomElements.Div,
     },
     ...chevronDom,
     GetFileIconVirtualDom.getFileIconVirtualDom(icon),
-    ...GetInputDom.getInputDom(isEditing, hasEditingError),
+    ...GetInputDom.getInputDom(isEditing, hasEditingError, editingSessionId),
     ...GetLabelDom.getLabelDom(isEditing, name, isCut || isIgnored),
   ]
 }

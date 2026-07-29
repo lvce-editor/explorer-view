@@ -95,7 +95,7 @@ export const getKeyBindings = (): readonly KeyBinding[] => {
       when: WhenExpression.FocusExplorer,
     },
     {
-      command: 'Explorer.focusNone',
+      command: 'Explorer.handleEscape',
       key: KeyCode.Escape,
       when: WhenExpression.FocusExplorer,
     },
@@ -107,11 +107,6 @@ export const getKeyBindings = (): readonly KeyBinding[] => {
     {
       command: 'Explorer.handleClickCurrent',
       key: KeyCode.Enter,
-      when: WhenExpression.FocusExplorer,
-    },
-    {
-      command: 'Explorer.handleEscape',
-      key: KeyCode.Escape,
       when: WhenExpression.FocusExplorer,
     },
     {

@@ -56,6 +56,9 @@ import * as HandleKeyDown from '../HandleKeyDown/HandleKeyDown.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandleResize from '../HandleResize/HandleResize.ts'
+import { handleScrollBarCaptureLost } from '../HandleScrollBarCaptureLost/HandleScrollBarCaptureLost.ts'
+import { handleScrollBarClick } from '../HandleScrollBarClick/HandleScrollBarClick.ts'
+import { handleScrollBarMove } from '../HandleScrollBarMove/HandleScrollBarMove.ts'
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as HandleWheel from '../HandleWheel/HandleWheel.ts'
 import * as HandleWorkspaceChange from '../HandleWorkspaceChange/HandleWorkspaceChange.ts'
@@ -65,6 +68,7 @@ import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as NewFile from '../NewFile/NewFile.ts'
 import * as NewFolder from '../NewFolder/NewFolder.ts'
 import * as OpenContainingFolder from '../OpenContainingFolder/OpenContainingFolder.ts'
+import * as OpenInIntegratedTerminal from '../OpenInIntegratedTerminal/OpenInIntegratedTerminal.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
 import * as RemoveDirent from '../RemoveDirent/RemoveDirent.ts'
 import * as RenameDirent from '../RenameDirent/RenameDirent.ts'
@@ -143,6 +147,9 @@ export const commandMap = {
   'Explorer.handlePaste': WrapCommand.wrapListItemCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapListItemCommand(HandlePointerDown.handlePointerDown),
   'Explorer.handleResize': WrapCommand.wrapListItemCommand(HandleResize.handleResize),
+  'Explorer.handleScrollBarCaptureLost': WrapCommand.wrapListItemCommand(handleScrollBarCaptureLost),
+  'Explorer.handleScrollBarClick': WrapCommand.wrapListItemCommand(handleScrollBarClick),
+  'Explorer.handleScrollBarMove': WrapCommand.wrapListItemCommand(handleScrollBarMove),
   'Explorer.handleUpload': WrapCommand.wrapListItemCommand(HandleUpload.handleUpload),
   'Explorer.handleWheel': WrapCommand.wrapListItemCommand(HandleWheel.handleWheel),
   'Explorer.handleWorkspaceChange': WrapCommand.wrapListItemCommandImmediate(HandleWorkspaceChange.handleWorkspaceChange),
@@ -152,6 +159,7 @@ export const commandMap = {
   'Explorer.newFile': WrapCommand.wrapListItemCommand(NewFile.newFile),
   'Explorer.newFolder': WrapCommand.wrapListItemCommand(NewFolder.newFolder),
   'Explorer.openContainingFolder': WrapCommand.wrapListItemCommand(OpenContainingFolder.openContainingFolder),
+  'Explorer.openInIntegratedTerminal': WrapCommand.wrapListItemCommand(OpenInIntegratedTerminal.openInIntegratedTerminal),
   'Explorer.refresh': WrapCommand.wrapListItemCommand(Refresh.refresh),
   'Explorer.removeDirent': WrapCommand.wrapListItemCommand(RemoveDirent.removeDirent),
   'Explorer.renameDirent': WrapCommand.wrapListItemCommand(RenameDirent.renameDirent),

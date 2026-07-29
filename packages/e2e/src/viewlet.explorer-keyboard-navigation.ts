@@ -4,8 +4,9 @@ export const name = 'viewlet.explorer-keyboard-navigation'
 
 export const skip = ['webkit']
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
+  await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a/b`)
   await FileSystem.writeFile(`${tmpDir}/a/b/c.txt`, 'ccccc')

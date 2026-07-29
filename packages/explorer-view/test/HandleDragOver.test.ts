@@ -22,6 +22,17 @@ test('handleDragOver - returns new state when drop targets change', () => {
   expect(result.dropTargets).not.toEqual(state.dropTargets)
 })
 
+test('handleDragOver - allows dropping into an empty readonly workspace', () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    isReadonly: true,
+    root: '',
+  }
+  const result = handleDragOver(state, 200, 200)
+  expect(result).not.toBe(state)
+  expect(result.dropTargets).toEqual([-1])
+})
+
 test.skip('handleDragOver - throws error for invalid coordinates', () => {
   const state = createDefaultState()
   expect(() => handleDragOver(state, NaN, 100)).toThrow()
