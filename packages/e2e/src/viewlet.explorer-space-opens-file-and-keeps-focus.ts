@@ -13,7 +13,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   await expect(explorerItems).toBeFocused()
 
   // act
-  await KeyBoard.press('Space')
+  await KeyBoard.press(' ')
 
   // assert
   const editorTab = Locator('.MainTab[title$="file.txt"]')
