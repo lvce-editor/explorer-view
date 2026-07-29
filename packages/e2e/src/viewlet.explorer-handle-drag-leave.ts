@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-handle-drag-leave'
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -20,6 +20,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // act
   await explorer.dispatchEvent('dragleave', { bubbles: true } as any)
+  await Command.execute('Timeout.sleep', 100)
 
   // assert
   await expect(dropTarget).toBeHidden()
