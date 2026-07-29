@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Workspace.setPath(tmpDir)
 
   // act
-  await Explorer.handleDragOver(5000, 5000)
+  await Explorer.handleDragOverIndex(-1)
 
   // assert
   const explorer = Locator('.Explorer .ListItems')
