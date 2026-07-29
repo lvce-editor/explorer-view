@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-context-menu-cut-file'
 
-export const test: Test = async ({ ClipBoard, ContextMenu, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ ClipBoard, Command, ContextMenu, expect, Explorer, FileSystem, KeyBoard, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
@@ -18,4 +18,11 @@ export const test: Test = async ({ ClipBoard, ContextMenu, expect, Explorer, Fil
   const treeItem = Locator('.TreeItem[data-index="1"]')
   const treeItemLabel = treeItem.locator('.Label')
   await expect(treeItemLabel).toHaveClass('LabelCut')
+
+  // act - cancel the cut operation
+  await KeyBoard.press('Escape')
+  await Command.execute('Timeout.sleep', 100)
+
+  // assert - file should no longer have cut decoration
+  await expect(treeItemLabel).toHaveJSProperty('className', 'Label')
 }

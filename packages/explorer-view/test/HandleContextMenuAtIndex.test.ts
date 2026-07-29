@@ -46,3 +46,25 @@ test('handleContextMenuAtIndex - keeps selection when target is selected', async
   expect(result.focusedIndex).toBe(1)
   expect(mockRpc.invocations).toEqual([['ContextMenu.show2', 1, 4, 100, 200, { menuId: 4 }]])
 })
+
+test('handleContextMenuAtIndex - keeps selection when target is focused', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ContextMenu.show2'() {},
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    items: [
+      { depth: 1, name: 'a', path: '/a', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'b', path: '/b', selected: true, type: DirentType.Directory },
+      { depth: 1, name: 'c', path: '/c', selected: false, type: DirentType.Directory },
+    ],
+  }
+
+  const result = await handleContextMenuAtIndex(state, 0, 100, 200)
+
+  expect(result.items.map((item) => item.selected)).toEqual([false, true, false])
+  expect(result.focusedIndex).toBe(0)
+  expect(mockRpc.invocations).toEqual([['ContextMenu.show2', 1, 4, 100, 200, { menuId: 4 }]])
+})

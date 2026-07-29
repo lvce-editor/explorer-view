@@ -24,6 +24,30 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
   expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', '/test/file.txt']])
 })
 
+test('copyPath - writes absolute path of focused dirent when scrolled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.writeText'(text: string) {
+      return
+    },
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 1,
+    items: [
+      { depth: 0, name: 'first.txt', path: '/test/first.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'focused.txt', path: '/test/focused.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'last.txt', path: '/test/last.txt', selected: false, type: DirentType.File },
+    ],
+    minLineY: 1,
+  }
+
+  const result = await copyPath(state)
+
+  expect(result).toBe(state)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', '/test/focused.txt']])
+})
+
 test('copyPath - writes workspace path when no focused dirent', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'(text: string) {
