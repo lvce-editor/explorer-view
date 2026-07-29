@@ -10,19 +10,18 @@ const label: VirtualDomNode = {
   type: VirtualDomElements.Div,
 }
 
+const dimmedLabel: VirtualDomNode = {
+  childCount: 1,
+  className: MergeClassNames.mergeClassNames(ClassNames.Label, ClassNames.LabelCut),
+  type: VirtualDomElements.Div,
+}
+
 export const getLabelDom = (isEditing: boolean, name: string, isDimmed: boolean): readonly VirtualDomNode[] => {
   if (isEditing) {
     return []
   }
   if (isDimmed) {
-    return [
-      {
-        childCount: 1,
-        className: MergeClassNames.mergeClassNames(ClassNames.Label, ClassNames.LabelCut),
-        type: VirtualDomElements.Div,
-      },
-      text(name),
-    ]
+    return [dimmedLabel, text(name)]
   }
   return [label, text(name)]
 }
