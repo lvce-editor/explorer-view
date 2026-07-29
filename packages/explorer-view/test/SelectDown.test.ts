@@ -14,9 +14,10 @@ const createTestState = (): ExplorerState => ({
 
 const createStateWithSelections = (selectedIndices: number[]): ExplorerState => {
   const state = createTestState()
+  const { items } = state
   return {
     ...state,
-    items: state.items.map((item, index) => ({
+    items: items.map((item, index) => ({
       ...item,
       selected: selectedIndices.includes(index),
     })),
@@ -46,7 +47,8 @@ test('selectDown - multiple selections', () => {
 
 test('selectDown - at end', () => {
   const state = createTestState()
-  const lastIndex = state.items.length - 1
+  const { items } = state
+  const lastIndex = items.length - 1
   const stateWithSelection = createStateWithSelections([lastIndex])
   const newState = selectDown(stateWithSelection)
   expect(newState.items[lastIndex].selected).toBe(true)

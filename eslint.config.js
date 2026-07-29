@@ -46,7 +46,6 @@ export default [
       'virtual-dom/no-raw-text-children': 'off',
       'virtual-dom/prefer-constants': 'off',
       'virtual-dom/prefer-merge-class-names': 'off',
-      'virtual-dom/prefer-state-destructuring': 'off',
     },
   },
   {

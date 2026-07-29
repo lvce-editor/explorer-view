@@ -41,7 +41,7 @@ test('handleClickSymLink - file symlink', async () => {
           type: 'editor',
           uri: '/test/symlink',
         },
-        focu: true,
+        focus: true,
         preview: true,
       },
     ],

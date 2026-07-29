@@ -124,7 +124,8 @@ test('handleClickDirectory - with multiple items in state', async () => {
       { depth: 0, name: 'another', path: '/another', selected: false, type: DirentType.File },
     ],
   }
-  const dirent = state.items[1]
+  const { items } = state
+  const dirent = items[1]
   const index = 1
   const keepFocus = true
 

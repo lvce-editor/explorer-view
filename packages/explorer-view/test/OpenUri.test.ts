@@ -38,7 +38,30 @@ test('openUri opens preview files through the main area input API', async () => 
           type: 'editor',
           uri: mockUri,
         },
-        focu: true,
+        focus: true,
+        preview: true,
+      },
+    ],
+  ])
+})
+
+test('openUri opens preview files without moving focus', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.openInput'() {},
+  })
+  const mockUri = 'file:///test.txt'
+  await openUri(mockUri, false, {
+    preview: true,
+  })
+  expect(mockRpc.invocations).toEqual([
+    [
+      'Main.openInput',
+      {
+        editorInput: {
+          type: 'editor',
+          uri: mockUri,
+        },
+        focus: false,
         preview: true,
       },
     ],

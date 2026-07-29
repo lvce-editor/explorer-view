@@ -18,8 +18,9 @@ test('handleDragOver - returns new state when drop targets change', () => {
     dropTargets: [1],
   }
   const result = handleDragOver(state, 200, 200)
+  const { dropTargets } = state
   expect(result).not.toBe(state)
-  expect(result.dropTargets).not.toEqual(state.dropTargets)
+  expect(result.dropTargets).not.toEqual(dropTargets)
 })
 
 test('handleDragOver - allows dropping into an empty readonly workspace', () => {
