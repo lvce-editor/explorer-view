@@ -1,8 +1,8 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-space-opens-file-and-keeps-focus'
+export const name = 'viewlet.explorer-open-file-keeps-focus'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoard, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file.txt`, 'content')
@@ -13,7 +13,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   await expect(explorerItems).toBeFocused()
 
   // act
-  await KeyBoard.press(' ')
+  await Command.execute('Explorer.handleClickCurrentButKeepFocus')
 
   // assert
   const editorTab = Locator('.MainTab[title$="file.txt"]')

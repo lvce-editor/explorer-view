@@ -20,3 +20,16 @@ test('registers one explorer Escape keybinding', () => {
     },
   ])
 })
+
+test('registers Space to open the focused item without moving focus', () => {
+  const keyBindings = getKeyBindings()
+  const spaceKeyBindings = keyBindings.filter(({ key, when }) => key === KeyCode.Space && when === WhenExpression.FocusExplorer)
+
+  expect(spaceKeyBindings).toEqual([
+    {
+      command: 'Explorer.handleClickCurrentButKeepFocus',
+      key: KeyCode.Space,
+      when: WhenExpression.FocusExplorer,
+    },
+  ])
+})
