@@ -19,8 +19,9 @@ const createScrollState = (): ExplorerState => ({
 
 test('handleScrollBarClick - grabs existing thumb', async () => {
   const state = createScrollState()
+  const { y } = state
 
-  const newState = await handleScrollBarClick(state, state.y + 50)
+  const newState = await handleScrollBarClick(state, y + 50)
 
   expect(newState.scrollBarActive).toBe(true)
   expect(newState.handleOffset).toBe(50)
@@ -29,8 +30,9 @@ test('handleScrollBarClick - grabs existing thumb', async () => {
 
 test('handleScrollBarClick - centers thumb at clicked position', async () => {
   const state = createScrollState()
+  const { y } = state
 
-  const newState = await handleScrollBarClick(state, state.y + 250)
+  const newState = await handleScrollBarClick(state, y + 250)
 
   expect(newState.scrollBarActive).toBe(true)
   expect(newState.handleOffset).toBe(125)
