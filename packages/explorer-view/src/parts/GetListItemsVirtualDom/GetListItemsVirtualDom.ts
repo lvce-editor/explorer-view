@@ -48,6 +48,7 @@ export const getListItemsVirtualDom = (
       onDrop: DomEventListenerFunctions.HandleDrop,
       onFocus: DomEventListenerFunctions.HandleListFocus,
       onPointerDown: DomEventListenerFunctions.HandlePointerDown,
+      onPointerUp: DomEventListenerFunctions.HandlePointerUp,
       onWheel: DomEventListenerFunctions.HandleWheel,
       role: AriaRoles.Tree,
       tabIndex: TabIndex.Focusable,
