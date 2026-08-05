@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { root } from './root.ts'
 
+import.meta.resolve('@lvce-editor/static-server')
 const sharedProcessUrl = import.meta.resolve('@lvce-editor/shared-process')
 
 const sharedProcess = await import(sharedProcessUrl)
