@@ -60,11 +60,6 @@ export const getKeyBindings = (): readonly KeyBinding[] => {
       when: WhenExpression.FocusExplorer,
     },
     {
-      command: 'Explorer.handlePaste',
-      key: KeyModifier.CtrlCmd | KeyCode.KeyV,
-      when: WhenExpression.FocusExplorer,
-    },
-    {
       command: 'Explorer.handleCopy',
       key: KeyModifier.CtrlCmd | KeyCode.KeyC,
       when: WhenExpression.FocusExplorer,

@@ -14,6 +14,7 @@ export const HandleInputClick = 9
 export const HandleKeyDown = 21
 export const HandleListBlur = 11
 export const HandleListFocus = 12
+export const HandleNativePaste = 26
 export const HandlePointerDown = 14
 export const HandlePointerUp = 25
 export const HandleScrollBarMove = 22

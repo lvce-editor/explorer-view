@@ -53,6 +53,7 @@ import * as HandleInputBlur from '../HandleInputBlur/HandleInputBlur.ts'
 import * as HandleInputClick from '../HandleInputClick/HandleInputClick.ts'
 import * as HandleInputKeyDown from '../HandleInputKeyDown/HandleInputKeyDown.ts'
 import * as HandleKeyDown from '../HandleKeyDown/HandleKeyDown.ts'
+import * as HandleNativePaste from '../HandleNativePaste/HandleNativePaste.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
 import * as HandlePointerUp from '../HandlePointerUp/HandlePointerUp.ts'
@@ -145,6 +146,7 @@ export const commandMap = {
   'Explorer.handleInputClick': WrapCommand.wrapListItemCommand(HandleInputClick.handleInputClick),
   'Explorer.handleInputKeyDown': WrapCommand.wrapListItemCommand(HandleInputKeyDown.handleInputKeyDown),
   'Explorer.handleKeyDown': WrapCommand.wrapListItemCommand(HandleKeyDown.handleKeyDown),
+  'Explorer.handleNativePaste': WrapCommand.wrapListItemCommand(HandleNativePaste.handleNativePaste),
   'Explorer.handlePaste': WrapCommand.wrapListItemCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapListItemCommand(HandlePointerDown.handlePointerDown),
   'Explorer.handlePointerUp': WrapCommand.wrapListItemCommand(HandlePointerUp.handlePointerUp),
