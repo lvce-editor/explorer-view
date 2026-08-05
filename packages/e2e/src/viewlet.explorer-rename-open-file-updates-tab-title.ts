@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-rename-open-file-updates-tab-title'
 
+export const skip = ['webkit']
+
 export const test: Test = async ({ Editor, expect, Explorer, FileSystem, Locator, Main, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   const originalUri = `${tmpDir}/original.txt`

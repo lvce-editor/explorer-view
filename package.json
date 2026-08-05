@@ -15,6 +15,8 @@
     "e2e:firefox": "npm run e2e:firefox --workspace=packages/e2e",
     "e2e:firefox:headless": "npm run e2e:firefox:headless --workspace=packages/e2e",
     "e2e:headless": "npm run e2e:headless --workspace=packages/e2e",
+    "e2e:webkit": "npm run e2e:webkit --workspace=packages/e2e",
+    "e2e:webkit:headless": "npm run e2e:webkit:headless --workspace=packages/e2e",
     "format": "prettier --write .",
     "lint": "eslint . && prettier --check . && knip --no-config-hints",
     "measure": "npm run measure --workspace=packages/build",
