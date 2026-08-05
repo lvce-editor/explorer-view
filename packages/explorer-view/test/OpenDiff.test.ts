@@ -9,5 +9,5 @@ test('openDiff opens file diff uri', async () => {
 
   await openDiff('/left.txt', '/right.txt', true)
 
-  expect(mockRpc.invocations).toEqual([['Main.openUri', 'diff:///left.txt<->/right.txt', true]])
+  expect(mockRpc.invocations).toEqual([['Main.openUri', { focus: true, uri: 'diff:///left.txt<->/right.txt' }]])
 })

@@ -119,7 +119,7 @@ test.each([
   const result = await handleDoubleClick(state, 0, 10)
 
   expect(result).toBe(state)
-  expect(mockRpc.invocations).toEqual([['Main.openUri', '/test.txt', true]])
+  expect(mockRpc.invocations).toEqual([['Main.openUri', { focus: true, uri: '/test.txt' }]])
 })
 
 test('handleDoubleClick - double click on item with multiple items returns same state', async () => {

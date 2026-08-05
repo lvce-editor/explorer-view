@@ -22,7 +22,7 @@ test('compareWithSelected - opens diff for selected and focused file', async () 
 
   const result = await compareWithSelected(state)
 
-  expect(mockRpc.invocations).toEqual([['Main.openUri', 'diff:///a.txt<->/b.txt', true]])
+  expect(mockRpc.invocations).toEqual([['Main.openUri', { focus: true, uri: 'diff:///a.txt<->/b.txt' }]])
   expect(result).toEqual({
     ...state,
     compareSourceUri: '',

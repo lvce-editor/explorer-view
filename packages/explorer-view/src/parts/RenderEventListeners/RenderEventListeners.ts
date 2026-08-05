@@ -91,7 +91,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenersFunctions.HandleDrop,
-      params: ['handleDrop', EventExpression.ClientX, EventExpression.ClientY, EventExpression.DataTransferFiles2, EventExpression.DataTransferFiles],
+      params: ['handleDrop', EventExpression.ClientX, EventExpression.ClientY, EventExpression.DataTransferFiles2],
       preventDefault: true,
     },
     {
