@@ -77,6 +77,7 @@ test('cancelEdit - removes editing items', async () => {
     ],
   }
 
+  const { items } = state
   const result = await cancelEdit(state)
   expect(result.items).toHaveLength(1)
   expect(result.items[0].type).toBe(DirentType.File)
@@ -88,7 +89,7 @@ test('cancelEdit - removes editing items', async () => {
     focus: FocusId.List,
     focused: true,
     focusedIndex: 0,
-    items: [state.items[0]],
+    items: [items[0]],
   })
   expect(mockRpc.invocations).toEqual([])
 })
@@ -210,6 +211,7 @@ test('cancelEdit - create file', async () => {
     ],
   }
 
+  const { items } = state
   const result = await cancelEdit(state)
   expect(result.items).toHaveLength(1)
   expect(result.items[0].type).toBe(DirentType.File)
@@ -221,7 +223,7 @@ test('cancelEdit - create file', async () => {
     focus: FocusId.List,
     focused: true,
     focusedIndex: 0,
-    items: [state.items[0]],
+    items: [items[0]],
   })
   expect(mockRpc.invocations).toEqual([])
 })

@@ -3,17 +3,16 @@ import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
+const errorMessageNode: VirtualDomNode = {
+  childCount: 1,
+  className: MergeClassNames.mergeClassNames(ClassNames.ExplorerErrorMessage),
+  type: VirtualDomElements.Div,
+}
+
 export const getErrorMessageDom = (errorMessage: string): readonly VirtualDomNode[] => {
   if (!errorMessage) {
     return []
   }
 
-  return [
-    {
-      childCount: 1,
-      className: MergeClassNames.mergeClassNames(ClassNames.ExplorerErrorMessage),
-      type: VirtualDomElements.Div,
-    },
-    text(errorMessage),
-  ]
+  return [errorMessageNode, text(errorMessage)]
 }

@@ -1,9 +1,9 @@
+import { defineConfig } from 'eslint/config'
 import * as config from '@lvce-editor/eslint-config'
 import * as regex from '@lvce-editor/eslint-plugin-regex'
 import * as tsconfig from '@lvce-editor/eslint-plugin-tsconfig'
-import * as actions from '@lvce-editor/eslint-plugin-github-actions'
 
-export default [
+export default defineConfig([
   ...config.default,
   ...config.recommendedVirtualDom,
   ...regex.default,
@@ -46,7 +46,6 @@ export default [
       'virtual-dom/no-raw-text-children': 'off',
       'virtual-dom/prefer-constants': 'off',
       'virtual-dom/prefer-merge-class-names': 'off',
-      'virtual-dom/prefer-state-destructuring': 'off',
     },
   },
   {
@@ -57,7 +56,7 @@ export default [
       'virtual-dom/prefer-state-destructuring': 'off',
     },
   },
-  ...actions.default,
+  ...config.recommendedActions,
   {
     rules: {
       'github-actions/needs': 'off',
@@ -97,4 +96,4 @@ export default [
       'sonarjs/void-use': 'off',
     },
   },
-]
+])

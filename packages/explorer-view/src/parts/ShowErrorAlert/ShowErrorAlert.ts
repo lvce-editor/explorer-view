@@ -1,5 +1,5 @@
-import { DialogWorker } from '@lvce-editor/rpc-registry'
+import * as ConfirmPrompt from '../ConfirmPrompt/ConfirmPrompt.ts'
 
 export const showErrorAlert = async (errorMessage: string): Promise<void> => {
-  await DialogWorker.invoke('ConfirmPrompt.prompt', errorMessage, undefined)
+  await ConfirmPrompt.confirm(errorMessage)
 }

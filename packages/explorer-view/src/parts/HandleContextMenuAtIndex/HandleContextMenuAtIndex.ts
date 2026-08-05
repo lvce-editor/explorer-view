@@ -7,10 +7,10 @@ import * as MenuEntryId from '../MenuEntryId/MenuEntryId.ts'
 export const handleContextMenuAtIndex = async (state: ExplorerState, index: number, x: number, y: number): Promise<ExplorerState> => {
   Assert.number(x)
   Assert.number(y)
-  const { items, uid } = state
+  const { focusedIndex, items, uid } = state
   const contextMenuItem = items[index]
   const newItems =
-    contextMenuItem && !contextMenuItem.selected
+    contextMenuItem && index !== focusedIndex && !contextMenuItem.selected
       ? items.map((item) => ({
           ...item,
           selected: false,

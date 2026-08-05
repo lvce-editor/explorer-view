@@ -23,6 +23,7 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem, editingSess
     hasEditingError,
     icon,
     id,
+    indent,
     index,
     isCut,
     isEditing,
@@ -47,6 +48,8 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem, editingSess
       'data-index': index,
       draggable: true,
       id,
+      // Keep the item aligned even when the generated indent stylesheet is applied late.
+      paddingLeft: indent,
       role: AriaRoles.TreeItem,
       title: getTitle(path),
       type: VirtualDomElements.Div,

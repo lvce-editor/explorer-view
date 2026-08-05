@@ -21,8 +21,9 @@ const createScrollState = (): ExplorerState => ({
 
 test('handleScrollBarMove - moves thumb with pointer', async () => {
   const state = createScrollState()
+  const { handleOffset, y } = state
 
-  const newState = await handleScrollBarMove(state, state.y + state.handleOffset + 125)
+  const newState = await handleScrollBarMove(state, y + handleOffset + 125)
 
   expect(newState.deltaY).toBe(250)
 })
