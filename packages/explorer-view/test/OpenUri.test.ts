@@ -9,7 +9,7 @@ test('openUri calls ParentRpc.invoke with correct parameters', async () => {
   const mockUri = 'file:///test.txt'
   const mockFocus = true
   await openUri(mockUri, mockFocus)
-  expect(mockRpc.invocations).toEqual([['Main.openUri', mockUri, mockFocus]])
+  expect(mockRpc.invocations).toEqual([['Main.openUri', { focus: mockFocus, uri: mockUri }]])
 })
 
 test('openUri calls ParentRpc.invoke with focus false', async () => {
@@ -19,7 +19,7 @@ test('openUri calls ParentRpc.invoke with focus false', async () => {
   const mockUri = 'file:///test.txt'
   const mockFocus = false
   await openUri(mockUri, mockFocus)
-  expect(mockRpc.invocations).toEqual([['Main.openUri', mockUri, mockFocus]])
+  expect(mockRpc.invocations).toEqual([['Main.openUri', { focus: mockFocus, uri: mockUri }]])
 })
 
 test('openUri opens preview files through the main area input API', async () => {

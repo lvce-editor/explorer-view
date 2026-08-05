@@ -46,6 +46,6 @@ test('acceptCreateFile', async () => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.writeFile', 'test/test.txt', ''],
     ['Layout.handleWorkspaceRefresh'],
-    ['Main.openUri', 'test/test.txt', true],
+    ['Main.openUri', { focus: true, uri: 'test/test.txt' }],
   ])
 })
