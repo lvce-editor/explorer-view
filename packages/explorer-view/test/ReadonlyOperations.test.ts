@@ -24,7 +24,7 @@ test.each([
   ['create folder', (): Promise<ExplorerState> => newFolder(state)],
   ['cut', (): Promise<ExplorerState> => handleCut(state)],
   ['delete', (): Promise<ExplorerState> => removeDirent(state)],
-  ['drop', (): Promise<ExplorerState> => handleDrop(state, 0, 0, [], undefined as any)],
+  ['drop', (): Promise<ExplorerState> => handleDrop(state, 0, 0, [])],
   ['drop at index', (): Promise<ExplorerState> => handleDropIndex(state, [], [], [], 0)],
   ['paste', (): Promise<ExplorerState> => handlePaste(state)],
   ['rename', (): Promise<ExplorerState> => renameDirent(state)],
