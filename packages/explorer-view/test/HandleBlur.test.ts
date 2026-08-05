@@ -4,12 +4,17 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
+import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 import { handleBlur } from '../src/parts/HandleBlur/HandleBlur.ts'
 
-test('handleBlur - when not editing, sets focused to false', async () => {
-  const state: ExplorerState = createDefaultState()
+test('handleBlur - when not editing, clears visual and keyboard focus', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focus: FocusId.List,
+  }
   const newState = await handleBlur(state)
   expect(newState.focused).toBe(false)
+  expect(newState.focus).toBe(FocusId.None)
 })
 
 test.skip('handleBlur - when editing, keeps state unchanged', async () => {
