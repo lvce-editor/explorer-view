@@ -5,12 +5,7 @@ import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosit
 import * as PlatformType from '../PlatformType/PlatformType.ts'
 import { VError } from '../VError/VError.ts'
 
-export const handleDrop = async (
-  state: ExplorerState,
-  x: number,
-  y: number,
-  fileIds: readonly number[],
-): Promise<ExplorerState> => {
+export const handleDrop = async (state: ExplorerState, x: number, y: number, fileIds: readonly number[]): Promise<ExplorerState> => {
   if (state.isReadonly && state.root !== '') {
     return state
   }
