@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as FocusId from '../FocusId/FocusId.ts'
 
 export const handleBlur = async (state: ExplorerState): Promise<ExplorerState> => {
   // TODO when blur event occurs because of context menu, focused index should stay the same
@@ -12,6 +13,7 @@ export const handleBlur = async (state: ExplorerState): Promise<ExplorerState> =
   })
   return {
     ...state,
+    focus: FocusId.None,
     focused: false,
     items: newItems,
   }
