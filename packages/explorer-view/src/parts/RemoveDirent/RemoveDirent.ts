@@ -13,7 +13,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   if (state.isReadonly) {
     return state
   }
-  const { confirmDelete, focusedIndex, items } = state
+  const { confirmDelete, focusedIndex, isTest, items } = state
   const selectedItems = getSelectedItems(items, focusedIndex)
   if (selectedItems.length === 0) {
     return state
@@ -21,7 +21,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   const toRemove = getPaths(selectedItems)
 
   if (confirmDelete) {
-    const confirmed = await ConfirmDelete.confirmDelete(selectedItems)
+    const confirmed = await ConfirmDelete.confirmDelete(selectedItems, isTest)
     if (!confirmed) {
       return state
     }
@@ -35,7 +35,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
   // TODO use bulk edit and explorer refresh
   const errorMessage = await ApplyFileOperations.applyFileOperations(fileOperations)
   if (errorMessage) {
-    await showErrorAlert(errorMessage)
+    await showErrorAlert(errorMessage, isTest)
     return state
   }
   const newState = await Refresh.refresh(state)

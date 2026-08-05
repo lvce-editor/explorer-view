@@ -30,6 +30,17 @@ test('confirm - renderer worker fallback', async () => {
   expect(rendererRpc.invocations).toEqual([['ConfirmPrompt.prompt', 'Continue?', undefined]])
 })
 
+test('confirm - renderer worker in test mode', async () => {
+  using rendererRpc = RendererWorker.registerMockRpc({
+    'ConfirmPrompt.prompt'() {
+      return true
+    },
+  })
+
+  expect(await confirm('Continue?', true)).toBe(true)
+  expect(rendererRpc.invocations).toEqual([['ConfirmPrompt.prompt', 'Continue?', undefined]])
+})
+
 test('confirm - unexpected error', async () => {
   using _dialogRpc = DialogWorker.registerMockRpc({
     'ConfirmPrompt.prompt'() {

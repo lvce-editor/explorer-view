@@ -44,6 +44,7 @@ export const createDefaultState = (): ExplorerState => ({
   inputSource: 0,
   isPointerDown: false,
   isReadonly: false,
+  isTest: false,
   itemHeight: 20,
   items: [],
   maxIndent: 0,

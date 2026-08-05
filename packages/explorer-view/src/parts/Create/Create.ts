@@ -16,6 +16,7 @@ export const create = (
   parentUid: any,
   platform: number = 0,
   assetDir: string = '',
+  isTest: boolean = false,
 ): any => {
   const state: ExplorerState = {
     assetDir,
@@ -61,6 +62,7 @@ export const create = (
     inputSource: 0,
     isPointerDown: false,
     isReadonly: false,
+    isTest,
     itemHeight: Height.ListItem,
     items: [],
     maxIndent: 0,

@@ -27,14 +27,31 @@ const commitHash = dirents.find(isCommitHash) || ''
 const rendererWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'renderer-worker', 'dist', 'rendererWorkerMain.js')
 
 const content = await readFile(rendererWorkerMainPath, 'utf-8')
+let newContent = content
 
 const remoteUrl = getRemoteUrl(workerPath)
-if (!content.includes('// const explorerWorkerUrl = ')) {
+if (!newContent.includes('// const explorerWorkerUrl = ')) {
   const occurrence = `const explorerWorkerUrl = \`\${assetDir}/packages/explorer-worker/dist/explorerViewWorkerMain.js\`;`
   const replacement = `// const explorerWorkerUrl = \`\${assetDir}/packages/explorer-worker/dist/explorerViewWorkerMain.js\`;
 const explorerWorkerUrl = \`${remoteUrl}\`;`
 
-  const newContent = content.replace(occurrence, replacement)
+  newContent = newContent.replace(occurrence, replacement)
+}
+
+const explorerCreateOccurrence =
+  "await invoke$f('Explorer.create', state.uid, state.uri, state.x, state.y, state.width, state.height, null, state.parentUid, state.platform, state.assetDir);"
+const explorerCreateReplacement =
+  "await invoke$f('Explorer.create', state.uid, state.uri, state.x, state.y, state.width, state.height, null, state.parentUid, state.platform, state.assetDir, isTest());"
+
+if (!newContent.includes(explorerCreateReplacement)) {
+  const occurrenceCount = newContent.split(explorerCreateOccurrence).length - 1
+  if (occurrenceCount !== 2) {
+    throw new Error(`expected two explorer create occurrences, found ${occurrenceCount}`)
+  }
+  newContent = newContent.replaceAll(explorerCreateOccurrence, explorerCreateReplacement)
+}
+
+if (newContent !== content) {
   await writeFile(rendererWorkerMainPath, newContent)
 }
 

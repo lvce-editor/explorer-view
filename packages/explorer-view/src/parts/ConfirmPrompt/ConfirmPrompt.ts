@@ -2,7 +2,10 @@ import { DialogWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 
 const missingDialogWorkerRelay = 'Command "SendMessagePortToExtensionHostWorker.sendMessagePortToDialogWorker" not found'
 
-export const confirm = async (message: string): Promise<boolean> => {
+export const confirm = async (message: string, isTest: boolean = false): Promise<boolean> => {
+  if (isTest) {
+    return RendererWorker.confirm(message)
+  }
   try {
     return await DialogWorker.invoke('ConfirmPrompt.prompt', message, undefined)
   } catch (error) {
