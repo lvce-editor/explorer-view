@@ -14,7 +14,9 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.handleDropIndex([], [], [`${tmpDir}/Main.elm`], 0)
 
   // assert
-  await expect(Locator(`.TreeItem[title="${tmpDir}/Main.elm"]`)).toBeHidden()
-  await expect(Locator(`.TreeItem[title="${tmpDir}/src/Main.elm"]`)).toBeVisible()
+  const originalFile = Locator(`.TreeItem[title="${tmpDir}/Main.elm"]`)
+  const movedFile = Locator(`.TreeItem[title="${tmpDir}/src/Main.elm"]`)
+  await expect(originalFile).toBeHidden()
+  await expect(movedFile).toBeVisible()
   await FileSystem.shouldHaveFile(`${tmpDir}/src/Main.elm`, 'module Main exposing (main)')
 }

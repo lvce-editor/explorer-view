@@ -9,10 +9,7 @@ test('moves a workspace file into a folder and expands the target', async () => 
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/workspace') {
-        return [
-          { name: 'src', type: DirentType.Directory },
-          ...(moved ? [] : [{ name: 'Main.elm', type: DirentType.File }]),
-        ]
+        return [{ name: 'src', type: DirentType.Directory }, ...(moved ? [] : [{ name: 'Main.elm', type: DirentType.File }])]
       }
       if (path === '/workspace/src') {
         return moved ? [{ name: 'Main.elm', type: DirentType.File }] : []
@@ -69,9 +66,7 @@ test('rejects moving a folder into its descendant before changing the file syste
     root: '/workspace',
   }
 
-  await expect(handleInternalDrop(state, ['/workspace/folder'], 1)).rejects.toThrow(
-    'Cannot move folder folder into a subfolder of itself',
-  )
+  await expect(handleInternalDrop(state, ['/workspace/folder'], 1)).rejects.toThrow('Cannot move folder folder into a subfolder of itself')
 })
 
 test('rejects a visible destination collision before changing the file system', async () => {

@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
-import { getInternalDragPaths } from '../src/parts/GetInternalDragPaths/GetInternalDragPaths.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import { getInternalDragPaths } from '../src/parts/GetInternalDragPaths/GetInternalDragPaths.ts'
 
 const items: readonly ExplorerItem[] = [
   { depth: 1, name: 'Main.elm', path: '/workspace/Main.elm', selected: false, type: DirentType.File },

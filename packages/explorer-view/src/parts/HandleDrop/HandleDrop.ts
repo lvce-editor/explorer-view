@@ -1,8 +1,8 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getDropHandler } from '../GetDropHandler/GetDropHandler.ts'
 import { getDroppedItems } from '../GetDroppedItems/GetDroppedItems.ts'
-import { getInternalDragPaths } from '../GetInternalDragPaths/GetInternalDragPaths.ts'
 import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosition.ts'
+import { getInternalDragPaths } from '../GetInternalDragPaths/GetInternalDragPaths.ts'
 import * as PlatformType from '../PlatformType/PlatformType.ts'
 import { VError } from '../VError/VError.ts'
 

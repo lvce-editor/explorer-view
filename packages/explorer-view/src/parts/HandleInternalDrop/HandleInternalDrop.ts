@@ -11,8 +11,10 @@ interface MoveOperation {
   readonly path: string
 }
 
+const directoryTypes: readonly number[] = [DirentType.Directory, DirentType.DirectoryExpanded, DirentType.DirectoryExpanding]
+
 const isDirectory = (item: ExplorerItem): boolean => {
-  return item.type === DirentType.Directory || item.type === DirentType.DirectoryExpanded || item.type === DirentType.DirectoryExpanding
+  return directoryTypes.includes(item.type)
 }
 
 const isDescendant = (path: string, parentPath: string, pathSeparator: string): boolean => {
@@ -47,7 +49,7 @@ const getTargetFolder = (state: ExplorerState, index: number): string => {
 
 const getTopLevelSourcePaths = (sourcePaths: readonly string[], pathSeparator: string): readonly string[] => {
   const uniquePaths = [...new Set(sourcePaths)]
-  return uniquePaths.filter((path) => !uniquePaths.some((otherPath) => otherPath !== path && isDescendant(path, otherPath, pathSeparator)))
+  return uniquePaths.filter((path) => uniquePaths.every((otherPath) => otherPath === path || !isDescendant(path, otherPath, pathSeparator)))
 }
 
 const getMoveOperations = (state: ExplorerState, sourcePaths: readonly string[], targetFolder: string): readonly MoveOperation[] => {
@@ -90,7 +92,8 @@ const expandTargetFolder = (items: readonly ExplorerItem[], targetFolder: string
 }
 
 export const handleInternalDrop = async (state: ExplorerState, sourcePaths: readonly string[], index: number): Promise<ExplorerState> => {
-  if (state.isReadonly) {
+  const { isReadonly, items } = state
+  if (isReadonly) {
     return state
   }
   const targetFolder = getTargetFolder(state, index)
@@ -104,8 +107,8 @@ export const handleInternalDrop = async (state: ExplorerState, sourcePaths: read
   for (const operation of operations) {
     await FileSystem.rename(operation.from, operation.path)
   }
-  const items = expandTargetFolder(state.items, targetFolder)
-  const updated = await Refresh.refresh({ ...state, items })
+  const expandedItems = expandTargetFolder(items, targetFolder)
+  const updated = await Refresh.refresh({ ...state, items: expandedItems })
   return {
     ...updated,
     dropTargets: [],

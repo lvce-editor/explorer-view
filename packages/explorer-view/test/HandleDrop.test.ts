@@ -50,10 +50,7 @@ test('handleDrop - moves an internal Explorer file into the drop target folder',
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/workspace') {
-        return [
-          { name: 'src', type: DirentType.Directory },
-          ...(moved ? [] : [{ name: 'Main.elm', type: DirentType.File }]),
-        ]
+        return [{ name: 'src', type: DirentType.Directory }, ...(moved ? [] : [{ name: 'Main.elm', type: DirentType.File }])]
       }
       return moved ? [{ name: 'Main.elm', type: DirentType.File }] : []
     },
