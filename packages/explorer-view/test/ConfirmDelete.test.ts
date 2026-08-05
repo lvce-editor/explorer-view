@@ -1,10 +1,10 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { DialogWorker } from '@lvce-editor/rpc-registry'
 import { confirmDelete } from '../src/parts/ConfirmDelete/ConfirmDelete.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('confirmDelete - single file', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = DialogWorker.registerMockRpc({
     'ConfirmPrompt.prompt'() {
       return true
     },
@@ -15,7 +15,7 @@ test('confirmDelete - single file', async () => {
 })
 
 test('confirmDelete - multiple folders', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = DialogWorker.registerMockRpc({
     'ConfirmPrompt.prompt'() {
       return false
     },

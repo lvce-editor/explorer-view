@@ -1,3 +1,5 @@
+import { LazyTransferMessagePortRpcParent } from '@lvce-editor/rpc'
+import { DialogWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import * as CommandMap from '../CommandMap/CommandMap.ts'
 import { registerCommands } from '../ExplorerStates/ExplorerStates.ts'
 import { initializeDragAndDropWorker } from '../InitializeDragAndDropWorker/InitializeDragAndDropWorker.ts'
@@ -15,4 +17,9 @@ export const listen = async (): Promise<void> => {
     initializeSourceControlWorker(),
     initializeDragAndDropWorker(),
   ])
+  const dialogRpc = await LazyTransferMessagePortRpcParent.create({
+    commandMap: {},
+    send: RendererWorker.sendMessagePortToDialogWorker,
+  })
+  DialogWorker.set(dialogRpc)
 }

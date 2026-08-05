@@ -1,5 +1,5 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ConfirmPrompt from '../ConfirmPrompt/ConfirmPrompt.ts'
 
 export const showErrorAlert = async (errorMessage: string): Promise<void> => {
-  await RendererWorker.confirm(errorMessage)
+  await ConfirmPrompt.confirm(errorMessage)
 }
