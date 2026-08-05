@@ -136,10 +136,11 @@ test('updateEditingValue - preserves other state properties', async () => {
     },
   })
   const state: ExplorerState = createDefaultState()
+  const { items, root, uid } = state
   const result = await updateEditingValue(state, 'new value')
-  expect(result.uid).toBe(state.uid)
-  expect(result.root).toBe(state.root)
-  expect(result.items).toBe(state.items)
+  expect(result.uid).toBe(uid)
+  expect(result.root).toBe(root)
+  expect(result.items).toBe(items)
   expect(mockRpc.invocations).toEqual([])
 })
 

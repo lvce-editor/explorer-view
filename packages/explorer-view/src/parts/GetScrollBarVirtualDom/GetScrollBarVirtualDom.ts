@@ -10,18 +10,17 @@ const scrollBarThumbNode: VirtualDomNode = {
   type: VirtualDomElements.Div,
 }
 
+const scrollBarNode: VirtualDomNode = {
+  childCount: 1,
+  className: MergeClassNames.mergeClassNames(ClassNames.ScrollBar, ClassNames.ScrollBarSmall),
+  onPointerDown: DomEventListenerFunctions.HandleScrollBarPointerDown,
+  type: VirtualDomElements.Div,
+}
+
 export const getScrollBarVirtualDom = (scrollBarHeight: number): readonly VirtualDomNode[] => {
   const shouldShowScrollbar = scrollBarHeight > 0
   if (!shouldShowScrollbar) {
     return []
   }
-  return [
-    {
-      childCount: 1,
-      className: MergeClassNames.mergeClassNames(ClassNames.ScrollBar, ClassNames.ScrollBarSmall),
-      onPointerDown: DomEventListenerFunctions.HandleScrollBarPointerDown,
-      type: VirtualDomElements.Div,
-    },
-    scrollBarThumbNode,
-  ]
+  return [scrollBarNode, scrollBarThumbNode]
 }

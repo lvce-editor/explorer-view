@@ -11,7 +11,7 @@ export const openUri = async (uri: string, focus: boolean, options?: OpenUriOpti
         type: 'editor',
         uri,
       },
-      focu: focus,
+      focus,
       preview: options.preview ?? false,
     })
     return

@@ -18,7 +18,10 @@ const createState = (focusedIndex: number, selectedIndices: readonly number[] = 
   items: ['a', 'b', 'c', 'd', 'e'].map((name, index) => createItem(name, selectedIndices.includes(index))),
 })
 
-const getSelectedIndices = (state: ExplorerState): readonly number[] => state.items.flatMap((item, index) => (item.selected ? [index] : []))
+const getSelectedIndices = (state: ExplorerState): readonly number[] => {
+  const { items } = state
+  return items.flatMap((item, index) => (item.selected ? [index] : []))
+}
 
 test('selects forward from the focused item when no multi-selection exists', async () => {
   const newState = await handleClickAtRangeSelection(createState(1), 4)
