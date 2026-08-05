@@ -24,3 +24,9 @@ test('getDragData - empty', () => {
   expect(result.items[1]).toEqual({ data: '', type: 'text/plain' })
   expect(result.label).toBe('0')
 })
+
+test('getDragData - preserves non-file workspace uri', () => {
+  const result = getDragData(['memfs:///workspace/Main.elm'])
+
+  expect(result.items[0]).toEqual({ data: 'memfs:///workspace/Main.elm', type: 'text/uri-list' })
+})

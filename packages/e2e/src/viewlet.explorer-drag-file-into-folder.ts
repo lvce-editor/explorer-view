@@ -2,28 +2,19 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drag-file-into-folder'
 
-export const skip = 1
-
-export const test: Test = async ({ Explorer, FileSystem, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.mkdir(`${tmpDir}/new`)
-  await FileSystem.writeFile(`${tmpDir}/file.txt`, 'content')
+  await FileSystem.mkdir(`${tmpDir}/src`)
+  await FileSystem.writeFile(`${tmpDir}/Main.elm`, 'module Main exposing (main)')
   await Workspace.setPath(tmpDir)
-  await Explorer.focusIndex(1)
-  await Explorer.handleDragOverIndex(1)
 
   // act
+  await Explorer.handleDragOverIndex(0)
+  await Explorer.handleDropIndex([], [], [`${tmpDir}/Main.elm`], 0)
 
-  // const opfsRoot = await navigator.storage.getDirectory()
-  // const fileHandle = await opfsRoot.getFileHandle('my first file', {
-  //   create: true,
-  // })
-  // console.log({ fileHandle })
-  // const fileHandles = [fileHandle]
-  // const files = []
-  // const paths = []
-  // const index = 0
-  // await Explorer.handleDropIndex(fileHandles, files, paths, index)
-  // TODO drop file into folder and verify it is moved
+  // assert
+  await expect(Locator(`.TreeItem[title="${tmpDir}/Main.elm"]`)).toBeHidden()
+  await expect(Locator(`.TreeItem[title="${tmpDir}/src/Main.elm"]`)).toBeVisible()
+  await FileSystem.shouldHaveFile(`${tmpDir}/src/Main.elm`, 'module Main exposing (main)')
 }

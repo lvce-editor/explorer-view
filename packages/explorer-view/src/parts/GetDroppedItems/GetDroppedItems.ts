@@ -4,6 +4,7 @@ import type { DroppedArgs } from '../UploadFileSystemHandles/UploadFileSystemHan
 export interface ExplorerDroppedItems {
   readonly fileHandles: DroppedArgs
   readonly paths: readonly string[]
+  readonly uris: readonly string[]
 }
 
 export const getDroppedItems = async (itemIds: readonly number[], isElectron: boolean): Promise<ExplorerDroppedItems> => {
@@ -11,5 +12,5 @@ export const getDroppedItems = async (itemIds: readonly number[], isElectron: bo
   const files = isElectron ? result.files : result.files.filter((file) => file.handle)
   const fileHandles = files.map((file) => file.handle || ({ kind: file.kind, name: file.name } as FileSystemHandle))
   const paths = files.map((file) => file.path)
-  return { fileHandles, paths }
+  return { fileHandles, paths, uris: result.uris }
 }
