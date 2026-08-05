@@ -55,6 +55,7 @@ import * as HandleInputKeyDown from '../HandleInputKeyDown/HandleInputKeyDown.ts
 import * as HandleKeyDown from '../HandleKeyDown/HandleKeyDown.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePointerDown from '../HandlePointerDown/HandlePointerDown.ts'
+import * as HandlePointerUp from '../HandlePointerUp/HandlePointerUp.ts'
 import * as HandleResize from '../HandleResize/HandleResize.ts'
 import { handleScrollBarCaptureLost } from '../HandleScrollBarCaptureLost/HandleScrollBarCaptureLost.ts'
 import { handleScrollBarClick } from '../HandleScrollBarClick/HandleScrollBarClick.ts'
@@ -146,6 +147,7 @@ export const commandMap = {
   'Explorer.handleKeyDown': WrapCommand.wrapListItemCommand(HandleKeyDown.handleKeyDown),
   'Explorer.handlePaste': WrapCommand.wrapListItemCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapListItemCommand(HandlePointerDown.handlePointerDown),
+  'Explorer.handlePointerUp': WrapCommand.wrapListItemCommand(HandlePointerUp.handlePointerUp),
   'Explorer.handleResize': WrapCommand.wrapListItemCommand(HandleResize.handleResize),
   'Explorer.handleScrollBarCaptureLost': WrapCommand.wrapListItemCommand(handleScrollBarCaptureLost),
   'Explorer.handleScrollBarClick': WrapCommand.wrapListItemCommand(handleScrollBarClick),

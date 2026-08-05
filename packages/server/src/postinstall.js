@@ -1,6 +1,6 @@
 import { readFile, readdir, writeFile } from 'node:fs/promises'
-import { join } from 'node:path'
-import { pathToFileURL } from 'node:url'
+import { dirname, join } from 'node:path'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const __dirname = import.meta.dirname
 
@@ -11,11 +11,11 @@ export const getRemoteUrl = (path) => {
   return `/remote/${url}`
 }
 
-const nodeModulesPath = join(root, 'node_modules')
-
 const workerPath = join(root, '.tmp', 'dist', 'dist', 'explorerViewWorkerMain.js')
 
-const serverStaticPath = join(nodeModulesPath, '@lvce-editor', 'static-server', 'static')
+const staticServerPackagePath = fileURLToPath(import.meta.resolve('@lvce-editor/static-server/package.json'))
+const dragAndDropWorkerPackagePath = fileURLToPath(import.meta.resolve('@lvce-editor/drag-and-drop-worker/package.json'))
+const serverStaticPath = join(dirname(staticServerPackagePath), 'static')
 
 const RE_COMMIT_HASH = /^[a-z\d]+$/
 const isCommitHash = (dirent) => {
@@ -54,6 +54,74 @@ if (!newContent.includes(explorerCreateReplacement)) {
 if (newContent !== content) {
   await writeFile(rendererWorkerMainPath, newContent)
 }
+
+const dragAndDropWorkerMainPath = join(dirname(dragAndDropWorkerPackagePath), 'dist', 'dragAndDropWorkerMain.js')
+const dragAndDropWorkerRemoteUrl = getRemoteUrl(dragAndDropWorkerMainPath)
+const dragAndDropCommand = 'SendMessagePortToExtensionHostWorker.sendMessagePortToDragAndDropWorker'
+let rendererWorkerContent = await readFile(rendererWorkerMainPath, 'utf-8')
+const retainedFileHandles = `const getFileHandles = async ids => {
+  const handles = await invoke$J('FileHandles.get', ids);
+  return handles.map(value => ({ kind: 'file', type: '', value }));
+};`
+if (!rendererWorkerContent.includes(retainedFileHandles)) {
+  const occurrence = `const getFileHandles = ids => {
+  return invoke$J('FileHandles.get', ids);
+};`
+  if (!rendererWorkerContent.includes(occurrence)) {
+    throw new Error('renderer retained file handles occurrence not found')
+  }
+  rendererWorkerContent = rendererWorkerContent.replace(occurrence, retainedFileHandles)
+}
+if (!rendererWorkerContent.includes(dragAndDropCommand)) {
+  const commandOccurrence = `  'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker': lazy('SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'),`
+  const commandReplacement = `  '${dragAndDropCommand}': lazy('${dragAndDropCommand}'),
+${commandOccurrence}`
+  const launcherOccurrence = `const {
+  invokeAndTransfer: invokeAndTransfer$d
+} = getOrCreateWorker(launchDiffWorker);`
+  const launcherReplacement = `${launcherOccurrence}
+
+const dragAndDropWorkerUrl = '${dragAndDropWorkerRemoteUrl}';
+
+const launchDragAndDropWorker = async () => {
+  const name = 'Drag And Drop Worker';
+  const ipc = await create$19({
+    method: ModuleWorkerAndWorkaroundForChromeDevtoolsBug,
+    name,
+    url: getConfiguredWorkerUrl$1('develop.dragAndDropWorkerPath', dragAndDropWorkerUrl)
+  });
+  handleIpc(ipc);
+  return ipc;
+};
+
+const {
+  invokeAndTransfer: invokeAndTransferDragAndDropWorker
+} = getOrCreateWorker(launchDragAndDropWorker);`
+  const sendOccurrence = `const sendMessagePortToDiffWorker = async (port, initialCommand, rpcId) => {
+  object(port);
+  string(initialCommand);
+  await invokeAndTransfer$d(initialCommand, port, rpcId);
+};`
+  const sendReplacement = `${sendOccurrence}
+const sendMessagePortToDragAndDropWorker = async (port) => {
+  object(port);
+  await invokeAndTransferDragAndDropWorker('DragAndDrop.handleMessagePort', port);
+};`
+  const exportOccurrence = `  sendMessagePortToDiffWorker: sendMessagePortToDiffWorker,`
+  const exportReplacement = `${exportOccurrence}
+  sendMessagePortToDragAndDropWorker: sendMessagePortToDragAndDropWorker,`
+  for (const occurrence of [commandOccurrence, launcherOccurrence, sendOccurrence, exportOccurrence]) {
+    if (!rendererWorkerContent.includes(occurrence)) {
+      throw new Error(`renderer drag and drop worker occurrence not found: ${occurrence}`)
+    }
+  }
+  rendererWorkerContent = rendererWorkerContent
+    .replace(commandOccurrence, commandReplacement)
+    .replace(launcherOccurrence, launcherReplacement)
+    .replace(sendOccurrence, sendReplacement)
+    .replace(exportOccurrence, exportReplacement)
+}
+await writeFile(rendererWorkerMainPath, rendererWorkerContent)
 
 const testWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'test-worker', 'dist', 'testWorkerMain.js')
 const testWorkerContent = await readFile(testWorkerMainPath, 'utf-8')
