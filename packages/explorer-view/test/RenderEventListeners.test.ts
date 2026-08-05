@@ -26,4 +26,8 @@ test('renderEventListeners', () => {
     name: 23,
     params: ['handleScrollBarCaptureLost'],
   })
+  expect(eventListeners).toContainEqual({
+    name: 25,
+    params: ['handlePointerUp'],
+  })
 })

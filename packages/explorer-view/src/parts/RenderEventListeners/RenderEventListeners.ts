@@ -48,6 +48,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handlePointerDown', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY],
     },
     {
+      name: DomEventListenersFunctions.HandlePointerUp,
+      params: ['handlePointerUp'],
+    },
+    {
       name: DomEventListenersFunctions.HandleScrollBarPointerDown,
       params: ['handleScrollBarClick', EventExpression.ClientY],
       preventDefault: true,

@@ -15,6 +15,7 @@ export const HandleKeyDown = 21
 export const HandleListBlur = 11
 export const HandleListFocus = 12
 export const HandlePointerDown = 14
+export const HandlePointerUp = 25
 export const HandleScrollBarMove = 22
 export const HandleScrollBarPointerCaptureLost = 23
 export const HandleScrollBarPointerDown = 24

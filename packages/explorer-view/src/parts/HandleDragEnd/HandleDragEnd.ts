@@ -4,5 +4,7 @@ export const handleDragEnd = (state: ExplorerState): ExplorerState => {
   return {
     ...state,
     dropTargets: [],
+    isPointerDown: false,
+    pointerDownIndex: -1,
   }
 }

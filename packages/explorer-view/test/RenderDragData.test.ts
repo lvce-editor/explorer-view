@@ -9,23 +9,27 @@ test('renderDragData - no items', () => {
   const newState: ExplorerState = {
     ...oldState,
     focusedIndex: 0,
+    isPointerDown: true,
     items: [],
+    pointerDownIndex: 0,
     uid: 123,
   }
   const result = renderDragData(oldState, newState)
   expect(result).toEqual(['Viewlet.setDragData', 123, expect.anything()])
 })
 
-test('renderDragData - selected and focused items', () => {
+test('renderDragData - selected and pointed items', () => {
   const oldState: ExplorerState = createDefaultState()
   const newState: ExplorerState = {
     ...oldState,
     focusedIndex: 1,
+    isPointerDown: true,
     items: [
       { depth: 1, icon: '', name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: true, setSize: 3, type: DirentType.File },
       { depth: 1, icon: '', name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: false, setSize: 3, type: DirentType.File },
       { depth: 1, icon: '', name: 'c.txt', path: 'file:///workspace/c.txt', posInSet: 3, selected: true, setSize: 3, type: DirentType.File },
     ],
+    pointerDownIndex: 1,
     uid: 123,
   }
   expect(renderDragData(oldState, newState)).toEqual([

@@ -32,5 +32,9 @@ test('left click on item', () => {
     items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
   }
   const result = handlePointerDown(state, MouseEventType.LeftClick, 0, 0)
-  expect(result).toEqual(state)
+  expect(result).toEqual({
+    ...state,
+    isPointerDown: true,
+    pointerDownIndex: 0,
+  })
 })

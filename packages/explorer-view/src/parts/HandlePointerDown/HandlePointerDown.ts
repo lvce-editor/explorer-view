@@ -13,5 +13,12 @@ export const handlePointerDown = (state: ExplorerState, button: number, x: numbe
       focusedIndex: -1,
     }
   }
+  if (button === MouseEventType.LeftClick) {
+    return {
+      ...state,
+      isPointerDown: true,
+      pointerDownIndex: index,
+    }
+  }
   return state
 }
