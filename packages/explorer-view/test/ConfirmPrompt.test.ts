@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { DialogWorker, RendererWorker } from '@lvce-editor/rpc-registry'
-import { confirm } from '../src/parts/ConfirmPrompt/ConfirmPrompt.ts'
+import { confirm, setIsTest } from '../src/parts/ConfirmPrompt/ConfirmPrompt.ts'
 
 test('confirm - dialog worker', async () => {
   using dialogRpc = DialogWorker.registerMockRpc({
@@ -37,8 +37,13 @@ test('confirm - renderer worker in test mode', async () => {
     },
   })
 
-  expect(await confirm('Continue?', true)).toBe(true)
-  expect(rendererRpc.invocations).toEqual([['ConfirmPrompt.prompt', 'Continue?', undefined]])
+  setIsTest(true)
+  try {
+    expect(await confirm('Continue?')).toBe(true)
+    expect(rendererRpc.invocations).toEqual([['ConfirmPrompt.prompt', 'Continue?', undefined]])
+  } finally {
+    setIsTest(false)
+  }
 })
 
 test('confirm - unexpected error', async () => {

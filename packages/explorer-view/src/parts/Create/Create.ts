@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as ConfirmPrompt from '../ConfirmPrompt/ConfirmPrompt.ts'
 import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType.ts'
 import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 import * as Height from '../Height/Height.ts'
@@ -18,6 +19,7 @@ export const create = (
   assetDir: string = '',
   isTest: boolean = false,
 ): any => {
+  ConfirmPrompt.setIsTest(isTest)
   const state: ExplorerState = {
     assetDir,
     chevronSpace: 22,
@@ -62,7 +64,6 @@ export const create = (
     inputSource: 0,
     isPointerDown: false,
     isReadonly: false,
-    isTest,
     itemHeight: Height.ListItem,
     items: [],
     maxIndent: 0,
