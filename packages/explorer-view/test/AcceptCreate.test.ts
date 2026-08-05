@@ -117,7 +117,7 @@ test('acceptCreate - successful file creation', async () => {
     ['FileSystem.readDirWithFileTypes', 'memfs:///workspace'],
     ['FileSystem.readDirWithFileTypes', 'memfs:///workspace/test'],
     ['Layout.handleWorkspaceRefresh'],
-    ['Main.openUri', 'memfs:///workspace/test/test.txt', true],
+    ['Main.openUri', { focus: true, uri: 'memfs:///workspace/test/test.txt' }],
   ])
 })
 
