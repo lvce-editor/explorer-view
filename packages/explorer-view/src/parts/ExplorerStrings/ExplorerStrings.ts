@@ -125,6 +125,12 @@ export const cannotCopyFolderIntoSubfolderOfItself = (folderName: string): strin
   })
 }
 
+export const cannotMoveFolderIntoSubfolderOfItself = (folderName: string): string => {
+  return I18nString.i18nString(UiStrings.CannotMoveFolderIntoSubfolderOfItself, {
+    PH1: folderName,
+  })
+}
+
 export const theNameIsNotValid = (): string => {
   return I18nString.i18nString(UiStrings.TheNameIsNotValid)
 }

@@ -102,3 +102,7 @@ test('theNameIsNotValid', () => {
 test('leadingOrTrailingWhitespaceDetected', () => {
   expect(ExplorerStrings.leadingOrTrailingWhitespaceDetected()).toBe('Leading or trailing whitespace detected in file or folder name.')
 })
+
+test('cannotMoveFolderIntoSubfolderOfItself', () => {
+  expect(ExplorerStrings.cannotMoveFolderIntoSubfolderOfItself('src')).toBe('Cannot move folder src into a subfolder of itself')
+})

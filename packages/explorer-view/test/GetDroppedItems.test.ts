@@ -17,7 +17,7 @@ test('normalizes worker files for browser explorer handling', async () => {
     },
   })
 
-  expect(await getDroppedItems([1, 2], false)).toEqual({ fileHandles: [handle], paths: [''] })
+  expect(await getDroppedItems([1, 2], false)).toEqual({ fileHandles: [handle], paths: [''], uris: ['html:///notes.txt'] })
   expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItems', [1, 2], false]])
 })
 
@@ -35,5 +35,6 @@ test('keeps path-only electron files', async () => {
   expect(await getDroppedItems([1], true)).toEqual({
     fileHandles: [{ kind: 'file', name: 'legacy.txt' }],
     paths: ['/tmp/legacy.txt'],
+    uris: ['file:///tmp/legacy.txt'],
   })
 })

@@ -1,11 +1,5 @@
+import { ensureUri } from '../EnsureUris/EnsureUris.ts'
 import { getDragLabel } from '../GetDragLabel/GetDragLabel.ts'
-
-const toUri = (path: string): string => {
-  if (path.startsWith('file://')) {
-    return path
-  }
-  return 'file://' + path
-}
 
 interface DragInfoItem {
   readonly data: string
@@ -18,7 +12,7 @@ export interface IDragInfoNew {
 }
 
 export const getDragData = (urls: readonly string[]): IDragInfoNew => {
-  const data = urls.map(toUri).join('\n')
+  const data = urls.map(ensureUri).join('\n')
   const dragData: readonly DragInfoItem[] = [
     {
       data,
