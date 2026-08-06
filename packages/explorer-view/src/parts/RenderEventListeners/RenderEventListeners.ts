@@ -99,6 +99,11 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       preventDefault: true,
     },
     {
+      name: DomEventListenersFunctions.HandleNativePaste,
+      params: ['handleNativePaste', 'event.clipboardData.files2'],
+      preventDefault: true,
+    },
+    {
       name: DomEventListenersFunctions.HandleDragLeave,
       params: ['handleDragLeave'],
     },

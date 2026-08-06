@@ -30,4 +30,9 @@ test('renderEventListeners', () => {
     name: 25,
     params: ['handlePointerUp'],
   })
+  expect(eventListeners).toContainEqual({
+    name: 26,
+    params: ['handleNativePaste', 'event.clipboardData.files2'],
+    preventDefault: true,
+  })
 })

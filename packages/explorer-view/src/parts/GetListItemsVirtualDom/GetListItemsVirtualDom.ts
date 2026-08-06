@@ -47,6 +47,7 @@ export const getListItemsVirtualDom = (
       onDragStart: DomEventListenerFunctions.HandleDragStart,
       onDrop: DomEventListenerFunctions.HandleDrop,
       onFocus: DomEventListenerFunctions.HandleListFocus,
+      onPaste: DomEventListenerFunctions.HandleNativePaste,
       onPointerDown: DomEventListenerFunctions.HandlePointerDown,
       onPointerUp: DomEventListenerFunctions.HandlePointerUp,
       onWheel: DomEventListenerFunctions.HandleWheel,

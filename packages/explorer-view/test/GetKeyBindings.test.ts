@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { WhenExpression } from '@lvce-editor/constants'
-import { KeyCode } from '@lvce-editor/virtual-dom-worker'
+import { KeyCode, KeyModifier } from '@lvce-editor/virtual-dom-worker'
 import { getKeyBindings } from '../src/parts/GetKeyBindings/GetKeyBindings.ts'
 
 test('getKeyBindings', () => {
@@ -32,4 +32,13 @@ test('registers Space to open the focused item without moving focus', () => {
       when: WhenExpression.FocusExplorer,
     },
   ])
+})
+
+test('allows the browser to dispatch native paste events', () => {
+  const keyBindings = getKeyBindings()
+  const pasteKeyBindings = keyBindings.filter(
+    ({ key, when }) => key === (KeyModifier.CtrlCmd | KeyCode.KeyV) && when === WhenExpression.FocusExplorer,
+  )
+
+  expect(pasteKeyBindings).toEqual([])
 })
