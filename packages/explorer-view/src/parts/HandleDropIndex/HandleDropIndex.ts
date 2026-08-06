@@ -5,6 +5,7 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 import * as HandleDropRoot from '../HandleDropRoot/HandleDropRoot.ts'
+import { handleInternalDrop } from '../HandleInternalDrop/HandleInternalDrop.ts'
 import { uploadFileSystemHandles } from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
 const getEndIndex = (items: readonly ExplorerItem[], index: number, dirent: ExplorerItem): number => {
@@ -75,6 +76,9 @@ export const handleDropIndex = async (
 ): Promise<ExplorerState> => {
   if (state.isReadonly) {
     return state
+  }
+  if (fileHandles.length === 0 && paths.length > 0) {
+    return handleInternalDrop(state, paths, index)
   }
   const { items } = state
   const dirent = items[index]
