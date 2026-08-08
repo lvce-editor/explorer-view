@@ -3,7 +3,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 export const name = 'viewlet.explorer-drag-selection-with-focused-item-in-middle'
 
 const assertDragData = async (Command: any, expectedUris: readonly string[], expectedLabel: string): Promise<void> => {
-  const dragData = await Command.execute('Viewlet.getDragData')
+  const dragData = await Command.execute('Explorer.getDragData')
   const expectedData = expectedUris.join('\n')
   const uriList = dragData?.items?.find((item: any) => item.type === 'text/uri-list')?.data
   const plainText = dragData?.items?.find((item: any) => item.type === 'text/plain')?.data
