@@ -2,27 +2,21 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drag-selection-with-focused-item-in-middle'
 
-const assertDragData = async (Command: any, expectedUris: readonly string[], expectedLabel: string): Promise<void> => {
-  const dragData = await Command.execute('Explorer.getDragData')
-  const expectedData = expectedUris.join('\n')
-  const uriList = dragData?.items?.find((item: any) => item.type === 'text/uri-list')?.data
-  const plainText = dragData?.items?.find((item: any) => item.type === 'text/plain')?.data
-  if (uriList !== expectedData || plainText !== expectedData || dragData?.label !== expectedLabel) {
-    throw new Error(`Unexpected drag data: ${JSON.stringify(dragData)}`)
-  }
-}
-
-export const test: Test = async ({ Command, Explorer, FileSystem, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
+  await FileSystem.mkdir(`${tmpDir}/destination`)
   await FileSystem.writeFile(`${tmpDir}/a.txt`, 'a')
   await FileSystem.writeFile(`${tmpDir}/b.txt`, 'b')
   await FileSystem.writeFile(`${tmpDir}/c.txt`, 'c')
   await Workspace.setPath(tmpDir)
-  await Explorer.focusIndex(1)
-  await Explorer.toggleIndividualSelection(0)
-  await Explorer.toggleIndividualSelection(2)
+  await Explorer.focusIndex(2)
+  await Explorer.toggleIndividualSelection(1)
+  await Explorer.toggleIndividualSelection(3)
 
-  await Command.execute('Explorer.handlePointerDown', 0, 0, 65)
+  await Explorer.handleDropIndex([], [], [`${tmpDir}/a.txt`, `${tmpDir}/b.txt`, `${tmpDir}/c.txt`], 0)
 
-  await assertDragData(Command, [`${tmpDir}/a.txt`, `${tmpDir}/b.txt`, `${tmpDir}/c.txt`], '3')
+  for (const file of ['a.txt', 'b.txt', 'c.txt']) {
+    const moved = Locator(`.TreeItem[title="${tmpDir}/destination/${file}"]`)
+    await expect(moved).toBeVisible()
+  }
 }

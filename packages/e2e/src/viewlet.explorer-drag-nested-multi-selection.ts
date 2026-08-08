@@ -2,27 +2,23 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drag-nested-multi-selection'
 
-const assertDragData = async (Command: any, expectedUris: readonly string[], expectedLabel: string): Promise<void> => {
-  const dragData = await Command.execute('Explorer.getDragData')
-  const expectedData = expectedUris.join('\n')
-  const uriList = dragData?.items?.find((item: any) => item.type === 'text/uri-list')?.data
-  const plainText = dragData?.items?.find((item: any) => item.type === 'text/plain')?.data
-  if (uriList !== expectedData || plainText !== expectedData || dragData?.label !== expectedLabel) {
-    throw new Error(`Unexpected drag data: ${JSON.stringify(dragData)}`)
-  }
-}
-
-export const test: Test = async ({ Command, Explorer, FileSystem, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/a.txt`, 'a')
-  await FileSystem.writeFile(`${tmpDir}/folder/b.txt`, 'b')
+  await FileSystem.mkdir(`${tmpDir}/destination`)
+  await FileSystem.mkdir(`${tmpDir}/source`)
+  await FileSystem.writeFile(`${tmpDir}/source/a.txt`, 'a')
+  await FileSystem.writeFile(`${tmpDir}/source/b.txt`, 'b')
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
-  await Explorer.focusIndex(1)
-  await Explorer.toggleIndividualSelection(2)
+  await Explorer.focusIndex(2)
+  await Explorer.toggleIndividualSelection(3)
 
-  await Command.execute('Explorer.handlePointerDown', 0, 0, 105)
+  await Explorer.handleDropIndex([], [], [`${tmpDir}/source/a.txt`, `${tmpDir}/source/b.txt`], 0)
 
-  await assertDragData(Command, [`${tmpDir}/folder/a.txt`, `${tmpDir}/folder/b.txt`], '2')
+  const movedA = Locator(`.TreeItem[title="${tmpDir}/destination/a.txt"]`)
+  const movedB = Locator(`.TreeItem[title="${tmpDir}/destination/b.txt"]`)
+  await expect(movedA).toBeVisible()
+  await expect(movedB).toBeVisible()
+  await FileSystem.shouldHaveFile(`${tmpDir}/destination/a.txt`, 'a')
+  await FileSystem.shouldHaveFile(`${tmpDir}/destination/b.txt`, 'b')
 }

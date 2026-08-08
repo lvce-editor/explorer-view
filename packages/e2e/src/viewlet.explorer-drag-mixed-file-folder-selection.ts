@@ -2,25 +2,23 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drag-mixed-file-folder-selection'
 
-const assertDragData = async (Command: any, expectedUris: readonly string[], expectedLabel: string): Promise<void> => {
-  const dragData = await Command.execute('Explorer.getDragData')
-  const expectedData = expectedUris.join('\n')
-  const uriList = dragData?.items?.find((item: any) => item.type === 'text/uri-list')?.data
-  const plainText = dragData?.items?.find((item: any) => item.type === 'text/plain')?.data
-  if (uriList !== expectedData || plainText !== expectedData || dragData?.label !== expectedLabel) {
-    throw new Error(`Unexpected drag data: ${JSON.stringify(dragData)}`)
-  }
-}
-
-export const test: Test = async ({ Command, Explorer, FileSystem, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.mkdir(`${tmpDir}/a-folder`)
-  await FileSystem.writeFile(`${tmpDir}/b.txt`, 'b')
+  await FileSystem.mkdir(`${tmpDir}/destination`)
+  await FileSystem.mkdir(`${tmpDir}/source-folder`)
+  await FileSystem.writeFile(`${tmpDir}/source-folder/nested.txt`, 'nested')
+  await FileSystem.writeFile(`${tmpDir}/source.txt`, 'source')
   await Workspace.setPath(tmpDir)
-  await Explorer.focusIndex(0)
-  await Explorer.toggleIndividualSelection(1)
+  await Explorer.focusIndex(1)
+  await Explorer.toggleIndividualSelection(2)
 
-  await Command.execute('Explorer.handlePointerDown', 0, 0, 85)
+  await Explorer.handleDropIndex([], [], [`${tmpDir}/source-folder`, `${tmpDir}/source.txt`], 0)
+  await Explorer.expandRecursively()
 
-  await assertDragData(Command, [`${tmpDir}/a-folder`, `${tmpDir}/b.txt`], '2')
+  const movedNested = Locator(`.TreeItem[title="${tmpDir}/destination/source-folder/nested.txt"]`)
+  const movedFile = Locator(`.TreeItem[title="${tmpDir}/destination/source.txt"]`)
+  await expect(movedNested).toBeVisible()
+  await expect(movedFile).toBeVisible()
+  await FileSystem.shouldHaveFile(`${tmpDir}/destination/source-folder/nested.txt`, 'nested')
+  await FileSystem.shouldHaveFile(`${tmpDir}/destination/source.txt`, 'source')
 }

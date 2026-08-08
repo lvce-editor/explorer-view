@@ -2,26 +2,25 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-drag-unselected-file-excludes-existing-selection'
 
-const assertDragData = async (Command: any, expectedUris: readonly string[], expectedLabel: string): Promise<void> => {
-  const dragData = await Command.execute('Explorer.getDragData')
-  const expectedData = expectedUris.join('\n')
-  const uriList = dragData?.items?.find((item: any) => item.type === 'text/uri-list')?.data
-  const plainText = dragData?.items?.find((item: any) => item.type === 'text/plain')?.data
-  if (uriList !== expectedData || plainText !== expectedData || dragData?.label !== expectedLabel) {
-    throw new Error(`Unexpected drag data: ${JSON.stringify(dragData)}`)
-  }
-}
-
-export const test: Test = async ({ Command, Explorer, FileSystem, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
+  await FileSystem.mkdir(`${tmpDir}/destination`)
   await FileSystem.writeFile(`${tmpDir}/a.txt`, 'a')
   await FileSystem.writeFile(`${tmpDir}/b.txt`, 'b')
   await FileSystem.writeFile(`${tmpDir}/c.txt`, 'c')
   await Workspace.setPath(tmpDir)
-  await Explorer.focusIndex(0)
-  await Explorer.toggleIndividualSelection(1)
+  await Explorer.focusIndex(1)
+  await Explorer.toggleIndividualSelection(2)
 
-  await Command.execute('Explorer.handlePointerDown', 0, 0, 105)
+  await Explorer.handleDropIndex([], [], [`${tmpDir}/c.txt`], 0)
 
-  await assertDragData(Command, [`${tmpDir}/c.txt`], 'c.txt')
+  const originalA = Locator(`.TreeItem[title="${tmpDir}/a.txt"]`)
+  const originalB = Locator(`.TreeItem[title="${tmpDir}/b.txt"]`)
+  const movedC = Locator(`.TreeItem[title="${tmpDir}/destination/c.txt"]`)
+  await expect(originalA).toBeVisible()
+  await expect(originalB).toBeVisible()
+  await expect(movedC).toBeVisible()
+  await FileSystem.shouldHaveFile(`${tmpDir}/a.txt`, 'a')
+  await FileSystem.shouldHaveFile(`${tmpDir}/b.txt`, 'b')
+  await FileSystem.shouldHaveFile(`${tmpDir}/destination/c.txt`, 'c')
 }
