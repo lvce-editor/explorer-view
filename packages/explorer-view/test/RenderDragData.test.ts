@@ -18,7 +18,7 @@ test('renderDragData - no items', () => {
   expect(result).toEqual(['Viewlet.setDragData', 123, expect.anything()])
 })
 
-test('renderDragData - selected and pointed items', () => {
+test('renderDragData - focused and selected items when pointing at the focused item', () => {
   const oldState: ExplorerState = createDefaultState()
   const newState: ExplorerState = {
     ...oldState,
@@ -47,6 +47,104 @@ test('renderDragData - selected and pointed items', () => {
         },
       ],
       label: '3',
+    },
+  ])
+})
+
+test('renderDragData - focused and selected items when pointing at a selected item', () => {
+  const oldState: ExplorerState = createDefaultState()
+  const newState: ExplorerState = {
+    ...oldState,
+    focusedIndex: 0,
+    isPointerDown: true,
+    items: [
+      { depth: 1, icon: '', name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: false, setSize: 3, type: DirentType.File },
+      { depth: 1, icon: '', name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: true, setSize: 3, type: DirentType.File },
+      { depth: 1, icon: '', name: 'c.txt', path: '/workspace/c.txt', posInSet: 3, selected: true, setSize: 3, type: DirentType.File },
+    ],
+    pointerDownIndex: 1,
+    uid: 123,
+  }
+
+  expect(renderDragData(oldState, newState)).toEqual([
+    'Viewlet.setDragData',
+    123,
+    {
+      items: [
+        {
+          data: 'file:///workspace/a.txt\nfile:///workspace/b.txt\nfile:///workspace/c.txt',
+          type: 'text/uri-list',
+        },
+        {
+          data: 'file:///workspace/a.txt\nfile:///workspace/b.txt\nfile:///workspace/c.txt',
+          type: 'text/plain',
+        },
+      ],
+      label: '3',
+    },
+  ])
+})
+
+test('renderDragData - only pointed item when pointing outside the selection', () => {
+  const oldState: ExplorerState = createDefaultState()
+  const newState: ExplorerState = {
+    ...oldState,
+    focusedIndex: 0,
+    isPointerDown: true,
+    items: [
+      { depth: 1, icon: '', name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: false, setSize: 3, type: DirentType.File },
+      { depth: 1, icon: '', name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: true, setSize: 3, type: DirentType.File },
+      { depth: 1, icon: '', name: 'c.txt', path: '/workspace/c.txt', posInSet: 3, selected: false, setSize: 3, type: DirentType.File },
+    ],
+    pointerDownIndex: 2,
+    uid: 123,
+  }
+
+  expect(renderDragData(oldState, newState)).toEqual([
+    'Viewlet.setDragData',
+    123,
+    {
+      items: [
+        {
+          data: 'file:///workspace/c.txt',
+          type: 'text/uri-list',
+        },
+        {
+          data: 'file:///workspace/c.txt',
+          type: 'text/plain',
+        },
+      ],
+      label: 'c.txt',
+    },
+  ])
+})
+
+test('renderDragData - no item for an out-of-range pointer index', () => {
+  const oldState: ExplorerState = createDefaultState()
+  const newState: ExplorerState = {
+    ...oldState,
+    focusedIndex: 0,
+    isPointerDown: true,
+    items: [{ depth: 1, icon: '', name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File }],
+    pointerDownIndex: 99,
+    uid: 123,
+  }
+
+  expect(renderDragData(oldState, newState)).toEqual([
+    'Viewlet.setDragData',
+    123,
+    {
+      items: [
+        {
+          data: '',
+          type: 'text/uri-list',
+        },
+        {
+          data: '',
+          type: 'text/plain',
+        },
+      ],
+      label: '0',
     },
   ])
 })
