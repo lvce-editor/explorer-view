@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { createMockRpc } from '@lvce-editor/rpc'
+import { RendererProcess, RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
@@ -161,6 +162,7 @@ test('wrapListItemCommand continues after a command fails', async () => {
 })
 
 test('wrapListItemCommand preserves user input when a pending render commits', async () => {
+  RendererProcess.set(createMockRpc({ commandMap: { 'Viewlet.queueCommands': () => 1 } }))
   const uid = 9005
   const state = {
     ...createDefaultState(),
@@ -180,7 +182,7 @@ test('wrapListItemCommand preserves user input when a pending render commits', a
 
   ExplorerStates.set(uid, state, state)
   await wrapped(uid)
-  Render2.render2(uid, [])
+  await Render2.render2(uid, [])
 
   const { newState } = ExplorerStates.get(uid)
   expect(newState.editingValue).toBe('new.txt')

@@ -1,4 +1,6 @@
-import { expect, test } from '@jest/globals'
+import { beforeEach, expect, jest, test } from '@jest/globals'
+import { createMockRpc } from '@lvce-editor/rpc'
+import { RendererProcess } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as Diff2 from '../src/parts/Diff2/Diff2.ts'
@@ -9,7 +11,14 @@ import { handlePointerUp } from '../src/parts/HandlePointerUp/HandlePointerUp.ts
 import * as MouseEventType from '../src/parts/MouseEventType/MouseEventType.ts'
 import * as Render2 from '../src/parts/Render2/Render2.ts'
 
-test('pointer down renders drag data for the pointed explorer item', () => {
+const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 1)
+
+beforeEach(() => {
+  queueCommands.mockClear()
+  RendererProcess.set(createMockRpc({ commandMap: { 'Viewlet.queueCommands': queueCommands } }))
+})
+
+test('pointer down renders drag data for the pointed explorer item', async () => {
   const uid = 42
   const oldState: ExplorerState = {
     ...createDefaultState(),
@@ -22,9 +31,9 @@ test('pointer down renders drag data for the pointed explorer item', () => {
   const newState = handlePointerDown(oldState, MouseEventType.LeftClick, 0, 0)
   ExplorerStates.set(uid, oldState, newState)
   const diffResult = Diff2.diff2(uid)
-  const commands = Render2.render2(uid, diffResult)
+  await Render2.render2(uid, diffResult)
 
-  expect(commands).toEqual([
+  expect(queueCommands).toHaveBeenCalledWith(uid, [
     [
       'Viewlet.setDragData',
       uid,
@@ -39,7 +48,7 @@ test('pointer down renders drag data for the pointed explorer item', () => {
   ])
 })
 
-test('pointer up rearms drag data rendering for repeated drags', () => {
+test('pointer up rearms drag data rendering for repeated drags', async () => {
   const uid = 43
   const initialState: ExplorerState = {
     ...createDefaultState(),
@@ -54,15 +63,15 @@ test('pointer up rearms drag data rendering for repeated drags', () => {
 
   const pointerDownState = handlePointerDown(initialState, MouseEventType.LeftClick, 0, initialState.itemHeight)
   ExplorerStates.set(uid, initialState, pointerDownState)
-  const firstCommands = Render2.render2(uid, Diff2.diff2(uid))
+  await Render2.render2(uid, Diff2.diff2(uid))
 
   const pointerUpState = handlePointerUp(pointerDownState)
   ExplorerStates.set(uid, pointerDownState, pointerUpState)
-  expect(Render2.render2(uid, Diff2.diff2(uid))).toEqual([])
+  await Render2.render2(uid, Diff2.diff2(uid))
 
   const secondPointerDownState = handlePointerDown(pointerUpState, MouseEventType.LeftClick, 0, initialState.itemHeight)
   ExplorerStates.set(uid, pointerUpState, secondPointerDownState)
-  const secondCommands = Render2.render2(uid, Diff2.diff2(uid))
+  await Render2.render2(uid, Diff2.diff2(uid))
 
   const expectedCommand = [
     'Viewlet.setDragData',
@@ -75,11 +84,12 @@ test('pointer up rearms drag data rendering for repeated drags', () => {
       label: 'second.txt',
     },
   ]
-  expect(firstCommands).toEqual([expectedCommand])
-  expect(secondCommands).toEqual([expectedCommand])
+  expect(queueCommands).toHaveBeenNthCalledWith(1, uid, [expectedCommand])
+  expect(queueCommands).toHaveBeenNthCalledWith(2, uid, [])
+  expect(queueCommands).toHaveBeenNthCalledWith(3, uid, [expectedCommand])
 })
 
-test('pointer down on a selected item renders drag data for the full effective selection', () => {
+test('pointer down on a selected item renders drag data for the full effective selection', async () => {
   const uid = 44
   const oldState: ExplorerState = {
     ...createDefaultState(),
@@ -95,7 +105,9 @@ test('pointer down on a selected item renders drag data for the full effective s
   const newState = handlePointerDown(oldState, MouseEventType.LeftClick, 0, oldState.itemHeight)
   ExplorerStates.set(uid, oldState, newState)
 
-  expect(Render2.render2(uid, Diff2.diff2(uid))).toEqual([
+  await Render2.render2(uid, Diff2.diff2(uid))
+
+  expect(queueCommands).toHaveBeenCalledWith(uid, [
     [
       'Viewlet.setDragData',
       uid,
