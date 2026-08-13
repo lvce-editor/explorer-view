@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { createMockRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -8,6 +9,7 @@ import * as GetVisibleExplorerItems from '../src/parts/GetVisibleExplorerItems/G
 import * as HandleClickFile from '../src/parts/HandleClickFile/HandleClickFile.ts'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as Render2 from '../src/parts/Render2/Render2.ts'
+import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 
 test('wrapListItemCommand recomputes visible items when focus changes', async () => {
   const uid = 9001
@@ -161,6 +163,7 @@ test('wrapListItemCommand continues after a command fails', async () => {
 })
 
 test('wrapListItemCommand preserves user input when a pending render commits', async () => {
+  RendererProcess.set(createMockRpc({ commandMap: { 'Viewlet.queueCommands': () => 1 } }))
   const uid = 9005
   const state = {
     ...createDefaultState(),
@@ -180,7 +183,7 @@ test('wrapListItemCommand preserves user input when a pending render commits', a
 
   ExplorerStates.set(uid, state, state)
   await wrapped(uid)
-  Render2.render2(uid, [])
+  await Render2.render2(uid, [])
 
   const { newState } = ExplorerStates.get(uid)
   expect(newState.editingValue).toBe('new.txt')
