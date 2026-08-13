@@ -9,10 +9,10 @@ export const renderFocus = (oldState: ExplorerState, newState: ExplorerState): r
     return []
   }
   if (newState.focus === FocusId.Input) {
-    return [ViewletCommand.FocusElementByName, InputName.ExplorerInput]
+    return [ViewletCommand.FocusElementByName, newState.uid, InputName.ExplorerInput]
   }
   if (newState.focus === FocusId.List) {
-    return [ViewletCommand.FocusSelector, '.ListItems']
+    return [ViewletCommand.FocusSelector, newState.uid, '.ListItems']
   }
   // TODO
   // 1. when focused, focus the outer list element

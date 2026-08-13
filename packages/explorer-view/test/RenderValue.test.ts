@@ -20,7 +20,7 @@ test('should return setValue command when focus is Input', () => {
 
   const result = renderValue(oldState, newState)
 
-  expect(result).toEqual(['Viewlet.setValueByName', InputName.ExplorerInput, 'test-value'])
+  expect(result).toEqual(['Viewlet.setValueByName', newState.uid, InputName.ExplorerInput, 'test-value'])
 })
 
 test('should return empty array when focus is not Input', () => {

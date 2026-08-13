@@ -22,7 +22,7 @@ test('focus input when focus is input', () => {
     focus: FocusId.Input,
   }
   const result = renderFocus(oldState, newState)
-  expect(result).toEqual(['Viewlet.focusElementByName', InputName.ExplorerInput])
+  expect(result).toEqual(['Viewlet.focusElementByName', newState.uid, InputName.ExplorerInput])
 })
 
 test('focus list when focus is list', () => {
@@ -32,7 +32,7 @@ test('focus list when focus is list', () => {
     focus: FocusId.List,
   }
   const result = renderFocus(oldState, newState)
-  expect(result).toEqual(['Viewlet.focusSelector', '.ListItems'])
+  expect(result).toEqual(['Viewlet.focusSelector', newState.uid, '.ListItems'])
 })
 
 test('empty array when no focus state', () => {
