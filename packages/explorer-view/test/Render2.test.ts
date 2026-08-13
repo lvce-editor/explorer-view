@@ -1,12 +1,24 @@
 import { expect, jest, test } from '@jest/globals'
 import { WhenExpression } from '@lvce-editor/constants'
 import { createMockRpc } from '@lvce-editor/rpc'
-import { RendererProcess } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 import * as Render2 from '../src/parts/Render2/Render2.ts'
+import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
+
+test('render2 - returns renderer commands when no direct renderer is connected', async () => {
+  const uid = 3
+  const oldState = { ...createDefaultState(), uid }
+  const newState = {
+    ...oldState,
+    items: [...oldState.items],
+  }
+  ExplorerStates.set(uid, oldState, newState)
+
+  await expect(Render2.render2(uid, [])).resolves.toEqual([['Viewlet.setPatches', uid, []]])
+})
 
 test('render2 - queues renderer commands and returns a lightweight commit marker', async () => {
   const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 17)

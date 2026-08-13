@@ -1,6 +1,5 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
 import { createMockRpc } from '@lvce-editor/rpc'
-import { RendererProcess } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as Diff2 from '../src/parts/Diff2/Diff2.ts'
@@ -10,6 +9,7 @@ import { handlePointerDown } from '../src/parts/HandlePointerDown/HandlePointerD
 import { handlePointerUp } from '../src/parts/HandlePointerUp/HandlePointerUp.ts'
 import * as MouseEventType from '../src/parts/MouseEventType/MouseEventType.ts'
 import * as Render2 from '../src/parts/Render2/Render2.ts'
+import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 
 const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 1)
 
