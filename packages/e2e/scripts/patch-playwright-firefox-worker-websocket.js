@@ -28,9 +28,15 @@ const after = `      _onWebSocketOpened(event) {
         this._page.frameManager.onWebSocketResponse(webSocketId(event.frameId, event.wsid), response2.status, response2.statusText, response2.headers);
       }`
 
+const upstreamFix = `      _onWebSocketOpened(event) {
+        const socketId = webSocketId(event.frameId, event.wsid);
+        const request2 = this._webSocketRequests.get(event.requestId);
+        const response2 = this._webSocketResponses.get(event.requestId);
+        if (!request2 || !response2) {`
+
 const content = await readFile(file, 'utf8')
 
-if (content.includes(after)) {
+if (content.includes(after) || content.includes(upstreamFix)) {
   process.exit(0)
 }
 

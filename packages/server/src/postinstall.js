@@ -38,17 +38,16 @@ const explorerWorkerUrl = \`${remoteUrl}\`;`
   newContent = newContent.replace(occurrence, replacement)
 }
 
-const explorerCreateOccurrence =
-  "await invoke$f('Explorer.create', state.uid, state.uri, state.x, state.y, state.width, state.height, null, state.parentUid, state.platform, state.assetDir);"
-const explorerCreateReplacement =
-  "await invoke$f('Explorer.create', state.uid, state.uri, state.x, state.y, state.width, state.height, null, state.parentUid, state.platform, state.assetDir, isTest());"
-
-if (!newContent.includes(explorerCreateReplacement)) {
-  const occurrenceCount = newContent.split(explorerCreateOccurrence).length - 1
-  if (occurrenceCount !== 2) {
-    throw new Error(`expected two explorer create occurrences, found ${occurrenceCount}`)
+const isTestContextOccurrence = '  isTest: isTest?.() ?? false,'
+const dynamicIsTestContext = `  get isTest() {
+    return isTest?.() ?? false;
+  },`
+if (!newContent.includes(dynamicIsTestContext)) {
+  const occurrenceCount = newContent.split(isTestContextOccurrence).length - 1
+  if (occurrenceCount !== 1) {
+    throw new Error(`expected one isTest context occurrence, found ${occurrenceCount}`)
   }
-  newContent = newContent.replaceAll(explorerCreateOccurrence, explorerCreateReplacement)
+  newContent = newContent.replace(isTestContextOccurrence, dynamicIsTestContext)
 }
 
 if (newContent !== content) {
@@ -60,12 +59,12 @@ const dragAndDropWorkerRemoteUrl = getRemoteUrl(dragAndDropWorkerMainPath)
 const dragAndDropCommand = 'SendMessagePortToExtensionHostWorker.sendMessagePortToDragAndDropWorker'
 let rendererWorkerContent = await readFile(rendererWorkerMainPath, 'utf-8')
 const retainedFileHandles = `const getFileHandles = async ids => {
-  const handles = await invoke$J('FileHandles.get', ids);
+  const handles = await invoke$I('FileHandles.get', ids);
   return handles.map(value => ({ kind: 'file', type: '', value }));
 };`
 if (!rendererWorkerContent.includes(retainedFileHandles)) {
   const occurrence = `const getFileHandles = ids => {
-  return invoke$J('FileHandles.get', ids);
+  return invoke$I('FileHandles.get', ids);
 };`
   if (!rendererWorkerContent.includes(occurrence)) {
     throw new Error('renderer retained file handles occurrence not found')

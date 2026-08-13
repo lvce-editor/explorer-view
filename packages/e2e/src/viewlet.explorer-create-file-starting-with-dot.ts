@@ -24,4 +24,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // assert
   const errorMessage = Locator('.ExplorerErrorMessage')
   await expect(errorMessage).toBeHidden()
+
+  // cleanup
+  await Explorer.cancelEdit()
 }
