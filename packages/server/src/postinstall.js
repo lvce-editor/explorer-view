@@ -38,6 +38,18 @@ const explorerWorkerUrl = \`${remoteUrl}\`;`
   newContent = newContent.replace(occurrence, replacement)
 }
 
+const isTestContextOccurrence = '  isTest: isTest?.() ?? false,'
+const dynamicIsTestContext = `  get isTest() {
+    return isTest?.() ?? false;
+  },`
+if (!newContent.includes(dynamicIsTestContext)) {
+  const occurrenceCount = newContent.split(isTestContextOccurrence).length - 1
+  if (occurrenceCount !== 1) {
+    throw new Error(`expected one isTest context occurrence, found ${occurrenceCount}`)
+  }
+  newContent = newContent.replace(isTestContextOccurrence, dynamicIsTestContext)
+}
+
 if (newContent !== content) {
   await writeFile(rendererWorkerMainPath, newContent)
 }
