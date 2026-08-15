@@ -67,16 +67,76 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
   )
 }
 
-const maybeUpdateGitIgnoredUris = async (oldState: ExplorerState, newState: ExplorerState): Promise<ExplorerState> => {
-  if (oldState.items === newState.items || oldState.sourceControlIgnoredUris !== newState.sourceControlIgnoredUris) {
-    return newState
-  }
-  const { gitIgnoreDecorations, items, pathSeparator, root } = newState
-  const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations)
-  return {
-    ...newState,
+const getStateWithVisibleItems = (state: ExplorerState): ExplorerState => {
+  const {
+    cutItems,
+    decorations,
+    dropTargets,
+    editingErrorMessage,
+    editingIcon,
+    editingIndex,
+    focusedIndex,
+    height,
+    icons,
+    itemHeight,
+    items,
+    minLineY,
     sourceControlIgnoredUris,
+    useChevrons,
+  } = state
+  const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
+  const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
+    items,
+    minLineY,
+    maxLineY,
+    focusedIndex,
+    editingIndex,
+    editingErrorMessage,
+    icons,
+    useChevrons,
+    dropTargets,
+    editingIcon,
+    cutItems,
+    sourceControlIgnoredUris,
+    decorations,
+  )
+  return {
+    ...state,
+    maxLineY,
+    visibleExplorerItems,
   }
+}
+
+const updateGitIgnoredUris = async (id: number, expectedState: ExplorerState): Promise<void> => {
+  const { gitIgnoreDecorations, items, pathSeparator, root, sourceControlIgnoredUris: previousIgnoredUris } = expectedState
+  const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations)
+  const intermediate = get(id)
+  const current = intermediate.newState
+  if (
+    current.items !== items ||
+    current.root !== root ||
+    current.pathSeparator !== pathSeparator ||
+    current.gitIgnoreDecorations !== gitIgnoreDecorations ||
+    current.sourceControlIgnoredUris !== previousIgnoredUris
+  ) {
+    return
+  }
+  const updatedState = getStateWithVisibleItems({
+    ...current,
+    sourceControlIgnoredUris,
+  })
+  set(id, intermediate.oldState, updatedState)
+  const { render2 } = await import('../Render2/Render2.ts')
+  await render2(id, [])
+}
+
+const maybeScheduleGitIgnoredUrisUpdate = (id: number, oldState: ExplorerState, newState: ExplorerState): void => {
+  if (oldState.items === newState.items || oldState.sourceControlIgnoredUris !== newState.sourceControlIgnoredUris) {
+    return
+  }
+  void updateGitIgnoredUris(id, newState).catch(() => {
+    // Ignored decorations are optional and must not block explorer interaction.
+  })
 }
 
 const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
@@ -89,7 +149,7 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
         completion,
       }
     }
-    const updatedState = await maybeUpdateGitIgnoredUris(newState, rawUpdatedState)
+    const updatedState = rawUpdatedState
     const {
       cutItems,
       decorations,
@@ -143,6 +203,7 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     }
     const intermediate2 = get(id)
     set(id, intermediate2.oldState, finalState)
+    maybeScheduleGitIgnoredUrisUpdate(id, newState, finalState)
     return {
       completion,
     }

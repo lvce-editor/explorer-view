@@ -212,3 +212,72 @@ test('wrapListItemCommandImmediate allows a callback while a queued command is r
   const { newState } = ExplorerStates.get(uid)
   expect(newState.editingValue).toBe('queued')
 })
+
+test('wrapListItemCommand renders items before gitignore decoration reads finish', async () => {
+  const uid = 9007
+  const gitIgnoreRead = Promise.withResolvers<string>()
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return gitIgnoreRead.promise
+    },
+  })
+  const item = { depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.path]: '' },
+    gitIgnoreDecorations: true,
+    root: '/workspace',
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    items: [item],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid)
+
+  expect(ExplorerStates.get(uid).newState.items).toEqual([item])
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual([])
+  gitIgnoreRead.resolve('*.log')
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/debug.log'])
+})
+
+test('wrapListItemCommand discards stale gitignore decoration results', async () => {
+  const uid = 9008
+  const firstRead = Promise.withResolvers<string>()
+  const secondRead = Promise.withResolvers<string>()
+  let readCount = 0
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      readCount++
+      if (readCount === 1) {
+        return firstRead.promise
+      }
+      return secondRead.promise
+    },
+  })
+  const firstItem = { depth: 1, name: 'first.log', path: '/workspace/first.log', selected: false, type: DirentType.File }
+  const secondItem = { depth: 1, name: 'second.tmp', path: '/workspace/second.tmp', selected: false, type: DirentType.File }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [firstItem.path]: '', [secondItem.path]: '' },
+    gitIgnoreDecorations: true,
+    root: '/workspace',
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, item: typeof firstItem) => ({
+    ...currentState,
+    items: [item],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid, firstItem)
+  await wrapped(uid, secondItem)
+  secondRead.resolve('*.tmp')
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  firstRead.resolve('*.log')
+  await new Promise((resolve) => setTimeout(resolve, 0))
+
+  expect(ExplorerStates.get(uid).newState.items).toEqual([secondItem])
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/second.tmp'])
+})
