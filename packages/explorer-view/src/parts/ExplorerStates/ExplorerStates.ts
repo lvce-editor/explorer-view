@@ -68,12 +68,9 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
   )
 }
 
-export const updateGitIgnoredUris = (
-  state: ExplorerState,
-  generation: number,
-  sourceControlIgnoredUris: readonly string[],
-): ExplorerState => {
-  if (state.gitIgnoreGeneration !== generation) {
+export const updateGitIgnoredUris = (state: ExplorerState, generation: number, sourceControlIgnoredUris: readonly string[]): ExplorerState => {
+  const { gitIgnoreGeneration } = state
+  if (gitIgnoreGeneration !== generation) {
     return state
   }
   return {
