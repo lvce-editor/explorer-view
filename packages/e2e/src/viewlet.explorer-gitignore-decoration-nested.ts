@@ -17,7 +17,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()
-  await Command.execute('Timeout.sleep', 100)
+  await Command.execute('Timeout.sleep', 200)
 
   // assert
   const ignored = Locator(`.TreeItem[title="${tmpDir}/packages/app/file.tmp"] .Label`)

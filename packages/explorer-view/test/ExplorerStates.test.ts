@@ -251,7 +251,46 @@ test('wrapListItemCommand renders items before gitignore decoration reads finish
   expect(ExplorerStates.get(uid).newState.items).toEqual([item])
   expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual([])
   gitIgnoreRead.resolve('*.log')
-  await new Promise((resolve) => setTimeout(resolve, 0))
+  await new Promise((resolve) => setTimeout(resolve, 150))
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/debug.log'])
+})
+
+test('wrapListItemCommand waits for interaction idle before applying gitignore decorations', async () => {
+  const uid = 9010
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return '*.log'
+    },
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number, ignoredUris: readonly string[]) {
+      await updateDecorations(uid, generation, ignoredUris)
+    },
+  })
+  const item = { depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.path]: '' },
+    gitIgnoreDecorations: true,
+    root: '/workspace',
+    uid,
+  }
+  const readItems = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    items: [item],
+  }))
+  const interact = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    focusedIndex: 0,
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await readItems(uid)
+  await new Promise((resolve) => setTimeout(resolve, 70))
+  await interact(uid)
+  await new Promise((resolve) => setTimeout(resolve, 50))
+
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual([])
+  await new Promise((resolve) => setTimeout(resolve, 75))
   expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/debug.log'])
 })
 
@@ -316,9 +355,9 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
   await wrapped(uid, secondItem)
   await new Promise((resolve) => setTimeout(resolve, 0))
   secondRead.resolve('*.tmp')
-  await new Promise((resolve) => setTimeout(resolve, 0))
+  await new Promise((resolve) => setTimeout(resolve, 150))
   firstRead.resolve('*.log')
-  await new Promise((resolve) => setTimeout(resolve, 0))
+  await new Promise((resolve) => setTimeout(resolve, 150))
 
   expect(ExplorerStates.get(uid).newState.items).toEqual([secondItem])
   expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/second.tmp'])
