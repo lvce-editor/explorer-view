@@ -13,8 +13,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.updateEditingValue('new-file.txt')
   await Explorer.acceptEdit()
 
-  // assert - the new file should be visible and focused
+  // assert - the new file should remain selected and the editor should be focused
   const newFile = Locator('.TreeItem[aria-label="new-file.txt"]')
+  const editorInput = Locator('.EditorInput textarea')
   await expect(newFile).toBeVisible()
   await expect(newFile).toHaveId('TreeItemActive')
+  await expect(editorInput).toBeFocused()
 }

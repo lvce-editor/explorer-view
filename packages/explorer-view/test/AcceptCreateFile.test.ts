@@ -22,6 +22,7 @@ test('acceptCreateFile', async () => {
     'IconTheme.getIcons'() {
       return ['folder-icon']
     },
+    'Main.focus'() {},
     'Main.openUri'() {},
   })
 
@@ -47,5 +48,6 @@ test('acceptCreateFile', async () => {
     ['FileSystem.writeFile', 'test/test.txt', ''],
     ['Layout.handleWorkspaceRefresh'],
     ['Main.openUri', { focus: true, uri: 'test/test.txt' }],
+    ['Main.focus'],
   ])
 })
