@@ -20,6 +20,14 @@ test('preserves non-file workspace uris', () => {
   expect(getInternalDragPaths(memoryItems, ['memfs:///workspace/Main.elm'])).toEqual(['memfs:///workspace/Main.elm'])
 })
 
+test('matches a remote folder uri with a trailing slash', () => {
+  const remoteItems: readonly ExplorerItem[] = [
+    { depth: 1, name: 'src', path: 'remote-ssh://test-host/workspace/src', selected: false, type: DirentType.Directory },
+  ]
+
+  expect(getInternalDragPaths(remoteItems, ['remote-ssh://test-host/workspace/src/'])).toEqual(['remote-ssh://test-host/workspace/src'])
+})
+
 test('rejects a partially external uri list', () => {
   expect(getInternalDragPaths(items, ['file:///workspace/Main.elm', 'file:///tmp/external.txt'])).toEqual([])
 })
