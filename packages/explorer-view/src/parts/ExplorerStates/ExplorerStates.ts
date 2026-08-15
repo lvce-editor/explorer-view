@@ -1,3 +1,4 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ViewletRegistry from '@lvce-editor/viewlet-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
@@ -14,6 +15,14 @@ interface Fn<T extends any[]> {
 }
 
 const commandQueues = new Map<number, Promise<void>>()
+const gitIgnoreApplyDelay = 100
+
+interface PendingGitIgnoreUpdate {
+  readonly run: () => void
+  readonly timer: NodeJS.Timeout
+}
+
+const pendingGitIgnoreUpdates = new Map<number, PendingGitIgnoreUpdate>()
 
 interface CommandRunResult {
   readonly completion: Promise<void> | undefined
@@ -67,16 +76,60 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
   )
 }
 
-const maybeUpdateGitIgnoredUris = async (oldState: ExplorerState, newState: ExplorerState): Promise<ExplorerState> => {
-  if (oldState.items === newState.items || oldState.sourceControlIgnoredUris !== newState.sourceControlIgnoredUris) {
-    return newState
+export const updateGitIgnoredUris = (state: ExplorerState, generation: number, sourceControlIgnoredUris: readonly string[]): ExplorerState => {
+  const { gitIgnoreGeneration } = state
+  if (gitIgnoreGeneration !== generation) {
+    return state
   }
-  const { gitIgnoreDecorations, items, pathSeparator, root } = newState
-  const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations)
   return {
-    ...newState,
+    ...state,
     sourceControlIgnoredUris,
   }
+}
+
+const scheduleGitIgnoredUrisUpdate = (uid: number, generation: number, sourceControlIgnoredUris: readonly string[]): void => {
+  const previous = pendingGitIgnoreUpdates.get(uid)
+  if (previous) {
+    clearTimeout(previous.timer)
+  }
+  const run = (): void => {
+    pendingGitIgnoreUpdates.delete(uid)
+    void RendererWorker.invoke('Viewlet.executeViewletCommand', uid, 'updateGitIgnoredUris', generation, sourceControlIgnoredUris).catch(() => {
+      // Ignored decorations are optional and must not block explorer interaction.
+    })
+  }
+  const timer = setTimeout(run, gitIgnoreApplyDelay)
+  pendingGitIgnoreUpdates.set(uid, { run, timer })
+}
+
+const postponeGitIgnoredUrisUpdate = (uid: number): void => {
+  const pending = pendingGitIgnoreUpdates.get(uid)
+  if (!pending) {
+    return
+  }
+  clearTimeout(pending.timer)
+  const timer = setTimeout(pending.run, gitIgnoreApplyDelay)
+  pendingGitIgnoreUpdates.set(uid, { run: pending.run, timer })
+}
+
+const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: ExplorerState): void => {
+  if (
+    !newState.gitIgnoreDecorations ||
+    oldState.items === newState.items ||
+    oldState.sourceControlIgnoredUris !== newState.sourceControlIgnoredUris
+  ) {
+    return
+  }
+  const { gitIgnoreDecorations, gitIgnoreGeneration, items, pathSeparator, root, uid } = newState
+  setTimeout(() => {
+    void GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations)
+      .then((sourceControlIgnoredUris) => {
+        scheduleGitIgnoredUrisUpdate(uid, gitIgnoreGeneration, sourceControlIgnoredUris)
+      })
+      .catch(() => {
+        // Ignored decorations are optional and must not block explorer interaction.
+      })
+  }, 0)
 }
 
 const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
@@ -89,7 +142,17 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
         completion,
       }
     }
-    const updatedState = await maybeUpdateGitIgnoredUris(newState, rawUpdatedState)
+    const gitIgnoreInputsChanged =
+      newState.items !== rawUpdatedState.items ||
+      newState.root !== rawUpdatedState.root ||
+      newState.pathSeparator !== rawUpdatedState.pathSeparator ||
+      newState.gitIgnoreDecorations !== rawUpdatedState.gitIgnoreDecorations
+    const updatedState = gitIgnoreInputsChanged
+      ? {
+          ...rawUpdatedState,
+          gitIgnoreGeneration: newState.gitIgnoreGeneration + 1,
+        }
+      : rawUpdatedState
     const {
       cutItems,
       decorations,
@@ -143,18 +206,27 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     }
     const intermediate2 = get(id)
     set(id, intermediate2.oldState, finalState)
+    maybeScheduleGitIgnoredUrisUpdate(newState, finalState)
     return {
       completion,
     }
   }
   if (!queued) {
     return async (id: number, ...args: T): Promise<void> => {
-      const result = await runCommand(id, ...args)
-      await result.completion
+      try {
+        const result = await runCommand(id, ...args)
+        await result.completion
+      } finally {
+        postponeGitIgnoredUrisUpdate(id)
+      }
     }
   }
   const wrappedCommand = async (id: number, ...args: T): Promise<void> => {
-    await enqueueCommand(id, () => runCommand(id, ...args))
+    try {
+      await enqueueCommand(id, () => runCommand(id, ...args))
+    } finally {
+      postponeGitIgnoredUrisUpdate(id)
+    }
   }
   return wrappedCommand
 }
