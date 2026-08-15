@@ -187,6 +187,7 @@ export const commandMap = {
   'Explorer.terminate': terminate,
   'Explorer.toggleIndividualSelection': WrapCommand.wrapListItemCommand(ToggleIndividualSelection.toggleIndividualSelection),
   'Explorer.updateEditingValue': WrapCommand.wrapListItemCommand(UpdateEditingValue.updateEditingValue),
+  'Explorer.updateGitIgnoredUris': WrapCommand.wrapListItemCommandImmediate(WrapCommand.updateGitIgnoredUris),
 
   'Explorer.updateIcons': WrapCommand.wrapListItemCommand(UpdateIcons.updateIcons),
 }

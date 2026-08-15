@@ -163,7 +163,14 @@ test('wrapListItemCommand continues after a command fails', async () => {
 })
 
 test('wrapListItemCommand preserves user input when a pending render commits', async () => {
-  RendererProcess.set(createMockRpc({ commandMap: { 'Viewlet.queueCommands': () => 1 } }))
+  RendererProcess.set(
+    createMockRpc({
+      commandMap: {
+        'Viewlet.commitPending': () => {},
+        'Viewlet.queueCommands': () => 1,
+      },
+    }),
+  )
   const uid = 9005
   const state = {
     ...createDefaultState(),
@@ -216,9 +223,13 @@ test('wrapListItemCommandImmediate allows a callback while a queued command is r
 test('wrapListItemCommand renders items before gitignore decoration reads finish', async () => {
   const uid = 9007
   const gitIgnoreRead = Promise.withResolvers<string>()
+  const updateDecorations = ExplorerStates.wrapListItemCommandImmediate(ExplorerStates.updateGitIgnoredUris)
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readFile'() {
       return gitIgnoreRead.promise
+    },
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number) {
+      await updateDecorations(uid, generation)
     },
   })
   const item = { depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File }
@@ -227,6 +238,7 @@ test('wrapListItemCommand renders items before gitignore decoration reads finish
     fileIconCache: { [item.path]: '' },
     gitIgnoreDecorations: true,
     root: '/workspace',
+    uid,
   }
   const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
     ...currentState,
@@ -243,11 +255,36 @@ test('wrapListItemCommand renders items before gitignore decoration reads finish
   expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/debug.log'])
 })
 
+test('wrapListItemCommand does not schedule decoration rendering when gitignore decorations are disabled', async () => {
+  const uid = 9009
+  let renderCount = 0
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'Viewlet.executeViewletCommand'() {
+      renderCount++
+    },
+  })
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { '/file.txt': '' },
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    items: [{ depth: 0, name: 'file.txt', path: '/file.txt', selected: false, type: DirentType.File }],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid)
+  await new Promise((resolve) => setTimeout(resolve, 0))
+
+  expect(renderCount).toBe(0)
+})
+
 test('wrapListItemCommand discards stale gitignore decoration results', async () => {
   const uid = 9008
   const firstRead = Promise.withResolvers<string>()
   const secondRead = Promise.withResolvers<string>()
   let readCount = 0
+  const updateDecorations = ExplorerStates.wrapListItemCommandImmediate(ExplorerStates.updateGitIgnoredUris)
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readFile'() {
       readCount++
@@ -255,6 +292,9 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
         return firstRead.promise
       }
       return secondRead.promise
+    },
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number) {
+      await updateDecorations(uid, generation)
     },
   })
   const firstItem = { depth: 1, name: 'first.log', path: '/workspace/first.log', selected: false, type: DirentType.File }
@@ -264,6 +304,7 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
     fileIconCache: { [firstItem.path]: '', [secondItem.path]: '' },
     gitIgnoreDecorations: true,
     root: '/workspace',
+    uid,
   }
   const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, item: typeof firstItem) => ({
     ...currentState,
@@ -273,6 +314,7 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
   ExplorerStates.set(uid, state, state)
   await wrapped(uid, firstItem)
   await wrapped(uid, secondItem)
+  await new Promise((resolve) => setTimeout(resolve, 0))
   secondRead.resolve('*.tmp')
   await new Promise((resolve) => setTimeout(resolve, 0))
   firstRead.resolve('*.log')

@@ -1,3 +1,4 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ViewletRegistry from '@lvce-editor/viewlet-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
@@ -67,76 +68,32 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
   )
 }
 
-const getStateWithVisibleItems = (state: ExplorerState): ExplorerState => {
-  const {
-    cutItems,
-    decorations,
-    dropTargets,
-    editingErrorMessage,
-    editingIcon,
-    editingIndex,
-    focusedIndex,
-    height,
-    icons,
-    itemHeight,
-    items,
-    minLineY,
-    sourceControlIgnoredUris,
-    useChevrons,
-  } = state
-  const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
-  const visibleExplorerItems = GetVisibleExplorerItems.getVisibleExplorerItems(
-    items,
-    minLineY,
-    maxLineY,
-    focusedIndex,
-    editingIndex,
-    editingErrorMessage,
-    icons,
-    useChevrons,
-    dropTargets,
-    editingIcon,
-    cutItems,
-    sourceControlIgnoredUris,
-    decorations,
-  )
+export const updateGitIgnoredUris = async (state: ExplorerState, generation: number): Promise<ExplorerState> => {
+  const { gitIgnoreDecorations, items, pathSeparator, root, uid } = state
+  const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations)
+  const current = get(uid).newState
+  if (current.gitIgnoreGeneration !== generation) {
+    return state
+  }
   return {
-    ...state,
-    maxLineY,
-    visibleExplorerItems,
+    ...current,
+    sourceControlIgnoredUris,
   }
 }
 
-const updateGitIgnoredUris = async (id: number, expectedState: ExplorerState): Promise<void> => {
-  const { gitIgnoreDecorations, items, pathSeparator, root, sourceControlIgnoredUris: previousIgnoredUris } = expectedState
-  const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations)
-  const intermediate = get(id)
-  const current = intermediate.newState
+const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: ExplorerState): void => {
   if (
-    current.items !== items ||
-    current.root !== root ||
-    current.pathSeparator !== pathSeparator ||
-    current.gitIgnoreDecorations !== gitIgnoreDecorations ||
-    current.sourceControlIgnoredUris !== previousIgnoredUris
+    !newState.gitIgnoreDecorations ||
+    oldState.items === newState.items ||
+    oldState.sourceControlIgnoredUris !== newState.sourceControlIgnoredUris
   ) {
     return
   }
-  const updatedState = getStateWithVisibleItems({
-    ...current,
-    sourceControlIgnoredUris,
-  })
-  set(id, intermediate.oldState, updatedState)
-  const { render2 } = await import('../Render2/Render2.ts')
-  await render2(id, [])
-}
-
-const maybeScheduleGitIgnoredUrisUpdate = (id: number, oldState: ExplorerState, newState: ExplorerState): void => {
-  if (oldState.items === newState.items || oldState.sourceControlIgnoredUris !== newState.sourceControlIgnoredUris) {
-    return
-  }
-  void updateGitIgnoredUris(id, newState).catch(() => {
-    // Ignored decorations are optional and must not block explorer interaction.
-  })
+  setTimeout(() => {
+    void RendererWorker.invoke('Viewlet.executeViewletCommand', newState.uid, 'updateGitIgnoredUris', newState.gitIgnoreGeneration).catch(() => {
+      // Ignored decorations are optional and must not block explorer interaction.
+    })
+  }, 0)
 }
 
 const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
@@ -149,7 +106,17 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
         completion,
       }
     }
-    const updatedState = rawUpdatedState
+    const gitIgnoreInputsChanged =
+      newState.items !== rawUpdatedState.items ||
+      newState.root !== rawUpdatedState.root ||
+      newState.pathSeparator !== rawUpdatedState.pathSeparator ||
+      newState.gitIgnoreDecorations !== rawUpdatedState.gitIgnoreDecorations
+    const updatedState = gitIgnoreInputsChanged
+      ? {
+          ...rawUpdatedState,
+          gitIgnoreGeneration: newState.gitIgnoreGeneration + 1,
+        }
+      : rawUpdatedState
     const {
       cutItems,
       decorations,
@@ -203,7 +170,7 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     }
     const intermediate2 = get(id)
     set(id, intermediate2.oldState, finalState)
-    maybeScheduleGitIgnoredUrisUpdate(id, newState, finalState)
+    maybeScheduleGitIgnoredUrisUpdate(newState, finalState)
     return {
       completion,
     }

@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-gitignore-decoration-nested'
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   // arrange
   await Settings.update({
     'explorer.gitIgnoreDecorations': true,
@@ -17,6 +17,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()
+  await Command.execute('Timeout.sleep', 100)
 
   // assert
   const ignored = Locator(`.TreeItem[title="${tmpDir}/packages/app/file.tmp"] .Label`)
