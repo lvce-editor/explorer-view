@@ -223,13 +223,13 @@ test('wrapListItemCommandImmediate allows a callback while a queued command is r
 test('wrapListItemCommand renders items before gitignore decoration reads finish', async () => {
   const uid = 9007
   const gitIgnoreRead = Promise.withResolvers<string>()
-  const updateDecorations = ExplorerStates.wrapListItemCommandImmediate(ExplorerStates.updateGitIgnoredUris)
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readFile'() {
       return gitIgnoreRead.promise
     },
-    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number) {
-      await updateDecorations(uid, generation)
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number, ignoredUris: readonly string[]) {
+      await updateDecorations(uid, generation, ignoredUris)
     },
   })
   const item = { depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File }
@@ -284,7 +284,7 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
   const firstRead = Promise.withResolvers<string>()
   const secondRead = Promise.withResolvers<string>()
   let readCount = 0
-  const updateDecorations = ExplorerStates.wrapListItemCommandImmediate(ExplorerStates.updateGitIgnoredUris)
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readFile'() {
       readCount++
@@ -293,8 +293,8 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
       }
       return secondRead.promise
     },
-    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number) {
-      await updateDecorations(uid, generation)
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number, ignoredUris: readonly string[]) {
+      await updateDecorations(uid, generation, ignoredUris)
     },
   })
   const firstItem = { depth: 1, name: 'first.log', path: '/workspace/first.log', selected: false, type: DirentType.File }

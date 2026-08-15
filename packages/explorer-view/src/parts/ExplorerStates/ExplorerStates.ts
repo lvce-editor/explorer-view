@@ -68,15 +68,16 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
   )
 }
 
-export const updateGitIgnoredUris = async (state: ExplorerState, generation: number): Promise<ExplorerState> => {
-  const { gitIgnoreDecorations, items, pathSeparator, root, uid } = state
-  const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations)
-  const current = get(uid).newState
-  if (current.gitIgnoreGeneration !== generation) {
+export const updateGitIgnoredUris = (
+  state: ExplorerState,
+  generation: number,
+  sourceControlIgnoredUris: readonly string[],
+): ExplorerState => {
+  if (state.gitIgnoreGeneration !== generation) {
     return state
   }
   return {
-    ...current,
+    ...state,
     sourceControlIgnoredUris,
   }
 }
@@ -89,10 +90,15 @@ const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: Ex
   ) {
     return
   }
+  const { gitIgnoreDecorations, gitIgnoreGeneration, items, pathSeparator, root, uid } = newState
   setTimeout(() => {
-    void RendererWorker.invoke('Viewlet.executeViewletCommand', newState.uid, 'updateGitIgnoredUris', newState.gitIgnoreGeneration).catch(() => {
-      // Ignored decorations are optional and must not block explorer interaction.
-    })
+    void GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations)
+      .then((sourceControlIgnoredUris) => {
+        return RendererWorker.invoke('Viewlet.executeViewletCommand', uid, 'updateGitIgnoredUris', gitIgnoreGeneration, sourceControlIgnoredUris)
+      })
+      .catch(() => {
+        // Ignored decorations are optional and must not block explorer interaction.
+      })
   }, 0)
 }
 
