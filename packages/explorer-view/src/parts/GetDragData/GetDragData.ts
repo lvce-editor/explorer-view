@@ -1,5 +1,6 @@
-import { ensureUri } from '../EnsureUris/EnsureUris.ts'
+import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import { getDragLabel } from '../GetDragLabel/GetDragLabel.ts'
+import { getDragUri } from '../GetDragUri/GetDragUri.ts'
 
 interface DragInfoItem {
   readonly data: string
@@ -11,8 +12,8 @@ export interface IDragInfoNew {
   readonly label?: string
 }
 
-export const getDragData = (urls: readonly string[]): IDragInfoNew => {
-  const data = urls.map(ensureUri).join('\n')
+export const getDragData = (items: readonly Pick<ExplorerItem, 'path' | 'type'>[]): IDragInfoNew => {
+  const data = items.map(getDragUri).join('\n')
   const dragData: readonly DragInfoItem[] = [
     {
       data,
@@ -25,6 +26,6 @@ export const getDragData = (urls: readonly string[]): IDragInfoNew => {
   ]
   return {
     items: dragData,
-    label: getDragLabel(urls),
+    label: getDragLabel(items.map((item) => item.path)),
   }
 }
