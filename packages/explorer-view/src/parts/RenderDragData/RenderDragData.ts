@@ -16,6 +16,6 @@ export const renderDragData = (oldState: ExplorerState, newState: ExplorerState)
   } else {
     draggedItems = []
   }
-  const dragData = getDragData(draggedItems.map((item) => item.path))
+  const dragData = getDragData(draggedItems)
   return ['Viewlet.setDragData', uid, dragData]
 }

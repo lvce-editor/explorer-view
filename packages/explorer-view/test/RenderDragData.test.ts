@@ -119,6 +119,41 @@ test('renderDragData - only pointed item when pointing outside the selection', (
   ])
 })
 
+test('renderDragData - remote folder has a trailing slash', () => {
+  const oldState: ExplorerState = createDefaultState()
+  const newState: ExplorerState = {
+    ...oldState,
+    focusedIndex: 0,
+    isPointerDown: true,
+    items: [
+      {
+        depth: 1,
+        icon: '',
+        name: 'src',
+        path: 'remote-ssh://test-host/workspace/src',
+        posInSet: 1,
+        selected: false,
+        setSize: 1,
+        type: DirentType.Directory,
+      },
+    ],
+    pointerDownIndex: 0,
+    uid: 123,
+  }
+
+  expect(renderDragData(oldState, newState)).toEqual([
+    'Viewlet.setDragData',
+    123,
+    {
+      items: [
+        { data: 'remote-ssh://test-host/workspace/src/', type: 'text/uri-list' },
+        { data: 'remote-ssh://test-host/workspace/src/', type: 'text/plain' },
+      ],
+      label: 'src',
+    },
+  ])
+})
+
 test('renderDragData - no item for an out-of-range pointer index', () => {
   const oldState: ExplorerState = createDefaultState()
   const newState: ExplorerState = {

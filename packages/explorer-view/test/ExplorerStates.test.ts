@@ -163,7 +163,14 @@ test('wrapListItemCommand continues after a command fails', async () => {
 })
 
 test('wrapListItemCommand preserves user input when a pending render commits', async () => {
-  RendererProcess.set(createMockRpc({ commandMap: { 'Viewlet.queueCommands': () => 1 } }))
+  RendererProcess.set(
+    createMockRpc({
+      commandMap: {
+        'Viewlet.commitPending': () => {},
+        'Viewlet.queueCommands': () => 1,
+      },
+    }),
+  )
   const uid = 9005
   const state = {
     ...createDefaultState(),
@@ -211,4 +218,147 @@ test('wrapListItemCommandImmediate allows a callback while a queued command is r
 
   const { newState } = ExplorerStates.get(uid)
   expect(newState.editingValue).toBe('queued')
+})
+
+test('wrapListItemCommand renders items before gitignore decoration reads finish', async () => {
+  const uid = 9007
+  const gitIgnoreRead = Promise.withResolvers<string>()
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return gitIgnoreRead.promise
+    },
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number, ignoredUris: readonly string[]) {
+      await updateDecorations(uid, generation, ignoredUris)
+    },
+  })
+  const item = { depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.path]: '' },
+    gitIgnoreDecorations: true,
+    root: '/workspace',
+    uid,
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    items: [item],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid)
+
+  expect(ExplorerStates.get(uid).newState.items).toEqual([item])
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual([])
+  gitIgnoreRead.resolve('*.log')
+  await new Promise((resolve) => setTimeout(resolve, 150))
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/debug.log'])
+})
+
+test('wrapListItemCommand waits for interaction idle before applying gitignore decorations', async () => {
+  const uid = 9010
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return '*.log'
+    },
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number, ignoredUris: readonly string[]) {
+      await updateDecorations(uid, generation, ignoredUris)
+    },
+  })
+  const item = { depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.path]: '' },
+    gitIgnoreDecorations: true,
+    root: '/workspace',
+    uid,
+  }
+  const readItems = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    items: [item],
+  }))
+  const interact = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    focusedIndex: 0,
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await readItems(uid)
+  await new Promise((resolve) => setTimeout(resolve, 70))
+  await interact(uid)
+  await new Promise((resolve) => setTimeout(resolve, 50))
+
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual([])
+  await new Promise((resolve) => setTimeout(resolve, 75))
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/debug.log'])
+})
+
+test('wrapListItemCommand does not schedule decoration rendering when gitignore decorations are disabled', async () => {
+  const uid = 9009
+  let renderCount = 0
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'Viewlet.executeViewletCommand'() {
+      renderCount++
+    },
+  })
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { '/file.txt': '' },
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    items: [{ depth: 0, name: 'file.txt', path: '/file.txt', selected: false, type: DirentType.File }],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid)
+  await new Promise((resolve) => setTimeout(resolve, 0))
+
+  expect(renderCount).toBe(0)
+})
+
+test('wrapListItemCommand discards stale gitignore decoration results', async () => {
+  const uid = 9008
+  const firstRead = Promise.withResolvers<string>()
+  const secondRead = Promise.withResolvers<string>()
+  let readCount = 0
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      readCount++
+      if (readCount === 1) {
+        return firstRead.promise
+      }
+      return secondRead.promise
+    },
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number, ignoredUris: readonly string[]) {
+      await updateDecorations(uid, generation, ignoredUris)
+    },
+  })
+  const firstItem = { depth: 1, name: 'first.log', path: '/workspace/first.log', selected: false, type: DirentType.File }
+  const secondItem = { depth: 1, name: 'second.tmp', path: '/workspace/second.tmp', selected: false, type: DirentType.File }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [firstItem.path]: '', [secondItem.path]: '' },
+    gitIgnoreDecorations: true,
+    root: '/workspace',
+    uid,
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, item: typeof firstItem) => ({
+    ...currentState,
+    items: [item],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid, firstItem)
+  await wrapped(uid, secondItem)
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  secondRead.resolve('*.tmp')
+  await new Promise((resolve) => setTimeout(resolve, 150))
+  firstRead.resolve('*.log')
+  await new Promise((resolve) => setTimeout(resolve, 150))
+
+  expect(ExplorerStates.get(uid).newState.items).toEqual([secondItem])
+  expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/second.tmp'])
 })
