@@ -22,6 +22,7 @@ test('acceptCreateFile', async () => {
     'IconTheme.getIcons'() {
       return ['folder-icon']
     },
+    'Main.focus'() {},
     'Main.openUri'() {},
   })
 
@@ -48,4 +49,6 @@ test('acceptCreateFile', async () => {
     ['Layout.handleWorkspaceRefresh'],
     ['Main.openUri', { focus: true, uri: 'test/test.txt' }],
   ])
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  expect(mockRpc.invocations.at(-1)).toEqual(['Main.focus'])
 })

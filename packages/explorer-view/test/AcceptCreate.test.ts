@@ -47,6 +47,7 @@ test('acceptCreate - successful file creation', async () => {
     'IconTheme.getIcons'() {
       return Array(2).fill('')
     },
+    'Main.focus'() {},
     'Main.openUri'() {},
   })
 
@@ -119,6 +120,8 @@ test('acceptCreate - successful file creation', async () => {
     ['Layout.handleWorkspaceRefresh'],
     ['Main.openUri', { focus: true, uri: 'memfs:///workspace/test/test.txt' }],
   ])
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  expect(mockRpc.invocations.at(-1)).toEqual(['Main.focus'])
 })
 
 test('acceptCreate - successful folder creation does not open uri', async () => {
