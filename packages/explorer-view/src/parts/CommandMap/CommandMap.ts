@@ -91,6 +91,8 @@ import * as ToggleIndividualSelection from '../ToggleIndividualSelection/ToggleI
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 
+const handleDirectMessagePort = (port: MessagePort): Promise<void> => HandleMessagePort.handleMessagePort(port, commandMap)
+
 export const commandMap = {
   'Explorer.acceptEdit': WrapCommand.wrapListItemCommand(AcceptEdit.acceptEdit),
   'Explorer.cancelEdit': WrapCommand.wrapListItemCommand(CancelEdit.cancelEdit),
@@ -147,7 +149,7 @@ export const commandMap = {
   'Explorer.handleInputClick': WrapCommand.wrapListItemCommand(HandleInputClick.handleInputClick),
   'Explorer.handleInputKeyDown': WrapCommand.wrapListItemCommand(HandleInputKeyDown.handleInputKeyDown),
   'Explorer.handleKeyDown': WrapCommand.wrapListItemCommand(HandleKeyDown.handleKeyDown),
-  'Explorer.handleMessagePort': HandleMessagePort.handleMessagePort,
+  'Explorer.handleMessagePort': handleDirectMessagePort,
   'Explorer.handleNativePaste': WrapCommand.wrapListItemCommand(HandleNativePaste.handleNativePaste),
   'Explorer.handlePaste': WrapCommand.wrapListItemCommand(HandlePaste.handlePaste),
   'Explorer.handlePointerDown': WrapCommand.wrapListItemCommand(HandlePointerDown.handlePointerDown),
