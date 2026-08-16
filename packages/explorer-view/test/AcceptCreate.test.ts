@@ -47,7 +47,6 @@ test('acceptCreate - successful file creation', async () => {
     'IconTheme.getIcons'() {
       return Array(2).fill('')
     },
-    'Main.focus'() {},
     'Main.openUri'() {},
   })
 
@@ -119,7 +118,6 @@ test('acceptCreate - successful file creation', async () => {
     ['FileSystem.readDirWithFileTypes', 'memfs:///workspace/test'],
     ['Layout.handleWorkspaceRefresh'],
     ['Main.openUri', { focus: true, uri: 'memfs:///workspace/test/test.txt' }],
-    ['Main.focus'],
   ])
 })
 

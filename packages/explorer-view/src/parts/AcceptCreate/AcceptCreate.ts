@@ -1,4 +1,3 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
@@ -56,7 +55,6 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
 
   if (newDirentType === DirentType.File) {
     await openUri(absolutePath, true)
-    await RendererWorker.invoke('Main.focus')
   }
 
   return {
