@@ -1,6 +1,7 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import { getNewChildDirentsForNewDirent } from '../GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
+import { getParentEndIndex } from '../GetParentEndIndex/GetParentEndIndex.ts'
 
 export const getNewDirentsForNewDirent = async (
   items: readonly ExplorerItem[],
@@ -38,7 +39,16 @@ export const getNewDirentsForNewDirent = async (
   // Create new array with updated items
   const parentIndex = focusedIndex
   const itemsBeforeParent = items.slice(0, parentIndex)
-  const itemsAfterChildren = items.slice(parentIndex + updatedChildren.length)
+  const parentEndIndex = getParentEndIndex(items, parentIndex)
+  const existingDescendants = items.slice(parentIndex + 1, parentEndIndex)
+  let childIndex = 0
+  for (let i = 0; i < existingDescendants.length; i++) {
+    if (existingDescendants[i].depth === depth) {
+      existingDescendants[i] = updatedChildren[childIndex++]
+    }
+  }
+  const newChildren = existingDescendants.length === 0 ? updatedChildren : [...existingDescendants, updatedChildren.at(-1)!]
+  const itemsAfterChildren = items.slice(parentEndIndex)
 
   let updatedParent = {
     ...items[parentIndex],
@@ -50,5 +60,5 @@ export const getNewDirentsForNewDirent = async (
     updatedParent = { ...updatedParent, type: DirentType.DirectoryExpanded }
   }
 
-  return [...itemsBeforeParent, updatedParent, ...updatedChildren, ...itemsAfterChildren]
+  return [...itemsBeforeParent, updatedParent, ...newChildren, ...itemsAfterChildren]
 }
