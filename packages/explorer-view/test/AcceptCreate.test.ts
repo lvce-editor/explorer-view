@@ -47,6 +47,7 @@ test('acceptCreate - successful file creation', async () => {
     'IconTheme.getIcons'() {
       return Array(2).fill('')
     },
+    'Main.focus'() {},
     'Main.openUri'() {},
   })
 
@@ -86,7 +87,7 @@ test('acceptCreate - successful file creation', async () => {
     ...state,
     editingIndex: -1,
     editingType: ExplorerEditingType.None,
-    focus: FocusId.List,
+    focus: FocusId.None,
     focusedIndex: 1,
     items: [
       {
@@ -119,6 +120,8 @@ test('acceptCreate - successful file creation', async () => {
     ['Layout.handleWorkspaceRefresh'],
     ['Main.openUri', { focus: true, uri: 'memfs:///workspace/test/test.txt' }],
   ])
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  expect(mockRpc.invocations.at(-1)).toEqual(['Main.focus'])
 })
 
 test('acceptCreate - successful folder creation does not open uri', async () => {
@@ -184,6 +187,7 @@ test('acceptCreate - successful folder creation does not open uri', async () => 
   const result = await acceptCreate(state, DirentType.Directory)
   expect(result.editingIndex).toBe(-1)
   expect(result.editingType).toBe(ExplorerEditingType.None)
+  expect(result.focus).toBe(FocusId.List)
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.mkdir', 'memfs:///workspace/test'],
     ['FileSystem.mkdir', 'memfs:///workspace/test/newfolder'],

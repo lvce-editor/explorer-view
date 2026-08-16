@@ -1,3 +1,4 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
@@ -16,6 +17,12 @@ import { join2 } from '../Path/Path.ts'
 import { refreshWorkspace } from '../RefreshWorkspace/RefreshWorkspace.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
+
+const focusEditorAfterExplorerRender = (): void => {
+  setTimeout(() => {
+    void RendererWorker.invoke('Main.focus')
+  }, 0)
+}
 
 export const acceptCreate = async (state: ExplorerState, newDirentType: number): Promise<ExplorerState> => {
   const { editingValue, excluded, focusedIndex, items, pathSeparator, root } = state
@@ -55,13 +62,14 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
 
   if (newDirentType === DirentType.File) {
     await openUri(absolutePath, true)
+    focusEditorAfterExplorerRender()
   }
 
   return {
     ...state,
     editingIndex: -1,
     editingType: ExplorerEditingType.None,
-    focus: FocusId.List,
+    focus: newDirentType === DirentType.File ? FocusId.None : FocusId.List,
     focusedIndex: newFocusedIndex,
     items: dirents,
   }
