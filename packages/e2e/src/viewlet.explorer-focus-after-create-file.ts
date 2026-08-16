@@ -2,10 +2,12 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-focus-after-create-file'
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
+  // Keep this focus test independent of browser-specific font loading behavior.
+  await Settings.update({ 'editor.fontFamily': 'monospace' })
   await Workspace.setPath(tmpDir)
 
   // act
