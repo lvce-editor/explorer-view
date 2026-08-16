@@ -99,6 +99,81 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
   expect(mockRpc.invocations).toEqual([])
 })
 
+test('getNewDirentsForNewDirent - folder with an expanded child', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+  })
+
+  const items = [
+    {
+      depth: 2,
+      icon: '',
+      name: 'sample-files',
+      path: '/root/packages/sample-files',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: DirentType.DirectoryExpanded,
+    },
+    {
+      depth: 3,
+      icon: '',
+      name: 'files',
+      path: '/root/packages/sample-files/files',
+      posInSet: 1,
+      selected: true,
+      setSize: 2,
+      type: DirentType.DirectoryExpanded,
+    },
+    ...['big_buck_bunny.mp4', 'big_buck_bunny.webm', 'echo-hereweare.ogv'].map((name, index) => ({
+      depth: 4,
+      icon: '',
+      name,
+      path: `/root/packages/sample-files/files/${name}`,
+      posInSet: index + 1,
+      selected: false,
+      setSize: 3,
+      type: DirentType.File,
+    })),
+    {
+      depth: 3,
+      icon: '',
+      name: 'package.json',
+      path: '/root/packages/sample-files/package.json',
+      posInSet: 2,
+      selected: false,
+      setSize: 2,
+      type: DirentType.File,
+    },
+    {
+      depth: 1,
+      icon: '',
+      name: 'scripts',
+      path: '/root/scripts',
+      posInSet: 2,
+      selected: false,
+      setSize: 2,
+      type: DirentType.Directory,
+    },
+  ]
+
+  const result = await getNewDirentsForNewDirent(items, 0, DirentType.EditingFolder, '/root')
+
+  expect(result.map(({ depth, name }) => ({ depth, name }))).toEqual([
+    { depth: 2, name: 'sample-files' },
+    { depth: 3, name: 'files' },
+    { depth: 4, name: 'big_buck_bunny.mp4' },
+    { depth: 4, name: 'big_buck_bunny.webm' },
+    { depth: 4, name: 'echo-hereweare.ogv' },
+    { depth: 3, name: 'package.json' },
+    { depth: 3, name: '' },
+    { depth: 1, name: 'scripts' },
+  ])
+  expect(mockRpc.invocations).toEqual([])
+})
+
 test('getNewDirentsForNewDirent - folder without children', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
