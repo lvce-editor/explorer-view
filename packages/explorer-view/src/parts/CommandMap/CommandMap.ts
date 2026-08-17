@@ -91,7 +91,8 @@ import * as ToggleIndividualSelection from '../ToggleIndividualSelection/ToggleI
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 
-const handleDirectMessagePort = (port: MessagePort): Promise<void> => HandleMessagePort.handleMessagePort(port, commandMap)
+const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
+  HandleMessagePort.handleMessagePort(port, commandMap, setAsRendererProcess)
 
 export const commandMap = {
   'Explorer.acceptEdit': WrapCommand.wrapListItemCommand(AcceptEdit.acceptEdit),
