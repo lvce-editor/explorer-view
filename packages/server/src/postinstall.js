@@ -58,18 +58,18 @@ const dragAndDropWorkerMainPath = join(dirname(dragAndDropWorkerPackagePath), 'd
 const dragAndDropWorkerRemoteUrl = getRemoteUrl(dragAndDropWorkerMainPath)
 const dragAndDropCommand = 'SendMessagePortToExtensionHostWorker.sendMessagePortToDragAndDropWorker'
 let rendererWorkerContent = await readFile(rendererWorkerMainPath, 'utf-8')
-const retainedFileHandles = `const getFileHandles = async ids => {
-  const handles = await invoke$I('FileHandles.get', ids);
-  return handles.map(value => ({ kind: 'file', type: '', value }));
-};`
+const retainedFileHandles = `return handles.map(value => ({ kind: 'file', type: '', value }));`
 if (!rendererWorkerContent.includes(retainedFileHandles)) {
-  const occurrence = `const getFileHandles = ids => {
-  return invoke$I('FileHandles.get', ids);
-};`
-  if (!rendererWorkerContent.includes(occurrence)) {
+  const occurrence = /const getFileHandles = ids => \{\n  return (invoke\$[\dA-Za-z]+)\('FileHandles\.get', ids\);\n\};/
+  const match = rendererWorkerContent.match(occurrence)
+  if (!match) {
     throw new Error('renderer retained file handles occurrence not found')
   }
-  rendererWorkerContent = rendererWorkerContent.replace(occurrence, retainedFileHandles)
+  const replacement = `const getFileHandles = async ids => {
+  const handles = await ${match[1]}('FileHandles.get', ids);
+  ${retainedFileHandles}
+};`
+  rendererWorkerContent = rendererWorkerContent.replace(occurrence, replacement)
 }
 if (!rendererWorkerContent.includes(dragAndDropCommand)) {
   const commandOccurrence = `  'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker': lazy('SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'),`
