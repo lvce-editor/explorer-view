@@ -76,6 +76,10 @@ const hasSameVisibleExplorerItemInputs = (oldState: ExplorerState, newState: Exp
   )
 }
 
+const hasSameDragDataInputs = (oldState: ExplorerState, newState: ExplorerState): boolean => {
+  return oldState.isPointerDown === newState.isPointerDown && oldState.pointerDownIndex === newState.pointerDownIndex
+}
+
 export const updateGitIgnoredUris = (state: ExplorerState, generation: number, sourceControlIgnoredUris: readonly string[]): ExplorerState => {
   const { gitIgnoreGeneration } = state
   if (gitIgnoreGeneration !== generation) {
@@ -172,7 +176,7 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState, intermediate.scheduledState)
     if (hasSameVisibleExplorerItemInputs(intermediate.newState, updatedState)) {
-      if (updatedState.inputSource === InputSource.User) {
+      if (updatedState.inputSource === InputSource.User || !hasSameDragDataInputs(intermediate.newState, updatedState)) {
         set(id, intermediate.oldState, updatedState)
       }
       return {

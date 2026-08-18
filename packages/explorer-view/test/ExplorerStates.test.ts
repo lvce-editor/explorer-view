@@ -196,6 +196,25 @@ test('wrapListItemCommand preserves user input when a pending render commits', a
   expect(newState.editingValue).toBe('new.txt')
 })
 
+test('wrapListItemCommand schedules drag state changes for rendering', async () => {
+  const uid = 9011
+  const state = createDefaultState()
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+    return {
+      ...currentState,
+      isPointerDown: true,
+      pointerDownIndex: 2,
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid)
+
+  const { scheduledState } = ExplorerStates.get(uid)
+  expect(scheduledState.isPointerDown).toBe(true)
+  expect(scheduledState.pointerDownIndex).toBe(2)
+})
+
 test('wrapListItemCommandImmediate allows a callback while a queued command is running', async () => {
   const uid = 9004
   const state = createDefaultState()
