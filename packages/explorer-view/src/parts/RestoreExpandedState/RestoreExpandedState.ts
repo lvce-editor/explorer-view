@@ -23,23 +23,27 @@ const createDirents = (
   return dirents
 }
 
-const getSavedExpandedPaths = (savedState: any, root: string): any => {
+export const getSavedExpandedPaths = (savedState: any, root: string): readonly string[] => {
   if (savedState && savedState.root !== root) {
     return []
   }
   if (savedState && savedState.expandedPaths && Array.isArray(savedState.expandedPaths)) {
-    return savedState.expandedPaths
+    return savedState.expandedPaths.filter((path: unknown): path is string => typeof path === 'string')
   }
   return []
 }
 
-export const restoreExpandedState = async (savedState: any, root: any, pathSeparator: any, excluded: any): Promise<any> => {
+export const restoreExpandedState = async (
+  expandedPaths: readonly string[],
+  root: string,
+  pathSeparator: string,
+  excluded: readonly string[],
+): Promise<readonly any[]> => {
   // TODO read all opened folders in parallel
   // ignore ENOENT errors
   // ignore ENOTDIR errors
   // merge all dirents
   // restore scroll location
-  const expandedPaths = getSavedExpandedPaths(savedState, root)
   if (root === Character.EmptyString) {
     return []
   }

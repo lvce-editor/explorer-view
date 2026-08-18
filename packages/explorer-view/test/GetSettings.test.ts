@@ -14,6 +14,7 @@ test('getSettings - useChevrons true', async () => {
     confirmPaste: false,
     excluded: [],
     gitIgnoreDecorations: true,
+    preserveExpandState: true,
     sourceControlDecorations: true,
     useChevrons: true,
   })
@@ -23,6 +24,7 @@ test('getSettings - useChevrons true', async () => {
     ['Preferences.get', 'explorer.confirmpaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+    ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
   ])
 })
@@ -42,6 +44,9 @@ test('getSettings - useChevrons false', async () => {
       if (settingName === 'explorer.gitIgnoreDecorations') {
         return false
       }
+      if (settingName === 'explorer.preserveExpandState') {
+        return false
+      }
       if (settingName === 'files.exclude') {
         return { '**/.git': true, '**/*.tmp': false }
       }
@@ -54,6 +59,7 @@ test('getSettings - useChevrons false', async () => {
     confirmPaste: false,
     excluded: ['**/.git'],
     gitIgnoreDecorations: false,
+    preserveExpandState: false,
     sourceControlDecorations: false,
     useChevrons: false,
   })
@@ -63,6 +69,7 @@ test('getSettings - useChevrons false', async () => {
     ['Preferences.get', 'explorer.confirmpaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+    ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
   ])
 })
@@ -79,6 +86,7 @@ test('getSettings - useChevrons undefined', async () => {
     confirmPaste: false,
     excluded: [],
     gitIgnoreDecorations: true,
+    preserveExpandState: true,
     sourceControlDecorations: true,
     useChevrons: true,
   })
@@ -88,6 +96,7 @@ test('getSettings - useChevrons undefined', async () => {
     ['Preferences.get', 'explorer.confirmpaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+    ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
   ])
 })
@@ -109,6 +118,7 @@ test('getSettings - confirmDelete false', async () => {
     ['Preferences.get', 'explorer.confirmpaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+    ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
   ])
 })

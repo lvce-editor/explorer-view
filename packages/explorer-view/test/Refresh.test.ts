@@ -83,6 +83,7 @@ test('refresh - preserve expanded folder', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    expandedPaths: ['/folder1'],
     items: [
       { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
       { depth: 1, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: File },
@@ -120,6 +121,7 @@ test('refresh - remove expanded folder that no longer exists', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    expandedPaths: ['/folder1'],
     items: [
       { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
       { depth: 1, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: File },
@@ -162,6 +164,7 @@ test('refresh - nested expanded folders', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    expandedPaths: ['/folder1', '/folder1/folder2'],
     items: [
       { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
       { depth: 1, name: 'folder2', path: '/folder1/folder2', selected: false, type: DirectoryExpanded },
@@ -216,6 +219,7 @@ test('refresh - preserve directory types', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    expandedPaths: ['/folder1', '/folder1/subfolder'],
     items: [
       { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
       { depth: 1, name: 'subfolder', path: '/folder1/subfolder', selected: false, type: DirectoryExpanded },
@@ -273,6 +277,7 @@ test('refresh - check filesystem response', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
+    expandedPaths: ['/folder1'],
     items: [
       { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
       { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
@@ -287,4 +292,66 @@ test('refresh - check filesystem response', async () => {
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.readDirWithFileTypes', '/folder1'],
   ])
+})
+
+test('refresh - restores nested expanded folders from the stable state after an external file change', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/workspace') {
+        return [{ name: 'outer', type: DirentType.Directory }]
+      }
+      if (path === '/workspace/outer') {
+        return [{ name: 'inner', type: DirentType.Directory }]
+      }
+      if (path === '/workspace/outer/inner') {
+        return [{ name: 'externally-created.txt', type: DirentType.File }]
+      }
+      return []
+    },
+  })
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    expandedPaths: ['/workspace/outer', '/workspace/outer/inner'],
+    items: [{ depth: 1, name: 'outer', path: '/workspace/outer', selected: false, type: DirentType.Directory }],
+    root: '/workspace',
+  }
+
+  const result = await refresh(state)
+
+  expect(result.items).toEqual([
+    expect.objectContaining({ path: '/workspace/outer', type: DirentType.DirectoryExpanded }),
+    expect.objectContaining({ path: '/workspace/outer/inner', type: DirentType.DirectoryExpanded }),
+    expect.objectContaining({ path: '/workspace/outer/inner/externally-created.txt', type: DirentType.File }),
+  ])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/workspace'],
+    ['FileSystem.readDirWithFileTypes', '/workspace/outer'],
+    ['FileSystem.readDirWithFileTypes', '/workspace/outer/inner'],
+  ])
+})
+
+test('refresh - uses legacy visible-item expansion state when preservation is disabled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/workspace') {
+        return [{ name: 'folder', type: DirentType.Directory }]
+      }
+      if (path === '/workspace/folder') {
+        return [{ name: 'file.txt', type: DirentType.File }]
+      }
+      return []
+    },
+  })
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    expandedPaths: ['/workspace/folder'],
+    items: [{ depth: 1, name: 'folder', path: '/workspace/folder', selected: false, type: DirentType.Directory }],
+    preserveExpandState: false,
+    root: '/workspace',
+  }
+
+  const result = await refresh(state)
+
+  expect(result.items).toEqual([expect.objectContaining({ path: '/workspace/folder', type: DirentType.Directory })])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/workspace']])
 })
