@@ -224,6 +224,7 @@ test('remove file from expanded folder', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     confirmDelete: false,
+    expandedPaths: ['/folder1'],
     focusedIndex: 1,
     items: [
       { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
