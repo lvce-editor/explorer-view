@@ -7,6 +7,7 @@ export const collapseAll = async (state: ExplorerState): Promise<ExplorerState> 
   const newDirents = items.filter(IsTopLevel.isTopLevel).map(ToCollapsedDirent.toCollapsedDirent)
   return {
     ...state,
+    expandedPaths: [],
     focusedIndex: 0,
     items: newDirents,
   }

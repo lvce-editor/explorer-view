@@ -33,6 +33,14 @@
   },
   {
     "category": "explorer",
+    "description": "Controls whether expanded folders are preserved for the current workspace when the Explorer rebuilds and across editor restarts.",
+    "heading": "Preserve Expand State",
+    "id": "explorer.preserveExpandState",
+    "type": 3,
+    "value": "true"
+  },
+  {
+    "category": "explorer",
     "description": "Controls whether source control decorations are shown in the Explorer.",
     "heading": "Source Control Decorations",
     "id": "explorer.sourceControlDecorations",

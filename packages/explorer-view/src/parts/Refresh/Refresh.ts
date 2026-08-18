@@ -7,9 +7,18 @@ import { getProtoMap } from '../GetProtoMap/GetProtoMap.ts'
 import { sortPathDirentsMap } from '../SortPathDirentsMap/SortPathDirentsMap.ts'
 
 export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { excluded, focusedIndex, gitIgnoreDecorations, items, pathSeparator, root } = state
-  const expandedDirents = getExpandedDirents(items)
-  const expandedPaths = getPaths(expandedDirents)
+  const {
+    excluded,
+    expandedPaths: preservedExpandedPaths,
+    focusedIndex,
+    gitIgnoreDecorations,
+    items,
+    pathSeparator,
+    preserveExpandState,
+    root,
+  } = state
+  const legacyExpandedPaths = getPaths(getExpandedDirents(items))
+  const expandedPaths = preserveExpandState ? preservedExpandedPaths : legacyExpandedPaths
   const allPaths = [root, ...expandedPaths]
   const pathToDirents = await getPathDirentsMap(allPaths)
   const sortedPathDirents = sortPathDirentsMap(pathToDirents)

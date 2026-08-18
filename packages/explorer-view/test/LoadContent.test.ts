@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
-import { Directory, File } from '../src/parts/DirentType/DirentType.ts'
+import { Directory, DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import { loadContent } from '../src/parts/LoadContent/LoadContent.ts'
 
 test('loadContent keeps empty workspaces writable', async () => {
@@ -128,6 +128,7 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
     ['Preferences.get', 'explorer.confirmpaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+    ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', '/workspace'],
@@ -198,10 +199,56 @@ test('loadContent clamps restored deltaY to maxDeltaY when content is still scro
     ['Preferences.get', 'explorer.confirmpaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+    ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', '/workspace'],
     ['FileSystem.isReadonly', '/workspace'],
     ['FileSystem.readDirWithFileTypes', '/workspace'],
   ])
+})
+
+test('loadContent reapplies the current workspace expand state when rebuilding without saved state', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.getPathSeparator'() {
+      return '/'
+    },
+    'FileSystem.isReadonly'() {
+      return false
+    },
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/workspace') {
+        return [{ name: 'outer', type: Directory }]
+      }
+      if (path === '/workspace/outer') {
+        return [{ name: 'inner', type: Directory }]
+      }
+      if (path === '/workspace/outer/inner') {
+        return [{ name: 'file.txt', type: File }]
+      }
+      return []
+    },
+    'Preferences.get'(key: string) {
+      return key === 'explorer.preserveExpandState'
+    },
+    'Workspace.getPath'() {
+      return '/workspace'
+    },
+  })
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    expandedPaths: ['/workspace/outer', '/workspace/outer/inner'],
+    root: '/workspace',
+  }
+  const { expandedPaths } = state
+
+  const result = await loadContent(state, undefined)
+
+  expect(result.items).toEqual([
+    expect.objectContaining({ path: '/workspace/outer', type: DirectoryExpanded }),
+    expect.objectContaining({ path: '/workspace/outer/inner', type: DirectoryExpanded }),
+    expect.objectContaining({ path: '/workspace/outer/inner/file.txt', type: File }),
+  ])
+  expect(result.expandedPaths).toEqual(expandedPaths)
+  expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', '/workspace/outer/inner'])
 })

@@ -11,8 +11,9 @@ test('saveState - returns correct saved state', () => {
   const newState: ExplorerState = {
     ...oldState,
     deltaY: 0,
+    expandedPaths: ['/test'],
     items: [
-      { depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.DirectoryExpanded },
+      { depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Directory },
       { depth: 1, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File },
     ],
     maxLineY: 100,

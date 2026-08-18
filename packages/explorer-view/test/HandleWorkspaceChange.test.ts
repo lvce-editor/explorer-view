@@ -49,6 +49,7 @@ test('should update state with new workspace path and load content', async () =>
     ['Preferences.get', 'explorer.confirmpaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+    ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
     ['FileSystem.getPathSeparator', '/new/workspace/path'],
@@ -75,8 +76,8 @@ test('should restore saved state for the new workspace', async () => {
       }
       return []
     },
-    'Preferences.get'() {
-      return false
+    'Preferences.get'(key: string) {
+      return key === 'explorer.preserveExpandState'
     },
     'Workspace.getPath'() {
       return '/restored/workspace'
@@ -98,6 +99,8 @@ test('should restore saved state for the new workspace', async () => {
   const result = await handleWorkspaceChange(initialState, '/restored/workspace', savedState)
 
   expect(result.root).toBe('/restored/workspace')
+  expect(result.expandedPaths).toEqual(['/restored/workspace/src'])
+  expect(result.preserveExpandState).toBe(true)
   expect(result.items.map((item) => item.path)).toContain('/restored/workspace/src')
   expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', '/restored/workspace'])
   expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', '/restored/workspace/src'])
@@ -160,6 +163,7 @@ test('should preserve state properties when updating workspace', async () => {
       ['Preferences.get', 'explorer.confirmpaste'],
       ['Preferences.get', 'files.exclude'],
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+      ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/another/workspace'],
@@ -213,6 +217,7 @@ test('should handle workspace path change with existing content', async () => {
       ['Preferences.get', 'explorer.confirmpaste'],
       ['Preferences.get', 'files.exclude'],
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+      ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/changed/workspace/path'],
@@ -261,6 +266,7 @@ test('should handle workspace path change with chevrons enabled', async () => {
       ['Preferences.get', 'explorer.confirmpaste'],
       ['Preferences.get', 'files.exclude'],
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+      ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/chevron/workspace'],
@@ -309,6 +315,7 @@ test('should handle different path separators', async () => {
       ['Preferences.get', 'explorer.confirmpaste'],
       ['Preferences.get', 'files.exclude'],
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+      ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', 'C:\\windows\\workspace'],
@@ -363,6 +370,7 @@ test('should set load error state when reading folder fails', async () => {
       ['Preferences.get', 'explorer.confirmpaste'],
       ['Preferences.get', 'files.exclude'],
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
+      ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
       ['Workspace.getPath'],
       ['FileSystem.getPathSeparator', '/restricted/workspace'],

@@ -3,6 +3,7 @@ export interface Settings {
   readonly confirmPaste: boolean
   readonly excluded: readonly string[]
   readonly gitIgnoreDecorations: boolean
+  readonly preserveExpandState: boolean
   readonly sourceControlDecorations: boolean
   readonly useChevrons: boolean
 }

@@ -28,6 +28,7 @@ export interface ExplorerState {
   readonly errorMessageTop: number
   readonly errorMessageWidth: number
   readonly excluded: readonly string[]
+  readonly expandedPaths: readonly string[]
   readonly fileIconCache: FileIconCache
   readonly fileIconWidth: number
   readonly finalDeltaY: number
@@ -59,6 +60,7 @@ export interface ExplorerState {
   readonly pathSeparator: string
   readonly platform: number
   readonly pointerDownIndex: number
+  readonly preserveExpandState: boolean
   readonly root: string
   readonly scrollBarActive: boolean
   readonly scrollBarHeight: number

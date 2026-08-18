@@ -168,3 +168,41 @@ test('handleClickDirectory - dirent not found in items', async () => {
   // Should return original state when dirent not found
   expect(newState).toBe(state)
 })
+
+test('handleClickDirectory - restores remembered expanded descendants', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/test') {
+        return [{ name: 'nested', type: DirentType.Directory }]
+      }
+      if (path === '/test/nested') {
+        return [{ name: 'file.txt', type: DirentType.File }]
+      }
+      return []
+    },
+  })
+  const dirent: ExplorerItem = {
+    depth: 0,
+    name: 'test',
+    path: '/test',
+    selected: false,
+    type: DirentType.Directory,
+  }
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    expandedPaths: ['/test/nested'],
+    items: [dirent],
+  }
+
+  const result = await handleClickDirectory(state, dirent, 0, true)
+
+  expect(result.items).toEqual([
+    dirent,
+    expect.objectContaining({ path: '/test/nested', type: DirentType.DirectoryExpanded }),
+    expect.objectContaining({ path: '/test/nested/file.txt', type: DirentType.File }),
+  ])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/test'],
+    ['FileSystem.readDirWithFileTypes', '/test/nested'],
+  ])
+})

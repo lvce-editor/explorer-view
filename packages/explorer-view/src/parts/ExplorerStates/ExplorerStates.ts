@@ -7,6 +7,7 @@ import * as GetGitIgnoredUris from '../GetGitIgnoredUris/GetGitIgnoredUris.ts'
 import * as GetExplorerMaxLineY from '../GetMaxLineY/GetMaxLineY.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
+import { syncExpandedPaths } from '../SyncExpandedPaths/SyncExpandedPaths.ts'
 
 export const { get, getCommandIds, registerCommands, set, wrapGetter } = ViewletRegistry.create<ExplorerState>()
 
@@ -135,8 +136,9 @@ const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: Ex
 const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
   const runCommand = async (id: number, ...args: T): Promise<CommandRunResult> => {
     const { newState } = get(id)
-    const rawUpdatedState = await fn(newState, ...args)
-    const completion = CommandCompletion.take(rawUpdatedState)
+    const commandState = await fn(newState, ...args)
+    const completion = CommandCompletion.take(commandState)
+    const rawUpdatedState = syncExpandedPaths(commandState)
     if (newState === rawUpdatedState) {
       return {
         completion,

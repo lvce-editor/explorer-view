@@ -13,18 +13,39 @@ import * as GetSettings from '../GetSettings/GetSettings.ts'
 import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
 import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
 
+const getExpandedPaths = (
+  savedState: unknown,
+  root: string,
+  currentRoot: string,
+  currentExpandedPaths: readonly string[],
+  preserveExpandState: boolean,
+): readonly string[] => {
+  if (!preserveExpandState) {
+    return []
+  }
+  if (savedState !== undefined && savedState !== null) {
+    return RestoreExpandedState.getSavedExpandedPaths(savedState, root)
+  }
+  if (currentRoot === root) {
+    return currentExpandedPaths
+  }
+  return []
+}
+
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
-  const { assetDir, height, itemHeight, platform } = state
-  const { confirmDelete, excluded, gitIgnoreDecorations, sourceControlDecorations, useChevrons } = await GetSettings.getSettings()
+  const { assetDir, expandedPaths: currentExpandedPaths, height, itemHeight, platform, root: currentRoot } = state
+  const { confirmDelete, excluded, gitIgnoreDecorations, preserveExpandState, sourceControlDecorations, useChevrons } =
+    await GetSettings.getSettings()
   const workspacePath = await GetWorkspacePath.getWorkspacePath()
   const root = GetSavedRoot.getSavedRoot(savedState, workspacePath)
+  const expandedPaths = getExpandedPaths(savedState, root, currentRoot, currentExpandedPaths, preserveExpandState)
   try {
     // TODO path separator could be restored from saved state
     const [pathSeparator, isReadonly] = await Promise.all([
       GetPathSeparator.getPathSeparator(root), // TODO only load path separator once
       root === '' ? false : FileSystem.isReadonly(root),
     ])
-    const restoredDirents = await RestoreExpandedState.restoreExpandedState(savedState, root, pathSeparator, excluded)
+    const restoredDirents = await RestoreExpandedState.restoreExpandedState(expandedPaths, root, pathSeparator, excluded)
     const rawDeltaY = GetRestoredDeltaY.getRestoredDeltaY(savedState)
     const maxDeltaY = Math.max(restoredDirents.length * itemHeight - height, 0)
     const deltaY = Math.min(Math.max(rawDeltaY, 0), maxDeltaY)
@@ -48,6 +69,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       errorCode: '',
       errorMessage: '',
       excluded,
+      expandedPaths,
       gitIgnoreDecorations,
       hasError: false,
       initial: false,
@@ -56,6 +78,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       maxIndent: 10,
       minLineY,
       pathSeparator,
+      preserveExpandState,
       root,
       sourceControlIgnoredUris,
       useChevrons,
@@ -68,11 +91,13 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       confirmDelete,
       errorCode,
       errorMessage,
+      expandedPaths,
       gitIgnoreDecorations,
       hasError: true,
       initial: false,
       isReadonly: false,
       items: [],
+      preserveExpandState,
       root,
       useChevrons,
     }

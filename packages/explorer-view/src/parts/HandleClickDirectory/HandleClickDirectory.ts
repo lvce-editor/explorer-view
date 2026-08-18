@@ -3,12 +3,27 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
+import { getPathDirentsMap } from '../GetPathDirentsMap/GetPathDirentsMap.ts'
+import { getProtoMapInternal } from '../GetProtoMapInternal/GetProtoMapInternal.ts'
+import { sortPathDirentsMap } from '../SortPathDirentsMap/SortPathDirentsMap.ts'
+
+const getRestoredChildDirents = async (state: ExplorerState, dirent: ExplorerItem): Promise<readonly ExplorerItem[]> => {
+  const { excluded, expandedPaths, pathSeparator, preserveExpandState, root } = state
+  const descendantPrefix = dirent.path.endsWith(pathSeparator) ? dirent.path : `${dirent.path}${pathSeparator}`
+  const descendantExpandedPaths = preserveExpandState ? expandedPaths.filter((path) => path.startsWith(descendantPrefix)) : []
+  if (descendantExpandedPaths.length === 0) {
+    return GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth, excluded, root)
+  }
+  const pathToDirents = await getPathDirentsMap([dirent.path, ...descendantExpandedPaths])
+  const sortedPathDirents = sortPathDirentsMap(pathToDirents)
+  return getProtoMapInternal(dirent.path, sortedPathDirents, descendantExpandedPaths, dirent.depth + 1, excluded, root)
+}
 
 export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus: boolean): Promise<ExplorerState> => {
   // @ts-ignore
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
-  const dirents = await GetChildDirents.getChildDirents(state.pathSeparator, dirent.path, dirent.depth, state.excluded, state.root)
+  const dirents = await getRestoredChildDirents(state, dirent)
   const state2 = state
   if (!state2) {
     return state
