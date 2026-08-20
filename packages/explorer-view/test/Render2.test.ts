@@ -55,7 +55,7 @@ test('render2 - leaves focus context management with the renderer worker', async
 
   expect(queueCommands).toHaveBeenCalledWith(uid, [['Viewlet.focusSelector', uid, '.ListItems']])
   expect(result).toEqual([
-    ['Viewlet.setFocusContext', uid, WhenExpression.FocusExplorer],
     ['Viewlet.commitPending', uid, 23],
+    ['Viewlet.setFocusContext', uid, WhenExpression.FocusExplorer],
   ])
 })

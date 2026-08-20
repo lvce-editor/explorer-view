@@ -15,5 +15,5 @@ export const render2 = async (uid: number, _diffResult: readonly number[]): Prom
   const rendererWorkerCommands = commands.filter((command) => command[0] === ViewletCommand.SetFocusContext)
   const rendererProcessCommands = commands.filter((command) => command[0] !== ViewletCommand.SetFocusContext)
   const transactionId = await RendererProcess.invoke('Viewlet.queueCommands', uid, rendererProcessCommands)
-  return [...rendererWorkerCommands, ['Viewlet.commitPending', uid, transactionId]]
+  return [['Viewlet.commitPending', uid, transactionId], ...rendererWorkerCommands]
 }
