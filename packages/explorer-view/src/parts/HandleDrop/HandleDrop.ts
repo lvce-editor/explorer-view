@@ -1,3 +1,4 @@
+import { DragAndDropWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getDropHandler } from '../GetDropHandler/GetDropHandler.ts'
 import { getDroppedItems } from '../GetDroppedItems/GetDroppedItems.ts'
@@ -6,13 +7,16 @@ import { getInternalDragPaths } from '../GetInternalDragPaths/GetInternalDragPat
 import * as PlatformType from '../PlatformType/PlatformType.ts'
 import { VError } from '../VError/VError.ts'
 
-export const handleDrop = async (state: ExplorerState, x: number, y: number, fileIds: readonly number[]): Promise<ExplorerState> => {
+export const handleDrop = async (state: ExplorerState, x: number, y: number, dropIdOrFileIds: number | readonly number[]): Promise<ExplorerState> => {
   if (state.isReadonly && state.root !== '') {
+    if (typeof dropIdOrFileIds === 'number') {
+      await DragAndDropWorker.discardDrop(dropIdOrFileIds)
+    }
     return state
   }
   try {
     const isElectron = state.platform === PlatformType.Electron
-    const { fileHandles, paths, uris } = await getDroppedItems(fileIds, isElectron)
+    const { fileHandles, paths, uris } = await getDroppedItems(dropIdOrFileIds, isElectron)
     const internalPaths = getInternalDragPaths(state.items, uris)
     const droppedPaths = internalPaths.length > 0 ? internalPaths : paths
     const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)

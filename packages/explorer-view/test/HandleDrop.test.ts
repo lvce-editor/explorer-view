@@ -27,6 +27,20 @@ test('handleDrop - successful drop', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
 
+test('handleDrop - discards an opt-in drop for a readonly workspace', async () => {
+  using dragRpc = DragAndDropWorker.registerMockRpc({
+    'DragAndDrop.discardDrop'() {},
+  })
+  const state = {
+    ...createDefaultState(),
+    isReadonly: true,
+    root: '/workspace',
+  }
+
+  await expect(handleDrop(state, 0, 0, 21)).resolves.toBe(state)
+  expect(dragRpc.invocations).toEqual([['DragAndDrop.discardDrop', 21]])
+})
+
 test('handleDrop - error case', async () => {
   using dragRpc = DragAndDropWorker.registerMockRpc({
     'DragAndDrop.getDroppedItems'() {

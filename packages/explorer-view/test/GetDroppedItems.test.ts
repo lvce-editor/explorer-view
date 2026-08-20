@@ -38,3 +38,23 @@ test('keeps path-only electron files', async () => {
     uris: ['file:///tmp/legacy.txt'],
   })
 })
+
+test('resolves opt-in drop data by drop id', async () => {
+  const handle = { kind: 'file', name: 'notes.txt' }
+  using dragRpc = DragAndDropWorker.registerMockRpc({
+    'DragAndDrop.getDroppedItemsByDropId'() {
+      return {
+        files: [{ handle, kind: 'file', name: 'notes.txt', path: '', uri: 'html:///notes.txt' }],
+        strings: [],
+        uris: ['html:///notes.txt'],
+      }
+    },
+  })
+
+  await expect(getDroppedItems(17, false)).resolves.toEqual({
+    fileHandles: [handle],
+    paths: [''],
+    uris: ['html:///notes.txt'],
+  })
+  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 17, false]])
+})
