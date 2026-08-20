@@ -58,18 +58,18 @@ const dragAndDropWorkerMainPath = join(dirname(dragAndDropWorkerPackagePath), 'd
 const dragAndDropWorkerRemoteUrl = getRemoteUrl(dragAndDropWorkerMainPath)
 const dragAndDropCommand = 'SendMessagePortToExtensionHostWorker.sendMessagePortToDragAndDropWorker'
 let rendererWorkerContent = await readFile(rendererWorkerMainPath, 'utf-8')
-const retainedFileHandles = `const getFileHandles = async ids => {
-  const handles = await invoke$I('FileHandles.get', ids);
-  return handles.map(value => ({ kind: 'file', type: '', value }));
-};`
-if (!rendererWorkerContent.includes(retainedFileHandles)) {
-  const occurrence = `const getFileHandles = ids => {
-  return invoke$I('FileHandles.get', ids);
-};`
-  if (!rendererWorkerContent.includes(occurrence)) {
+const retainedFileHandles =
+  /const getFileHandles = async ids => \{\n  const handles = await invoke[^\n(]*\('FileHandles\.get', ids\);\n  return handles\.map\(value => \(\{ kind: 'file', type: '', value \}\)\);\n\};/
+if (!retainedFileHandles.test(rendererWorkerContent)) {
+  const occurrence = /const getFileHandles = ids => \{\n  return (invoke[^\n(]*)\('FileHandles\.get', ids\);\n\};/
+  if (!occurrence.test(rendererWorkerContent)) {
     throw new Error('renderer retained file handles occurrence not found')
   }
-  rendererWorkerContent = rendererWorkerContent.replace(occurrence, retainedFileHandles)
+  const replacement = `const getFileHandles = async ids => {
+  const handles = await $1('FileHandles.get', ids);
+  return handles.map(value => ({ kind: 'file', type: '', value }));
+};`
+  rendererWorkerContent = rendererWorkerContent.replace(occurrence, replacement)
 }
 if (!rendererWorkerContent.includes(dragAndDropCommand)) {
   const commandOccurrence = `  'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker': lazy('SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'),`
@@ -124,15 +124,17 @@ await writeFile(rendererWorkerMainPath, rendererWorkerContent)
 
 const testWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'test-worker', 'dist', 'testWorkerMain.js')
 const testWorkerContent = await readFile(testWorkerMainPath, 'utf-8')
-const resetOccurrence = `    await invoke$1('Layout.reset');`
-const resetReplacement = `    await invoke$1('FileSystem.remove', 'memfs:///workspace');
-    await invoke$1('Layout.reset');
-    await invoke$1('Layout.hideSideBar');
-    await invoke$1('Layout.showSideBar');`
+const resetOccurrence = /    await (invoke[^\n(]*)\('Layout\.reset'\);/
+const resetReplacement =
+  /    await invoke[^\n(]*\('FileSystem\.remove', 'memfs:\/\/\/workspace'\);\n    await invoke[^\n(]*\('Layout\.reset'\);\n    await invoke[^\n(]*\('Layout\.hideSideBar'\);\n    await invoke[^\n(]*\('Layout\.showSideBar'\);/
 
-if (!testWorkerContent.includes(resetReplacement)) {
-  if (!testWorkerContent.includes(resetOccurrence)) {
+if (!resetReplacement.test(testWorkerContent)) {
+  if (!resetOccurrence.test(testWorkerContent)) {
     throw new Error('test worker reset occurrence not found')
   }
-  await writeFile(testWorkerMainPath, testWorkerContent.replace(resetOccurrence, resetReplacement))
+  const replacement = `    await $1('FileSystem.remove', 'memfs:///workspace');
+    await $1('Layout.reset');
+    await $1('Layout.hideSideBar');
+    await $1('Layout.showSideBar');`
+  await writeFile(testWorkerMainPath, testWorkerContent.replace(resetOccurrence, replacement))
 }
