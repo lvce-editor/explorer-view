@@ -22,7 +22,7 @@ test('render2 - returns renderer commands when no direct renderer is connected',
 
 test('render2 - preserves state changes that were not scheduled for rendering', async () => {
   const uid = 4
-  const renderedState = { ...createDefaultState(), uid, focusWord: 'b' }
+  const renderedState = { ...createDefaultState(), focusWord: 'b', uid }
   const currentState = { ...renderedState, focusWord: '' }
   ExplorerStates.set(uid, renderedState, currentState, renderedState)
 
