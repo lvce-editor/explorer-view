@@ -20,6 +20,21 @@ test('render2 - returns renderer commands when no direct renderer is connected',
   await expect(Render2.render2(uid, [])).resolves.toEqual([['Viewlet.setPatches', uid, []]])
 })
 
+test('render2 - preserves state changes that were not scheduled for rendering', async () => {
+  const uid = 4
+  const renderedState = { ...createDefaultState(), uid, focusWord: 'b' }
+  const currentState = { ...renderedState, focusWord: '' }
+  ExplorerStates.set(uid, renderedState, currentState, renderedState)
+
+  await Render2.render2(uid, [])
+
+  expect(ExplorerStates.get(uid)).toEqual({
+    newState: currentState,
+    oldState: renderedState,
+    scheduledState: renderedState,
+  })
+})
+
 test('render2 - queues renderer commands and returns a lightweight commit marker', async () => {
   const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 17)
   RendererProcess.set(
