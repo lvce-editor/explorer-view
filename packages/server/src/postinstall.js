@@ -126,13 +126,14 @@ const testWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'test-
 const testWorkerContent = await readFile(testWorkerMainPath, 'utf-8')
 const resetOccurrence = /    await (invoke[^\n(]*)\('Layout\.reset'\);/
 const resetReplacement =
-  /    await invoke[^\n(]*\('FileSystem\.remove', 'memfs:\/\/\/workspace'\);\n    await invoke[^\n(]*\('Layout\.reset'\);\n    await invoke[^\n(]*\('Layout\.hideSideBar'\);\n    await invoke[^\n(]*\('Layout\.showSideBar'\);/
+  /    await invoke[^\n(]*\('FileSystem\.remove', 'memfs:\/\/\/workspace'\);\n    await invoke[^\n(]*\('FileSystem\.mkdir', 'memfs:\/\/\/workspace'\);\n    await invoke[^\n(]*\('Layout\.reset'\);\n    await invoke[^\n(]*\('Layout\.hideSideBar'\);\n    await invoke[^\n(]*\('Layout\.showSideBar'\);/
 
 if (!resetReplacement.test(testWorkerContent)) {
   if (!resetOccurrence.test(testWorkerContent)) {
     throw new Error('test worker reset occurrence not found')
   }
   const replacement = `    await $1('FileSystem.remove', 'memfs:///workspace');
+    await $1('FileSystem.mkdir', 'memfs:///workspace');
     await $1('Layout.reset');
     await $1('Layout.hideSideBar');
     await $1('Layout.showSideBar');`
