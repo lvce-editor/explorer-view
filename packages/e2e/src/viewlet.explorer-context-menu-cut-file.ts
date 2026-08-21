@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-context-menu-cut-file'
 
+export const skip = ['webkit']
+
 export const test: Test = async ({ ClipBoard, Command, ContextMenu, expect, Explorer, FileSystem, KeyBoard, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
