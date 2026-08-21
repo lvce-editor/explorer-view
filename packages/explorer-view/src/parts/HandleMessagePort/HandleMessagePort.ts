@@ -2,8 +2,6 @@ import { PlainMessagePortRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
-const RendererWorkerCallbackDelay = 200
-
 export const handleMessagePort = async (
   port: MessagePort,
   viewletCommandMap: Readonly<Record<string, unknown>>,
@@ -17,8 +15,9 @@ export const handleMessagePort = async (
     await fn(uid, ...args)
     await RendererWorker.invoke('Viewlet.requestRender', uid)
     if (RendererProcess.takePostRenderFocus(uid)) {
-      await RendererWorker.invoke('Main.focus')
-      await new Promise((resolve) => setTimeout(resolve, RendererWorkerCallbackDelay))
+      setTimeout(() => {
+        void RendererWorker.invoke('Main.focus')
+      }, 0)
     }
   }
 

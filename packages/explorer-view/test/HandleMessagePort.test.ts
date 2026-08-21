@@ -38,6 +38,7 @@ test('connects the view directly to the renderer process', async () => {
   expect(requestRender).toHaveBeenCalledWith(7)
   RendererProcess.requestPostRenderFocus(7)
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'world')
+  await new Promise((resolve) => setTimeout(resolve, 0))
   expect(focus).toHaveBeenCalledTimes(1)
   await expect(rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'missing')).rejects.toThrow('Viewlet command not found: missing')
 
