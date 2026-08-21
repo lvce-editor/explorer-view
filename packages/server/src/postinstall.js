@@ -15,6 +15,7 @@ const workerPath = join(root, '.tmp', 'dist', 'dist', 'explorerViewWorkerMain.js
 
 const staticServerPackagePath = fileURLToPath(import.meta.resolve('@lvce-editor/static-server/package.json'))
 const dragAndDropWorkerPackagePath = fileURLToPath(import.meta.resolve('@lvce-editor/drag-and-drop-worker/package.json'))
+const mainAreaWorkerPackagePath = fileURLToPath(import.meta.resolve('@lvce-editor/main-area-worker/package.json'))
 const serverStaticPath = join(dirname(staticServerPackagePath), 'static')
 
 const RE_COMMIT_HASH = /^[a-z\d]+$/
@@ -28,6 +29,18 @@ const rendererWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'r
 
 const content = await readFile(rendererWorkerMainPath, 'utf-8')
 let newContent = content
+
+const mainAreaWorkerMainPath = join(dirname(mainAreaWorkerPackagePath), 'dist', 'mainAreaWorkerMain.js')
+const mainAreaWorkerRemoteUrl = getRemoteUrl(mainAreaWorkerMainPath)
+if (!newContent.includes('// const mainAreaWorkerUrl = ')) {
+  const occurrence = `const mainAreaWorkerUrl = \`\${assetDir}/packages/main-area-worker/dist/mainAreaWorkerMain.js\`;`
+  const replacement = `// const mainAreaWorkerUrl = \`\${assetDir}/packages/main-area-worker/dist/mainAreaWorkerMain.js\`;
+const mainAreaWorkerUrl = \`${mainAreaWorkerRemoteUrl}\`;`
+  if (!newContent.includes(occurrence)) {
+    throw new Error('main area worker occurrence not found')
+  }
+  newContent = newContent.replace(occurrence, replacement)
+}
 
 const remoteUrl = getRemoteUrl(workerPath)
 if (!newContent.includes('// const explorerWorkerUrl = ')) {

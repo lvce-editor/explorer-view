@@ -15,6 +15,7 @@ import { mergeTrees } from '../MergeTrees/MergeTrees.ts'
 import { openUri } from '../OpenUri/OpenUri.ts'
 import { join2 } from '../Path/Path.ts'
 import { refreshWorkspace } from '../RefreshWorkspace/RefreshWorkspace.ts'
+import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
@@ -24,8 +25,20 @@ const focusEditorAfterExplorerRender = (): void => {
   }, 0)
 }
 
+const openCreatedFile = async (absolutePath: string): Promise<void> => {
+  await openUri(absolutePath, true)
+  focusEditorAfterExplorerRender()
+}
+
+const finishCreate = async (absolutePath: string, newDirentType: number): Promise<void> => {
+  await refreshWorkspace()
+  if (newDirentType === DirentType.File) {
+    await openCreatedFile(absolutePath)
+  }
+}
+
 export const acceptCreate = async (state: ExplorerState, newDirentType: number): Promise<ExplorerState> => {
-  const { editingValue, excluded, focusedIndex, items, pathSeparator, root } = state
+  const { editingValue, excluded, focusedIndex, items, pathSeparator, root, uid } = state
   const newFileName = editingValue
   const siblingFileNames = getSiblingFileNames(items, focusedIndex, root, pathSeparator)
   const editingErrorMessage = ValidateFileName2.validateFileName2(newFileName, siblingFileNames)
@@ -58,11 +71,13 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   const dirents = newItems
   const newFocusedIndex = GetIndex.getIndex(newItems, absolutePath)
 
-  await refreshWorkspace()
-
-  if (newDirentType === DirentType.File) {
-    await openUri(absolutePath, true)
-    focusEditorAfterExplorerRender()
+  if (RendererProcess.isConnected()) {
+    if (newDirentType === DirentType.File) {
+      await openUri(absolutePath, true)
+      RendererProcess.requestPostRenderFocus(uid)
+    }
+  } else {
+    await finishCreate(absolutePath, newDirentType)
   }
 
   return {
