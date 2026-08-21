@@ -2,7 +2,7 @@ import { PlainMessagePortRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
-const RendererWorkerCallbackDelay = 50
+const RendererWorkerCallbackDelay = 200
 
 export const handleMessagePort = async (
   port: MessagePort,
