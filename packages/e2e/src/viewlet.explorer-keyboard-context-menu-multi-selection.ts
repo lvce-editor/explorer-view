@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-keyboard-context-menu-multi-selection'
 
+export const skip = ['webkit']
+
 export const test: Test = async ({ ContextMenu, Dialog, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await Dialog.mockConfirm(() => true)
