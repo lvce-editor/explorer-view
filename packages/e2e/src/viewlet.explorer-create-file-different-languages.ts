@@ -2,6 +2,10 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-different-languages'
 
+const waitForCreateSideEffects = async (): Promise<void> => {
+  await new Promise((resolve) => setTimeout(resolve, 200))
+}
+
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -17,6 +21,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox1).toBeFocused()
   await Explorer.updateEditingValue('Müller.txt')
   await Explorer.acceptEdit()
+  await waitForCreateSideEffects()
   const newFile1 = Locator('.Explorer').locator('text=Müller.txt')
   await expect(newFile1).toBeVisible()
 
@@ -27,6 +32,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox2).toBeFocused()
   await Explorer.updateEditingValue('Français.txt')
   await Explorer.acceptEdit()
+  await waitForCreateSideEffects()
   const newFile2 = Locator('.Explorer').locator('text=Français.txt')
   await expect(newFile2).toBeVisible()
 
@@ -37,6 +43,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox3).toBeFocused()
   await Explorer.updateEditingValue('Niño.txt')
   await Explorer.acceptEdit()
+  await waitForCreateSideEffects()
   const newFile3 = Locator('.Explorer').locator('text=Niño.txt')
   await expect(newFile3).toBeVisible()
 
@@ -47,6 +54,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox4).toBeFocused()
   await Explorer.updateEditingValue('Русский.txt')
   await Explorer.acceptEdit()
+  await waitForCreateSideEffects()
   const newFile4 = Locator('.Explorer').locator('text=Русский.txt')
   await expect(newFile4).toBeVisible()
 
@@ -57,6 +65,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox5).toBeFocused()
   await Explorer.updateEditingValue('中文.txt')
   await Explorer.acceptEdit()
+  await waitForCreateSideEffects()
   const newFile5 = Locator('.Explorer').locator('text=中文.txt')
   await expect(newFile5).toBeVisible()
 
@@ -67,6 +76,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox6).toBeFocused()
   await Explorer.updateEditingValue('こんにちは.txt')
   await Explorer.acceptEdit()
+  await waitForCreateSideEffects()
   const newFile6 = Locator('.Explorer').locator('text=こんにちは.txt')
   await expect(newFile6).toBeVisible()
 
@@ -77,6 +87,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox7).toBeFocused()
   await Explorer.updateEditingValue('안녕하세요.txt')
   await Explorer.acceptEdit()
+  await waitForCreateSideEffects()
   const newFile7 = Locator('.Explorer').locator('text=안녕하세요.txt')
   await expect(newFile7).toBeVisible()
 
@@ -87,6 +98,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox8).toBeFocused()
   await Explorer.updateEditingValue('العربية.txt')
   await Explorer.acceptEdit()
+  await waitForCreateSideEffects()
   const newFile8 = Locator('.Explorer').locator('text=العربية.txt')
   await expect(newFile8).toBeVisible()
 
@@ -97,6 +109,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox9).toBeFocused()
   await Explorer.updateEditingValue('עברית.txt')
   await Explorer.acceptEdit()
+  await waitForCreateSideEffects()
   const newFile9 = Locator('.Explorer').locator('text=עברית.txt')
   await expect(newFile9).toBeVisible()
 }

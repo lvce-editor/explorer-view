@@ -20,6 +20,21 @@ test('render2 - returns renderer commands when no direct renderer is connected',
   await expect(Render2.render2(uid, [])).resolves.toEqual([['Viewlet.setPatches', uid, []]])
 })
 
+test('render2 - preserves state changes that were not scheduled for rendering', async () => {
+  const uid = 4
+  const renderedState = { ...createDefaultState(), focusWord: 'b', uid }
+  const currentState = { ...renderedState, focusWord: '' }
+  ExplorerStates.set(uid, renderedState, currentState, renderedState)
+
+  await Render2.render2(uid, [])
+
+  expect(ExplorerStates.get(uid)).toEqual({
+    newState: currentState,
+    oldState: renderedState,
+    scheduledState: renderedState,
+  })
+})
+
 test('render2 - queues renderer commands and returns a lightweight commit marker', async () => {
   const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 17)
   RendererProcess.set(
@@ -55,7 +70,7 @@ test('render2 - leaves focus context management with the renderer worker', async
 
   expect(queueCommands).toHaveBeenCalledWith(uid, [['Viewlet.focusSelector', uid, '.ListItems']])
   expect(result).toEqual([
-    ['Viewlet.setFocusContext', uid, WhenExpression.FocusExplorer],
     ['Viewlet.commitPending', uid, 23],
+    ['Viewlet.setFocusContext', uid, WhenExpression.FocusExplorer],
   ])
 })

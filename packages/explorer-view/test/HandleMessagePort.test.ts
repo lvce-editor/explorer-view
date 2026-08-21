@@ -21,10 +21,12 @@ test('connects the view directly to the renderer process', async () => {
   expect(queueCommands).toHaveBeenCalledWith(7, [['Viewlet.setDom2', 7, []]])
 
   const requestRender = jest.fn(async (_uid: number) => {})
+  const focus = jest.fn(async () => {})
   RendererWorker.set(
     Object.assign(
       createMockRpc({
         commandMap: {
+          'Main.focus': focus,
           'Viewlet.requestRender': requestRender,
         },
       }),
@@ -34,6 +36,10 @@ test('connects the view directly to the renderer process', async () => {
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'hello')
   expect(handleEvent).toHaveBeenCalledWith(7, 'hello')
   expect(requestRender).toHaveBeenCalledWith(7)
+  RendererProcess.requestPostRenderFocus(7)
+  await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'world')
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  expect(focus).toHaveBeenCalledTimes(1)
   await expect(rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'missing')).rejects.toThrow('Viewlet command not found: missing')
 
   await RendererProcessRegistry.dispose()

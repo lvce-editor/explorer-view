@@ -14,6 +14,11 @@ export const handleMessagePort = async (
     }
     await fn(uid, ...args)
     await RendererWorker.invoke('Viewlet.requestRender', uid)
+    if (RendererProcess.takePostRenderFocus(uid)) {
+      setTimeout(() => {
+        void RendererWorker.invoke('Main.focus')
+      }, 0)
+    }
   }
 
   const rpc = await PlainMessagePortRpc.create({

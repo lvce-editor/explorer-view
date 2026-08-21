@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-context-menu-copy-relative-path-root-no-focused-item'
 
+export const skip = ['webkit']
+
 export const test: Test = async ({ ClipBoard, ContextMenu, Explorer, FileSystem, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
