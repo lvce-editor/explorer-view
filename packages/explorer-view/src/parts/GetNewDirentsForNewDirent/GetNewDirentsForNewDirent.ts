@@ -3,6 +3,12 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import { getNewChildDirentsForNewDirent } from '../GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
 import { getParentEndIndex } from '../GetParentEndIndex/GetParentEndIndex.ts'
 
+const folderTypes = new Set([DirentType.Directory, DirentType.DirectoryExpanded, DirentType.DirectoryExpanding, DirentType.SymLinkFolder])
+
+const getTopLevelFileIndex = (items: readonly ExplorerItem[]): number => {
+  return items.findIndex((item) => item.depth === 0 && !folderTypes.has(item.type))
+}
+
 export const getNewDirentsForNewDirent = async (
   items: readonly ExplorerItem[],
   focusedIndex: number,
@@ -24,7 +30,11 @@ export const getNewDirentsForNewDirent = async (
     if (type === DirentType.EditingFolder) {
       return [newDirent, ...items]
     }
-    return [...items, newDirent]
+    const fileIndex = getTopLevelFileIndex(items)
+    if (fileIndex === -1) {
+      return [...items, newDirent]
+    }
+    return [...items.slice(0, fileIndex), newDirent, ...items.slice(fileIndex)]
   }
 
   const focusedItem = items[focusedIndex]
