@@ -15,7 +15,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // assert
   const treeItems = Locator('.Explorer .TreeItem')
-  await expect(treeItems.nth(0)).toHaveAttribute('aria-label', 'folder')
-  await expect(treeItems.nth(1).locator('input')).toBeFocused()
-  await expect(treeItems.nth(2)).toHaveAttribute('aria-label', 'file.txt')
+  const folder = treeItems.nth(0)
+  const input = treeItems.nth(1).locator('input')
+  const file = treeItems.nth(2)
+  await expect(folder).toHaveAttribute('aria-label', 'folder')
+  await expect(input).toBeFocused()
+  await expect(file).toHaveAttribute('aria-label', 'file.txt')
 }
