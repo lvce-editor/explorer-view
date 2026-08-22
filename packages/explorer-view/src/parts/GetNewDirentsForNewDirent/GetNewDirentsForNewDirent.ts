@@ -6,7 +6,8 @@ import { getParentEndIndex } from '../GetParentEndIndex/GetParentEndIndex.ts'
 const folderTypes = new Set([DirentType.Directory, DirentType.DirectoryExpanded, DirentType.DirectoryExpanding, DirentType.SymLinkFolder])
 
 const getTopLevelFileIndex = (items: readonly ExplorerItem[]): number => {
-  return items.findIndex((item) => item.depth === 0 && !folderTypes.has(item.type))
+  const topLevelDepth = items[0]?.depth
+  return items.findIndex((item) => item.depth === topLevelDepth && !folderTypes.has(item.type))
 }
 
 export const getNewDirentsForNewDirent = async (

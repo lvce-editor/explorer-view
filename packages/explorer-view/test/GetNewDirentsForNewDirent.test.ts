@@ -325,7 +325,7 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
 
   const items = [
     {
-      depth: 0,
+      depth: 1,
       icon: '',
       name: 'folder',
       path: '/root/folder',
@@ -335,7 +335,7 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
       type: DirentType.DirectoryExpanded,
     },
     {
-      depth: 1,
+      depth: 2,
       icon: '',
       name: 'child.txt',
       path: '/root/folder/child.txt',
@@ -345,7 +345,7 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
       type: DirentType.File,
     },
     {
-      depth: 0,
+      depth: 1,
       icon: '',
       name: 'file.txt',
       path: '/root/file.txt',
@@ -359,10 +359,10 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
   const result = await getNewDirentsForNewDirent(items, -1, DirentType.EditingFile, '/root', [], true)
 
   expect(result.map(({ depth, name, type }) => ({ depth, name, type }))).toEqual([
-    { depth: 0, name: 'folder', type: DirentType.DirectoryExpanded },
-    { depth: 1, name: 'child.txt', type: DirentType.File },
+    { depth: 1, name: 'folder', type: DirentType.DirectoryExpanded },
+    { depth: 2, name: 'child.txt', type: DirentType.File },
     { depth: 0, name: '', type: DirentType.EditingFile },
-    { depth: 0, name: 'file.txt', type: DirentType.File },
+    { depth: 1, name: 'file.txt', type: DirentType.File },
   ])
   expect(mockRpc.invocations).toEqual([])
 })
