@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Workspace.setPath(tmpDir)
   await Explorer.newFile()
 
-  await Explorer.handleClickAt(false, 0, false, true, 300, 65)
+  await Explorer.handleClickAt(false, 0, false, true, 300, 125)
 
   const input = Locator('.Explorer input')
   await expect(input).toBeVisible()
