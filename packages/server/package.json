@@ -12,8 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "@lvce-editor/main-area-worker": "9.52.0",
-    "@lvce-editor/server": "0.108.1",
-    "@lvce-editor/static-server": "0.108.1"
+    "@lvce-editor/server": "0.108.3",
+    "@lvce-editor/static-server": "0.108.3"
   },
   "devDependencies": {
     "@types/node": "^25.9.3"
