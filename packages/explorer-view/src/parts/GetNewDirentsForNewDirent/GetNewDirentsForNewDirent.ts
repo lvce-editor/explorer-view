@@ -15,6 +15,7 @@ export const getNewDirentsForNewDirent = async (
   type: number,
   root: string,
   excluded: readonly string[] = [],
+  insertAtFolderBoundary = false,
 ): Promise<readonly ExplorerItem[]> => {
   if (items.length === 0 || focusedIndex === -1) {
     const newDirent: ExplorerItem = {
@@ -29,6 +30,9 @@ export const getNewDirentsForNewDirent = async (
     }
     if (type === DirentType.EditingFolder) {
       return [newDirent, ...items]
+    }
+    if (!insertAtFolderBoundary) {
+      return [...items, newDirent]
     }
     const fileIndex = getTopLevelFileIndex(items)
     if (fileIndex === -1) {

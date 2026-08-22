@@ -289,7 +289,7 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file before exis
   const root = '/root'
 
   const { focusedIndex, items } = state
-  const result = await getNewDirentsForNewDirent(items, focusedIndex, DirentType.File, root)
+  const result = await getNewDirentsForNewDirent(items, focusedIndex, DirentType.File, root, [], true)
 
   expect(result).toEqual([
     {
@@ -356,7 +356,7 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
     },
   ]
 
-  const result = await getNewDirentsForNewDirent(items, -1, DirentType.EditingFile, '/root')
+  const result = await getNewDirentsForNewDirent(items, -1, DirentType.EditingFile, '/root', [], true)
 
   expect(result.map(({ depth, name, type }) => ({ depth, name, type }))).toEqual([
     { depth: 0, name: 'folder', type: DirentType.DirectoryExpanded },
