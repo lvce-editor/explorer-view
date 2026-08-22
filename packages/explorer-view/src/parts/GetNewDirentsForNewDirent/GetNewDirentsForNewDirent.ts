@@ -3,11 +3,13 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import { getNewChildDirentsForNewDirent } from '../GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
 import { getParentEndIndex } from '../GetParentEndIndex/GetParentEndIndex.ts'
 
-const folderTypes = new Set([DirentType.Directory, DirentType.DirectoryExpanded, DirentType.DirectoryExpanding, DirentType.SymLinkFolder])
+const isFolder = (type: number): boolean => {
+  return [DirentType.Directory, DirentType.DirectoryExpanded, DirentType.DirectoryExpanding, DirentType.SymLinkFolder].includes(type)
+}
 
 const getTopLevelFileIndex = (items: readonly ExplorerItem[]): number => {
   const topLevelDepth = items[0]?.depth
-  return items.findIndex((item) => item.depth === topLevelDepth && !folderTypes.has(item.type))
+  return items.findIndex((item) => item.depth === topLevelDepth && !isFolder(item.type))
 }
 
 export const getNewDirentsForNewDirent = async (
