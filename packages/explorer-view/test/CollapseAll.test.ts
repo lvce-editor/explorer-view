@@ -3,6 +3,7 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { collapseAll } from '../src/parts/CollapseAll/CollapseAll.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 
 test('collapseAll - empty state', async () => {
   const state: ExplorerState = createDefaultState()
@@ -35,4 +36,26 @@ test('collapseAll - with nested items', async () => {
       { depth: 1, name: 'folder2', path: '/folder2', selected: false, type: DirentType.Directory },
     ],
   })
+})
+
+test('collapseAll - cancels file creation at the folder boundary', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingType: ExplorerEditingType.CreateFile,
+    editingValue: 'test-file.txt',
+    focusedIndex: 0,
+    items: [
+      { depth: 0, name: '', path: '/', selected: false, type: DirentType.EditingFile },
+      { depth: 1, name: 'file1.txt', path: '/file1.txt', selected: false, type: DirentType.File },
+    ],
+  }
+
+  const result = await collapseAll(state)
+
+  expect(result.editingIndex).toBe(-1)
+  expect(result.editingType).toBe(ExplorerEditingType.None)
+  expect(result.editingValue).toBe('')
+  expect(result.focusedIndex).toBe(0)
+  expect(result.items).toEqual([{ depth: 1, name: 'file1.txt', path: '/file1.txt', selected: false, type: DirentType.File }])
 })

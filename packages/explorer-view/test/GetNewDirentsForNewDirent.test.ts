@@ -262,7 +262,7 @@ test('getNewDirentsForNewDirent - no items', async () => {
   expect(mockRpc.invocations).toEqual([])
 })
 
-test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async () => {
+test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file before existing files', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return []
@@ -289,19 +289,9 @@ test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async ()
   const root = '/root'
 
   const { focusedIndex, items } = state
-  const result = await getNewDirentsForNewDirent(items, focusedIndex, DirentType.File, root)
+  const result = await getNewDirentsForNewDirent(items, focusedIndex, DirentType.File, root, [], true)
 
   expect(result).toEqual([
-    {
-      depth: 0,
-      icon: '',
-      name: 'file1.txt',
-      path: '/root/file1.txt',
-      posInSet: 1,
-      selected: false,
-      setSize: 1,
-      type: DirentType.File,
-    },
     {
       depth: 0,
       icon: '',
@@ -312,6 +302,67 @@ test('getNewDirentsForNewDirent - focusedIndex -1 with existing items', async ()
       setSize: 1,
       type: DirentType.File,
     },
+    {
+      depth: 0,
+      icon: '',
+      name: 'file1.txt',
+      path: '/root/file1.txt',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: DirentType.File,
+    },
+  ])
+  expect(mockRpc.invocations).toEqual([])
+})
+
+test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between folders and files', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+  })
+
+  const items = [
+    {
+      depth: 1,
+      icon: '',
+      name: 'folder',
+      path: '/root/folder',
+      posInSet: 1,
+      selected: false,
+      setSize: 2,
+      type: DirentType.DirectoryExpanded,
+    },
+    {
+      depth: 2,
+      icon: '',
+      name: 'child.txt',
+      path: '/root/folder/child.txt',
+      posInSet: 1,
+      selected: false,
+      setSize: 1,
+      type: DirentType.File,
+    },
+    {
+      depth: 1,
+      icon: '',
+      name: 'file.txt',
+      path: '/root/file.txt',
+      posInSet: 2,
+      selected: false,
+      setSize: 2,
+      type: DirentType.File,
+    },
+  ]
+
+  const result = await getNewDirentsForNewDirent(items, -1, DirentType.EditingFile, '/root', [], true)
+
+  expect(result.map(({ depth, name, type }) => ({ depth, name, type }))).toEqual([
+    { depth: 1, name: 'folder', type: DirentType.DirectoryExpanded },
+    { depth: 2, name: 'child.txt', type: DirentType.File },
+    { depth: 0, name: '', type: DirentType.EditingFile },
+    { depth: 1, name: 'file.txt', type: DirentType.File },
   ])
   expect(mockRpc.invocations).toEqual([])
 })

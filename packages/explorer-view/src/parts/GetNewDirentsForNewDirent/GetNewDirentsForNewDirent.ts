@@ -3,12 +3,22 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import { getNewChildDirentsForNewDirent } from '../GetNewChildDirentsForNewDirent/GetNewChildDirentsForNewDirent.ts'
 import { getParentEndIndex } from '../GetParentEndIndex/GetParentEndIndex.ts'
 
+const isFolder = (type: number): boolean => {
+  return [DirentType.Directory, DirentType.DirectoryExpanded, DirentType.DirectoryExpanding, DirentType.SymLinkFolder].includes(type)
+}
+
+const getTopLevelFileIndex = (items: readonly ExplorerItem[]): number => {
+  const topLevelDepth = items[0]?.depth
+  return items.findIndex((item) => item.depth === topLevelDepth && !isFolder(item.type))
+}
+
 export const getNewDirentsForNewDirent = async (
   items: readonly ExplorerItem[],
   focusedIndex: number,
   type: number,
   root: string,
   excluded: readonly string[] = [],
+  insertAtFolderBoundary = false,
 ): Promise<readonly ExplorerItem[]> => {
   if (items.length === 0 || focusedIndex === -1) {
     const newDirent: ExplorerItem = {
@@ -24,7 +34,14 @@ export const getNewDirentsForNewDirent = async (
     if (type === DirentType.EditingFolder) {
       return [newDirent, ...items]
     }
-    return [...items, newDirent]
+    if (!insertAtFolderBoundary) {
+      return [...items, newDirent]
+    }
+    const fileIndex = getTopLevelFileIndex(items)
+    if (fileIndex === -1) {
+      return [...items, newDirent]
+    }
+    return [...items.slice(0, fileIndex), newDirent, ...items.slice(fileIndex)]
   }
 
   const focusedItem = items[focusedIndex]
