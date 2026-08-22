@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-focus-after-create-file'
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
@@ -14,6 +14,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   await Explorer.newFile()
   await Explorer.updateEditingValue('new-file.txt')
   await Explorer.acceptEdit()
+  await Command.execute('Timeout.sleep', 200)
 
   // assert - the new file should remain selected and the editor should be focused
   const newFile = Locator('.TreeItem[aria-label="new-file.txt"]')
