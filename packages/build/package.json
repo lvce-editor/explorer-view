@@ -14,8 +14,8 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.29.7",
     "@lvce-editor/measure-memory": "^3.11.0",
-    "@lvce-editor/shared-process": "0.105.18",
-    "@lvce-editor/static-server": "0.105.18",
+    "@lvce-editor/shared-process": "0.107.4",
+    "@lvce-editor/static-server": "0.107.4",
     "@rollup/plugin-babel": "^7.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@types/node": "^25.5.0",
