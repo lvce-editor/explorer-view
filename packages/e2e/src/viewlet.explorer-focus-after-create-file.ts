@@ -14,7 +14,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   await Explorer.newFile()
   await Explorer.updateEditingValue('new-file.txt')
   await Explorer.acceptEdit()
-  await new Promise((resolve) => setTimeout(resolve, 200))
 
   // assert - the new file should remain selected and the editor should be focused
   const newFile = Locator('.TreeItem[aria-label="new-file.txt"]')
