@@ -1,16 +1,12 @@
+import { spawn } from 'node:child_process'
 import { readdir } from 'node:fs/promises'
-import { createRequire } from 'node:module'
-import { dirname, join } from 'node:path'
-import { execa } from 'execa'
-import { root } from './root.ts'
+import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const maximumTestsPerRun = 100
 const testPrefix = 'viewlet.explorer'
-const e2ePath = join(root, 'packages', 'e2e')
-const testSourcePath = join(e2ePath, 'src')
-const require = createRequire(join(e2ePath, 'package.json'))
-const testWithPlaywrightPackagePath = require.resolve('@lvce-editor/test-with-playwright/package.json')
-const testWithPlaywrightPath = join(dirname(testWithPlaywrightPackagePath), 'bin', 'test-with-playwright.js')
+const testSourcePath = join(import.meta.dirname, '..', 'src')
+const testWithPlaywrightPath = fileURLToPath(import.meta.resolve('@lvce-editor/test-with-playwright/bin/test-with-playwright.js'))
 
 interface TestGroup {
   readonly names: readonly string[]
@@ -47,21 +43,18 @@ const getTestFilters = (testNames: readonly string[]): readonly string[] => {
 }
 
 const runTestGroup = async (filter: string, extraArguments: readonly string[]): Promise<void> => {
-  await execa(
+  const child = spawn(
     process.execPath,
-    [
-      testWithPlaywrightPath,
-      '--only-extension=.',
-      '--test-path=.',
-      '--browser=webkit',
-      ...extraArguments,
-      `--filter=${filter}`,
-    ],
-    {
-      cwd: e2ePath,
-      stdio: 'inherit',
-    },
+    [testWithPlaywrightPath, '--only-extension=.', '--test-path=.', '--browser=webkit', ...extraArguments, `--filter=${filter}`],
+    { stdio: 'inherit' },
   )
+  const exitCode = await new Promise<number | null>((resolve, reject) => {
+    child.once('error', reject)
+    child.once('exit', (code) => resolve(code))
+  })
+  if (exitCode !== 0) {
+    throw new Error(`WebKit test group ${filter} exited with code ${exitCode}`)
+  }
 }
 
 const main = async (): Promise<void> => {
