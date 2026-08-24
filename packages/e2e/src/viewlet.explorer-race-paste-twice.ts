@@ -26,7 +26,8 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
   }
   const treeItems = Locator('.TreeItem')
   await expect(treeItems).toHaveCount(5)
-  await expect(treeItems.nth(0)).toHaveAttribute('title', `${tmpDir}/a`)
+  const firstTreeItem = treeItems.nth(0)
+  await expect(firstTreeItem).toHaveAttribute('title', `${tmpDir}/a`)
   const a = Locator(`.TreeItem[title="${tmpDir}/a"]`)
   const b = Locator(`.TreeItem[title="${tmpDir}/b"]`)
   await expect(a).toBeVisible()
