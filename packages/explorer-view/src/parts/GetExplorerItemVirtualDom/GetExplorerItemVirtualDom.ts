@@ -1,6 +1,7 @@
 import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetChevronVirtualDom from '../GetChevronVirtualDom/GetChevronVirtualDom.ts'
 import * as GetFileIconVirtualDom from '../GetFileIconVirtualDom/GetFileIconVirtualDom.ts'
 import * as GetInputDom from '../GetInputDom/GetInputDom.ts'
@@ -35,6 +36,7 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem, editingSess
     setSize,
   } = item
   const chevronDom = GetChevronVirtualDom.getChevronVirtualDom(chevron)
+  const fileIconDom = icon ? [GetFileIconVirtualDom.getFileIconVirtualDom(icon)] : []
   return [
     {
       ariaExpanded,
@@ -55,7 +57,12 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem, editingSess
       type: VirtualDomElements.Div,
     },
     ...chevronDom,
-    GetFileIconVirtualDom.getFileIconVirtualDom(icon),
+    {
+      childCount: fileIconDom.length,
+      className: ClassNames.FileIconSlot,
+      type: VirtualDomElements.Div,
+    },
+    ...fileIconDom,
     ...GetInputDom.getInputDom(isEditing, hasEditingError, editingSessionId),
     ...GetLabelDom.getLabelDom(isEditing, name, isCut || isIgnored),
   ]
