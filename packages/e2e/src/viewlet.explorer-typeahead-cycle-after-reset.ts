@@ -4,9 +4,11 @@ export const name = 'viewlet.explorer-typeahead-cycle-after-reset'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/alpha.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/banana.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/berry.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/alpha.txt` },
+    { content: '', uri: `${tmpDir}/banana.txt` },
+    { content: '', uri: `${tmpDir}/berry.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusFirst()
 

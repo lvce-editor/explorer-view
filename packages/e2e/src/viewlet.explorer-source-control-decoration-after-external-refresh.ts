@@ -12,8 +12,10 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
   const uri = import.meta.resolve('../fixtures/sample.source-control-decoration')
   await Extension.addWebExtension(uri)
   const tmpDir = 'extension-host://xyz://'
-  await FileSystem.writeFile(`${tmpDir}/a`, '')
-  await FileSystem.writeFile(`${tmpDir}/b`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/a` },
+    { content: '', uri: `${tmpDir}/b` },
+  ])
   await Workspace.setPath(tmpDir)
   const decorated = Locator('.TreeItem[aria-label="a"]')
   const plain = Locator('.TreeItem[aria-label="b"]')

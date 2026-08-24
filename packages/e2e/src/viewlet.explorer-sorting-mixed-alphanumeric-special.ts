@@ -5,16 +5,18 @@ export const name = 'viewlet.explorer-sorting-mixed-alphanumeric-special'
 export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/1file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/a-file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/b_file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/file1.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/file2.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/file@10.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/file#2.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/file$3.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/z-file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/10file.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/1file.txt` },
+    { content: '', uri: `${tmpDir}/a-file.txt` },
+    { content: '', uri: `${tmpDir}/b_file.txt` },
+    { content: '', uri: `${tmpDir}/file1.txt` },
+    { content: '', uri: `${tmpDir}/file2.txt` },
+    { content: '', uri: `${tmpDir}/file@10.txt` },
+    { content: '', uri: `${tmpDir}/file#2.txt` },
+    { content: '', uri: `${tmpDir}/file$3.txt` },
+    { content: '', uri: `${tmpDir}/z-file.txt` },
+    { content: '', uri: `${tmpDir}/10file.txt` },
+  ])
 
   // act
   await Workspace.setPath(tmpDir)

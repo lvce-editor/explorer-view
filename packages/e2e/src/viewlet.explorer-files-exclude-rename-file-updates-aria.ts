@@ -4,9 +4,11 @@ export const name = 'viewlet.explorer-files-exclude-rename-file-updates-aria'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/b.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/c.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/a.txt` },
+    { content: '', uri: `${tmpDir}/b.txt` },
+    { content: '', uri: `${tmpDir}/c.txt` },
+  ])
   await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(1)

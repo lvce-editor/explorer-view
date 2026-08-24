@@ -5,11 +5,13 @@ export const name = 'viewlet.explorer-rename-file-special-characters'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/original1.txt`, 'content 1')
-  await FileSystem.writeFile(`${tmpDir}/original2.txt`, 'content 2')
-  await FileSystem.writeFile(`${tmpDir}/original3.txt`, 'content 3')
-  await FileSystem.writeFile(`${tmpDir}/original4.txt`, 'content 4')
-  await FileSystem.writeFile(`${tmpDir}/original5.txt`, 'content 5')
+  await FileSystem.setFiles([
+    { content: 'content 1', uri: `${tmpDir}/original1.txt` },
+    { content: 'content 2', uri: `${tmpDir}/original2.txt` },
+    { content: 'content 3', uri: `${tmpDir}/original3.txt` },
+    { content: 'content 4', uri: `${tmpDir}/original4.txt` },
+    { content: 'content 5', uri: `${tmpDir}/original5.txt` },
+  ])
 
   await Workspace.setPath(tmpDir)
 

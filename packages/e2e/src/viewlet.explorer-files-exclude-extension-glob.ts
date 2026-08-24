@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-files-exclude-extension-glob'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/dist`)
-  await FileSystem.writeFile(`${tmpDir}/dist/app.js`, '')
-  await FileSystem.writeFile(`${tmpDir}/dist/app.js.map`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/dist/app.js` },
+    { content: '', uri: `${tmpDir}/dist/app.js.map` },
+  ])
   await Settings.update({ 'files.exclude': { '**/*.map': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()

@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-shift-select-different-nesting-levels'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/outer/inner`)
-  await FileSystem.writeFile(`${tmpDir}/outer/inner/deep.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/z.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/outer/inner/deep.txt` },
+    { content: '', uri: `${tmpDir}/z.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.handleClick(0)
   await Explorer.handleClick(1)

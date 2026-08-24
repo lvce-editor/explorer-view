@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-files-exclude-folder-descendants'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/secret/deep`)
-  await FileSystem.writeFile(`${tmpDir}/secret/deep/passwords.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/visible.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/secret/deep/passwords.txt` },
+    { content: '', uri: `${tmpDir}/visible.txt` },
+  ])
   await Settings.update({ 'files.exclude': { '**/secret': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()

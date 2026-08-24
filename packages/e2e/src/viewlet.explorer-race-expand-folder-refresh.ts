@@ -6,10 +6,12 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/a.txt`, 'a')
-  await FileSystem.writeFile(`${tmpDir}/folder/b.txt`, 'b')
-  await FileSystem.writeFile(`${tmpDir}/folder/c.txt`, 'c')
-  await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
+  await FileSystem.setFiles([
+    { content: 'a', uri: `${tmpDir}/folder/a.txt` },
+    { content: 'b', uri: `${tmpDir}/folder/b.txt` },
+    { content: 'c', uri: `${tmpDir}/folder/c.txt` },
+    { content: 'root', uri: `${tmpDir}/root.txt` },
+  ])
   await Workspace.setPath(tmpDir)
 
   // act: click folder to expand (async reads children), refresh rebuilds tree — both fire concurrently

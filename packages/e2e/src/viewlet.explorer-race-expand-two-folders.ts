@@ -7,10 +7,12 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder-a`)
   await FileSystem.mkdir(`${tmpDir}/folder-b`)
-  await FileSystem.writeFile(`${tmpDir}/folder-a/a1.txt`, 'a1')
-  await FileSystem.writeFile(`${tmpDir}/folder-a/a2.txt`, 'a2')
-  await FileSystem.writeFile(`${tmpDir}/folder-b/b1.txt`, 'b1')
-  await FileSystem.writeFile(`${tmpDir}/folder-b/b2.txt`, 'b2')
+  await FileSystem.setFiles([
+    { content: 'a1', uri: `${tmpDir}/folder-a/a1.txt` },
+    { content: 'a2', uri: `${tmpDir}/folder-a/a2.txt` },
+    { content: 'b1', uri: `${tmpDir}/folder-b/b1.txt` },
+    { content: 'b2', uri: `${tmpDir}/folder-b/b2.txt` },
+  ])
   await Workspace.setPath(tmpDir)
 
   // act: click both folders concurrently to expand them — async expansions race

@@ -6,8 +6,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/nested.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/root.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/folder/nested.txt` },
+    { content: '', uri: `${tmpDir}/root.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
 

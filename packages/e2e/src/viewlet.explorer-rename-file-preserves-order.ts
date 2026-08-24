@@ -16,11 +16,13 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/.nvmrc`, '')
-  await FileSystem.writeFile(`${tmpDir}/LICENSE`, '')
-  await FileSystem.writeFile(`${tmpDir}/README.md`, '')
-  await FileSystem.writeFile(`${tmpDir}/eslint.config.js`, '')
-  await FileSystem.writeFile(`${tmpDir}/package.json`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/.nvmrc` },
+    { content: '', uri: `${tmpDir}/LICENSE` },
+    { content: '', uri: `${tmpDir}/README.md` },
+    { content: '', uri: `${tmpDir}/eslint.config.js` },
+    { content: '', uri: `${tmpDir}/package.json` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.refresh()
 

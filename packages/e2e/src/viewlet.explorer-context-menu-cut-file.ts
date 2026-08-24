@@ -8,8 +8,10 @@ export const test: Test = async ({ ClipBoard, Command, ContextMenu, expect, Expl
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
-  await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'content 2')
+  await FileSystem.setFiles([
+    { content: 'content 1', uri: `${tmpDir}/file1.txt` },
+    { content: 'content 2', uri: `${tmpDir}/file2.txt` },
+  ])
   await Workspace.setPath(tmpDir)
 
   // act

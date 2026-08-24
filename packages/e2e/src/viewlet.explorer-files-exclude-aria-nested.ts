@@ -5,9 +5,11 @@ export const name = 'viewlet.explorer-files-exclude-aria-nested'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder/b.tmp`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder/c.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/folder/a.txt` },
+    { content: '', uri: `${tmpDir}/folder/b.tmp` },
+    { content: '', uri: `${tmpDir}/folder/c.txt` },
+  ])
   await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()

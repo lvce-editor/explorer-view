@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-shift-select-mixed-files-and-folders'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a-folder`)
-  await FileSystem.writeFile(`${tmpDir}/b.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/c.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/b.txt` },
+    { content: '', uri: `${tmpDir}/c.txt` },
+  ])
   await Workspace.setPath(tmpDir)
 
   await Explorer.focusIndex(0)

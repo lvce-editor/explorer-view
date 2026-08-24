@@ -8,9 +8,11 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
     'explorer.gitIgnoreDecorations': true,
   })
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/a`, '')
-  await FileSystem.writeFile(`${tmpDir}/b`, '')
-  await FileSystem.writeFile(`${tmpDir}/.gitignore`, 'a')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/a` },
+    { content: '', uri: `${tmpDir}/b` },
+    { content: 'a', uri: `${tmpDir}/.gitignore` },
+  ])
 
   // act
   await Workspace.setPath(tmpDir)

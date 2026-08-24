@@ -8,8 +8,10 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder/nested`)
-  await FileSystem.writeFile(`${tmpDir}/folder/nested/file.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/root.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/folder/nested/file.txt` },
+    { content: '', uri: `${tmpDir}/root.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
   await Explorer.focusIndex(2)

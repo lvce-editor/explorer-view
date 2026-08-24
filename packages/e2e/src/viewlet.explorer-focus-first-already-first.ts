@@ -4,8 +4,10 @@ export const name = 'viewlet.explorer-focus-first-already-first'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/b.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/a.txt` },
+    { content: '', uri: `${tmpDir}/b.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
 

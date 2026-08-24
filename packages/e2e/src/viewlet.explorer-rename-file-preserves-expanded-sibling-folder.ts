@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-rename-file-preserves-expanded-sibling-fol
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/a/child.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/a.json`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/a/child.txt` },
+    { content: '', uri: `${tmpDir}/a.json` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.clickCurrent()

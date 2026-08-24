@@ -9,8 +9,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const secondWorkspace = `${tmpDir}/second-workspace`
   await FileSystem.mkdir(firstWorkspace)
   await FileSystem.mkdir(secondWorkspace)
-  await FileSystem.writeFile(`${firstWorkspace}/first.txt`, '')
-  await FileSystem.writeFile(`${secondWorkspace}/second.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${firstWorkspace}/first.txt` },
+    { content: '', uri: `${secondWorkspace}/second.txt` },
+  ])
   await Workspace.setPath(firstWorkspace)
   await Workspace.setPath('')
 

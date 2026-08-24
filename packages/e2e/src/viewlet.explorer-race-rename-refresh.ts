@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-race-rename-refresh'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/a.txt`, 'a')
-  await FileSystem.writeFile(`${tmpDir}/b.txt`, 'b')
+  await FileSystem.setFiles([
+    { content: 'a', uri: `${tmpDir}/a.txt` },
+    { content: 'b', uri: `${tmpDir}/b.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
 

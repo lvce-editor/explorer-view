@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-files-exclude-git-nested'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/project/.git`)
-  await FileSystem.writeFile(`${tmpDir}/project/.git/config`, '')
-  await FileSystem.writeFile(`${tmpDir}/project/readme.md`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/project/.git/config` },
+    { content: '', uri: `${tmpDir}/project/readme.md` },
+  ])
   await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()

@@ -7,8 +7,10 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
-  await FileSystem.writeFile(`${tmpDir}/a/file-1.txt`, 'content')
-  await FileSystem.writeFile(`${tmpDir}/a/file-2.txt`, 'content')
+  await FileSystem.setFiles([
+    { content: 'content', uri: `${tmpDir}/a/file-1.txt` },
+    { content: 'content', uri: `${tmpDir}/a/file-2.txt` },
+  ])
   await FileSystem.mkdir(`${tmpDir}/b`)
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)

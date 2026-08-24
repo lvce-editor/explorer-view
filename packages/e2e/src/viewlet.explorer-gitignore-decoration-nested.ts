@@ -11,9 +11,11 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await FileSystem.mkdir(`${tmpDir}/packages`)
   await FileSystem.mkdir(`${tmpDir}/packages/app`)
   await FileSystem.mkdir(`${tmpDir}/packages/other`)
-  await FileSystem.writeFile(`${tmpDir}/packages/app/file.tmp`, '')
-  await FileSystem.writeFile(`${tmpDir}/packages/other/file.tmp`, '')
-  await FileSystem.writeFile(`${tmpDir}/packages/app/.gitignore`, '*.tmp')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/packages/app/file.tmp` },
+    { content: '', uri: `${tmpDir}/packages/other/file.tmp` },
+    { content: '*.tmp', uri: `${tmpDir}/packages/app/.gitignore` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()

@@ -18,11 +18,13 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/languages`)
   await FileSystem.mkdir(`${tmpDir}/sample-folder`)
-  await FileSystem.writeFile(`${tmpDir}/test.txt`, 'div')
-  await FileSystem.writeFile(`${tmpDir}/languages/index.html`, 'div')
-  await FileSystem.writeFile(`${tmpDir}/sample-folder/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/sample-folder/b.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/sample-folder/c.txt`, '')
+  await FileSystem.setFiles([
+    { content: 'div', uri: `${tmpDir}/test.txt` },
+    { content: 'div', uri: `${tmpDir}/languages/index.html` },
+    { content: '', uri: `${tmpDir}/sample-folder/a.txt` },
+    { content: '', uri: `${tmpDir}/sample-folder/b.txt` },
+    { content: '', uri: `${tmpDir}/sample-folder/c.txt` },
+  ])
 
   // act
   await Workspace.setPath(tmpDir)

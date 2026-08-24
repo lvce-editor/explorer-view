@@ -6,8 +6,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/f1.txt`, 'f1')
-  await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
+  await FileSystem.setFiles([
+    { content: 'f1', uri: `${tmpDir}/folder/f1.txt` },
+    { content: 'root', uri: `${tmpDir}/root.txt` },
+  ])
   await Workspace.setPath(tmpDir)
 
   // act: saveState saves scroll/expand state, handleClick expands folder — both fire concurrently

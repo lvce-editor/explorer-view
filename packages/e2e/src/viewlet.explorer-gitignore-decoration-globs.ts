@@ -11,10 +11,12 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   await FileSystem.mkdir(`${tmpDir}/src`)
   await FileSystem.mkdir(`${tmpDir}/src/app`)
   await FileSystem.mkdir(`${tmpDir}/src/app/generated`)
-  await FileSystem.writeFile(`${tmpDir}/debug.log`, '')
-  await FileSystem.writeFile(`${tmpDir}/src/app/generated/file.ts`, '')
-  await FileSystem.writeFile(`${tmpDir}/src/app/generated/file.js`, '')
-  await FileSystem.writeFile(`${tmpDir}/.gitignore`, '*.log\nsrc/**/generated/*.ts')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/debug.log` },
+    { content: '', uri: `${tmpDir}/src/app/generated/file.ts` },
+    { content: '', uri: `${tmpDir}/src/app/generated/file.js` },
+    { content: '*.log\nsrc/**/generated/*.ts', uri: `${tmpDir}/.gitignore` },
+  ])
 
   // act
   await Workspace.setPath(tmpDir)

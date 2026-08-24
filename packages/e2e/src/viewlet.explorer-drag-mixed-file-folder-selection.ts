@@ -6,8 +6,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/destination`)
   await FileSystem.mkdir(`${tmpDir}/source-folder`)
-  await FileSystem.writeFile(`${tmpDir}/source-folder/nested.txt`, 'nested')
-  await FileSystem.writeFile(`${tmpDir}/source.txt`, 'source')
+  await FileSystem.setFiles([
+    { content: 'nested', uri: `${tmpDir}/source-folder/nested.txt` },
+    { content: 'source', uri: `${tmpDir}/source.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(1)
   await Explorer.toggleIndividualSelection(2)
