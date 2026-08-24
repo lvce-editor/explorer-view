@@ -1,5 +1,7 @@
 import { expect, test } from '@jest/globals'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getScrollBarVirtualDom } from '../src/parts/GetScrollBarVirtualDom/GetScrollBarVirtualDom.ts'
+import * as VirtualDomElements from '../src/parts/VirtualDomElements/VirtualDomElements.ts'
 
 test('getScrollBarVirtualDom - no scrollbar when height is 0', () => {
   const dom = getScrollBarVirtualDom(0)
@@ -12,13 +14,13 @@ test('getScrollBarVirtualDom - renders scrollbar', () => {
     {
       childCount: 1,
       className: 'ScrollBar ScrollBarSmall',
-      onPointerDown: 24,
-      type: 4,
+      onPointerDown: DomEventListenerFunctions.HandleScrollBarPointerDown,
+      type: VirtualDomElements.Div,
     },
     {
       childCount: 0,
       className: 'ScrollBarThumb',
-      type: 4,
+      type: VirtualDomElements.Div,
     },
   ])
 })
