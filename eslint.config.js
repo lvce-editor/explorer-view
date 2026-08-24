@@ -10,7 +10,6 @@ export default defineConfig([
   {
     files: ['**/*.ts'],
     rules: {
-      '@cspell/spellchecker': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
