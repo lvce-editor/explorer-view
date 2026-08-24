@@ -15,11 +15,12 @@ export const handleClickAt = async (
   eventX: number,
   eventY: number,
 ): Promise<ExplorerState> => {
+  const { items } = state
   if (defaultPrevented || button !== MouseEventType.LeftClick) {
     return state
   }
   const index = GetIndexFromPosition.getIndexFromPosition(state, eventX, eventY)
-  if (index === -1 || index >= state.items.length) {
+  if (index === -1 || index >= items.length) {
     return FocusIndex.focusIndex(state, -1)
   }
   if (shiftKey) {

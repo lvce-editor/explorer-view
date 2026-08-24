@@ -48,14 +48,6 @@ export default defineConfig([
       'virtual-dom/prefer-merge-class-names': 'off',
     },
   },
-  {
-    files: [
-      'packages/explorer-view/src/parts/{AcceptEdit,CompareWithSelected,CopyPath,CopyRelativePath,Create,Focus,FocusParentFolder,GetFocusedFile,GetLoadErrorMessage,GetMenuEntries,HandleClickAt,HandleClickCurrent,HandleClickCurrentButKeepFocus,HandleClickDirectory,HandleContextMenuKeyboard,HandleCut,HandleDoubleClick,HandleDragOver,HandleDragOverIndex,HandleDrop,HandleDropIndex,HandleDropRoot,HandleDropRootDefault,HandleDropRootElectron,HandleFocus,HandlePaste,HandleResize,HandleUpload,HandleWheel,NewFile,NewFolder,RemoveDirent,RenameDirent,SetDeltaY}/**/*.ts',
-    ],
-    rules: {
-      'virtual-dom/prefer-state-destructuring': 'off',
-    },
-  },
   ...config.recommendedActions,
   {
     rules: {

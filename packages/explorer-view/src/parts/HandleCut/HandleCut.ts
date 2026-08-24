@@ -6,12 +6,12 @@ import * as FocusId from '../FocusId/FocusId.ts'
 import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 
 export const handleCut = async (state: ExplorerState): Promise<ExplorerState> => {
-  if (state.isReadonly) {
+  const { focusedIndex, isReadonly, items } = state
+  if (isReadonly) {
     return state
   }
   // TODO handle multiple files
   // TODO if not file is selected, what happens?
-  const { focusedIndex, items } = state
   const dirents = getSelectedItems(items, focusedIndex)
   if (dirents.length === 0) {
     return state

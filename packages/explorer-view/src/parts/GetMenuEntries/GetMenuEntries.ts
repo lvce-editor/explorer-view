@@ -105,7 +105,8 @@ const disable = (entry: MenuEntry): MenuEntry => {
 }
 
 const getWritableEntry = (state: ExplorerState, entry: MenuEntry): MenuEntry => {
-  if (state.isReadonly) {
+  const { isReadonly } = state
+  if (isReadonly) {
     return disable(entry)
   }
   return entry
@@ -209,6 +210,7 @@ const getMenuEntriesRoot = (state: ExplorerState): readonly MenuEntry[] => {
 }
 
 export const getMenuEntries = (state: ExplorerState): readonly MenuEntry[] => {
+  const { compareSourceUri } = state
   const focusedDirent = getFocusedDirent(state)
   if (!focusedDirent) {
     return getMenuEntriesRoot(state)
@@ -217,7 +219,7 @@ export const getMenuEntries = (state: ExplorerState): readonly MenuEntry[] => {
     case DirentType.Directory:
       return getMenuEntriesDirectory(state)
     case DirentType.File:
-      if (state.compareSourceUri && state.compareSourceUri !== focusedDirent.path) {
+      if (compareSourceUri && compareSourceUri !== focusedDirent.path) {
         return getMenuEntriesFileCompareWithSelected(state)
       }
       return getMenuEntriesFile(state)

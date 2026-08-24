@@ -3,10 +3,11 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
 
 export const copyPath = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { root } = state
   const dirent = GetFocusedDirent.getFocusedDirent(state)
   // TODO windows paths
   // TODO handle error
-  const path = dirent ? dirent.path : state.root
+  const path = dirent ? dirent.path : root
   await RendererWorker.writeClipBoardText(path)
   return state
 }

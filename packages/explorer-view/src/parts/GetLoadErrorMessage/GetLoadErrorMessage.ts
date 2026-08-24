@@ -8,17 +8,19 @@ const getMissingFolderMessage = (root: string): string => {
 }
 
 export const getLoadErrorMessage = (state: ExplorerState): string => {
-  if (state.hasError) {
-    if (state.errorCode === 'ENOENT') {
-      return getMissingFolderMessage(state.root)
+  const { errorCode, errorMessage, hasError, root } = state
+  if (hasError) {
+    if (errorCode === 'ENOENT') {
+      return getMissingFolderMessage(root)
     }
-    const code = state.errorCode ? ` (error code: ${state.errorCode})` : ''
-    const reason = state.errorMessage || 'an unexpected error occurred'
+    const code = errorCode ? ` (error code: ${errorCode})` : ''
+    const reason = errorMessage || 'an unexpected error occurred'
     return `Could not open folder due to ${reason}${code}.`
   }
   return ''
 }
 
 export const shouldShowOpenAnotherFolderButton = (state: ExplorerState): boolean => {
-  return state.hasError && state.errorCode === 'ENOENT'
+  const { errorCode, hasError } = state
+  return hasError && errorCode === 'ENOENT'
 }

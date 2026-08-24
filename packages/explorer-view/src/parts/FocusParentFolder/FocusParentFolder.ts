@@ -3,7 +3,8 @@ import * as FocusIndex from '../FocusIndex/FocusIndex.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
 
 export const focusParentFolder = (state: ExplorerState): ExplorerState => {
-  const parentStartIndex = GetParentStartIndex.getParentStartIndex(state.items, state.focusedIndex)
+  const { focusedIndex, items } = state
+  const parentStartIndex = GetParentStartIndex.getParentStartIndex(items, focusedIndex)
   if (parentStartIndex === -1) {
     return state
   }

@@ -22,13 +22,14 @@ export const handleDropRoot = async (
   files: readonly File[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
-  if (state.isReadonly && state.root !== '') {
+  const { isReadonly, platform, root } = state
+  if (isReadonly && root !== '') {
     return state
   }
   if (fileHandles.length === 0 && paths.length > 0) {
     return handleInternalDrop(state, paths, -1)
   }
-  const isElectron = state.platform === PlatformType.Electron
+  const isElectron = platform === PlatformType.Electron
   const fn = getModule(isElectron)
   return fn(state, fileHandles, files, paths)
 }

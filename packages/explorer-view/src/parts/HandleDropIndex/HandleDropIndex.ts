@@ -74,13 +74,13 @@ export const handleDropIndex = async (
   paths: readonly string[],
   index: number,
 ): Promise<ExplorerState> => {
-  if (state.isReadonly) {
+  const { isReadonly, items } = state
+  if (isReadonly) {
     return state
   }
   if (fileHandles.length === 0 && paths.length > 0) {
     return handleInternalDrop(state, paths, index)
   }
-  const { items } = state
   const dirent = items[index]
   // TODO if it is a file, drop into the folder of the file
   // TODO if it is a folder, drop into the folder

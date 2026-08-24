@@ -6,10 +6,10 @@ import * as ExplorerEditingType from '../ExplorerEditingType/ExplorerEditingType
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const acceptEdit = async (state: ExplorerState, inputSource: number = InputSource.Script): Promise<ExplorerState> => {
-  if (state.isReadonly) {
+  const { editingType, inputSource: currentInputSource, isReadonly } = state
+  if (isReadonly) {
     return state
   }
-  const { editingType, inputSource: currentInputSource } = state
   let newState: ExplorerState
   switch (editingType) {
     case ExplorerEditingType.CreateFile:

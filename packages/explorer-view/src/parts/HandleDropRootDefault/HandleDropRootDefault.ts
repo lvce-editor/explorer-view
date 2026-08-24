@@ -38,7 +38,8 @@ const openDroppedDirectoryAsWorkspace = async (state: ExplorerState, fileHandle:
 }
 
 const getFirstDroppedDirectory = (state: ExplorerState, fileHandles: DroppedArgs): FileSystemDirectoryHandle | undefined => {
-  if (state.root !== '') {
+  const { root } = state
+  if (root !== '') {
     return undefined
   }
   for (const item of fileHandles) {

@@ -3,10 +3,11 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 
 export const getFocusedFile = (state: ExplorerState): ExplorerItem | undefined => {
-  if (state.focusedIndex < 0 || state.focusedIndex >= state.items.length) {
+  const { focusedIndex, items } = state
+  if (focusedIndex < 0 || focusedIndex >= items.length) {
     return undefined
   }
-  const item = state.items[state.focusedIndex]
+  const item = items[focusedIndex]
   if (item.type !== DirentType.File) {
     return undefined
   }
