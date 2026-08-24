@@ -169,7 +169,7 @@ export const commandMap = {
   'Explorer.newFolder': WrapCommand.wrapListItemCommand(NewFolder.newFolder),
   'Explorer.openContainingFolder': WrapCommand.wrapListItemCommand(OpenContainingFolder.openContainingFolder),
   'Explorer.openInIntegratedTerminal': WrapCommand.wrapListItemCommand(OpenInIntegratedTerminal.openInIntegratedTerminal),
-  'Explorer.refresh': WrapCommand.wrapListItemCommand(Refresh.refresh),
+  'Explorer.refresh': WrapCommand.wrapListItemCommand(Refresh.refreshExplorer),
   'Explorer.removeDirent': WrapCommand.wrapListItemCommand(RemoveDirent.removeDirent),
   'Explorer.renameDirent': WrapCommand.wrapListItemCommand(RenameDirent.renameDirent),
   'Explorer.render2': Render2.render2,

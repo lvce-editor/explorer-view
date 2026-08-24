@@ -4,7 +4,9 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
-import { refresh } from '../src/parts/Refresh/Refresh.ts'
+import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
+import * as FocusId from '../src/parts/FocusId/FocusId.ts'
+import { refresh, refreshExplorer } from '../src/parts/Refresh/Refresh.ts'
 
 test('refresh - empty state', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
@@ -53,6 +55,38 @@ test('refresh - with top level items', async () => {
   expect(result.items).toHaveLength(2)
   expect(result.items[0].name).toBe('file1')
   expect(result.items[1].name).toBe('file2')
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
+})
+
+test('refreshExplorer - cancels active file creation', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [
+        { name: 'a.txt', type: DirentType.File },
+        { name: 'b.txt', type: DirentType.File },
+      ]
+    },
+  })
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingType: ExplorerEditingType.CreateFile,
+    editingValue: 'draft.txt',
+    focus: FocusId.Input,
+    focusedIndex: 0,
+    items: [{ depth: 0, name: 'draft.txt', path: '/draft.txt', selected: false, type: DirentType.EditingFile }],
+  }
+
+  const result = await refreshExplorer(state)
+
+  expect(result.editingIndex).toBe(-1)
+  expect(result.editingType).toBe(ExplorerEditingType.None)
+  expect(result.editingValue).toBe('')
+  expect(result.focus).toBe(FocusId.List)
+  expect(result.items).toEqual([
+    expect.objectContaining({ name: 'a.txt', path: '/a.txt', type: DirentType.File }),
+    expect.objectContaining({ name: 'b.txt', path: '/b.txt', type: DirentType.File }),
+  ])
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
 

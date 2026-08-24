@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import { cancelEditInternal } from '../CancelEditInternal/CancelEditInternal.ts'
 import { getExpandedDirents } from '../GetExpandedDirents/GetExpandedDirents.ts'
 import * as GetGitIgnoredUris from '../GetGitIgnoredUris/GetGitIgnoredUris.ts'
 import { getPathDirentsMap } from '../GetPathDirentsMap/GetPathDirentsMap.ts'
@@ -34,4 +35,10 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
     items: newItems,
     sourceControlIgnoredUris,
   }
+}
+
+export const refreshExplorer = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { editingIndex } = state
+  const stateWithoutEdit = editingIndex === -1 ? state : await cancelEditInternal(state, true)
+  return refresh(stateWithoutEdit)
 }

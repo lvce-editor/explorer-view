@@ -3,7 +3,7 @@ import { collapseAll } from '../CollapseAll/CollapseAll.ts'
 import * as InputName from '../InputName/InputName.ts'
 import { newFile } from '../NewFile/NewFile.ts'
 import { newFolder } from '../NewFolder/NewFolder.ts'
-import { refresh } from '../Refresh/Refresh.ts'
+import { refreshExplorer } from '../Refresh/Refresh.ts'
 
 export const handleButtonClick = async (state: ExplorerState, name: string): Promise<ExplorerState> => {
   switch (name) {
@@ -14,7 +14,7 @@ export const handleButtonClick = async (state: ExplorerState, name: string): Pro
     case InputName.NewFolder:
       return newFolder(state)
     case InputName.Refresh:
-      return refresh(state)
+      return refreshExplorer(state)
     default:
       return state
   }
