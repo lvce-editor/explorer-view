@@ -5,16 +5,18 @@ export const name = 'viewlet.explorer-sorting-emojis'
 export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/🚀 rocket.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/🌟 star.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/💎 diamond.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/🔥 fire.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/⚡ lightning.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/🌈 rainbow.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/🎯 target.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/💡 idea.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/🚀🚀 double-rocket.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/a-normal-file.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/🚀 rocket.txt` },
+    { content: '', uri: `${tmpDir}/🌟 star.txt` },
+    { content: '', uri: `${tmpDir}/💎 diamond.txt` },
+    { content: '', uri: `${tmpDir}/🔥 fire.txt` },
+    { content: '', uri: `${tmpDir}/⚡ lightning.txt` },
+    { content: '', uri: `${tmpDir}/🌈 rainbow.txt` },
+    { content: '', uri: `${tmpDir}/🎯 target.txt` },
+    { content: '', uri: `${tmpDir}/💡 idea.txt` },
+    { content: '', uri: `${tmpDir}/🚀🚀 double-rocket.txt` },
+    { content: '', uri: `${tmpDir}/a-normal-file.txt` },
+  ])
 
   // act
   await Workspace.setPath(tmpDir)

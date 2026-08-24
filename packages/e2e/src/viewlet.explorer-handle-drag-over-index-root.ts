@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-handle-drag-over-index-root'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/file-1.txt`, 'a')
-  await FileSystem.writeFile(`${tmpDir}/file-2.txt`, 'b')
+  await FileSystem.setFiles([
+    { content: 'a', uri: `${tmpDir}/file-1.txt` },
+    { content: 'b', uri: `${tmpDir}/file-2.txt` },
+  ])
   await Workspace.setPath(tmpDir)
 
   // act

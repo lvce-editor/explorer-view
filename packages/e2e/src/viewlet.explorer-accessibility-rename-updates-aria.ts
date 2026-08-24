@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-accessibility-rename-updates-aria'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/c.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/a.txt` },
+    { content: '', uri: `${tmpDir}/c.txt` },
+  ])
   await Workspace.setPath(tmpDir)
 
   // act

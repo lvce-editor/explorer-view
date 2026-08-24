@@ -5,10 +5,12 @@ export const name = 'viewlet.explorer-large-directory-typeahead-focus'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/alpha.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/banana.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/berry.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/cherry.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/alpha.txt` },
+    { content: '', uri: `${tmpDir}/banana.txt` },
+    { content: '', uri: `${tmpDir}/berry.txt` },
+    { content: '', uri: `${tmpDir}/cherry.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusFirst()
 

@@ -7,9 +7,11 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
   await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder/b.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder/c.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/folder/a.txt` },
+    { content: '', uri: `${tmpDir}/folder/b.txt` },
+    { content: '', uri: `${tmpDir}/folder/c.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
 

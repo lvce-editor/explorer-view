@@ -5,9 +5,11 @@ export const name = 'viewlet.explorer-drop-multiple-internal-files-on-file-row'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/target.txt`, 'target')
-  await FileSystem.writeFile(`${tmpDir}/one.txt`, 'one')
-  await FileSystem.writeFile(`${tmpDir}/two.txt`, 'two')
+  await FileSystem.setFiles([
+    { content: 'target', uri: `${tmpDir}/folder/target.txt` },
+    { content: 'one', uri: `${tmpDir}/one.txt` },
+    { content: 'two', uri: `${tmpDir}/two.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
 

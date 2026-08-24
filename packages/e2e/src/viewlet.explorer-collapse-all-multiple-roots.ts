@@ -6,8 +6,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.mkdir(`${tmpDir}/b`)
-  await FileSystem.writeFile(`${tmpDir}/a/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/b/b.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/a/a.txt` },
+    { content: '', uri: `${tmpDir}/b/b.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandAll()

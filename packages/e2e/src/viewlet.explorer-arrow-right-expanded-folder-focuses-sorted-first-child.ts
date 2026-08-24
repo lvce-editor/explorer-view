@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-arrow-right-expanded-folder-focuses-sorted
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/z.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder/a.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/folder/z.txt` },
+    { content: '', uri: `${tmpDir}/folder/a.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.handleArrowRight()

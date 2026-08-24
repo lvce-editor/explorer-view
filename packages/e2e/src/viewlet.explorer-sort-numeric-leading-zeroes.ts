@@ -5,10 +5,12 @@ export const name = 'viewlet.explorer-sort-numeric-leading-zeroes'
 export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/file10.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/file001.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/file01.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/file1.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/file10.txt` },
+    { content: '', uri: `${tmpDir}/file001.txt` },
+    { content: '', uri: `${tmpDir}/file01.txt` },
+    { content: '', uri: `${tmpDir}/file1.txt` },
+  ])
 
   // act
   await Workspace.setPath(tmpDir)

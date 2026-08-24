@@ -8,15 +8,17 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/folder-1`)
   await FileSystem.mkdir(`${tmpDir}/folder-2`)
   await FileSystem.mkdir(`${tmpDir}/folder-3`)
-  await FileSystem.writeFile(`${tmpDir}/folder-1/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder-1/b.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder-1/c.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder-2/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder-2/b.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder-2/c.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder-3/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder-3/b.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/folder-3/c.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/folder-1/a.txt` },
+    { content: '', uri: `${tmpDir}/folder-1/b.txt` },
+    { content: '', uri: `${tmpDir}/folder-1/c.txt` },
+    { content: '', uri: `${tmpDir}/folder-2/a.txt` },
+    { content: '', uri: `${tmpDir}/folder-2/b.txt` },
+    { content: '', uri: `${tmpDir}/folder-2/c.txt` },
+    { content: '', uri: `${tmpDir}/folder-3/a.txt` },
+    { content: '', uri: `${tmpDir}/folder-3/b.txt` },
+    { content: '', uri: `${tmpDir}/folder-3/c.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusFirst()
 

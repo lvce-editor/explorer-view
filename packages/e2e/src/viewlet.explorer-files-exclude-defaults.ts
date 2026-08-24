@@ -7,9 +7,11 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   await FileSystem.mkdir(`${tmpDir}/.git`)
   await FileSystem.mkdir(`${tmpDir}/.svn`)
   await FileSystem.mkdir(`${tmpDir}/.hg`)
-  await FileSystem.writeFile(`${tmpDir}/.DS_Store`, '')
-  await FileSystem.writeFile(`${tmpDir}/Thumbs.db`, '')
-  await FileSystem.writeFile(`${tmpDir}/visible.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/.DS_Store` },
+    { content: '', uri: `${tmpDir}/Thumbs.db` },
+    { content: '', uri: `${tmpDir}/visible.txt` },
+  ])
   await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
   await Workspace.setPath(tmpDir)
 

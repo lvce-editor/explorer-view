@@ -5,16 +5,18 @@ export const name = 'viewlet.explorer-sorting'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/1.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/2.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/3.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/4.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/5.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/6.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/7.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/8.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/9.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/10.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/1.txt` },
+    { content: '', uri: `${tmpDir}/2.txt` },
+    { content: '', uri: `${tmpDir}/3.txt` },
+    { content: '', uri: `${tmpDir}/4.txt` },
+    { content: '', uri: `${tmpDir}/5.txt` },
+    { content: '', uri: `${tmpDir}/6.txt` },
+    { content: '', uri: `${tmpDir}/7.txt` },
+    { content: '', uri: `${tmpDir}/8.txt` },
+    { content: '', uri: `${tmpDir}/9.txt` },
+    { content: '', uri: `${tmpDir}/10.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusFirst()
 

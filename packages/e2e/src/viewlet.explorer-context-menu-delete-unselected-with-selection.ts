@@ -8,9 +8,11 @@ export const test: Test = async ({ ContextMenu, Dialog, expect, Explorer, FileSy
   // arrange
   await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
-  await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'content 2')
-  await FileSystem.writeFile(`${tmpDir}/file3.txt`, 'content 3')
+  await FileSystem.setFiles([
+    { content: 'content 1', uri: `${tmpDir}/file1.txt` },
+    { content: 'content 2', uri: `${tmpDir}/file2.txt` },
+    { content: 'content 3', uri: `${tmpDir}/file3.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.selectIndices([0, 1])
   const selectedFile1 = Locator('.TreeItem[aria-label="file1.txt"]')

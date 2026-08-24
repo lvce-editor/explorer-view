@@ -7,8 +7,10 @@ export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace })
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
-  await FileSystem.writeFile(`${tmpDir}/a/file.txt`, 'content')
-  await FileSystem.writeFile(`${tmpDir}/file.txt`, 'content')
+  await FileSystem.setFiles([
+    { content: 'content', uri: `${tmpDir}/a/file.txt` },
+    { content: 'content', uri: `${tmpDir}/file.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()

@@ -4,9 +4,11 @@ export const name = 'viewlet.explorer-typeahead-reset-word'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/alpha.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/beta.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/charlie.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/alpha.txt` },
+    { content: '', uri: `${tmpDir}/beta.txt` },
+    { content: '', uri: `${tmpDir}/charlie.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusFirst()
 

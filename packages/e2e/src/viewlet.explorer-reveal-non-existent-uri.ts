@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-reveal-non-existent-uri'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/first.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/second.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/first.txt` },
+    { content: '', uri: `${tmpDir}/second.txt` },
+  ])
   await Workspace.setPath(tmpDir)
 
   const explorer = Locator('.Explorer')

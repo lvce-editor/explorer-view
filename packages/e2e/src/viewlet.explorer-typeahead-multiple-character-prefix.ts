@@ -4,9 +4,11 @@ export const name = 'viewlet.explorer-typeahead-multiple-character-prefix'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/banana.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/berry.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/brick.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/banana.txt` },
+    { content: '', uri: `${tmpDir}/berry.txt` },
+    { content: '', uri: `${tmpDir}/brick.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusFirst()
 

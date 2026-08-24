@@ -6,16 +6,18 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/stress-folder`)
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00000.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00001.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00002.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00003.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00004.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00005.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00006.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00007.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00008.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/stress-folder/item-00009.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/stress-folder/item-00000.txt` },
+    { content: '', uri: `${tmpDir}/stress-folder/item-00001.txt` },
+    { content: '', uri: `${tmpDir}/stress-folder/item-00002.txt` },
+    { content: '', uri: `${tmpDir}/stress-folder/item-00003.txt` },
+    { content: '', uri: `${tmpDir}/stress-folder/item-00004.txt` },
+    { content: '', uri: `${tmpDir}/stress-folder/item-00005.txt` },
+    { content: '', uri: `${tmpDir}/stress-folder/item-00006.txt` },
+    { content: '', uri: `${tmpDir}/stress-folder/item-00007.txt` },
+    { content: '', uri: `${tmpDir}/stress-folder/item-00008.txt` },
+    { content: '', uri: `${tmpDir}/stress-folder/item-00009.txt` },
+  ])
   await Workspace.setPath(tmpDir)
 
   // act

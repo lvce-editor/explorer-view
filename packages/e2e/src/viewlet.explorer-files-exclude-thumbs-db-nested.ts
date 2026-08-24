@@ -5,8 +5,10 @@ export const name = 'viewlet.explorer-files-exclude-thumbs-db-nested'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/images`)
-  await FileSystem.writeFile(`${tmpDir}/images/Thumbs.db`, '')
-  await FileSystem.writeFile(`${tmpDir}/images/photo.png`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/images/Thumbs.db` },
+    { content: '', uri: `${tmpDir}/images/photo.png` },
+  ])
   await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()

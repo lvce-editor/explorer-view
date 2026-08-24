@@ -4,8 +4,10 @@ export const name = 'viewlet.explorer-typeahead-non-ascii-ignored'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/alpha.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/éclair.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/alpha.txt` },
+    { content: '', uri: `${tmpDir}/éclair.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusFirst()
 

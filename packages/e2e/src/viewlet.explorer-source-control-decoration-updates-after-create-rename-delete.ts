@@ -12,8 +12,10 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
   const uri = import.meta.resolve('../fixtures/sample.source-control-decoration')
   await Extension.addWebExtension(uri)
   const tmpDir = 'extension-host://xyz://'
-  await FileSystem.writeFile(`${tmpDir}/tracked.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/.gitignore`, 'ignored.txt')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/tracked.txt` },
+    { content: 'ignored.txt', uri: `${tmpDir}/.gitignore` },
+  ])
   await Workspace.setPath(tmpDir)
 
   // act

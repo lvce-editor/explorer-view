@@ -7,8 +7,10 @@ export const skip = 1
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
-  await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'content 2')
+  await FileSystem.setFiles([
+    { content: 'content 1', uri: `${tmpDir}/file1.txt` },
+    { content: 'content 2', uri: `${tmpDir}/file2.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.newFile()
   await Explorer.updateEditingValue('file2.txt')

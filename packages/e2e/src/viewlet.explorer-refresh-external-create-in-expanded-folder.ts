@@ -6,8 +6,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/one.txt`, 'one')
-  await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
+  await FileSystem.setFiles([
+    { content: 'one', uri: `${tmpDir}/folder/one.txt` },
+    { content: 'root', uri: `${tmpDir}/root.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()

@@ -58,7 +58,7 @@ export default defineConfig([
   {
     files: ['packages/e2e/**/*.ts'],
     rules: {
-      'e2e/prefer-filesystem-set-files': 'off',
+      'e2e/prefer-filesystem-set-files': 'error',
       '@typescript-eslint/no-unnecessary-type-assertion': 'off',
       '@typescript-eslint/no-redundant-type-constituents': 'off',
     },

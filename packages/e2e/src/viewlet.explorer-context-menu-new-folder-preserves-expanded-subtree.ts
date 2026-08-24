@@ -7,11 +7,13 @@ export const skip = ['webkit']
 export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/sample-files/files/big_buck_bunny.mp4`, '')
-  await FileSystem.writeFile(`${tmpDir}/sample-files/files/big_buck_bunny.webm`, '')
-  await FileSystem.writeFile(`${tmpDir}/sample-files/files/echo-hereweare.ogv`, '')
-  await FileSystem.writeFile(`${tmpDir}/sample-files/package.json`, '{}')
-  await FileSystem.writeFile(`${tmpDir}/scripts/test.js`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/sample-files/files/big_buck_bunny.mp4` },
+    { content: '', uri: `${tmpDir}/sample-files/files/big_buck_bunny.webm` },
+    { content: '', uri: `${tmpDir}/sample-files/files/echo-hereweare.ogv` },
+    { content: '{}', uri: `${tmpDir}/sample-files/package.json` },
+    { content: '', uri: `${tmpDir}/scripts/test.js` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.clickCurrent()

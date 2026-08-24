@@ -9,8 +9,10 @@ export const test: Test = async ({ ClipBoard, ContextMenu, Explorer, FileSystem,
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await FileSystem.writeFile(`${tmpDir}/folder/nested.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/root.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/folder/nested.txt` },
+    { content: '', uri: `${tmpDir}/root.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()

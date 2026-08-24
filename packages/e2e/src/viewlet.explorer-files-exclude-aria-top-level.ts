@@ -4,9 +4,11 @@ export const name = 'viewlet.explorer-files-exclude-aria-top-level'
 
 export const test: Test = async ({ expect, FileSystem, Locator, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/a.txt`, '')
-  await FileSystem.writeFile(`${tmpDir}/b.tmp`, '')
-  await FileSystem.writeFile(`${tmpDir}/c.txt`, '')
+  await FileSystem.setFiles([
+    { content: '', uri: `${tmpDir}/a.txt` },
+    { content: '', uri: `${tmpDir}/b.tmp` },
+    { content: '', uri: `${tmpDir}/c.txt` },
+  ])
   await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
   await Workspace.setPath(tmpDir)
 

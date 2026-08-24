@@ -7,8 +7,10 @@ export const skip = ['webkit']
 export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'left')
-  await FileSystem.writeFile(`${tmpDir}/file2.txt`, 'right')
+  await FileSystem.setFiles([
+    { content: 'left', uri: `${tmpDir}/file1.txt` },
+    { content: 'right', uri: `${tmpDir}/file2.txt` },
+  ])
   await Workspace.setPath(tmpDir)
   await Explorer.openContextMenu(0)
   await ContextMenu.selectItem('Select for Compare')

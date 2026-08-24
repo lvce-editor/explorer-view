@@ -9,9 +9,11 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
   const uri = import.meta.resolve('../fixtures/sample.file-system-provider-create-file-error-permission-denied')
   await Extension.addWebExtension(uri)
   const prefix = 'extension-host://xyz://'
-  await FileSystem.writeFile(`${prefix}/file1.txt`, 'content 1')
-  await FileSystem.writeFile(`${prefix}/file2.txt`, 'content 2')
-  await FileSystem.writeFile(`${prefix}/file3.txt`, 'content 3')
+  await FileSystem.setFiles([
+    { content: 'content 1', uri: `${prefix}/file1.txt` },
+    { content: 'content 2', uri: `${prefix}/file2.txt` },
+    { content: 'content 3', uri: `${prefix}/file3.txt` },
+  ])
   await Workspace.setPath(`${prefix}/`)
 
   // act
