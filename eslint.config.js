@@ -1,13 +1,12 @@
 import { defineConfig } from 'eslint/config'
 import * as config from '@lvce-editor/eslint-config'
-import * as regex from '@lvce-editor/eslint-plugin-regex'
-import * as tsconfig from '@lvce-editor/eslint-plugin-tsconfig'
 
 export default defineConfig([
   ...config.default,
   ...config.recommendedVirtualDom,
-  ...regex.default,
-  ...tsconfig.default,
+  ...config.recommendedRegex,
+  ...config.recommendedTsconfig,
+  ...config.recommendedActions,
   {
     files: ['**/*.ts'],
     rules: {
