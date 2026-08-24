@@ -91,6 +91,7 @@ export const create = (
     x,
     y,
   }
-  ExplorerStates.set(state.uid, state, state)
+  const { uid } = state
+  ExplorerStates.set(uid, state, state)
   return state
 }

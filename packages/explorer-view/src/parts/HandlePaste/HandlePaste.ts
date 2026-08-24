@@ -5,7 +5,8 @@ import * as HandlePasteCut from '../HandlePasteCut/HandlePasteCut.ts'
 import * as NativeFileTypes from '../NativeFileTypes/NativeFileTypes.ts'
 
 export const handlePaste = async (state: ExplorerState): Promise<ExplorerState> => {
-  if (state.isReadonly) {
+  const { isReadonly, pasteShouldMove } = state
+  if (isReadonly) {
     return state
   }
   const nativeFiles = await ClipBoard.readNativeFiles()
@@ -31,7 +32,7 @@ export const handlePaste = async (state: ExplorerState): Promise<ExplorerState> 
   }
 
   // Use the pasteShouldMove flag to determine whether to cut or copy
-  if (state.pasteShouldMove) {
+  if (pasteShouldMove) {
     return HandlePasteCut.handlePasteCut(state, nativeFiles)
   }
   return HandlePasteCopy.handlePasteCopy(state, nativeFiles)

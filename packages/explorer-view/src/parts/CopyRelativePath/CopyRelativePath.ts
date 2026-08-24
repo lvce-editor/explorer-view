@@ -17,11 +17,12 @@ const getRelativePath = (root: string, pathSeparator: string, path: string): str
 }
 
 export const copyRelativePath = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { pathSeparator, root } = state
   const dirent = GetFocusedDirent.getFocusedDirent(state)
   if (!dirent) {
     return state
   }
-  const relativePath = getRelativePath(state.root, state.pathSeparator, dirent.path)
+  const relativePath = getRelativePath(root, pathSeparator, dirent.path)
   // TODO handle error
   await ClipBoard.writeText(relativePath)
   return state

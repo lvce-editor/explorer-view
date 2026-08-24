@@ -7,11 +7,12 @@ import { normalizeDirentType } from '../NormalizeDirentType/NormalizeDirentType.
 import * as OpenUri from '../OpenUri/OpenUri.ts'
 
 export const handleDoubleClick = async (state: ExplorerState, eventX: number, eventY: number): Promise<ExplorerState> => {
+  const { items } = state
   const index = getIndexFromPosition(state, eventX, eventY)
   if (index === -1) {
     return newFile(state)
   }
-  const item = state.items[index]
+  const item = items[index]
   const type = normalizeDirentType(item.type)
   if (type === DirentType.File || type === DirentType.SymLinkFile) {
     return CommandCompletion.set(state, OpenUri.openUri(item.path, true))

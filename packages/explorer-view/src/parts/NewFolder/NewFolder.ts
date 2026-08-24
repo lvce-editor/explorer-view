@@ -4,7 +4,8 @@ import { getEditingIcon } from '../GetEditingIcon/GetEditingIcon.ts'
 import * as NewDirent from '../NewDirent/NewDirent.ts'
 
 export const newFolder = async (state: ExplorerState): Promise<ExplorerState> => {
-  if (state.root === '' || state.isReadonly || state.editingIndex !== -1) {
+  const { editingIndex, isReadonly, root } = state
+  if (root === '' || isReadonly || editingIndex !== -1) {
     return state
   }
   const editingIcon = await getEditingIcon(ExplorerEditingType.CreateFolder, '')

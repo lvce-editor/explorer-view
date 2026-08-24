@@ -8,16 +8,17 @@ import * as PlatformType from '../PlatformType/PlatformType.ts'
 import { VError } from '../VError/VError.ts'
 
 export const handleDrop = async (state: ExplorerState, x: number, y: number, dropIdOrFileIds: number | readonly number[]): Promise<ExplorerState> => {
-  if (state.isReadonly && state.root !== '') {
+  const { isReadonly, items, platform, root } = state
+  if (isReadonly && root !== '') {
     if (typeof dropIdOrFileIds === 'number') {
       await DragAndDropWorker.discardDrop(dropIdOrFileIds)
     }
     return state
   }
   try {
-    const isElectron = state.platform === PlatformType.Electron
+    const isElectron = platform === PlatformType.Electron
     const { fileHandles, paths, uris } = await getDroppedItems(dropIdOrFileIds, isElectron)
-    const internalPaths = getInternalDragPaths(state.items, uris)
+    const internalPaths = getInternalDragPaths(items, uris)
     const droppedPaths = internalPaths.length > 0 ? internalPaths : paths
     const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)
     const fn = getDropHandler(index)

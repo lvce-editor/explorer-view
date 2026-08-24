@@ -4,9 +4,10 @@ import { getIndexFromPosition } from '../GetIndexFromPosition/GetIndexFromPositi
 import { handleDragOverIndex } from '../HandleDragOverIndex/HandleDragOverIndex.ts'
 
 export const handleDragOver = (state: ExplorerState, x: number, y: number): ExplorerState => {
+  const { isReadonly, root } = state
   Assert.number(x)
   Assert.number(y)
-  if (state.isReadonly && state.root !== '') {
+  if (isReadonly && root !== '') {
     return state
   }
   const index = getIndexFromPosition(state, x, y)

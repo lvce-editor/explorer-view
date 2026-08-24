@@ -4,7 +4,8 @@ import * as NewDirent from '../NewDirent/NewDirent.ts'
 
 // TODO much shared logic with newFolder
 export const newFile = (state: ExplorerState): Promise<ExplorerState> => {
-  if (state.root === '' || state.isReadonly) {
+  const { isReadonly, root } = state
+  if (root === '' || isReadonly) {
     return Promise.resolve(state)
   }
   return NewDirent.newDirent(state, ExplorerEditingType.CreateFile)
