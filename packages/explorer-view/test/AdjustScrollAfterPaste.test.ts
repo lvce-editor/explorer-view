@@ -2,6 +2,7 @@ import { test, expect } from '@jest/globals'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { adjustScrollAfterPaste } from '../src/parts/AdjustScrollAfterPaste/AdjustScrollAfterPaste.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('should adjust scroll when focused index is below minLineY', () => {
   const state: ExplorerState = {
@@ -77,4 +78,26 @@ test('should handle edge case with odd viewport size', () => {
   expect(result.minLineY).toBe(-1)
   expect(result.maxLineY).toBe(5)
   expect(result.deltaY).toBe(-20)
+})
+
+test('should use the current item count when the previous maximum is stale', () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    height: 100,
+    itemHeight: 20,
+    items: [
+      { depth: 0, name: 'a', path: '/a', selected: false, type: DirentType.Directory },
+      { depth: 0, name: 'b', path: '/b', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'a', path: '/b/a', selected: false, type: DirentType.Directory },
+    ],
+    maxLineY: 2,
+    minLineY: 0,
+  }
+
+  const result = adjustScrollAfterPaste(state, 2)
+
+  expect(result.focusedIndex).toBe(2)
+  expect(result.minLineY).toBe(0)
+  expect(result.maxLineY).toBe(3)
+  expect(result.deltaY).toBe(0)
 })

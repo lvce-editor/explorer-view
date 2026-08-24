@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-paste-twice'
 
-export const skip = 1
-
 export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
@@ -21,15 +19,16 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
   await Promise.all([Explorer.handlePaste(), Explorer.handlePaste()])
 
   // assert: source and target remain stable without duplicate tree rows for one URI
-  const a = Locator('.TreeItem[aria-label="a"]')
-  const b = Locator('.TreeItem[aria-label="b"]')
-  const sourceFiles = Locator('.TreeItem[aria-label="file.txt"]')
-  const duplicateSource = sourceFiles.nth(2)
+  const entries = await FileSystem.readDir(tmpDir)
+  const names = entries.map((entry) => entry.name)
+  if (!names.includes('a') || !names.includes('b')) {
+    throw new Error(`Expected source and target folders on disk, got ${JSON.stringify(names)}`)
+  }
+  const treeItems = Locator('.TreeItem')
+  await expect(treeItems).toHaveCount(5)
+  await expect(treeItems.nth(0)).toHaveAttribute('title', `${tmpDir}/a`)
+  const a = Locator(`.TreeItem[title="${tmpDir}/a"]`)
+  const b = Locator(`.TreeItem[title="${tmpDir}/b"]`)
   await expect(a).toBeVisible()
   await expect(b).toBeVisible()
-  await expect(duplicateSource).toBeHidden()
-
-  const treeItems = Locator('.TreeItem')
-  const extraTreeItem = treeItems.nth(5)
-  await expect(extraTreeItem).toBeHidden()
 }
