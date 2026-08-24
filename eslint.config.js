@@ -43,7 +43,6 @@ export default defineConfig([
       '@typescript-eslint/unbound-method': 'off',
       'virtual-dom/no-object-attribute-values': 'off',
       'virtual-dom/no-raw-text-children': 'off',
-      'virtual-dom/prefer-constants': 'off',
       'virtual-dom/prefer-merge-class-names': 'off',
     },
   },
