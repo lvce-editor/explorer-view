@@ -2,10 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-focus-index-delete'
 
-export const skip = 1
-
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
+  await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.setFiles([
     { content: 'content 1', uri: `${tmpDir}/file1.txt` },
@@ -19,14 +18,13 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Promise.all([Explorer.focusIndex(1), Explorer.removeDirent()])
 
   // assert: explorer should be stable — no crash, no stale focus
-  // file2.txt and file3.txt should always be visible
-  const file2 = Locator('.TreeItem[aria-label="file2.txt"]')
+  // file3.txt should always be visible; either file1.txt or file2.txt may be deleted
   const file3 = Locator('.TreeItem[aria-label="file3.txt"]')
-  await expect(file2).toBeVisible()
   await expect(file3).toBeVisible()
 
-  // At most 2 tree items
+  // Exactly two rows remain, with one valid active row
   const treeItems = Locator('.TreeItem')
-  const row2 = treeItems.nth(2)
-  await expect(row2).toBeHidden()
+  await expect(treeItems).toHaveCount(2)
+  const activeTreeItem = Locator('.TreeItem#TreeItemActive')
+  await expect(activeTreeItem).toHaveCount(1)
 }
