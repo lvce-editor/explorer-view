@@ -72,6 +72,12 @@ export default defineConfig([
     },
   },
   {
+    files: ['packages/e2e/scripts/**/*.ts'],
+    rules: {
+      'e2e/no-imports': 'off',
+    },
+  },
+  {
     files: ['**/*.test.ts'],
     rules: {
       'jest/no-disabled-tests': 'off',

@@ -48,7 +48,7 @@ jobs:
       - name: install playwright webkit dependency
         working-directory: ./packages/e2e
         run: npx playwright install webkit
-        if: runner.os == 'Linux'
+        if: runner.os != 'Windows'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e
@@ -64,7 +64,7 @@ jobs:
       - name: e2e webkit
         working-directory: ./packages/e2e
         run: npm run e2e:webkit:headless -- --timeout=2100000
-        if: runner.os == 'Linux'
+        if: runner.os != 'Windows'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: measure
