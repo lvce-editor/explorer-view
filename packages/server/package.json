@@ -11,9 +11,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@lvce-editor/main-area-worker": "9.52.0",
-    "@lvce-editor/server": "0.108.3",
-    "@lvce-editor/static-server": "0.108.3"
+    "@lvce-editor/main-area-worker": "9.53.0",
+    "@lvce-editor/server": "0.108.12",
+    "@lvce-editor/static-server": "0.108.12"
   },
   "devDependencies": {
     "@types/node": "^25.9.3"
