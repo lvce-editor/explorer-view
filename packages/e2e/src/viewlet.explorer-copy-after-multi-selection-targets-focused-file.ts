@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-copy-after-multi-selection-targets-focused-file'
 
-export const skip = 1
-
 export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace }) => {
   // arrange
   await ClipBoard.enableMemoryClipBoard()
@@ -13,13 +11,16 @@ export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace })
     { content: '', uri: `${tmpDir}/b.txt` },
     { content: '', uri: `${tmpDir}/c.txt` },
   ])
+  await FileSystem.mkdir(`${tmpDir}/target`)
   await Workspace.setPath(tmpDir)
-  await Explorer.selectIndices([0, 1])
+  await Explorer.selectIndices([1, 2])
 
   // act
-  await Explorer.focusIndex(2)
+  await Explorer.focusIndex(3)
   await Explorer.handleCopy()
+  await Explorer.focusIndex(0)
+  await Explorer.handlePaste()
 
   // assert
-  await ClipBoard.shouldHaveText('memfs:///workspace/c.txt')
+  await FileSystem.shouldHaveFile(`${tmpDir}/target/c.txt`, '')
 }
