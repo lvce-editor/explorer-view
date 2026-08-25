@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-context-menu-paste-file'
 
-export const skip = 1
+export const skip = ['webkit']
 
 export const test: Test = async ({ ClipBoard, ContextMenu, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
@@ -21,6 +21,6 @@ export const test: Test = async ({ ClipBoard, ContextMenu, expect, Explorer, Fil
   await ContextMenu.selectItem('Paste')
 
   // assert
-  const pastedFile = Locator('.TreeItem[aria-label="file2 copy.txt"]')
+  const pastedFile = Locator('.TreeItem[aria-label="file1 copy.txt"]')
   await expect(pastedFile).toBeVisible()
 }
