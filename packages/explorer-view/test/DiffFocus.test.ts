@@ -43,3 +43,19 @@ test('isEqual should return false when focus differs', () => {
   }
   expect(isEqual(oldState, newState)).toBe(false)
 })
+
+test('isEqual should return false when focus generation differs', () => {
+  const oldState = {
+    ...createDefaultState(),
+    focus: 1,
+    focused: true,
+    focusGeneration: 1,
+  }
+  const newState = {
+    ...createDefaultState(),
+    focus: 1,
+    focused: true,
+    focusGeneration: 2,
+  }
+  expect(isEqual(oldState, newState)).toBe(false)
+})

@@ -215,6 +215,27 @@ test('wrapListItemCommand schedules drag state changes for rendering', async () 
   expect(scheduledState.pointerDownIndex).toBe(2)
 })
 
+test('wrapListItemCommand schedules repeated focus requests for rendering', async () => {
+  const uid = 9012
+  const state = {
+    ...createDefaultState(),
+    focus: FocusId.List,
+    focused: true,
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+    return {
+      ...currentState,
+      focusGeneration: currentState.focusGeneration + 1,
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid)
+
+  const { scheduledState } = ExplorerStates.get(uid)
+  expect(scheduledState.focusGeneration).toBe(1)
+})
+
 test('wrapListItemCommandImmediate allows a callback while a queued command is running', async () => {
   const uid = 9004
   const state = createDefaultState()
