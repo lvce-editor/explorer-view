@@ -76,7 +76,27 @@ test('renderItems - load error message', () => {
   expect(dom).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        text: 'Could not open folder due to permission was denied (error code: EACCES).',
+        text: 'Could not open folder. Permission was denied. Error code: EACCES.',
+      }),
+    ]),
+  )
+})
+
+test('renderItems - remote load error shows diagnostic details and code', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...createDefaultState(),
+    errorCode: 'E_REMOTE_BACKEND_WEBSOCKET_ERROR',
+    errorMessage: 'Remote workspace backend WebSocket failed: Received unexpected server response: 503',
+    hasError: true,
+    root: 'remote-ssh://example.com/workspace',
+  }
+  const result = renderItems(oldState, newState)
+  const dom = result[2]
+  expect(dom).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        text: 'Could not open folder. Remote workspace backend WebSocket failed: Received unexpected server response: 503. Error code: E_REMOTE_BACKEND_WEBSOCKET_ERROR.',
       }),
     ]),
   )
@@ -104,7 +124,7 @@ test('renderItems - editing and load error messages are both passed and load err
   expect(dom).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        text: 'Could not open folder due to permission was denied (error code: EACCES).',
+        text: 'Could not open folder. Permission was denied. Error code: EACCES.',
       }),
     ]),
   )
