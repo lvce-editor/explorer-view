@@ -10,10 +10,15 @@ test('focus - assigns focus if not present', () => {
   expect(result).not.toBe(state)
 })
 
-test('focus - does not change state if focus present', () => {
+test('focus - requests focus again if focus present', () => {
   const state = { ...createDefaultState(), focus: 123 }
   const result = focus(state)
-  expect(result).toBe(state)
+  expect(result).toMatchObject({
+    focus: 123,
+    focused: true,
+    version: 2,
+  })
+  expect(result).not.toBe(state)
 })
 
 test('focus - focuses the existing target if explorer is not focused', () => {
@@ -22,6 +27,18 @@ test('focus - focuses the existing target if explorer is not focused', () => {
   expect(result).toMatchObject({
     focus: FocusId.List,
     focused: true,
+    version: 2,
   })
   expect(result).not.toBe(state)
+})
+
+test('focus - preserves an active rename input', () => {
+  const state = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    focus: FocusId.Input,
+    focused: true,
+  }
+  const result = focus(state)
+  expect(result).toBe(state)
 })

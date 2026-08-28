@@ -178,7 +178,13 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState, intermediate.scheduledState)
     if (hasSameVisibleExplorerItemInputs(intermediate.newState, updatedState)) {
-      if (updatedState.inputSource === InputSource.User || !hasSameDragDataInputs(intermediate.newState, updatedState)) {
+      if (
+        updatedState.inputSource === InputSource.User ||
+        !hasSameDragDataInputs(intermediate.newState, updatedState) ||
+        intermediate.newState.focus !== updatedState.focus ||
+        intermediate.newState.focused !== updatedState.focused ||
+        intermediate.newState.version !== updatedState.version
+      ) {
         set(id, intermediate.oldState, updatedState)
       }
       return {
