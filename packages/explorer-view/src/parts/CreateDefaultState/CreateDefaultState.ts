@@ -32,7 +32,6 @@ export const createDefaultState = (): ExplorerState => ({
   focus: 0,
   focused: true,
   focusedIndex: 0,
-  focusGeneration: 0,
   focusWord: '',
   focusWordTimeout: 1000,
   gitIgnoreDecorations: false,

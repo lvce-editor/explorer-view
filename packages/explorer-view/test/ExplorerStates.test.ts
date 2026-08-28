@@ -225,7 +225,7 @@ test('wrapListItemCommand schedules repeated focus requests for rendering', asyn
   const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
     return {
       ...currentState,
-      focusGeneration: currentState.focusGeneration + 1,
+      version: currentState.version + 1,
     }
   })
 
@@ -233,7 +233,7 @@ test('wrapListItemCommand schedules repeated focus requests for rendering', asyn
   await wrapped(uid)
 
   const { scheduledState } = ExplorerStates.get(uid)
-  expect(scheduledState.focusGeneration).toBe(1)
+  expect(scheduledState.version).toBe(2)
 })
 
 test('wrapListItemCommandImmediate allows a callback while a queued command is running', async () => {

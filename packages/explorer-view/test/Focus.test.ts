@@ -16,7 +16,7 @@ test('focus - requests focus again if focus present', () => {
   expect(result).toMatchObject({
     focus: 123,
     focused: true,
-    focusGeneration: 1,
+    version: 2,
   })
   expect(result).not.toBe(state)
 })
@@ -27,7 +27,7 @@ test('focus - focuses the existing target if explorer is not focused', () => {
   expect(result).toMatchObject({
     focus: FocusId.List,
     focused: true,
-    focusGeneration: 1,
+    version: 2,
   })
   expect(result).not.toBe(state)
 })

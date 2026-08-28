@@ -2,7 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FocusId from '../FocusId/FocusId.ts'
 
 export const focus = (state: ExplorerState): ExplorerState => {
-  const { editingIndex, focus, focusGeneration } = state
+  const { editingIndex, focus, version } = state
   if (editingIndex !== -1) {
     return state
   }
@@ -10,6 +10,6 @@ export const focus = (state: ExplorerState): ExplorerState => {
     ...state,
     focus: focus || FocusId.List,
     focused: true,
-    focusGeneration: focusGeneration + 1,
+    version: version + 1,
   }
 }
