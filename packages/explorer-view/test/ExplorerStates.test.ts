@@ -236,6 +236,27 @@ test('wrapListItemCommand schedules repeated focus requests for rendering', asyn
   expect(scheduledState.version).toBe(2)
 })
 
+test('wrapListItemCommand schedules explorer blur for rendering', async () => {
+  const uid = 9013
+  const state = {
+    ...createDefaultState(),
+    focus: FocusId.List,
+    focused: true,
+  }
+  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+    return {
+      ...currentState,
+      focused: false,
+    }
+  })
+
+  ExplorerStates.set(uid, state, state)
+  await wrapped(uid)
+
+  const { scheduledState } = ExplorerStates.get(uid)
+  expect(scheduledState.focused).toBe(false)
+})
+
 test('wrapListItemCommandImmediate allows a callback while a queued command is running', async () => {
   const uid = 9004
   const state = createDefaultState()
