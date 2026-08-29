@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-reveal-from-tab-context-menu'
 
 export const skip = 1
 
-export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Locator, Main, Workspace }) => {
+export const test: Test = async ({ Command, ContextMenu, expect, Explorer, FileSystem, Locator, Main, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   const firstFile = `${tmpDir}/a.txt`
@@ -26,6 +26,8 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   await Main.openUri(secondFile)
   const tab = Locator('.MainTab[title$="b.txt"]')
   await expect(tab).toBeVisible()
+  await Command.execute('Layout.hideSideBar')
+  await expect(secondTreeItem).toBeHidden()
 
   // act
   await Main.handleTabContextMenu(0, 0, 0)
@@ -34,5 +36,6 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   await ContextMenu.selectItem('Reveal in Explorer')
 
   // assert
+  await expect(secondTreeItem).toBeVisible()
   await expect(secondTreeItem).toHaveId('TreeItemActive')
 }
