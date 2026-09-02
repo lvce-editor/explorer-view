@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { DragAndDropWorker, RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleNativePaste } from '../src/parts/HandleNativePaste/HandleNativePaste.ts'
@@ -7,16 +7,10 @@ import * as NativeFileTypes from '../src/parts/NativeFileTypes/NativeFileTypes.t
 import * as PlatformType from '../src/parts/PlatformType/PlatformType.ts'
 
 test('copies a native Electron file into the focused workspace folder', async () => {
-  using dragRpc = DragAndDropWorker.registerMockRpc({
-    'DragAndDrop.getDroppedItems'() {
-      return {
-        files: [{ handle: undefined, kind: 'file', name: 'Main.elm', path: '/home/test/Main.elm', uri: 'file:///home/test/Main.elm' }],
-        strings: [],
-        uris: ['file:///home/test/Main.elm'],
-      }
-    },
-  })
   using rendererRpc = RendererWorker.registerMockRpc({
+    'FileHandles.get'() {
+      return [{ kind: 'file-legacy', path: '/home/test/Main.elm', value: new File(['content'], 'Main.elm') }]
+    },
     'FileSystem.copy'() {},
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/workspace/src') {
@@ -41,8 +35,8 @@ test('copies a native Electron file into the focused workspace folder', async ()
 
   await handleNativePaste(state, [41])
 
-  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItems', [41], true]])
   expect(rendererRpc.invocations).toEqual([
+    ['FileHandles.get', [41]],
     ['FileSystem.readDirWithFileTypes', '/workspace/src'],
     ['FileSystem.copy', '/home/test/Main.elm', '/workspace/src/Main.elm'],
     ['FileSystem.readDirWithFileTypes', '/workspace'],
@@ -70,8 +64,8 @@ test('does not paste native files into a readonly workspace', async () => {
 })
 
 test('wraps native clipboard resolution errors', async () => {
-  using _dragRpc = DragAndDropWorker.registerMockRpc({
-    'DragAndDrop.getDroppedItems'() {
+  using _rendererRpc = RendererWorker.registerMockRpc({
+    'FileHandles.get'() {
       throw new Error('native path unavailable')
     },
   })

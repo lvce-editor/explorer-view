@@ -13,7 +13,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const fileHandle = await opfsRoot.getFileHandle('dropped.txt', { create: true })
 
   // act
-  await Explorer.handleDropIndex([fileHandle], [], [], 0)
+  await Explorer.handleDropIndex([fileHandle], [], 0)
 
   // assert
   const droppedAtRoot = Locator(`.TreeItem[title="${tmpDir}/dropped.txt"]`)

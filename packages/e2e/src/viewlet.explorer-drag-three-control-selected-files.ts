@@ -15,7 +15,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.toggleIndividualSelection(2)
   await Explorer.toggleIndividualSelection(3)
 
-  await Explorer.handleDropIndex([], [], [`${tmpDir}/a.txt`, `${tmpDir}/b.txt`, `${tmpDir}/c.txt`], 0)
+  await Explorer.handleDropIndex([], [`${tmpDir}/a.txt`, `${tmpDir}/b.txt`, `${tmpDir}/c.txt`], 0)
 
   for (const file of ['a.txt', 'b.txt', 'c.txt']) {
     const moved = Locator(`.TreeItem[title="${tmpDir}/destination/${file}"]`)

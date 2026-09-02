@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.focusIndex(1)
   await Explorer.toggleIndividualSelection(2)
 
-  await Explorer.handleDropIndex([], [], [`${tmpDir}/source-folder`, `${tmpDir}/source.txt`], 0)
+  await Explorer.handleDropIndex([], [`${tmpDir}/source-folder`, `${tmpDir}/source.txt`], 0)
   await Explorer.expandRecursively()
 
   const movedNested = Locator(`.TreeItem[title="${tmpDir}/destination/source-folder/nested.txt"]`)

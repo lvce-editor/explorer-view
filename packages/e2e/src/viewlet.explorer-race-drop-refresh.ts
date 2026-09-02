@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-race-drop-refresh'
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ DragAndDrop, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
@@ -15,7 +15,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.handleDragOverIndex(2)
 
   // act: handleDrop drops the dragged file, refresh rebuilds the tree — both fire concurrently
-  await Promise.all([Explorer.handleDrop(0, 0, [], []), Explorer.refresh()])
+  const dropId = await DragAndDrop.createDropSession([])
+  await Promise.all([Explorer.handleDrop(0, 0, dropId), Explorer.refresh()])
 
   // assert: explorer should be stable — no crash, no duplicate items
   // folder a and folder b should always be visible

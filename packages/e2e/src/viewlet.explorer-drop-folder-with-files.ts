@@ -20,12 +20,11 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await writable.write('hello world')
   await writable.close()
   const fileHandles = [directoryHandle]
-  const files: File[] = []
   const paths: string[] = []
   const index = 0
 
   // act
-  await Explorer.handleDropIndex(fileHandles, files, paths, index)
+  await Explorer.handleDropIndex(fileHandles, paths, index)
   await Explorer.expandRecursively()
 
   // assert

@@ -4,19 +4,20 @@ export const name = 'viewlet.explorer-drop-file-empty-workspace'
 
 export const skip = ['webkit']
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ DragAndDrop, expect, Explorer, Locator, Workspace }) => {
   // arrange
   await Workspace.setPath('')
   const opfsRoot = await navigator.storage.getDirectory()
   const fileHandle = await opfsRoot.getFileHandle('dropped-file.txt', {
     create: true,
   })
-  const id = await FileSystem.registerFileHandle(fileHandle)
+  const file = await fileHandle.getFile()
+  const dropId = await DragAndDrop.createDropSession([{ file, fileSystemHandle: fileHandle, kind: 'file', type: file.type }])
   const welcomeMessage = Locator('.Explorer .WelcomeMessage')
   const treeItems = Locator('.TreeItem')
 
   // act
-  await Explorer.handleDrop(5000, 5000, [id], [])
+  await Explorer.handleDrop(5000, 5000, dropId)
 
   // assert
   await expect(welcomeMessage).toBeVisible()

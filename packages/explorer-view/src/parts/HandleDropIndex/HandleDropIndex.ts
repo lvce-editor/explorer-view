@@ -1,6 +1,5 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-import type { DroppedArgs } from '../UploadFileSystemHandles/UploadFileSystemHandles.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import * as GetParentStartIndex from '../GetParentStartIndex/GetParentStartIndex.ts'
@@ -33,9 +32,7 @@ const handleDropIntoFolder = async (
   state: ExplorerState,
   dirent: ExplorerItem,
   index: number,
-  fileHandles: DroppedArgs,
-  files: readonly File[],
-  paths: readonly string[],
+  fileHandles: readonly FileSystemHandle[],
 ): Promise<ExplorerState> => {
   const { excluded, items, pathSeparator, root } = state
 
@@ -55,22 +52,20 @@ const handleDropIntoFile = (
   state: ExplorerState,
   dirent: ExplorerItem,
   index: number,
-  fileHandles: DroppedArgs,
-  files: readonly File[],
+  fileHandles: readonly FileSystemHandle[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
   const { items } = state
   const parentIndex = GetParentStartIndex.getParentStartIndex(items, index)
   if (parentIndex === -1) {
-    return HandleDropRoot.handleDropRoot(state, fileHandles, files, paths)
+    return HandleDropRoot.handleDropRoot(state, fileHandles, paths)
   }
-  return handleDropIndex(state, fileHandles, files, paths, parentIndex)
+  return handleDropIndex(state, fileHandles, paths, parentIndex)
 }
 
 export const handleDropIndex = async (
   state: ExplorerState,
-  fileHandles: DroppedArgs,
-  files: readonly File[],
+  fileHandles: readonly FileSystemHandle[],
   paths: readonly string[],
   index: number,
 ): Promise<ExplorerState> => {
@@ -88,9 +83,9 @@ export const handleDropIndex = async (
   switch (dirent.type) {
     case DirentType.Directory:
     case DirentType.DirectoryExpanded:
-      return handleDropIntoFolder(state, dirent, index, fileHandles, files, paths)
+      return handleDropIntoFolder(state, dirent, index, fileHandles)
     case DirentType.File:
-      return handleDropIntoFile(state, dirent, index, fileHandles, files, paths)
+      return handleDropIntoFile(state, dirent, index, fileHandles, paths)
     default:
       return state
   }

@@ -16,12 +16,11 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     create: true,
   })
   const fileHandles = [fileHandle]
-  const files: File[] = []
   const paths: string[] = []
   const index = 0
 
   // act
-  await Explorer.handleDropIndex(fileHandles, files, paths, index)
+  await Explorer.handleDropIndex(fileHandles, paths, index)
 
   // assert
   const newFile = Locator('.TreeItem[aria-label="my first file"]')
