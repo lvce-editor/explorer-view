@@ -16,9 +16,6 @@ const handleFileIcons = (requests: readonly any[]): readonly string[] => {
 
 test('newDirent sets focus and updates state when no item is focused', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -70,9 +67,6 @@ test('newDirent sets focus and updates state when no item is focused', async () 
 
 test('newDirent handles directory click when focused item is a directory', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -126,9 +120,6 @@ test('newDirent handles directory click when focused item is a directory', async
 
 test('newDirent updates state when focused item is not a directory', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -191,9 +182,6 @@ test('newDirent updates state when focused item is not a directory', async () =>
 
 test('newDirent expands a closed folder when creating a file inside it', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },

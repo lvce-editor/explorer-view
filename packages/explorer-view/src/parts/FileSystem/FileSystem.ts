@@ -12,10 +12,6 @@ export const readFile = async (uri: string): Promise<string> => {
   return FileSystemWorker.invoke('FileSystem.readFile', uri)
 }
 
-export const getPathSeparator = async (root: string): Promise<string> => {
-  return FileSystemWorker.invoke('FileSystem.getPathSeparator', root)
-}
-
 export const isReadonly = async (root: string): Promise<boolean> => {
   return FileSystemWorker.invoke('FileSystem.isReadonly', root)
 }

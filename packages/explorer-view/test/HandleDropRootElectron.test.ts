@@ -7,9 +7,6 @@ import { handleDrop } from '../src/parts/HandleDropRootElectron/HandleDropRootEl
 
 test('handleDropRootElectron opens dropped folder as workspace when workspace is empty', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.isReadonly'() {
       return false
     },
@@ -56,7 +53,6 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
-    ['FileSystem.getPathSeparator', '/home/simon/dotfiles'],
     ['FileSystem.isReadonly', '/home/simon/dotfiles'],
     ['FileSystem.readDirWithFileTypes', '/home/simon/dotfiles'],
   ])

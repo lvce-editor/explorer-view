@@ -7,9 +7,6 @@ import { newFolder } from '../src/parts/NewFolder/NewFolder.ts'
 
 test('newFolder', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },

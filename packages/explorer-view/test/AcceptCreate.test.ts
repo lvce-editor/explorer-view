@@ -23,9 +23,6 @@ test.skip('acceptCreate - empty file name', async () => {
 
 test('acceptCreate - successful file creation', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.mkdir'() {
       return
     },
@@ -126,9 +123,6 @@ test('acceptCreate - successful file creation', async () => {
 
 test('acceptCreate - successful folder creation does not open uri', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.mkdir'() {
       return
     },
@@ -199,9 +193,6 @@ test('acceptCreate - successful folder creation does not open uri', async () => 
 
 test('acceptCreate - nested folder creation uses the file parent when a file is focused', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.mkdir'() {
       return
     },

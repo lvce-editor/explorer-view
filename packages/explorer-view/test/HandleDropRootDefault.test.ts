@@ -7,9 +7,6 @@ import { handleDrop } from '../src/parts/HandleDropRootDefault/HandleDropRootDef
 
 test('handleDropRootDefault opens dropped folder as workspace when workspace is empty', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.isReadonly'() {
       return false
     },
@@ -60,7 +57,6 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
-    ['FileSystem.getPathSeparator', 'html://dropped-folder'],
     ['FileSystem.isReadonly', 'html://dropped-folder'],
     ['FileSystem.readDirWithFileTypes', 'html://dropped-folder'],
   ])
@@ -69,9 +65,6 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
 
 test('handleDropRootDefault opens first dropped folder as workspace when two folders are dropped into empty workspace', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.isReadonly'() {
       return false
     },
@@ -126,7 +119,6 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
-    ['FileSystem.getPathSeparator', 'html://first-folder'],
     ['FileSystem.isReadonly', 'html://first-folder'],
     ['FileSystem.readDirWithFileTypes', 'html://first-folder'],
   ])
@@ -155,9 +147,6 @@ test('handleDropRootDefault ignores dropped file when workspace is empty', async
 
 test('handleDropRootDefault opens dropped folder as workspace when file and folder are dropped into empty workspace', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.isReadonly'() {
       return false
     },
@@ -212,7 +201,6 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getPath'],
-    ['FileSystem.getPathSeparator', 'html://dropped-folder'],
     ['FileSystem.isReadonly', 'html://dropped-folder'],
     ['FileSystem.readDirWithFileTypes', 'html://dropped-folder'],
   ])
