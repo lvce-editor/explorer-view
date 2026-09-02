@@ -11,9 +11,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@lvce-editor/drag-and-drop-worker": "0.10.0",
     "@lvce-editor/main-area-worker": "9.53.0",
-    "@lvce-editor/server": "0.112.3",
-    "@lvce-editor/static-server": "0.108.14"
+    "@lvce-editor/server": "0.108.14",
+    "@lvce-editor/static-server": "0.108.14",
+    "@lvce-editor/test-worker": "17.17.1"
   },
   "devDependencies": {
     "@types/node": "^25.9.3"
