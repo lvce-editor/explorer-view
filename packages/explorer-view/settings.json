@@ -4,7 +4,7 @@
     "description": "Controls whether the Explorer uses chevrons instead of folder icons to show expanded and collapsed folders.",
     "heading": "Use Chevrons",
     "id": "explorer.useChevrons",
-    "type": 3,
+    "type": "boolean",
     "value": "true"
   },
   {
@@ -12,7 +12,7 @@
     "description": "Controls whether the Explorer asks for confirmation before deleting files and folders.",
     "heading": "Confirm Delete",
     "id": "explorer.confirmdelete",
-    "type": 3,
+    "type": "boolean",
     "value": "true"
   },
   {
@@ -20,7 +20,7 @@
     "description": "Controls whether the Explorer asks for confirmation before pasting files and folders.",
     "heading": "Confirm Paste",
     "id": "explorer.confirmpaste",
-    "type": 3,
+    "type": "boolean",
     "value": "false"
   },
   {
@@ -28,7 +28,7 @@
     "description": "Controls whether files ignored by Git are decorated in the Explorer.",
     "heading": "Git Ignore Decorations",
     "id": "explorer.gitIgnoreDecorations",
-    "type": 3,
+    "type": "boolean",
     "value": "true"
   },
   {
@@ -36,7 +36,7 @@
     "description": "Controls whether expanded folders are preserved for the current workspace when the Explorer rebuilds and across editor restarts.",
     "heading": "Preserve Expand State",
     "id": "explorer.preserveExpandState",
-    "type": 3,
+    "type": "boolean",
     "value": "true"
   },
   {
@@ -44,7 +44,7 @@
     "description": "Controls whether source control decorations are shown in the Explorer.",
     "heading": "Source Control Decorations",
     "id": "explorer.sourceControlDecorations",
-    "type": 3,
+    "type": "boolean",
     "value": "true"
   },
   {
@@ -52,7 +52,7 @@
     "description": "Configures glob patterns for excluding files and folders from the Explorer.",
     "heading": "Exclude",
     "id": "files.exclude",
-    "type": 4,
+    "type": "array",
     "value": {
       "**/.DS_Store": true,
       "**/.git": true,
