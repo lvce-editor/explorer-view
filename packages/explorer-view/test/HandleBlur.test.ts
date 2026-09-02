@@ -19,9 +19,6 @@ test('handleBlur - when not editing, clears visual and keyboard focus', async ()
 
 test.skip('handleBlur - when editing, keeps state unchanged', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.writeFile'() {
       return
     },
@@ -62,7 +59,6 @@ test.skip('handleBlur - when editing, keeps state unchanged', async () => {
     maxLineY: 2,
   })
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.getPathSeparator'],
     ['FileSystem.writeFile', '1/created.txt', ''],
     ['IconTheme.getFileIcon', { depth: 0, name: '1', path: '1', selected: false, type: DirentType.File }],
     [

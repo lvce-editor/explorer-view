@@ -66,9 +66,6 @@ test('expandRecursively - replaces focused directory children', async () => {
 
 test.skip('expand root directory', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return [
         { isSymbolicLink: false, name: 'file1.txt', type: 'file' },
@@ -100,9 +97,6 @@ test.skip('expand root directory', async () => {
 
 test.skip('expand focused directory', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return [
         { isSymbolicLink: false, name: 'file1.txt', type: 'file' },

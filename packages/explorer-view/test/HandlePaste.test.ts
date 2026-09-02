@@ -31,9 +31,6 @@ test('should handle paste with copy type', async () => {
       }
     },
     'FileSystem.copy'() {},
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -69,9 +66,6 @@ test('should handle paste with cut type', async () => {
       }
     },
     'FileSystem.copy'() {},
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -108,9 +102,6 @@ test('should handle paste with multiple files', async () => {
       }
     },
     'FileSystem.copy'() {},
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -147,9 +138,6 @@ test('should handle paste with empty files array', async () => {
         type: NativeFileTypes.Copy,
       }
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -183,9 +171,6 @@ test('should preserve state properties when handling paste', async () => {
       }
     },
     'FileSystem.copy'() {},
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },

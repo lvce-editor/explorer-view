@@ -99,18 +99,6 @@ test('getRealPath', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.getRealPath', '/test/link']])
 })
 
-test('getPathSeparator', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
-  })
-
-  const result = await FileSystem.getPathSeparator('/')
-  expect(result).toBe('/')
-  expect(mockRpc.invocations).toEqual([['FileSystem.getPathSeparator', '/']])
-})
-
 test('isReadonly', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.isReadonly'() {

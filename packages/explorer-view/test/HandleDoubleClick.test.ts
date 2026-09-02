@@ -8,9 +8,6 @@ import { handleDoubleClick } from '../src/parts/HandleDoubleClick/HandleDoubleCl
 
 test('handleDoubleClick - double click on empty area creates new file', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -147,9 +144,6 @@ test('handleDoubleClick - double click on item with multiple items returns same 
 
 test('handleDoubleClick - double click on empty area with scrolled state creates new file', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },

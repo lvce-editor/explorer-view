@@ -11,9 +11,6 @@ test('should focus on first newly created file after paste copy', async () => {
     'FileSystem.copy'() {
       return undefined
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       readCount++
       return readCount === 1
@@ -63,9 +60,6 @@ test('should handle paste copy with multiple files and focus on first', async ()
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.copy'() {
       return undefined
-    },
-    'FileSystem.getPathSeparator'() {
-      return '/'
     },
     'FileSystem.readDirWithFileTypes'() {
       readCount++
@@ -122,9 +116,6 @@ test('should handle paste copy with multiple files and focus on first', async ()
 
 test('should handle paste copy with empty files array', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'() {
       return []
     },
@@ -163,9 +154,6 @@ test('should handle paste copy with empty files array', async () => {
 test('should preserve existing file when pasting into collapsed folder', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.copy'() {},
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/test/target') {
         return [{ name: 'file.txt', type: DirentType.File }]

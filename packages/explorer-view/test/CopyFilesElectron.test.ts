@@ -8,9 +8,6 @@ test('copyFilesElectron', async () => {
     'FileSystem.copy'() {
       return undefined
     },
-    'FileSystem.getPathSeparator'() {
-      return '/'
-    },
   })
 
   const root = '/test'
@@ -23,7 +20,6 @@ test('copyFilesElectron', async () => {
 
   await copyFilesElectron(root, fileHandles, files, paths)
   expect(mockRpc.invocations).toEqual([
-    ['FileSystem.getPathSeparator', '/test'],
     ['FileSystem.copy', '/source/file1.txt', '/test/file1.txt'],
     ['FileSystem.copy', '/source/file2.txt', '/test/file2.txt'],
   ])

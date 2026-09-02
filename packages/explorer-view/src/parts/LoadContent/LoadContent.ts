@@ -5,12 +5,12 @@ import * as GetErrorMessage from '../GetErrorMessage/GetErrorMessage.ts'
 import * as GetFileDecorations from '../GetFileDecorations/GetFileDecorations.ts'
 import * as GetFriendlyErrorMessage from '../GetFriendlyErrorMessage/GetFriendlyErrorMessage.ts'
 import * as GetGitIgnoredUris from '../GetGitIgnoredUris/GetGitIgnoredUris.ts'
-import * as GetPathSeparator from '../GetPathSeparator/GetPathSeparator.ts'
 import * as GetRestoredDeltaY from '../GetRestoredDeltaY/GetRestoredDeltaY.ts'
 import * as GetSavedRoot from '../GetSavedRoot/GetSavedRoot.ts'
 import { getScheme } from '../GetScheme/GetScheme.ts'
 import * as GetSettings from '../GetSettings/GetSettings.ts'
 import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
+import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
 
 const getExpandedPaths = (
@@ -40,11 +40,8 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
   const root = GetSavedRoot.getSavedRoot(savedState, workspacePath)
   const expandedPaths = getExpandedPaths(savedState, root, currentRoot, currentExpandedPaths, preserveExpandState)
   try {
-    // TODO path separator could be restored from saved state
-    const [pathSeparator, isReadonly] = await Promise.all([
-      GetPathSeparator.getPathSeparator(root), // TODO only load path separator once
-      root === '' ? false : FileSystem.isReadonly(root),
-    ])
+    const pathSeparator = PathSeparatorType.Slash
+    const isReadonly = root === '' ? false : await FileSystem.isReadonly(root)
     const restoredDirents = await RestoreExpandedState.restoreExpandedState(expandedPaths, root, pathSeparator, excluded)
     const rawDeltaY = GetRestoredDeltaY.getRestoredDeltaY(savedState)
     const maxDeltaY = Math.max(restoredDirents.length * itemHeight - height, 0)
