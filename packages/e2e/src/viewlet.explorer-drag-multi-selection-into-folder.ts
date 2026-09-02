@@ -26,7 +26,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // act
   await Explorer.focusIndex(0)
-  await Explorer.handleDropIndex([aHandle, bHandle, folderHandle], [], [], 0)
+  await Explorer.handleDropIndex([aHandle, bHandle, folderHandle], [], 0)
   await Explorer.expandRecursively()
 
   // assert

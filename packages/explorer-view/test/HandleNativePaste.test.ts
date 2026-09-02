@@ -8,15 +8,15 @@ import * as PlatformType from '../src/parts/PlatformType/PlatformType.ts'
 
 test('copies a native Electron file into the focused workspace folder', async () => {
   using rendererRpc = RendererWorker.registerMockRpc({
+    'FileHandles.get'() {
+      return [{ kind: 'file-legacy', path: '/home/test/Main.elm', value: new File(['content'], 'Main.elm') }]
+    },
     'FileSystem.copy'() {},
     'FileSystem.readDirWithFileTypes'(path: string) {
       if (path === '/workspace/src') {
         return []
       }
       return [{ name: 'src', type: DirentType.Directory }]
-    },
-    'FileSystemHandle.getFileHandles'() {
-      return [{ kind: 'file-legacy', path: '/home/test/Main.elm', value: new File(['content'], 'Main.elm') }]
     },
     'IconTheme.getIcons'() {
       return ['']
@@ -36,7 +36,7 @@ test('copies a native Electron file into the focused workspace folder', async ()
   await handleNativePaste(state, [41])
 
   expect(rendererRpc.invocations).toEqual([
-    ['FileSystemHandle.getFileHandles', [41]],
+    ['FileHandles.get', [41]],
     ['FileSystem.readDirWithFileTypes', '/workspace/src'],
     ['FileSystem.copy', '/home/test/Main.elm', '/workspace/src/Main.elm'],
     ['FileSystem.readDirWithFileTypes', '/workspace'],
@@ -65,7 +65,7 @@ test('does not paste native files into a readonly workspace', async () => {
 
 test('wraps native clipboard resolution errors', async () => {
   using _rendererRpc = RendererWorker.registerMockRpc({
-    'FileSystemHandle.getFileHandles'() {
+    'FileHandles.get'() {
       throw new Error('native path unavailable')
     },
   })

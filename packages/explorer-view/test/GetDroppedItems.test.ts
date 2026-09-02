@@ -5,7 +5,7 @@ import { getClipboardItems, getDroppedItems } from '../src/parts/GetDroppedItems
 test('normalizes worker files for browser explorer handling', async () => {
   const handle = { kind: 'file', name: 'notes.txt' }
   using rendererRpc = RendererWorker.registerMockRpc({
-    'FileSystemHandle.getFileHandles'() {
+    'FileHandles.get'() {
       return [
         { kind: 'file', path: '', value: handle },
         { kind: 'file-legacy', path: '', value: new File(['legacy'], 'legacy.txt') },
@@ -14,12 +14,12 @@ test('normalizes worker files for browser explorer handling', async () => {
   })
 
   expect(await getClipboardItems([1, 2], false)).toEqual({ fileHandles: [handle], paths: [''], uris: [] })
-  expect(rendererRpc.invocations).toEqual([['FileSystemHandle.getFileHandles', [1, 2]]])
+  expect(rendererRpc.invocations).toEqual([['FileHandles.get', [1, 2]]])
 })
 
 test('keeps path-only electron files', async () => {
   using _rendererRpc = RendererWorker.registerMockRpc({
-    'FileSystemHandle.getFileHandles'() {
+    'FileHandles.get'() {
       return [{ kind: 'file-legacy', path: '/tmp/legacy.txt', value: new File(['legacy'], 'legacy.txt') }]
     },
   })

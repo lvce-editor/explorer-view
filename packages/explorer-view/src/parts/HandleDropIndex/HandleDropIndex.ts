@@ -33,7 +33,6 @@ const handleDropIntoFolder = async (
   dirent: ExplorerItem,
   index: number,
   fileHandles: readonly FileSystemHandle[],
-  paths: readonly string[],
 ): Promise<ExplorerState> => {
   const { excluded, items, pathSeparator, root } = state
 
@@ -84,7 +83,7 @@ export const handleDropIndex = async (
   switch (dirent.type) {
     case DirentType.Directory:
     case DirentType.DirectoryExpanded:
-      return handleDropIntoFolder(state, dirent, index, fileHandles, paths)
+      return handleDropIntoFolder(state, dirent, index, fileHandles)
     case DirentType.File:
       return handleDropIntoFile(state, dirent, index, fileHandles, paths)
     default:

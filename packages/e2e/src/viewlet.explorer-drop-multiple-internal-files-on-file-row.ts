@@ -13,7 +13,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
 
-  await Explorer.handleDropIndex([], [], [`${tmpDir}/one.txt`, `${tmpDir}/two.txt`], 1)
+  await Explorer.handleDropIndex([], [`${tmpDir}/one.txt`, `${tmpDir}/two.txt`], 1)
 
   const movedOne = Locator(`.TreeItem[title="${tmpDir}/folder/one.txt"]`)
   const movedTwo = Locator(`.TreeItem[title="${tmpDir}/folder/two.txt"]`)

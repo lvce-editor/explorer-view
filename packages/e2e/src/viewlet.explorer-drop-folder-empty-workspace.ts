@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-drop-folder-empty-workspace'
 
 export const skip = ['webkit']
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ DragAndDrop, expect, Explorer, Locator, Workspace }) => {
   // arrange
   await Workspace.setPath('')
   const opfsRoot = await navigator.storage.getDirectory()
@@ -17,11 +17,11 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const writable = await nestedFileHandle.createWritable({ keepExistingData: false })
   await writable.write('hello world')
   await writable.close()
-  const id = await FileSystem.registerFileHandle(directoryHandle)
+  const dropId = await DragAndDrop.createDropSession([{ fileSystemHandle: directoryHandle, kind: 'file', type: '' }])
   const welcomeMessage = Locator('.Explorer .WelcomeMessage')
 
   // act
-  await Explorer.handleDrop(5000, 5000, [id], [])
+  await Explorer.handleDrop(5000, 5000, dropId)
 
   // assert
   await expect(welcomeMessage).toBeHidden()

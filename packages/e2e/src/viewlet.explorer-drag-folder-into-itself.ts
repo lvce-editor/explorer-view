@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.focusFirst()
 
   // act
-  await Explorer.handleDropIndex([folderHandle], [], [], 0)
+  await Explorer.handleDropIndex([folderHandle], [], 0)
 
   // assert
   const folder = Locator('.TreeItem[aria-label="folder"]')

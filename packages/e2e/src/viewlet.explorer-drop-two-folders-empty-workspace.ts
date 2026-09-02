@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-drop-two-folders-empty-workspace'
 
 export const skip = ['webkit']
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ DragAndDrop, expect, Explorer, Locator, Workspace }) => {
   // arrange
   await Workspace.setPath('')
   const opfsRoot = await navigator.storage.getDirectory()
@@ -26,14 +26,16 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const secondWritable = await secondNestedFileHandle.createWritable({ keepExistingData: false })
   await secondWritable.write('second')
   await secondWritable.close()
-  const firstId = await FileSystem.registerFileHandle(firstDirectoryHandle)
-  const secondId = await FileSystem.registerFileHandle(secondDirectoryHandle)
+  const dropId = await DragAndDrop.createDropSession([
+    { fileSystemHandle: firstDirectoryHandle, kind: 'file', type: '' },
+    { fileSystemHandle: secondDirectoryHandle, kind: 'file', type: '' },
+  ])
   const welcomeMessage = Locator('.Explorer .WelcomeMessage')
   const firstNestedFile = Locator('.TreeItem[aria-label="first-inside.txt"]')
   const secondNestedFile = Locator('.TreeItem[aria-label="second-inside.txt"]')
 
   // act
-  await Explorer.handleDrop(5000, 5000, [firstId, secondId], [])
+  await Explorer.handleDrop(5000, 5000, dropId)
 
   // assert
   await expect(welcomeMessage).toBeHidden()

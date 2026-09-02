@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-handle-drop'
 
 export const skip = ['webkit']
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ DragAndDrop, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.setFiles([
@@ -18,11 +18,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     create: true,
   })
   const file = await fileHandle.getFile()
-  const fileList = [file]
-  const id = await FileSystem.registerFileHandle(fileHandle)
+  const dropId = await DragAndDrop.createDropSession([{ file, fileSystemHandle: fileHandle, kind: 'file', type: file.type }])
 
   // act
-  await Explorer.handleDrop(0, 0, [id], fileList)
+  await Explorer.handleDrop(0, 0, dropId)
 
   // assert
   const droppedFile = Locator('.TreeItem', { hasText: 'dropped-file.txt' })
