@@ -6,7 +6,7 @@ import { handleDrop } from '../src/parts/HandleDrop/HandleDrop.ts'
 
 test('handleDrop - successful drop', async () => {
   using dragRpc = DragAndDropWorker.registerMockRpc({
-    'DragAndDrop.getDroppedItems'() {
+    'DragAndDrop.getDroppedItemsByDropId'() {
       return { files: [], strings: [], uris: [] }
     },
   })
@@ -21,9 +21,9 @@ test('handleDrop - successful drop', async () => {
 
   const state = createDefaultState()
 
-  const result = await handleDrop(state, 0, 0, [1])
+  const result = await handleDrop(state, 0, 0, 1)
   expect(result).toBeDefined()
-  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItems', [1], false]])
+  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 1, false]])
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
 
@@ -43,21 +43,21 @@ test('handleDrop - discards an opt-in drop for a readonly workspace', async () =
 
 test('handleDrop - error case', async () => {
   using dragRpc = DragAndDropWorker.registerMockRpc({
-    'DragAndDrop.getDroppedItems'() {
+    'DragAndDrop.getDroppedItemsByDropId'() {
       throw new Error('test error')
     },
   })
 
   const state = createDefaultState()
 
-  await expect(handleDrop(state, 0, 0, [1])).rejects.toThrow(new Error('Failed to drop files: test error'))
-  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItems', [1], false]])
+  await expect(handleDrop(state, 0, 0, 1)).rejects.toThrow(new Error('Failed to drop files: test error'))
+  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 1, false]])
 })
 
 test('handleDrop - moves an internal Explorer file into the drop target folder', async () => {
   let moved = false
   using dragRpc = DragAndDropWorker.registerMockRpc({
-    'DragAndDrop.getDroppedItems'() {
+    'DragAndDrop.getDroppedItemsByDropId'() {
       return { files: [], strings: [], uris: ['file:///workspace/Main.elm'] }
     },
   })
@@ -81,16 +81,16 @@ test('handleDrop - moves an internal Explorer file into the drop target folder',
     root: '/workspace',
   }
 
-  const result = await handleDrop(state, 0, 0, [1])
+  const result = await handleDrop(state, 0, 0, 1)
 
   expect(result.items.map((item) => item.path)).toEqual(['/workspace/src', '/workspace/src/Main.elm'])
-  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItems', [1], false]])
+  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 1, false]])
   expect(mockRpc.invocations).toContainEqual(['FileSystem.rename', '/workspace/Main.elm', '/workspace/src/Main.elm'])
 })
 
 test('handleDrop - wraps internal move failures', async () => {
   using _dragRpc = DragAndDropWorker.registerMockRpc({
-    'DragAndDrop.getDroppedItems'() {
+    'DragAndDrop.getDroppedItemsByDropId'() {
       return { files: [], strings: [], uris: ['file:///workspace/Main.elm'] }
     },
   })
@@ -108,5 +108,5 @@ test('handleDrop - wraps internal move failures', async () => {
     root: '/workspace',
   }
 
-  await expect(handleDrop(state, 0, 0, [1])).rejects.toThrow('Failed to drop files: permission denied')
+  await expect(handleDrop(state, 0, 0, 1)).rejects.toThrow('Failed to drop files: permission denied')
 })

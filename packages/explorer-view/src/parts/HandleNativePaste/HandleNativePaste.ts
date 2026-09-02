@@ -1,6 +1,6 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getDropHandler } from '../GetDropHandler/GetDropHandler.ts'
-import { getDroppedItems } from '../GetDroppedItems/GetDroppedItems.ts'
+import { getClipboardItems } from '../GetDroppedItems/GetDroppedItems.ts'
 import * as HandlePaste from '../HandlePaste/HandlePaste.ts'
 import * as HandlePasteCopy from '../HandlePasteCopy/HandlePasteCopy.ts'
 import * as PlatformType from '../PlatformType/PlatformType.ts'
@@ -16,7 +16,7 @@ export const handleNativePaste = async (state: ExplorerState, itemIds: readonly 
   }
   try {
     const isElectron = platform === PlatformType.Electron
-    const { fileHandles, paths } = await getDroppedItems(itemIds, isElectron)
+    const { fileHandles, paths } = await getClipboardItems(itemIds, isElectron)
     if (isElectron) {
       const nativePaths = paths.filter(Boolean)
       if (nativePaths.length === 0) {
@@ -29,7 +29,7 @@ export const handleNativePaste = async (state: ExplorerState, itemIds: readonly 
       })
     }
     const handleDrop = getDropHandler(focusedIndex)
-    return handleDrop(state, fileHandles, [], paths, focusedIndex)
+    return handleDrop(state, fileHandles, paths, focusedIndex)
   } catch (error) {
     throw new VError(error, 'Failed to paste native files')
   }

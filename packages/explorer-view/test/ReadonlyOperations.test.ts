@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { DragAndDropWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { acceptEdit } from '../src/parts/AcceptEdit/AcceptEdit.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -18,14 +19,21 @@ const state: ExplorerState = {
   isReadonly: true,
 }
 
+const handleReadonlyDrop = async (): Promise<ExplorerState> => {
+  using _dragRpc = DragAndDropWorker.registerMockRpc({
+    'DragAndDrop.discardDrop'() {},
+  })
+  return handleDrop(state, 0, 0, 1)
+}
+
 test.each([
   ['accept edit', (): Promise<ExplorerState> => acceptEdit(state)],
   ['create file', (): Promise<ExplorerState> => newFile(state)],
   ['create folder', (): Promise<ExplorerState> => newFolder(state)],
   ['cut', (): Promise<ExplorerState> => handleCut(state)],
   ['delete', (): Promise<ExplorerState> => removeDirent(state)],
-  ['drop', (): Promise<ExplorerState> => handleDrop(state, 0, 0, [])],
-  ['drop at index', (): Promise<ExplorerState> => handleDropIndex(state, [], [], [], 0)],
+  ['drop', handleReadonlyDrop],
+  ['drop at index', (): Promise<ExplorerState> => handleDropIndex(state, [], [], 0)],
   ['paste', (): Promise<ExplorerState> => handlePaste(state)],
   ['rename', (): Promise<ExplorerState> => renameDirent(state)],
   ['upload', (): Promise<ExplorerState> => handleUpload(state, [])],
