@@ -1,7 +1,7 @@
 import { DragAndDropWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getDropHandler } from '../GetDropHandler/GetDropHandler.ts'
-import { getDroppedItems } from '../GetDroppedItems/GetDroppedItems.ts'
+import { getDroppedItemsByDropId } from '../GetDroppedItems/GetDroppedItems.ts'
 import * as GetIndexFromPosition from '../GetIndexFromPosition/GetIndexFromPosition.ts'
 import { getInternalDragPaths } from '../GetInternalDragPaths/GetInternalDragPaths.ts'
 import * as PlatformType from '../PlatformType/PlatformType.ts'
@@ -15,7 +15,7 @@ export const handleDrop = async (state: ExplorerState, x: number, y: number, dro
   }
   try {
     const isElectron = platform === PlatformType.Electron
-    const { fileHandles, paths, uris } = await getDroppedItems(dropId, isElectron)
+    const { fileHandles, paths, uris } = await getDroppedItemsByDropId(dropId, isElectron)
     const internalPaths = getInternalDragPaths(items, uris)
     const droppedPaths = internalPaths.length > 0 ? internalPaths : paths
     const index = GetIndexFromPosition.getIndexFromPosition(state, x, y)

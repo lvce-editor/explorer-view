@@ -16,7 +16,7 @@ const toExplorerDroppedItems = (
   return { fileHandles, paths, uris: result.uris }
 }
 
-export const getDroppedItems = async (dropId: number, isElectron: boolean): Promise<ExplorerDroppedItems> => {
+export const getDroppedItemsByDropId = async (dropId: number, isElectron: boolean): Promise<ExplorerDroppedItems> => {
   const result = await DragAndDropWorker.getDroppedItemsByDropId(dropId, isElectron)
   return toExplorerDroppedItems(result, isElectron)
 }

@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { DragAndDropWorker, RendererWorker } from '@lvce-editor/rpc-registry'
-import { getClipboardItems, getDroppedItems } from '../src/parts/GetDroppedItems/GetDroppedItems.ts'
+import { getClipboardItems, getDroppedItemsByDropId } from '../src/parts/GetDroppedItems/GetDroppedItems.ts'
 
 test('normalizes worker files for browser explorer handling', async () => {
   const handle = { kind: 'file', name: 'notes.txt' }
@@ -43,7 +43,7 @@ test('resolves opt-in drop data by drop id', async () => {
     },
   })
 
-  await expect(getDroppedItems(17, false)).resolves.toEqual({
+  await expect(getDroppedItemsByDropId(17, false)).resolves.toEqual({
     fileHandles: [handle],
     paths: [''],
     uris: ['html:///notes.txt'],
