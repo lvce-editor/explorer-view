@@ -63,6 +63,40 @@ test('revealItemHidden - expands visible ancestor folder', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/folder1']])
 })
 
+test('revealItemHidden - clamps the scroll position after expanding the last folder', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/root/z') {
+        return [{ name: 'file.txt', type: DirentType.File }]
+      }
+      return []
+    },
+  })
+  const names = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'z']
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    height: 100,
+    items: names.map((name) => ({
+      depth: 1,
+      name,
+      path: `/root/${name}`,
+      selected: false,
+      type: DirentType.Directory,
+    })),
+    maxLineY: 6,
+    root: '/root',
+  }
+
+  const newState = await revealItemHidden(state, '/root/z/file.txt')
+
+  expect(newState.focusedIndex).toBe(10)
+  expect(newState.deltaY).toBe(120)
+  expect(newState.minLineY).toBe(6)
+  expect(newState.items[9].type).toBe(DirentType.DirectoryExpanded)
+  expect(newState.items[10].path).toBe('/root/z/file.txt')
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/z']])
+})
+
 test('revealItemHidden - inserts revealed descendants before the next visible sibling', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'(path: string) {

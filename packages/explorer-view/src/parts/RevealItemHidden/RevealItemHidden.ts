@@ -6,11 +6,11 @@ import { getPathPartsChildren } from '../GetPathPartsChildren/GetPathPartsChildr
 import { getPathPartsToReveal } from '../GetPathPartsToReveal/GetPathPartsToReveal.ts'
 import { mergeVisibleWithHiddenItems } from '../MergeVisibleWithHiddenItems/MergeVisibleWithHiddenItems.ts'
 import { orderDirents } from '../OrderDirents/OrderDirents.ts'
-import { scrollInto } from '../ScrollInto/ScrollInto.ts'
+import { revealItemVisible } from '../RevealItemVisible/RevealItemVisible.ts'
 
 // TODO maybe just insert items into explorer and refresh whole explorer
 export const revealItemHidden = async (state: ExplorerState, uri: string): Promise<ExplorerState> => {
-  const { excluded, items, maxLineY, minLineY, pathSeparator, root } = state
+  const { excluded, items, pathSeparator, root } = state
   const pathParts = getPathParts(root, uri, pathSeparator)
   if (pathParts.length === 0) {
     return state
@@ -35,13 +35,11 @@ export const revealItemHidden = async (state: ExplorerState, uri: string): Promi
   if (index === -1) {
     throw new Error(`File not found in explorer ${uri}`)
   }
-  const { newMaxLineY, newMinLineY } = scrollInto(index, minLineY, maxLineY)
-  return {
-    ...state,
-    focused: true,
-    focusedIndex: index,
-    items: newDirents,
-    maxLineY: newMaxLineY,
-    minLineY: newMinLineY,
-  }
+  return revealItemVisible(
+    {
+      ...state,
+      items: newDirents,
+    },
+    index,
+  )
 }
