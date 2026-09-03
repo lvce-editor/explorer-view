@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Workspace.setPath(tmpDir)
   await Explorer.expandRecursively()
   const treeItems = Locator('.TreeItem')
-  const firstTreeItem = treeItems.nth(0)
+  const firstTreeItem = Locator('.TreeItem', { hasText: 'folder-00' })
   const list = Locator('.ListItems')
   await list.dispatchEvent('wheel', {
     bubbles: true,
