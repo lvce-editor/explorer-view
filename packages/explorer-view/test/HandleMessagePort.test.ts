@@ -5,22 +5,15 @@ import { handleMessagePort } from '../src/parts/HandleMessagePort/HandleMessageP
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 
 test('connects the view directly to the renderer process', async () => {
-  let failMainAreaLookup = false
-  const mainAreaFocused = Promise.withResolvers<void>()
+  let failActiveEditorLookup = false
+  const activeEditorFocused = Promise.withResolvers<void>()
   const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 31)
-  const getUid = jest.fn((_rpcId: string) => {
-    if (failMainAreaLookup) {
-      throw new Error('main area not found')
-    }
-    return 42
-  })
   const focusSelector = jest.fn(async (_uid: number, _selector: string) => {
-    mainAreaFocused.resolve()
+    activeEditorFocused.resolve()
   })
   const { port1, port2 } = new MessageChannel()
   const rendererProcessRpc = await PlainMessagePortRpcParent.create({
     commandMap: {
-      'DirectView.getUid': getUid,
       'Viewlet.focusSelector': focusSelector,
       'Viewlet.queueCommands': queueCommands,
     },
@@ -44,6 +37,12 @@ test('connects the view directly to the renderer process', async () => {
     Object.assign(
       createMockRpc({
         commandMap: {
+          'GetActiveEditor.getActiveEditorId'() {
+            if (failActiveEditorLookup) {
+              throw new Error('active editor not found')
+            }
+            return 42
+          },
           'Main.focus': focus,
           'Viewlet.requestRender': requestRender,
         },
@@ -56,11 +55,10 @@ test('connects the view directly to the renderer process', async () => {
   expect(requestRender).toHaveBeenCalledWith(7)
   RendererProcess.requestPostRenderFocus(7)
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'world')
-  await mainAreaFocused.promise
-  expect(getUid).toHaveBeenCalledWith('MainArea')
+  await activeEditorFocused.promise
   expect(focusSelector).toHaveBeenCalledWith(42, '[name="editor"]')
   expect(focus).not.toHaveBeenCalled()
-  failMainAreaLookup = true
+  failActiveEditorLookup = true
   RendererProcess.requestPostRenderFocus(7)
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'fallback')
   await fallbackFocused.promise
