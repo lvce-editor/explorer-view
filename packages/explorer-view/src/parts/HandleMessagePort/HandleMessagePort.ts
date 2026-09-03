@@ -4,12 +4,7 @@ import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
 const focusActiveEditor = async (): Promise<void> => {
   try {
-    const editorUid = await RendererWorker.invoke('GetActiveEditor.getActiveEditorId')
-    if (typeof editorUid !== 'number' || editorUid < 0) {
-      throw new Error('active editor not found')
-    }
-    await RendererProcess.invoke('Viewlet.focusSelector', editorUid, '[name="editor"]')
-    await RendererProcess.invoke('Viewlet.focusSelectorAfterRender', editorUid, '[name="editor"]')
+    await RendererWorker.invoke('Editor.handleFocus')
   } catch {
     await RendererWorker.invoke('Main.focus')
   }
