@@ -25,6 +25,7 @@ test('handleClickSymLink - file symlink', async () => {
     'FileSystem.stat'() {
       return DirentType.File
     },
+    'Main.focus'() {},
     'Main.openInput'() {
       return undefined
     },
@@ -46,6 +47,8 @@ test('handleClickSymLink - file symlink', async () => {
       },
     ],
   ])
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  expect(mockRpc.invocations.at(-1)).toEqual(['Main.focus'])
 })
 
 test('handleClickSymLink - unsupported type', async () => {

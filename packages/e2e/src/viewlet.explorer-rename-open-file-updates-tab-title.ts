@@ -4,13 +4,14 @@ export const name = 'viewlet.explorer-rename-open-file-updates-tab-title'
 
 export const skip = ['webkit']
 
-export const test: Test = async ({ Editor, expect, Explorer, FileSystem, Locator, Main, Workspace }) => {
+export const test: Test = async ({ Command, Editor, expect, Explorer, FileSystem, Locator, Main, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   const originalUri = `${tmpDir}/original.txt`
   const renamedUri = `${tmpDir}/renamed.txt`
   await FileSystem.writeFile(originalUri, 'content')
   await Workspace.setPath(tmpDir)
   await Explorer.handleClick(0)
+  await Command.execute('Timeout.sleep', 1000)
 
   const originalTab = Locator('.MainTab[title$="original.txt"]')
   const renamedTab = Locator('.MainTab[title$="renamed.txt"]')
@@ -20,6 +21,7 @@ export const test: Test = async ({ Editor, expect, Explorer, FileSystem, Locator
   await Explorer.renameDirent()
   await Explorer.updateEditingValue('renamed.txt')
   await Explorer.acceptEdit()
+  await Command.execute('Timeout.sleep', 1000)
 
   await expect(originalTab).toBeHidden()
   await expect(renamedTab).toBeVisible()
