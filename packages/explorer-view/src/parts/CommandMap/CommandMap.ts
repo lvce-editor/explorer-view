@@ -19,6 +19,7 @@ import * as FocusLast from '../FocusLast/FocusLast.ts'
 import * as FocusNext from '../FocusNext/FocusNext.ts'
 import * as FocusNone from '../FocusNone/FocusNone.ts'
 import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
+import * as GetComponentState from '../GetComponentState/GetComponentState.ts'
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetMenuEntries2 from '../GetMenuEntries2/GetMenuEntries2.ts'
 import * as GetMenuEntries from '../GetMenuEntries/GetMenuEntries.ts'
@@ -86,6 +87,7 @@ import * as SelectDown from '../SelectDown/SelectDown.ts'
 import * as SelectForCompare from '../SelectForCompare/SelectForCompare.ts'
 import * as SelectIndices from '../SelectIndices/SelectIndices.ts'
 import * as SelectUp from '../SelectUp/SelectUp.ts'
+import * as SetComponentState from '../SetComponentState/SetComponentState.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 import * as ToggleIndividualSelection from '../ToggleIndividualSelection/ToggleIndividualSelection.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
@@ -116,6 +118,7 @@ export const commandMap = {
   'Explorer.focusNone': WrapCommand.wrapListItemCommand(FocusNone.focusNone),
   'Explorer.focusPrevious': WrapCommand.wrapListItemCommand(FocusPrevious.focusPrevious),
   'Explorer.getCommandIds': WrapCommand.getCommandIds,
+  'Explorer.getComponentState': GetComponentState.getComponentState,
   'Explorer.getKeyBindings': GetKeyBindings.getKeyBindings,
   'Explorer.getMenuEntries': GetMenuEntries.getMenuEntries,
   'Explorer.getMenuEntries2': WrapCommand.wrapGetter(GetMenuEntries2.getMenuEntries2),
@@ -185,6 +188,7 @@ export const commandMap = {
   'Explorer.selectForCompare': WrapCommand.wrapListItemCommand(SelectForCompare.selectForCompare),
   'Explorer.selectIndices': WrapCommand.wrapListItemCommand(SelectIndices.setSelectedIndices),
   'Explorer.selectUp': WrapCommand.wrapListItemCommand(SelectUp.selectUp),
+  'Explorer.setComponentState': SetComponentState.setComponentState,
   'Explorer.setDeltaY': WrapCommand.wrapListItemCommand(SetDeltaY.setDeltaY),
   'Explorer.setSelectedIndices': WrapCommand.wrapListItemCommand(SelectIndices.setSelectedIndices),
   'Explorer.terminate': terminate,
