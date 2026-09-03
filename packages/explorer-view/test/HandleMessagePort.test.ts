@@ -6,15 +6,17 @@ import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.t
 
 test('connects the view directly to the renderer process', async () => {
   let failActiveEditorLookup = false
-  const activeEditorFocused = Promise.withResolvers<void>()
+  const activeEditorFocusScheduled = Promise.withResolvers<void>()
   const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 31)
-  const focusSelector = jest.fn(async (_uid: number, _selector: string) => {
-    activeEditorFocused.resolve()
+  const focusSelector = jest.fn(async (_uid: number, _selector: string) => {})
+  const focusSelectorAfterRender = jest.fn(async (_uid: number, _selector: string) => {
+    activeEditorFocusScheduled.resolve()
   })
   const { port1, port2 } = new MessageChannel()
   const rendererProcessRpc = await PlainMessagePortRpcParent.create({
     commandMap: {
       'Viewlet.focusSelector': focusSelector,
+      'Viewlet.focusSelectorAfterRender': focusSelectorAfterRender,
       'Viewlet.queueCommands': queueCommands,
     },
     messagePort: port1,
@@ -55,8 +57,9 @@ test('connects the view directly to the renderer process', async () => {
   expect(requestRender).toHaveBeenCalledWith(7)
   RendererProcess.requestPostRenderFocus(7)
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'world')
-  await activeEditorFocused.promise
+  await activeEditorFocusScheduled.promise
   expect(focusSelector).toHaveBeenCalledWith(42, '[name="editor"]')
+  expect(focusSelectorAfterRender).toHaveBeenCalledWith(42, '[name="editor"]')
   expect(focus).not.toHaveBeenCalled()
   failActiveEditorLookup = true
   RendererProcess.requestPostRenderFocus(7)

@@ -9,6 +9,7 @@ const focusActiveEditor = async (): Promise<void> => {
       throw new Error('active editor not found')
     }
     await RendererProcess.invoke('Viewlet.focusSelector', editorUid, '[name="editor"]')
+    await RendererProcess.invoke('Viewlet.focusSelectorAfterRender', editorUid, '[name="editor"]')
   } catch {
     await RendererWorker.invoke('Main.focus')
   }
