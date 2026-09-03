@@ -38,6 +38,24 @@ test('collapseAll - with nested items', async () => {
   })
 })
 
+test('collapseAll - resets scroll position', async () => {
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    deltaY: 200,
+    items: [
+      { depth: 1, name: 'folder', path: '/folder', selected: false, type: DirentType.DirectoryExpanded },
+      { depth: 2, name: 'nested', path: '/folder/nested', selected: false, type: DirentType.DirectoryExpanded },
+    ],
+    maxLineY: 12,
+    minLineY: 10,
+  }
+
+  const result = await collapseAll(state)
+
+  expect(result.deltaY).toBe(0)
+  expect(result.minLineY).toBe(0)
+})
+
 test('collapseAll - cancels file creation at the folder boundary', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
