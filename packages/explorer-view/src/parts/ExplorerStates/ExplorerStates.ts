@@ -9,7 +9,7 @@ import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleE
 import * as InputSource from '../InputSource/InputSource.ts'
 import { syncExpandedPaths } from '../SyncExpandedPaths/SyncExpandedPaths.ts'
 
-export const { get, getCommandIds, registerCommands, set, wrapGetter } = ViewletRegistry.create<ExplorerState>()
+export const { clear, get, getCommandIds, registerCommands, set, wrapGetter } = ViewletRegistry.create<ExplorerState>()
 
 interface Fn<T extends any[]> {
   (state: ExplorerState, ...args: T): ExplorerState | Promise<ExplorerState>
