@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-preview-tab-replaced-repeatedly'
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.setFiles([
     { content: 'first', uri: `${tmpDir}/a-first.txt` },
@@ -11,8 +11,11 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Workspace.setPath(tmpDir)
 
   await Explorer.handleClick(0)
+  await Command.execute('Timeout.sleep', 1000)
   await Explorer.handleClick(1)
+  await Command.execute('Timeout.sleep', 1000)
   await Explorer.handleClick(0)
+  await Command.execute('Timeout.sleep', 1000)
 
   const firstTab = Locator('.MainTabPreview[title$="a-first.txt"]')
   const secondTab = Locator('.MainTab[title$="b-second.txt"]')

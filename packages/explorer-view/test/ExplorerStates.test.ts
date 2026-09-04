@@ -93,6 +93,7 @@ test('wrapListItemCommand remains responsive while a file is opening', async () 
   const editorOpeningStarted = Promise.withResolvers<void>()
   const editorOpened = Promise.withResolvers<void>()
   using _mockRpc = RendererWorker.registerMockRpc({
+    'Main.focus'() {},
     async 'Main.openInput'() {
       editorOpeningStarted.resolve()
       await editorOpened.promise
@@ -139,6 +140,7 @@ test('wrapListItemCommand remains responsive while a file is opening', async () 
   expect(nextCommandResult).toBe('completed')
   expect(openCommandCompleted).toBe(true)
   expect(ExplorerStates.get(uid).newState.editingValue).toBe('expanded')
+  await new Promise((resolve) => setTimeout(resolve, 0))
 })
 
 test('wrapListItemCommand continues after a command fails', async () => {

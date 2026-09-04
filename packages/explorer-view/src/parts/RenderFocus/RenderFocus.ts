@@ -11,7 +11,7 @@ export const renderFocus = (oldState: ExplorerState, newState: ExplorerState): r
   if (newState.focus === FocusId.Input) {
     return [ViewletCommand.FocusElementByName, newState.uid, InputName.ExplorerInput]
   }
-  if (newState.focus === FocusId.List) {
+  if (newState.focused && newState.focus === FocusId.List) {
     return [ViewletCommand.FocusSelector, newState.uid, '.ListItems']
   }
   // TODO

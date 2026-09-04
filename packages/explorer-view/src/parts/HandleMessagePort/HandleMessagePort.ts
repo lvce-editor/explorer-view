@@ -2,6 +2,19 @@ import { PlainMessagePortRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
+const focusActiveEditor = async (): Promise<void> => {
+  try {
+    const editorUid = await RendererWorker.invoke('GetActiveEditor.getActiveEditorId')
+    if (typeof editorUid !== 'number' || editorUid < 0) {
+      throw new Error('active editor not found')
+    }
+    await RendererProcess.invoke('Viewlet.focusSelector', editorUid, '.EditorInput textarea')
+    await RendererProcess.invoke('Viewlet.focusSelectorAfterRender', editorUid, '.EditorInput textarea')
+  } catch {
+    await RendererWorker.invoke('Main.focus')
+  }
+}
+
 export const handleMessagePort = async (
   port: MessagePort,
   viewletCommandMap: Readonly<Record<string, unknown>>,
@@ -14,10 +27,11 @@ export const handleMessagePort = async (
     }
     await fn(uid, ...args)
     await RendererWorker.invoke('Viewlet.requestRender', uid)
-    if (RendererProcess.takePostRenderFocus(uid)) {
+    const focusDelay = RendererProcess.takePostRenderFocus(uid)
+    if (focusDelay !== undefined) {
       setTimeout(() => {
-        void RendererWorker.invoke('Main.focus')
-      }, 0)
+        void focusActiveEditor()
+      }, focusDelay)
     }
   }
 
