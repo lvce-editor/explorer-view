@@ -5,7 +5,7 @@ const state = {
   connected: false,
 }
 
-const postRenderFocusRequests = new Set<number>()
+const postRenderFocusRequests = new Map<number, number>()
 
 export const isConnected = (): boolean => {
   const { connected } = state
@@ -20,8 +20,8 @@ export const invokeAndTransfer = (method: string, ...params: readonly unknown[])
   return RendererProcessRegistry.invokeAndTransfer(method, ...params)
 }
 
-export const requestPostRenderFocus = (uid: number): void => {
-  postRenderFocusRequests.add(uid)
+export const requestPostRenderFocus = (uid: number, delay = 0): void => {
+  postRenderFocusRequests.set(uid, delay)
 }
 
 export const set = (rpc: Rpc): void => {
@@ -29,6 +29,8 @@ export const set = (rpc: Rpc): void => {
   state.connected = true
 }
 
-export const takePostRenderFocus = (uid: number): boolean => {
-  return postRenderFocusRequests.delete(uid)
+export const takePostRenderFocus = (uid: number): number | undefined => {
+  const delay = postRenderFocusRequests.get(uid)
+  postRenderFocusRequests.delete(uid)
+  return delay
 }

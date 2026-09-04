@@ -5,6 +5,8 @@ import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
 import * as OpenUri from '../OpenUri/OpenUri.ts'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
+const focusDelay = 100
+
 const focusEditor = async (): Promise<void> => {
   try {
     const editorUid = await RendererWorker.invoke('GetActiveEditor.getActiveEditorId')
@@ -25,7 +27,7 @@ const openFile = async (uid: number, dirent: ExplorerItem, keepFocus: boolean): 
   if (!keepFocus) {
     await focusEditor()
     if (RendererProcess.isConnected()) {
-      RendererProcess.requestPostRenderFocus(uid)
+      RendererProcess.requestPostRenderFocus(uid, focusDelay)
     }
   }
 }

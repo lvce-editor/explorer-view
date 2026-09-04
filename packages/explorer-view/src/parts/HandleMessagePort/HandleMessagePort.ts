@@ -2,8 +2,6 @@ import { PlainMessagePortRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
-const focusDelay = 100
-
 const focusActiveEditor = async (): Promise<void> => {
   try {
     const editorUid = await RendererWorker.invoke('GetActiveEditor.getActiveEditorId')
@@ -29,7 +27,8 @@ export const handleMessagePort = async (
     }
     await fn(uid, ...args)
     await RendererWorker.invoke('Viewlet.requestRender', uid)
-    if (RendererProcess.takePostRenderFocus(uid)) {
+    const focusDelay = RendererProcess.takePostRenderFocus(uid)
+    if (focusDelay !== undefined) {
       setTimeout(() => {
         void focusActiveEditor()
       }, focusDelay)
