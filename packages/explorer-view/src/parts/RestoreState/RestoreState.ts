@@ -15,13 +15,8 @@ const getSavedDeltaY = (savedState: unknown): number => {
 }
 
 const getSavedRoot = (savedState: unknown): string => {
-  if (hasProperty(savedState, 'root') && typeof savedState.root === 'string') {
-    try {
-      new URL(savedState.root)
-      return savedState.root
-    } catch {
-      return ''
-    }
+  if (hasProperty(savedState, 'root') && typeof savedState.root === 'string' && URL.canParse(savedState.root)) {
+    return savedState.root
   }
   return ''
 }
