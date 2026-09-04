@@ -2,6 +2,8 @@ import { PlainMessagePortRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
+const focusDelay = 100
+
 const focusActiveEditor = async (): Promise<void> => {
   try {
     await RendererWorker.invoke('Editor.handleBlur')
@@ -26,7 +28,7 @@ export const handleMessagePort = async (
     if (RendererProcess.takePostRenderFocus(uid)) {
       setTimeout(() => {
         void focusActiveEditor()
-      }, 0)
+      }, focusDelay)
     }
   }
 
