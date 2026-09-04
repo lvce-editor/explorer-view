@@ -23,25 +23,45 @@ test('restoreState returns correct state with valid input', () => {
   const savedState = {
     deltaY: 50,
     minLineY: 100,
-    workspacePath: '/test/path',
+    root: 'file:///test/path',
   }
   const result = restoreState(savedState)
   expect(result).toEqual({
     deltaY: 50,
     minLineY: 100,
-    root: '/test/path',
+    root: 'file:///test/path',
   })
 })
 
 test('restoreState handles partial state with missing properties', () => {
   const savedState = {
-    workspacePath: '/test/path',
+    root: 'file:///test/path',
   }
   const result = restoreState(savedState)
   expect(result).toEqual({
     deltaY: 0,
     minLineY: 0,
-    root: '/test/path',
+    root: 'file:///test/path',
+  })
+})
+
+test('restoreState ignores the legacy workspace path property', () => {
+  const result = restoreState({ workspacePath: '/test/path' })
+
+  expect(result).toEqual({
+    deltaY: 0,
+    minLineY: 0,
+    root: '',
+  })
+})
+
+test('restoreState ignores a root that is not a uri', () => {
+  const result = restoreState({ root: '/test/path' })
+
+  expect(result).toEqual({
+    deltaY: 0,
+    minLineY: 0,
+    root: '',
   })
 })
 
@@ -49,7 +69,7 @@ test('restoreState handles invalid property types', () => {
   const savedState = {
     deltaY: true,
     minLineY: '100',
-    workspacePath: 123,
+    root: 123,
   }
   const result = restoreState(savedState)
   expect(result).toEqual({

@@ -1,3 +1,3 @@
-export const getSavedRoot = (savedState: any, workspacePath: string): string => {
-  return workspacePath
+export const getSavedRoot = (savedState: any, workspaceUri: string): string => {
+  return workspaceUri
 }

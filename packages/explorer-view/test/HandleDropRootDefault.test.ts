@@ -18,7 +18,7 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
+    'Workspace.getUri'() {
       return 'html://dropped-folder'
     },
     'Workspace.setPath'() {
@@ -55,7 +55,7 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
-    ['Workspace.getPath'],
+    ['Workspace.getUri'],
     ['FileSystem.isReadonly', 'html://dropped-folder'],
     ['FileSystem.readDirWithFileTypes', 'html://dropped-folder'],
   ])
@@ -76,7 +76,7 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
+    'Workspace.getUri'() {
       return 'html://first-folder'
     },
     'Workspace.setPath'() {
@@ -117,7 +117,7 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
-    ['Workspace.getPath'],
+    ['Workspace.getUri'],
     ['FileSystem.isReadonly', 'html://first-folder'],
     ['FileSystem.readDirWithFileTypes', 'html://first-folder'],
   ])
@@ -158,7 +158,7 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
+    'Workspace.getUri'() {
       return 'html://dropped-folder'
     },
     'Workspace.setPath'() {
@@ -199,7 +199,7 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
-    ['Workspace.getPath'],
+    ['Workspace.getUri'],
     ['FileSystem.isReadonly', 'html://dropped-folder'],
     ['FileSystem.readDirWithFileTypes', 'html://dropped-folder'],
   ])

@@ -15,8 +15,8 @@ test('should update state with new workspace path and load content', async () =>
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/workspace/path'
+    'Workspace.getUri'() {
+      return 'file:///new/workspace/path'
     },
   })
 
@@ -29,7 +29,7 @@ test('should update state with new workspace path and load content', async () =>
   const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
 
-  expect(result.root).toBe('/new/workspace/path')
+  expect(result.root).toBe('file:///new/workspace/path')
   expect(result).toHaveProperty('items')
   expect(result).toHaveProperty('icons')
   expect(result).toHaveProperty('fileIconCache')
@@ -40,7 +40,7 @@ test('should update state with new workspace path and load content', async () =>
   expect(result).toHaveProperty('excluded')
   expect(result).toHaveProperty('useChevrons')
   expect(mockRpc.invocations).toEqual([
-    ['Workspace.getPath'],
+    ['Workspace.getUri'],
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
@@ -48,9 +48,9 @@ test('should update state with new workspace path and load content', async () =>
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
-    ['Workspace.getPath'],
-    ['FileSystem.isReadonly', '/new/workspace/path'],
-    ['FileSystem.readDirWithFileTypes', '/new/workspace/path'],
+    ['Workspace.getUri'],
+    ['FileSystem.isReadonly', 'file:///new/workspace/path'],
+    ['FileSystem.readDirWithFileTypes', 'file:///new/workspace/path'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])
 })
@@ -61,10 +61,10 @@ test('should restore saved state for the new workspace', async () => {
       return false
     },
     'FileSystem.readDirWithFileTypes'(path: string) {
-      if (path === '/restored/workspace') {
+      if (path === 'file:///restored/workspace') {
         return [{ isDirectory: true, isFile: false, name: 'src' }]
       }
-      if (path === '/restored/workspace/src') {
+      if (path === 'file:///restored/workspace/src') {
         return [{ isDirectory: false, isFile: true, name: 'index.ts' }]
       }
       return []
@@ -72,8 +72,8 @@ test('should restore saved state for the new workspace', async () => {
     'Preferences.get'(key: string) {
       return key === 'explorer.preserveExpandState'
     },
-    'Workspace.getPath'() {
-      return '/restored/workspace'
+    'Workspace.getUri'() {
+      return 'file:///restored/workspace'
     },
   })
 
@@ -86,17 +86,17 @@ test('should restore saved state for the new workspace', async () => {
   const initialState: ExplorerState = createDefaultState()
   const savedState = {
     deltaY: 0,
-    expandedPaths: ['/restored/workspace/src'],
-    root: '/restored/workspace',
+    expandedPaths: ['file:///restored/workspace/src'],
+    root: 'file:///restored/workspace',
   }
-  const result = await handleWorkspaceChange(initialState, '/restored/workspace', savedState)
+  const result = await handleWorkspaceChange(initialState, 'file:///restored/workspace', savedState)
 
-  expect(result.root).toBe('/restored/workspace')
-  expect(result.expandedPaths).toEqual(['/restored/workspace/src'])
+  expect(result.root).toBe('file:///restored/workspace')
+  expect(result.expandedPaths).toEqual(['file:///restored/workspace/src'])
   expect(result.preserveExpandState).toBe(true)
-  expect(result.items.map((item) => item.path)).toContain('/restored/workspace/src')
-  expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', '/restored/workspace'])
-  expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', '/restored/workspace/src'])
+  expect(result.items.map((item) => item.path)).toContain('file:///restored/workspace/src')
+  expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', 'file:///restored/workspace'])
+  expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', 'file:///restored/workspace/src'])
 })
 
 test('should preserve state properties when updating workspace', async () => {
@@ -110,8 +110,8 @@ test('should preserve state properties when updating workspace', async () => {
     'Preferences.get'() {
       return true
     },
-    'Workspace.getPath'() {
-      return '/another/workspace'
+    'Workspace.getUri'() {
+      return 'file:///another/workspace'
     },
   })
 
@@ -147,7 +147,7 @@ test('should preserve state properties when updating workspace', async () => {
   expect(result.scrollBarActive).toBe(initialState.scrollBarActive)
   expect(mockRpc.invocations).toEqual(
     expect.arrayContaining([
-      ['Workspace.getPath'],
+      ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
@@ -155,12 +155,12 @@ test('should preserve state properties when updating workspace', async () => {
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
-      ['Workspace.getPath'],
-      ['FileSystem.isReadonly', '/another/workspace'],
-      ['FileSystem.readDirWithFileTypes', '/another/workspace'],
+      ['Workspace.getUri'],
+      ['FileSystem.isReadonly', 'file:///another/workspace'],
+      ['FileSystem.readDirWithFileTypes', 'file:///another/workspace'],
     ]),
   )
-  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', '/another/workspace', '', 0]])
+  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', 'file:///another/workspace', '', 0]])
 })
 
 test('should handle workspace path change with existing content', async () => {
@@ -177,8 +177,8 @@ test('should handle workspace path change with existing content', async () => {
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/changed/workspace/path'
+    'Workspace.getUri'() {
+      return 'file:///changed/workspace/path'
     },
   })
 
@@ -191,13 +191,13 @@ test('should handle workspace path change with existing content', async () => {
   const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
 
-  expect(result.root).toBe('/changed/workspace/path')
+  expect(result.root).toBe('file:///changed/workspace/path')
   expect(result.items).toHaveLength(2)
   expect(result.pathSeparator).toBe('/')
   expect(result.useChevrons).toBe(false)
   expect(mockRpc.invocations).toEqual(
     expect.arrayContaining([
-      ['Workspace.getPath'],
+      ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
@@ -205,9 +205,9 @@ test('should handle workspace path change with existing content', async () => {
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
-      ['Workspace.getPath'],
-      ['FileSystem.isReadonly', '/changed/workspace/path'],
-      ['FileSystem.readDirWithFileTypes', '/changed/workspace/path'],
+      ['Workspace.getUri'],
+      ['FileSystem.isReadonly', 'file:///changed/workspace/path'],
+      ['FileSystem.readDirWithFileTypes', 'file:///changed/workspace/path'],
     ]),
   )
   expect(mockSourceControlRpc.invocations).toEqual([])
@@ -224,8 +224,8 @@ test('should handle workspace path change with chevrons enabled', async () => {
     'Preferences.get'() {
       return true
     },
-    'Workspace.getPath'() {
-      return '/chevron/workspace'
+    'Workspace.getUri'() {
+      return 'file:///chevron/workspace'
     },
   })
 
@@ -238,11 +238,11 @@ test('should handle workspace path change with chevrons enabled', async () => {
   const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
 
-  expect(result.root).toBe('/chevron/workspace')
+  expect(result.root).toBe('file:///chevron/workspace')
   expect(result.useChevrons).toBe(true)
   expect(mockRpc.invocations).toEqual(
     expect.arrayContaining([
-      ['Workspace.getPath'],
+      ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
@@ -250,12 +250,12 @@ test('should handle workspace path change with chevrons enabled', async () => {
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
-      ['Workspace.getPath'],
-      ['FileSystem.isReadonly', '/chevron/workspace'],
-      ['FileSystem.readDirWithFileTypes', '/chevron/workspace'],
+      ['Workspace.getUri'],
+      ['FileSystem.isReadonly', 'file:///chevron/workspace'],
+      ['FileSystem.readDirWithFileTypes', 'file:///chevron/workspace'],
     ]),
   )
-  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', '/chevron/workspace', '', 0]])
+  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', 'file:///chevron/workspace', '', 0]])
 })
 
 test('should always use slash for URI paths', async () => {
@@ -269,7 +269,7 @@ test('should always use slash for URI paths', async () => {
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
+    'Workspace.getUri'() {
       return 'file:///C:/windows/workspace'
     },
   })
@@ -287,7 +287,7 @@ test('should always use slash for URI paths', async () => {
   expect(result.pathSeparator).toBe('/')
   expect(mockRpc.invocations).toEqual(
     expect.arrayContaining([
-      ['Workspace.getPath'],
+      ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
@@ -295,7 +295,7 @@ test('should always use slash for URI paths', async () => {
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
-      ['Workspace.getPath'],
+      ['Workspace.getUri'],
       ['FileSystem.isReadonly', 'file:///C:/windows/workspace'],
       ['FileSystem.readDirWithFileTypes', 'file:///C:/windows/workspace'],
     ]),
@@ -317,8 +317,8 @@ test('should set load error state when reading folder fails', async () => {
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/restricted/workspace'
+    'Workspace.getUri'() {
+      return 'file:///restricted/workspace'
     },
   })
 
@@ -331,14 +331,14 @@ test('should set load error state when reading folder fails', async () => {
   const initialState: ExplorerState = createDefaultState()
   const result = await handleWorkspaceChange(initialState)
 
-  expect(result.root).toBe('/restricted/workspace')
+  expect(result.root).toBe('file:///restricted/workspace')
   expect(result.hasError).toBe(true)
   expect(result.errorCode).toBe('EACCES')
   expect(result.errorMessage).toBe('permission was denied')
   expect(result.items).toEqual([])
   expect(mockRpc.invocations).toEqual(
     expect.arrayContaining([
-      ['Workspace.getPath'],
+      ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
       ['Preferences.get', 'explorer.confirmdelete'],
       ['Preferences.get', 'explorer.confirmpaste'],
@@ -346,9 +346,9 @@ test('should set load error state when reading folder fails', async () => {
       ['Preferences.get', 'explorer.gitIgnoreDecorations'],
       ['Preferences.get', 'explorer.preserveExpandState'],
       ['Preferences.get', 'explorer.sourceControlDecorations'],
-      ['Workspace.getPath'],
-      ['FileSystem.isReadonly', '/restricted/workspace'],
-      ['FileSystem.readDirWithFileTypes', '/restricted/workspace'],
+      ['Workspace.getUri'],
+      ['FileSystem.isReadonly', 'file:///restricted/workspace'],
+      ['FileSystem.readDirWithFileTypes', 'file:///restricted/workspace'],
     ]),
   )
   expect(mockSourceControlRpc.invocations).toEqual([])

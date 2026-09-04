@@ -31,8 +31,8 @@ test('handleDoubleClick - double click on empty area creates new file', async ()
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const state: ExplorerState = {
@@ -42,6 +42,7 @@ test('handleDoubleClick - double click on empty area creates new file', async ()
     items: [{ depth: 0, name: 'testfolder', path: '/testfolder', selected: false, type: DirentType.Directory }],
     maxLineY: 1,
     minLineY: 0,
+    root: 'file:///new/path',
     y: 0,
   }
 
@@ -88,6 +89,7 @@ test('handleDoubleClick - double click on item returns same state', async () => 
     items: [{ depth: 0, name: 'testfolder', path: '/testfolder', selected: false, type: DirentType.Directory }],
     maxLineY: 1,
     minLineY: 0,
+    root: 'file:///new/path',
     y: 0,
   }
 
@@ -167,8 +169,8 @@ test('handleDoubleClick - double click on empty area with scrolled state creates
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const state: ExplorerState = {
@@ -178,6 +180,7 @@ test('handleDoubleClick - double click on empty area with scrolled state creates
     items: [{ depth: 0, name: 'testfolder', path: '/testfolder', selected: false, type: DirentType.Directory }],
     maxLineY: 1,
     minLineY: 0,
+    root: 'file:///new/path',
     y: 0,
   }
 
