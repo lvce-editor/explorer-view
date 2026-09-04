@@ -7,7 +7,6 @@ export interface VisibleExplorerItem {
   readonly hasEditingError: boolean
   readonly icon: string
   readonly id: string | undefined // TODO make it always string
-  readonly indent: number
   readonly index: number
   readonly isCut: boolean
   readonly isEditing: boolean

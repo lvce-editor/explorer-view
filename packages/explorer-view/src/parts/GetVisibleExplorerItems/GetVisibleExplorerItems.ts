@@ -71,7 +71,6 @@ export const getVisibleExplorerItems = (
       hasEditingError: isEditing && Boolean(editingErrorMessage),
       icon,
       id,
-      indent,
       index: i,
       isCut,
       isEditing: isEditing,
