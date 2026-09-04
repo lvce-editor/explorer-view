@@ -20,11 +20,11 @@ test('getVisibleExplorerItems - basic', () => {
   expect(result[0]).toMatchObject({
     ariaExpanded: undefined,
     chevron: 0,
+    className: 'TreeItem Indent-26 TreeItemActive',
     depth: 0,
     hasEditingError: false,
     icon: 'icon',
     id: 'TreeItemActive',
-    indent: 26,
     isEditing: false,
     name: 'test',
     path: '/test',
