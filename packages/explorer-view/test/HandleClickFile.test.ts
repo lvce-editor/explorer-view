@@ -22,6 +22,8 @@ const state: ExplorerState = {
 
 test('opens file with editor focus', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleBlur'() {},
+    'Editor.handleFocus'() {},
     'Main.openInput'() {},
   })
 
@@ -42,6 +44,8 @@ test('opens file with editor focus', async () => {
         preview: true,
       },
     ],
+    ['Editor.handleBlur'],
+    ['Editor.handleFocus'],
   ])
 })
 
@@ -68,4 +72,21 @@ test('keeps explorer focused after opening file', async () => {
       },
     ],
   ])
+})
+
+test('falls back to main focus when editor focus fails', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleBlur'() {},
+    'Editor.handleFocus'() {
+      throw new Error('editor focus failed')
+    },
+    'Main.focus'() {},
+    'Main.openInput'() {},
+  })
+
+  const newState = await handleClickFile(state, file, 0)
+  const completion = CommandCompletion.take(newState)
+  expect(completion).toBeDefined()
+  await completion
+  expect(mockRpc.invocations.slice(-3)).toEqual([['Editor.handleBlur'], ['Editor.handleFocus'], ['Main.focus']])
 })

@@ -19,6 +19,8 @@ test('handleClickSymLink - file symlink', async () => {
 
   const mockRealPath = '/test/real-file'
   using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleBlur'() {},
+    'Editor.handleFocus'() {},
     'FileSystem.getRealPath'() {
       return mockRealPath
     },
@@ -45,6 +47,8 @@ test('handleClickSymLink - file symlink', async () => {
         preview: true,
       },
     ],
+    ['Editor.handleBlur'],
+    ['Editor.handleFocus'],
   ])
 })
 
