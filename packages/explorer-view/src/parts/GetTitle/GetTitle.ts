@@ -6,6 +6,11 @@ export const getTitle = (state: ExplorerState): string => {
   if (!root) {
     return 'Explorer'
   }
-  const normalizedRoot = root.endsWith(pathSeparator) && root !== pathSeparator ? root.slice(0, -pathSeparator.length) : root
-  return Path.getBaseName(pathSeparator, normalizedRoot) || normalizedRoot
+  const isUri = URL.canParse(root)
+  const titlePath = isUri ? new URL(root).pathname : root
+  const titlePathSeparator = isUri ? '/' : pathSeparator
+  const normalizedTitlePath =
+    titlePath.endsWith(titlePathSeparator) && titlePath !== titlePathSeparator ? titlePath.slice(0, -titlePathSeparator.length) : titlePath
+  const title = Path.getBaseName(titlePathSeparator, normalizedTitlePath) || normalizedTitlePath
+  return decodeURIComponent(title)
 }

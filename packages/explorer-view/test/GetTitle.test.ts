@@ -11,6 +11,25 @@ test('getTitle - returns workspace name', () => {
   expect(GetTitle.getTitle(state)).toBe('project')
 })
 
+test('getTitle - returns workspace name from uri', () => {
+  const state = {
+    ...createDefaultState(),
+    pathSeparator: '\\',
+    root: 'file:///home/test/project',
+  }
+
+  expect(GetTitle.getTitle(state)).toBe('project')
+})
+
+test('getTitle - decodes workspace name from uri', () => {
+  const state = {
+    ...createDefaultState(),
+    root: 'file:///home/test/project%20name',
+  }
+
+  expect(GetTitle.getTitle(state)).toBe('project name')
+})
+
 test('getTitle - returns explorer when no folder is open', () => {
   const state = {
     ...createDefaultState(),
