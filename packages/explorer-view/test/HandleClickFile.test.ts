@@ -1,11 +1,13 @@
-import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { expect, jest, test } from '@jest/globals'
+import { createMockRpc } from '@lvce-editor/rpc'
+import { RendererProcess as RendererProcessRegistry, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as CommandCompletion from '../src/parts/CommandCompletion/CommandCompletion.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickFile } from '../src/parts/HandleClickFile/HandleClickFile.ts'
+import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 
 const file: ExplorerItem = {
   depth: 0,
@@ -89,4 +91,26 @@ test('falls back to main focus when editor focus fails', async () => {
   expect(completion).toBeDefined()
   await completion
   expect(mockRpc.invocations.slice(-3)).toEqual([['Editor.handleBlur'], ['Editor.handleFocus'], ['Main.focus']])
+})
+
+test('requests editor DOM focus after the explorer render', async () => {
+  const { uid } = state
+  RendererProcess.set(
+    Object.assign(createMockRpc({ commandMap: {} }), {
+      dispose: jest.fn(),
+    }),
+  )
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleBlur'() {},
+    'Editor.handleFocus'() {},
+    'Main.openInput'() {},
+  })
+
+  const newState = await handleClickFile(state, file, 0)
+  const completion = CommandCompletion.take(newState)
+  expect(completion).toBeDefined()
+  await completion
+  expect(RendererProcess.takePostRenderFocus(uid)).toBe(true)
+
+  await RendererProcessRegistry.dispose()
 })

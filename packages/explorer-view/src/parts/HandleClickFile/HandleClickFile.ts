@@ -3,6 +3,7 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
 import * as OpenUri from '../OpenUri/OpenUri.ts'
+import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
 const focusEditor = async (): Promise<void> => {
   try {
@@ -13,17 +14,21 @@ const focusEditor = async (): Promise<void> => {
   }
 }
 
-const openFile = async (dirent: ExplorerItem, keepFocus: boolean): Promise<void> => {
+const openFile = async (uid: number, dirent: ExplorerItem, keepFocus: boolean): Promise<void> => {
   await OpenUri.openUri(dirent.path, !keepFocus, {
     preview: true,
   })
   if (!keepFocus) {
     await focusEditor()
+    if (RendererProcess.isConnected()) {
+      RendererProcess.requestPostRenderFocus(uid)
+    }
   }
 }
 
 export const handleClickFile = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus = false): Promise<ExplorerState> => {
-  const completion = openFile(dirent, keepFocus)
+  const { uid } = state
+  const completion = openFile(uid, dirent, keepFocus)
   const newState = {
     ...state,
     focused: keepFocus,
