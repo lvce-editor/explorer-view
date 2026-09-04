@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
+import * as CommandCompletion from '../src/parts/CommandCompletion/CommandCompletion.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickSymLink } from '../src/parts/HandleClickSymlink/HandleClickSymlink.ts'
@@ -27,12 +28,18 @@ test('handleClickSymLink - file symlink', async () => {
     'FileSystem.stat'() {
       return DirentType.File
     },
+    'GetActiveEditor.getActiveEditorId'() {
+      return 84
+    },
     'Main.openInput'() {
       return undefined
     },
   })
 
-  await handleClickSymLink(state, dirent, index)
+  const newState = await handleClickSymLink(state, dirent, index)
+  const completion = CommandCompletion.take(newState)
+  expect(completion).toBeDefined()
+  await completion
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.getRealPath', '/test/symlink'],
     ['FileSystem.stat', '/test/real-file'],
@@ -47,8 +54,9 @@ test('handleClickSymLink - file symlink', async () => {
         preview: true,
       },
     ],
-    ['Editor.handleBlur'],
-    ['Editor.handleFocus'],
+    ['GetActiveEditor.getActiveEditorId'],
+    ['Editor.handleBlur', 84],
+    ['Editor.handleFocus', 84],
   ])
 })
 

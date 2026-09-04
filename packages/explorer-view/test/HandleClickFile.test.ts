@@ -1,13 +1,11 @@
-import { expect, jest, test } from '@jest/globals'
-import { createMockRpc } from '@lvce-editor/rpc'
-import { RendererProcess as RendererProcessRegistry, RendererWorker } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as CommandCompletion from '../src/parts/CommandCompletion/CommandCompletion.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleClickFile } from '../src/parts/HandleClickFile/HandleClickFile.ts'
-import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 
 const file: ExplorerItem = {
   depth: 0,
@@ -26,6 +24,9 @@ test('opens file with editor focus', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.handleBlur'() {},
     'Editor.handleFocus'() {},
+    'GetActiveEditor.getActiveEditorId'() {
+      return 84
+    },
     'Main.openInput'() {},
   })
 
@@ -46,8 +47,9 @@ test('opens file with editor focus', async () => {
         preview: true,
       },
     ],
-    ['Editor.handleBlur'],
-    ['Editor.handleFocus'],
+    ['GetActiveEditor.getActiveEditorId'],
+    ['Editor.handleBlur', 84],
+    ['Editor.handleFocus', 84],
   ])
 })
 
@@ -82,6 +84,9 @@ test('falls back to main focus when editor focus fails', async () => {
     'Editor.handleFocus'() {
       throw new Error('editor focus failed')
     },
+    'GetActiveEditor.getActiveEditorId'() {
+      return 84
+    },
     'Main.focus'() {},
     'Main.openInput'() {},
   })
@@ -90,27 +95,10 @@ test('falls back to main focus when editor focus fails', async () => {
   const completion = CommandCompletion.take(newState)
   expect(completion).toBeDefined()
   await completion
-  expect(mockRpc.invocations.slice(-3)).toEqual([['Editor.handleBlur'], ['Editor.handleFocus'], ['Main.focus']])
-})
-
-test('requests editor DOM focus after the explorer render', async () => {
-  const { uid } = state
-  RendererProcess.set(
-    Object.assign(createMockRpc({ commandMap: {} }), {
-      dispose: jest.fn(),
-    }),
-  )
-  using _mockRpc = RendererWorker.registerMockRpc({
-    'Editor.handleBlur'() {},
-    'Editor.handleFocus'() {},
-    'Main.openInput'() {},
-  })
-
-  const newState = await handleClickFile(state, file, 0)
-  const completion = CommandCompletion.take(newState)
-  expect(completion).toBeDefined()
-  await completion
-  expect(RendererProcess.takePostRenderFocus(uid)).toBe(true)
-
-  await RendererProcessRegistry.dispose()
+  expect(mockRpc.invocations.slice(-4)).toEqual([
+    ['GetActiveEditor.getActiveEditorId'],
+    ['Editor.handleBlur', 84],
+    ['Editor.handleFocus', 84],
+    ['Main.focus'],
+  ])
 })

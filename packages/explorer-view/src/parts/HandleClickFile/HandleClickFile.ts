@@ -7,8 +7,12 @@ import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
 const focusEditor = async (): Promise<void> => {
   try {
-    await RendererWorker.invoke('Editor.handleBlur')
-    await RendererWorker.invoke('Editor.handleFocus')
+    const editorUid = await RendererWorker.invoke('GetActiveEditor.getActiveEditorId')
+    if (typeof editorUid !== 'number' || editorUid < 0) {
+      throw new Error('active editor not found')
+    }
+    await RendererWorker.invoke('Editor.handleBlur', editorUid)
+    await RendererWorker.invoke('Editor.handleFocus', editorUid)
   } catch {
     await RendererWorker.invoke('Main.focus')
   }
