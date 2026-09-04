@@ -129,17 +129,17 @@ const testWorkerPackagePath = fileURLToPath(import.meta.resolve('@lvce-editor/te
 await cp(join(dirname(testWorkerPackagePath), 'dist', 'testWorkerMain.js'), testWorkerMainPath)
 const testWorkerContent = await readFile(testWorkerMainPath, 'utf-8')
 const resetOccurrence = /    await (invoke[^\n(]*)\('Layout\.reset'\);/
+const resetViewLocationsOccurrence = /    await (invoke[^\n(]*)\('Layout\.resetViewLocations'\);/
 const resetReplacement =
-  /    await invoke[^\n(]*\('FileSystem\.remove', 'memfs:\/\/\/workspace'\);\n    await invoke[^\n(]*\('FileSystem\.mkdir', 'memfs:\/\/\/workspace'\);\n    await invoke[^\n(]*\('Layout\.reset'\);\n    await invoke[^\n(]*\('Layout\.hideSideBar'\);\n    await invoke[^\n(]*\('Layout\.showSideBar'\);/
+  /    await invoke[^\n(]*\('Layout\.(?:reset|resetViewLocations)'\);\n    await invoke[^\n(]*\('Layout\.hideSideBar'\);\n    await invoke[^\n(]*\('Layout\.showSideBar'\);/
 
 if (!resetReplacement.test(testWorkerContent)) {
-  if (!resetOccurrence.test(testWorkerContent)) {
+  const occurrence = resetViewLocationsOccurrence.test(testWorkerContent) ? resetViewLocationsOccurrence : resetOccurrence
+  if (!occurrence.test(testWorkerContent)) {
     throw new Error('test worker reset occurrence not found')
   }
-  const replacement = `    await $1('FileSystem.remove', 'memfs:///workspace');
-    await $1('FileSystem.mkdir', 'memfs:///workspace');
-    await $1('Layout.reset');
+  const replacement = `$&
     await $1('Layout.hideSideBar');
     await $1('Layout.showSideBar');`
-  await writeFile(testWorkerMainPath, testWorkerContent.replace(resetOccurrence, replacement))
+  await writeFile(testWorkerMainPath, testWorkerContent.replace(occurrence, replacement))
 }
