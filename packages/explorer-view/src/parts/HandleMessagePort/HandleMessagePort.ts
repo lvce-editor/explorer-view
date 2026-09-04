@@ -4,6 +4,7 @@ import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
 const focusActiveEditor = async (): Promise<void> => {
   try {
+    await RendererWorker.invoke('Editor.handleBlur')
     await RendererWorker.invoke('Editor.handleFocus')
   } catch {
     await RendererWorker.invoke('Main.focus')

@@ -26,6 +26,13 @@ test('connects the view directly to the renderer process', async () => {
 
   const requestRender = jest.fn(async (_uid: number) => {})
   const fallbackFocused = Promise.withResolvers<void>()
+  const blurEditor = jest.fn(async () => {})
+  const focusEditor = jest.fn(async () => {
+    if (failEditorFocus) {
+      throw new Error('editor focus failed')
+    }
+    activeEditorFocused.resolve()
+  })
   const focus = jest.fn(async () => {
     fallbackFocused.resolve()
   })
@@ -33,12 +40,8 @@ test('connects the view directly to the renderer process', async () => {
     Object.assign(
       createMockRpc({
         commandMap: {
-          'Editor.handleFocus'() {
-            if (failEditorFocus) {
-              throw new Error('editor focus failed')
-            }
-            activeEditorFocused.resolve()
-          },
+          'Editor.handleBlur': blurEditor,
+          'Editor.handleFocus': focusEditor,
           'Main.focus': focus,
           'Viewlet.requestRender': requestRender,
         },
@@ -52,6 +55,8 @@ test('connects the view directly to the renderer process', async () => {
   RendererProcess.requestPostRenderFocus(7)
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'world')
   await activeEditorFocused.promise
+  expect(blurEditor).toHaveBeenCalledTimes(1)
+  expect(focusEditor).toHaveBeenCalledTimes(1)
   expect(focus).not.toHaveBeenCalled()
   failEditorFocus = true
   RendererProcess.requestPostRenderFocus(7)
