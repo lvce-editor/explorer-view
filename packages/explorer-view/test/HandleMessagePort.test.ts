@@ -5,14 +5,10 @@ import { handleMessagePort } from '../src/parts/HandleMessagePort/HandleMessageP
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 
 test('connects the view directly to the renderer process', async () => {
-  let failEditorFocus = false
-  const activeEditorFocused = Promise.withResolvers<void>()
   const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 31)
   const { port1, port2 } = new MessageChannel()
   const rendererProcessRpc = await PlainMessagePortRpcParent.create({
-    commandMap: {
-      'Viewlet.queueCommands': queueCommands,
-    },
+    commandMap: { 'Viewlet.queueCommands': queueCommands },
     messagePort: port1,
   })
   const handleEvent = jest.fn(async (_uid: number, _value: string) => {})
@@ -25,23 +21,11 @@ test('connects the view directly to the renderer process', async () => {
   expect(queueCommands).toHaveBeenCalledWith(7, [['Viewlet.setDom2', 7, []]])
 
   const requestRender = jest.fn(async (_uid: number) => {})
-  const fallbackFocused = Promise.withResolvers<void>()
-  const blurEditor = jest.fn(async () => {})
-  const focusEditor = jest.fn(async () => {
-    if (failEditorFocus) {
-      throw new Error('editor focus failed')
-    }
-    activeEditorFocused.resolve()
-  })
-  const focus = jest.fn(async () => {
-    fallbackFocused.resolve()
-  })
+  const focus = jest.fn(async () => {})
   RendererWorker.set(
     Object.assign(
       createMockRpc({
         commandMap: {
-          'Editor.handleBlur': blurEditor,
-          'Editor.handleFocus': focusEditor,
           'Main.focus': focus,
           'Viewlet.requestRender': requestRender,
         },
@@ -54,14 +38,7 @@ test('connects the view directly to the renderer process', async () => {
   expect(requestRender).toHaveBeenCalledWith(7)
   RendererProcess.requestPostRenderFocus(7)
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'world')
-  await activeEditorFocused.promise
-  expect(blurEditor).toHaveBeenCalledTimes(1)
-  expect(focusEditor).toHaveBeenCalledTimes(1)
-  expect(focus).not.toHaveBeenCalled()
-  failEditorFocus = true
-  RendererProcess.requestPostRenderFocus(7)
-  await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'fallback')
-  await fallbackFocused.promise
+  await new Promise((resolve) => setTimeout(resolve, 0))
   expect(focus).toHaveBeenCalledTimes(1)
   await expect(rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'missing')).rejects.toThrow('Viewlet command not found: missing')
 
