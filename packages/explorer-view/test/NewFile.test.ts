@@ -31,8 +31,8 @@ test('newFile', async () => {
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const state: ExplorerState = {
@@ -40,6 +40,7 @@ test('newFile', async () => {
     focusedIndex: 0,
     items: [{ depth: 0, name: 'testfolder', path: '/testfolder', selected: false, type: DirentType.Directory }],
     maxLineY: 1,
+    root: 'file:///new/path',
   }
 
   const result = await newFile(state)

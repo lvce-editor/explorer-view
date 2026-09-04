@@ -9,7 +9,7 @@ import * as GetRestoredDeltaY from '../GetRestoredDeltaY/GetRestoredDeltaY.ts'
 import * as GetSavedRoot from '../GetSavedRoot/GetSavedRoot.ts'
 import { getScheme } from '../GetScheme/GetScheme.ts'
 import * as GetSettings from '../GetSettings/GetSettings.ts'
-import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
+import * as GetWorkspaceUri from '../GetWorkspaceUri/GetWorkspaceUri.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
 
@@ -36,8 +36,8 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
   const { assetDir, expandedPaths: currentExpandedPaths, height, itemHeight, platform, root: currentRoot } = state
   const { confirmDelete, excluded, gitIgnoreDecorations, preserveExpandState, sourceControlDecorations, useChevrons } =
     await GetSettings.getSettings()
-  const workspacePath = await GetWorkspacePath.getWorkspacePath()
-  const root = GetSavedRoot.getSavedRoot(savedState, workspacePath)
+  const workspaceUri = await GetWorkspaceUri.getWorkspaceUri()
+  const root = GetSavedRoot.getSavedRoot(savedState, workspaceUri)
   const expandedPaths = getExpandedPaths(savedState, root, currentRoot, currentExpandedPaths, preserveExpandState)
   try {
     const pathSeparator = PathSeparatorType.Slash

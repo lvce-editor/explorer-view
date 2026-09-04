@@ -14,9 +14,14 @@ const getSavedDeltaY = (savedState: unknown): number => {
   return 0
 }
 
-const getSavedWorkspacePath = (savedState: unknown): string => {
-  if (hasProperty(savedState, 'workspacePath') && typeof savedState.workspacePath === 'string') {
-    return savedState.workspacePath
+const getSavedRoot = (savedState: unknown): string => {
+  if (hasProperty(savedState, 'root') && typeof savedState.root === 'string') {
+    try {
+      new URL(savedState.root)
+      return savedState.root
+    } catch {
+      return ''
+    }
   }
   return ''
 }
@@ -30,7 +35,7 @@ export const restoreState = (savedState: unknown): RestoredState => {
     }
   }
 
-  const root = getSavedWorkspacePath(savedState)
+  const root = getSavedRoot(savedState)
   const minLineY = getSavedMinLineY(savedState)
   const deltaY = getSavedDeltaY(savedState)
   return {

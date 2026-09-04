@@ -29,14 +29,15 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
     items: [],
+    root: 'file:///new/path',
   }
   const mockEditingType = 1
 
@@ -55,7 +56,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
         depth: 0,
         icon: '',
         name: '',
-        path: '/',
+        path: 'file:///new/path',
         posInSet: 1,
         selected: false,
         setSize: 1,
@@ -80,8 +81,8 @@ test('newDirent handles directory click when focused item is a directory', async
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const mockState: ExplorerState = {
@@ -136,14 +137,15 @@ test('newDirent updates state when focused item is not a directory', async () =>
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    root: 'file:///new/path',
   }
   const mockEditingType = 1
 
@@ -169,7 +171,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
         depth: 0,
         icon: '',
         name: '',
-        path: '/',
+        path: 'file:///new/path',
         posInSet: 1,
         selected: false,
         setSize: 1,
@@ -195,8 +197,8 @@ test('newDirent expands a closed folder when creating a file inside it', async (
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const mockState: ExplorerState = {

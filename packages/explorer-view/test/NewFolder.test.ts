@@ -22,14 +22,15 @@ test('newFolder', async () => {
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: -1,
     items: [],
+    root: 'file:///new/path',
   }
 
   const result = await newFolder(mockState)
@@ -47,7 +48,7 @@ test('newFolder', async () => {
         depth: 0,
         icon: '',
         name: '',
-        path: '/',
+        path: 'file:///new/path',
         posInSet: 1,
         selected: false,
         setSize: 1,
