@@ -21,12 +21,7 @@ export const test: Test = async ({ Editor, expect, Explorer, FileSystem, Locator
   await Explorer.updateEditingValue('renamed.txt')
   await Explorer.acceptEdit()
 
-  try {
-    await expect(originalTab).toBeHidden()
-  } catch (error) {
-    const mainAreaState = await Main.saveState(2)
-    throw new Error(`${error}\nMain area state: ${JSON.stringify(mainAreaState)}`)
-  }
+  await expect(originalTab).toBeHidden()
   await expect(renamedTab).toBeVisible()
 
   await Editor.setCursor(0, 7)
