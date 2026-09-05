@@ -24,7 +24,6 @@ export const getNewDirentsForNewDirent = async (
   if (items.length === 0 || focusedIndex === -1) {
     const newDirent: ExplorerItem = {
       depth: 0,
-      icon: '',
       name: '',
       path: root,
       posInSet: 1,

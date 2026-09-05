@@ -93,8 +93,8 @@ test('revealItem - reveals hidden item inside root', async () => {
   const newState = await revealItem(state, '/workspace/src/index.ts')
   expect(newState.focusedIndex).toBe(1)
   expect(newState.items).toEqual([
-    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
-    { depth: 2, icon: '', name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
+    { depth: 2, name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
   ])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', '/workspace'],

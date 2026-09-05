@@ -26,7 +26,6 @@ test('getProtoMapInternal - directory with files', () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'file1.txt',
       path: '/root/file1.txt',
       posInSet: 1,
@@ -36,7 +35,6 @@ test('getProtoMapInternal - directory with files', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'file2.txt',
       path: '/root/file2.txt',
       posInSet: 2,
@@ -62,7 +60,6 @@ test('getProtoMapInternal - directory with subdirectories', () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'folder1',
       path: '/root/folder1',
       posInSet: 1,
@@ -72,7 +69,6 @@ test('getProtoMapInternal - directory with subdirectories', () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'file1.txt',
       path: '/root/folder1/file1.txt',
       posInSet: 1,
@@ -82,7 +78,6 @@ test('getProtoMapInternal - directory with subdirectories', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'folder2',
       path: '/root/folder2',
       posInSet: 2,
@@ -92,7 +87,6 @@ test('getProtoMapInternal - directory with subdirectories', () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'file2.txt',
       path: '/root/folder2/file2.txt',
       posInSet: 1,
@@ -118,7 +112,6 @@ test('getProtoMapInternal - directory with different file types', () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'file.txt',
       path: '/root/file.txt',
       posInSet: 1,
@@ -128,7 +121,6 @@ test('getProtoMapInternal - directory with different file types', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'symlink.txt',
       path: '/root/symlink.txt',
       posInSet: 2,
@@ -138,7 +130,6 @@ test('getProtoMapInternal - directory with different file types', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 3,
@@ -148,7 +139,6 @@ test('getProtoMapInternal - directory with different file types', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'symlink-folder',
       path: '/root/symlink-folder',
       posInSet: 4,
@@ -179,7 +169,6 @@ test('getProtoMapInternal - nested directory structure', () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'folder1',
       path: '/root/folder1',
       posInSet: 1,
@@ -189,7 +178,6 @@ test('getProtoMapInternal - nested directory structure', () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'folder2',
       path: '/root/folder1/folder2',
       posInSet: 1,
@@ -199,7 +187,6 @@ test('getProtoMapInternal - nested directory structure', () => {
     },
     {
       depth: 3,
-      icon: '',
       name: 'file.txt',
       path: '/root/folder1/folder2/file.txt',
       posInSet: 1,

@@ -19,7 +19,6 @@ export const getNewChildDirentsForNewDirent = async (
     const visibleChildDirents = childDirents.filter((dirent: { name: string }) => !isExcluded(root, join2(parentPath, dirent.name), excluded))
     existingChildren = visibleChildDirents.map((dirent: { name: string; type: number }, index: number) => ({
       depth,
-      icon: '',
       name: dirent.name,
       path: join2(parentPath, dirent.name),
       posInSet: index + 1,
@@ -35,7 +34,6 @@ export const getNewChildDirentsForNewDirent = async (
   }))
   const newDirent: ExplorerItem = {
     depth,
-    icon: '',
     name: '',
     path: parentPath,
     posInSet: updatedChildren.length + 1,

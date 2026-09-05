@@ -8,7 +8,7 @@ test('renderIncremental - returns patches for changed items', () => {
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
-    items: [{ depth: 1, icon: '', name: 'test.txt', path: '/workspace/test.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File }],
+    items: [{ depth: 1, name: 'test.txt', path: '/workspace/test.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File }],
     uid: 123,
   }
   const result = renderIncremental(oldState, newState)

@@ -18,7 +18,6 @@ test('treeToArray - single file', () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'file.txt',
       path: '/test/file.txt',
       posInSet: 1,
@@ -42,7 +41,6 @@ test('treeToArray - nested structure', () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/test/folder',
       posInSet: 1,
@@ -52,7 +50,6 @@ test('treeToArray - nested structure', () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'nested.txt',
       path: '/test/folder/nested.txt',
       posInSet: 1,
@@ -62,7 +59,6 @@ test('treeToArray - nested structure', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'file.txt',
       path: '/test/file.txt',
       posInSet: 2,
@@ -84,7 +80,6 @@ test('treeToArray - deep nested structure', () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'folder1',
       path: '/test/folder1',
       posInSet: 1,
@@ -94,7 +89,6 @@ test('treeToArray - deep nested structure', () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'folder2',
       path: '/test/folder1/folder2',
       posInSet: 1,
@@ -104,7 +98,6 @@ test('treeToArray - deep nested structure', () => {
     },
     {
       depth: 3,
-      icon: '',
       name: 'deep.txt',
       path: '/test/folder1/folder2/deep.txt',
       posInSet: 1,
@@ -133,7 +126,6 @@ test('treeToArray - update tree and children', () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'folder1',
       path: '/test/folder1',
       posInSet: 1,
@@ -143,7 +135,6 @@ test('treeToArray - update tree and children', () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'subfolder',
       path: '/test/folder1/subfolder',
       posInSet: 1,
@@ -153,7 +144,6 @@ test('treeToArray - update tree and children', () => {
     },
     {
       depth: 3,
-      icon: '',
       name: 'deep.txt',
       path: '/test/folder1/subfolder/deep.txt',
       posInSet: 1,
@@ -163,7 +153,6 @@ test('treeToArray - update tree and children', () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'file1.txt',
       path: '/test/folder1/file1.txt',
       posInSet: 2,
@@ -173,7 +162,6 @@ test('treeToArray - update tree and children', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'folder2',
       path: '/test/folder2',
       posInSet: 2,
@@ -183,7 +171,6 @@ test('treeToArray - update tree and children', () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'file2.txt',
       path: '/test/folder2/file2.txt',
       posInSet: 1,

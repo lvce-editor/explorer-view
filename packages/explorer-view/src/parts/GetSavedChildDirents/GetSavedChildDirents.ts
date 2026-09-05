@@ -26,7 +26,6 @@ export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: 
     if ((child.type === DirentType.Directory || child.type === DirentType.SymLinkFolder) && childPath in map) {
       dirents.push({
         depth,
-        icon: '',
         name,
         path: childPath,
         posInSet: i + 1,
@@ -37,7 +36,6 @@ export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: 
     } else {
       dirents.push({
         depth,
-        icon: '',
         name,
         path: childPath,
         posInSet: i + 1,

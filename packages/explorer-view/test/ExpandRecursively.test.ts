@@ -27,9 +27,9 @@ test('expandRecursively - expands root when no item is focused', async () => {
   }
   const newState = await expandRecursively(state)
   expect(newState.items).toEqual([
-    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirectoryExpanded },
-    { depth: 2, icon: '', name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: File },
-    { depth: 1, icon: '', name: 'README.md', path: '/workspace/README.md', posInSet: 2, selected: false, setSize: 2, type: File },
+    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirectoryExpanded },
+    { depth: 2, name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: File },
+    { depth: 1, name: 'README.md', path: '/workspace/README.md', posInSet: 2, selected: false, setSize: 2, type: File },
   ])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', '/workspace'],
@@ -50,17 +50,17 @@ test('expandRecursively - replaces focused directory children', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [
-      { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: Directory },
-      { depth: 2, icon: '', name: 'old.ts', path: '/workspace/src/old.ts', posInSet: 1, selected: false, setSize: 1, type: File },
-      { depth: 1, icon: '', name: 'README.md', path: '/workspace/README.md', posInSet: 2, selected: false, setSize: 2, type: File },
+      { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: Directory },
+      { depth: 2, name: 'old.ts', path: '/workspace/src/old.ts', posInSet: 1, selected: false, setSize: 1, type: File },
+      { depth: 1, name: 'README.md', path: '/workspace/README.md', posInSet: 2, selected: false, setSize: 2, type: File },
     ],
     root: '/workspace',
   }
   const newState = await expandRecursively(state)
   expect(newState.items).toEqual([
-    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirectoryExpanded },
-    { depth: 2, icon: '', name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: File },
-    { depth: 1, icon: '', name: 'README.md', path: '/workspace/README.md', posInSet: 2, selected: false, setSize: 2, type: File },
+    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirectoryExpanded },
+    { depth: 2, name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: File },
+    { depth: 1, name: 'README.md', path: '/workspace/README.md', posInSet: 2, selected: false, setSize: 2, type: File },
   ])
 })
 

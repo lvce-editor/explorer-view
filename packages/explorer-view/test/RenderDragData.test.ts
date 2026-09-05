@@ -25,9 +25,9 @@ test('renderDragData - focused and selected items when pointing at the focused i
     focusedIndex: 1,
     isPointerDown: true,
     items: [
-      { depth: 1, icon: '', name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: true, setSize: 3, type: DirentType.File },
-      { depth: 1, icon: '', name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: false, setSize: 3, type: DirentType.File },
-      { depth: 1, icon: '', name: 'c.txt', path: 'file:///workspace/c.txt', posInSet: 3, selected: true, setSize: 3, type: DirentType.File },
+      { depth: 1, name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: true, setSize: 3, type: DirentType.File },
+      { depth: 1, name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: false, setSize: 3, type: DirentType.File },
+      { depth: 1, name: 'c.txt', path: 'file:///workspace/c.txt', posInSet: 3, selected: true, setSize: 3, type: DirentType.File },
     ],
     pointerDownIndex: 1,
     uid: 123,
@@ -58,9 +58,9 @@ test('renderDragData - focused and selected items when pointing at a selected it
     focusedIndex: 0,
     isPointerDown: true,
     items: [
-      { depth: 1, icon: '', name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: false, setSize: 3, type: DirentType.File },
-      { depth: 1, icon: '', name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: true, setSize: 3, type: DirentType.File },
-      { depth: 1, icon: '', name: 'c.txt', path: '/workspace/c.txt', posInSet: 3, selected: true, setSize: 3, type: DirentType.File },
+      { depth: 1, name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: false, setSize: 3, type: DirentType.File },
+      { depth: 1, name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: true, setSize: 3, type: DirentType.File },
+      { depth: 1, name: 'c.txt', path: '/workspace/c.txt', posInSet: 3, selected: true, setSize: 3, type: DirentType.File },
     ],
     pointerDownIndex: 1,
     uid: 123,
@@ -92,9 +92,9 @@ test('renderDragData - only pointed item when pointing outside the selection', (
     focusedIndex: 0,
     isPointerDown: true,
     items: [
-      { depth: 1, icon: '', name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: false, setSize: 3, type: DirentType.File },
-      { depth: 1, icon: '', name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: true, setSize: 3, type: DirentType.File },
-      { depth: 1, icon: '', name: 'c.txt', path: '/workspace/c.txt', posInSet: 3, selected: false, setSize: 3, type: DirentType.File },
+      { depth: 1, name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: false, setSize: 3, type: DirentType.File },
+      { depth: 1, name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: true, setSize: 3, type: DirentType.File },
+      { depth: 1, name: 'c.txt', path: '/workspace/c.txt', posInSet: 3, selected: false, setSize: 3, type: DirentType.File },
     ],
     pointerDownIndex: 2,
     uid: 123,
@@ -128,7 +128,6 @@ test('renderDragData - remote folder has a trailing slash', () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'src',
         path: 'remote-ssh://test-host/workspace/src',
         posInSet: 1,
@@ -160,7 +159,7 @@ test('renderDragData - no item for an out-of-range pointer index', () => {
     ...oldState,
     focusedIndex: 0,
     isPointerDown: true,
-    items: [{ depth: 1, icon: '', name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File }],
+    items: [{ depth: 1, name: 'a.txt', path: '/workspace/a.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File }],
     pointerDownIndex: 99,
     uid: 123,
   }

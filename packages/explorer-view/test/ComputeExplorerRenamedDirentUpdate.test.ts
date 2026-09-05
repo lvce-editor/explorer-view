@@ -12,7 +12,6 @@ test('computeExplorerRenamedDirentUpdate - basic rename', () => {
   const children: ExplorerItem[] = [
     {
       depth: 1,
-      icon: '',
       name: 'child1',
       path: '/parent/child1',
       posInSet: 1,
@@ -22,7 +21,6 @@ test('computeExplorerRenamedDirentUpdate - basic rename', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'child2',
       path: '/parent/child2',
       posInSet: 2,
@@ -72,7 +70,6 @@ test('computeExplorerRenamedDirentUpdate - deep nested rename', () => {
   const children: ExplorerItem[] = [
     {
       depth: 1,
-      icon: '',
       name: 'old',
       path: '/old',
       posInSet: 1,
@@ -127,7 +124,6 @@ test('computeExplorerRenamedDirentUpdate - preserves expanded renamed folder', (
   const children: ExplorerItem[] = [
     {
       depth: 2,
-      icon: '',
       name: 'new',
       path: '/parent/new',
       posInSet: 1,
@@ -166,7 +162,6 @@ test('computeExplorerRenamedDirentUpdate - sorts renamed parent children and upd
   const children: ExplorerItem[] = [
     {
       depth: 1,
-      icon: '',
       name: 'readme2.md',
       path: '/readme2.md',
       posInSet: 1,
@@ -176,7 +171,6 @@ test('computeExplorerRenamedDirentUpdate - sorts renamed parent children and upd
     },
     {
       depth: 1,
-      icon: '',
       name: '.nvmrc',
       path: '/.nvmrc',
       posInSet: 2,
@@ -186,7 +180,6 @@ test('computeExplorerRenamedDirentUpdate - sorts renamed parent children and upd
     },
     {
       depth: 1,
-      icon: '',
       name: 'package.json',
       path: '/package.json',
       posInSet: 3,
@@ -196,7 +189,6 @@ test('computeExplorerRenamedDirentUpdate - sorts renamed parent children and upd
     },
     {
       depth: 1,
-      icon: '',
       name: 'LICENSE',
       path: '/LICENSE',
       posInSet: 4,
@@ -206,7 +198,6 @@ test('computeExplorerRenamedDirentUpdate - sorts renamed parent children and upd
     },
     {
       depth: 1,
-      icon: '',
       name: 'eslint.config.js',
       path: '/eslint.config.js',
       posInSet: 5,

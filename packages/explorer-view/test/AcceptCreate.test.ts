@@ -66,7 +66,6 @@ test('acceptCreate - successful file creation', async () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'test.txt',
         path: 'memfs:///workspace/test/test.txt',
         posInSet: 1,
@@ -89,7 +88,6 @@ test('acceptCreate - successful file creation', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'test',
         path: 'memfs:///workspace/test',
         posInSet: 1,
@@ -99,7 +97,6 @@ test('acceptCreate - successful file creation', async () => {
       },
       {
         depth: 2,
-        icon: '',
         name: 'test.txt',
         path: 'memfs:///workspace/test/test.txt',
         posInSet: 1,
@@ -165,7 +162,6 @@ test('acceptCreate - successful folder creation does not open uri', async () => 
       },
       {
         depth: 1,
-        icon: '',
         name: 'newfolder',
         path: 'memfs:///workspace/test/newfolder',
         posInSet: 1,
@@ -231,7 +227,6 @@ test('acceptCreate - nested folder creation uses the file parent when a file is 
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'file1.txt',
         path: 'memfs:///workspace/file1.txt',
         posInSet: 1,
@@ -241,7 +236,6 @@ test('acceptCreate - nested folder creation uses the file parent when a file is 
       },
       {
         depth: 0,
-        icon: '',
         name: '',
         path: 'memfs:///workspace',
         posInSet: 1,

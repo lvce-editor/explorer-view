@@ -5,27 +5,27 @@ import { updateDirentsAtPath } from '../src/parts/UpdateDirentsAtPath/UpdateDire
 
 test('updateDirentsAtPath - replaces root children', () => {
   const items: readonly ExplorerItem[] = [
-    { depth: 1, icon: '', name: 'old.txt', path: '/workspace/old.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'old.txt', path: '/workspace/old.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
   ]
   const result = updateDirentsAtPath(items, '/workspace', '/workspace', [
     { name: 'b.txt', type: DirentType.File },
     { name: 'src', type: DirentType.Directory },
   ])
   expect(result).toEqual([
-    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory },
-    { depth: 1, icon: '', name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
+    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory },
+    { depth: 1, name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
   ])
 })
 
 test('updateDirentsAtPath - replaces nested children', () => {
   const items: readonly ExplorerItem[] = [
-    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
-    { depth: 2, icon: '', name: 'old.ts', path: '/workspace/src/old.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
+    { depth: 2, name: 'old.ts', path: '/workspace/src/old.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
   ]
   const result = updateDirentsAtPath(items, '/workspace/src', '/workspace', [{ name: 'index.ts', type: DirentType.File }])
   expect(result).toEqual([
-    { depth: 1, icon: '', name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
-    { depth: 2, icon: '', name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
+    { depth: 2, name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
   ])
 })
 
@@ -46,8 +46,8 @@ test.skip('updateDirentsAtPath - empty items', () => {
 
 test.skip('updateDirentsAtPath - update existing items', () => {
   const items: readonly ExplorerItem[] = [
-    { depth: 0, icon: '', name: 'folder', path: '/test/folder', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory },
-    { depth: 0, icon: '', name: 'file.txt', path: '/test/file.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
+    { depth: 0, name: 'folder', path: '/test/folder', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory },
+    { depth: 0, name: 'file.txt', path: '/test/file.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
   ]
   const path = '/test'
   const root = '/test'
@@ -73,8 +73,8 @@ test.skip('updateDirentsAtPath - update existing items', () => {
 
 test.skip('updateDirentsAtPath - nested structure', () => {
   const items: readonly ExplorerItem[] = [
-    { depth: 0, icon: '', name: 'folder', path: '/test/folder', posInSet: 1, selected: false, setSize: 1, type: DirentType.Directory },
-    { depth: 1, icon: '', name: 'nested.txt', path: '/test/folder/nested.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 0, name: 'folder', path: '/test/folder', posInSet: 1, selected: false, setSize: 1, type: DirentType.Directory },
+    { depth: 1, name: 'nested.txt', path: '/test/folder/nested.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
   ]
   const path = '/test/folder'
   const root = '/test'

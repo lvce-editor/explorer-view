@@ -39,8 +39,8 @@ test('acceptRename - renames file and refreshes parent children', async () => {
     editingType: ExplorerEditingType.Rename,
     editingValue: 'b.txt',
     items: [
-      { depth: 1, icon: '', name: 'a.txt', path: '/test/a.txt', posInSet: 1, selected: false, setSize: 2, type: DirentType.File },
-      { depth: 1, icon: '', name: 'c.txt', path: '/test/c.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
+      { depth: 1, name: 'a.txt', path: '/test/a.txt', posInSet: 1, selected: false, setSize: 2, type: DirentType.File },
+      { depth: 1, name: 'c.txt', path: '/test/c.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
     ],
     pathSeparator: PathSeparatorType.Slash,
     root: '/test',
@@ -52,8 +52,8 @@ test('acceptRename - renames file and refreshes parent children', async () => {
   expect(result.editingValue).toBe('')
   expect(result.focusedIndex).toBe(0)
   expect(result.items).toEqual([
-    { depth: 1, icon: '', name: 'b.txt', path: '/test/b.txt', posInSet: 1, selected: false, setSize: 2, type: DirentType.File },
-    { depth: 1, icon: '', name: 'c.txt', path: '/test/c.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
+    { depth: 1, name: 'b.txt', path: '/test/b.txt', posInSet: 1, selected: false, setSize: 2, type: DirentType.File },
+    { depth: 1, name: 'c.txt', path: '/test/c.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
   ])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],

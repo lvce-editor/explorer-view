@@ -13,7 +13,6 @@ test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
   const items = [
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 1,
@@ -28,7 +27,6 @@ test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
   expect(result).toEqual([
     {
       depth: 2,
-      icon: '',
       name: '',
       path: '',
       posInSet: 1,
@@ -50,7 +48,6 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
   const items = [
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 1,
@@ -60,7 +57,6 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
     },
     {
       depth: 2,
-      icon: '',
       name: 'file1.txt',
       path: '/root/folder/file1.txt',
       posInSet: 1,
@@ -70,7 +66,6 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
     },
     {
       depth: 2,
-      icon: '',
       name: 'file2.txt',
       path: '/root/folder/file2.txt',
       posInSet: 2,
@@ -85,7 +80,6 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
   expect(result).toEqual([
     {
       depth: 2,
-      icon: '',
       name: 'file1.txt',
       path: '/root/folder/file1.txt',
       posInSet: 1,
@@ -95,7 +89,6 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
     },
     {
       depth: 2,
-      icon: '',
       name: 'file2.txt',
       path: '/root/folder/file2.txt',
       posInSet: 2,
@@ -105,7 +98,6 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
     },
     {
       depth: 2,
-      icon: '',
       name: '',
       path: '',
       posInSet: 3,
@@ -127,7 +119,6 @@ test.skip('getNewChildDirentsForNewDirent - directory with no children', async (
   const items = [
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 1,
@@ -142,7 +133,6 @@ test.skip('getNewChildDirentsForNewDirent - directory with no children', async (
   expect(result).toEqual([
     {
       depth: 2,
-      icon: '',
       name: '',
       path: '',
       posInSet: 1,
@@ -164,7 +154,6 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
   const items = [
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 1,
@@ -174,7 +163,6 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
     },
     {
       depth: 2,
-      icon: '',
       name: 'file1.txt',
       path: '/root/folder/file1.txt',
       posInSet: 1,
@@ -184,7 +172,6 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
     },
     {
       depth: 2,
-      icon: '',
       name: 'folder1',
       path: '/root/folder/folder1',
       posInSet: 2,
@@ -199,7 +186,6 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
   expect(result).toEqual([
     {
       depth: 2,
-      icon: '',
       name: 'file1.txt',
       path: '/root/folder/file1.txt',
       posInSet: 1,
@@ -209,7 +195,6 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
     },
     {
       depth: 2,
-      icon: '',
       name: 'folder1',
       path: '/root/folder/folder1',
       posInSet: 2,
@@ -219,7 +204,6 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
     },
     {
       depth: 2,
-      icon: '',
       name: '',
       path: '',
       posInSet: 3,
@@ -241,7 +225,6 @@ test.skip('getNewChildDirentsForNewDirent - error case', async () => {
   const items = [
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 1,

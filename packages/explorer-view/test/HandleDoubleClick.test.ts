@@ -67,7 +67,6 @@ test('handleDoubleClick - double click on empty area creates new file', async ()
       },
       {
         depth: 1,
-        icon: '',
         name: '',
         path: '/testfolder',
         posInSet: 1,
@@ -205,7 +204,6 @@ test('handleDoubleClick - double click on empty area with scrolled state creates
       },
       {
         depth: 1,
-        icon: '',
         name: '',
         path: '/testfolder',
         posInSet: 1,

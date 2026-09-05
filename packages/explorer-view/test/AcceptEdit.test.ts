@@ -89,7 +89,6 @@ test.skip('acceptEdit - rename', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a.txt',
         path: '/test/a.txt',
         posInSet: 1,
@@ -107,7 +106,6 @@ test.skip('acceptEdit - rename', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'b.txt',
         path: '/test/b.txt',
         posInSet: 1,
@@ -134,7 +132,6 @@ test.skip('acceptEdit - rename - nested file', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a',
         path: '/test/a',
         posInSet: 1,
@@ -143,7 +140,6 @@ test.skip('acceptEdit - rename - nested file', async () => {
       },
       {
         depth: 2,
-        icon: '',
         name: 'b.txt',
         path: '/test/a/b.txt',
         posInSet: 1,
@@ -162,7 +158,6 @@ test.skip('acceptEdit - rename - nested file', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a',
         path: '/test/a',
         posInSet: 1,
@@ -171,7 +166,6 @@ test.skip('acceptEdit - rename - nested file', async () => {
       },
       {
         depth: 2,
-        icon: '',
         name: 'c.txt',
         path: '/test/a/c.txt',
         posInSet: 1,
@@ -196,7 +190,6 @@ test.skip('acceptEdit - create - insert folder', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a',
         path: '/test/a',
         posInSet: 1,
@@ -205,7 +198,6 @@ test.skip('acceptEdit - create - insert folder', async () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'b',
         path: '/test/b',
         posInSet: 2,
@@ -214,7 +206,6 @@ test.skip('acceptEdit - create - insert folder', async () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'd',
         path: '/test/d',
         posInSet: 3,
@@ -233,7 +224,6 @@ test.skip('acceptEdit - create - insert folder', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a',
         path: '/test/a',
         posInSet: 1,
@@ -242,7 +232,6 @@ test.skip('acceptEdit - create - insert folder', async () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'b',
         path: '/test/b',
         posInSet: 2,
@@ -251,7 +240,6 @@ test.skip('acceptEdit - create - insert folder', async () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'c',
         path: '/test/c',
         posInSet: 3,
@@ -260,7 +248,6 @@ test.skip('acceptEdit - create - insert folder', async () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'd',
         path: '/test/d',
         posInSet: 3, // TODO should be 4

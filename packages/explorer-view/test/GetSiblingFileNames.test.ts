@@ -6,7 +6,6 @@ test('getSiblingFileNames - root level files', () => {
   const items: readonly ExplorerItem[] = [
     {
       depth: 0,
-      icon: '',
       name: 'file1.txt',
       path: '/root/file1.txt',
       posInSet: 0,
@@ -16,7 +15,6 @@ test('getSiblingFileNames - root level files', () => {
     },
     {
       depth: 0,
-      icon: '',
       name: 'file2.txt',
       path: '/root/file2.txt',
       posInSet: 1,
@@ -26,7 +24,6 @@ test('getSiblingFileNames - root level files', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'file3.txt',
       path: '/root/folder/file3.txt',
       posInSet: 0,
@@ -44,7 +41,6 @@ test('getSiblingFileNames - folder level files', () => {
   const items: readonly ExplorerItem[] = [
     {
       depth: 0,
-      icon: '',
       name: 'file1.txt',
       path: '/root/file1.txt',
       posInSet: 0,
@@ -54,7 +50,6 @@ test('getSiblingFileNames - folder level files', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'file2.txt',
       path: '/root/folder/file2.txt',
       posInSet: 0,
@@ -64,7 +59,6 @@ test('getSiblingFileNames - folder level files', () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'file3.txt',
       path: '/root/folder/file3.txt',
       posInSet: 1,
@@ -82,7 +76,6 @@ test('getSiblingFileNames - no siblings', () => {
   const items: readonly ExplorerItem[] = [
     {
       depth: 0,
-      icon: '',
       name: 'file1.txt',
       path: '/root/file1.txt',
       posInSet: 0,
