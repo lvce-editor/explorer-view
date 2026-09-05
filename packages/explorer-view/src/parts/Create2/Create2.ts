@@ -12,6 +12,7 @@ export const create2 = (
   parentUid: any,
   platform: number = 0,
   assetDir: string = '',
+  applicationId?: string,
 ): void => {
-  return create(uid, uri, x, y, width, height, args, parentUid, platform, assetDir)
+  return create(uid, uri, x, y, width, height, args, parentUid, platform, assetDir, false, applicationId)
 }

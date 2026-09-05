@@ -19,6 +19,7 @@ export const getNewDirentsForNewDirent = async (
   root: string,
   excluded: readonly string[] = [],
   insertAtFolderBoundary = false,
+  applicationId?: string,
 ): Promise<readonly ExplorerItem[]> => {
   if (items.length === 0 || focusedIndex === -1) {
     const newDirent: ExplorerItem = {
@@ -51,7 +52,7 @@ export const getNewDirentsForNewDirent = async (
   const parentPath = focusedItem.path
   const depth = focusedItem.depth + 1
 
-  const updatedChildren = await getNewChildDirentsForNewDirent(items, depth, parentPath, type, excluded, root)
+  const updatedChildren = await getNewChildDirentsForNewDirent(items, depth, parentPath, type, excluded, root, applicationId)
 
   // Create new array with updated items
   const parentIndex = focusedIndex

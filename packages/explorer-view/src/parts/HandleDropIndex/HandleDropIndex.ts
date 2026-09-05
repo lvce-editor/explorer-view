@@ -34,11 +34,12 @@ const handleDropIntoFolder = async (
   index: number,
   fileHandles: readonly FileSystemHandle[],
 ): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { excluded, items, pathSeparator, root } = state
 
-  await uploadFileSystemHandles(dirent.path, '/', fileHandles)
+  await uploadFileSystemHandles(dirent.path, '/', fileHandles, applicationId)
 
-  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth, excluded, root)
+  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth, excluded, root, applicationId)
   const mergedDirents = getMergedDirents(items, index, dirent, childDirents)
   // TODO update maxlineY
   return {

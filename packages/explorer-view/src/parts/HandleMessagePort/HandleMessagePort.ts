@@ -1,5 +1,7 @@
 import { PlainMessagePortRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ApplicationRpc from '../ApplicationRpc/ApplicationRpc.ts'
+import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
 export const handleMessagePort = async (
@@ -12,11 +14,12 @@ export const handleMessagePort = async (
     if (typeof fn !== 'function') {
       throw new TypeError(`Viewlet command not found: ${command}`)
     }
+    const applicationId = ExplorerStates.get(uid)?.newState.applicationId
     await fn(uid, ...args)
     await RendererWorker.invoke('Viewlet.requestRender', uid)
     if (RendererProcess.takePostRenderFocus(uid)) {
       setTimeout(() => {
-        void RendererWorker.invoke('Main.focus')
+        void ApplicationRpc.invokeForView(applicationId, uid, 'Main.focus').catch(() => {})
       }, 0)
     }
   }

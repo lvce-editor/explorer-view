@@ -2,6 +2,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 
 export const handleUpload = async (state: ExplorerState, dirents: readonly any[]): Promise<any> => {
+  const { applicationId } = state
   const { isReadonly, pathSeparator, root } = state
   if (isReadonly) {
     return state
@@ -17,6 +18,6 @@ export const handleUpload = async (state: ExplorerState, dirents: readonly any[]
     // but not sure how else to send them via jsonrpc
     const content = await dirent.file.text()
     const absolutePath = [root, dirent.file.name].join(pathSeparator)
-    await FileSystem.writeFile(absolutePath, content)
+    await FileSystem.writeFile(absolutePath, content, applicationId)
   }
 }

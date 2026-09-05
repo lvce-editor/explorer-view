@@ -1,5 +1,5 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as OpenUri from '../OpenUri/OpenUri.ts'
 
-export const openDiff = async (leftUri: string, rightUri: string, focus: boolean): Promise<void> => {
-  await RendererWorker.openUri(`diff://${leftUri}<->${rightUri}`, focus)
+export const openDiff = async (leftUri: string, rightUri: string, focus: boolean, applicationId?: string): Promise<void> => {
+  await OpenUri.openUri(`diff://${leftUri}<->${rightUri}`, focus, undefined, applicationId)
 }

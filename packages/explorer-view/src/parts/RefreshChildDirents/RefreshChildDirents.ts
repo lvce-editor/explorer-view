@@ -10,6 +10,7 @@ const refreshChildDirent = async (
   expandedFolders: readonly string[],
   excluded: readonly string[],
   root: string,
+  applicationId?: string,
 ): Promise<readonly ExplorerItem[]> => {
   const path = folder.path.endsWith(pathSeparator) ? `${folder.path}${dirent.name}` : `${folder.path}${pathSeparator}${dirent.name}`
   const isExpandedFolder = expandedFolders.includes(path)
@@ -27,7 +28,7 @@ const refreshChildDirent = async (
   }
 
   if (isExpandedFolder && dirent.type === 'directory') {
-    const nestedItems = await refreshChildDirents(item, pathSeparator, expandedFolders, excluded, root)
+    const nestedItems = await refreshChildDirents(item, pathSeparator, expandedFolders, excluded, root, applicationId)
     return [item, ...nestedItems]
   }
 
@@ -40,15 +41,16 @@ export const refreshChildDirents = async (
   expandedFolders: readonly string[],
   excluded: readonly string[] = [],
   root: string = folder.path,
+  applicationId?: string,
 ): Promise<readonly ExplorerItem[]> => {
-  const rawChildDirents = await FileSystem.readDirWithFileTypes(folder.path)
+  const rawChildDirents = await FileSystem.readDirWithFileTypes(folder.path, applicationId)
   const childDirents = rawChildDirents.filter((dirent) => {
     const path = folder.path.endsWith(pathSeparator) ? `${folder.path}${dirent.name}` : `${folder.path}${pathSeparator}${dirent.name}`
     return !isExcluded(root, path, excluded)
   })
   const childItems = await Promise.all(
     childDirents.map(async (dirent) => {
-      return refreshChildDirent(folder, dirent, pathSeparator, expandedFolders, excluded, root)
+      return refreshChildDirent(folder, dirent, pathSeparator, expandedFolders, excluded, root, applicationId)
     }),
   )
   return childItems.flat()

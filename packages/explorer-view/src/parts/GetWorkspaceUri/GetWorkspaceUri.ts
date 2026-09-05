@@ -1,5 +1,5 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import * as ApplicationRpc from '../ApplicationRpc/ApplicationRpc.ts'
 
-export const getWorkspaceUri = (): Promise<string> => {
-  return Rpc.invoke('Workspace.getUri')
+export const getWorkspaceUri = (applicationId?: string): Promise<string> => {
+  return ApplicationRpc.invoke(applicationId, 'Workspace.getUri')
 }

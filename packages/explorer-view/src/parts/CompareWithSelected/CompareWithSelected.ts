@@ -3,6 +3,7 @@ import * as GetFocusedFile from '../GetFocusedFile/GetFocusedFile.ts'
 import * as OpenDiff from '../OpenDiff/OpenDiff.ts'
 
 export const compareWithSelected = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { compareSourceUri } = state
   const focusedFile = GetFocusedFile.getFocusedFile(state)
   if (!focusedFile) {
@@ -11,7 +12,7 @@ export const compareWithSelected = async (state: ExplorerState): Promise<Explore
   if (!compareSourceUri || compareSourceUri === focusedFile.path) {
     return state
   }
-  await OpenDiff.openDiff(compareSourceUri, focusedFile.path, true)
+  await OpenDiff.openDiff(compareSourceUri, focusedFile.path, true, applicationId)
   return {
     ...state,
     compareSourceUri: '',

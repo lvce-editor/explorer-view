@@ -4,9 +4,15 @@ import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
 import * as OpenUri from '../OpenUri/OpenUri.ts'
 
 export const handleClickFile = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus = false): Promise<ExplorerState> => {
-  const completion = OpenUri.openUri(dirent.path, !keepFocus, {
-    preview: true,
-  })
+  const { applicationId } = state
+  const completion = OpenUri.openUri(
+    dirent.path,
+    !keepFocus,
+    {
+      preview: true,
+    },
+    applicationId,
+  )
   const newState = {
     ...state,
     focused: keepFocus,
