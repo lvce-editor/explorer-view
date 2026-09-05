@@ -1,5 +1,5 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as ApplicationRpc from '../ApplicationRpc/ApplicationRpc.ts'
 import { getChildDirents } from '../GetChildDirents/GetChildDirents.ts'
 import { isDirectoryHandle } from '../IsDirectoryHandle/IsDirectoryHandle.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
@@ -15,8 +15,9 @@ const getMergedDirents = async (
   pathSeparator: string,
   dirents: readonly any[],
   excluded: readonly string[],
+  applicationId?: string,
 ): Promise<readonly any[]> => {
-  const childDirents = await getChildDirents(pathSeparator, root, 0, excluded, root)
+  const childDirents = await getChildDirents(pathSeparator, root, 0, excluded, root, applicationId)
   const mergedDirents = mergeDirents(dirents, childDirents)
   return mergedDirents
 }
@@ -26,9 +27,10 @@ const getDroppedDirectoryWorkspacePath = (fileHandle: FileSystemDirectoryHandle)
 }
 
 const openDroppedDirectoryAsWorkspace = async (state: ExplorerState, fileHandle: FileSystemDirectoryHandle): Promise<ExplorerState> => {
+  const { applicationId } = state
   const path = getDroppedDirectoryWorkspacePath(fileHandle)
-  await RendererWorker.invoke('PersistentFileHandle.addHandle', fileHandle.name, fileHandle)
-  await RendererWorker.invoke('Workspace.setPath', path)
+  await ApplicationRpc.invoke(applicationId, 'PersistentFileHandle.addHandle', fileHandle.name, fileHandle)
+  await ApplicationRpc.invoke(applicationId, 'Workspace.setPath', path)
   const updated = await LoadContent.loadContent(state, undefined)
   return {
     ...updated,
@@ -54,6 +56,7 @@ export const handleDrop = async (
   fileHandles: readonly FileSystemHandle[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { excluded, items, pathSeparator, root } = state
   const droppedDirectory = getFirstDroppedDirectory(state, fileHandles)
   if (droppedDirectory) {
@@ -65,7 +68,7 @@ export const handleDrop = async (
       dropTargets: [],
     }
   }
-  const handled = await UploadFileSystemHandles.uploadFileSystemHandles(root, pathSeparator, fileHandles)
+  const handled = await UploadFileSystemHandles.uploadFileSystemHandles(root, pathSeparator, fileHandles, applicationId)
   if (handled) {
     const updated = await Refresh.refresh(state)
     return {
@@ -73,7 +76,7 @@ export const handleDrop = async (
       dropTargets: [],
     }
   }
-  const mergedDirents = await getMergedDirents(root, pathSeparator, items, excluded)
+  const mergedDirents = await getMergedDirents(root, pathSeparator, items, excluded, applicationId)
   return {
     ...state,
     dropTargets: [],

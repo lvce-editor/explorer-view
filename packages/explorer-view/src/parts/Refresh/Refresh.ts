@@ -8,6 +8,7 @@ import { getProtoMap } from '../GetProtoMap/GetProtoMap.ts'
 import { sortPathDirentsMap } from '../SortPathDirentsMap/SortPathDirentsMap.ts'
 
 export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { applicationId } = state
   const {
     excluded,
     expandedPaths: preservedExpandedPaths,
@@ -21,14 +22,14 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
   const legacyExpandedPaths = getPaths(getExpandedDirents(items))
   const expandedPaths = preserveExpandState ? preservedExpandedPaths : legacyExpandedPaths
   const allPaths = [root, ...expandedPaths]
-  const pathToDirents = await getPathDirentsMap(allPaths)
+  const pathToDirents = await getPathDirentsMap(allPaths, applicationId)
   const sortedPathDirents = sortPathDirentsMap(pathToDirents)
   const newItems = getProtoMap(root, sortedPathDirents, expandedPaths, excluded)
   let newFocusedIndex = focusedIndex
   if (focusedIndex >= newItems.length) {
     newFocusedIndex = newItems.length - 1
   }
-  const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, newItems, pathSeparator, gitIgnoreDecorations)
+  const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, newItems, pathSeparator, gitIgnoreDecorations, applicationId)
   return {
     ...state,
     focusedIndex: newFocusedIndex,

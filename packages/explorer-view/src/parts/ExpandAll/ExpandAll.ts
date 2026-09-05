@@ -3,6 +3,7 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 
 export const expandAll = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { excluded, focusedIndex, items, pathSeparator, root } = state
   if (focusedIndex === -1) {
     return state
@@ -21,7 +22,7 @@ export const expandAll = async (state: ExplorerState): Promise<ExplorerState> =>
     dirent.type = DirentType.DirectoryExpanding
     // TODO handle error
     // TODO race condition
-    const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth, excluded, root)
+    const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth, excluded, root, applicationId)
     const newIndex = newDirents.indexOf(dirent)
     if (newIndex === -1) {
       continue

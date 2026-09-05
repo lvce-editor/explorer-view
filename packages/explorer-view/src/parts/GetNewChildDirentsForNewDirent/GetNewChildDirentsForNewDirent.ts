@@ -10,11 +10,12 @@ export const getNewChildDirentsForNewDirent = async (
   direntType: number,
   excluded: readonly string[] = [],
   root: string = parentPath,
+  applicationId?: string,
 ): Promise<readonly ExplorerItem[]> => {
   // Get existing children or query them if they don't exist
   let existingChildren = items.filter((item) => item.depth === depth && item.path.startsWith(parentPath))
   if (existingChildren.length === 0) {
-    const childDirents = await FileSystem.readDirWithFileTypes(parentPath)
+    const childDirents = await FileSystem.readDirWithFileTypes(parentPath, applicationId)
     const visibleChildDirents = childDirents.filter((dirent: { name: string }) => !isExcluded(root, join2(parentPath, dirent.name), excluded))
     existingChildren = visibleChildDirents.map((dirent: { name: string; type: number }, index: number) => ({
       depth,

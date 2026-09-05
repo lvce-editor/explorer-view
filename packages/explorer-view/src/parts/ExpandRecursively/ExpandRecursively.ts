@@ -4,6 +4,7 @@ import * as GetChildDirentsRecursively from '../GetChildDirentsRecursively/GetCh
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 
 export const expandRecursively = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { excluded, focusedIndex, items, pathSeparator, root } = state
   const dirent =
     focusedIndex < 0
@@ -20,7 +21,7 @@ export const expandRecursively = async (state: ExplorerState): Promise<ExplorerS
   // TODO race condition: what if folder is being deleted while it is recursively expanding?
   // TODO race condition: what if a new file/folder is created while the folder is recursively expanding?
   // @ts-ignore
-  const childDirents = await GetChildDirentsRecursively.getChildDirentsRecursively(dirent, pathSeparator, excluded, root)
+  const childDirents = await GetChildDirentsRecursively.getChildDirentsRecursively(dirent, pathSeparator, excluded, root, applicationId)
   const startIndex = focusedIndex
   if (focusedIndex >= 0) {
     const endIndex = GetParentEndIndex.getParentEndIndex(items, focusedIndex)

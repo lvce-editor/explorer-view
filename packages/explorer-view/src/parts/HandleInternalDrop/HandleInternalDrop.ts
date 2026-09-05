@@ -92,6 +92,7 @@ const expandTargetFolder = (items: readonly ExplorerItem[], targetFolder: string
 }
 
 export const handleInternalDrop = async (state: ExplorerState, sourcePaths: readonly string[], index: number): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { expandedPaths: oldExpandedPaths, isReadonly, items, preserveExpandState } = state
   if (isReadonly) {
     return state
@@ -105,7 +106,7 @@ export const handleInternalDrop = async (state: ExplorerState, sourcePaths: read
     }
   }
   for (const operation of operations) {
-    await FileSystem.rename(operation.from, operation.path)
+    await FileSystem.rename(operation.from, operation.path, applicationId)
   }
   const expandedItems = expandTargetFolder(items, targetFolder)
   const expandedPaths = preserveExpandState ? [...new Set([...oldExpandedPaths, targetFolder])] : oldExpandedPaths

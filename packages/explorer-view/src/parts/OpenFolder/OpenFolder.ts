@@ -1,5 +1,5 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ApplicationRpc from '../ApplicationRpc/ApplicationRpc.ts'
 
-export const openFolder = async (): Promise<void> => {
-  await RendererWorker.invoke(`Dialog.openFolder`)
+export const openFolder = async (applicationId?: string): Promise<void> => {
+  await ApplicationRpc.invoke(applicationId, 'Dialog.openFolder')
 }

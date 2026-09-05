@@ -10,6 +10,7 @@ import * as Refresh from '../Refresh/Refresh.ts'
 import { showErrorAlert } from '../ShowErrorAlert/ShowErrorAlert.ts'
 
 export const removeDirent = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { confirmDelete, focusedIndex, isReadonly, items } = state
   if (isReadonly) {
     return state
@@ -33,7 +34,7 @@ export const removeDirent = async (state: ExplorerState): Promise<ExplorerState>
     }
   })
   // TODO use bulk edit and explorer refresh
-  const errorMessage = await ApplyFileOperations.applyFileOperations(fileOperations)
+  const errorMessage = await ApplyFileOperations.applyFileOperations(fileOperations, applicationId)
   if (errorMessage) {
     await showErrorAlert(errorMessage)
     return state

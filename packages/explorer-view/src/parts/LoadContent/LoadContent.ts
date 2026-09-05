@@ -33,16 +33,17 @@ const getExpandedPaths = (
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { assetDir, expandedPaths: currentExpandedPaths, height, itemHeight, platform, root: currentRoot } = state
   const { confirmDelete, excluded, gitIgnoreDecorations, preserveExpandState, sourceControlDecorations, useChevrons } =
     await GetSettings.getSettings()
-  const workspaceUri = await GetWorkspaceUri.getWorkspaceUri()
+  const workspaceUri = await GetWorkspaceUri.getWorkspaceUri(applicationId)
   const root = GetSavedRoot.getSavedRoot(savedState, workspaceUri)
   const expandedPaths = getExpandedPaths(savedState, root, currentRoot, currentExpandedPaths, preserveExpandState)
   try {
     const pathSeparator = PathSeparatorType.Slash
-    const isReadonly = root === '' ? false : await FileSystem.isReadonly(root)
-    const restoredDirents = await RestoreExpandedState.restoreExpandedState(expandedPaths, root, pathSeparator, excluded)
+    const isReadonly = root === '' ? false : await FileSystem.isReadonly(root, applicationId)
+    const restoredDirents = await RestoreExpandedState.restoreExpandedState(expandedPaths, root, pathSeparator, excluded, applicationId)
     const rawDeltaY = GetRestoredDeltaY.getRestoredDeltaY(savedState)
     const maxDeltaY = Math.max(restoredDirents.length * itemHeight - height, 0)
     const deltaY = Math.min(Math.max(rawDeltaY, 0), maxDeltaY)
@@ -56,8 +57,15 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
       sourceControlDecorations,
       assetDir,
       platform,
+      applicationId,
     )
-    const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, restoredDirents, pathSeparator, gitIgnoreDecorations)
+    const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(
+      root,
+      restoredDirents,
+      pathSeparator,
+      gitIgnoreDecorations,
+      applicationId,
+    )
     return {
       ...state,
       confirmDelete,

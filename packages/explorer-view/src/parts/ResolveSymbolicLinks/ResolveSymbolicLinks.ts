@@ -6,11 +6,11 @@ import * as IsSymbolicLink from '../IsSymbolicLink/IsSymbolicLink.ts'
 
 // TODO maybe resolving of symbolic links should happen in shared process?
 // so that there is less code and less work in the frontend
-const resolveSymbolicLink = async (uri: string, rawDirent: any): Promise<any> => {
+const resolveSymbolicLink = async (uri: string, rawDirent: any, applicationId?: string): Promise<any> => {
   try {
     // TODO support windows paths
     const absolutePath = uri + '/' + rawDirent.name
-    const type = await FileSystem.stat(absolutePath)
+    const type = await FileSystem.stat(absolutePath, applicationId)
     const symLinkType = GetSymlinkType.getSymlinkType(type)
     return {
       name: rawDirent.name,
@@ -29,11 +29,11 @@ const resolveSymbolicLink = async (uri: string, rawDirent: any): Promise<any> =>
   }
 }
 
-export const resolveSymbolicLinks = async (uri: string, rawDirents: readonly any[]): Promise<any> => {
+export const resolveSymbolicLinks = async (uri: string, rawDirents: readonly any[], applicationId?: string): Promise<any> => {
   const promises = []
   for (const rawDirent of rawDirents) {
     if (IsSymbolicLink.isSymbolicLink(rawDirent)) {
-      const resolvedDirent = resolveSymbolicLink(uri, rawDirent)
+      const resolvedDirent = resolveSymbolicLink(uri, rawDirent, applicationId)
       promises.push(resolvedDirent)
     } else {
       promises.push(rawDirent)

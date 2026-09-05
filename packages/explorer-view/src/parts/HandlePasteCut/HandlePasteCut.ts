@@ -31,11 +31,12 @@ const getTargetUri = (root: string, items: readonly ExplorerItem[], index: numbe
 }
 
 export const handlePasteCut = async (state: ExplorerState, nativeFiles: NativeFilesResult): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { focusedIndex, items, pathSeparator, root } = state
   // TODO root is not necessrily target uri
   const targetUri = getTargetUri(root, items, focusedIndex)
   const operations = getOperations(targetUri, nativeFiles.files)
-  await ApplyFileOperations.applyFileOperations(operations)
+  await ApplyFileOperations.applyFileOperations(operations, applicationId)
 
   // Refresh the state after cut operations
   const latestState = await refresh(state)

@@ -1,5 +1,5 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as ApplicationRpc from '../ApplicationRpc/ApplicationRpc.ts'
 import * as ApplyFileOperations from '../ApplyFileOperations/ApplyFileOperations.ts'
 import { createTree } from '../CreateTree/CreateTree.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
@@ -19,25 +19,26 @@ import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 import { treeToArray } from '../TreeToArray/TreeToArray.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
-const focusEditorAfterExplorerRender = (): void => {
+const focusEditorAfterExplorerRender = (applicationId?: string): void => {
   setTimeout(() => {
-    void RendererWorker.invoke('Main.focus')
+    void ApplicationRpc.invoke(applicationId, 'Main.focus').catch(() => {})
   }, 0)
 }
 
-const openCreatedFile = async (absolutePath: string): Promise<void> => {
-  await openUri(absolutePath, true)
-  focusEditorAfterExplorerRender()
+const openCreatedFile = async (absolutePath: string, applicationId?: string): Promise<void> => {
+  await openUri(absolutePath, true, undefined, applicationId)
+  focusEditorAfterExplorerRender(applicationId)
 }
 
-const finishCreate = async (absolutePath: string, newDirentType: number): Promise<void> => {
-  await refreshWorkspace()
+const finishCreate = async (absolutePath: string, newDirentType: number, applicationId?: string): Promise<void> => {
+  await refreshWorkspace(applicationId)
   if (newDirentType === DirentType.File) {
-    await openCreatedFile(absolutePath)
+    await openCreatedFile(absolutePath, applicationId)
   }
 }
 
 export const acceptCreate = async (state: ExplorerState, newDirentType: number): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { editingValue, excluded, focusedIndex, items, pathSeparator, root, uid } = state
   const newFileName = editingValue
   const siblingFileNames = getSiblingFileNames(items, focusedIndex, root, pathSeparator)
@@ -51,7 +52,7 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   const parentFolder = getParentFolder(items, focusedIndex, root, pathSeparator)
   const absolutePath = join2(parentFolder, newFileName)
   const operations = GetFileOperationsCreate.getFileOperationsCreate(editingValue, newDirentType, pathSeparator, absolutePath, root)
-  const createErrorMessage = await ApplyFileOperations.applyFileOperations(operations)
+  const createErrorMessage = await ApplyFileOperations.applyFileOperations(operations, applicationId)
   if (createErrorMessage) {
     return {
       ...state,
@@ -60,7 +61,7 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
   }
 
   const pathPaths = getPathParts(root, absolutePath, pathSeparator)
-  const children = await getPathPartsChildren(pathPaths, excluded, root)
+  const children = await getPathPartsChildren(pathPaths, excluded, root, applicationId)
 
   const tree = createTree(items, root)
   const childTree = createTree(children, root)
@@ -73,11 +74,11 @@ export const acceptCreate = async (state: ExplorerState, newDirentType: number):
 
   if (RendererProcess.isConnected()) {
     if (newDirentType === DirentType.File) {
-      await openUri(absolutePath, true)
+      await openUri(absolutePath, true, undefined, applicationId)
       RendererProcess.requestPostRenderFocus(uid)
     }
   } else {
-    await finishCreate(absolutePath, newDirentType)
+    await finishCreate(absolutePath, newDirentType, applicationId)
   }
 
   return {

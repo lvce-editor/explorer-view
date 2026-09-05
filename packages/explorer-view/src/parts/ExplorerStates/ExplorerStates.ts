@@ -127,7 +127,7 @@ const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: Ex
   }
   const { gitIgnoreDecorations, gitIgnoreGeneration, items, pathSeparator, root, uid } = newState
   setTimeout(() => {
-    void GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations)
+    void GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations, newState.applicationId)
       .then((sourceControlIgnoredUris) => {
         scheduleGitIgnoredUrisUpdate(uid, gitIgnoreGeneration, sourceControlIgnoredUris)
       })
