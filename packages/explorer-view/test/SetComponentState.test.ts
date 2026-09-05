@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { ViewletCommand } from '@lvce-editor/constants'
+import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
@@ -7,7 +8,7 @@ import { getVisibleExplorerItems } from '../src/parts/GetVisibleExplorerItems/Ge
 import { render2 } from '../src/parts/Render2/Render2.ts'
 import { setComponentState } from '../src/parts/SetComponentState/SetComponentState.ts'
 
-const createState = () => {
+const createState = (): ExplorerState => {
   const items = ['a.txt', 'b.txt', 'c.txt'].map((name) => ({ depth: 0, name, path: `/${name}`, selected: false, type: DirentType.File }))
   return {
     ...createDefaultState(),
@@ -26,7 +27,8 @@ test.each([
   const state = createState()
   const { uid } = state
   ExplorerStates.set(uid, state, state)
-  const editedState = JSON.parse(JSON.stringify(state))
+  const stateJson = JSON.stringify(state)
+  const editedState = JSON.parse(stateJson)
   const [removed] = editedState.visibleExplorerItems.splice(index, 1)
   await setComponentState(uid, editedState)
   expect(ExplorerStates.get(uid).scheduledState.visibleExplorerItems).toEqual(editedState.visibleExplorerItems)
@@ -43,13 +45,15 @@ test('setComponentState preserves clearing and restoring visible items from JSON
   const state = createState()
   const { uid } = state
   ExplorerStates.set(uid, state, state)
-  const editedState = JSON.parse(JSON.stringify(state))
+  const stateJson = JSON.stringify(state)
+  const editedState = JSON.parse(stateJson)
   editedState.visibleExplorerItems = []
   await setComponentState(uid, editedState)
   expect(ExplorerStates.get(uid).scheduledState.visibleExplorerItems).toEqual([])
   await render2(uid, [])
-  await setComponentState(uid, JSON.parse(JSON.stringify(state)))
-  expect(ExplorerStates.get(uid).scheduledState.visibleExplorerItems).toEqual(state.visibleExplorerItems)
+  await setComponentState(uid, JSON.parse(stateJson))
+  const { visibleExplorerItems } = state
+  expect(ExplorerStates.get(uid).scheduledState.visibleExplorerItems).toEqual(visibleExplorerItems)
   const commands = await render2(uid, [])
   expect(commands[0][0]).toBe(ViewletCommand.SetDom2)
 })
@@ -58,7 +62,8 @@ test('setComponentState keeps incremental rendering for a visible label edit', a
   const state = createState()
   const { uid } = state
   ExplorerStates.set(uid, state, state)
-  const editedState = JSON.parse(JSON.stringify(state))
+  const stateJson = JSON.stringify(state)
+  const editedState = JSON.parse(stateJson)
   editedState.visibleExplorerItems[0].name = 'renamed.txt'
   await setComponentState(uid, editedState)
   expect(ExplorerStates.get(uid).scheduledState.visibleExplorerItems[0].name).toBe('renamed.txt')
@@ -71,7 +76,8 @@ test('setComponentState still derives visible items when only focusedIndex chang
   const state = createState()
   const { uid } = state
   ExplorerStates.set(uid, state, state)
-  const editedState = JSON.parse(JSON.stringify(state))
+  const stateJson = JSON.stringify(state)
+  const editedState = JSON.parse(stateJson)
   editedState.focusedIndex = 1
   await setComponentState(uid, editedState)
   const { scheduledState } = ExplorerStates.get(uid)
@@ -81,7 +87,8 @@ test('setComponentState still derives visible items when only focusedIndex chang
 
 test('setComponentState rejects a changed uid without changing registered state', async () => {
   const state = createState()
-  ExplorerStates.set(state.uid, state, state)
-  await expect(setComponentState(state.uid, { ...state, uid: 999 })).rejects.toThrow('Explorer state uid must remain 1')
-  expect(ExplorerStates.get(state.uid).newState).toBe(state)
+  const { uid } = state
+  ExplorerStates.set(uid, state, state)
+  await expect(setComponentState(uid, { ...state, uid: 999 })).rejects.toThrow('Explorer state uid must remain 1')
+  expect(ExplorerStates.get(uid).newState).toBe(state)
 })

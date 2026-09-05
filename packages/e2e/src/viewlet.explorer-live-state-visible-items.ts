@@ -23,13 +23,17 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
     throw new Error('Explorer component not found')
   }
   const state = await Command.execute('ComponentState.getState', explorer.uid)
-  const editedState = JSON.parse(JSON.stringify(state))
+  const stateJson = JSON.stringify(state)
+  const editedState = JSON.parse(stateJson)
   editedState.visibleExplorerItems.splice(1, 1)
   await Command.execute('ComponentState.setState', explorer.uid, editedState)
   await expect(rows).toHaveCount(2)
-  await expect(Locator('.Explorer .Label').nth(0)).toHaveText('a.txt')
-  await expect(Locator('.Explorer .Label').nth(1)).toHaveText('c.txt')
-  await expect(Locator('.Explorer .TreeItem', { hasText: 'b.txt' })).toBeHidden()
+  const firstLabel = Locator('.Explorer .Label').nth(0)
+  const secondLabel = Locator('.Explorer .Label').nth(1)
+  const removedRow = Locator('.Explorer .TreeItem', { hasText: 'b.txt' })
+  await expect(firstLabel).toHaveText('a.txt')
+  await expect(secondLabel).toHaveText('c.txt')
+  await expect(removedRow).toBeHidden()
 
   editedState.visibleExplorerItems = []
   await Command.execute('ComponentState.setState', explorer.uid, editedState)
@@ -37,5 +41,5 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
 
   await Command.execute('ComponentState.setState', explorer.uid, state)
   await expect(rows).toHaveCount(3)
-  await expect(Locator('.Explorer .Label').nth(1)).toHaveText('b.txt')
+  await expect(secondLabel).toHaveText('b.txt')
 }
