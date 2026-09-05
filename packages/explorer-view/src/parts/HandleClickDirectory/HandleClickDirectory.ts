@@ -38,8 +38,6 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
   newDirents.splice(newIndex + 1, 0, ...dirents)
   // @ts-ignore
   dirent.type = DirentType.DirectoryExpanded
-  // @ts-ignore
-  dirent.icon = ''
   // TODO when focused index has changed while expanding, don't update it
 
   return {

@@ -25,7 +25,6 @@ export const getNewDirentsAccept = (
   const depth = parentDirent.depth + 1
   const newDirent: ExplorerItem = {
     depth,
-    icon: '',
     name: newFileName,
     path: absolutePath,
     posInSet: -1,

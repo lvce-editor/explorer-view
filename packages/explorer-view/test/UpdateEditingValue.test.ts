@@ -161,7 +161,6 @@ test('updateEditingValue - real-time validation during file creation', async () 
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'existing-file.txt',
         path: '/root/existing-file.txt',
         posInSet: 0,
@@ -198,7 +197,6 @@ test('updateEditingValue - real-time validation during folder creation', async (
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'existing-folder',
         path: '/root/existing-folder',
         posInSet: 0,
@@ -235,7 +233,6 @@ test('updateEditingValue - allows current name during rename', async () => {
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'existing-file.txt',
         path: '/root/existing-file.txt',
         posInSet: 0,
@@ -268,7 +265,6 @@ test('updateEditingValue - validates sibling collision during rename', async () 
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'source',
         path: '/root/source',
         posInSet: 0,
@@ -278,7 +274,6 @@ test('updateEditingValue - validates sibling collision during rename', async () 
       },
       {
         depth: 0,
-        icon: '',
         name: 'destination',
         path: '/root/destination',
         posInSet: 1,

@@ -22,7 +22,6 @@ export const getProtoMapInternal = (
     const path = join2(root, item.name)
     const displayDirent: ExplorerItem = {
       depth,
-      icon: '',
       name: item.name,
       path,
       posInSet: i + 1,

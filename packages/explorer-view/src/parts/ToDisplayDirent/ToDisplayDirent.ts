@@ -13,7 +13,6 @@ export const toDisplayDirent = (
   const path = join2(parentPath, rawDirentName)
   return {
     depth: parentDepth + 1,
-    icon: '',
     name: rawDirentName,
     path, // TODO storing absolute path might be too costly, could also store relative path here
     posInSet: index + 1,

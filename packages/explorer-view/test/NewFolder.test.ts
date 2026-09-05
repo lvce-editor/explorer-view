@@ -46,7 +46,6 @@ test('newFolder', async () => {
     items: [
       {
         depth: 0,
-        icon: '',
         name: '',
         path: 'file:///new/path',
         posInSet: 1,

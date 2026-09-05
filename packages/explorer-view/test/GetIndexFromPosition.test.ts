@@ -91,7 +91,6 @@ test('getIndexFromPosition', () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: '.git',
         path: 'test:///virtual-dom/.git',
         posInSet: 1,
@@ -101,7 +100,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: '.github',
         path: 'test:///virtual-dom/.github',
         posInSet: 2,
@@ -111,7 +109,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: '.vscode',
         path: 'test:///virtual-dom/.vscode',
         posInSet: 3,
@@ -121,7 +118,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'dist',
         path: 'test:///virtual-dom/dist',
         posInSet: 4,
@@ -131,7 +127,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'node_modules',
         path: 'test:///virtual-dom/node_modules',
         posInSet: 5,
@@ -141,7 +136,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'packages',
         path: 'test:///virtual-dom/packages',
         posInSet: 6,
@@ -151,7 +145,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'scripts',
         path: 'test:///virtual-dom/scripts',
         posInSet: 7,
@@ -161,7 +154,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'virtual-dom-worker',
         path: 'test:///virtual-dom/virtual-dom-worker',
         posInSet: 8,
@@ -171,7 +163,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: '.gitignore',
         path: 'test:///virtual-dom/.gitignore',
         posInSet: 9,
@@ -181,7 +172,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: '.gitpod.Dockerfile',
         path: 'test:///virtual-dom/.gitpod.Dockerfile',
         posInSet: 10,
@@ -191,7 +181,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: '.gitpod.yml',
         path: 'test:///virtual-dom/.gitpod.yml',
         posInSet: 11,
@@ -201,7 +190,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: '.nvmrc',
         path: 'test:///virtual-dom/.nvmrc',
         posInSet: 12,
@@ -211,7 +199,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'LICENSE',
         path: 'test:///virtual-dom/LICENSE',
         posInSet: 13,
@@ -221,7 +208,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'README.md',
         path: 'test:///virtual-dom/README.md',
         posInSet: 14,
@@ -231,7 +217,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'eslint.config.js',
         path: 'test:///virtual-dom/eslint.config.js',
         posInSet: 15,
@@ -241,7 +226,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'lerna.json',
         path: 'test:///virtual-dom/lerna.json',
         posInSet: 16,
@@ -251,7 +235,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'package-lock.json',
         path: 'test:///virtual-dom/package-lock.json',
         posInSet: 17,
@@ -261,7 +244,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'package.json',
         path: 'test:///virtual-dom/package.json',
         posInSet: 18,
@@ -271,7 +253,6 @@ test('getIndexFromPosition', () => {
       },
       {
         depth: 1,
-        icon: '',
         name: 'tsconfig.json',
         path: 'test:///virtual-dom/tsconfig.json',
         posInSet: 19,

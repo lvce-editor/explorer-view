@@ -21,7 +21,6 @@ test('getNewDirentsAccept - create file in root', async () => {
   expect(result.dirents).toHaveLength(1)
   expect(result.dirents[0]).toEqual({
     depth: 1,
-    icon: '',
     name: 'test.txt',
     path: '/root/test.txt',
     posInSet: 1,
@@ -49,7 +48,6 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
   const items = [
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 1,
@@ -64,7 +62,6 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
   expect(result.dirents).toHaveLength(2)
   expect(result.dirents[1]).toEqual({
     depth: 2,
-    icon: '',
     name: 'test.txt',
     path: '/root/folder/test.txt',
     posInSet: 1,
@@ -96,7 +93,6 @@ test('getNewDirentsAccept - create nested file', async () => {
   expect(result.dirents).toHaveLength(1)
   expect(result.dirents[0]).toEqual({
     depth: 1,
-    icon: '',
     name: 'a/b/c/test.txt',
     path: '/root/a/b/c/test.txt',
     posInSet: 1,

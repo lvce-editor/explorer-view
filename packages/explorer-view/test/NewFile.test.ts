@@ -63,7 +63,6 @@ test('newFile', async () => {
       },
       {
         depth: 1,
-        icon: '',
         name: '',
         path: '/testfolder',
         posInSet: 1,

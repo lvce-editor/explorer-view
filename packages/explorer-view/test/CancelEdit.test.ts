@@ -46,7 +46,6 @@ test('cancelEdit - removes editing items', async () => {
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'file1.txt',
         path: '/file1.txt',
         posInSet: 1,
@@ -56,7 +55,6 @@ test('cancelEdit - removes editing items', async () => {
       },
       {
         depth: 0,
-        icon: '',
         name: 'test.txt',
         path: '/test.txt',
         posInSet: 2,
@@ -66,7 +64,6 @@ test('cancelEdit - removes editing items', async () => {
       },
       {
         depth: 0,
-        icon: '',
         name: 'newfolder',
         path: '/newfolder',
         posInSet: 3,

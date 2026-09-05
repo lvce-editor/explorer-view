@@ -41,7 +41,7 @@ test('handleClickDirectory - updates state with focus', async () => {
   expect(newState.focused).toBe(true)
   expect(newState.focus).toBe(FocusId.List)
   expect(dirent.type).toBe(DirentType.DirectoryExpanded)
-  expect(dirent.icon).toBe('')
+  expect(dirent).not.toHaveProperty('icon')
 })
 
 test('handleClickDirectory - updates state without focus', async () => {
@@ -75,7 +75,7 @@ test('handleClickDirectory - updates state without focus', async () => {
   expect(newState.focused).toBe(false)
   expect(newState.focus).toBe(FocusId.List)
   expect(dirent.type).toBe(DirentType.DirectoryExpanded)
-  expect(dirent.icon).toBe('')
+  expect(dirent).not.toHaveProperty('icon')
 })
 
 test('handleClickDirectory - with empty child dirents', async () => {
@@ -106,7 +106,7 @@ test('handleClickDirectory - with empty child dirents', async () => {
   expect(newState.focusedIndex).toBe(0)
   expect(newState.focused).toBe(true)
   expect(dirent.type).toBe(DirentType.DirectoryExpanded)
-  expect(dirent.icon).toBe('')
+  expect(dirent).not.toHaveProperty('icon')
 })
 
 test('handleClickDirectory - with multiple items in state', async () => {
@@ -139,7 +139,7 @@ test('handleClickDirectory - with multiple items in state', async () => {
   expect(newState.focusedIndex).toBe(1)
   expect(newState.focused).toBe(true)
   expect(dirent.type).toBe(DirentType.DirectoryExpanded)
-  expect(dirent.icon).toBe('')
+  expect(dirent).not.toHaveProperty('icon')
 })
 
 test('handleClickDirectory - dirent not found in items', async () => {

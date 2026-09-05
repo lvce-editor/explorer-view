@@ -53,8 +53,8 @@ test('loadContent applies files.exclude before computing aria metadata', async (
   expect(result.excluded).toEqual(['**/.git', '**/*.tmp'])
   expect(result.pathSeparator).toBe('/')
   expect(result.items).toEqual([
-    { depth: 1, icon: '', name: 'a.txt', path: 'file:///workspace/a.txt', posInSet: 1, setSize: 2, type: File },
-    { depth: 1, icon: '', name: 'c.txt', path: 'file:///workspace/c.txt', posInSet: 2, setSize: 2, type: File },
+    { depth: 1, name: 'a.txt', path: 'file:///workspace/a.txt', posInSet: 1, setSize: 2, type: File },
+    { depth: 1, name: 'c.txt', path: 'file:///workspace/c.txt', posInSet: 2, setSize: 2, type: File },
   ])
   expect(mockRpc.invocations).toContainEqual(['Preferences.get', 'files.exclude'])
 })
@@ -95,7 +95,6 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'folder1',
         path: 'file:///workspace/folder1',
         posInSet: 1,
@@ -104,7 +103,6 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
       },
       {
         depth: 1,
-        icon: '',
         name: 'folder2',
         path: 'file:///workspace/folder2',
         posInSet: 2,
@@ -170,14 +168,14 @@ test('loadContent clamps restored deltaY to maxDeltaY when content is still scro
     deltaY: 60,
     isReadonly: true,
     items: [
-      { depth: 1, icon: '', name: 'file1', path: 'file:///workspace/file1', posInSet: 1, setSize: 8, type: File },
-      { depth: 1, icon: '', name: 'file2', path: 'file:///workspace/file2', posInSet: 2, setSize: 8, type: File },
-      { depth: 1, icon: '', name: 'file3', path: 'file:///workspace/file3', posInSet: 3, setSize: 8, type: File },
-      { depth: 1, icon: '', name: 'file4', path: 'file:///workspace/file4', posInSet: 4, setSize: 8, type: File },
-      { depth: 1, icon: '', name: 'file5', path: 'file:///workspace/file5', posInSet: 5, setSize: 8, type: File },
-      { depth: 1, icon: '', name: 'file6', path: 'file:///workspace/file6', posInSet: 6, setSize: 8, type: File },
-      { depth: 1, icon: '', name: 'file7', path: 'file:///workspace/file7', posInSet: 7, setSize: 8, type: File },
-      { depth: 1, icon: '', name: 'file8', path: 'file:///workspace/file8', posInSet: 8, setSize: 8, type: File },
+      { depth: 1, name: 'file1', path: 'file:///workspace/file1', posInSet: 1, setSize: 8, type: File },
+      { depth: 1, name: 'file2', path: 'file:///workspace/file2', posInSet: 2, setSize: 8, type: File },
+      { depth: 1, name: 'file3', path: 'file:///workspace/file3', posInSet: 3, setSize: 8, type: File },
+      { depth: 1, name: 'file4', path: 'file:///workspace/file4', posInSet: 4, setSize: 8, type: File },
+      { depth: 1, name: 'file5', path: 'file:///workspace/file5', posInSet: 5, setSize: 8, type: File },
+      { depth: 1, name: 'file6', path: 'file:///workspace/file6', posInSet: 6, setSize: 8, type: File },
+      { depth: 1, name: 'file7', path: 'file:///workspace/file7', posInSet: 7, setSize: 8, type: File },
+      { depth: 1, name: 'file8', path: 'file:///workspace/file8', posInSet: 8, setSize: 8, type: File },
     ],
     minLineY: 3,
   })

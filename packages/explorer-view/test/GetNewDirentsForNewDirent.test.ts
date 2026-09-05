@@ -19,7 +19,6 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'folder',
         path: '/root/folder',
         posInSet: 1,
@@ -29,7 +28,6 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
       },
       {
         depth: 2,
-        icon: '',
         name: 'file1.txt',
         path: '/root/folder/file1.txt',
         posInSet: 1,
@@ -39,7 +37,6 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
       },
       {
         depth: 2,
-        icon: '',
         name: 'file2.txt',
         path: '/root/folder/file2.txt',
         posInSet: 2,
@@ -57,7 +54,6 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 1,
@@ -67,7 +63,6 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'file1.txt',
       path: '/root/folder/file1.txt',
       posInSet: 1,
@@ -77,7 +72,6 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
     },
     {
       depth: 2,
-      icon: '',
       name: 'file2.txt',
       path: '/root/folder/file2.txt',
       posInSet: 2,
@@ -87,7 +81,6 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
     },
     {
       depth: 2,
-      icon: '',
       name: '',
       path: '/root/folder',
       posInSet: 3,
@@ -109,7 +102,6 @@ test('getNewDirentsForNewDirent - folder with an expanded child', async () => {
   const items = [
     {
       depth: 2,
-      icon: '',
       name: 'sample-files',
       path: '/root/packages/sample-files',
       posInSet: 1,
@@ -119,7 +111,6 @@ test('getNewDirentsForNewDirent - folder with an expanded child', async () => {
     },
     {
       depth: 3,
-      icon: '',
       name: 'files',
       path: '/root/packages/sample-files/files',
       posInSet: 1,
@@ -129,7 +120,6 @@ test('getNewDirentsForNewDirent - folder with an expanded child', async () => {
     },
     ...['big_buck_bunny.mp4', 'big_buck_bunny.webm', 'echo-hereweare.ogv'].map((name, index) => ({
       depth: 4,
-      icon: '',
       name,
       path: `/root/packages/sample-files/files/${name}`,
       posInSet: index + 1,
@@ -139,7 +129,6 @@ test('getNewDirentsForNewDirent - folder with an expanded child', async () => {
     })),
     {
       depth: 3,
-      icon: '',
       name: 'package.json',
       path: '/root/packages/sample-files/package.json',
       posInSet: 2,
@@ -149,7 +138,6 @@ test('getNewDirentsForNewDirent - folder with an expanded child', async () => {
     },
     {
       depth: 1,
-      icon: '',
       name: 'scripts',
       path: '/root/scripts',
       posInSet: 2,
@@ -188,7 +176,6 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'folder',
         path: '/root/folder',
         posInSet: 1,
@@ -207,7 +194,6 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 1,
@@ -217,7 +203,6 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
     },
     {
       depth: 2,
-      icon: '',
       name: '',
       path: '/root/folder',
       posInSet: 1,
@@ -250,7 +235,6 @@ test('getNewDirentsForNewDirent - no items', async () => {
   expect(result).toEqual([
     {
       depth: 0,
-      icon: '',
       name: '',
       path: '/root',
       posInSet: 1,
@@ -276,7 +260,6 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file before exis
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'file1.txt',
         path: '/root/file1.txt',
         posInSet: 1,
@@ -294,7 +277,6 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file before exis
   expect(result).toEqual([
     {
       depth: 0,
-      icon: '',
       name: '',
       path: '/root',
       posInSet: 1,
@@ -304,7 +286,6 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file before exis
     },
     {
       depth: 0,
-      icon: '',
       name: 'file1.txt',
       path: '/root/file1.txt',
       posInSet: 1,
@@ -326,7 +307,6 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
   const items = [
     {
       depth: 1,
-      icon: '',
       name: 'folder',
       path: '/root/folder',
       posInSet: 1,
@@ -336,7 +316,6 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
     },
     {
       depth: 2,
-      icon: '',
       name: 'child.txt',
       path: '/root/folder/child.txt',
       posInSet: 1,
@@ -346,7 +325,6 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
     },
     {
       depth: 1,
-      icon: '',
       name: 'file.txt',
       path: '/root/file.txt',
       posInSet: 2,
@@ -381,7 +359,6 @@ test('getNewDirentsForNewDirent - top-level new folder is inserted first', async
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'file1.txt',
         path: '/root/file1.txt',
         posInSet: 1,
@@ -399,7 +376,6 @@ test('getNewDirentsForNewDirent - top-level new folder is inserted first', async
   expect(result).toEqual([
     {
       depth: 0,
-      icon: '',
       name: '',
       path: '/root',
       posInSet: 1,
@@ -409,7 +385,6 @@ test('getNewDirentsForNewDirent - top-level new folder is inserted first', async
     },
     {
       depth: 0,
-      icon: '',
       name: 'file1.txt',
       path: '/root/file1.txt',
       posInSet: 1,

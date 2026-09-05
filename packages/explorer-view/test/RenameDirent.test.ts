@@ -71,7 +71,7 @@ test('renameDirent preserves icon when entering edit mode', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     icons: ['file-icon'],
-    items: [{ depth: 0, icon: 'file-icon', name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
     minLineY: 0,
   }
 
@@ -87,6 +87,6 @@ test('renameDirent preserves icon when entering edit mode', async () => {
     editingValue: 'test.txt',
     focus: FocusId.Input,
     inputSource: InputSource.Script,
-    items: [{ depth: 0, icon: 'file-icon', name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.EditingFile }],
+    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.EditingFile }],
   })
 })

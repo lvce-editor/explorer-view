@@ -68,7 +68,6 @@ test('should return unchanged item for symlink', () => {
 test('should preserve all properties when collapsing expanded directory', () => {
   const expandedDir: ExplorerItem = {
     depth: 2,
-    icon: 'folder-icon',
     name: 'test-dir',
     path: '/test/test-dir',
     posInSet: 3,
@@ -81,7 +80,6 @@ test('should preserve all properties when collapsing expanded directory', () => 
 
   expect(result).toEqual({
     depth: 2,
-    icon: 'folder-icon',
     name: 'test-dir',
     path: '/test/test-dir',
     posInSet: 3,

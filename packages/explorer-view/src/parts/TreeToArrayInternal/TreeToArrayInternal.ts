@@ -14,7 +14,6 @@ export const treeToArrayInternal = (map: Tree, root: string, items: ExplorerItem
     const absolutePath = join2(root, childPath)
     items.push({
       depth,
-      icon: '',
       name: child.name,
       path: absolutePath,
       posInSet: i + 1,

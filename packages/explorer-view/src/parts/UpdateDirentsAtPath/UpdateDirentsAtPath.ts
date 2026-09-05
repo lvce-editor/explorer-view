@@ -14,7 +14,6 @@ export const updateDirentsAtPath = (
   const sortedDirents = newDirents
     .map((dirent, index) => ({
       depth: 0, // TODO
-      icon: '',
       name: dirent.name,
       path: join2(path, dirent.name),
       posInSet: index + 1,

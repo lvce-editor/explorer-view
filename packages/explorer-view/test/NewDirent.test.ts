@@ -54,7 +54,6 @@ test('newDirent sets focus and updates state when no item is focused', async () 
     items: [
       {
         depth: 0,
-        icon: '',
         name: '',
         path: 'file:///new/path',
         posInSet: 1,
@@ -106,7 +105,6 @@ test('newDirent handles directory click when focused item is a directory', async
       { depth: 0, name: 'test', path: '/test', selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
       {
         depth: 1,
-        icon: '',
         name: '',
         path: '/test',
         posInSet: 1,
@@ -169,7 +167,6 @@ test('newDirent updates state when focused item is not a directory', async () =>
       },
       {
         depth: 0,
-        icon: '',
         name: '',
         path: 'file:///new/path',
         posInSet: 1,
