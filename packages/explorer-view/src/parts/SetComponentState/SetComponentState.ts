@@ -12,4 +12,14 @@ const applyComponentState = (currentState: ExplorerState, state: ExplorerState):
   return state
 }
 
-export const setComponentState = ExplorerStates.wrapListItemCommandImmediate(applyComponentState)
+const setDerivedComponentState = ExplorerStates.wrapListItemCommandImmediate(applyComponentState)
+
+export const setComponentState = async (uid: number, state: ExplorerState): Promise<void> => {
+  const { newState, oldState } = ExplorerStates.get(uid)
+  const updatedState = applyComponentState(newState, state)
+  if (JSON.stringify(newState.visibleExplorerItems) === JSON.stringify(updatedState.visibleExplorerItems)) {
+    await setDerivedComponentState(uid, updatedState)
+    return
+  }
+  ExplorerStates.set(uid, oldState, updatedState)
+}
