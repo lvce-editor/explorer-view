@@ -2,6 +2,7 @@ import { afterEach, expect, test } from '@jest/globals'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { create } from '../src/parts/Create/Create.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
+import { getComponentDom } from '../src/parts/GetComponentDom/GetComponentDom.ts'
 import { getComponentState } from '../src/parts/GetComponentState/GetComponentState.ts'
 import { setComponentState } from '../src/parts/SetComponentState/SetComponentState.ts'
 
@@ -48,4 +49,20 @@ test('rejects non-object state', async () => {
   ExplorerStates.set(1, oldState, oldState)
 
   await expect(setComponentState(1, [] as unknown as ExplorerState)).rejects.toThrow('Explorer state must be an object')
+})
+
+test('inspects the current virtual DOM without advancing rendered state', () => {
+  const uid = 104
+  const oldState = { ...createState(uid, 0), uid }
+  const newState = { ...oldState, initial: false }
+  ExplorerStates.set(uid, oldState, newState)
+  const before = ExplorerStates.get(uid)
+  const dom = getComponentDom(uid)
+
+  expect(Array.isArray(dom)).toBe(true)
+  expect(dom.length).toBeGreaterThan(0)
+  expect(dom[0]).toEqual(expect.objectContaining({ childCount: expect.any(Number), type: expect.any(Number) }))
+  expect(ExplorerStates.get(uid)).toEqual(before)
+  expect(ExplorerStates.get(uid).oldState).toBe(oldState)
+  expect(ExplorerStates.get(uid).newState).toBe(newState)
 })

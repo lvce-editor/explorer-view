@@ -19,6 +19,7 @@ import * as FocusLast from '../FocusLast/FocusLast.ts'
 import * as FocusNext from '../FocusNext/FocusNext.ts'
 import * as FocusNone from '../FocusNone/FocusNone.ts'
 import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
+import { getComponentDom } from '../GetComponentDom/GetComponentDom.ts'
 import * as GetComponentState from '../GetComponentState/GetComponentState.ts'
 import * as GetKeyBindings from '../GetKeyBindings/GetKeyBindings.ts'
 import * as GetMenuEntries2 from '../GetMenuEntries2/GetMenuEntries2.ts'
@@ -118,6 +119,7 @@ export const commandMap = {
   'Explorer.focusNone': WrapCommand.wrapListItemCommand(FocusNone.focusNone),
   'Explorer.focusPrevious': WrapCommand.wrapListItemCommand(FocusPrevious.focusPrevious),
   'Explorer.getCommandIds': WrapCommand.getCommandIds,
+  'Explorer.getComponentDom': getComponentDom,
   'Explorer.getComponentState': GetComponentState.getComponentState,
   'Explorer.getKeyBindings': GetKeyBindings.getKeyBindings,
   'Explorer.getMenuEntries': GetMenuEntries.getMenuEntries,
