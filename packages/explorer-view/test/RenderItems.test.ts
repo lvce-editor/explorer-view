@@ -159,7 +159,7 @@ test('renderItems - missing folder load error shows friendly message and button'
   )
 })
 
-test('renderItems - displays a fallback code for uncoded load errors', () => {
+test('renderItems - displays a fallback code for load errors without a code', () => {
   const oldState = createDefaultState()
   const newState = { ...oldState, errorMessage: 'connection failed', hasError: true }
   expect(renderItems(oldState, newState)[2]).toEqual(

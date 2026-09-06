@@ -15,7 +15,9 @@ export const test: Test = async ({ expect, FileSystem, Layout, Locator, SideBar,
   // assert
   const error = Locator('.Explorer .WelcomeMessage')
   await expect(error).toBeVisible()
-  await expect(error).toHaveText(`Could not open "${missingFolder}" because the folder does not exist. It may have been moved or deleted. Error code: ENOENT.`)
+  await expect(error).toHaveText(
+    `Could not open "${missingFolder}" because the folder does not exist. It may have been moved or deleted. Error code: ENOENT.`,
+  )
 
   const openAnotherFolderButton = Locator('.Explorer .Button')
   await expect(openAnotherFolderButton).toBeVisible()
