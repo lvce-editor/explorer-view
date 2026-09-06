@@ -145,7 +145,7 @@ test('renderItems - missing folder load error shows friendly message and button'
   expect(dom).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        text: 'Could not open "/workspace/missing-folder" because the folder does not exist. It may have been moved or deleted.',
+        text: 'Could not open "/workspace/missing-folder" because the folder does not exist. It may have been moved or deleted. Error code: ENOENT.',
       }),
       expect.objectContaining({
         className: 'Button ButtonPrimary ButtonWide',
@@ -156,5 +156,13 @@ test('renderItems - missing folder load error shows friendly message and button'
         text: 'Open another folder',
       }),
     ]),
+  )
+})
+
+test('renderItems - displays a fallback code for uncoded load errors', () => {
+  const oldState = createDefaultState()
+  const newState = { ...oldState, errorMessage: 'connection failed', hasError: true }
+  expect(renderItems(oldState, newState)[2]).toEqual(
+    expect.arrayContaining([expect.objectContaining({ text: 'Could not open folder. Connection failed. Error code: E_EXPLORER_LOAD_FAILED.' })]),
   )
 })

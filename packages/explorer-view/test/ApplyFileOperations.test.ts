@@ -49,3 +49,14 @@ test('should apply multiple operations in sequence', async () => {
     ['FileSystem.writeFile', '/test/folder/file.txt', 'content'],
   ])
 })
+
+test.each(['EACCES', undefined])('should display file operation error codes (%s)', async (code) => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      throw Object.assign(new Error('Access denied'), { code })
+    },
+  })
+  const result = await applyFileOperations([{ path: '/test/file.txt', text: '', type: FileOperationType.CreateFile }])
+  expect(result).toBe(`Error: Access denied Error code: ${code || 'E_EXPLORER_FILE_OPERATION_FAILED'}.`)
+  expect(mockRpc.invocations).toHaveLength(1)
+})

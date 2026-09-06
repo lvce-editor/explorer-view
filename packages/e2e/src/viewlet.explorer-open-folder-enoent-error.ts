@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-open-folder-enoent-error'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, FileSystem, Layout, Locator, SideBar, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -17,7 +15,7 @@ export const test: Test = async ({ expect, FileSystem, Layout, Locator, SideBar,
   // assert
   const error = Locator('.Explorer .WelcomeMessage')
   await expect(error).toBeVisible()
-  await expect(error).toHaveText(`Could not open "${missingFolder}" because the folder does not exist. It may have been moved or deleted.`)
+  await expect(error).toHaveText(`Could not open "${missingFolder}" because the folder does not exist. It may have been moved or deleted. Error code: ENOENT.`)
 
   const openAnotherFolderButton = Locator('.Explorer .Button')
   await expect(openAnotherFolderButton).toBeVisible()

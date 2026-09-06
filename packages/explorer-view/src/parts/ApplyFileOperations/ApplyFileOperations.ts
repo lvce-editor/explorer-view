@@ -1,6 +1,7 @@
 import { VError } from '@lvce-editor/verror'
 import type { FileOperation } from '../FileOperation/FileOperation.ts'
 import { applyOperation as applyFileOperation } from '../ApplyFileOperation/ApplyFileOperation.ts'
+import { getErrorCode } from '../GetErrorCode/GetErrorCode.ts'
 
 export const applyFileOperations = async (operations: readonly FileOperation[], applicationId?: string): Promise<string> => {
   try {
@@ -11,6 +12,6 @@ export const applyFileOperations = async (operations: readonly FileOperation[], 
     return ''
   } catch (error) {
     console.error(new VError(error, 'Failed to apply file operations'))
-    return String(error)
+    return `${String(error)} Error code: ${getErrorCode(error) || 'E_EXPLORER_FILE_OPERATION_FAILED'}.`
   }
 }
