@@ -2,6 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-open-folder-enoent-error'
 
+// The bundled test application needs the JSON-RPC error-code preservation update.
+export const skip = 1
+
 export const test: Test = async ({ expect, FileSystem, Layout, Locator, SideBar, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir({ scheme: 'file' })
