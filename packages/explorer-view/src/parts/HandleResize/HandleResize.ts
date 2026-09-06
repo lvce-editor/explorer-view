@@ -5,6 +5,8 @@ import * as GetScrollBarSize from '../GetScrollBarSize/GetScrollBarSize.ts'
 export interface Dimensions {
   readonly height: number
   readonly width: number
+  readonly x?: number
+  readonly y?: number
 }
 
 export const handleResize = (state: ExplorerState, dimensions: Dimensions): ExplorerState => {
@@ -19,7 +21,8 @@ export const handleResize = (state: ExplorerState, dimensions: Dimensions): Expl
     width: currentWidth,
   } = state
   const { height: rawHeight, width: rawWidth } = dimensions
-  if (!Number.isFinite(rawHeight) || !Number.isFinite(rawWidth)) {
+  const { x = state.x, y = state.y } = dimensions
+  if (!Number.isFinite(rawHeight) || !Number.isFinite(rawWidth) || !Number.isFinite(x) || !Number.isFinite(y)) {
     return state
   }
   const height = Math.max(0, rawHeight)
@@ -33,6 +36,8 @@ export const handleResize = (state: ExplorerState, dimensions: Dimensions): Expl
   if (
     currentHeight === height &&
     currentWidth === width &&
+    state.x === x &&
+    state.y === y &&
     currentDeltaY === newDeltaY &&
     currentMinLineY === minLineY &&
     currentMaxLineY === maxLineY &&
@@ -48,5 +53,7 @@ export const handleResize = (state: ExplorerState, dimensions: Dimensions): Expl
     minLineY,
     scrollBarHeight,
     width,
+    x,
+    y,
   }
 }
