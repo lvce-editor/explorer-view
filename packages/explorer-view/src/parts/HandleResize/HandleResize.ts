@@ -19,9 +19,11 @@ export const handleResize = (state: ExplorerState, dimensions: Dimensions): Expl
     minLineY: currentMinLineY,
     scrollBarHeight: currentScrollBarHeight,
     width: currentWidth,
+    x: currentX,
+    y: currentY,
   } = state
   const { height: rawHeight, width: rawWidth } = dimensions
-  const { x = state.x, y = state.y } = dimensions
+  const { x = currentX, y = currentY } = dimensions
   if (!Number.isFinite(rawHeight) || !Number.isFinite(rawWidth) || !Number.isFinite(x) || !Number.isFinite(y)) {
     return state
   }
@@ -36,8 +38,8 @@ export const handleResize = (state: ExplorerState, dimensions: Dimensions): Expl
   if (
     currentHeight === height &&
     currentWidth === width &&
-    state.x === x &&
-    state.y === y &&
+    currentX === x &&
+    currentY === y &&
     currentDeltaY === newDeltaY &&
     currentMinLineY === minLineY &&
     currentMaxLineY === maxLineY &&
