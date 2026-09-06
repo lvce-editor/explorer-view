@@ -18,10 +18,10 @@ export const getLoadErrorMessage = (state: ExplorerState): string => {
   const { errorCode, errorMessage, hasError, root } = state
   if (hasError) {
     if (errorCode === 'ENOENT') {
-      return getMissingFolderMessage(root)
+      return `${getMissingFolderMessage(root)} Error code: ${errorCode}.`
     }
     const reason = errorMessage || 'an unexpected error occurred'
-    const code = errorCode ? ` Error code: ${errorCode}.` : ''
+    const code = ` Error code: ${errorCode || 'E_EXPLORER_LOAD_FAILED'}.`
     return `Could not open folder. ${toSentence(reason)}${code}`
   }
   return ''

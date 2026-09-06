@@ -333,7 +333,7 @@ test('removeDirent - shows error message when file operation fails', async () =>
 
   const result = await removeDirent(state)
   expect(result).toBe(state)
-  expect(confirmFn).toHaveBeenCalledWith('Error: Permission denied')
+  expect(confirmFn).toHaveBeenCalledWith('Error: Permission denied Error code: E_EXPLORER_FILE_OPERATION_FAILED.')
   expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
   expect(consoleErrorSpy).toHaveBeenCalledWith(
     expect.objectContaining({
@@ -382,7 +382,7 @@ test('removeDirent - shows error message for multiple files when operation fails
 
   const result = await removeDirent(state)
   expect(result).toBe(state)
-  expect(confirmFn).toHaveBeenCalledWith('Error: Access denied')
+  expect(confirmFn).toHaveBeenCalledWith('Error: Access denied Error code: E_EXPLORER_FILE_OPERATION_FAILED.')
   expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
   expect(consoleErrorSpy).toHaveBeenCalledWith(
     expect.objectContaining({
