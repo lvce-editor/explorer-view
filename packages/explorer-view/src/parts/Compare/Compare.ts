@@ -24,6 +24,9 @@ const compareLeadingNumbers = (a: string, b: string): number => {
 }
 
 export const compareStringNumeric = (a: string, b: string): number => {
+  if (a === b) {
+    return 0
+  }
   if (RE_CHARACTERS.test(a) && RE_CHARACTERS.test(b)) {
     return a < b ? -1 : 1
   }

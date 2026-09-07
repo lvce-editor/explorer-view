@@ -218,12 +218,12 @@ test('computeExplorerRenamedDirentUpdate - sorts renamed parent children and upd
         setSize: 5,
       },
       {
-        ...children[3],
+        ...children[4],
         posInSet: 2,
         setSize: 5,
       },
       {
-        ...children[4],
+        ...children[3],
         posInSet: 3,
         setSize: 5,
       },
