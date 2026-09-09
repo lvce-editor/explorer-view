@@ -10,7 +10,6 @@ const createDirents = (
   excluded: readonly string[],
   pathSeparator: string,
 ): readonly any[] => {
-  const dirents = []
   const map = Object.create(null)
   for (let i = 0; i < expandedDirentPaths.length; i++) {
     const path = expandedDirentPaths[i]
@@ -19,8 +18,7 @@ const createDirents = (
       map[path] = children.value
     }
   }
-  dirents.push(...getSavedChildDirents(map, root, 1, excluded, pathSeparator, root))
-  return dirents
+  return getSavedChildDirents(map, root, 1, excluded, pathSeparator, root)
 }
 
 export const getSavedExpandedPaths = (savedState: any, root: string): readonly string[] => {
