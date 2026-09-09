@@ -48,10 +48,15 @@ test.each([false, true])('restoreExpandedState loads a large directory (nested: 
     setSize: fileCount,
     type: File,
   })
-  if (nested) {
-    expect(items[0]).toEqual({ depth: 1, name: 'folder', path: directory, posInSet: 1, setSize: 2, type: DirectoryExpanded })
-    expect(items.at(-1)).toEqual({ depth: 1, name: 'z.txt', path: `${root}/z.txt`, posInSet: 2, setSize: 2, type: File })
-  }
+  const rootSiblings = nested ? [items[0], items.at(-1)] : []
+  expect(rootSiblings).toEqual(
+    nested
+      ? [
+          { depth: 1, name: 'folder', path: directory, posInSet: 1, setSize: 2, type: DirectoryExpanded },
+          { depth: 1, name: 'z.txt', path: `${root}/z.txt`, posInSet: 2, setSize: 2, type: File },
+        ]
+      : [],
+  )
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', root],
     ...(nested ? [['FileSystem.readDirWithFileTypes', directory]] : []),

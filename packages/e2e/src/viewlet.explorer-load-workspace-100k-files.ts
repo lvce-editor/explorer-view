@@ -26,7 +26,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     const item = Locator(`.TreeItem[aria-label="file-${index.toString().padStart(6, '0')}.txt"]`)
     await expect(item).toBeVisible()
     await expect(item).toHaveId('TreeItemActive')
-    await expect(item).toHaveAttribute('aria-setsize', `${totalFiles}`)
+    await expect(item).toHaveAttribute('aria-setsize', String(totalFiles))
   }
 
   // act: refreshing takes the same workspace restoration path.
