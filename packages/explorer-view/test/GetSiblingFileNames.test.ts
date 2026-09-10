@@ -88,3 +88,30 @@ test('getSiblingFileNames - no siblings', () => {
   const result = GetSiblingFileNames.getSiblingFileNames(items, 0, '/root', '/')
   expect(result).toEqual(['file1.txt'])
 })
+
+test.each(['/', '\\'])('getSiblingFileNames - creation only checks the target directory (%s)', (separator) => {
+  const item = (name: string, path: string, depth: number): ExplorerItem => ({
+    name,
+    path: path.replaceAll('/', separator),
+    depth,
+    selected: false,
+    type: 7,
+  })
+  const items = [
+    item('editor.devin', '/root/editor.devin', 0),
+    item('', '/root/editor.devin', 1),
+    item('a.txt', '/root/editor.devin/a.txt', 1),
+    item('long-name.txt', '/root/editor.devin/long-name.txt', 1),
+    item('install.sh', '/root/install.sh', 0),
+    item('nested.txt', '/root/editor.devin/sub/nested.txt', 2),
+  ]
+  expect(GetSiblingFileNames.getSiblingFileNames(items, 1, '/root', separator)).toEqual(['a.txt', 'long-name.txt'])
+})
+
+test('getSiblingFileNames - different length sibling names', () => {
+  const items: readonly ExplorerItem[] = [
+    { name: 'a', path: '/root/a', depth: 0, selected: false, type: 7 },
+    { name: 'long-name', path: '/root/long-name', depth: 0, selected: false, type: 7 },
+  ]
+  expect(GetSiblingFileNames.getSiblingFileNames(items, 0, '/root', '/')).toEqual(['a', 'long-name'])
+})
