@@ -33,7 +33,7 @@
     "@lvce-editor/eslint-config": "^18.10.0",
     "@types/node": "^24.8.0",
     "eslint": "^10.8.1",
-    "knip": "^6.34.0",
+    "knip": "^6.35.1",
     "prettier": "^3.9.6",
     "typescript": "^6.0.3"
   }
