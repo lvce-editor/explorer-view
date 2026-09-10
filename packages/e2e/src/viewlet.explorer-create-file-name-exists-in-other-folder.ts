@@ -11,7 +11,9 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.newFile()
   await Explorer.updateEditingValue('install.sh')
 
-  await expect(Locator('.ExplorerErrorMessage')).toHaveCount(0)
+  const errorMessage = Locator('.ExplorerErrorMessage')
+  await expect(errorMessage).toHaveCount(0)
   await Explorer.acceptEdit()
-  await expect(Locator('.Explorer').locator('text=install.sh')).toHaveCount(2)
+  const files = Locator('.Explorer').locator('text=install.sh')
+  await expect(files).toHaveCount(2)
 }

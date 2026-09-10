@@ -91,9 +91,9 @@ test('getSiblingFileNames - no siblings', () => {
 
 test.each(['/', '\\'])('getSiblingFileNames - creation only checks the target directory (%s)', (separator) => {
   const item = (name: string, path: string, depth: number): ExplorerItem => ({
-    name,
-    path: path.replaceAll('/', separator),
     depth,
+    name,
+    path: path.replaceAll('/', () => separator),
     selected: false,
     type: 7,
   })
@@ -110,8 +110,8 @@ test.each(['/', '\\'])('getSiblingFileNames - creation only checks the target di
 
 test('getSiblingFileNames - different length sibling names', () => {
   const items: readonly ExplorerItem[] = [
-    { name: 'a', path: '/root/a', depth: 0, selected: false, type: 7 },
-    { name: 'long-name', path: '/root/long-name', depth: 0, selected: false, type: 7 },
+    { depth: 0, name: 'a', path: '/root/a', selected: false, type: 7 },
+    { depth: 0, name: 'long-name', path: '/root/long-name', selected: false, type: 7 },
   ]
   expect(GetSiblingFileNames.getSiblingFileNames(items, 0, '/root', '/')).toEqual(['a', 'long-name'])
 })
