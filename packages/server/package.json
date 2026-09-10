@@ -12,10 +12,10 @@
   "license": "MIT",
   "dependencies": {
     "@lvce-editor/drag-and-drop-worker": "0.11.0",
-    "@lvce-editor/main-area-worker": "9.62.0",
-    "@lvce-editor/server": "0.113.24",
-    "@lvce-editor/static-server": "0.113.24",
-    "@lvce-editor/test-worker": "17.22.0"
+    "@lvce-editor/main-area-worker": "9.63.0",
+    "@lvce-editor/server": "0.114.5",
+    "@lvce-editor/static-server": "0.114.5",
+    "@lvce-editor/test-worker": "17.23.0"
   },
   "devDependencies": {
     "@types/node": "^25.9.3"
