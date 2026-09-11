@@ -20,7 +20,8 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
   await Promise.all([Explorer.removeDirent(), Explorer.newFile()])
 
   // assert: explorer should be stable — no crash, no stale rows
-  await expect(Locator('.TreeItem[aria-label="file1.txt"]')).toBeHidden()
+  const file1 = Locator('.TreeItem[aria-label="file1.txt"]')
+  await expect(file1).toBeHidden()
   // file2.txt and file3.txt should always be visible
   const file2 = Locator('.TreeItem[aria-label="file2.txt"]')
   const file3 = Locator('.TreeItem[aria-label="file3.txt"]')
