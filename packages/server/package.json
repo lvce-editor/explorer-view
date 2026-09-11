@@ -4,18 +4,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "postinstall": "node src/postinstall.js",
-    "dev": "node ../../node_modules/@lvce-editor/server/bin/server.js --test-path=../e2e"
+    "dev": "node src/server.js --test-path=../e2e"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@lvce-editor/drag-and-drop-worker": "0.11.0",
-    "@lvce-editor/main-area-worker": "9.62.0",
-    "@lvce-editor/server": "0.113.24",
-    "@lvce-editor/static-server": "0.113.24",
-    "@lvce-editor/test-worker": "17.22.0"
+    "@lvce-editor/server": "0.113.24"
   },
   "devDependencies": {
     "@types/node": "^25.9.3"

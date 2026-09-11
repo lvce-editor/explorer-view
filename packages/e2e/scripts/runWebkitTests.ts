@@ -45,7 +45,15 @@ const getTestFilters = (testNames: readonly string[]): readonly string[] => {
 const runTestGroup = async (filter: string, extraArguments: readonly string[]): Promise<void> => {
   const child = spawn(
     process.execPath,
-    [testWithPlaywrightPath, '--only-extension=.', '--test-path=.', '--browser=webkit', ...extraArguments, `--filter=${filter}`],
+    [
+      testWithPlaywrightPath,
+      '--server-path=../server/src/server.js',
+      '--only-extension=.',
+      '--test-path=.',
+      '--browser=webkit',
+      ...extraArguments,
+      `--filter=${filter}`,
+    ],
     { stdio: 'inherit' },
   )
   const exitCode = await new Promise<number | null>((resolve, reject) => {

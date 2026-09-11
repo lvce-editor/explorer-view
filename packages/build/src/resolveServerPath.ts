@@ -1,7 +1,5 @@
-import { createRequire } from 'node:module'
-
-const serverRequire = createRequire(new URL('../../server/package.json', import.meta.url))
+import { fileURLToPath } from 'node:url'
 
 export const resolveServerPath = (): string => {
-  return serverRequire.resolve('@lvce-editor/server/bin/server.js')
+  return fileURLToPath(new URL('../../server/src/server.js', import.meta.url))
 }
