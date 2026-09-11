@@ -19,5 +19,6 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   await expect(input).toBeFocused()
   await Explorer.updateEditingValue('zz-new-folder')
   await Explorer.acceptEdit()
-  await expect(Locator('.Explorer').locator('text=zz-new-folder')).toBeVisible()
+  const newFolder = Locator('.Explorer').locator('text=zz-new-folder')
+  await expect(newFolder).toBeVisible()
 }
