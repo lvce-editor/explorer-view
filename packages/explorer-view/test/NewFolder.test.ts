@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import { newFolder } from '../src/parts/NewFolder/NewFolder.ts'
 
@@ -67,4 +68,37 @@ test('newFolder - no workspace', async () => {
   const result = await newFolder(state)
 
   expect(result).toBe(state)
+})
+
+test('newFolder reveals the input after many existing child folders', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFolderIcon'() {
+      return 'folder-icon'
+    },
+  })
+  const root = '/workspace'
+  const children = Array.from({ length: 30 }, (_, index) => ({
+    depth: 1,
+    name: `folder-${index}`,
+    path: `${root}/parts/folder-${index}`,
+    selected: false,
+    type: DirentType.Directory,
+  }))
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    height: 100,
+    items: [{ depth: 0, name: 'parts', path: `${root}/parts`, selected: false, type: DirentType.DirectoryExpanded }, ...children],
+    maxLineY: 5,
+    root,
+  }
+
+  const result = await newFolder(state)
+
+  expect(result.items[result.editingIndex].path).toBe(`${root}/parts`)
+  expect(result.editingIndex).toBeGreaterThanOrEqual(result.minLineY)
+  expect(result.editingIndex).toBeLessThan(result.maxLineY)
+  expect(result.deltaY).toBeGreaterThan(0)
+  expect(result.deltaY).toBeLessThanOrEqual(result.items.length * result.itemHeight - result.height)
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFolderIcon', { name: '' }]])
 })
