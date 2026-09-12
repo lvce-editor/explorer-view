@@ -24,6 +24,7 @@ test('renderCss - basic with empty visibleExplorerItems', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }`,
   ])
@@ -69,6 +70,7 @@ test('renderCss - with single visibleExplorerItem', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-10 {
@@ -153,6 +155,7 @@ test('renderCss - with multiple visibleExplorerItems with different indents', ()
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-0 {
@@ -240,6 +243,7 @@ test('renderCss - with duplicate indents should only generate unique indent clas
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-10 {
@@ -291,6 +295,7 @@ test('renderCss - with zero scrollBarHeight', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-5 {

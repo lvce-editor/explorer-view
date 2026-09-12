@@ -15,6 +15,7 @@ test('getCss - basic scrollBarHeight and empty indents', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }`)
 })
@@ -33,6 +34,7 @@ test('getCss - with single indent', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-10 {
@@ -54,6 +56,7 @@ test('getCss - with multiple indents', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-0 {
@@ -81,6 +84,7 @@ test('getCss - with zero scrollBarHeight', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-5 {
@@ -105,6 +109,7 @@ test('getCss - with large indents', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-100 {

@@ -18,6 +18,7 @@ export const getCss = (
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }`,
     ...uniqueIndents.map(getIndentRule),
