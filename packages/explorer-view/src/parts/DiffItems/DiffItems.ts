@@ -1,5 +1,4 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
-
 import { getNativeDragPaths } from '../GetNativeDragPaths/GetNativeDragPaths.ts'
 
 export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boolean => {
