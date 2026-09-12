@@ -3,10 +3,13 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import { getDraggedItems } from '../GetDraggedItems/GetDraggedItems.ts'
 import * as PlatformType from '../PlatformType/PlatformType.ts'
 
-const isLocalPath = (path: string): boolean => path.startsWith('/') || path.startsWith('file://') || /^[a-z]:[\\/]/i.test(path)
+const windowsPath = /^[a-z]:[\\/]/i
+
+const isLocalPath = (path: string): boolean => path.startsWith('/') || path.startsWith('file://') || windowsPath.test(path)
 
 export const handleDragStart = async (state: ExplorerState): Promise<ExplorerState> => {
-  if (state.platform !== PlatformType.Electron) {
+  const { platform } = state
+  if (platform !== PlatformType.Electron) {
     return state
   }
   const paths = getDraggedItems(state).map((item) => item.path)

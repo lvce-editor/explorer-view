@@ -1,11 +1,12 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { handleDragStart } from '../src/parts/HandleDragStart/HandleDragStart.ts'
 import * as PlatformType from '../src/parts/PlatformType/PlatformType.ts'
 
-const createItem = (path: string, selected = false) => ({
+const createItem = (path: string, selected = false): ExplorerItem => ({
   depth: 1,
   name: path,
   path,
