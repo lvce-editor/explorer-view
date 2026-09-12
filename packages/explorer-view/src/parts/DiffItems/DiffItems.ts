@@ -1,9 +1,11 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
+import { getNativeDragPaths } from '../GetNativeDragPaths/GetNativeDragPaths.ts'
+
 export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boolean => {
   return (
     oldState.items === newState.items &&
-    oldState.pointerDownIndex === newState.pointerDownIndex &&
+    (getNativeDragPaths(oldState).length > 0) === (getNativeDragPaths(newState).length > 0) &&
     oldState.minLineY === newState.minLineY &&
     oldState.maxLineY === newState.maxLineY &&
     oldState.focusedIndex === newState.focusedIndex &&
