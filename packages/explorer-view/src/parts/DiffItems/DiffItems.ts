@@ -3,6 +3,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 export const isEqual = (oldState: ExplorerState, newState: ExplorerState): boolean => {
   return (
     oldState.items === newState.items &&
+    oldState.pointerDownIndex === newState.pointerDownIndex &&
     oldState.minLineY === newState.minLineY &&
     oldState.maxLineY === newState.maxLineY &&
     oldState.focusedIndex === newState.focusedIndex &&

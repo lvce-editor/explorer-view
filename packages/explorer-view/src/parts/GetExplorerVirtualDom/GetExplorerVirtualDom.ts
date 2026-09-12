@@ -44,6 +44,7 @@ export const getExplorerVirtualDom = (
   loadErrorMessage: string,
   showOpenAnotherFolderButton: boolean,
   editingSessionId = 0,
+  nativeDrag = false,
 ): readonly VirtualDomNode[] => {
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide, dropTargets)
@@ -58,7 +59,7 @@ export const getExplorerVirtualDom = (
   const parentNode = getParentNode(childCount)
   const dom: readonly VirtualDomNode[] = [
     parentNode,
-    ...GetListItemsVirtualDom.getListItemsVirtualDom(visibleItems, focusedIndex, focused, dropTargets, editingSessionId),
+    ...GetListItemsVirtualDom.getListItemsVirtualDom(visibleItems, focusedIndex, focused, dropTargets, editingSessionId, nativeDrag),
     ...scrollBarDom,
     ...errorDom,
   ]

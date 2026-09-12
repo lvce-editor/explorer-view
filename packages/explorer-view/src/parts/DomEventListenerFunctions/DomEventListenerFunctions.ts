@@ -22,3 +22,5 @@ export const HandleScrollBarPointerCaptureLost = 23
 export const HandleScrollBarPointerDown = 24
 export const HandleWheel = 15
 export const HandleDoubleClick = 16
+
+export const HandleNativeDragStart = 27
