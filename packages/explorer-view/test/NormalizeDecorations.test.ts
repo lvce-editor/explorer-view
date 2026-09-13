@@ -114,6 +114,21 @@ test('normalizeDecorations - returns all valid decorations', () => {
   ])
 })
 
+test('normalizeDecorations - converts filesystem paths to file URIs', () => {
+  const decorations: FileDecoration[] = [{ decoration: 'ignore', uri: '/workspace/node_modules' }]
+  const result = normalizeDecorations(decorations)
+  expect(result).toEqual([{ decoration: 'ignore', uri: 'file:///workspace/node_modules' }])
+})
+
+test('normalizeDecorations - preserves qualified and non-file URIs', () => {
+  const decorations: FileDecoration[] = [
+    { decoration: 'modified', uri: 'file:///workspace/file.txt' },
+    { decoration: 'modified', uri: 'memfs:///workspace/file.txt' },
+  ]
+  const result = normalizeDecorations(decorations)
+  expect(result).toEqual(decorations)
+})
+
 test('normalizeDecorations - handles mixed valid and invalid decorations', () => {
   const decorations: FileDecoration[] = [
     { decoration: 'modified', uri: 'file:///test.txt' },
