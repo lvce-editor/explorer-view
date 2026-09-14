@@ -97,6 +97,37 @@ test('should update visible items and icons', async () => {
   const result = await setDeltaY(state, 100)
   expect(result.deltaY).toBe(100)
   expect(result.minLineY).toBe(5)
-  expect(result.maxLineY).toBe(10)
+  expect(result.maxLineY).toBe(11)
+  expect(mockRpc.invocations).toEqual([])
+})
+
+test('should preserve a fractional row offset while scrolling', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getFolderIcon'() {
+      return 'icon'
+    },
+    'IconTheme.getIcons'() {
+      return ['icon']
+    },
+  })
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    height: 100,
+    itemHeight: 20,
+    items: Array.from({ length: 20 }, (_, i) => ({
+      depth: 0,
+      name: `file${i}`,
+      path: `/file${i}`,
+      selected: false,
+      type: 1,
+    })),
+  }
+  const result = await setDeltaY(state, 5)
+  expect(result.deltaY).toBe(5)
+  expect(result.minLineY).toBe(0)
+  expect(result.maxLineY).toBe(6)
   expect(mockRpc.invocations).toEqual([])
 })

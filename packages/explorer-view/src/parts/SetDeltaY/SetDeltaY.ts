@@ -1,4 +1,5 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as GetExplorerMaxLineY from '../GetMaxLineY/GetMaxLineY.ts'
 
 export const setDeltaY = async (state: ExplorerState, deltaY: number): Promise<ExplorerState> => {
   const { deltaY: currentDeltaY, height, itemHeight, items } = state
@@ -13,8 +14,8 @@ export const setDeltaY = async (state: ExplorerState, deltaY: number): Promise<E
   if (currentDeltaY === deltaY) {
     return state
   }
-  const minLineY = Math.round(deltaY / itemHeight)
-  const maxLineY = minLineY + Math.round(height / itemHeight)
+  const minLineY = Math.floor(deltaY / itemHeight)
+  const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
   return {
     ...state,
     deltaY,

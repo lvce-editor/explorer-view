@@ -3,6 +3,25 @@ import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { getIndexFromPosition } from '../src/parts/GetIndexFromPosition/GetIndexFromPosition.ts'
 
+test('getIndexFromPosition accounts for a fractional scroll offset', () => {
+  const state = {
+    ...createDefaultState(),
+    deltaY: 5,
+    height: 100,
+    itemHeight: 20,
+    items: Array.from({ length: 10 }, (_, index) => ({
+      depth: 0,
+      name: `file-${index}`,
+      path: `/file-${index}`,
+      selected: false,
+      type: 1,
+    })),
+    y: 10,
+  }
+  expect(getIndexFromPosition(state, 0, 24)).toBe(0)
+  expect(getIndexFromPosition(state, 0, 25)).toBe(1)
+})
+
 test('getIndexFromPosition', () => {
   const state: ExplorerState = {
     ...createDefaultState(),

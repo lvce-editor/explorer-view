@@ -8,7 +8,7 @@ export const revealItemVisible = (state: ExplorerState, index: number): Explorer
   const requestedDeltaY = requestedMinLineY === minLineY ? currentDeltaY : requestedMinLineY * itemHeight
   const maxDeltaY = Math.max(items.length * itemHeight - height, 0)
   const deltaY = Math.min(Math.max(requestedDeltaY, 0), maxDeltaY)
-  const newMinLineY = Math.round(deltaY / itemHeight)
+  const newMinLineY = Math.floor(deltaY / itemHeight)
   const newMaxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(newMinLineY, height, itemHeight, items.length)
   return {
     ...state,
