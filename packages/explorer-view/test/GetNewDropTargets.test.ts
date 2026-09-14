@@ -16,7 +16,7 @@ test('getNewDropTargets - index -1', () => {
 test('getNewDropTargets - cannot be dropped into', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: DirentType.File, uri: '/test.txt' }],
   }
   const result = getNewDropTargets(state, 0)
   expect(result).toEqual([-1, 0, 1])
@@ -25,7 +25,7 @@ test('getNewDropTargets - cannot be dropped into', () => {
 test('getNewDropTargets - can be dropped into', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'test', selected: false, type: DirentType.Directory, uri: '/test' }],
   }
   const result = getNewDropTargets(state, 0)
   expect(result).toEqual([0])

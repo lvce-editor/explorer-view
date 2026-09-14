@@ -26,13 +26,13 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     }
   }
   const renamedDirent = items[editingIndex]
-  const oldUri = renamedDirent.path
+  const oldUri = renamedDirent.uri
   const dirname = dirname2(oldUri)
   const newUri = join2(dirname, editingValue)
   if (oldUri === newUri) {
     return cancelEditRename(state, true)
   }
-  const operations = GetFileOperationsRename.getFileOperationsRename(renamedDirent.path, editingValue)
+  const operations = GetFileOperationsRename.getFileOperationsRename(renamedDirent.uri, editingValue)
   const renameErrorMessage = await ApplyFileOperations.applyFileOperations(operations, applicationId)
   if (renameErrorMessage) {
     return {

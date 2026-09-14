@@ -9,8 +9,8 @@ export const getSiblingFileNames = (items: readonly ExplorerItem[], focusedIndex
 
   const focusedItem = items[focusedIndex]
   // Creation placeholders store the target directory itself as their path.
-  const parentPath = focusedItem.name ? dirname(pathSeparator, focusedItem.path) : focusedItem.path
-  const siblingItems = items.filter((item) => item.name !== '' && dirname(pathSeparator, item.path) === parentPath)
+  const parentPath = focusedItem.name ? dirname(pathSeparator, focusedItem.uri) : focusedItem.uri
+  const siblingItems = items.filter((item) => item.name !== '' && dirname(pathSeparator, item.uri) === parentPath)
 
   return siblingItems.map((item) => item.name)
 }

@@ -7,9 +7,9 @@ import { handleClickAtRangeSelection } from '../src/parts/HandleClickAtRangeSele
 const createItem = (name: string, selected = false): ExplorerItem => ({
   depth: 1,
   name,
-  path: `/${name}`,
   selected,
   type: 0,
+  uri: `/${name}`,
 })
 
 const createState = (focusedIndex: number, selectedIndices: readonly number[] = []): ExplorerState => ({

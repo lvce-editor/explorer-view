@@ -19,8 +19,8 @@ export const getGitIgnoredUris = async (
   }
   return items
     .filter((item) => {
-      const relativePath = GetGitIgnoreRelativePath.getGitIgnoreRelativePath(root, item.path, pathSeparator)
+      const relativePath = GetGitIgnoreRelativePath.getGitIgnoreRelativePath(root, item.uri, pathSeparator)
       return IsGitIgnored.isGitIgnored(relativePath, patterns)
     })
-    .map((item) => item.path)
+    .map((item) => item.uri)
 }

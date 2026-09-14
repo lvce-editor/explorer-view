@@ -4,7 +4,7 @@ import * as GetIconCacheKey from '../GetIconCacheKey/GetIconCacheKey.ts'
 
 export const getIconsCached = (dirents: readonly ExplorerItem[], fileIconCache: FileIconCache): string[] => {
   return dirents.map((dirent) => {
-    const cacheKey = GetIconCacheKey.getIconCacheKey(dirent.path, dirent.type)
+    const cacheKey = GetIconCacheKey.getIconCacheKey(dirent.uri, dirent.type)
     return fileIconCache[cacheKey]
   })
 }

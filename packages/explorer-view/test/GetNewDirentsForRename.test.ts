@@ -7,9 +7,9 @@ test('getNewDirentsForRename - file', () => {
     {
       depth: 0,
       name: 'test.txt',
-      path: '/test.txt',
       selected: false,
       type: DirentType.File,
+      uri: '/test.txt',
     },
   ]
   const result = getNewDirentsForRename(items, 0)
@@ -17,9 +17,9 @@ test('getNewDirentsForRename - file', () => {
   expect(result[0]).toEqual({
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.EditingFile,
+    uri: '/test.txt',
   })
 })
 
@@ -28,9 +28,9 @@ test('getNewDirentsForRename - folder', () => {
     {
       depth: 0,
       name: 'test',
-      path: '/test',
       selected: false,
       type: DirentType.Directory,
+      uri: '/test',
     },
   ]
   const result = getNewDirentsForRename(items, 0)
@@ -38,8 +38,8 @@ test('getNewDirentsForRename - folder', () => {
   expect(result[0]).toEqual({
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.EditingFolder,
+    uri: '/test',
   })
 })

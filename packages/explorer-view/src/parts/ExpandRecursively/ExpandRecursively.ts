@@ -10,8 +10,8 @@ export const expandRecursively = async (state: ExplorerState): Promise<ExplorerS
     focusedIndex < 0
       ? {
           depth: 0,
-          path: root,
           type: DirentType.Directory,
+          uri: root,
         }
       : items[focusedIndex]
   if (dirent.type !== DirentType.Directory && dirent.type !== DirentType.DirectoryExpanding && dirent.type !== DirentType.DirectoryExpanded) {

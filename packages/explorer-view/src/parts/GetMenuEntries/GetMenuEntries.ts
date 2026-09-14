@@ -219,7 +219,7 @@ export const getMenuEntries = (state: ExplorerState): readonly MenuEntry[] => {
     case DirentType.Directory:
       return getMenuEntriesDirectory(state)
     case DirentType.File:
-      if (compareSourceUri && compareSourceUri !== focusedDirent.path) {
+      if (compareSourceUri && compareSourceUri !== focusedDirent.uri) {
         return getMenuEntriesFileCompareWithSelected(state)
       }
       return getMenuEntriesFile(state)

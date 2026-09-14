@@ -7,29 +7,29 @@ test('getSiblingFileNames - root level files', () => {
     {
       depth: 0,
       name: 'file1.txt',
-      path: '/root/file1.txt',
       posInSet: 0,
       selected: false,
       setSize: 2,
       type: 1,
+      uri: '/root/file1.txt',
     },
     {
       depth: 0,
       name: 'file2.txt',
-      path: '/root/file2.txt',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: 1,
+      uri: '/root/file2.txt',
     },
     {
       depth: 1,
       name: 'file3.txt',
-      path: '/root/folder/file3.txt',
       posInSet: 0,
       selected: false,
       setSize: 1,
       type: 1,
+      uri: '/root/folder/file3.txt',
     },
   ]
 
@@ -42,29 +42,29 @@ test('getSiblingFileNames - folder level files', () => {
     {
       depth: 0,
       name: 'file1.txt',
-      path: '/root/file1.txt',
       posInSet: 0,
       selected: false,
       setSize: 1,
       type: 1,
+      uri: '/root/file1.txt',
     },
     {
       depth: 1,
       name: 'file2.txt',
-      path: '/root/folder/file2.txt',
       posInSet: 0,
       selected: false,
       setSize: 2,
       type: 1,
+      uri: '/root/folder/file2.txt',
     },
     {
       depth: 1,
       name: 'file3.txt',
-      path: '/root/folder/file3.txt',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: 1,
+      uri: '/root/folder/file3.txt',
     },
   ]
 
@@ -77,11 +77,11 @@ test('getSiblingFileNames - no siblings', () => {
     {
       depth: 0,
       name: 'file1.txt',
-      path: '/root/file1.txt',
       posInSet: 0,
       selected: false,
       setSize: 1,
       type: 1,
+      uri: '/root/file1.txt',
     },
   ]
 
@@ -90,12 +90,12 @@ test('getSiblingFileNames - no siblings', () => {
 })
 
 test.each(['/', '\\'])('getSiblingFileNames - creation only checks the target directory (%s)', (separator) => {
-  const item = (name: string, path: string, depth: number): ExplorerItem => ({
+  const item = (name: string, uri: string, depth: number): ExplorerItem => ({
     depth,
     name,
-    path: path.replaceAll('/', () => separator),
     selected: false,
     type: 7,
+    uri: uri.replaceAll('/', () => separator),
   })
   const items = [
     item('editor.devin', '/root/editor.devin', 0),
@@ -110,8 +110,8 @@ test.each(['/', '\\'])('getSiblingFileNames - creation only checks the target di
 
 test('getSiblingFileNames - different length sibling names', () => {
   const items: readonly ExplorerItem[] = [
-    { depth: 0, name: 'a', path: '/root/a', selected: false, type: 7 },
-    { depth: 0, name: 'long-name', path: '/root/long-name', selected: false, type: 7 },
+    { depth: 0, name: 'a', selected: false, type: 7, uri: '/root/a' },
+    { depth: 0, name: 'long-name', selected: false, type: 7, uri: '/root/long-name' },
   ]
   expect(GetSiblingFileNames.getSiblingFileNames(items, 0, '/root', '/')).toEqual(['a', 'long-name'])
 })

@@ -23,11 +23,11 @@ export const getProtoMapInternal = (
     const displayDirent: ExplorerItem = {
       depth,
       name: item.name,
-      path,
       posInSet: i + 1,
       selected: false,
       setSize: items.length,
       type: restoreDirentType(item.type, path, expandedPaths),
+      uri: path,
     }
     const children = getProtoMapInternal(path, pathToDirents, expandedPaths, depth + 1, excluded, workspaceRoot)
     protoMap.push(displayDirent, ...children)

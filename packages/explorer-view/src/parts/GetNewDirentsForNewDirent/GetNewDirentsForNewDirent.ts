@@ -25,11 +25,11 @@ export const getNewDirentsForNewDirent = async (
     const newDirent: ExplorerItem = {
       depth: 0,
       name: '',
-      path: root,
       posInSet: 1,
       selected: false,
       setSize: 1,
       type,
+      uri: root,
     }
     if (type === DirentType.EditingFolder) {
       return [newDirent, ...items]
@@ -48,7 +48,7 @@ export const getNewDirentsForNewDirent = async (
   if (!focusedItem) {
     return items
   }
-  const parentPath = focusedItem.path
+  const parentPath = focusedItem.uri
   const depth = focusedItem.depth + 1
 
   const updatedChildren = await getNewChildDirentsForNewDirent(items, depth, parentPath, type, excluded, root, applicationId)

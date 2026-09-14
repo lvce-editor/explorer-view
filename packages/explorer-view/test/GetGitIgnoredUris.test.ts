@@ -15,8 +15,8 @@ test('getGitIgnoredUris reads root gitignore and matches items', async () => {
   const result = await getGitIgnoredUris(
     '/workspace',
     [
-      { depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File },
-      { depth: 1, name: 'keep.txt', path: '/workspace/keep.txt', selected: false, type: DirentType.File },
+      { depth: 1, name: 'debug.log', selected: false, type: DirentType.File, uri: '/workspace/debug.log' },
+      { depth: 1, name: 'keep.txt', selected: false, type: DirentType.File, uri: '/workspace/keep.txt' },
     ],
     '/',
     true,
@@ -40,10 +40,10 @@ test('getGitIgnoredUris reads nested gitignore files', async () => {
   const result = await getGitIgnoredUris(
     '/workspace',
     [
-      { depth: 1, name: 'packages', path: '/workspace/packages', selected: false, type: DirentType.DirectoryExpanded },
-      { depth: 2, name: 'app', path: '/workspace/packages/app', selected: false, type: DirentType.DirectoryExpanded },
-      { depth: 3, name: 'file.tmp', path: '/workspace/packages/app/file.tmp', selected: false, type: DirentType.File },
-      { depth: 2, name: 'file.tmp', path: '/workspace/packages/file.tmp', selected: false, type: DirentType.File },
+      { depth: 1, name: 'packages', selected: false, type: DirentType.DirectoryExpanded, uri: '/workspace/packages' },
+      { depth: 2, name: 'app', selected: false, type: DirentType.DirectoryExpanded, uri: '/workspace/packages/app' },
+      { depth: 3, name: 'file.tmp', selected: false, type: DirentType.File, uri: '/workspace/packages/app/file.tmp' },
+      { depth: 2, name: 'file.tmp', selected: false, type: DirentType.File, uri: '/workspace/packages/file.tmp' },
     ],
     '/',
     true,
@@ -68,8 +68,8 @@ test('getGitIgnoredUris does not read gitignore files from collapsed folders', a
   const result = await getGitIgnoredUris(
     '/workspace',
     [
-      { depth: 1, name: 'packages', path: '/workspace/packages', selected: false, type: DirentType.Directory },
-      { depth: 1, name: 'build', path: '/workspace/build', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'packages', selected: false, type: DirentType.Directory, uri: '/workspace/packages' },
+      { depth: 1, name: 'build', selected: false, type: DirentType.Directory, uri: '/workspace/build' },
     ],
     '/',
     true,
@@ -86,7 +86,7 @@ test('getGitIgnoredUris returns empty when disabled', async () => {
   })
   const result = await getGitIgnoredUris(
     '/workspace',
-    [{ depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File }],
+    [{ depth: 1, name: 'debug.log', selected: false, type: DirentType.File, uri: '/workspace/debug.log' }],
     '/',
     false,
   )

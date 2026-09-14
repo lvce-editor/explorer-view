@@ -6,7 +6,7 @@ import * as OpenUri from '../OpenUri/OpenUri.ts'
 export const handleClickFile = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus = false): Promise<ExplorerState> => {
   const { applicationId } = state
   const completion = OpenUri.openUri(
-    dirent.path,
+    dirent.uri,
     !keepFocus,
     {
       preview: true,

@@ -5,9 +5,9 @@ import { revealItemVisible } from '../src/parts/RevealItemVisible/RevealItemVisi
 const items = Array.from({ length: 10 }, (_, index) => ({
   depth: 0,
   name: `file-${index}.txt`,
-  path: `/file-${index}.txt`,
   selected: false,
   type: 1,
+  uri: `/file-${index}.txt`,
 }))
 
 test('revealItemVisible - clamps the scroll position when revealing the last item', () => {

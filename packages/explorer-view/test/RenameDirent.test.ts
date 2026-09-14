@@ -12,7 +12,7 @@ test('renameDirent updates state with editing properties', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     icons: [''],
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: DirentType.File, uri: '/test.txt' }],
   }
 
   const result = await renameDirent(mockState)
@@ -27,7 +27,7 @@ test('renameDirent updates state with editing properties', async () => {
     editingValue: 'test.txt',
     focus: FocusId.Input,
     inputSource: InputSource.Script,
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.EditingFile }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: DirentType.EditingFile, uri: '/test.txt' }],
   })
 })
 
@@ -36,7 +36,7 @@ test('renameDirent updates state with editing properties for folder', async () =
     ...createDefaultState(),
     focusedIndex: 0,
     icons: [''],
-    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'test', selected: false, type: DirentType.Directory, uri: '/test' }],
   }
 
   const result = await renameDirent(mockState)
@@ -51,7 +51,7 @@ test('renameDirent updates state with editing properties for folder', async () =
     editingValue: 'test',
     focus: FocusId.Input,
     inputSource: InputSource.Script,
-    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.EditingFolder }],
+    items: [{ depth: 0, name: 'test', selected: false, type: DirentType.EditingFolder, uri: '/test' }],
   })
 })
 
@@ -71,7 +71,7 @@ test('renameDirent preserves icon when entering edit mode', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     icons: ['file-icon'],
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: DirentType.File, uri: '/test.txt' }],
     minLineY: 0,
   }
 
@@ -87,6 +87,6 @@ test('renameDirent preserves icon when entering edit mode', async () => {
     editingValue: 'test.txt',
     focus: FocusId.Input,
     inputSource: InputSource.Script,
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.EditingFile }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: DirentType.EditingFile, uri: '/test.txt' }],
   })
 })

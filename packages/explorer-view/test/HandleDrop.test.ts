@@ -75,15 +75,15 @@ test('handleDrop - moves an internal Explorer file into the drop target folder',
   const state = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'src', path: '/workspace/src', selected: false, type: DirentType.Directory },
-      { depth: 1, name: 'Main.elm', path: '/workspace/Main.elm', selected: false, type: DirentType.File },
+      { depth: 1, name: 'src', selected: false, type: DirentType.Directory, uri: '/workspace/src' },
+      { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/Main.elm' },
     ],
     root: '/workspace',
   }
 
   const result = await handleDrop(state, 0, 0, 1)
 
-  expect(result.items.map((item) => item.path)).toEqual(['/workspace/src', '/workspace/src/Main.elm'])
+  expect(result.items.map((item) => item.uri)).toEqual(['/workspace/src', '/workspace/src/Main.elm'])
   expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 1, false]])
   expect(mockRpc.invocations).toContainEqual(['FileSystem.rename', '/workspace/Main.elm', '/workspace/src/Main.elm'])
 })
@@ -102,8 +102,8 @@ test('handleDrop - wraps internal move failures', async () => {
   const state = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'src', path: '/workspace/src', selected: false, type: DirentType.Directory },
-      { depth: 1, name: 'Main.elm', path: '/workspace/Main.elm', selected: false, type: DirentType.File },
+      { depth: 1, name: 'src', selected: false, type: DirentType.Directory, uri: '/workspace/src' },
+      { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/Main.elm' },
     ],
     root: '/workspace',
   }

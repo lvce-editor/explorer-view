@@ -4,8 +4,8 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getInternalDragPaths } from '../src/parts/GetInternalDragPaths/GetInternalDragPaths.ts'
 
 const items: readonly ExplorerItem[] = [
-  { depth: 1, name: 'Main.elm', path: '/workspace/Main.elm', selected: false, type: DirentType.File },
-  { depth: 1, name: 'src', path: '/workspace/src', selected: false, type: DirentType.Directory },
+  { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/Main.elm' },
+  { depth: 1, name: 'src', selected: false, type: DirentType.Directory, uri: '/workspace/src' },
 ]
 
 test('returns Explorer paths matching retained drag uris', () => {
@@ -14,7 +14,7 @@ test('returns Explorer paths matching retained drag uris', () => {
 
 test('preserves non-file workspace uris', () => {
   const memoryItems: readonly ExplorerItem[] = [
-    { depth: 1, name: 'Main.elm', path: 'memfs:///workspace/Main.elm', selected: false, type: DirentType.File },
+    { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: 'memfs:///workspace/Main.elm' },
   ]
 
   expect(getInternalDragPaths(memoryItems, ['memfs:///workspace/Main.elm'])).toEqual(['memfs:///workspace/Main.elm'])
@@ -22,7 +22,7 @@ test('preserves non-file workspace uris', () => {
 
 test('matches a remote folder uri with a trailing slash', () => {
   const remoteItems: readonly ExplorerItem[] = [
-    { depth: 1, name: 'src', path: 'remote-ssh://test-host/workspace/src', selected: false, type: DirentType.Directory },
+    { depth: 1, name: 'src', selected: false, type: DirentType.Directory, uri: 'remote-ssh://test-host/workspace/src' },
   ]
 
   expect(getInternalDragPaths(remoteItems, ['remote-ssh://test-host/workspace/src/'])).toEqual(['remote-ssh://test-host/workspace/src'])

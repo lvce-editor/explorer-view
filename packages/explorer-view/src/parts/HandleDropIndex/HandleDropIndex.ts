@@ -37,9 +37,9 @@ const handleDropIntoFolder = async (
   const { applicationId } = state
   const { excluded, items, pathSeparator, root } = state
 
-  await uploadFileSystemHandles(dirent.path, '/', fileHandles, applicationId)
+  await uploadFileSystemHandles(dirent.uri, '/', fileHandles, applicationId)
 
-  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.path, dirent.depth, excluded, root, applicationId)
+  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.uri, dirent.depth, excluded, root, applicationId)
   const mergedDirents = getMergedDirents(items, index, dirent, childDirents)
   // TODO update maxlineY
   return {

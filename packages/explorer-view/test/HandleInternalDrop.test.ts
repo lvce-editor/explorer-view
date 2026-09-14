@@ -24,8 +24,8 @@ test('moves a workspace file into a folder and expands the target', async () => 
     ...createDefaultState(),
     dropTargets: [0],
     items: [
-      { depth: 1, name: 'src', path: '/workspace/src', selected: false, type: DirentType.Directory },
-      { depth: 1, name: 'Main.elm', path: '/workspace/Main.elm', selected: false, type: DirentType.File },
+      { depth: 1, name: 'src', selected: false, type: DirentType.Directory, uri: '/workspace/src' },
+      { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/Main.elm' },
     ],
     root: '/workspace',
   }
@@ -34,8 +34,8 @@ test('moves a workspace file into a folder and expands the target', async () => 
 
   expect(result.dropTargets).toEqual([])
   expect(result.items).toEqual([
-    expect.objectContaining({ name: 'src', path: '/workspace/src', type: DirentType.DirectoryExpanded }),
-    expect.objectContaining({ name: 'Main.elm', path: '/workspace/src/Main.elm', type: DirentType.File }),
+    expect.objectContaining({ name: 'src', type: DirentType.DirectoryExpanded, uri: '/workspace/src' }),
+    expect.objectContaining({ name: 'Main.elm', type: DirentType.File, uri: '/workspace/src/Main.elm' }),
   ])
   expect(mockRpc.invocations).toContainEqual(['FileSystem.rename', '/workspace/Main.elm', '/workspace/src/Main.elm'])
 })
@@ -45,8 +45,8 @@ test('does not move a file when it is already in the target folder', async () =>
     ...createDefaultState(),
     dropTargets: [0],
     items: [
-      { depth: 1, name: 'src', path: '/workspace/src', selected: false, type: DirentType.DirectoryExpanded },
-      { depth: 2, name: 'Main.elm', path: '/workspace/src/Main.elm', selected: false, type: DirentType.File },
+      { depth: 1, name: 'src', selected: false, type: DirentType.DirectoryExpanded, uri: '/workspace/src' },
+      { depth: 2, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/src/Main.elm' },
     ],
     root: '/workspace',
   }
@@ -60,8 +60,8 @@ test('rejects moving a folder into its descendant before changing the file syste
   const state = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'folder', path: '/workspace/folder', selected: false, type: DirentType.DirectoryExpanded },
-      { depth: 2, name: 'child', path: '/workspace/folder/child', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'folder', selected: false, type: DirentType.DirectoryExpanded, uri: '/workspace/folder' },
+      { depth: 2, name: 'child', selected: false, type: DirentType.Directory, uri: '/workspace/folder/child' },
     ],
     root: '/workspace',
   }
@@ -73,9 +73,9 @@ test('rejects a visible destination collision before changing the file system', 
   const state = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'src', path: '/workspace/src', selected: false, type: DirentType.DirectoryExpanded },
-      { depth: 2, name: 'Main.elm', path: '/workspace/src/Main.elm', selected: false, type: DirentType.File },
-      { depth: 1, name: 'Main.elm', path: '/workspace/Main.elm', selected: false, type: DirentType.File },
+      { depth: 1, name: 'src', selected: false, type: DirentType.DirectoryExpanded, uri: '/workspace/src' },
+      { depth: 2, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/src/Main.elm' },
+      { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/Main.elm' },
     ],
     root: '/workspace',
   }

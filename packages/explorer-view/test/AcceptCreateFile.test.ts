@@ -34,9 +34,9 @@ test('acceptCreateFile', async () => {
       {
         depth: 0,
         name: 'test',
-        path: 'test',
         selected: false,
         type: 1,
+        uri: 'test',
       },
     ],
     root: '/test',

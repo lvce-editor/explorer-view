@@ -53,7 +53,7 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     const decorations = await GetFileDecorations.getFileDecorations(
       scheme,
       root,
-      restoredDirents.filter((item: any) => item.depth === 1).map((item: any) => item.path),
+      restoredDirents.filter((item: any) => item.depth === 1).map((item: any) => item.uri),
       sourceControlDecorations,
       assetDir,
       platform,

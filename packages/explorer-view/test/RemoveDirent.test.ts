@@ -30,7 +30,7 @@ test('removeDirent - removes focused item', async () => {
     ...createDefaultState(),
     confirmDelete: false,
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File }],
+    items: [{ depth: 0, name: 'file1.txt', selected: false, type: File, uri: '/file1.txt' }],
   }
 
   const result = await removeDirent(state)
@@ -66,8 +66,8 @@ test('removeDirent - removes multiple selected items', async () => {
     confirmDelete: false,
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: true, type: File },
-      { depth: 0, name: 'file2.txt', path: '/file2.txt', selected: true, type: File },
+      { depth: 0, name: 'file1.txt', selected: true, type: File, uri: '/file1.txt' },
+      { depth: 0, name: 'file2.txt', selected: true, type: File, uri: '/file2.txt' },
     ],
   }
 
@@ -105,9 +105,9 @@ test('removeDirent - removes focused item and selected items', async () => {
     confirmDelete: false,
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
-      { depth: 0, name: 'file2.txt', path: '/file2.txt', selected: true, type: File },
-      { depth: 0, name: 'file3.txt', path: '/file3.txt', selected: true, type: File },
+      { depth: 0, name: 'file1.txt', selected: false, type: File, uri: '/file1.txt' },
+      { depth: 0, name: 'file2.txt', selected: true, type: File, uri: '/file2.txt' },
+      { depth: 0, name: 'file3.txt', selected: true, type: File, uri: '/file3.txt' },
     ],
   }
 
@@ -146,8 +146,8 @@ test('remove file', async () => {
     confirmDelete: false,
     focusedIndex: 1,
     items: [
-      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: Directory },
-      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File },
+      { depth: 0, name: 'folder1', selected: false, type: Directory, uri: '/folder1' },
+      { depth: 0, name: 'file1.txt', selected: false, type: File, uri: '/file1.txt' },
     ],
   }
 
@@ -185,8 +185,8 @@ test('remove folder with children', async () => {
     confirmDelete: false,
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
-      { depth: 1, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: File },
+      { depth: 0, name: 'folder1', selected: false, type: DirectoryExpanded, uri: '/folder1' },
+      { depth: 1, name: 'file1.txt', selected: false, type: File, uri: '/folder1/file1.txt' },
     ],
     root: '/',
   }
@@ -227,8 +227,8 @@ test('remove file from expanded folder', async () => {
     expandedPaths: ['/folder1'],
     focusedIndex: 1,
     items: [
-      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirectoryExpanded },
-      { depth: 1, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: File },
+      { depth: 0, name: 'folder1', selected: false, type: DirectoryExpanded, uri: '/folder1' },
+      { depth: 1, name: 'file1.txt', selected: false, type: File, uri: '/folder1/file1.txt' },
     ],
   }
 
@@ -267,7 +267,7 @@ test.skip('removeDirent - with confirmation enabled and user confirms', async ()
     ...createDefaultState(),
     confirmDelete: false,
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File }],
+    items: [{ depth: 0, name: 'file1.txt', selected: false, type: File, uri: '/file1.txt' }],
   }
 
   const result = await removeDirent(state)
@@ -287,8 +287,8 @@ test.skip('removeDirent - with confirmation enabled and user cancels', async () 
     confirmDelete: false,
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: true, type: File },
-      { depth: 0, name: 'file2.txt', path: '/file2.txt', selected: true, type: File },
+      { depth: 0, name: 'file1.txt', selected: true, type: File, uri: '/file1.txt' },
+      { depth: 0, name: 'file2.txt', selected: true, type: File, uri: '/file2.txt' },
     ],
   }
 
@@ -328,7 +328,7 @@ test('removeDirent - shows error message when file operation fails', async () =>
     ...createDefaultState(),
     confirmDelete: false,
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File }],
+    items: [{ depth: 0, name: 'file1.txt', selected: false, type: File, uri: '/file1.txt' }],
   }
 
   const result = await removeDirent(state)
@@ -375,8 +375,8 @@ test('removeDirent - shows error message for multiple files when operation fails
     confirmDelete: false,
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'file1.txt', path: '/file1.txt', selected: true, type: File },
-      { depth: 0, name: 'file2.txt', path: '/file2.txt', selected: true, type: File },
+      { depth: 0, name: 'file1.txt', selected: true, type: File, uri: '/file1.txt' },
+      { depth: 0, name: 'file2.txt', selected: true, type: File, uri: '/file2.txt' },
     ],
   }
 
@@ -415,7 +415,7 @@ test('removeDirent - continues normally when no error occurs', async () => {
     ...createDefaultState(),
     confirmDelete: false,
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: File }],
+    items: [{ depth: 0, name: 'file1.txt', selected: false, type: File, uri: '/file1.txt' }],
   }
 
   const result = await removeDirent(state)

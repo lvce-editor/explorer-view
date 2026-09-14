@@ -21,10 +21,10 @@ test('collapseAll - with nested items', async () => {
       '/folder2/file2.txt': 'icon',
     },
     items: [
-      { depth: 1, name: 'folder1', path: '/folder1', selected: false, type: DirentType.Directory },
-      { depth: 2, name: 'file1.txt', path: '/folder1/file1.txt', selected: false, type: DirentType.File },
-      { depth: 1, name: 'folder2', path: '/folder2', selected: false, type: DirentType.Directory },
-      { depth: 2, name: 'file2.txt', path: '/folder2/file2.txt', selected: false, type: DirentType.File },
+      { depth: 1, name: 'folder1', selected: false, type: DirentType.Directory, uri: '/folder1' },
+      { depth: 2, name: 'file1.txt', selected: false, type: DirentType.File, uri: '/folder1/file1.txt' },
+      { depth: 1, name: 'folder2', selected: false, type: DirentType.Directory, uri: '/folder2' },
+      { depth: 2, name: 'file2.txt', selected: false, type: DirentType.File, uri: '/folder2/file2.txt' },
     ],
   }
 
@@ -32,8 +32,8 @@ test('collapseAll - with nested items', async () => {
   expect(result).toEqual({
     ...state,
     items: [
-      { depth: 1, name: 'folder1', path: '/folder1', selected: false, type: DirentType.Directory },
-      { depth: 1, name: 'folder2', path: '/folder2', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'folder1', selected: false, type: DirentType.Directory, uri: '/folder1' },
+      { depth: 1, name: 'folder2', selected: false, type: DirentType.Directory, uri: '/folder2' },
     ],
   })
 })
@@ -43,8 +43,8 @@ test('collapseAll - resets scroll position', async () => {
     ...createDefaultState(),
     deltaY: 200,
     items: [
-      { depth: 1, name: 'folder', path: '/folder', selected: false, type: DirentType.DirectoryExpanded },
-      { depth: 2, name: 'nested', path: '/folder/nested', selected: false, type: DirentType.DirectoryExpanded },
+      { depth: 1, name: 'folder', selected: false, type: DirentType.DirectoryExpanded, uri: '/folder' },
+      { depth: 2, name: 'nested', selected: false, type: DirentType.DirectoryExpanded, uri: '/folder/nested' },
     ],
     maxLineY: 12,
     minLineY: 10,
@@ -64,8 +64,8 @@ test('collapseAll - cancels file creation at the folder boundary', async () => {
     editingValue: 'test-file.txt',
     focusedIndex: 0,
     items: [
-      { depth: 0, name: '', path: '/', selected: false, type: DirentType.EditingFile },
-      { depth: 1, name: 'file1.txt', path: '/file1.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: '', selected: false, type: DirentType.EditingFile, uri: '/' },
+      { depth: 1, name: 'file1.txt', selected: false, type: DirentType.File, uri: '/file1.txt' },
     ],
   }
 
@@ -75,5 +75,5 @@ test('collapseAll - cancels file creation at the folder boundary', async () => {
   expect(result.editingType).toBe(ExplorerEditingType.None)
   expect(result.editingValue).toBe('')
   expect(result.focusedIndex).toBe(0)
-  expect(result.items).toEqual([{ depth: 1, name: 'file1.txt', path: '/file1.txt', selected: false, type: DirentType.File }])
+  expect(result.items).toEqual([{ depth: 1, name: 'file1.txt', selected: false, type: DirentType.File, uri: '/file1.txt' }])
 })

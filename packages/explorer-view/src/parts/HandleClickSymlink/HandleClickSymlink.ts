@@ -6,7 +6,7 @@ import * as HandleClickFile from '../HandleClickFile/HandleClickFile.ts'
 
 export const handleClickSymLink = async (state: ExplorerState, dirent: ExplorerItem, index: number): Promise<ExplorerState> => {
   const { applicationId } = state
-  const realPath = await FileSystem.getRealPath(dirent.path, applicationId)
+  const realPath = await FileSystem.getRealPath(dirent.uri, applicationId)
   const type = await FileSystem.stat(realPath, applicationId)
   switch (type) {
     case DirentType.File:

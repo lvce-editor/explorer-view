@@ -24,7 +24,7 @@ export const revealItemHidden = async (state: ExplorerState, uri: string): Promi
   const orderedDirents = orderDirents(mergedDirents)
   const expandedPaths = new Set(pathPartsToReveal.map((pathPart) => pathPart.path))
   const newDirents = orderedDirents.map((item) => {
-    if (expandedPaths.has(item.path) && item.type === DirentType.Directory) {
+    if (expandedPaths.has(item.uri) && item.type === DirentType.Directory) {
       return {
         ...item,
         type: DirentType.DirectoryExpanded,

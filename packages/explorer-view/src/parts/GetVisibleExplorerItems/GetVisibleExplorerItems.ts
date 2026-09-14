@@ -54,11 +54,11 @@ export const getVisibleExplorerItems = (
     const isFocused = i === focusedIndex
     const id = isFocused ? 'TreeItemActive' : undefined
     const isSelected = item.selected
-    const isCut = cutItems.includes(item.path)
+    const isCut = cutItems.includes(item.uri)
     const isDropping = dropTargets.includes(i)
-    const isIgnored = sourceControlIgnoredUris.includes(item.path)
+    const isIgnored = sourceControlIgnoredUris.includes(item.uri)
     const indent = indentFn(item.depth, chevron)
-    const decoration = decorationMap[item.path] || ''
+    const decoration = decorationMap[item.uri] || ''
     const className = getTreeItemClassName(isSelected, isFocused, isDropping, useChevrons, indent, decoration)
     const expanded = GetExpandedType.getExpandedType(item.type)
     const ariaExpanded = ariaExpandedValues[expanded]

@@ -31,7 +31,7 @@ test('should focus on first newly created file after paste copy', async () => {
   const initialState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'index.js', path: '/test/index.js', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'index.js', selected: false, type: DirentType.File, uri: '/test/index.js' }],
     root: '/test',
   }
 
@@ -46,7 +46,7 @@ test('should focus on first newly created file after paste copy', async () => {
   expect(result).toBeDefined()
   expect(result.items).toHaveLength(2)
   const focusedItem = result.items[result.focusedIndex]
-  expect(focusedItem.path).toBe('/test/index copy.js')
+  expect(focusedItem.uri).toBe('/test/index copy.js')
   expect(result.focused).toBe(true)
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test'],
@@ -87,8 +87,8 @@ test('should handle paste copy with multiple files and focus on first', async ()
     ...createDefaultState(),
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'file1.txt', path: '/test/file1.txt', selected: false, type: DirentType.File },
-      { depth: 0, name: 'file2.txt', path: '/test/file2.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'file1.txt', selected: false, type: DirentType.File, uri: '/test/file1.txt' },
+      { depth: 0, name: 'file2.txt', selected: false, type: DirentType.File, uri: '/test/file2.txt' },
     ],
     root: '/test',
   }
@@ -104,7 +104,7 @@ test('should handle paste copy with multiple files and focus on first', async ()
   expect(result).toBeDefined()
   expect(result.items).toHaveLength(4)
   const focusedItem = result.items[result.focusedIndex]
-  expect(focusedItem.path).toBe('/test/file1 copy.txt')
+  expect(focusedItem.uri).toBe('/test/file1 copy.txt')
   expect(result.focused).toBe(true)
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test'],
@@ -174,8 +174,8 @@ test('should preserve existing file when pasting into collapsed folder', async (
     ...createDefaultState(),
     focusedIndex: 1,
     items: [
-      { depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File },
-      { depth: 0, name: 'target', path: '/test/target', selected: false, type: DirentType.Directory },
+      { depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/test/file.txt' },
+      { depth: 0, name: 'target', selected: false, type: DirentType.Directory, uri: '/test/target' },
     ],
     root: '/test',
   }

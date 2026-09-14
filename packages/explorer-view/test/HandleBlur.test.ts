@@ -38,9 +38,9 @@ test.skip('handleBlur - when editing, keeps state unchanged', async () => {
       {
         depth: 0,
         name: '1',
-        path: '1',
         selected: false,
         type: DirentType.File,
+        uri: '1',
       },
     ],
   }
@@ -60,12 +60,12 @@ test.skip('handleBlur - when editing, keeps state unchanged', async () => {
   })
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.writeFile', '1/created.txt', ''],
-    ['IconTheme.getFileIcon', { depth: 0, name: '1', path: '1', selected: false, type: DirentType.File }],
+    ['IconTheme.getFileIcon', { depth: 0, name: '1', selected: false, type: DirentType.File, uri: '1' }],
     [
       'IconTheme.getIcons',
       [
-        { depth: 0, name: '1', path: '1', selected: false, type: DirentType.File },
-        { depth: 0, name: 'created.txt', path: '1/created.txt', selected: false, type: DirentType.File },
+        { depth: 0, name: '1', selected: false, type: DirentType.File, uri: '1' },
+        { depth: 0, name: 'created.txt', selected: false, type: DirentType.File, uri: '1/created.txt' },
       ],
     ],
   ])

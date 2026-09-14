@@ -8,8 +8,8 @@ test('syncExpandedPaths adds expanded visible folders and removes explicitly col
     ...createDefaultState(),
     expandedPaths: ['/workspace/collapsed', '/workspace/hidden'],
     items: [
-      { depth: 1, name: 'expanded', path: '/workspace/expanded', selected: false, type: DirentType.DirectoryExpanded },
-      { depth: 1, name: 'collapsed', path: '/workspace/collapsed', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'expanded', selected: false, type: DirentType.DirectoryExpanded, uri: '/workspace/expanded' },
+      { depth: 1, name: 'collapsed', selected: false, type: DirentType.Directory, uri: '/workspace/collapsed' },
     ],
   }
 
@@ -22,7 +22,7 @@ test('syncExpandedPaths preserves hidden descendant expansion', () => {
   const state = {
     ...createDefaultState(),
     expandedPaths: ['/workspace/parent/child'],
-    items: [{ depth: 1, name: 'parent', path: '/workspace/parent', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 1, name: 'parent', selected: false, type: DirentType.Directory, uri: '/workspace/parent' }],
   }
 
   const result = syncExpandedPaths(state)
@@ -34,7 +34,7 @@ test('syncExpandedPaths does nothing when preservation is disabled', () => {
   const state = {
     ...createDefaultState(),
     expandedPaths: ['/workspace/folder'],
-    items: [{ depth: 1, name: 'folder', path: '/workspace/folder', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 1, name: 'folder', selected: false, type: DirentType.Directory, uri: '/workspace/folder' }],
     preserveExpandState: false,
   }
 

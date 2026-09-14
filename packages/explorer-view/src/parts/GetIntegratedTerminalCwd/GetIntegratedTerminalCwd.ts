@@ -11,7 +11,7 @@ export const getIntegratedTerminalCwd = (state: ExplorerState): string => {
   }
   const item = items[focusedIndex]
   if (directoryTypes.has(item.type)) {
-    return item.path
+    return item.uri
   }
-  return Path.dirname(pathSeparator, item.path)
+  return Path.dirname(pathSeparator, item.uri)
 }

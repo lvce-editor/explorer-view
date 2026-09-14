@@ -17,10 +17,10 @@ test('basic item', () => {
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: '/test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(5)
@@ -46,10 +46,10 @@ test('item without an icon does not render a file icon placeholder', () => {
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 1,
+    uri: '/test.txt',
   }
 
   const dom = getExplorerItemVirtualDom(item)
@@ -74,10 +74,10 @@ test('selected item', () => {
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: true,
     setSize: 2,
+    uri: '/test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom[0].ariaSelected).toBe('true')
@@ -97,10 +97,10 @@ test('file uri item removes file scheme from title', () => {
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: 'file:///test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: 'file:///test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom[0].title).toBe('/test.txt')
@@ -120,10 +120,10 @@ test('non-file uri item keeps scheme in title', () => {
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: 'memfs:///test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: 'memfs:///test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom[0].title).toBe('memfs:///test.txt')
@@ -143,10 +143,10 @@ test('item with chevron', () => {
     isEditing: false,
     isIgnored: false,
     name: 'test',
-    path: '/test',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: '/test',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(6)
@@ -169,10 +169,10 @@ test('item in editing state', () => {
     isEditing: true,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: '/test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(4)
@@ -194,10 +194,10 @@ test('item with error', () => {
     isEditing: true,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: '/test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(4)

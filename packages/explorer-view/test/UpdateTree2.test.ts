@@ -5,10 +5,10 @@ import { updateTree2 } from '../src/parts/UpdateTree2/UpdateTree2.ts'
 
 test('updateTree2 - merges updates into existing tree', () => {
   const rootItems: readonly ExplorerItem[] = [
-    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.Directory },
+    { depth: 1, name: 'src', posInSet: 1, selected: false, setSize: 1, type: DirentType.Directory, uri: '/workspace/src' },
   ]
   const childItems: readonly ExplorerItem[] = [
-    { depth: 2, name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 2, name: 'index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File, uri: '/workspace/src/index.ts' },
   ]
   expect(updateTree2({ '': rootItems }, { '/src': childItems })).toEqual({
     '': rootItems,
@@ -18,10 +18,10 @@ test('updateTree2 - merges updates into existing tree', () => {
 
 test('updateTree2 - update overrides existing path', () => {
   const oldItems: readonly ExplorerItem[] = [
-    { depth: 1, name: 'old.txt', path: '/workspace/old.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'old.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File, uri: '/workspace/old.txt' },
   ]
   const newItems: readonly ExplorerItem[] = [
-    { depth: 1, name: 'new.txt', path: '/workspace/new.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'new.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File, uri: '/workspace/new.txt' },
   ]
   expect(updateTree2({ '': oldItems }, { '': newItems })).toEqual({
     '': newItems,

@@ -9,8 +9,8 @@ test('expandAll - no focused item', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
-        { name: 'file1', path: '/dir1/file1', type: DirentType.File },
-        { name: 'file2', path: '/dir1/file2', type: DirentType.File },
+        { name: 'file1', type: DirentType.File, uri: '/dir1/file1' },
+        { name: 'file2', type: DirentType.File, uri: '/dir1/file2' },
       ]
     },
     'IconTheme.getFileIcon'() {
@@ -36,8 +36,8 @@ test('expandAll - expand directories at same depth', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
-        { name: 'file1', path: '/dir1/file1', type: DirentType.File },
-        { name: 'file2', path: '/dir1/file2', type: DirentType.File },
+        { name: 'file1', type: DirentType.File, uri: '/dir1/file1' },
+        { name: 'file2', type: DirentType.File, uri: '/dir1/file2' },
       ]
     },
     'IconTheme.getFileIcon'() {
@@ -54,8 +54,8 @@ test('expandAll - expand directories at same depth', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'dir1', path: '/dir1', selected: false, type: DirentType.Directory },
-      { depth: 0, name: 'dir2', path: '/dir2', selected: false, type: DirentType.Directory },
+      { depth: 0, name: 'dir1', selected: false, type: DirentType.Directory, uri: '/dir1' },
+      { depth: 0, name: 'dir2', selected: false, type: DirentType.Directory, uri: '/dir2' },
     ],
   }
 

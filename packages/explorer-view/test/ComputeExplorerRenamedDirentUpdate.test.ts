@@ -13,20 +13,20 @@ test('computeExplorerRenamedDirentUpdate - basic rename', () => {
     {
       depth: 1,
       name: 'child1',
-      path: '/parent/child1',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: 1,
+      uri: '/parent/child1',
     },
     {
       depth: 1,
       name: 'child2',
-      path: '/parent/child2',
       posInSet: 2,
       selected: false,
       setSize: 2,
       type: 1,
+      uri: '/parent/child2',
     },
   ]
   const tree: Tree = {
@@ -71,11 +71,11 @@ test('computeExplorerRenamedDirentUpdate - deep nested rename', () => {
     {
       depth: 1,
       name: 'old',
-      path: '/old',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: 1,
+      uri: '/old',
     },
   ]
   const tree: Tree = {
@@ -125,11 +125,11 @@ test('computeExplorerRenamedDirentUpdate - preserves expanded renamed folder', (
     {
       depth: 2,
       name: 'new',
-      path: '/parent/new',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.Directory,
+      uri: '/parent/new',
     },
   ]
   const tree: Tree = {
@@ -163,47 +163,47 @@ test('computeExplorerRenamedDirentUpdate - sorts renamed parent children and upd
     {
       depth: 1,
       name: 'readme2.md',
-      path: '/readme2.md',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/readme2.md',
     },
     {
       depth: 1,
       name: '.nvmrc',
-      path: '/.nvmrc',
       posInSet: 2,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/.nvmrc',
     },
     {
       depth: 1,
       name: 'package.json',
-      path: '/package.json',
       posInSet: 3,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/package.json',
     },
     {
       depth: 1,
       name: 'LICENSE',
-      path: '/LICENSE',
       posInSet: 4,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/LICENSE',
     },
     {
       depth: 1,
       name: 'eslint.config.js',
-      path: '/eslint.config.js',
       posInSet: 5,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/eslint.config.js',
     },
   ]
   const tree: Tree = {}

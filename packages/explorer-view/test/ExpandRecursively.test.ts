@@ -7,17 +7,17 @@ import { expandRecursively } from '../src/parts/ExpandRecursively/ExpandRecursiv
 
 test('expandRecursively - expands root when no item is focused', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'(uri: string) {
-      if (uri === '/workspace') {
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/workspace') {
         return [
           { name: 'README.md', type: File },
           { name: 'src', type: Directory },
         ]
       }
-      if (uri === '/workspace/src') {
+      if (path === '/workspace/src') {
         return [{ name: 'index.ts', type: File }]
       }
-      throw new Error(`unexpected read ${uri}`)
+      throw new Error(`unexpected read ${path}`)
     },
   })
   const state: ExplorerState = {
@@ -27,9 +27,9 @@ test('expandRecursively - expands root when no item is focused', async () => {
   }
   const newState = await expandRecursively(state)
   expect(newState.items).toEqual([
-    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirectoryExpanded },
-    { depth: 2, name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: File },
-    { depth: 1, name: 'README.md', path: '/workspace/README.md', posInSet: 2, selected: false, setSize: 2, type: File },
+    { depth: 1, name: 'src', posInSet: 1, selected: false, setSize: 2, type: DirectoryExpanded, uri: '/workspace/src' },
+    { depth: 2, name: 'index.ts', posInSet: 1, selected: false, setSize: 1, type: File, uri: '/workspace/src/index.ts' },
+    { depth: 1, name: 'README.md', posInSet: 2, selected: false, setSize: 2, type: File, uri: '/workspace/README.md' },
   ])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', '/workspace'],
@@ -39,28 +39,28 @@ test('expandRecursively - expands root when no item is focused', async () => {
 
 test('expandRecursively - replaces focused directory children', async () => {
   using _mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'(uri: string) {
-      if (uri === '/workspace/src') {
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/workspace/src') {
         return [{ name: 'index.ts', type: File }]
       }
-      throw new Error(`unexpected read ${uri}`)
+      throw new Error(`unexpected read ${path}`)
     },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [
-      { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: Directory },
-      { depth: 2, name: 'old.ts', path: '/workspace/src/old.ts', posInSet: 1, selected: false, setSize: 1, type: File },
-      { depth: 1, name: 'README.md', path: '/workspace/README.md', posInSet: 2, selected: false, setSize: 2, type: File },
+      { depth: 1, name: 'src', posInSet: 1, selected: false, setSize: 2, type: Directory, uri: '/workspace/src' },
+      { depth: 2, name: 'old.ts', posInSet: 1, selected: false, setSize: 1, type: File, uri: '/workspace/src/old.ts' },
+      { depth: 1, name: 'README.md', posInSet: 2, selected: false, setSize: 2, type: File, uri: '/workspace/README.md' },
     ],
     root: '/workspace',
   }
   const newState = await expandRecursively(state)
   expect(newState.items).toEqual([
-    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirectoryExpanded },
-    { depth: 2, name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: File },
-    { depth: 1, name: 'README.md', path: '/workspace/README.md', posInSet: 2, selected: false, setSize: 2, type: File },
+    { depth: 1, name: 'src', posInSet: 1, selected: false, setSize: 2, type: DirectoryExpanded, uri: '/workspace/src' },
+    { depth: 2, name: 'index.ts', posInSet: 1, selected: false, setSize: 1, type: File, uri: '/workspace/src/index.ts' },
+    { depth: 1, name: 'README.md', posInSet: 2, selected: false, setSize: 2, type: File, uri: '/workspace/README.md' },
   ])
 })
 
@@ -83,8 +83,8 @@ test.skip('expand root directory', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'file1.txt', path: '/test/file1.txt', selected: false, type: File },
-      { depth: 0, name: 'dir1', path: '/test/dir1', selected: false, type: Directory },
+      { depth: 0, name: 'file1.txt', selected: false, type: File, uri: '/test/file1.txt' },
+      { depth: 0, name: 'dir1', selected: false, type: Directory, uri: '/test/dir1' },
     ],
     root: '/test',
   }
@@ -114,8 +114,8 @@ test.skip('expand focused directory', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'dir1', path: '/test/dir1', selected: false, type: Directory },
-      { depth: 0, name: 'file1.txt', path: '/test/file1.txt', selected: false, type: File },
+      { depth: 0, name: 'dir1', selected: false, type: Directory, uri: '/test/dir1' },
+      { depth: 0, name: 'file1.txt', selected: false, type: File, uri: '/test/file1.txt' },
     ],
   }
   const newState = await expandRecursively(state)
@@ -133,9 +133,9 @@ test('do not expand file', async () => {
       {
         depth: 0,
         name: 'test.txt',
-        path: '/test.txt',
         selected: false,
         type: File,
+        uri: '/test.txt',
       },
     ],
   }

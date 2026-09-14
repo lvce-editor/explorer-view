@@ -8,6 +8,6 @@ export const selectForCompare = (state: ExplorerState): ExplorerState => {
   }
   return {
     ...state,
-    compareSourceUri: focusedFile.path,
+    compareSourceUri: focusedFile.uri,
   }
 }

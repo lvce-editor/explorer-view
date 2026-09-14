@@ -20,8 +20,8 @@ test('getFileIcons - all cached', async () => {
   using mockRpc = IconThemeWorker.registerMockRpc({})
 
   const dirents: readonly ExplorerItem[] = [
-    { depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File },
-    { depth: 0, name: 'b', path: '/b', selected: false, type: DirentType.Directory },
+    { depth: 0, name: 'a.txt', selected: false, type: DirentType.File, uri: '/a.txt' },
+    { depth: 0, name: 'b', selected: false, type: DirentType.Directory, uri: '/b' },
   ]
   const cache: FileIconCache = {
     '/a.txt': 'cached-a',
@@ -37,8 +37,8 @@ test('getFileIcons - all cached', async () => {
 
 test('getFileIcons - none cached', async () => {
   const dirents: readonly ExplorerItem[] = [
-    { depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File },
-    { depth: 0, name: 'b', path: '/b', selected: false, type: DirentType.Directory },
+    { depth: 0, name: 'a.txt', selected: false, type: DirentType.File, uri: '/a.txt' },
+    { depth: 0, name: 'b', selected: false, type: DirentType.Directory, uri: '/b' },
   ]
 
   using mockRpc = IconThemeWorker.registerMockRpc({
@@ -68,9 +68,9 @@ test('getFileIcons - none cached', async () => {
 
 test('getFileIcons - mixed cache', async () => {
   const dirents: readonly ExplorerItem[] = [
-    { depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File },
-    { depth: 0, name: 'b', path: '/b', selected: false, type: DirentType.Directory },
-    { depth: 0, name: 'c.txt', path: '/c.txt', selected: false, type: DirentType.File },
+    { depth: 0, name: 'a.txt', selected: false, type: DirentType.File, uri: '/a.txt' },
+    { depth: 0, name: 'b', selected: false, type: DirentType.Directory, uri: '/b' },
+    { depth: 0, name: 'c.txt', selected: false, type: DirentType.File, uri: '/c.txt' },
   ]
   const cache: FileIconCache = {
     '/a.txt': 'cached-a',
@@ -104,8 +104,8 @@ test('getFileIcons - mixed cache', async () => {
 
 test('getFileIcons - expanded folder uses expanded request and cache entry', async () => {
   const dirents: readonly ExplorerItem[] = [
-    { depth: 0, name: 'packages', path: '/packages', selected: false, type: DirentType.Directory },
-    { depth: 0, name: 'packages', path: '/packages', selected: false, type: DirentType.DirectoryExpanded },
+    { depth: 0, name: 'packages', selected: false, type: DirentType.Directory, uri: '/packages' },
+    { depth: 0, name: 'packages', selected: false, type: DirentType.DirectoryExpanded, uri: '/packages' },
   ]
   const cache: FileIconCache = {
     '/packages': 'folder-packages',
