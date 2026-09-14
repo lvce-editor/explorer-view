@@ -1,4 +1,3 @@
-import { terminate } from '@lvce-editor/viewlet-registry'
 import * as AcceptEdit from '../AcceptEdit/AcceptEdit.ts'
 import * as CancelEdit from '../CancelEdit/CancelEdit.ts'
 import * as CancelTypeAhead from '../CancelTypeAhead/CancelTypeAhead.ts'
@@ -91,6 +90,7 @@ import * as SelectUp from '../SelectUp/SelectUp.ts'
 import * as SetComponentState from '../SetComponentState/SetComponentState.ts'
 import * as SetDeltaY from '../SetDeltaY/SetDeltaY.ts'
 import * as ToggleIndividualSelection from '../ToggleIndividualSelection/ToggleIndividualSelection.ts'
+import { terminate } from '../Terminate/Terminate.ts'
 import * as UpdateEditingValue from '../UpdateEditingValue/UpdateEditingValue.ts'
 import * as UpdateIcons from '../UpdateIcons/UpdateIcons.ts'
 

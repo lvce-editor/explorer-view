@@ -9,7 +9,9 @@ import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleE
 import * as InputSource from '../InputSource/InputSource.ts'
 import { syncExpandedPaths } from '../SyncExpandedPaths/SyncExpandedPaths.ts'
 
-export const { clear, get, getCommandIds, registerCommands, set, wrapGetter } = ViewletRegistry.create<ExplorerState>()
+const { clear: clearStates, get, getCommandIds, registerCommands, set, wrapGetter } = ViewletRegistry.create<ExplorerState>()
+
+export { get, getCommandIds, registerCommands, set, wrapGetter }
 
 interface Fn<T extends any[]> {
   (state: ExplorerState, ...args: T): ExplorerState | Promise<ExplorerState>
@@ -24,6 +26,18 @@ interface PendingGitIgnoreUpdate {
 }
 
 const pendingGitIgnoreUpdates = new Map<number, PendingGitIgnoreUpdate>()
+
+const hasExplorerState = (uid: number): boolean => {
+  return Boolean(get(uid))
+}
+
+export const clear = (): void => {
+  for (const { timer } of pendingGitIgnoreUpdates.values()) {
+    clearTimeout(timer)
+  }
+  pendingGitIgnoreUpdates.clear()
+  clearStates()
+}
 
 interface CommandRunResult {
   readonly completion: Promise<void> | undefined
@@ -99,6 +113,9 @@ const scheduleGitIgnoredUrisUpdate = (uid: number, generation: number, sourceCon
   }
   const run = (): void => {
     pendingGitIgnoreUpdates.delete(uid)
+    if (!hasExplorerState(uid)) {
+      return
+    }
     void RendererWorker.invoke('Viewlet.executeViewletCommand', uid, 'updateGitIgnoredUris', generation, sourceControlIgnoredUris).catch(() => {
       // Ignored decorations are optional and must not block explorer interaction.
     })
@@ -127,8 +144,14 @@ const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: Ex
   }
   const { gitIgnoreDecorations, gitIgnoreGeneration, items, pathSeparator, root, uid } = newState
   setTimeout(() => {
+    if (!hasExplorerState(uid)) {
+      return
+    }
     void GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations, newState.applicationId)
       .then((sourceControlIgnoredUris) => {
+        if (!hasExplorerState(uid)) {
+          return
+        }
         scheduleGitIgnoredUrisUpdate(uid, gitIgnoreGeneration, sourceControlIgnoredUris)
       })
       .catch(() => {
