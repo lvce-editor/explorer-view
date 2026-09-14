@@ -122,3 +122,9 @@ test('getCss - with large indents', () => {
   padding-left: 300px;
 }`)
 })
+
+test('getCss - fractional row offset', () => {
+  const result = getCss(20, 10, [], 0, 0, 0, -5)
+  expect(result).toContain('--ListItemsOffset: -5px;')
+  expect(result).toContain('.Explorer .ListItems > .TreeItem:first-child {\n  margin-top: var(--ListItemsOffset);\n}')
+})

@@ -32,7 +32,7 @@ export const handleResize = (state: ExplorerState, dimensions: Dimensions): Expl
   const contentHeight = items.length * itemHeight
   const maxDeltaY = Math.max(contentHeight - height, 0)
   const newDeltaY = Math.min(Math.max(currentDeltaY, 0), maxDeltaY)
-  const minLineY = Math.round(newDeltaY / itemHeight)
+  const minLineY = Math.floor(newDeltaY / itemHeight)
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
   const scrollBarHeight = GetScrollBarSize.getScrollBarSize(height, contentHeight, 20)
   if (

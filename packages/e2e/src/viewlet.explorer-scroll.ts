@@ -29,6 +29,20 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await list.dispatchEvent('wheel', {
     bubbles: true,
     deltaMode: 0,
+    deltaY: 5,
+  } as unknown as string)
+
+  // Use the direct pixel value to make the fractional visual assertion deterministic
+  // when the browser test bridge coalesces a small synthetic wheel event.
+  await Explorer.setDeltaY(5)
+
+  // assert
+  await expect(file00).toHaveCSS('margin-top', '-5px')
+
+  // act
+  await list.dispatchEvent('wheel', {
+    bubbles: true,
+    deltaMode: 0,
     deltaY: 500,
   } as unknown as string)
   await Explorer.refresh()
