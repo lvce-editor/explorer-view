@@ -1,6 +1,7 @@
 const RE_CHARACTERS = /^[a-zA-Z.-]+$/
 const RE_LEADING_DIGITS = /^\d+/
 const RE_LEADING_ZEROES = /^0+/
+const numericCollator = new Intl.Collator('en', { numeric: true })
 
 const compareLeadingDigits = (a: string, b: string): number => {
   const normalizedA = a.replace(RE_LEADING_ZEROES, '') || '0'
@@ -30,5 +31,5 @@ export const compareStringNumeric = (a: string, b: string): number => {
   if (RE_CHARACTERS.test(a) && RE_CHARACTERS.test(b)) {
     return a < b ? -1 : 1
   }
-  return compareLeadingNumbers(a, b) || a.localeCompare(b, 'en', { numeric: true })
+  return compareLeadingNumbers(a, b) || numericCollator.compare(a, b)
 }
