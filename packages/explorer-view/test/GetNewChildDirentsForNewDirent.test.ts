@@ -14,11 +14,11 @@ test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
     {
       depth: 1,
       name: 'folder',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder',
     },
   ]
 
@@ -28,11 +28,11 @@ test.skip('getNewChildDirentsForNewDirent - empty directory', async () => {
     {
       depth: 2,
       name: '',
-      path: '',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '',
     },
   ])
   expect(mockRpc.invocations).toEqual([])
@@ -49,29 +49,29 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
     {
       depth: 1,
       name: 'folder',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder',
     },
     {
       depth: 2,
       name: 'file1.txt',
-      path: '/root/folder/file1.txt',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: DirentType.File,
+      uri: '/root/folder/file1.txt',
     },
     {
       depth: 2,
       name: 'file2.txt',
-      path: '/root/folder/file2.txt',
       posInSet: 2,
       selected: false,
       setSize: 2,
       type: DirentType.File,
+      uri: '/root/folder/file2.txt',
     },
   ]
 
@@ -81,29 +81,29 @@ test.skip('getNewChildDirentsForNewDirent - directory with existing children', a
     {
       depth: 2,
       name: 'file1.txt',
-      path: '/root/folder/file1.txt',
       posInSet: 1,
       selected: false,
       setSize: 3,
       type: DirentType.File,
+      uri: '/root/folder/file1.txt',
     },
     {
       depth: 2,
       name: 'file2.txt',
-      path: '/root/folder/file2.txt',
       posInSet: 2,
       selected: false,
       setSize: 3,
       type: DirentType.File,
+      uri: '/root/folder/file2.txt',
     },
     {
       depth: 2,
       name: '',
-      path: '',
       posInSet: 3,
       selected: false,
       setSize: 3,
       type: DirentType.File,
+      uri: '',
     },
   ])
   expect(mockRpc.invocations).toEqual([])
@@ -120,11 +120,11 @@ test.skip('getNewChildDirentsForNewDirent - directory with no children', async (
     {
       depth: 1,
       name: 'folder',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder',
     },
   ]
 
@@ -134,11 +134,11 @@ test.skip('getNewChildDirentsForNewDirent - directory with no children', async (
     {
       depth: 2,
       name: '',
-      path: '',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.DirectoryExpanded,
+      uri: '',
     },
   ])
   expect(mockRpc.invocations).toEqual([])
@@ -155,29 +155,29 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
     {
       depth: 1,
       name: 'folder',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder',
     },
     {
       depth: 2,
       name: 'file1.txt',
-      path: '/root/folder/file1.txt',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: DirentType.File,
+      uri: '/root/folder/file1.txt',
     },
     {
       depth: 2,
       name: 'folder1',
-      path: '/root/folder/folder1',
       posInSet: 2,
       selected: false,
       setSize: 2,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder/folder1',
     },
   ]
 
@@ -187,29 +187,29 @@ test.skip('getNewChildDirentsForNewDirent - different dirent types', async () =>
     {
       depth: 2,
       name: 'file1.txt',
-      path: '/root/folder/file1.txt',
       posInSet: 1,
       selected: false,
       setSize: 4,
       type: DirentType.File,
+      uri: '/root/folder/file1.txt',
     },
     {
       depth: 2,
       name: 'folder1',
-      path: '/root/folder/folder1',
       posInSet: 2,
       selected: false,
       setSize: 4,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder/folder1',
     },
     {
       depth: 2,
       name: '',
-      path: '',
       posInSet: 3,
       selected: false,
       setSize: 4,
       type: DirentType.SymLinkFolder,
+      uri: '',
     },
   ])
   expect(mockRpc.invocations).toEqual([])
@@ -226,11 +226,11 @@ test.skip('getNewChildDirentsForNewDirent - error case', async () => {
     {
       depth: 1,
       name: 'folder',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder',
     },
   ]
 

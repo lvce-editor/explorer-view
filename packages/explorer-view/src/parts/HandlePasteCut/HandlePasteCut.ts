@@ -27,7 +27,7 @@ const getTargetUri = (root: string, items: readonly ExplorerItem[], index: numbe
   if (index === -1) {
     return root
   }
-  return items[index].path
+  return items[index].uri
 }
 
 export const handlePasteCut = async (state: ExplorerState, nativeFiles: NativeFilesResult): Promise<ExplorerState> => {

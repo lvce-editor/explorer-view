@@ -12,8 +12,8 @@ export interface VisibleExplorerItem {
   readonly isEditing: boolean
   readonly isIgnored: boolean
   readonly name: string
-  readonly path: string
   readonly posInSet: number
   readonly selected: boolean
   readonly setSize: number
+  readonly uri: string
 }

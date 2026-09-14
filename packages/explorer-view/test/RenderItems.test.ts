@@ -12,9 +12,9 @@ test('renderItems - basic', () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: 1,
+        uri: '/test',
       },
     ],
     width: 500,
@@ -33,9 +33,9 @@ test('renderItems - narrow width', () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: 1,
+        uri: '/test',
       },
     ],
     width: 400,
@@ -57,9 +57,9 @@ test('renderItems - load error message', () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: 1,
+        uri: '/test',
       },
     ],
     root: '/workspace',

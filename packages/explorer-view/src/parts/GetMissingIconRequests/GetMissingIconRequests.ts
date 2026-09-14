@@ -6,7 +6,7 @@ import * as GetIconCacheKey from '../GetIconCacheKey/GetIconCacheKey.ts'
 const getMissingDirents = (dirents: readonly ExplorerItem[], fileIconCache: FileIconCache): readonly ExplorerItem[] => {
   const missingDirents: ExplorerItem[] = []
   for (const dirent of dirents) {
-    const cacheKey = GetIconCacheKey.getIconCacheKey(dirent.path, dirent.type)
+    const cacheKey = GetIconCacheKey.getIconCacheKey(dirent.uri, dirent.type)
     if (!(cacheKey in fileIconCache)) {
       missingDirents.push(dirent)
     }
@@ -15,11 +15,11 @@ const getMissingDirents = (dirents: readonly ExplorerItem[], fileIconCache: File
 }
 
 const toIconRequest = (dirent: ExplorerItem): IconRequest => {
-  const cacheKey = GetIconCacheKey.getIconCacheKey(dirent.path, dirent.type)
+  const cacheKey = GetIconCacheKey.getIconCacheKey(dirent.uri, dirent.type)
   return {
-    ...(cacheKey !== dirent.path && { expanded: true }),
+    ...(cacheKey !== dirent.uri && { expanded: true }),
     name: dirent.name,
-    path: dirent.path,
+    path: dirent.uri,
     type: dirent.type,
   }
 }

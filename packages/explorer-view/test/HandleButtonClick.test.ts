@@ -12,9 +12,9 @@ test('handleButtonClick - CollapseAll', async () => {
     ...createDefaultState(),
     focusedIndex: 1,
     items: [
-      { depth: 1, name: 'folder1', path: '/folder1', selected: false, type: DirentType.DirectoryExpanded },
-      { depth: 2, name: 'file1', path: '/folder1/file1', selected: false, type: DirentType.File },
-      { depth: 1, name: 'folder2', path: '/folder2', selected: false, type: DirentType.DirectoryExpanded },
+      { depth: 1, name: 'folder1', selected: false, type: DirentType.DirectoryExpanded, uri: '/folder1' },
+      { depth: 2, name: 'file1', selected: false, type: DirentType.File, uri: '/folder1/file1' },
+      { depth: 1, name: 'folder2', selected: false, type: DirentType.DirectoryExpanded, uri: '/folder2' },
     ],
   }
   const newState = await handleButtonClick(state, InputName.CollapseAll)
@@ -34,7 +34,7 @@ test('handleButtonClick - NewFile', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 1, name: 'folder1', path: '/folder1', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 1, name: 'folder1', selected: false, type: DirentType.Directory, uri: '/folder1' }],
   }
   const newState = await handleButtonClick(state, InputName.NewFile)
   expect(newState.editingType).toBe(ExplorerEditingType.CreateFile)
@@ -55,7 +55,7 @@ test('handleButtonClick - NewFolder', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 1, name: 'folder1', path: '/folder1', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 1, name: 'folder1', selected: false, type: DirentType.Directory, uri: '/folder1' }],
   }
   const newState = await handleButtonClick(state, InputName.NewFolder)
   expect(newState.editingType).toBe(ExplorerEditingType.CreateFolder)

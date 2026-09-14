@@ -8,9 +8,9 @@ test('getVisibleExplorerItems - basic', () => {
     {
       depth: 0,
       name: 'test',
-      path: '/test',
       selected: false,
       type: 0,
+      uri: '/test',
     },
   ]
   const editingIcon = ''
@@ -27,7 +27,7 @@ test('getVisibleExplorerItems - basic', () => {
     id: 'TreeItemActive',
     isEditing: false,
     name: 'test',
-    path: '/test',
+    uri: '/test',
   })
 })
 
@@ -36,9 +36,9 @@ test('getVisibleExplorerItems - editing', () => {
     {
       depth: 0,
       name: 'test',
-      path: '/test',
       selected: true,
       type: 0,
+      uri: '/test',
     },
   ]
   const editingIcon = ''
@@ -61,7 +61,7 @@ test('getVisibleExplorerItems - new item', () => {
   // expect(result[0]).toMatchObject({
   //   depth: 3,
   //   name: 'new',
-  //   path: '/test/new',
+  //   uri: '/test/new',
   //   isEditing: true,
   //   hasEditingError: true,
   // })
@@ -72,9 +72,9 @@ test('getVisibleExplorerItems - ignored item is dimmed', () => {
     {
       depth: 0,
       name: 'ignored.txt',
-      path: '/ignored.txt',
       selected: false,
       type: 0,
+      uri: '/ignored.txt',
     },
   ]
   const editingIcon = ''

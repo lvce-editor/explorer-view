@@ -5,27 +5,27 @@ import { updateDirentsAtPath } from '../src/parts/UpdateDirentsAtPath/UpdateDire
 
 test('updateDirentsAtPath - replaces root children', () => {
   const items: readonly ExplorerItem[] = [
-    { depth: 1, name: 'old.txt', path: '/workspace/old.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'old.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File, uri: '/workspace/old.txt' },
   ]
   const result = updateDirentsAtPath(items, '/workspace', '/workspace', [
     { name: 'b.txt', type: DirentType.File },
     { name: 'src', type: DirentType.Directory },
   ])
   expect(result).toEqual([
-    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory },
-    { depth: 1, name: 'b.txt', path: '/workspace/b.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
+    { depth: 1, name: 'src', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory, uri: '/workspace/src' },
+    { depth: 1, name: 'b.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File, uri: '/workspace/b.txt' },
   ])
 })
 
 test('updateDirentsAtPath - replaces nested children', () => {
   const items: readonly ExplorerItem[] = [
-    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
-    { depth: 2, name: 'old.ts', path: '/workspace/src/old.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded, uri: '/workspace/src' },
+    { depth: 2, name: 'old.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File, uri: '/workspace/src/old.ts' },
   ]
   const result = updateDirentsAtPath(items, '/workspace/src', '/workspace', [{ name: 'index.ts', type: DirentType.File }])
   expect(result).toEqual([
-    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
-    { depth: 2, name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded, uri: '/workspace/src' },
+    { depth: 2, name: 'index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File, uri: '/workspace/src/index.ts' },
   ])
 })
 
@@ -38,7 +38,7 @@ test.skip('updateDirentsAtPath - empty items', () => {
   expect(result).toHaveLength(1)
   expect(result[0].name).toBe('file.txt')
   expect(result[0].type).toBe(DirentType.File)
-  expect(result[0].path).toBe('/test/file.txt')
+  expect(result[0].uri).toBe('/test/file.txt')
   expect(result[0].depth).toBe(0)
   expect(result[0].posInSet).toBe(1)
   expect(result[0].setSize).toBe(1)
@@ -46,8 +46,8 @@ test.skip('updateDirentsAtPath - empty items', () => {
 
 test.skip('updateDirentsAtPath - update existing items', () => {
   const items: readonly ExplorerItem[] = [
-    { depth: 0, name: 'folder', path: '/test/folder', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory },
-    { depth: 0, name: 'file.txt', path: '/test/file.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File },
+    { depth: 0, name: 'folder', posInSet: 1, selected: false, setSize: 2, type: DirentType.Directory, uri: '/test/folder' },
+    { depth: 0, name: 'file.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File, uri: '/test/file.txt' },
   ]
   const path = '/test'
   const root = '/test'
@@ -59,13 +59,13 @@ test.skip('updateDirentsAtPath - update existing items', () => {
   expect(result).toHaveLength(2)
   expect(result[0].name).toBe('folder')
   expect(result[0].type).toBe(DirentType.Directory)
-  expect(result[0].path).toBe('/test/folder')
+  expect(result[0].uri).toBe('/test/folder')
   expect(result[0].depth).toBe(0)
   expect(result[0].posInSet).toBe(1)
   expect(result[0].setSize).toBe(2)
   expect(result[1].name).toBe('new.txt')
   expect(result[1].type).toBe(DirentType.File)
-  expect(result[1].path).toBe('/test/new.txt')
+  expect(result[1].uri).toBe('/test/new.txt')
   expect(result[1].depth).toBe(0)
   expect(result[1].posInSet).toBe(2)
   expect(result[1].setSize).toBe(2)
@@ -73,8 +73,8 @@ test.skip('updateDirentsAtPath - update existing items', () => {
 
 test.skip('updateDirentsAtPath - nested structure', () => {
   const items: readonly ExplorerItem[] = [
-    { depth: 0, name: 'folder', path: '/test/folder', posInSet: 1, selected: false, setSize: 1, type: DirentType.Directory },
-    { depth: 1, name: 'nested.txt', path: '/test/folder/nested.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 0, name: 'folder', posInSet: 1, selected: false, setSize: 1, type: DirentType.Directory, uri: '/test/folder' },
+    { depth: 1, name: 'nested.txt', posInSet: 1, selected: false, setSize: 1, type: DirentType.File, uri: '/test/folder/nested.txt' },
   ]
   const path = '/test/folder'
   const root = '/test'
@@ -83,13 +83,13 @@ test.skip('updateDirentsAtPath - nested structure', () => {
   expect(result).toHaveLength(2)
   expect(result[0].name).toBe('folder')
   expect(result[0].type).toBe(DirentType.Directory)
-  expect(result[0].path).toBe('/test/folder')
+  expect(result[0].uri).toBe('/test/folder')
   expect(result[0].depth).toBe(0)
   expect(result[0].posInSet).toBe(1)
   expect(result[0].setSize).toBe(1)
   expect(result[1].name).toBe('new.txt')
   expect(result[1].type).toBe(DirentType.File)
-  expect(result[1].path).toBe('/test/folder/new.txt')
+  expect(result[1].uri).toBe('/test/folder/new.txt')
   expect(result[1].depth).toBe(1)
   expect(result[1].posInSet).toBe(1)
   expect(result[1].setSize).toBe(1)

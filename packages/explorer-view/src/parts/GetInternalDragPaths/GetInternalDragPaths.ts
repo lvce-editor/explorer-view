@@ -5,7 +5,7 @@ export const getInternalDragPaths = (items: readonly ExplorerItem[], uris: reado
   if (uris.length === 0) {
     return []
   }
-  const pathByUri = new Map(items.map((item) => [getDragUri(item), item.path]))
+  const pathByUri = new Map(items.map((item) => [getDragUri(item), item.uri]))
   const paths: string[] = []
   for (const uri of uris) {
     const path = pathByUri.get(uri)

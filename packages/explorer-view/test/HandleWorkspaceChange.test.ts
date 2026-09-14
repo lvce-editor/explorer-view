@@ -94,7 +94,7 @@ test('should restore saved state for the new workspace', async () => {
   expect(result.root).toBe('file:///restored/workspace')
   expect(result.expandedPaths).toEqual(['file:///restored/workspace/src'])
   expect(result.preserveExpandState).toBe(true)
-  expect(result.items.map((item) => item.path)).toContain('file:///restored/workspace/src')
+  expect(result.items.map((item) => item.uri)).toContain('file:///restored/workspace/src')
   expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', 'file:///restored/workspace'])
   expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', 'file:///restored/workspace/src'])
 })

@@ -9,7 +9,7 @@ import { render2 } from '../src/parts/Render2/Render2.ts'
 import { setComponentState } from '../src/parts/SetComponentState/SetComponentState.ts'
 
 const createState = (): ExplorerState => {
-  const items = ['a.txt', 'b.txt', 'c.txt'].map((name) => ({ depth: 0, name, path: `/${name}`, selected: false, type: DirentType.File }))
+  const items = ['a.txt', 'b.txt', 'c.txt'].map((name) => ({ depth: 0, name, selected: false, type: DirentType.File, uri: `/${name}` }))
   return {
     ...createDefaultState(),
     fileIconCache: { '/a.txt': '', '/b.txt': '', '/c.txt': '' },

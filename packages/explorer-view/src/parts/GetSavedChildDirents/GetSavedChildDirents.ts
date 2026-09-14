@@ -27,10 +27,10 @@ export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: 
       dirents.push({
         depth,
         name,
-        path: childPath,
         posInSet: i + 1,
         setSize: visibleLength,
         type: DirentType.DirectoryExpanded,
+        uri: childPath,
       })
       const descendants = getSavedChildDirents(map, childPath, depth + 1, excluded, pathSeparator, root)
       for (const descendant of descendants) {
@@ -40,10 +40,10 @@ export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: 
       dirents.push({
         depth,
         name,
-        path: childPath,
         posInSet: i + 1,
         setSize: visibleLength,
         type,
+        uri: childPath,
       })
     }
   }

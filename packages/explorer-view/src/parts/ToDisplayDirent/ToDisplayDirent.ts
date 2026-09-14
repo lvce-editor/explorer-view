@@ -14,10 +14,10 @@ export const toDisplayDirent = (
   return {
     depth: parentDepth + 1,
     name: rawDirentName,
-    path, // TODO storing absolute path might be too costly, could also store relative path here
     posInSet: index + 1,
     selected: false,
     setSize: length,
     type: rawDirentType,
+    uri: path, // TODO storing absolute path might be too costly, could also store relative path here
   }
 }

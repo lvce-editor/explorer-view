@@ -8,7 +8,7 @@ test('selectForCompare - stores focused file uri', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'a.txt', selected: false, type: DirentType.File, uri: '/a.txt' }],
   }
 
   const result = selectForCompare(state)
@@ -23,7 +23,7 @@ test('selectForCompare - ignores non-file focus', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'folder', path: '/folder', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'folder', selected: false, type: DirentType.Directory, uri: '/folder' }],
   }
 
   const result = selectForCompare(state)

@@ -53,8 +53,8 @@ test('loadContent applies files.exclude before computing aria metadata', async (
   expect(result.excluded).toEqual(['**/.git', '**/*.tmp'])
   expect(result.pathSeparator).toBe('/')
   expect(result.items).toEqual([
-    { depth: 1, name: 'a.txt', path: 'file:///workspace/a.txt', posInSet: 1, setSize: 2, type: File },
-    { depth: 1, name: 'c.txt', path: 'file:///workspace/c.txt', posInSet: 2, setSize: 2, type: File },
+    { depth: 1, name: 'a.txt', posInSet: 1, setSize: 2, type: File, uri: 'file:///workspace/a.txt' },
+    { depth: 1, name: 'c.txt', posInSet: 2, setSize: 2, type: File, uri: 'file:///workspace/c.txt' },
   ])
   expect(mockRpc.invocations).toContainEqual(['Preferences.get', 'files.exclude'])
 })
@@ -96,18 +96,18 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
       {
         depth: 1,
         name: 'folder1',
-        path: 'file:///workspace/folder1',
         posInSet: 1,
         setSize: 2,
         type: Directory,
+        uri: 'file:///workspace/folder1',
       },
       {
         depth: 1,
         name: 'folder2',
-        path: 'file:///workspace/folder2',
         posInSet: 2,
         setSize: 2,
         type: Directory,
+        uri: 'file:///workspace/folder2',
       },
     ],
     minLineY: 0,
@@ -168,14 +168,14 @@ test('loadContent clamps restored deltaY to maxDeltaY when content is still scro
     deltaY: 60,
     isReadonly: true,
     items: [
-      { depth: 1, name: 'file1', path: 'file:///workspace/file1', posInSet: 1, setSize: 8, type: File },
-      { depth: 1, name: 'file2', path: 'file:///workspace/file2', posInSet: 2, setSize: 8, type: File },
-      { depth: 1, name: 'file3', path: 'file:///workspace/file3', posInSet: 3, setSize: 8, type: File },
-      { depth: 1, name: 'file4', path: 'file:///workspace/file4', posInSet: 4, setSize: 8, type: File },
-      { depth: 1, name: 'file5', path: 'file:///workspace/file5', posInSet: 5, setSize: 8, type: File },
-      { depth: 1, name: 'file6', path: 'file:///workspace/file6', posInSet: 6, setSize: 8, type: File },
-      { depth: 1, name: 'file7', path: 'file:///workspace/file7', posInSet: 7, setSize: 8, type: File },
-      { depth: 1, name: 'file8', path: 'file:///workspace/file8', posInSet: 8, setSize: 8, type: File },
+      { depth: 1, name: 'file1', posInSet: 1, setSize: 8, type: File, uri: 'file:///workspace/file1' },
+      { depth: 1, name: 'file2', posInSet: 2, setSize: 8, type: File, uri: 'file:///workspace/file2' },
+      { depth: 1, name: 'file3', posInSet: 3, setSize: 8, type: File, uri: 'file:///workspace/file3' },
+      { depth: 1, name: 'file4', posInSet: 4, setSize: 8, type: File, uri: 'file:///workspace/file4' },
+      { depth: 1, name: 'file5', posInSet: 5, setSize: 8, type: File, uri: 'file:///workspace/file5' },
+      { depth: 1, name: 'file6', posInSet: 6, setSize: 8, type: File, uri: 'file:///workspace/file6' },
+      { depth: 1, name: 'file7', posInSet: 7, setSize: 8, type: File, uri: 'file:///workspace/file7' },
+      { depth: 1, name: 'file8', posInSet: 8, setSize: 8, type: File, uri: 'file:///workspace/file8' },
     ],
     minLineY: 3,
   })
@@ -227,9 +227,9 @@ test('loadContent reapplies the current workspace expand state when rebuilding w
   const result = await loadContent(state, undefined)
 
   expect(result.items).toEqual([
-    expect.objectContaining({ path: 'file:///workspace/outer', type: DirectoryExpanded }),
-    expect.objectContaining({ path: 'file:///workspace/outer/inner', type: DirectoryExpanded }),
-    expect.objectContaining({ path: 'file:///workspace/outer/inner/file.txt', type: File }),
+    expect.objectContaining({ type: DirectoryExpanded, uri: 'file:///workspace/outer' }),
+    expect.objectContaining({ type: DirectoryExpanded, uri: 'file:///workspace/outer/inner' }),
+    expect.objectContaining({ type: File, uri: 'file:///workspace/outer/inner/file.txt' }),
   ])
   expect(result.expandedPaths).toEqual(expandedPaths)
   expect(mockRpc.invocations).toContainEqual(['FileSystem.readDirWithFileTypes', 'file:///workspace/outer/inner'])

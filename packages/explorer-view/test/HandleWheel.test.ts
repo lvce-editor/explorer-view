@@ -19,11 +19,11 @@ test('handleWheel calls SetDeltaY with correct delta', async () => {
     height: 50,
     itemHeight: 20,
     items: [
-      { depth: 0, name: 'test1', path: '/test1', selected: false, type: 1 },
-      { depth: 0, name: 'test2', path: '/test2', selected: false, type: 1 },
-      { depth: 0, name: 'test3', path: '/test3', selected: false, type: 1 },
-      { depth: 0, name: 'test4', path: '/test4', selected: false, type: 1 },
-      { depth: 0, name: 'test5', path: '/test5', selected: false, type: 1 },
+      { depth: 0, name: 'test1', selected: false, type: 1, uri: '/test1' },
+      { depth: 0, name: 'test2', selected: false, type: 1, uri: '/test2' },
+      { depth: 0, name: 'test3', selected: false, type: 1, uri: '/test3' },
+      { depth: 0, name: 'test4', selected: false, type: 1, uri: '/test4' },
+      { depth: 0, name: 'test5', selected: false, type: 1, uri: '/test5' },
     ],
   }
   const result = await handleWheel(state, 0, 5)
@@ -46,11 +46,11 @@ test('handleWheel with negative delta', async () => {
     height: 50,
     itemHeight: 20,
     items: [
-      { depth: 0, name: 'test1', path: '/test1', selected: false, type: 1 },
-      { depth: 0, name: 'test2', path: '/test2', selected: false, type: 1 },
-      { depth: 0, name: 'test3', path: '/test3', selected: false, type: 1 },
-      { depth: 0, name: 'test4', path: '/test4', selected: false, type: 1 },
-      { depth: 0, name: 'test5', path: '/test5', selected: false, type: 1 },
+      { depth: 0, name: 'test1', selected: false, type: 1, uri: '/test1' },
+      { depth: 0, name: 'test2', selected: false, type: 1, uri: '/test2' },
+      { depth: 0, name: 'test3', selected: false, type: 1, uri: '/test3' },
+      { depth: 0, name: 'test4', selected: false, type: 1, uri: '/test4' },
+      { depth: 0, name: 'test5', selected: false, type: 1, uri: '/test5' },
     ],
   }
   const result = await handleWheel(state, 0, -3)

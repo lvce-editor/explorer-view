@@ -5,9 +5,9 @@ import { sortExplorerItems } from '../src/parts/SortExplorerItems/SortExplorerIt
 const createItem = (name: string, type: number): any => ({
   depth: 1,
   name,
-  path: `/test/${name}`,
   selected: false,
   type,
+  uri: `/test/${name}`,
 })
 
 test('sorts folders before files', () => {

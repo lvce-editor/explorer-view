@@ -3,7 +3,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.js'
 import { getDragData } from '../src/parts/GetDragData/GetDragData.js'
 
 test('getDragData - single url', () => {
-  const result = getDragData([{ path: '/a.txt', type: DirentType.File }])
+  const result = getDragData([{ type: DirentType.File, uri: '/a.txt' }])
   expect(result.items[0]).toEqual({ data: 'file:///a.txt', type: 'text/uri-list' })
   expect(result.items[1]).toEqual({ data: 'file:///a.txt', type: 'text/plain' })
   expect(result.label).toBe('a.txt')
@@ -11,8 +11,8 @@ test('getDragData - single url', () => {
 
 test('getDragData - multiple urls', () => {
   const result = getDragData([
-    { path: '/a.txt', type: DirentType.File },
-    { path: '/b.txt', type: DirentType.File },
+    { type: DirentType.File, uri: '/a.txt' },
+    { type: DirentType.File, uri: '/b.txt' },
   ])
   expect(result.items[0]).toEqual({ data: 'file:///a.txt\nfile:///b.txt', type: 'text/uri-list' })
   expect(result.items[1]).toEqual({ data: 'file:///a.txt\nfile:///b.txt', type: 'text/plain' })
@@ -27,13 +27,13 @@ test('getDragData - empty', () => {
 })
 
 test('getDragData - preserves non-file workspace uri', () => {
-  const result = getDragData([{ path: 'memfs:///workspace/Main.elm', type: DirentType.File }])
+  const result = getDragData([{ type: DirentType.File, uri: 'memfs:///workspace/Main.elm' }])
 
   expect(result.items[0]).toEqual({ data: 'memfs:///workspace/Main.elm', type: 'text/uri-list' })
 })
 
 test('getDragData - marks remote folders with a trailing slash', () => {
-  const result = getDragData([{ path: 'remote-ssh://test-host/workspace/src', type: DirentType.Directory }])
+  const result = getDragData([{ type: DirentType.Directory, uri: 'remote-ssh://test-host/workspace/src' }])
 
   expect(result.items[0]).toEqual({ data: 'remote-ssh://test-host/workspace/src/', type: 'text/uri-list' })
 })

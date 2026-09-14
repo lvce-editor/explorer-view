@@ -57,7 +57,7 @@ test('opening a file or manifest targets the owning main area', async () => {
   using rpc = RendererWorker.registerMockRpc({ 'Application.execute': async () => {} })
   await openUri('memfs:///extension.json', true, undefined, 'source')
   const state = { ...createDefaultState(), applicationId: 'source', uid: 1 }
-  const item = { depth: 1, name: 'main.ts', path: 'memfs:///main.ts', selected: false, type: DirentType.File }
+  const item = { depth: 1, name: 'main.ts', selected: false, type: DirentType.File, uri: 'memfs:///main.ts' }
   const clicked = await handleClickFile(state, item, 0)
   await CommandCompletion.take(clicked)
   expect(rpc.invocations).toContainEqual(['Application.execute', 'source', 'Main.openUri', { focus: true, uri: 'memfs:///extension.json' }])

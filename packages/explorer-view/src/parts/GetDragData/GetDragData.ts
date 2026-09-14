@@ -12,7 +12,7 @@ export interface IDragInfoNew {
   readonly label?: string
 }
 
-export const getDragData = (items: readonly Pick<ExplorerItem, 'path' | 'type'>[]): IDragInfoNew => {
+export const getDragData = (items: readonly Pick<ExplorerItem, 'uri' | 'type'>[]): IDragInfoNew => {
   const data = items.map(getDragUri).join('\n')
   const dragData: readonly DragInfoItem[] = [
     {
@@ -26,6 +26,6 @@ export const getDragData = (items: readonly Pick<ExplorerItem, 'path' | 'type'>[
   ]
   return {
     items: dragData,
-    label: getDragLabel(items.map((item) => item.path)),
+    label: getDragLabel(items.map((item) => item.uri)),
   }
 }

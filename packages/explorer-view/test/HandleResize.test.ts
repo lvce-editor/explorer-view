@@ -9,9 +9,9 @@ test('handleResize updates dimensions, viewport lines and scrollbarHeight', () =
   const items: readonly ExplorerItem[] = Array.from({ length: 10 }, (_, index) => ({
     depth: 0,
     name: `file-${index}`,
-    path: `/file-${index}`,
     selected: false,
     type: 1,
+    uri: `/file-${index}`,
   }))
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -35,9 +35,9 @@ test('handleResize clamps deltaY when viewport gets larger', () => {
   const items: readonly ExplorerItem[] = Array.from({ length: 10 }, (_, index) => ({
     depth: 0,
     name: `file-${index}`,
-    path: `/file-${index}`,
     selected: false,
     type: 1,
+    uri: `/file-${index}`,
   }))
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -67,9 +67,9 @@ test('moving an embedded Explorer updates click coordinates without changing its
   const items: readonly ExplorerItem[] = Array.from({ length: 10 }, (_, index) => ({
     depth: 0,
     name: `file-${index}`,
-    path: `/file-${index}`,
     selected: false,
     type: 1,
+    uri: `/file-${index}`,
   }))
   const state = handleResize({ ...createDefaultState(), itemHeight: 22, items, x: 48, y: 55 }, { height: 300, width: 240 })
   const moved = handleResize(state, { height: 300, width: 240, x: 0, y: 35 })

@@ -22,11 +22,11 @@ test('getNewDirentsAccept - create file in root', async () => {
   expect(result.dirents[0]).toEqual({
     depth: 1,
     name: 'test.txt',
-    path: '/root/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 1,
     type: DirentType.File,
+    uri: '/root/test.txt',
   })
   expect(result.newFocusedIndex).toBe(0)
   expect(mockRpc.invocations).toEqual([])
@@ -49,11 +49,11 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
     {
       depth: 1,
       name: 'folder',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: 2,
+      uri: '/root/folder',
     },
   ]
 
@@ -63,11 +63,11 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
   expect(result.dirents[1]).toEqual({
     depth: 2,
     name: 'test.txt',
-    path: '/root/folder/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 1,
     type: DirentType.File,
+    uri: '/root/folder/test.txt',
   })
   expect(result.newFocusedIndex).toBe(1)
   expect(mockRpc.invocations).toEqual([])
@@ -94,11 +94,11 @@ test('getNewDirentsAccept - create nested file', async () => {
   expect(result.dirents[0]).toEqual({
     depth: 1,
     name: 'a/b/c/test.txt',
-    path: '/root/a/b/c/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 1,
     type: DirentType.File,
+    uri: '/root/a/b/c/test.txt',
   })
   expect(result.newFocusedIndex).toBe(0)
   expect(mockRpc.invocations).toEqual([])

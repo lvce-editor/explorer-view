@@ -47,29 +47,29 @@ test('cancelEdit - removes editing items', async () => {
       {
         depth: 0,
         name: 'file1.txt',
-        path: '/file1.txt',
         posInSet: 1,
         selected: false,
         setSize: 1,
         type: DirentType.File,
+        uri: '/file1.txt',
       },
       {
         depth: 0,
         name: 'test.txt',
-        path: '/test.txt',
         posInSet: 2,
         selected: false,
         setSize: 1,
         type: DirentType.EditingFile,
+        uri: '/test.txt',
       },
       {
         depth: 0,
         name: 'newfolder',
-        path: '/newfolder',
         posInSet: 3,
         selected: false,
         setSize: 1,
         type: DirentType.EditingFolder,
+        uri: '/newfolder',
       },
     ],
   }
@@ -106,9 +106,9 @@ test('cancelEdit - rename file', async () => {
       {
         depth: 0,
         name: 'test.txt',
-        path: '/test.txt',
         selected: false,
         type: DirentType.EditingFile,
+        uri: '/test.txt',
       },
     ],
   }
@@ -126,9 +126,9 @@ test('cancelEdit - rename file', async () => {
       {
         depth: 0,
         name: 'test.txt',
-        path: '/test.txt',
         selected: false,
         type: DirentType.File,
+        uri: '/test.txt',
       },
     ],
   })
@@ -150,9 +150,9 @@ test('cancelEdit - rename folder', async () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: DirentType.EditingFolder,
+        uri: '/test',
       },
     ],
   }
@@ -170,9 +170,9 @@ test('cancelEdit - rename folder', async () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: DirentType.Directory,
+        uri: '/test',
       },
     ],
   })
@@ -194,16 +194,16 @@ test('cancelEdit - create file', async () => {
       {
         depth: 0,
         name: 'file1.txt',
-        path: '/file1.txt',
         selected: false,
         type: DirentType.File,
+        uri: '/file1.txt',
       },
       {
         depth: 0,
         name: 'test.txt',
-        path: '/test.txt',
         selected: false,
         type: DirentType.EditingFile,
+        uri: '/test.txt',
       },
     ],
   }

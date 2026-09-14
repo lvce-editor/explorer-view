@@ -15,7 +15,7 @@ test('handleCut - with focused dirent', async () => {
     ...createDefaultState(),
     focused: false,
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: DirentType.File, uri: '/test.txt' }],
   }
   const result = await handleCut(state)
 

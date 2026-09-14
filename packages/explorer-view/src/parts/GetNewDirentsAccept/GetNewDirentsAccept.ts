@@ -20,17 +20,17 @@ export const getNewDirentsAccept = (
       ? items[focusedIndex]
       : {
           depth: 0,
-          path: root,
+          uri: root,
         }
   const depth = parentDirent.depth + 1
   const newDirent: ExplorerItem = {
     depth,
     name: newFileName,
-    path: absolutePath,
     posInSet: -1,
     selected: false,
     setSize: 1,
     type: newDirentType,
+    uri: absolutePath,
   }
   let insertIndex = focusedIndex
   let posInSet = 1

@@ -20,9 +20,9 @@ test('getMenuEntries2 - directory', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: true,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -39,9 +39,9 @@ test('getMenuEntries2 - file', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -58,9 +58,9 @@ test('getMenuEntries2 - file shows select for compare by default', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -78,9 +78,9 @@ test('getMenuEntries2 - file shows compare with selected for different file', ()
   const item: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -98,9 +98,9 @@ test('getMenuEntries2 - file disables write operations when file system is reado
   const item: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -119,9 +119,9 @@ test('getMenuEntries2 - directory disables write operations when file system is 
   const item: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const state: ExplorerState = {
     ...createDefaultState(),

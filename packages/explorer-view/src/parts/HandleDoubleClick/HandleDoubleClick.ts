@@ -16,7 +16,7 @@ export const handleDoubleClick = async (state: ExplorerState, eventX: number, ev
   const item = items[index]
   const type = normalizeDirentType(item.type)
   if (type === DirentType.File || type === DirentType.SymLinkFile) {
-    return CommandCompletion.set(state, OpenUri.openUri(item.path, true, undefined, applicationId))
+    return CommandCompletion.set(state, OpenUri.openUri(item.uri, true, undefined, applicationId))
   }
   return state
 }

@@ -15,11 +15,11 @@ export const treeToArrayInternal = (map: Tree, root: string, items: ExplorerItem
     items.push({
       depth,
       name: child.name,
-      path: absolutePath,
       posInSet: i + 1,
       selected: false,
       setSize: count,
       type: child.type,
+      uri: absolutePath,
     })
     treeToArrayInternal(map, root, items, childPath, depth + 1)
   }

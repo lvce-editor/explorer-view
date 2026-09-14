@@ -7,9 +7,9 @@ test('isSymbolicLink - symlink', () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'symlink',
-    path: '/symlink',
     selected: false,
     type: DirentType.Symlink,
+    uri: '/symlink',
   }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(true)
 })
@@ -18,9 +18,9 @@ test('isSymbolicLink - file', () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'file.txt',
-    path: '/file.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/file.txt',
   }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(false)
 })
@@ -29,9 +29,9 @@ test('isSymbolicLink - directory', () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'directory',
-    path: '/directory',
     selected: false,
     type: DirentType.Directory,
+    uri: '/directory',
   }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(false)
 })
@@ -40,9 +40,9 @@ test('isSymbolicLink - symlink file', () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'symlink-file',
-    path: '/symlink-file',
     selected: false,
     type: DirentType.SymLinkFile,
+    uri: '/symlink-file',
   }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(false)
 })
@@ -51,9 +51,9 @@ test('isSymbolicLink - symlink folder', () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'symlink-folder',
-    path: '/symlink-folder',
     selected: false,
     type: DirentType.SymLinkFolder,
+    uri: '/symlink-folder',
   }
   expect(IsSymbolicLink.isSymbolicLink(dirent)).toBe(false)
 })

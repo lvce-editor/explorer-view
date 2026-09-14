@@ -48,11 +48,11 @@ test('newFolder', async () => {
       {
         depth: 0,
         name: '',
-        path: 'file:///new/path',
         posInSet: 1,
         selected: false,
         setSize: 1,
         type: 103,
+        uri: 'file:///new/path',
       },
     ],
   })
@@ -80,22 +80,22 @@ test('newFolder reveals the input after many existing child folders', async () =
   const children = Array.from({ length: 30 }, (_, index) => ({
     depth: 1,
     name: `folder-${index}`,
-    path: `${root}/parts/folder-${index}`,
     selected: false,
     type: DirentType.Directory,
+    uri: `${root}/parts/folder-${index}`,
   }))
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
     height: 100,
-    items: [{ depth: 0, name: 'parts', path: `${root}/parts`, selected: false, type: DirentType.DirectoryExpanded }, ...children],
+    items: [{ depth: 0, name: 'parts', selected: false, type: DirentType.DirectoryExpanded, uri: `${root}/parts` }, ...children],
     maxLineY: 5,
     root,
   }
 
   const result = await newFolder(state)
 
-  expect(result.items[result.editingIndex].path).toBe(`${root}/parts`)
+  expect(result.items[result.editingIndex].uri).toBe(`${root}/parts`)
   expect(result.editingIndex).toBeGreaterThanOrEqual(result.minLineY)
   expect(result.editingIndex).toBeLessThan(result.maxLineY)
   expect(result.deltaY).toBeGreaterThan(0)

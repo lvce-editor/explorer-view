@@ -7,9 +7,9 @@ test('getNewDirentsForCancelRename - file', () => {
     {
       depth: 0,
       name: 'test.txt',
-      path: '/test.txt',
       selected: false,
       type: DirentType.EditingFile,
+      uri: '/test.txt',
     },
   ]
   const result = getNewDirentsForCancelRename(items, 0)
@@ -17,9 +17,9 @@ test('getNewDirentsForCancelRename - file', () => {
   expect(result[0]).toEqual({
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   })
 })
 
@@ -28,9 +28,9 @@ test('getNewDirentsForCancelRename - folder', () => {
     {
       depth: 0,
       name: 'test',
-      path: '/test',
       selected: false,
       type: DirentType.EditingFolder,
+      uri: '/test',
     },
   ]
   const result = getNewDirentsForCancelRename(items, 0)
@@ -38,8 +38,8 @@ test('getNewDirentsForCancelRename - folder', () => {
   expect(result[0]).toEqual({
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   })
 })

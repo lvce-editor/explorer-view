@@ -11,7 +11,7 @@ test('revealItem - excluded uri leaves state unchanged', async () => {
     excluded: ['**/.git'],
     focused: true,
     focusedIndex: 0,
-    items: [{ depth: 1, name: 'visible.txt', path: '/root/visible.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 1, name: 'visible.txt', selected: false, type: DirentType.File, uri: '/root/visible.txt' }],
     pathSeparator: '/',
     root: '/root',
   }
@@ -61,27 +61,27 @@ test('revealItem - item found', async () => {
       {
         depth: 0,
         name: 'test',
-        path: 'test',
         selected: false,
         type: 1,
+        uri: 'test',
       },
     ],
   }
   const newState = await revealItem(state, 'test')
-  expect(newState.items[0].path).toBe('test')
+  expect(newState.items[0].uri).toBe('test')
   expect(mockRpc.invocations).toEqual([])
 })
 
 test('revealItem - reveals hidden item inside root', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readDirWithFileTypes'(uri: string) {
-      if (uri === '/workspace') {
+    'FileSystem.readDirWithFileTypes'(path: string) {
+      if (path === '/workspace') {
         return [{ name: 'src', type: DirentType.Directory }]
       }
-      if (uri === '/workspace/src') {
+      if (path === '/workspace/src') {
         return [{ name: 'index.ts', type: DirentType.File }]
       }
-      throw new Error(`unexpected read ${uri}`)
+      throw new Error(`unexpected read ${path}`)
     },
   })
 
@@ -93,8 +93,8 @@ test('revealItem - reveals hidden item inside root', async () => {
   const newState = await revealItem(state, '/workspace/src/index.ts')
   expect(newState.focusedIndex).toBe(1)
   expect(newState.items).toEqual([
-    { depth: 1, name: 'src', path: '/workspace/src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded },
-    { depth: 2, name: 'index.ts', path: '/workspace/src/index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File },
+    { depth: 1, name: 'src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded, uri: '/workspace/src' },
+    { depth: 2, name: 'index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File, uri: '/workspace/src/index.ts' },
   ])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', '/workspace'],

@@ -35,25 +35,25 @@ test.each([false, true])('restoreExpandedState loads a large directory (nested: 
   expect(items[firstFileIndex]).toEqual({
     depth: nested ? 2 : 1,
     name: 'file-000000.txt',
-    path: `${directory}/file-000000.txt`,
     posInSet: 1,
     setSize: fileCount,
     type: File,
+    uri: `${directory}/file-000000.txt`,
   })
   expect(items[firstFileIndex + fileCount - 1]).toEqual({
     depth: nested ? 2 : 1,
     name: 'file-199999.txt',
-    path: `${directory}/file-199999.txt`,
     posInSet: fileCount,
     setSize: fileCount,
     type: File,
+    uri: `${directory}/file-199999.txt`,
   })
   const rootSiblings = nested ? [items[0], items.at(-1)] : []
   expect(rootSiblings).toEqual(
     nested
       ? [
-          { depth: 1, name: 'folder', path: directory, posInSet: 1, setSize: 2, type: DirectoryExpanded },
-          { depth: 1, name: 'z.txt', path: `${root}/z.txt`, posInSet: 2, setSize: 2, type: File },
+          { depth: 1, name: 'folder', posInSet: 1, setSize: 2, type: DirectoryExpanded, uri: directory },
+          { depth: 1, name: 'z.txt', posInSet: 2, setSize: 2, type: File, uri: `${root}/z.txt` },
         ]
       : [],
   )

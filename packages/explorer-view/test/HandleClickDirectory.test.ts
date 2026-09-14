@@ -11,8 +11,8 @@ test('handleClickDirectory - updates state with focus', async () => {
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
-        { isDirectory: false, isSymbolicLink: false, name: 'child1', path: '/test/child1' },
-        { isDirectory: false, isSymbolicLink: false, name: 'child2', path: '/test/child2' },
+        { isDirectory: false, isSymbolicLink: false, name: 'child1', uri: '/test/child1' },
+        { isDirectory: false, isSymbolicLink: false, name: 'child2', uri: '/test/child2' },
       ]
     },
   })
@@ -20,9 +20,9 @@ test('handleClickDirectory - updates state with focus', async () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -48,8 +48,8 @@ test('handleClickDirectory - updates state without focus', async () => {
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       return [
-        { isDirectory: false, isSymbolicLink: false, name: 'child1', path: '/test/child1' },
-        { isDirectory: false, isSymbolicLink: false, name: 'child2', path: '/test/child2' },
+        { isDirectory: false, isSymbolicLink: false, name: 'child1', uri: '/test/child1' },
+        { isDirectory: false, isSymbolicLink: false, name: 'child2', uri: '/test/child2' },
       ]
     },
   })
@@ -57,9 +57,9 @@ test('handleClickDirectory - updates state without focus', async () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -88,9 +88,9 @@ test('handleClickDirectory - with empty child dirents', async () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -112,16 +112,16 @@ test('handleClickDirectory - with empty child dirents', async () => {
 test('handleClickDirectory - with multiple items in state', async () => {
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
-      return [{ isDirectory: false, isSymbolicLink: false, name: 'child1', path: '/test/child1' }]
+      return [{ isDirectory: false, isSymbolicLink: false, name: 'child1', uri: '/test/child1' }]
     },
   })
 
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'other', path: '/other', selected: false, type: DirentType.File },
-      { depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Directory },
-      { depth: 0, name: 'another', path: '/another', selected: false, type: DirentType.File },
+      { depth: 0, name: 'other', selected: false, type: DirentType.File, uri: '/other' },
+      { depth: 0, name: 'test', selected: false, type: DirentType.Directory, uri: '/test' },
+      { depth: 0, name: 'another', selected: false, type: DirentType.File, uri: '/another' },
     ],
   }
   const { items } = state
@@ -145,20 +145,20 @@ test('handleClickDirectory - with multiple items in state', async () => {
 test('handleClickDirectory - dirent not found in items', async () => {
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
-      return [{ isDirectory: false, isSymbolicLink: false, name: 'child1', path: '/test/child1' }]
+      return [{ isDirectory: false, isSymbolicLink: false, name: 'child1', uri: '/test/child1' }]
     },
   })
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    items: [{ depth: 0, name: 'other', path: '/other', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'other', selected: false, type: DirentType.File, uri: '/other' }],
   }
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const index = 0
   const keepFocus = true
@@ -184,9 +184,9 @@ test('handleClickDirectory - restores remembered expanded descendants', async ()
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -198,8 +198,8 @@ test('handleClickDirectory - restores remembered expanded descendants', async ()
 
   expect(result.items).toEqual([
     dirent,
-    expect.objectContaining({ path: '/test/nested', type: DirentType.DirectoryExpanded }),
-    expect.objectContaining({ path: '/test/nested/file.txt', type: DirentType.File }),
+    expect.objectContaining({ type: DirentType.DirectoryExpanded, uri: '/test/nested' }),
+    expect.objectContaining({ type: DirentType.File, uri: '/test/nested/file.txt' }),
   ])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test'],

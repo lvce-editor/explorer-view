@@ -9,10 +9,10 @@ export const compareWithSelected = async (state: ExplorerState): Promise<Explore
   if (!focusedFile) {
     return state
   }
-  if (!compareSourceUri || compareSourceUri === focusedFile.path) {
+  if (!compareSourceUri || compareSourceUri === focusedFile.uri) {
     return state
   }
-  await OpenDiff.openDiff(compareSourceUri, focusedFile.path, true, applicationId)
+  await OpenDiff.openDiff(compareSourceUri, focusedFile.uri, true, applicationId)
   return {
     ...state,
     compareSourceUri: '',

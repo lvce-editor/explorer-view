@@ -7,14 +7,14 @@ export const orderDirents = (dirents: readonly ExplorerItem[]): readonly Explore
   const minDepth = Math.min(...dirents.map((dirent) => dirent.depth))
 
   const withDeepChildren = (parent: ExplorerItem, processed: Set<string>): ExplorerItem[] => {
-    if (processed.has(parent.path)) {
+    if (processed.has(parent.uri)) {
       return []
     }
-    processed.add(parent.path)
+    processed.add(parent.uri)
 
     const children = []
     for (const dirent of dirents) {
-      if (dirent.depth === parent.depth + 1 && dirent.path.startsWith(parent.path)) {
+      if (dirent.depth === parent.depth + 1 && dirent.uri.startsWith(parent.uri)) {
         children.push(...withDeepChildren(dirent, processed))
       }
     }

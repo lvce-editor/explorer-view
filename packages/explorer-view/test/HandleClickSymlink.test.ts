@@ -11,9 +11,9 @@ test('handleClickSymLink - file symlink', async () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'symlink',
-    path: '/test/symlink',
     selected: false,
     type: DirentType.Symlink,
+    uri: '/test/symlink',
   }
   const index = 0
 
@@ -53,9 +53,9 @@ test('handleClickSymLink - unsupported type', async () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'symlink',
-    path: '/test/symlink',
     selected: false,
     type: DirentType.Symlink,
+    uri: '/test/symlink',
   }
   const index = 0
 

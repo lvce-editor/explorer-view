@@ -7,9 +7,9 @@ test('setSelectedIndices sets selection for given indices', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'file1', path: '/file1', selected: false, type: 0 },
-      { depth: 0, name: 'file2', path: '/file2', selected: false, type: 0 },
-      { depth: 0, name: 'file3', path: '/file3', selected: false, type: 0 },
+      { depth: 0, name: 'file1', selected: false, type: 0, uri: '/file1' },
+      { depth: 0, name: 'file2', selected: false, type: 0, uri: '/file2' },
+      { depth: 0, name: 'file3', selected: false, type: 0, uri: '/file3' },
     ],
   }
 

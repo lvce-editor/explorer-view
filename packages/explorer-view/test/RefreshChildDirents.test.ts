@@ -13,14 +13,14 @@ test('refreshChildDirents - basic', async () => {
     },
   })
 
-  const folder = { depth: 0, name: 'test', path: '/test', selected: false, type: Directory }
+  const folder = { depth: 0, name: 'test', selected: false, type: Directory, uri: '/test' }
   const result = await refreshChildDirents(folder, '/', [])
   expect(result).toHaveLength(2)
   expect(result[0].name).toBe('file1.txt')
-  expect(result[0].path).toBe('/test/file1.txt')
+  expect(result[0].uri).toBe('/test/file1.txt')
   expect(result[0].depth).toBe(1)
   expect(result[1].name).toBe('folder1')
-  expect(result[1].path).toBe('/test/folder1')
+  expect(result[1].uri).toBe('/test/folder1')
   expect(result[1].depth).toBe(1)
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
 })
@@ -38,15 +38,15 @@ test('refreshChildDirents - with expanded folder', async () => {
     },
   })
 
-  const folder = { depth: 0, name: 'test', path: '/test', selected: false, type: Directory }
+  const folder = { depth: 0, name: 'test', selected: false, type: Directory, uri: '/test' }
   const result = await refreshChildDirents(folder, '/', ['/test/folder1'])
   expect(result).toHaveLength(2)
   expect(result[0].name).toBe('folder1')
-  expect(result[0].path).toBe('/test/folder1')
+  expect(result[0].uri).toBe('/test/folder1')
   expect(result[0].type).toBe(DirectoryExpanded)
   expect(result[0].depth).toBe(1)
   expect(result[1].name).toBe('file1.txt')
-  expect(result[1].path).toBe('/test/folder1/file1.txt')
+  expect(result[1].uri).toBe('/test/folder1/file1.txt')
   expect(result[1].depth).toBe(2)
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test'],

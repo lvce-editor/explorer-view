@@ -7,9 +7,9 @@ test('should collapse expanded directory to regular directory', () => {
   const expandedDir: ExplorerItem = {
     depth: 1,
     name: 'test-dir',
-    path: '/test/test-dir',
     selected: false,
     type: DirentType.DirectoryExpanded,
+    uri: '/test/test-dir',
   }
 
   const result = toCollapsedDirent(expandedDir)
@@ -17,9 +17,9 @@ test('should collapse expanded directory to regular directory', () => {
   expect(result).toEqual({
     depth: 1,
     name: 'test-dir',
-    path: '/test/test-dir',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test/test-dir',
   })
 })
 
@@ -27,9 +27,9 @@ test('should return unchanged item for non-expanded directory', () => {
   const regularDir: ExplorerItem = {
     depth: 1,
     name: 'test-dir',
-    path: '/test/test-dir',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test/test-dir',
   }
 
   const result = toCollapsedDirent(regularDir)
@@ -41,9 +41,9 @@ test('should return unchanged item for file', () => {
   const file: ExplorerItem = {
     depth: 1,
     name: 'test-file.txt',
-    path: '/test/test-file.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test/test-file.txt',
   }
 
   const result = toCollapsedDirent(file)
@@ -55,9 +55,9 @@ test('should return unchanged item for symlink', () => {
   const symlink: ExplorerItem = {
     depth: 1,
     name: 'test-symlink',
-    path: '/test/test-symlink',
     selected: false,
     type: DirentType.Symlink,
+    uri: '/test/test-symlink',
   }
 
   const result = toCollapsedDirent(symlink)
@@ -69,11 +69,11 @@ test('should preserve all properties when collapsing expanded directory', () => 
   const expandedDir: ExplorerItem = {
     depth: 2,
     name: 'test-dir',
-    path: '/test/test-dir',
     posInSet: 3,
     selected: true,
     setSize: 5,
     type: DirentType.DirectoryExpanded,
+    uri: '/test/test-dir',
   }
 
   const result = toCollapsedDirent(expandedDir)
@@ -81,10 +81,10 @@ test('should preserve all properties when collapsing expanded directory', () => 
   expect(result).toEqual({
     depth: 2,
     name: 'test-dir',
-    path: '/test/test-dir',
     posInSet: 3,
     selected: true,
     setSize: 5,
     type: DirentType.Directory,
+    uri: '/test/test-dir',
   })
 })
