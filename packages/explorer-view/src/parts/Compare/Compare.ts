@@ -1,11 +1,11 @@
 const RE_CHARACTERS = /^[a-zA-Z.-]+$/
 const RE_LEADING_DIGITS = /^\d+/
 const RE_LEADING_ZEROES = /^0+/
-let numericCollator: Intl.Collator | undefined
+const cache: { numericCollator?: Intl.Collator } = {}
 
 const getOrCreateNumericCollator = (): Intl.Collator => {
-  numericCollator ??= new Intl.Collator('en', { numeric: true })
-  return numericCollator
+  cache.numericCollator ??= new Intl.Collator('en', { numeric: true })
+  return cache.numericCollator
 }
 
 const compareLeadingDigits = (a: string, b: string): number => {
