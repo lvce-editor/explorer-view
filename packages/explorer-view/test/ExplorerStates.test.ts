@@ -423,3 +423,36 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
   expect(ExplorerStates.get(uid).newState.items).toEqual([secondItem])
   expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/second.tmp'])
 })
+
+test('clear cancels pending gitignore decoration updates', async () => {
+  const uid = 9014
+  let renderCount = 0
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return '*.log'
+    },
+    'Viewlet.executeViewletCommand'() {
+      renderCount++
+    },
+  })
+  const item = { depth: 1, name: 'debug.log', selected: false, type: DirentType.File, uri: '/workspace/debug.log' }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.uri]: '' },
+    gitIgnoreDecorations: true,
+    root: '/workspace',
+    uid,
+  }
+  const readItems = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    items: [item],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await readItems(uid)
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  ExplorerStates.clear()
+  await new Promise((resolve) => setTimeout(resolve, 150))
+
+  expect(renderCount).toBe(0)
+})
