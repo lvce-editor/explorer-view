@@ -92,3 +92,17 @@ test('setComponentState rejects a changed uid without changing registered state'
   await expect(setComponentState(uid, { ...state, uid: 999 })).rejects.toThrow('Explorer state uid must remain 1')
   expect(ExplorerStates.get(uid).newState).toBe(state)
 })
+
+test('saving the same live JSON twice preserves derived focus', async () => {
+  const state = createState()
+  const { uid } = state
+  ExplorerStates.set(uid, state, state)
+  const content = JSON.stringify({ ...state, focusedIndex: 1 })
+  await setComponentState(uid, JSON.parse(content))
+  await render2(uid, [])
+  await setComponentState(uid, JSON.parse(content))
+  const { scheduledState } = ExplorerStates.get(uid)
+  expect(scheduledState.focusedIndex).toBe(1)
+  expect(scheduledState.visibleExplorerItems[0].id).toBeUndefined()
+  expect(scheduledState.visibleExplorerItems[1].id).toBe('TreeItemActive')
+})
