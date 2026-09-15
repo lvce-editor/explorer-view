@@ -109,7 +109,7 @@ test('saving the same live JSON twice preserves derived focus', async () => {
 
 test('reapplies the same JSON after another command changes the state', async () => {
   const state = createState()
-  const { uid } = state
+  const { root, uid } = state
   ExplorerStates.set(uid, state, state)
   const content = JSON.stringify({ ...state, focusedIndex: 1 })
   await setComponentState(uid, JSON.parse(content))
@@ -117,5 +117,5 @@ test('reapplies the same JSON after another command changes the state', async ()
   const externallyChangedState = { ...newState, root: '/different-workspace' }
   ExplorerStates.set(uid, externallyChangedState, externallyChangedState)
   await setComponentState(uid, JSON.parse(content))
-  expect(ExplorerStates.get(uid).newState.root).toBe(state.root)
+  expect(ExplorerStates.get(uid).newState.root).toBe(root)
 })
