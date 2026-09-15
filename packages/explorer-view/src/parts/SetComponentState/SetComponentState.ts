@@ -1,6 +1,8 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ExplorerStates from '../ExplorerStates/ExplorerStates.ts'
 
+const appliedInputs = new WeakMap<ExplorerState, string>()
+
 const applyComponentState = (currentState: ExplorerState, state: ExplorerState): ExplorerState => {
   if (!state || typeof state !== 'object' || Array.isArray(state)) {
     throw new TypeError('Explorer state must be an object')
@@ -17,9 +19,14 @@ const setDerivedComponentState = ExplorerStates.wrapListItemCommandImmediate(app
 export const setComponentState = async (uid: number, state: ExplorerState): Promise<void> => {
   const { newState, oldState } = ExplorerStates.get(uid)
   const updatedState = applyComponentState(newState, state)
+  const input = JSON.stringify(updatedState)
+  // A live edit is applied before Save writes the same JSON again. Preserve
+  // the derived items unless another command has changed the current state.
+  if (appliedInputs.get(newState) === input) return
   if (JSON.stringify(newState.visibleExplorerItems) === JSON.stringify(updatedState.visibleExplorerItems)) {
     await setDerivedComponentState(uid, updatedState)
-    return
+  } else {
+    ExplorerStates.set(uid, oldState, updatedState)
   }
-  ExplorerStates.set(uid, oldState, updatedState)
+  appliedInputs.set(ExplorerStates.get(uid).newState, input)
 }
