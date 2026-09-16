@@ -22,6 +22,44 @@ test('getIndexFromPosition accounts for a fractional scroll offset', () => {
   expect(getIndexFromPosition(state, 0, 25)).toBe(1)
 })
 
+test('getIndexFromPosition accounts for whole-row and fractional scroll offsets', () => {
+  const state = {
+    ...createDefaultState(),
+    deltaY: 105,
+    itemHeight: 20,
+    items: Array.from({ length: 20 }, (_, index) => ({
+      depth: 0,
+      name: `file-${index}`,
+      selected: false,
+      type: 1,
+      uri: `/file-${index}`,
+    })),
+    minLineY: 5,
+    y: 10,
+  }
+  expect(getIndexFromPosition(state, 0, 15)).toBe(5)
+  expect(getIndexFromPosition(state, 0, 34)).toBe(6)
+})
+
+test('getIndexFromPosition returns the last visible item at the bottom of the list', () => {
+  const state = {
+    ...createDefaultState(),
+    deltaY: 300,
+    height: 100,
+    itemHeight: 20,
+    items: Array.from({ length: 20 }, (_, index) => ({
+      depth: 0,
+      name: `file-${index}`,
+      selected: false,
+      type: 1,
+      uri: `/file-${index}`,
+    })),
+    minLineY: 15,
+    y: 10,
+  }
+  expect(getIndexFromPosition(state, 0, 100)).toBe(19)
+})
+
 test('getIndexFromPosition', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
