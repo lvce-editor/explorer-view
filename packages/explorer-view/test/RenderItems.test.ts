@@ -166,3 +166,17 @@ test('renderItems - displays a fallback code for load errors without a code', ()
     expect.arrayContaining([expect.objectContaining({ text: 'Could not open folder. Connection failed. Error code: E_EXPLORER_LOAD_FAILED.' })]),
   )
 })
+
+test('renderItems - local Electron drags prevent the HTML drag before requesting native dragging', () => {
+  const state = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    initial: false,
+    items: [{ depth: 1, name: 'a.txt', path: '/a.txt', posInSet: 1, selected: false, setSize: 1, type: 7 }],
+    platform: 2,
+    pointerDownIndex: 0,
+    root: '/',
+  }
+  const dom = renderItems(state, state)[2]
+  expect(dom.find((node: any) => node.role === 'tree').onDragStart).toBe(DomEventListenerFunctions.HandleNativeDragStart)
+})

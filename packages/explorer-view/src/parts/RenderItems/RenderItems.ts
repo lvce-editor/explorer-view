@@ -2,6 +2,7 @@ import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as GetExplorerVirtualDom from '../GetExplorerVirtualDom/GetExplorerVirtualDom.ts'
 import * as GetLoadErrorMessage from '../GetLoadErrorMessage/GetLoadErrorMessage.ts'
+import { getNativeDragPaths } from '../GetNativeDragPaths/GetNativeDragPaths.ts'
 
 export const renderItems = (oldState: ExplorerState, newState: ExplorerState): any => {
   const { dropTargets, editingErrorMessage, editingSessionId, focused, focusedIndex, height, initial, itemHeight, items, root, width } = newState
@@ -26,6 +27,7 @@ export const renderItems = (oldState: ExplorerState, newState: ExplorerState): a
     loadErrorMessage,
     showOpenAnotherFolderButton,
     editingSessionId,
+    getNativeDragPaths(newState).length > 0,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

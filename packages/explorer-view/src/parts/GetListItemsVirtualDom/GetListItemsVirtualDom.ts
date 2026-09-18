@@ -30,6 +30,7 @@ export const getListItemsVirtualDom = (
   focused: boolean,
   dropTargets: readonly number[],
   editingSessionId = 0,
+  nativeDrag = false,
 ): readonly VirtualDomNode[] => {
   const dom: readonly VirtualDomNode[] = [
     {
@@ -44,7 +45,7 @@ export const getListItemsVirtualDom = (
       onDragEnd: DomEventListenerFunctions.HandleDragEnd,
       onDragLeave: DomEventListenerFunctions.HandleDragLeave,
       onDragOver: DomEventListenerFunctions.HandleDragOver,
-      onDragStart: DomEventListenerFunctions.HandleDragStart,
+      onDragStart: nativeDrag ? DomEventListenerFunctions.HandleNativeDragStart : DomEventListenerFunctions.HandleDragStart,
       onDrop: DomEventListenerFunctions.HandleDrop,
       onFocus: DomEventListenerFunctions.HandleListFocus,
       onPaste: DomEventListenerFunctions.HandleNativePaste,

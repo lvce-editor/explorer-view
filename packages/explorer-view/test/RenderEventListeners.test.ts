@@ -36,3 +36,11 @@ test('renderEventListeners', () => {
     preventDefault: true,
   })
 })
+
+test('native drag handler prevents the browser drag synchronously', () => {
+  expect(RenderEventListeners.renderEventListeners()).toContainEqual({
+    name: 27,
+    params: ['handleDragStart'],
+    preventDefault: true,
+  })
+})
