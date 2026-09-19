@@ -166,3 +166,23 @@ test('renderItems - displays a fallback code for load errors without a code', ()
     expect.arrayContaining([expect.objectContaining({ text: 'Could not open folder. Connection failed. Error code: E_EXPLORER_LOAD_FAILED.' })]),
   )
 })
+
+test('renderItems - displays workspace progress instead of stale explorer content', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    root: 'remote-ssh://example.com/workspace',
+    workspaceProgressMessage: 'Opening Remote Workspace…',
+  }
+
+  expect(renderItems(oldState, newState)[2]).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        role: 'status',
+      }),
+      expect.objectContaining({
+        text: 'Opening Remote Workspace…',
+      }),
+    ]),
+  )
+})

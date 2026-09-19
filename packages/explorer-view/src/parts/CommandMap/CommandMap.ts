@@ -66,6 +66,7 @@ import { handleScrollBarMove } from '../HandleScrollBarMove/HandleScrollBarMove.
 import * as HandleUpload from '../HandleUpload/HandleUpload.ts'
 import * as HandleWheel from '../HandleWheel/HandleWheel.ts'
 import * as HandleWorkspaceChange from '../HandleWorkspaceChange/HandleWorkspaceChange.ts'
+import * as HandleWorkspaceProgress from '../HandleWorkspaceProgress/HandleWorkspaceProgress.ts'
 import { handleWorkspaceRefresh } from '../HandleWorkspaceRefresh/HandleWorkspaceRefresh.ts'
 import * as Initialize from '../Initialize/Initialize.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
@@ -167,6 +168,7 @@ export const commandMap = {
   'Explorer.handleUpload': WrapCommand.wrapListItemCommand(HandleUpload.handleUpload),
   'Explorer.handleWheel': WrapCommand.wrapListItemCommand(HandleWheel.handleWheel),
   'Explorer.handleWorkspaceChange': WrapCommand.wrapListItemCommandImmediate(HandleWorkspaceChange.handleWorkspaceChange),
+  'Explorer.handleWorkspaceProgress': WrapCommand.wrapListItemCommandImmediate(HandleWorkspaceProgress.handleWorkspaceProgress),
   'Explorer.handleWorkspaceRefresh': WrapCommand.wrapListItemCommandImmediate(handleWorkspaceRefresh),
   'Explorer.initialize': Initialize.initialize,
   'Explorer.loadContent': WrapCommand.wrapListItemCommand(LoadContent.loadContent),
