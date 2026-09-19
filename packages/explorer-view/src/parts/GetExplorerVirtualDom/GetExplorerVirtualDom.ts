@@ -8,6 +8,7 @@ import * as GetListItemsVirtualDom from '../GetListItemsVirtualDom/GetListItemsV
 import * as GetLoadErrorVirtualDom from '../GetLoadErrorVirtualDom/GetLoadErrorVirtualDom.ts'
 import * as GetScrollBarSize from '../GetScrollBarSize/GetScrollBarSize.ts'
 import * as GetScrollBarVirtualDom from '../GetScrollBarVirtualDom/GetScrollBarVirtualDom.ts'
+import * as GetWorkspaceProgressVirtualDom from '../GetWorkspaceProgressVirtualDom/GetWorkspaceProgressVirtualDom.ts'
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
@@ -44,7 +45,11 @@ export const getExplorerVirtualDom = (
   loadErrorMessage: string,
   showOpenAnotherFolderButton: boolean,
   editingSessionId = 0,
+  workspaceProgressMessage = '',
 ): readonly VirtualDomNode[] => {
+  if (workspaceProgressMessage) {
+    return GetWorkspaceProgressVirtualDom.getWorkspaceProgressVirtualDom(workspaceProgressMessage)
+  }
   if (!root) {
     return GetExplorerWelcomeVirtualDom.getExplorerWelcomeVirtualDom(isWide, dropTargets)
   }

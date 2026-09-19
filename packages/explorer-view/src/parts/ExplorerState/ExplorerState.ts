@@ -72,6 +72,7 @@ export interface ExplorerState {
   readonly version: number
   readonly visibleExplorerItems: readonly VisibleExplorerItem[]
   readonly width: number
+  readonly workspaceProgressMessage: string
   readonly x: number
   readonly y: number
 }

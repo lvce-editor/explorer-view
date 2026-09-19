@@ -90,6 +90,7 @@ export const create = (
     version: 0,
     visibleExplorerItems: [],
     width,
+    workspaceProgressMessage: '',
     x,
     y,
   }
