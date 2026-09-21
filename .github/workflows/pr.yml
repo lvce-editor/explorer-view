@@ -30,6 +30,7 @@ jobs:
       - name: npm ci
         run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
+      - run: node packages/build/src/traceWebSocketStartup.ts
       - run: npm run build
       - run: npm run build:static
       - run: npm test
@@ -97,6 +98,7 @@ jobs:
       - name: npm ci
         run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
+      - run: node packages/build/src/traceWebSocketStartup.ts
       - run: npm run build
       - run: npm run build:static
       - name: install playwright dependencies
@@ -110,10 +112,14 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p e2e-artifacts
-          npm run e2e:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
-          mv renderer-worker-traces e2e-artifacts/chromium-traces
+          npm run e2e:headless -- --filter=viewlet.explorer-toolbar- --trace-renderer-worker 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Preserve Chromium traces
+        if: always()
+        working-directory: ./packages/e2e
+        shell: bash
+        run: mv renderer-worker-traces e2e-artifacts/chromium-traces
       - name: e2e traced Firefox suite
         if: always()
         working-directory: ./packages/e2e
@@ -127,7 +133,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: windows-suite-${{ matrix.attempt }}
+          name: explorer-windows-suite-${{ matrix.attempt }}
           path: |
             packages/e2e/e2e-artifacts/
             packages/e2e/renderer-worker-traces/
