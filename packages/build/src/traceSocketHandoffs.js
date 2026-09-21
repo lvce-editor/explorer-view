@@ -1,3 +1,4 @@
+// @ts-nocheck -- diagnostic capture of Node private native handles
 import childProcess from 'node:child_process'
 import { syncBuiltinESMExports } from 'node:module'
 

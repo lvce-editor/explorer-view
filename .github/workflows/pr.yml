@@ -111,15 +111,22 @@ jobs:
           set -o pipefail
           mkdir -p e2e-artifacts
           export NODE_OPTIONS="--import=$(node -p 'require("node:url").pathToFileURL(require("node:path").resolve("../build/src/traceSocketHandoffs.js")).href')"
-          npm run e2e:headless 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
+          npm run e2e:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Preserve Chromium traces
+        if: always()
+        working-directory: ./packages/e2e
+        shell: bash
+        run: mv renderer-worker-traces e2e-artifacts/chromium-traces
       - name: Upload Chromium logs
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: explorer-handoff-chromium-${{ matrix.attempt }}
-          path: packages/e2e/e2e-artifacts/chromium-*.log
+          name: explorer-startup-chromium-${{ matrix.attempt }}
+          path: |
+            packages/e2e/e2e-artifacts/
+            packages/e2e/renderer-worker-traces/
           if-no-files-found: error
       - name: Full Firefox suite
         if: always()
@@ -128,13 +135,15 @@ jobs:
         run: |
           set -o pipefail
           export NODE_OPTIONS="--import=$(node -p 'require("node:url").pathToFileURL(require("node:path").resolve("../build/src/traceSocketHandoffs.js")).href')"
-          npm run e2e:firefox:headless 2>&1 | tee e2e-artifacts/firefox-${{ matrix.attempt }}.log
+          npm run e2e:firefox:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/firefox-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: Upload attempt logs
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: explorer-handoff-suite-${{ matrix.attempt }}
-          path: packages/e2e/e2e-artifacts/
+          name: explorer-startup-suite-${{ matrix.attempt }}
+          path: |
+            packages/e2e/e2e-artifacts/
+            packages/e2e/renderer-worker-traces/
           if-no-files-found: error
