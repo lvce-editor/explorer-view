@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-env:
-  LVCE_WS_TRACE_DIR: ${{ github.workspace }}/packages/e2e/e2e-artifacts
-
 jobs:
   pr:
     strategy:
@@ -33,7 +30,6 @@ jobs:
       - name: npm ci
         run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
-      - run: node packages/build/src/traceSocketTransfer.ts
       - run: npm run build
       - run: npm run build:static
       - run: npm test
@@ -76,8 +72,8 @@ jobs:
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
 
-  flaky-toolbar:
-    name: Windows suite attempt ${{ matrix.attempt }}
+  fixed-windows:
+    name: Windows fixed suite attempt ${{ matrix.attempt }}
     strategy:
       fail-fast: false
       matrix:
@@ -101,43 +97,35 @@ jobs:
       - name: npm ci
         run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
-      - run: node packages/build/src/traceSocketTransfer.ts
       - run: npm run build
       - run: npm run build:static
-      - name: install playwright dependencies
+      - name: Install Playwright browsers
         working-directory: ./packages/e2e
         run: npx playwright install chromium firefox
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e traced Windows suite
+      - name: Full Chromium suite
         working-directory: ./packages/e2e
         shell: bash
         run: |
           set -o pipefail
           mkdir -p e2e-artifacts
-          npm run e2e:headless -- --filter=viewlet.explorer-toolbar- --trace-renderer-worker 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
+          npm run e2e:headless 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: Preserve Chromium traces
-        if: always()
-        working-directory: ./packages/e2e
-        shell: bash
-        run: mv renderer-worker-traces e2e-artifacts/chromium-traces
-      - name: e2e traced Firefox suite
+      - name: Full Firefox suite
         if: always()
         working-directory: ./packages/e2e
         shell: bash
         run: |
           set -o pipefail
-          npm run e2e:firefox:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/firefox-${{ matrix.attempt }}.log
+          npm run e2e:firefox:headless 2>&1 | tee e2e-artifacts/firefox-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: Upload attempt artifacts
+      - name: Upload attempt logs
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: explorer-windows-suite-${{ matrix.attempt }}
-          path: |
-            packages/e2e/e2e-artifacts/
-            packages/e2e/renderer-worker-traces/
+          name: explorer-fixed-suite-${{ matrix.attempt }}
+          path: packages/e2e/e2e-artifacts/
           if-no-files-found: error
