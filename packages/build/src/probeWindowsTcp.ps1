@@ -23,6 +23,7 @@ public static class TcpPortProbe {
         try { socket = listener.AcceptSocket(); }
         catch (SocketException) { return; }
         catch (ObjectDisposedException) { return; }
+        catch (InvalidOperationException) { return; }
         using (socket) {
           Interlocked.Increment(ref accepted);
           try {
@@ -57,11 +58,13 @@ public static class TcpPortProbe {
   }
 }
 '@
+New-Item -ItemType Directory -Force e2e-artifacts | Out-Null
 $results = @()
 foreach ($dynamicServer in @($false, $true)) {
   foreach ($randomize in @($false, $true)) {
-    $result = [TcpPortProbe]::Run($randomize, $dynamicServer, 10000)
+    $result = [TcpPortProbe]::Run($randomize, $dynamicServer, 50000)
     $results += $result
+    $results | ConvertTo-Json -Depth 6 | Set-Content e2e-artifacts/tcp-port-probe.json
     $result | ConvertTo-Json -Depth 6 -Compress
   }
 }
