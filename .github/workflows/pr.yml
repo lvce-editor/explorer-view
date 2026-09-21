@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  LVCE_WS_TRACE_DIR: ${{ github.workspace }}/packages/e2e/e2e-artifacts
+
 jobs:
   pr:
     strategy:
