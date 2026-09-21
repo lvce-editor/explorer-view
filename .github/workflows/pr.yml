@@ -72,61 +72,23 @@ jobs:
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
 
-  fixed-windows:
-    name: Windows fixed suite attempt ${{ matrix.attempt }}
+  tcp-probe:
+    name: Windows TCP port probe ${{ matrix.attempt }}
     strategy:
       fail-fast: false
       matrix:
-        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        attempt: [1, 2, 3]
     runs-on: windows-2025
-    timeout-minutes: 60
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: '.nvmrc'
-      - name: Compute node modules cache key
-        id: nodeModulesCacheKey
-        run: echo "value=$(node packages/build/src/computeNodeModulesCacheKey.ts)" >> $GITHUB_OUTPUT
-        shell: bash
-      - uses: actions/cache@v6
-        id: npm-cache
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-cacheNodeModules-${{ steps.nodeModulesCacheKey.outputs.value }}
-      - name: npm ci
-        run: npm ci
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-      - run: node packages/build/src/traceStartupErrors.ts
-      - run: node packages/build/src/traceNetwork.ts
-      - run: npm run build
-      - run: npm run build:static
-      - name: Install Playwright browsers
-        working-directory: ./packages/e2e
-        run: npx playwright install chromium firefox
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: Full Chromium suite
-        working-directory: ./packages/e2e
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p e2e-artifacts
-          export NODE_OPTIONS="--import=$(node -p 'require("node:url").pathToFileURL(require("node:path").resolve("../build/src/traceSocketHandoffs.js")).href')"
-          npm run e2e:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: Preserve Chromium traces
-        if: always()
-        working-directory: ./packages/e2e
-        shell: bash
-        run: mv renderer-worker-traces e2e-artifacts/chromium-traces
-      - name: Upload Chromium logs
+      - name: Compare client port allocation
+        shell: pwsh
+        run: ./packages/build/src/probeWindowsTcp.ps1
+      - name: Upload probe results
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: explorer-final-startup-${{ matrix.attempt }}
-          path: |
-            packages/e2e/e2e-artifacts/
-            packages/e2e/renderer-worker-traces/
+          name: windows-tcp-port-probe-${{ matrix.attempt }}
+          path: e2e-artifacts/
           if-no-files-found: error
