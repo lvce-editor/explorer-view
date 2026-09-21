@@ -73,13 +73,13 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: 0
 
   flaky-toolbar:
-    name: toolbar Windows attempt ${{ matrix.attempt }}
+    name: Windows suite attempt ${{ matrix.attempt }}
     strategy:
       fail-fast: false
       matrix:
         attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     runs-on: windows-2025
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
@@ -101,22 +101,34 @@ jobs:
       - run: npm run build:static
       - name: install playwright dependencies
         working-directory: ./packages/e2e
-        run: npx playwright install chromium
+        run: npx playwright install chromium firefox
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e toolbar
+      - name: e2e traced Windows suite
         working-directory: ./packages/e2e
         shell: bash
         run: |
           set -o pipefail
           mkdir -p e2e-artifacts
-          npm run e2e:headless -- --filter=viewlet.explorer-toolbar- 2>&1 | tee e2e-artifacts/toolbar-${{ matrix.attempt }}.log
+          npm run e2e:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
+          mv renderer-worker-traces e2e-artifacts/chromium-traces
+      - name: e2e traced Firefox suite
+        if: always()
+        working-directory: ./packages/e2e
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run e2e:firefox:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/firefox-${{ matrix.attempt }}.log
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: Upload attempt artifacts
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: toolbar-windows-${{ matrix.attempt }}
-          path: packages/e2e/e2e-artifacts/
+          name: windows-suite-${{ matrix.attempt }}
+          path: |
+            packages/e2e/e2e-artifacts/
+            packages/e2e/renderer-worker-traces/
           if-no-files-found: error
