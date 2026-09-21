@@ -109,8 +109,8 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          mkdir -p .e2e-artifacts
-          npm run e2e:headless -- --filter=viewlet.explorer-toolbar- 2>&1 | tee .e2e-artifacts/toolbar-${{ matrix.attempt }}.log
+          mkdir -p e2e-artifacts
+          npm run e2e:headless -- --filter=viewlet.explorer-toolbar- 2>&1 | tee e2e-artifacts/toolbar-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: Upload attempt artifacts
@@ -118,5 +118,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: toolbar-windows-${{ matrix.attempt }}
-          path: packages/e2e/.e2e-artifacts/
-          if-no-files-found: warn
+          path: packages/e2e/e2e-artifacts/
+          if-no-files-found: error
