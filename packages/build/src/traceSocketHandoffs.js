@@ -6,8 +6,8 @@ const fork = childProcess.fork
 let transfers = 0
 
 const instrument = (child) => {
-  const send = child.send
-  child.send = function (message, socket, ...args) {
+  const send = child._send
+  child._send = function (message, socket, ...args) {
     const handle = socket?._handle
     const reading = handle?.reading
     const result = send.call(this, message, socket, ...args)
