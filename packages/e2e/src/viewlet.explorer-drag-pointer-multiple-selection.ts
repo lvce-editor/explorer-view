@@ -18,8 +18,8 @@ export const test: Test = async ({ DragAndDrop, expect, Explorer, FileSystem, Lo
 
   const list = Locator('.Explorer .ListItems')
   await list.dispatchEvent('pointerdown', { bubbles: true, button: 0, clientX: 300, clientY: 100 } as any)
-  await new Promise((resolve) => setTimeout(resolve, 100))
   await list.dispatchEvent('dragstart', { bubbles: true } as any)
+  await Explorer.handleDragOverIndex(0)
   await DragAndDrop.shouldHaveDragData([
     { data: `${tmpDir}/source-folder/\n${tmpDir}/second.txt\n${tmpDir}/source.txt`, type: 'text/uri-list' },
     { data: `${tmpDir}/source-folder/\n${tmpDir}/second.txt\n${tmpDir}/source.txt`, type: 'text/plain' },
@@ -34,6 +34,7 @@ export const test: Test = async ({ DragAndDrop, expect, Explorer, FileSystem, Lo
     await FileSystem.shouldHaveFile(`${tmpDir}/destination/${file}`, file === 'source.txt' ? 'source' : 'second')
   }
   await Explorer.expandRecursively()
-  await expect(Locator(`.TreeItem[title="${tmpDir}/destination/source-folder/nested.txt"]`)).toBeVisible()
+  const movedNested = Locator(`.TreeItem[title="${tmpDir}/destination/source-folder/nested.txt"]`)
+  await expect(movedNested).toBeVisible()
   await FileSystem.shouldHaveFile(`${tmpDir}/destination/source-folder/nested.txt`, 'nested')
 }
