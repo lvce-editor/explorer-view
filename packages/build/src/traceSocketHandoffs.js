@@ -1,6 +1,13 @@
 // @ts-nocheck -- diagnostic capture of Node private native handles
 import childProcess from 'node:child_process'
+import { Server } from 'node:http'
 import { syncBuiltinESMExports } from 'node:module'
+
+const listen = Server.prototype.listen
+Server.prototype.listen = function (...args) {
+  this.once('listening', () => console.error('[server-address]', JSON.stringify({ pid: process.pid, address: this.address() })))
+  return listen.apply(this, args)
+}
 
 const fork = childProcess.fork
 let transfers = 0
