@@ -34,6 +34,7 @@ jobs:
         run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
       - run: node packages/build/src/traceWebSocketStartup.ts
+      - run: node packages/build/src/traceBrowserWebSocket.ts
       - run: npm run build
       - run: npm run build:static
       - run: npm test
@@ -76,27 +77,69 @@ jobs:
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
 
-  socket-transfer:
-    name: Windows socket transfer attempt ${{ matrix.attempt }}
+  flaky-toolbar:
+    name: Windows suite attempt ${{ matrix.attempt }}
     strategy:
       fail-fast: false
       matrix:
-        attempt: [1, 2, 3]
+        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     runs-on: windows-2025
-    timeout-minutes: 20
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
-      - run: npm ci
-      - name: Probe socket transfer before and after pausing
+      - name: Compute node modules cache key
+        id: nodeModulesCacheKey
+        run: echo "value=$(node packages/build/src/computeNodeModulesCacheKey.ts)" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/cache@v6
+        id: npm-cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-cacheNodeModules-${{ steps.nodeModulesCacheKey.outputs.value }}
+      - name: npm ci
+        run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+      - run: node packages/build/src/traceWebSocketStartup.ts
+      - run: node packages/build/src/traceBrowserWebSocket.ts
+      - run: npm run build
+      - run: npm run build:static
+      - name: install playwright dependencies
+        working-directory: ./packages/e2e
+        run: npx playwright install chromium firefox
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: e2e traced Windows suite
+        working-directory: ./packages/e2e
         shell: bash
         run: |
           set -o pipefail
-          node packages/build/src/probeSocketTransfer.ts 2>&1 | tee socket-transfer.log
-      - uses: actions/upload-artifact@v7
+          mkdir -p e2e-artifacts
+          npm run e2e:headless -- --filter=viewlet.explorer-toolbar- --trace-renderer-worker 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Preserve Chromium traces
         if: always()
+        working-directory: ./packages/e2e
+        shell: bash
+        run: mv renderer-worker-traces e2e-artifacts/chromium-traces
+      - name: e2e traced Firefox suite
+        if: always()
+        working-directory: ./packages/e2e
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run e2e:firefox:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/firefox-${{ matrix.attempt }}.log
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Upload attempt artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
         with:
-          name: socket-transfer-${{ matrix.attempt }}
-          path: socket-transfer.log
+          name: explorer-windows-suite-${{ matrix.attempt }}
+          path: |
+            packages/e2e/e2e-artifacts/
+            packages/e2e/renderer-worker-traces/
+          if-no-files-found: error
