@@ -112,6 +112,8 @@ jobs:
           mkdir -p e2e-artifacts
           npm run e2e:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
           mv renderer-worker-traces e2e-artifacts/chromium-traces
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e traced Firefox suite
         if: always()
         working-directory: ./packages/e2e
@@ -119,8 +121,6 @@ jobs:
         run: |
           set -o pipefail
           npm run e2e:firefox:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/firefox-${{ matrix.attempt }}.log
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: Upload attempt artifacts
