@@ -97,6 +97,8 @@ jobs:
       - name: npm ci
         run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
+      - run: node packages/build/src/traceStartupErrors.ts
+      - run: node packages/build/src/traceNetwork.ts
       - run: npm run build
       - run: npm run build:static
       - name: Install Playwright browsers
@@ -110,22 +112,21 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p e2e-artifacts
-          npm run e2e:headless 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
+          export NODE_OPTIONS="--import=$(node -p 'require("node:url").pathToFileURL(require("node:path").resolve("../build/src/traceSocketHandoffs.js")).href')"
+          npm run e2e:headless -- --trace-renderer-worker 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: Full Firefox suite
+      - name: Preserve Chromium traces
         if: always()
         working-directory: ./packages/e2e
         shell: bash
-        run: |
-          set -o pipefail
-          npm run e2e:firefox:headless -- --timeout=2100000 2>&1 | tee e2e-artifacts/firefox-${{ matrix.attempt }}.log
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: Upload attempt logs
+        run: mv renderer-worker-traces e2e-artifacts/chromium-traces
+      - name: Upload Chromium logs
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: explorer-fixed-suite-${{ matrix.attempt }}
-          path: packages/e2e/e2e-artifacts/
+          name: explorer-final-startup-${{ matrix.attempt }}
+          path: |
+            packages/e2e/e2e-artifacts/
+            packages/e2e/renderer-worker-traces/
           if-no-files-found: error
