@@ -72,23 +72,60 @@ jobs:
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
 
-  tcp-probe:
-    name: Windows TCP port probe ${{ matrix.attempt }}
+  fixed-windows:
+    name: Windows fixed suite attempt ${{ matrix.attempt }}
     strategy:
       fail-fast: false
       matrix:
-        attempt: [1, 2, 3]
+        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     runs-on: windows-2025
-    timeout-minutes: 15
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
-      - name: Compare client port allocation
-        shell: pwsh
-        run: ./packages/build/src/probeWindowsTcp.ps1
-      - name: Upload probe results
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+      - name: Compute node modules cache key
+        id: nodeModulesCacheKey
+        run: echo "value=$(node packages/build/src/computeNodeModulesCacheKey.ts)" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/cache@v6
+        id: npm-cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-cacheNodeModules-${{ steps.nodeModulesCacheKey.outputs.value }}
+      - name: npm ci
+        run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+      - run: npm run build
+      - run: npm run build:static
+      - name: Install Playwright browsers
+        working-directory: ./packages/e2e
+        run: npx playwright install chromium firefox
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Full Chromium suite
+        working-directory: ./packages/e2e
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p e2e-artifacts
+          npm run e2e:headless 2>&1 | tee e2e-artifacts/chromium-${{ matrix.attempt }}.log
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Full Firefox suite
+        if: always()
+        working-directory: ./packages/e2e
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run e2e:firefox:headless -- --timeout=2100000 2>&1 | tee e2e-artifacts/firefox-${{ matrix.attempt }}.log
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Upload attempt logs
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: windows-tcp-port-probe-${{ matrix.attempt }}
-          path: e2e-artifacts/
+          name: explorer-fixed-suite-${{ matrix.attempt }}
+          path: packages/e2e/e2e-artifacts/
           if-no-files-found: error
