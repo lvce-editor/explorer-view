@@ -10,7 +10,7 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
     { content: 'content 1', uri: `${tmpDir}/file1.txt` },
     { content: 'content 2', uri: `${tmpDir}/file2.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
 
   // act: handleCopy captures the focused item while refresh concurrently replaces that item

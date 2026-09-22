@@ -6,7 +6,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/before.txt`, '')
   await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await FileSystem.remove(`${tmpDir}/before.txt`)
   await FileSystem.writeFile(`${tmpDir}/after.tmp`, '')
   await Explorer.refresh()

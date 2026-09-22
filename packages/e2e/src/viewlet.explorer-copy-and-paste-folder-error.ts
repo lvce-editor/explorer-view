@@ -8,7 +8,7 @@ export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace })
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.mkdir(`${tmpDir}/a/b`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()
 

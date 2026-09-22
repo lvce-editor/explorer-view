@@ -8,7 +8,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a/b/c/d`)
   await FileSystem.writeFile(`${tmpDir}/a/b/c/d/e.txt`, 'deep')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   const topLevelFolder = Locator(`.TreeItem[title$="/a"]`)
   const parentFolder = Locator(`.TreeItem[title$="/a/b"]`)

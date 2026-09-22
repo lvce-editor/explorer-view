@@ -18,7 +18,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${tmpDir}/stress-folder/item-00008.txt` },
     { content: '', uri: `${tmpDir}/stress-folder/item-00009.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.focusFirst()

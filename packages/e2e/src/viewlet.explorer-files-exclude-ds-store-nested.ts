@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
     { content: '', uri: `${tmpDir}/images/photo.png` },
   ])
   await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   const excludedFile = Locator('.TreeItem[aria-label=".DS_Store"]')

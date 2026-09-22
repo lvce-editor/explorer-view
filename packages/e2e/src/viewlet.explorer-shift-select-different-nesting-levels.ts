@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${tmpDir}/outer/inner/deep.txt` },
     { content: '', uri: `${tmpDir}/z.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.handleClick(0)
   await Explorer.handleClick(1)
 

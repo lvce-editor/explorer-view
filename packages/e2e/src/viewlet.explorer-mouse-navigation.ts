@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/folder-2`)
   await FileSystem.mkdir(`${tmpDir}/folder-3`)
   await FileSystem.writeFile(`${tmpDir}/test.txt`, 'div')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.handleClick(-1)

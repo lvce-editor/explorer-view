@@ -6,7 +6,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
   // arrange
   await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.removeDirent()

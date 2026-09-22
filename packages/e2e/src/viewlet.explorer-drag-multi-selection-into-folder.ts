@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/target`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const opfsRoot = await navigator.storage.getDirectory()
   const aHandle = await opfsRoot.getFileHandle('a.txt', { create: true })
   const bHandle = await opfsRoot.getFileHandle('b.txt', { create: true })

@@ -9,13 +9,13 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
   await FileSystem.writeFile(`${tmpDir}/folder/file.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
   const savedState = await Explorer.saveState()
 
   // act
-  await Workspace.setPath('')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri('')
+  await Workspace.setUri(tmpDir)
   await Explorer.restoreState(savedState)
 
   // assert

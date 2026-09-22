@@ -7,7 +7,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/src`)
   await FileSystem.writeFile(`${tmpDir}/Main.elm`, 'module Main exposing (main)')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.handleDragOverIndex(0)

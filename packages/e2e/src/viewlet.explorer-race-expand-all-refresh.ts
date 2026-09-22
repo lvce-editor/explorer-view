@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.writeFile(`${tmpDir}/a/a.txt`, 'a')
   await FileSystem.mkdir(`${tmpDir}/b`)
   await FileSystem.writeFile(`${tmpDir}/b/b.txt`, 'b')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act: expandAll reads both folders while refresh concurrently replaces their rows
   await Promise.all([Explorer.expandAll(), Explorer.refresh()])

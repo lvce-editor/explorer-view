@@ -11,7 +11,7 @@ export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace })
     { content: 'content', uri: `${tmpDir}/a/file.txt` },
     { content: 'content', uri: `${tmpDir}/file.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()
   await Explorer.focusIndex(2)

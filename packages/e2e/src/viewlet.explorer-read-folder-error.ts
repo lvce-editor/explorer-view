@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Extension, FileSystem, Layout, Locato
     { content: 'content 2', uri: `${prefix}/file2.txt` },
     { content: 'content 3', uri: `${prefix}/file3.txt` },
   ])
-  await Workspace.setPath(`${prefix}/`)
+  await Workspace.setUri(`${prefix}/`)
   await SideBar.hide()
 
   // act

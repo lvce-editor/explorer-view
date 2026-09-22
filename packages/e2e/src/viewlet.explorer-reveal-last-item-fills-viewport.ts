@@ -13,7 +13,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const lastFilePath = `${tmpDir}/file-099.txt`
   const precedingFile = Locator('.TreeItem[aria-label="file-080.txt"]')
   const lastFile = Locator('.TreeItem[aria-label="file-099.txt"]')

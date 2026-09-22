@@ -12,7 +12,7 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
     { content: 'f2', uri: `${tmpDir}/a/f2.txt` },
   ])
   await FileSystem.mkdir(`${tmpDir}/b`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
   await Explorer.focusIndex(1)
   await Explorer.handleCopy()

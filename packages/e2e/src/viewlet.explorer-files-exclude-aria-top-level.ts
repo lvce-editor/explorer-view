@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
     { content: '', uri: `${tmpDir}/c.txt` },
   ])
   await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   const a = Locator('.TreeItem[aria-label="a.txt"]')
   const c = Locator('.TreeItem[aria-label="c.txt"]')

@@ -12,7 +12,7 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Icon
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder-a`)
   await FileSystem.writeFile(`${tmpDir}/file.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const extensionUri = import.meta.resolve('../fixtures/sample.icon-theme')
   await Extension.addWebExtension(extensionUri)
   await IconTheme.setIconTheme('test-icon-theme')

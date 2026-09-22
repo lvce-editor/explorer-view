@@ -7,7 +7,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   await FileSystem.mkdir(`${tmpDir}/src/generated`)
   await FileSystem.mkdir(`${tmpDir}/packages/src/generated`)
   await Settings.update({ 'files.exclude': { 'src/generated': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   const rootGenerated = Locator(`.TreeItem[title="${tmpDir}/src/generated"]`)

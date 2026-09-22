@@ -6,7 +6,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act: handleDoubleClick creates editing row on empty space, cancelEdit cancels it — both fire concurrently
   await Promise.all([Explorer.handleDoubleClick(20, 100), Explorer.cancelEdit()])

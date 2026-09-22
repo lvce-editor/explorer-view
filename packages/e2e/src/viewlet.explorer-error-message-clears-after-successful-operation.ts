@@ -6,7 +6,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/existing.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.newFile()
   await Explorer.updateEditingValue('existing.txt')
   const errorMessage = Locator('.ExplorerErrorMessage')

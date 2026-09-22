@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   await FileSystem.mkdir(`${tmpDir}/folder-a`)
   await FileSystem.mkdir(`${tmpDir}/folder-b`)
   await FileSystem.writeFile(`${tmpDir}/file.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // assert - with chevrons enabled, folders should have chevron icons
   const folderA = Locator('.TreeItem[aria-label="folder-a"]')

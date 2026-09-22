@@ -7,7 +7,7 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   for (let index = 0; index < 100; index++) {
     await FileSystem.mkdir(`${tmpDir}/parts/folder-${index}`)
   }
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.clickCurrent()
 

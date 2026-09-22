@@ -7,7 +7,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   await FileSystem.mkdir(`${tmpDir}/.git`)
   await FileSystem.mkdir(`${tmpDir}/.github`)
   await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   const gitFolder = Locator('.TreeItem[aria-label=".git"]')
   const githubFolder = Locator('.TreeItem[aria-label=".github"]')

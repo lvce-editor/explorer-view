@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'a', uri: `${tmpDir}/file-1.txt` },
     { content: 'b', uri: `${tmpDir}/file-2.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.handleDragOverIndex(-1)

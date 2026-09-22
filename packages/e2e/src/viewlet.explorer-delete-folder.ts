@@ -9,7 +9,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
   await FileSystem.mkdir(`${tmpDir}/folder-1`)
   await FileSystem.mkdir(`${tmpDir}/folder-2`)
   await FileSystem.mkdir(`${tmpDir}/folder-3`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.focusFirst()

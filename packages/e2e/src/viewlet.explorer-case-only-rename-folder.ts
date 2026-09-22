@@ -5,7 +5,7 @@ export const name = 'viewlet.explorer-case-only-rename-folder'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusFirst()
 
   await Explorer.renameDirent()

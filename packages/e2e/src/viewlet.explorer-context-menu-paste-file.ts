@@ -12,7 +12,7 @@ export const test: Test = async ({ ClipBoard, ContextMenu, expect, Explorer, Fil
     { content: 'content 1', uri: `${tmpDir}/file1.txt` },
     { content: 'content 2', uri: `${tmpDir}/file2.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.handleCopy()
 

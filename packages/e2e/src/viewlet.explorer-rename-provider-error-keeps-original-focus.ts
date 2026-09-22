@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
   await Extension.addWebExtension(uri)
   const prefix = 'sample-file-system-provider-permission://xyz'
   await FileSystem.writeFile(`${prefix}/file1.txt`, '')
-  await Workspace.setPath(`${prefix}/`)
+  await Workspace.setUri(`${prefix}/`)
   await Explorer.focusFirst()
 
   // act

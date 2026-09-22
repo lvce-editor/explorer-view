@@ -13,7 +13,7 @@ export const test: Test = async ({ ClipBoard, ContextMenu, Explorer, FileSystem,
     { content: '', uri: `${tmpDir}/folder/nested.txt` },
     { content: '', uri: `${tmpDir}/root.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()
   await Explorer.focusIndex(2)

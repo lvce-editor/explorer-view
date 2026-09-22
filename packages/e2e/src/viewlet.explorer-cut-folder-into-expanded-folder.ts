@@ -9,7 +9,7 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
   await FileSystem.mkdir(`${tmpDir}/source/nested`)
   await FileSystem.mkdir(`${tmpDir}/target`)
   await FileSystem.writeFile(`${tmpDir}/source/nested/file.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   // act

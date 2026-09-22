@@ -11,7 +11,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
     { content: 'd', uri: `${tmpDir}/a/b/c/d.txt` },
     { content: 'root', uri: `${tmpDir}/root.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
 
   // act: expandRecursively unfolds the tree, removeDirent deletes folder a — both fire concurrently

@@ -10,14 +10,14 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${tmpDir}/b.txt` },
     { content: '', uri: `${tmpDir}/c.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(1)
   const savedState = await Explorer.saveState()
 
   // act
   await FileSystem.remove(`${tmpDir}/b.txt`)
-  await Workspace.setPath('')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri('')
+  await Workspace.setUri(tmpDir)
   await Explorer.restoreState(savedState)
 
   // assert

@@ -10,7 +10,7 @@ export const test: Test = async ({ ClipBoard, ContextMenu, Explorer, FileSystem,
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.writeFile(`${tmpDir}/a/b.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   // act

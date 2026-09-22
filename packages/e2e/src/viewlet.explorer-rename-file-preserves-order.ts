@@ -23,7 +23,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${tmpDir}/eslint.config.js` },
     { content: '', uri: `${tmpDir}/package.json` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.refresh()
 
   const initialOrder = ['.nvmrc', 'eslint.config.js', 'LICENSE', 'package.json', 'README.md']

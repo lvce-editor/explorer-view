@@ -21,7 +21,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     )
   }
 
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.focusIndex(0)

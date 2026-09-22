@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
     { content: '', uri: `${tmpDir}/folder/c.txt` },
   ])
   await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   const a = Locator('.TreeItem[aria-label="a.txt"]')

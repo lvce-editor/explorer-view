@@ -13,7 +13,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'content 5', uri: `${tmpDir}/original5.txt` },
   ])
 
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // Test 1: Rename file to include brackets and parentheses
   const explorer1 = Locator('.Explorer')

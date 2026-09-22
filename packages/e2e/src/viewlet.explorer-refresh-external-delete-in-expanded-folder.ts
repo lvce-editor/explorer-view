@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'deleted', uri: `${tmpDir}/folder/deleted.txt` },
     { content: 'kept', uri: `${tmpDir}/folder/kept.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()
   const folder = Locator('.TreeItem[aria-label="folder"]')

@@ -14,7 +14,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
       uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.selectAll()

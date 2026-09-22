@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'f1', uri: `${tmpDir}/a/f1.txt` },
     { content: 'f2', uri: `${tmpDir}/b/f2.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   // act: collapseAll collapses the tree, handleClick on folder a expands it — both fire concurrently

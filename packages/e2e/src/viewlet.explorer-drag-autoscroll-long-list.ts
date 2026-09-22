@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       uri: `${tmpDir}/file-${index.toString().padStart(2, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const opfsRoot = await navigator.storage.getDirectory()
   const fileHandle = await opfsRoot.getFileHandle('file-79.txt', { create: true })
 

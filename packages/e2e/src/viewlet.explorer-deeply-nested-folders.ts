@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   }
   await FileSystem.writeFile(`${currentPath}/deep-file.txt`, 'deep')
 
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusFirst()
 
   // act

@@ -10,7 +10,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
     { content: 'content 2', uri: `${tmpDir}/file2.txt` },
   ])
 
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // Test 1: Create file with German characters
   await Explorer.newFile()

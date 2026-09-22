@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.setDeltaY(1)
   await Explorer.setDeltaY(0)
   const scrollBarThumb = Locator('.Explorer .ScrollBarThumb')
