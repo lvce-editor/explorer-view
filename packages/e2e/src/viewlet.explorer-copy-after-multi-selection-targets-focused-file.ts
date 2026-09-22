@@ -12,7 +12,7 @@ export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace })
     { content: '', uri: `${tmpDir}/c.txt` },
   ])
   await FileSystem.mkdir(`${tmpDir}/target`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.selectIndices([1, 2])
 
   // act

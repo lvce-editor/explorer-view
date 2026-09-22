@@ -9,7 +9,7 @@ export const test: Test = async ({ ClipBoard, ContextMenu, Explorer, FileSystem,
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(-1)
 
   // act

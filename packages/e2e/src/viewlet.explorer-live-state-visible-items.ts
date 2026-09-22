@@ -14,7 +14,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
     { content: 'b', uri: `${tmpDir}/b.txt` },
     { content: 'c', uri: `${tmpDir}/c.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const rows = Locator('.Explorer .TreeItem')
   await expect(rows).toHaveCount(3)
   const components = (await Command.execute('ComponentState.getComponents')) as readonly ComponentInfo[]

@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const originalName = `${'a'.repeat(80)}.txt`
   const renamedName = `${'b'.repeat(80)}.txt`
   await FileSystem.writeFile(`${tmpDir}/${originalName}`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusFirst()
 
   // act

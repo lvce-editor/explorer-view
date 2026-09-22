@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'one', uri: `${tmpDir}/one.txt` },
     { content: 'two', uri: `${tmpDir}/two.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   await Explorer.handleDropIndex([], [`${tmpDir}/one.txt`, `${tmpDir}/two.txt`], 1)

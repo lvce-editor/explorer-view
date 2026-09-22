@@ -7,7 +7,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder`)
   await FileSystem.writeFile(`${tmpDir}/folder/one.txt`, 'one')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const folder = Locator('.TreeItem[aria-label="folder"]')
   const one = Locator('.TreeItem[aria-label="one.txt"]')
   const two = Locator('.TreeItem[aria-label="two.txt"]')

@@ -27,7 +27,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   ])
 
   // act
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   const titleLanguages = '/languages'
   const treeItemLanguages = Locator(`.TreeItem[title$="${titleLanguages}"]`)

@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Main, 
     { content: 'pinned', uri: pinnedFile },
     { content: 'preview', uri: `${tmpDir}/b-preview.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   await Main.openUri(pinnedFile)
   await Explorer.handleClick(1)

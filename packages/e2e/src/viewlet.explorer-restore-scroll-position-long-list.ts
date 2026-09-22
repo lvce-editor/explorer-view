@@ -13,13 +13,13 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(150)
   const savedState = await Explorer.saveState()
 
   // act
-  await Workspace.setPath('')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri('')
+  await Workspace.setUri(tmpDir)
   await Explorer.restoreState(savedState)
 
   // assert

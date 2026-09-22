@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-scrollbar-stays-in-track'
 
 const nonZeroVerticalTranslation = /^0px [1-9]\d*px$/
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFiles(
     Array.from({ length: 100 }, (_, index) => ({
@@ -12,13 +12,16 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const thumb = Locator('.Explorer .ScrollBarThumb')
   const lastFile = Locator('.TreeItem', { hasText: 'file-099.txt' })
   const list = Locator('.Explorer .ListItems')
 
   for (let index = 0; index < 3; index++) {
-    await list.dispatchEvent('wheel', { bubbles: true, deltaMode: 0, deltaY: 10_000 } as unknown as string)
+    await Command.execute('TestFrameWork.performAction', list, 'dispatchEvent', {
+      init: { bubbles: true, deltaMode: 0, deltaY: 10_000 },
+      type: 'wheel',
+    })
     await Explorer.refresh()
     await expect(lastFile).toBeVisible()
     await expect(thumb).toBeVisible()

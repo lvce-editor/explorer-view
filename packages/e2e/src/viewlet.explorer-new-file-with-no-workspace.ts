@@ -13,12 +13,12 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${firstWorkspace}/first.txt` },
     { content: '', uri: `${secondWorkspace}/second.txt` },
   ])
-  await Workspace.setPath(firstWorkspace)
-  await Workspace.setPath('')
+  await Workspace.setUri(firstWorkspace)
+  await Workspace.setUri('')
 
   // act
   await Explorer.newFile()
-  await Workspace.setPath(secondWorkspace)
+  await Workspace.setUri(secondWorkspace)
 
   // assert
   const input = Locator('.Explorer input')

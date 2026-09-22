@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, FileSystem, Layout, Locator, SideBar,
   // arrange
   const tmpDir = await FileSystem.getTmpDir({ scheme: 'file' })
   const missingFolder = `${tmpDir}/missing-folder`
-  await Workspace.setPath(missingFolder)
+  await Workspace.setUri(missingFolder)
   await SideBar.hide()
 
   // act

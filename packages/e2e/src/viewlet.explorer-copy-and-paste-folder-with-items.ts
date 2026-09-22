@@ -12,7 +12,7 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
   await FileSystem.writeFile(`${tmpDir}/a/file.txt`, '')
   await FileSystem.mkdir(`${tmpDir}/a/c`)
   await FileSystem.mkdir(`${tmpDir}/b`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()
 

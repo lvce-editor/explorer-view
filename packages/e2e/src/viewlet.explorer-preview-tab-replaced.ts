@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'first', uri: `${tmpDir}/a-first.txt` },
     { content: 'second', uri: `${tmpDir}/b-second.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   await Explorer.handleClick(0)
   await Explorer.handleClick(1)

@@ -13,7 +13,7 @@ export const test: Test = async ({ ClipBoard, ContextMenu, Explorer, FileSystem,
     { content: 'content 2', uri: `${tmpDir}/file2.txt` },
   ])
   await FileSystem.mkdir(`${tmpDir}/target`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.openContextMenu(2)

@@ -13,7 +13,7 @@ export const test: Test = async ({ Command, ContextMenu, expect, Explorer, FileS
     { content: 'content 1', uri: firstFile },
     { content: 'content 2', uri: secondFile },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   const firstTreeItem = Locator('.TreeItem[aria-label="a.txt"]')
   const secondTreeItem = Locator('.TreeItem[aria-label="b.txt"]')

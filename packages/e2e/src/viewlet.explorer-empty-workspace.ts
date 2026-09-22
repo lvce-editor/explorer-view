@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-empty-workspace'
 
 export const test: Test = async ({ expect, Explorer, Locator, Workspace }) => {
   // act
-  await Workspace.setPath('')
+  await Workspace.setUri('')
 
   // assert
   const explorer = Locator('.Explorer')

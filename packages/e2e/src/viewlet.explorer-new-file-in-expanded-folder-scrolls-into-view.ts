@@ -13,7 +13,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   )
   await FileSystem.mkdir(`${tmpDir}/target-folder`)
   await FileSystem.writeFile(`${tmpDir}/target-folder/existing.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.clickCurrent()
 

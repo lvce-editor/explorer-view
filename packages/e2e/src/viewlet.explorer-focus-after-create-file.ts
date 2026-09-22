@@ -8,7 +8,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
   // Keep this focus test independent of browser-specific font loading behavior.
   await Settings.update({ 'editor.fontFamily': 'monospace' })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.newFile()

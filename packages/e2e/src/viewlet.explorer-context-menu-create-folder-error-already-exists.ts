@@ -8,7 +8,7 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/folder1`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(-1)
 
   // act

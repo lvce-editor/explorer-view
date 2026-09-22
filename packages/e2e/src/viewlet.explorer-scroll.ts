@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-scroll'
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFiles(
@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       uri: `${tmpDir}/file-${index.toString().padStart(2, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const file00 = Locator('.TreeItem', { hasText: 'file-00.txt' })
   const file23 = Locator('.TreeItem', { hasText: 'file-23.txt' })
   const file50 = Locator('.TreeItem', { hasText: 'file-50.txt' })
@@ -26,11 +26,14 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(file00).toHaveId('TreeItemActive')
 
   // act
-  await list.dispatchEvent('wheel', {
-    bubbles: true,
-    deltaMode: 0,
-    deltaY: 5,
-  } as unknown as string)
+  await Command.execute('TestFrameWork.performAction', list, 'dispatchEvent', {
+    init: {
+      bubbles: true,
+      deltaMode: 0,
+      deltaY: 5,
+    },
+    type: 'wheel',
+  })
 
   // Use the direct pixel value to make the fractional visual assertion deterministic
   // when the browser test bridge coalesces a small synthetic wheel event.
@@ -40,11 +43,14 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(file00).toHaveCSS('margin-top', '-5px')
 
   // act
-  await list.dispatchEvent('wheel', {
-    bubbles: true,
-    deltaMode: 0,
-    deltaY: 500,
-  } as unknown as string)
+  await Command.execute('TestFrameWork.performAction', list, 'dispatchEvent', {
+    init: {
+      bubbles: true,
+      deltaMode: 0,
+      deltaY: 500,
+    },
+    type: 'wheel',
+  })
   await Explorer.refresh()
 
   // assert
@@ -52,11 +58,14 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(file23).toBeVisible()
 
   // act
-  await list.dispatchEvent('wheel', {
-    bubbles: true,
-    deltaMode: 0,
-    deltaY: -500,
-  } as unknown as string)
+  await Command.execute('TestFrameWork.performAction', list, 'dispatchEvent', {
+    init: {
+      bubbles: true,
+      deltaMode: 0,
+      deltaY: -500,
+    },
+    type: 'wheel',
+  })
   await Explorer.refresh()
 
   // assert

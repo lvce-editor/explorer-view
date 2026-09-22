@@ -9,7 +9,7 @@ export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace })
   const root = `${tmpDir}/root with spaces [x] cafe`
   await FileSystem.mkdir(`${root}/folder`)
   await FileSystem.writeFile(`${root}/folder/file name.txt`, '')
-  await Workspace.setPath(root)
+  await Workspace.setUri(root)
   await Explorer.expandRecursively()
   await Explorer.focusIndex(1)
 

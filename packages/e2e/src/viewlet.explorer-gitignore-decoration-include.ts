@@ -15,7 +15,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   ])
 
   // act
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // assert
   const debug = Locator('.TreeItem[aria-label="debug.log"] .Label')

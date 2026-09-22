@@ -36,11 +36,5 @@
     "knip": "^6.34.0",
     "prettier": "^3.9.6",
     "typescript": "^6.0.3"
-  },
-  "overrides": {
-    "@lvce-editor/test-worker": "17.22.0",
-    "@playwright/test": "1.62.1",
-    "playwright": "1.62.1",
-    "playwright-core": "1.62.1"
   }
 }

@@ -20,7 +20,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       }),
     )
   }
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   const indices = [0, 250, 1999, 125, 1500, 1, 1998]
 

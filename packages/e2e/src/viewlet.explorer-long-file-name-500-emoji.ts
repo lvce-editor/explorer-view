@@ -13,7 +13,7 @@ export const test: Test = async ({ expect, Extension, FileSystem, Locator, Works
   await FileSystem.writeFile(`${prefix}/${fileName}`, '')
 
   // act
-  await Workspace.setPath(`${prefix}/`)
+  await Workspace.setUri(`${prefix}/`)
 
   // assert
   const treeItems = Locator('.TreeItem')

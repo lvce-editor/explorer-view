@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'f1', uri: `${tmpDir}/folder/f1.txt` },
     { content: 'root', uri: `${tmpDir}/root.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act: saveState saves scroll/expand state, handleClick expands folder — both fire concurrently
   await Promise.all([Explorer.saveState(), Explorer.handleClick(0)])

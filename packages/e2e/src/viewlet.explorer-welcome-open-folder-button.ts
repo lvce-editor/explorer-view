@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-welcome-open-folder-button'
 
 export const test: Test = async ({ expect, Explorer, Locator, Workspace }) => {
   // arrange
-  await Workspace.setPath('')
+  await Workspace.setUri('')
 
   // assert
   const openFolderButton = Locator('button[name="OpenFolder"]')

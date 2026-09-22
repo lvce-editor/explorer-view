@@ -7,7 +7,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/alpha`)
   await FileSystem.mkdir(`${tmpDir}/beta`)
   await FileSystem.writeFile(`${tmpDir}/charlie.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusLast()
 
   await Explorer.handleKeyDown(false, 'b')

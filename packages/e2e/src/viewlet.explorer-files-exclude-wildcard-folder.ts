@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   await FileSystem.mkdir(`${tmpDir}/cache-windows`)
   await FileSystem.mkdir(`${tmpDir}/cached`)
   await Settings.update({ 'files.exclude': { '**/cache-*': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   const linuxCache = Locator('.TreeItem[aria-label="cache-linux"]')
   const windowsCache = Locator('.TreeItem[aria-label="cache-windows"]')

@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'b', uri: `${tmpDir}/b.txt` },
     { content: 'c', uri: `${tmpDir}/c.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(1)
   await Explorer.toggleIndividualSelection(2)
 

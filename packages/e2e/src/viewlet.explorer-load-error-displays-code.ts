@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-load-error-displays-code'
 
 export const test: Test = async ({ expect, FileSystem, Layout, Locator, SideBar, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir({ scheme: 'file' })
-  await Workspace.setPath(`${tmpDir}/missing-folder`)
+  await Workspace.setUri(`${tmpDir}/missing-folder`)
   await SideBar.hide()
   await Layout.showSideBar()
 

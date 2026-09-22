@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
     { content: '', uri: `${tmpDir}/dist/app.js.map` },
   ])
   await Settings.update({ 'files.exclude': { '**/*.map': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   const sourceMap = Locator('.TreeItem[aria-label="app.js.map"]')

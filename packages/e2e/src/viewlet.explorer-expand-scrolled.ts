@@ -12,7 +12,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       uri: `${tmpDir}/folder-${index.toString().padStart(2, '0')}/child-${index.toString().padStart(2, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const bottomFolder = Locator('.TreeItem[aria-label="folder-98"]')
   const expandedFolder = Locator('.TreeItem[aria-expanded="true"]')
   const childItems = Locator('.TreeItem[aria-label^="child-"]')

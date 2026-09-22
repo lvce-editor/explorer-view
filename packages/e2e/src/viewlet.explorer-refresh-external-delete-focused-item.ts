@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${tmpDir}/b.txt` },
     { content: '', uri: `${tmpDir}/c.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(1)
   const deletedFile = Locator('.TreeItem[aria-label="b.txt"]')
   const nextFile = Locator('.TreeItem[aria-label="c.txt"]')

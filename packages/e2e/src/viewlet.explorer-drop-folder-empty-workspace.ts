@@ -6,7 +6,7 @@ export const skip = ['webkit']
 
 export const test: Test = async ({ DragAndDrop, expect, Explorer, Locator, Workspace }) => {
   // arrange
-  await Workspace.setPath('')
+  await Workspace.setUri('')
   const opfsRoot = await navigator.storage.getDirectory()
   const directoryHandle = await opfsRoot.getDirectoryHandle('dropped-workspace-folder', {
     create: true,

@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-create-folder-with-multiple-dots'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   await Explorer.newFolder()
   await Explorer.updateEditingValue('release..draft')

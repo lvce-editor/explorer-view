@@ -12,7 +12,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
     { content: '', uri: `${tmpDir}/folder/b.txt` },
     { content: '', uri: `${tmpDir}/folder/c.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   // act

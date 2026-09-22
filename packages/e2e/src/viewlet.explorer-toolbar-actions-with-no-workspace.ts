@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-toolbar-actions-with-no-workspace'
 
 export const test: Test = async ({ expect, Explorer, Locator, Workspace }) => {
   // arrange
-  await Workspace.setPath('')
+  await Workspace.setUri('')
 
   // act
   await Explorer.refresh()
