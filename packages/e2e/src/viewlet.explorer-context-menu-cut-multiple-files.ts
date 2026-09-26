@@ -23,12 +23,13 @@ export const test: Test = async ({ ClipBoard, ContextMenu, expect, Explorer, Fil
 
   // assert
   const cutLabels = Locator('.TreeItem .Label.LabelCut')
+  const unselectedLabel = Locator('.TreeItem[data-index="3"] .Label')
   await expect(cutLabels).toHaveCount(3)
-  await expect(Locator('.TreeItem[data-index="3"] .Label')).toHaveClass('Label')
+  await expect(unselectedLabel).toHaveClass('Label')
 
   // act - cancel the cut operation
   await KeyBoard.press('Escape')
 
   // assert
-  await expect(Locator('.TreeItem .Label.LabelCut')).toHaveCount(0)
+  await expect(cutLabels).toHaveCount(0)
 }
