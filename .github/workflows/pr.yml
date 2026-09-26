@@ -167,6 +167,9 @@ jobs:
         run: npm run e2e:firefox:headless -- --timeout=2100000
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Install navigation diagnostics
+        if: runner.os == 'Linux'
+        run: python3 .github/scripts/patch-navigation.py
       - name: e2e webkit
         working-directory: ./packages/e2e
         run: |
@@ -186,6 +189,7 @@ jobs:
         with:
           name: e2e-${{ matrix.os }}-${{ matrix.attempt }}
           path: |
+            packages/e2e/navigation-diagnostics/**
             packages/e2e/webkit.log
             packages/e2e/test-results/**
             packages/e2e/screenshots/**
