@@ -10,7 +10,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, macos-15, windows-2025]
+        os: [ubuntu-24.04]
+        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        include:
+          - os: macos-15
+            attempt: 1
+          - os: windows-2025
+            attempt: 1
     runs-on: ${{ matrix.os }}
     timeout-minutes: 180
     steps:
@@ -63,7 +69,10 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e webkit
         working-directory: ./packages/e2e
-        run: npm run e2e:webkit:headless -- --timeout=2100000
+        run: |
+          set -o pipefail
+          npm run e2e:webkit:headless -- --timeout=2100000 2>&1 | tee webkit.log
+        shell: bash
         if: runner.os != 'Windows'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
@@ -71,3 +80,14 @@ jobs:
         run: npm run measure
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Upload e2e evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-${{ matrix.os }}-${{ matrix.attempt }}
+          path: |
+            packages/e2e/webkit.log
+            packages/e2e/test-results/**
+            packages/e2e/screenshots/**
+            packages/e2e/renderer-worker-traces/**
+          if-no-files-found: warn
