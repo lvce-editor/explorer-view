@@ -7,10 +7,16 @@ export const getTitle = (state: ExplorerState): string => {
     return 'Explorer'
   }
   const isUri = URL.canParse(root)
-  const titlePath = isUri ? new URL(root).pathname : root
+  const url = isUri ? new URL(root) : undefined
+  const titlePath = url?.pathname ?? root
   const titlePathSeparator = isUri ? '/' : pathSeparator
   const normalizedTitlePath =
     titlePath.endsWith(titlePathSeparator) && titlePath !== titlePathSeparator ? titlePath.slice(0, -titlePathSeparator.length) : titlePath
   const title = Path.getBaseName(titlePathSeparator, normalizedTitlePath) || normalizedTitlePath
-  return decodeURIComponent(title)
+  const decodedTitle = decodeURIComponent(title)
+  if (url?.protocol !== 'remote-ssh:' || !url.hostname) {
+    return decodedTitle
+  }
+  const remoteSuffix = `[SSH: ${url.hostname}]`
+  return decodedTitle ? `${decodedTitle} ${remoteSuffix}` : remoteSuffix
 }
