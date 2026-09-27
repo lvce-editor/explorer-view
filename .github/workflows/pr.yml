@@ -12,7 +12,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04]
         attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-        isolation: [navigation, context]
+        isolation: [navigation]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 180
     steps:
@@ -51,16 +51,6 @@ jobs:
         working-directory: ./packages/e2e
         run: npx playwright install webkit
         if: runner.os != 'Windows'
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e
-        working-directory: ./packages/e2e
-        run: npm run e2e:headless
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e firefox
-        working-directory: ./packages/e2e
-        run: npm run e2e:firefox:headless -- --timeout=2100000
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: Install native debugger

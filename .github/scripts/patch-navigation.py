@@ -38,7 +38,7 @@ const probeNavigation = async (page, url) => {
   try {
     const { execFileSync } = await import('node:child_process');
     recordNavigation('processes', { table: execFileSync('ps', ['-eo', 'pid,ppid,stat,nlwp,rss,pcpu,comm'], { encoding: 'utf8', timeout: 3000 }) });
-    for (const pid of execFileSync('pgrep', ['-f', '/(WPEWebProcess|WebKitWebProcess)( |$)'], { encoding: 'utf8', timeout: 3000 }).trim().split('\n')) {
+    for (const pid of execFileSync('pgrep', ['-f', '/(WPEWebProcess|WebKitWebProcess|WPENetworkProcess|WebKitNetworkProcess)( |$)'], { encoding: 'utf8', timeout: 3000 }).trim().split('\n')) {
       try {
         recordNavigation('native-stack', { pid, stack: execFileSync('sudo', ['gdb', '-batch', '-ex', 'set pagination off', '-ex', 'thread apply all bt', '-p', pid], { encoding: 'utf8', timeout: 15000, maxBuffer: 8 * 1024 * 1024 }) });
       } catch (error) { recordNavigation('native-stack-error', { pid, error: String(error), stdout: String(error.stdout || '') }); }
