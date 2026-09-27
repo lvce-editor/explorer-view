@@ -68,7 +68,7 @@ test('setComponentState keeps incremental rendering for a visible label edit', a
   await setComponentState(uid, editedState)
   expect(ExplorerStates.get(uid).scheduledState.visibleExplorerItems[0].name).toBe('renamed.txt')
   const commands = await render2(uid, [])
-  expect(commands[0][0]).toBe(ViewletCommand.SetPatches)
+  expect(commands[0][0]).toBe('Viewlet.setTreePatches')
   expect(commands[0][2]).toContainEqual(expect.objectContaining({ value: 'renamed.txt' }))
 })
 
