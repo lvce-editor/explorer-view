@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 
 bundle = Path('node_modules/@lvce-editor/test-with-playwright-worker/dist/workerMain.js')
 source = bundle.read_text()
@@ -76,7 +77,17 @@ const navigateToTest = async (page, url) => {
     diagnosticAppendFileSync(`navigation-diagnostics/navigation-${process.pid}.jsonl`, navigationEvents.splice(0).map(event => JSON.stringify(event)).join('\n') + '\n');
   }
 };"""
-if source.count(original) != 1:
+restore = '--restore' in sys.argv
+if restore:
+    if source.count(replacement) == 1 and source.count(original) == 0:
+        bundle.write_text(source.replace(replacement, original))
+    elif source.count(original) != 1:
+        raise RuntimeError('Unexpected runner while restoring navigation diagnostics')
+    print(f'Restored original navigation function in {bundle}')
+elif source.count(replacement) == 1 and source.count(original) == 0:
+    print(f'Navigation diagnostics already installed in {bundle}')
+elif source.count(original) == 1:
+    bundle.write_text(source.replace(original, replacement))
+    print(f'Installed test-only navigation diagnostics in {bundle}')
+else:
     raise RuntimeError('Expected exactly one navigation function in the installed runner')
-bundle.write_text(source.replace(original, replacement))
-print(f'Installed test-only navigation diagnostics in {bundle}')

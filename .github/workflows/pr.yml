@@ -183,6 +183,9 @@ jobs:
         run: npm run measure
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Restore runner before caching
+        if: always() && runner.os == 'Linux'
+        run: python3 .github/scripts/patch-navigation.py --restore
       - name: Upload e2e evidence
         if: always()
         uses: actions/upload-artifact@v7
