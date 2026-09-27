@@ -38,6 +38,11 @@ const probeNavigation = async (page, url) => {
   try {
     const { execFileSync } = await import('node:child_process');
     recordNavigation('processes', { table: execFileSync('ps', ['-eo', 'pid,ppid,stat,nlwp,rss,pcpu,comm'], { encoding: 'utf8', timeout: 3000 }) });
+    for (const pid of execFileSync('pgrep', ['-f', '/(WPEWebProcess|WebKitWebProcess)( |$)'], { encoding: 'utf8', timeout: 3000 }).trim().split('\n')) {
+      try {
+        recordNavigation('native-stack', { pid, stack: execFileSync('sudo', ['gdb', '-batch', '-ex', 'set pagination off', '-ex', 'thread apply all bt', '-p', pid], { encoding: 'utf8', timeout: 15000, maxBuffer: 8 * 1024 * 1024 }) });
+      } catch (error) { recordNavigation('native-stack-error', { pid, error: String(error), stdout: String(error.stdout || '') }); }
+    }
     recordNavigation('memory', { meminfo: await readFile('/proc/meminfo', 'utf8') });
   } catch (error) { recordNavigation('resource-probe-error', { error: String(error) }); }
 };
@@ -49,6 +54,9 @@ const navigateToTest = async (page, url) => {
     });
     page.on('response', response => {
       if (response.request().isNavigationRequest()) recordNavigation('response', { url: navigationPath(response.url()), status: response.status() });
+    });
+    page.on('requestfinished', request => {
+      if (request.isNavigationRequest()) recordNavigation('requestfinished', { url: navigationPath(request.url()) });
     });
     page.on('requestfailed', request => recordNavigation('requestfailed', { url: navigationPath(request.url()), error: request.failure()?.errorText }));
     page.on('domcontentloaded', () => recordNavigation('domcontentloaded', { url: navigationPath(page.url()) }));
@@ -77,7 +85,28 @@ const navigateToTest = async (page, url) => {
     diagnosticAppendFileSync(`navigation-diagnostics/navigation-${process.pid}.jsonl`, navigationEvents.splice(0).map(event => JSON.stringify(event)).join('\n') + '\n');
   }
 };"""
+isolation_original = 'const runTest = async ({'
+isolation_replacement = """const runTest = async (options) => {
+  if (process.env.WEBKIT_ISOLATION !== 'context') return runTestInPage(options);
+  const browser = options.page.context().browser();
+  if (!browser) throw new Error('Missing browser for context isolation experiment');
+  const context = await browser.newContext();
+  try {
+    const page = await context.newPage();
+    return await runTestInPage({ ...options, page });
+  } finally {
+    await context.close();
+  }
+};
+const runTestInPage = async ({"""
 restore = '--restore' in sys.argv
+if restore:
+    if source.count(isolation_replacement) == 1:
+        source = source.replace(isolation_replacement, isolation_original)
+else:
+    if source.count(isolation_original) != 1:
+        raise RuntimeError('Expected one runTest function for isolation experiment')
+    source = source.replace(isolation_original, isolation_replacement)
 if restore:
     if source.count(replacement) == 1 and source.count(original) == 0:
         bundle.write_text(source.replace(replacement, original))
