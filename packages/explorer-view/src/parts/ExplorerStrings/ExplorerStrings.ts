@@ -131,8 +131,10 @@ export const cannotMoveFolderIntoSubfolderOfItself = (folderName: string): strin
   })
 }
 
-export const theNameIsNotValid = (): string => {
-  return I18nString.i18nString(UiStrings.TheNameIsNotValid)
+export const theNameIsNotValid = (name: string): string => {
+  return I18nString.i18nString(UiStrings.TheNameIsNotValid, {
+    PH1: name,
+  })
 }
 
 export const leadingOrTrailingWhitespaceDetected = (): string => {
