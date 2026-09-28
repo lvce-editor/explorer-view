@@ -26,7 +26,7 @@ test('getFileOperations - single folder', () => {
   expect(getFileOperations(root, uploadTree)).toEqual([{ path: '/test/folder', type: FileOperationType.CreateFolder }])
 })
 
-test.skip('getFileOperations - nested structure', () => {
+test('getFileOperations - nested structure', () => {
   const root = '/test'
   const blob1 = new Blob(['content1'])
   const blob2 = new Blob(['content2'])
@@ -41,10 +41,23 @@ test.skip('getFileOperations - nested structure', () => {
     },
   }
   expect(getFileOperations(root, uploadTree)).toEqual([
+    { blob: blob3, path: '/test/file3.txt', type: FileOperationType.CreateFile },
     { path: '/test/folder1', type: FileOperationType.CreateFolder },
     { blob: blob1, path: '/test/folder1/file1.txt', type: FileOperationType.CreateFile },
     { path: '/test/folder1/subfolder', type: FileOperationType.CreateFolder },
     { blob: blob2, path: '/test/folder1/subfolder/file2.txt', type: FileOperationType.CreateFile },
-    { blob: blob3, path: '/test/file3.txt', type: FileOperationType.CreateFile },
+  ])
+})
+
+test('getFileOperations - folder containing a file named blob', () => {
+  const blob = new Blob(['content'])
+  const uploadTree = {
+    folder: {
+      blob: { blob },
+    },
+  }
+  expect(getFileOperations('/test', uploadTree)).toEqual([
+    { path: '/test/folder', type: FileOperationType.CreateFolder },
+    { blob, path: '/test/folder/blob', type: FileOperationType.CreateFile },
   ])
 })
