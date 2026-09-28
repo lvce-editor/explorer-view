@@ -11,9 +11,9 @@ export const syncExpandedPaths = (state: ExplorerState): ExplorerState => {
   for (const item of items) {
     const type = normalizeDirentType(item.type)
     if (type === DirentType.DirectoryExpanded || type === DirentType.DirectoryExpanding) {
-      expandedPaths.add(item.path)
+      expandedPaths.add(item.uri)
     } else if (type === DirentType.Directory || type === DirentType.SymLinkFolder) {
-      expandedPaths.delete(item.path)
+      expandedPaths.delete(item.uri)
     }
   }
   const newExpandedPaths = [...expandedPaths]

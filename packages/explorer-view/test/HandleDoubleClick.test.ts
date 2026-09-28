@@ -31,17 +31,18 @@ test('handleDoubleClick - double click on empty area creates new file', async ()
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
     itemHeight: 20,
-    items: [{ depth: 0, name: 'testfolder', path: '/testfolder', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'testfolder', selected: false, type: DirentType.Directory, uri: '/testfolder' }],
     maxLineY: 1,
     minLineY: 0,
+    root: 'file:///new/path',
     y: 0,
   }
 
@@ -59,20 +60,19 @@ test('handleDoubleClick - double click on empty area creates new file', async ()
       {
         depth: 0,
         name: 'testfolder',
-        path: '/testfolder',
         selected: false,
         setSize: 1,
         type: DirentType.DirectoryExpanded,
+        uri: '/testfolder',
       },
       {
         depth: 1,
-        icon: '',
         name: '',
-        path: '/testfolder',
         posInSet: 1,
         selected: false,
         setSize: 2,
         type: DirentType.EditingFile,
+        uri: '/testfolder',
       },
     ],
     visibleExplorerItems: expect.anything(),
@@ -85,9 +85,10 @@ test('handleDoubleClick - double click on item returns same state', async () => 
     ...createDefaultState(),
     focusedIndex: 0,
     itemHeight: 20,
-    items: [{ depth: 0, name: 'testfolder', path: '/testfolder', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'testfolder', selected: false, type: DirentType.Directory, uri: '/testfolder' }],
     maxLineY: 1,
     minLineY: 0,
+    root: 'file:///new/path',
     y: 0,
   }
 
@@ -107,7 +108,7 @@ test.each([
     ...createDefaultState(),
     focusedIndex: 0,
     itemHeight: 20,
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type, uri: '/test.txt' }],
     maxLineY: 1,
     minLineY: 0,
     y: 0,
@@ -125,8 +126,8 @@ test('handleDoubleClick - double click on item with multiple items returns same 
     focusedIndex: 0,
     itemHeight: 20,
     items: [
-      { depth: 0, name: 'folder1', path: '/folder1', selected: false, type: DirentType.Directory },
-      { depth: 0, name: 'folder2', path: '/folder2', selected: false, type: DirentType.Directory },
+      { depth: 0, name: 'folder1', selected: false, type: DirentType.Directory, uri: '/folder1' },
+      { depth: 0, name: 'folder2', selected: false, type: DirentType.Directory, uri: '/folder2' },
     ],
     maxLineY: 2,
     minLineY: 0,
@@ -167,17 +168,18 @@ test('handleDoubleClick - double click on empty area with scrolled state creates
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
     itemHeight: 20,
-    items: [{ depth: 0, name: 'testfolder', path: '/testfolder', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'testfolder', selected: false, type: DirentType.Directory, uri: '/testfolder' }],
     maxLineY: 1,
     minLineY: 0,
+    root: 'file:///new/path',
     y: 0,
   }
 
@@ -195,20 +197,19 @@ test('handleDoubleClick - double click on empty area with scrolled state creates
       {
         depth: 0,
         name: 'testfolder',
-        path: '/testfolder',
         selected: false,
         setSize: 1,
         type: DirentType.DirectoryExpanded,
+        uri: '/testfolder',
       },
       {
         depth: 1,
-        icon: '',
         name: '',
-        path: '/testfolder',
         posInSet: 1,
         selected: false,
         setSize: 2,
         type: DirentType.EditingFile,
+        uri: '/testfolder',
       },
     ],
     visibleExplorerItems: expect.anything(),

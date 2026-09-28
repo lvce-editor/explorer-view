@@ -18,9 +18,11 @@ export const create = (
   platform: number = 0,
   assetDir: string = '',
   isTest: boolean = false,
+  applicationId?: string,
 ): any => {
   ConfirmPrompt.setIsTest(isTest)
   const state: ExplorerState = {
+    ...(applicationId !== undefined && { applicationId }),
     assetDir,
     chevronSpace: 22,
     compareSourceUri: '',
@@ -88,6 +90,7 @@ export const create = (
     version: 0,
     visibleExplorerItems: [],
     width,
+    workspaceProgressMessage: '',
     x,
     y,
   }

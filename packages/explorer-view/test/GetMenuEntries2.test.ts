@@ -15,14 +15,61 @@ test('getMenuEntries2 - root', () => {
   expect(menuEntries.length).toBeGreaterThan(0)
 })
 
+test('getMenuEntries2 - open containing folder is enabled only for file URIs', () => {
+  const directory: ExplorerItem = {
+    depth: 0,
+    name: 'folder',
+    selected: true,
+    type: DirentType.Directory,
+    uri: 'file:///workspace/folder',
+  }
+  const file: ExplorerItem = {
+    depth: 0,
+    name: 'file.txt',
+    selected: true,
+    type: DirentType.File,
+    uri: 'file:///workspace/file.txt',
+  }
+  const supportedStates: ExplorerState[] = [
+    { ...createDefaultState(), root: 'file:///workspace' },
+    { ...createDefaultState(), focusedIndex: 0, items: [directory], root: 'file:///workspace' },
+    { ...createDefaultState(), focusedIndex: 0, items: [file], root: 'file:///workspace' },
+    { ...createDefaultState(), compareSourceUri: 'file:///workspace/other.txt', focusedIndex: 0, items: [file], root: 'file:///workspace' },
+  ]
+  for (const state of supportedStates) {
+    const entry = getMenuEntries2(state).find((menuEntry) => menuEntry.id === 'openContainingFolder')
+    expect(entry?.flags).toBe(MenuItemFlags.RestoreFocus)
+  }
+
+  const unsupportedStates: ExplorerState[] = [
+    ...['html:///workspace', 'remote-ssh://host/workspace', ''].map((root) => ({ ...createDefaultState(), root })),
+    ...[
+      { ...directory, uri: 'html:///workspace/folder' },
+      { ...file, uri: 'remote-ssh://host/workspace/file.txt' },
+      { ...file, uri: '' },
+    ].map((item) => ({ ...createDefaultState(), focusedIndex: 0, items: [item], root: 'file:///workspace' })),
+    {
+      ...createDefaultState(),
+      compareSourceUri: 'file:///workspace/other.txt',
+      focusedIndex: 0,
+      items: [{ ...file, uri: 'html:///workspace/file.txt' }],
+      root: 'file:///workspace',
+    },
+  ]
+  for (const state of unsupportedStates) {
+    const entry = getMenuEntries2(state).find((menuEntry) => menuEntry.id === 'openContainingFolder')
+    expect(entry?.flags).toBe(MenuItemFlags.Disabled)
+  }
+})
+
 test('getMenuEntries2 - directory', () => {
   const uid = 1
   const item: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: true,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -39,9 +86,9 @@ test('getMenuEntries2 - file', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -58,9 +105,9 @@ test('getMenuEntries2 - file shows select for compare by default', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -78,9 +125,9 @@ test('getMenuEntries2 - file shows compare with selected for different file', ()
   const item: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -98,9 +145,9 @@ test('getMenuEntries2 - file disables write operations when file system is reado
   const item: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -119,9 +166,9 @@ test('getMenuEntries2 - directory disables write operations when file system is 
   const item: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const state: ExplorerState = {
     ...createDefaultState(),

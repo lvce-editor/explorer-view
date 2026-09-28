@@ -18,9 +18,9 @@ const getUpdatedChildren = (
   const previousTypes = new Map(previousChildren.map((child) => [child.name, normalizeDirentType(child.type)]))
   const oldName = getBaseName('/', oldUri)
   return children.toSorted(CompareDirent.compareDirent).map((child, index) => {
-    const previousName = child.path === newUri ? oldName : child.name
+    const previousName = child.uri === newUri ? oldName : child.name
     const previousType = previousTypes.get(previousName)
-    const wasExpanded = previousType === DirentType.DirectoryExpanded || (child.path === newUri && renamedChildren.length > 0)
+    const wasExpanded = previousType === DirentType.DirectoryExpanded || (child.uri === newUri && renamedChildren.length > 0)
     if (wasExpanded && child.type === DirentType.Directory) {
       return {
         ...child,

@@ -6,13 +6,14 @@ export const uploadFileSystemHandles = async (
   root: string,
   pathSeparator: string,
   fileSystemHandles: readonly FileSystemHandle[],
+  applicationId?: string,
 ): Promise<boolean> => {
   if (fileSystemHandles.length === 0) {
     return true
   }
   const uploadTree = await createUploadTree(root, fileSystemHandles)
   const fileOperations = GetFileOperations.getFileOperations(root, uploadTree)
-  await ApplyFileOperations.applyFileOperations(fileOperations)
+  await ApplyFileOperations.applyFileOperations(fileOperations, applicationId)
 
   // TODO
   // 1. in electron, use webutils.getPathForFile to see if a path is available

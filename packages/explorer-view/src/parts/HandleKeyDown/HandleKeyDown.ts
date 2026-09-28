@@ -1,12 +1,13 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as ApplicationRpc from '../ApplicationRpc/ApplicationRpc.ts'
 import { cancelTypeAhead } from '../CancelTypeAhead/CancelTypeAhead.ts'
 import { filterByFocusWord } from '../FilterByFocusWord/FilterByFocusWord.ts'
 import { isAscii } from '../IsAscii/IsAscii.ts'
 
-const typeAheadTimeout: { value?: ReturnType<typeof setTimeout> } = {}
+const typeAheadTimeouts = new Map<number, ReturnType<typeof setTimeout>>()
 
 export const handleKeyDown = (state: ExplorerState, defaultPrevented: boolean, key: string): ExplorerState => {
+  const { applicationId, uid } = state
   const { focusedIndex, focusWord, focusWordTimeout, items } = state
   if (defaultPrevented) {
     return state
@@ -22,13 +23,16 @@ export const handleKeyDown = (state: ExplorerState, defaultPrevented: boolean, k
   const itemNames = items.map((item) => item.name)
   const matchingIndex = filterByFocusWord(itemNames, focusedIndex, newFocusWord)
 
-  if (typeAheadTimeout.value) {
-    clearTimeout(typeAheadTimeout.value)
+  const previous = typeAheadTimeouts.get(uid)
+  if (previous) {
+    clearTimeout(previous)
   }
 
-  typeAheadTimeout.value = setTimeout(() => {
-    void RendererWorker.invoke('Explorer.cancelTypeAhead')
+  const timer = setTimeout(() => {
+    typeAheadTimeouts.delete(uid)
+    void ApplicationRpc.invokeForView(applicationId, uid, 'Explorer.cancelTypeAhead').catch(() => {})
   }, focusWordTimeout)
+  typeAheadTimeouts.set(uid, timer)
 
   if (matchingIndex === -1) {
     return {

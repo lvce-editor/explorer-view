@@ -3,7 +3,12 @@ import { getFileOperationsElectron } from '../GetFileOperationsElectron/GetFileO
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 
 // TODO copy files in parallel
-export const copyFilesElectron = async (root: string, fileHandles: readonly FileSystemHandle[], paths: readonly string[]): Promise<void> => {
+export const copyFilesElectron = async (
+  root: string,
+  fileHandles: readonly FileSystemHandle[],
+  paths: readonly string[],
+  applicationId?: string,
+): Promise<void> => {
   const operations = await getFileOperationsElectron(root, paths, fileHandles, PathSeparatorType.Slash)
-  await applyFileOperations(operations)
+  await applyFileOperations(operations, applicationId)
 }

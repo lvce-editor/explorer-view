@@ -31,15 +31,16 @@ test('newFile', async () => {
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/new/path'
+    'Workspace.getUri'() {
+      return 'file:///new/path'
     },
   })
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'testfolder', path: '/testfolder', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'testfolder', selected: false, type: DirentType.Directory, uri: '/testfolder' }],
     maxLineY: 1,
+    root: 'file:///new/path',
   }
 
   const result = await newFile(state)
@@ -55,20 +56,19 @@ test('newFile', async () => {
       {
         depth: 0,
         name: 'testfolder',
-        path: '/testfolder',
         selected: false,
         setSize: 1,
         type: DirentType.DirectoryExpanded,
+        uri: '/testfolder',
       },
       {
         depth: 1,
-        icon: '',
         name: '',
-        path: '/testfolder',
         posInSet: 1,
         selected: false,
         setSize: 2,
         type: DirentType.EditingFile,
+        uri: '/testfolder',
       },
     ],
     visibleExplorerItems: expect.anything(),

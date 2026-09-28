@@ -2,7 +2,7 @@ import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 
 const getMatchingOldIndex = (oldDirents: readonly ExplorerItem[], oldIndex: number, newDirent: ExplorerItem): number => {
   for (let i = oldIndex; i < oldDirents.length; i++) {
-    if (oldDirents[i].path === newDirent.path) {
+    if (oldDirents[i].uri === newDirent.uri) {
       return i
     }
   }

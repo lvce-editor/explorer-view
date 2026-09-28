@@ -8,13 +8,14 @@ export const getErrorMessagePosition = (
   itemHeight: number,
   focusedIndex: number,
   minLineY: number,
+  deltaY: number,
   depth: number,
   indent: number,
   fileIconWidth: number,
   padding: number,
   width: number,
 ): Position => {
-  const top = itemHeight * (focusedIndex - minLineY + 1)
+  const top = itemHeight * (focusedIndex - minLineY + 1) - (deltaY % itemHeight)
   const left = depth * indent + fileIconWidth + padding
   const errorMessageWidth = width - left
   return {

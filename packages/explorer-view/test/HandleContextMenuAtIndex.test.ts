@@ -13,9 +13,9 @@ test('handleContextMenuAtIndex - clears selection when target is not selected', 
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'a.txt', path: '/a.txt', selected: true, type: DirentType.File },
-      { depth: 1, name: 'b.txt', path: '/b.txt', selected: true, type: DirentType.File },
-      { depth: 1, name: 'c.txt', path: '/c.txt', selected: false, type: DirentType.File },
+      { depth: 1, name: 'a.txt', selected: true, type: DirentType.File, uri: '/a.txt' },
+      { depth: 1, name: 'b.txt', selected: true, type: DirentType.File, uri: '/b.txt' },
+      { depth: 1, name: 'c.txt', selected: false, type: DirentType.File, uri: '/c.txt' },
     ],
   }
 
@@ -34,9 +34,9 @@ test('handleContextMenuAtIndex - keeps selection when target is selected', async
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'a.txt', path: '/a.txt', selected: true, type: DirentType.File },
-      { depth: 1, name: 'b.txt', path: '/b.txt', selected: true, type: DirentType.File },
-      { depth: 1, name: 'c.txt', path: '/c.txt', selected: false, type: DirentType.File },
+      { depth: 1, name: 'a.txt', selected: true, type: DirentType.File, uri: '/a.txt' },
+      { depth: 1, name: 'b.txt', selected: true, type: DirentType.File, uri: '/b.txt' },
+      { depth: 1, name: 'c.txt', selected: false, type: DirentType.File, uri: '/c.txt' },
     ],
   }
 
@@ -56,9 +56,9 @@ test('handleContextMenuAtIndex - keeps selection when target is focused', async 
     ...createDefaultState(),
     focusedIndex: 0,
     items: [
-      { depth: 1, name: 'a', path: '/a', selected: false, type: DirentType.Directory },
-      { depth: 1, name: 'b', path: '/b', selected: true, type: DirentType.Directory },
-      { depth: 1, name: 'c', path: '/c', selected: false, type: DirentType.Directory },
+      { depth: 1, name: 'a', selected: false, type: DirentType.Directory, uri: '/a' },
+      { depth: 1, name: 'b', selected: true, type: DirentType.Directory, uri: '/b' },
+      { depth: 1, name: 'c', selected: false, type: DirentType.Directory, uri: '/c' },
     ],
   }
 

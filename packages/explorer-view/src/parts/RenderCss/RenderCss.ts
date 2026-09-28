@@ -32,12 +32,14 @@ export const renderCss = (oldState: ExplorerState, newState: ExplorerState): rea
     itemHeight,
     focusedIndex,
     minLineY,
+    deltaY,
     depth,
     indent,
     fileIconWidth,
     padding + defaultPaddingLeft + chevronSpace,
     width,
   )
-  const css = getCss(scrollBarHeight, scrollBarTop, uniqueIndents, left, top, errorMessageWidth)
+  const relative = -(deltaY % itemHeight)
+  const css = getCss(scrollBarHeight, scrollBarTop, uniqueIndents, left, top, errorMessageWidth, relative)
   return [ViewletCommand.SetCss, uid, css]
 }

@@ -4,17 +4,27 @@ import * as FocusId from '../FocusId/FocusId.ts'
 import * as GetFittingIndex from '../GetFittingIndex/GetFittingIndex.ts'
 import * as GetNewDirentsForNewDirent from '../GetNewDirentsForNewDirent/GetNewDirentsForNewDirent.ts'
 import * as GetNewDirentType from '../GetNewDirentType/GetNewDirentType.ts'
+import { revealItemVisible } from '../RevealItemVisible/RevealItemVisible.ts'
 
 export const newDirent = async (state: ExplorerState, editingType: number, editingIcon = ''): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { editingIndex, editingSessionId, excluded, focusedIndex, items, root } = state
   if (editingIndex !== -1) {
     return state
   }
   const index = GetFittingIndex.getFittingIndex(items, focusedIndex)
   const direntType = GetNewDirentType.getNewDirentType(editingType)
-  const newDirents = await GetNewDirentsForNewDirent.getNewDirentsForNewDirent(items, index, direntType, root, excluded, focusedIndex === -1)
+  const newDirents = await GetNewDirentsForNewDirent.getNewDirentsForNewDirent(
+    items,
+    index,
+    direntType,
+    root,
+    excluded,
+    focusedIndex === -1,
+    applicationId,
+  )
   const newEditingIndex = newDirents.findIndex((item) => item.type === DirentType.EditingFile || item.type === DirentType.EditingFolder)
-  return {
+  const newState = {
     ...state,
     editingIcon,
     editingIndex: newEditingIndex,
@@ -25,4 +35,10 @@ export const newDirent = async (state: ExplorerState, editingType: number, editi
     focusedIndex: newEditingIndex,
     items: newDirents,
   }
+  const { deltaY, height, itemHeight } = newState
+  const inputTop = newEditingIndex * itemHeight
+  if (inputTop < deltaY || inputTop + itemHeight > deltaY + height) {
+    return revealItemVisible(newState, newEditingIndex)
+  }
+  return newState
 }

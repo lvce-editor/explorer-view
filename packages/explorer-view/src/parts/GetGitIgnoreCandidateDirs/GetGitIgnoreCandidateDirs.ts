@@ -15,9 +15,9 @@ export const getGitIgnoreCandidateDirs = (root: string, items: readonly Explorer
   const dirs = new Set([root])
   for (const item of items) {
     if (directoryTypes.has(item.type)) {
-      dirs.add(item.path)
+      dirs.add(item.uri)
     }
-    const parent = getParentPath(item.path, pathSeparator)
+    const parent = getParentPath(item.uri, pathSeparator)
     if (parent && parent.startsWith(root)) {
       dirs.add(parent)
     }

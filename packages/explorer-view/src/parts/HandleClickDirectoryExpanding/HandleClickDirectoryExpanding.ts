@@ -10,8 +10,6 @@ export const handleClickDirectoryExpanding = async (
 ): Promise<ExplorerState> => {
   // @ts-ignore
   dirent.type = DirentType.Directory
-  // @ts-ignore
-  dirent.icon = ''
   return {
     ...state,
     focused: keepFocus,

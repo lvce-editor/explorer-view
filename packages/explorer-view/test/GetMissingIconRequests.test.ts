@@ -11,7 +11,7 @@ test('getMissingIconRequests - empty list', () => {
 })
 
 test('getMissingIconRequests - all in cache', () => {
-  const dirents: readonly ExplorerItem[] = [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }]
+  const dirents: readonly ExplorerItem[] = [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/test/file.txt' }]
   const cache: FileIconCache = {
     '/test/file.txt': 'icon',
   }
@@ -20,8 +20,8 @@ test('getMissingIconRequests - all in cache', () => {
 
 test('getMissingIconRequests - some missing', () => {
   const dirents: readonly ExplorerItem[] = [
-    { depth: 0, name: 'file1.txt', path: '/test/file1.txt', selected: false, type: DirentType.File },
-    { depth: 0, name: 'file2.txt', path: '/test/file2.txt', selected: false, type: DirentType.File },
+    { depth: 0, name: 'file1.txt', selected: false, type: DirentType.File, uri: '/test/file1.txt' },
+    { depth: 0, name: 'file2.txt', selected: false, type: DirentType.File, uri: '/test/file2.txt' },
   ]
   const cache: FileIconCache = {
     '/test/file1.txt': 'icon',
@@ -33,7 +33,7 @@ test('getMissingIconRequests - some missing', () => {
 
 test('getMissingIconRequests - expanded folder cached separately', () => {
   const dirents: readonly ExplorerItem[] = [
-    { depth: 0, name: 'packages', path: '/test/packages', selected: false, type: DirentType.DirectoryExpanded },
+    { depth: 0, name: 'packages', selected: false, type: DirentType.DirectoryExpanded, uri: '/test/packages' },
   ]
   const cache: FileIconCache = {
     '/test/packages': 'folder-icon',

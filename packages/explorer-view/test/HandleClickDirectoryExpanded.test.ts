@@ -11,9 +11,9 @@ test.skip('collapse expanded directory', async () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const index = 0
   const keepFocus = true
@@ -29,23 +29,23 @@ test('collapse expanded directory with children', async () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const child1: ExplorerItem = {
     depth: 1,
     name: 'child1',
-    path: '/test/child1',
     selected: false,
     type: DirentType.File,
+    uri: '/test/child1',
   }
   const child2: ExplorerItem = {
     depth: 1,
     name: 'child2',
-    path: '/test/child2',
     selected: false,
     type: DirentType.File,
+    uri: '/test/child2',
   }
   const state: ExplorerState = {
     ...createDefaultState(),
@@ -76,9 +76,9 @@ test('collapse expanded directory with many items preserves icons', async () => 
   const dirent = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const items = [dirent]
   const fileIconCache: Record<string, string> = { '/test/': 'folder-icon' }
@@ -88,9 +88,9 @@ test('collapse expanded directory with many items preserves icons', async () => 
     const child: ExplorerItem = {
       depth: 1,
       name: `child${i}`,
-      path: `/test/child${i}`,
       selected: false,
       type: DirentType.File,
+      uri: `/test/child${i}`,
     }
     items.push(child)
     fileIconCache[`/test/child${i}`] = `icon-${i}`
@@ -123,17 +123,17 @@ test('collapse expanded directory with scroll position adjustment', async () => 
   const otherFolder: ExplorerItem = {
     depth: 0,
     name: '1',
-    path: '/1',
     selected: false,
     type: DirentType.Directory,
+    uri: '/1',
   }
 
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const items: ExplorerItem[] = [otherFolder, dirent]
   const fileIconCache: Record<string, string> = {
@@ -146,9 +146,9 @@ test('collapse expanded directory with scroll position adjustment', async () => 
     const child: ExplorerItem = {
       depth: 1,
       name: `child${i}`,
-      path: `/test/child${i}`,
       selected: false,
       type: DirentType.File,
+      uri: `/test/child${i}`,
     }
     items.push(child)
     fileIconCache[`/test/child${i}`] = `icon-${i}`

@@ -5,6 +5,8 @@ import * as GetScrollBarSize from '../GetScrollBarSize/GetScrollBarSize.ts'
 export interface Dimensions {
   readonly height: number
   readonly width: number
+  readonly x?: number
+  readonly y?: number
 }
 
 export const handleResize = (state: ExplorerState, dimensions: Dimensions): ExplorerState => {
@@ -17,9 +19,12 @@ export const handleResize = (state: ExplorerState, dimensions: Dimensions): Expl
     minLineY: currentMinLineY,
     scrollBarHeight: currentScrollBarHeight,
     width: currentWidth,
+    x: currentX,
+    y: currentY,
   } = state
   const { height: rawHeight, width: rawWidth } = dimensions
-  if (!Number.isFinite(rawHeight) || !Number.isFinite(rawWidth)) {
+  const { x = currentX, y = currentY } = dimensions
+  if (!Number.isFinite(rawHeight) || !Number.isFinite(rawWidth) || !Number.isFinite(x) || !Number.isFinite(y)) {
     return state
   }
   const height = Math.max(0, rawHeight)
@@ -27,12 +32,14 @@ export const handleResize = (state: ExplorerState, dimensions: Dimensions): Expl
   const contentHeight = items.length * itemHeight
   const maxDeltaY = Math.max(contentHeight - height, 0)
   const newDeltaY = Math.min(Math.max(currentDeltaY, 0), maxDeltaY)
-  const minLineY = Math.round(newDeltaY / itemHeight)
+  const minLineY = Math.floor(newDeltaY / itemHeight)
   const maxLineY = GetExplorerMaxLineY.getExplorerMaxLineY(minLineY, height, itemHeight, items.length)
   const scrollBarHeight = GetScrollBarSize.getScrollBarSize(height, contentHeight, 20)
   if (
     currentHeight === height &&
     currentWidth === width &&
+    currentX === x &&
+    currentY === y &&
     currentDeltaY === newDeltaY &&
     currentMinLineY === minLineY &&
     currentMaxLineY === maxLineY &&
@@ -48,5 +55,7 @@ export const handleResize = (state: ExplorerState, dimensions: Dimensions): Expl
     minLineY,
     scrollBarHeight,
     width,
+    x,
+    y,
   }
 }

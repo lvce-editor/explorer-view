@@ -19,33 +19,30 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'folder',
-        path: '/root/folder',
         posInSet: 1,
         selected: false,
         setSize: 1,
         type: DirentType.DirectoryExpanded,
+        uri: '/root/folder',
       },
       {
         depth: 2,
-        icon: '',
         name: 'file1.txt',
-        path: '/root/folder/file1.txt',
         posInSet: 1,
         selected: false,
         setSize: 2,
         type: DirentType.File,
+        uri: '/root/folder/file1.txt',
       },
       {
         depth: 2,
-        icon: '',
         name: 'file2.txt',
-        path: '/root/folder/file2.txt',
         posInSet: 2,
         selected: false,
         setSize: 2,
         type: DirentType.File,
+        uri: '/root/folder/file2.txt',
       },
     ],
   }
@@ -57,43 +54,39 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'folder',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder',
     },
     {
       depth: 2,
-      icon: '',
       name: 'file1.txt',
-      path: '/root/folder/file1.txt',
       posInSet: 1,
       selected: false,
       setSize: 4,
       type: DirentType.File,
+      uri: '/root/folder/file1.txt',
     },
     {
       depth: 2,
-      icon: '',
       name: 'file2.txt',
-      path: '/root/folder/file2.txt',
       posInSet: 2,
       selected: false,
       setSize: 4,
       type: DirentType.File,
+      uri: '/root/folder/file2.txt',
     },
     {
       depth: 2,
-      icon: '',
       name: '',
-      path: '/root/folder',
       posInSet: 3,
       selected: false,
       setSize: 4,
       type: DirentType.File,
+      uri: '/root/folder',
     },
   ])
   expect(mockRpc.invocations).toEqual([])
@@ -109,53 +102,48 @@ test('getNewDirentsForNewDirent - folder with an expanded child', async () => {
   const items = [
     {
       depth: 2,
-      icon: '',
       name: 'sample-files',
-      path: '/root/packages/sample-files',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/packages/sample-files',
     },
     {
       depth: 3,
-      icon: '',
       name: 'files',
-      path: '/root/packages/sample-files/files',
       posInSet: 1,
       selected: true,
       setSize: 2,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/packages/sample-files/files',
     },
     ...['big_buck_bunny.mp4', 'big_buck_bunny.webm', 'echo-hereweare.ogv'].map((name, index) => ({
       depth: 4,
-      icon: '',
       name,
-      path: `/root/packages/sample-files/files/${name}`,
       posInSet: index + 1,
       selected: false,
       setSize: 3,
       type: DirentType.File,
+      uri: `/root/packages/sample-files/files/${name}`,
     })),
     {
       depth: 3,
-      icon: '',
       name: 'package.json',
-      path: '/root/packages/sample-files/package.json',
       posInSet: 2,
       selected: false,
       setSize: 2,
       type: DirentType.File,
+      uri: '/root/packages/sample-files/package.json',
     },
     {
       depth: 1,
-      icon: '',
       name: 'scripts',
-      path: '/root/scripts',
       posInSet: 2,
       selected: false,
       setSize: 2,
       type: DirentType.Directory,
+      uri: '/root/scripts',
     },
   ]
 
@@ -188,13 +176,12 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'folder',
-        path: '/root/folder',
         posInSet: 1,
         selected: false,
         setSize: 1,
         type: DirentType.DirectoryExpanded,
+        uri: '/root/folder',
       },
     ],
   }
@@ -207,23 +194,21 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
   expect(result).toEqual([
     {
       depth: 1,
-      icon: '',
       name: 'folder',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder',
     },
     {
       depth: 2,
-      icon: '',
       name: '',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: DirentType.File,
+      uri: '/root/folder',
     },
   ])
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/folder']])
@@ -250,13 +235,12 @@ test('getNewDirentsForNewDirent - no items', async () => {
   expect(result).toEqual([
     {
       depth: 0,
-      icon: '',
       name: '',
-      path: '/root',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/root',
     },
   ])
   expect(mockRpc.invocations).toEqual([])
@@ -276,13 +260,12 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file before exis
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'file1.txt',
-        path: '/root/file1.txt',
         posInSet: 1,
         selected: false,
         setSize: 1,
         type: DirentType.File,
+        uri: '/root/file1.txt',
       },
     ],
   }
@@ -294,23 +277,21 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file before exis
   expect(result).toEqual([
     {
       depth: 0,
-      icon: '',
       name: '',
-      path: '/root',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/root',
     },
     {
       depth: 0,
-      icon: '',
       name: 'file1.txt',
-      path: '/root/file1.txt',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/root/file1.txt',
     },
   ])
   expect(mockRpc.invocations).toEqual([])
@@ -326,33 +307,30 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
   const items = [
     {
       depth: 1,
-      icon: '',
       name: 'folder',
-      path: '/root/folder',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: DirentType.DirectoryExpanded,
+      uri: '/root/folder',
     },
     {
       depth: 2,
-      icon: '',
       name: 'child.txt',
-      path: '/root/folder/child.txt',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/root/folder/child.txt',
     },
     {
       depth: 1,
-      icon: '',
       name: 'file.txt',
-      path: '/root/file.txt',
       posInSet: 2,
       selected: false,
       setSize: 2,
       type: DirentType.File,
+      uri: '/root/file.txt',
     },
   ]
 
@@ -381,13 +359,12 @@ test('getNewDirentsForNewDirent - top-level new folder is inserted first', async
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'file1.txt',
-        path: '/root/file1.txt',
         posInSet: 1,
         selected: false,
         setSize: 1,
         type: DirentType.File,
+        uri: '/root/file1.txt',
       },
     ],
   }
@@ -399,23 +376,21 @@ test('getNewDirentsForNewDirent - top-level new folder is inserted first', async
   expect(result).toEqual([
     {
       depth: 0,
-      icon: '',
       name: '',
-      path: '/root',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.EditingFolder,
+      uri: '/root',
     },
     {
       depth: 0,
-      icon: '',
       name: 'file1.txt',
-      path: '/root/file1.txt',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/root/file1.txt',
     },
   ])
   expect(mockRpc.invocations).toEqual([])

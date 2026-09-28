@@ -58,6 +58,16 @@ export default defineConfig([
       'e2e/prefer-filesystem-set-files': 'error',
       '@typescript-eslint/no-unnecessary-type-assertion': 'off',
       '@typescript-eslint/no-redundant-type-constituents': 'off',
+      '@typescript-eslint/no-deprecated': [
+        'error',
+        {
+          allow: [
+            { from: 'package', name: 'setPath', package: '@lvce-editor/test-worker' },
+            { from: 'package', name: 'dispatchEvent', package: '@lvce-editor/test-worker' },
+            { from: 'package', name: 'type', package: '@lvce-editor/test-worker' },
+          ],
+        },
+      ],
     },
   },
   {

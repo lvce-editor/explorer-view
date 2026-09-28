@@ -7,9 +7,9 @@ test('canBeDroppedInto - directory', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'directory',
-    path: '/directory',
     selected: false,
     type: DirentType.Directory,
+    uri: '/directory',
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(true)
 })
@@ -18,9 +18,9 @@ test('canBeDroppedInto - directory expanded', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'directory',
-    path: '/directory',
     selected: false,
     type: DirentType.DirectoryExpanded,
+    uri: '/directory',
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(true)
 })
@@ -29,9 +29,9 @@ test('canBeDroppedInto - directory expanding', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'directory',
-    path: '/directory',
     selected: false,
     type: DirentType.DirectoryExpanding,
+    uri: '/directory',
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(true)
 })
@@ -40,9 +40,9 @@ test('canBeDroppedInto - file', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'file.txt',
-    path: '/file.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/file.txt',
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(false)
 })
@@ -51,9 +51,9 @@ test('canBeDroppedInto - unknown type', () => {
   const item: ExplorerItem = {
     depth: 0,
     name: 'unknown',
-    path: '/unknown',
     selected: false,
     type: 999_999,
+    uri: '/unknown',
   }
   expect(CanBeDroppedInto.canBeDroppedInto(item)).toBe(false)
 })

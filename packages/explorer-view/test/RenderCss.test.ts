@@ -24,6 +24,7 @@ test('renderCss - basic with empty visibleExplorerItems', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }`,
   ])
@@ -39,21 +40,20 @@ test('renderCss - with single visibleExplorerItem', () => {
       {
         ariaExpanded: undefined,
         chevron: 0,
-        className: 'file',
+        className: 'file Indent-10',
         depth: 0,
         hasEditingError: false,
         icon: 'file',
         id: '1',
-        indent: 10,
         index: 0,
         isCut: false,
         isEditing: false,
         isIgnored: false,
         name: 'test.txt',
-        path: '/test.txt',
         posInSet: 1,
         selected: false,
         setSize: 1,
+        uri: '/test.txt',
       },
     ],
   }
@@ -70,6 +70,7 @@ test('renderCss - with single visibleExplorerItem', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-10 {
@@ -88,59 +89,56 @@ test('renderCss - with multiple visibleExplorerItems with different indents', ()
       {
         ariaExpanded: 'true',
         chevron: 1,
-        className: 'folder',
+        className: 'folder Indent-0',
         depth: 0,
         hasEditingError: false,
         icon: 'folder',
         id: '1',
-        indent: 0,
         index: 0,
         isCut: false,
         isEditing: false,
         isIgnored: false,
         name: 'folder1',
-        path: '/folder1',
         posInSet: 1,
         selected: false,
         setSize: 2,
+        uri: '/folder1',
       },
       {
         ariaExpanded: undefined,
         chevron: 0,
-        className: 'file',
+        className: 'file Indent-20',
         depth: 1,
         hasEditingError: false,
         icon: 'file',
         id: '2',
-        indent: 20,
         index: 1,
         isCut: false,
         isEditing: false,
         isIgnored: false,
         name: 'file1.txt',
-        path: '/folder1/file1.txt',
         posInSet: 1,
         selected: false,
         setSize: 1,
+        uri: '/folder1/file1.txt',
       },
       {
         ariaExpanded: undefined,
         chevron: 0,
-        className: 'file',
+        className: 'file Indent-20',
         depth: 1,
         hasEditingError: false,
         icon: 'file',
         id: '3',
-        indent: 20,
         index: 2,
         isCut: false,
         isEditing: false,
         isIgnored: false,
         name: 'file2.txt',
-        path: '/folder1/file2.txt',
         posInSet: 2,
         selected: false,
         setSize: 1,
+        uri: '/folder1/file2.txt',
       },
     ],
   }
@@ -157,6 +155,7 @@ test('renderCss - with multiple visibleExplorerItems with different indents', ()
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-0 {
@@ -178,59 +177,56 @@ test('renderCss - with duplicate indents should only generate unique indent clas
       {
         ariaExpanded: undefined,
         chevron: 0,
-        className: 'file',
+        className: 'file Indent-10',
         depth: 0,
         hasEditingError: false,
         icon: 'file',
         id: '1',
-        indent: 10,
         index: 0,
         isCut: false,
         isEditing: false,
         isIgnored: false,
         name: 'file1.txt',
-        path: '/file1.txt',
         posInSet: 1,
         selected: false,
         setSize: 3,
+        uri: '/file1.txt',
       },
       {
         ariaExpanded: undefined,
         chevron: 0,
-        className: 'file',
+        className: 'file Indent-10',
         depth: 0,
         hasEditingError: false,
         icon: 'file',
         id: '2',
-        indent: 10,
         index: 1,
         isCut: false,
         isEditing: false,
         isIgnored: false,
         name: 'file2.txt',
-        path: '/file2.txt',
         posInSet: 2,
         selected: false,
         setSize: 3,
+        uri: '/file2.txt',
       },
       {
         ariaExpanded: undefined,
         chevron: 0,
-        className: 'file',
+        className: 'file Indent-20',
         depth: 0,
         hasEditingError: false,
         icon: 'file',
         id: '3',
-        indent: 20,
         index: 2,
         isCut: false,
         isEditing: false,
         isIgnored: false,
         name: 'file3.txt',
-        path: '/file3.txt',
         posInSet: 3,
         selected: false,
         setSize: 3,
+        uri: '/file3.txt',
       },
     ],
   }
@@ -247,6 +243,7 @@ test('renderCss - with duplicate indents should only generate unique indent clas
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-10 {
@@ -268,21 +265,20 @@ test('renderCss - with zero scrollBarHeight', () => {
       {
         ariaExpanded: undefined,
         chevron: 0,
-        className: 'file',
+        className: 'file Indent-5',
         depth: 0,
         hasEditingError: false,
         icon: 'file',
         id: '1',
-        indent: 5,
         index: 0,
         isCut: false,
         isEditing: false,
         isIgnored: false,
         name: 'test.txt',
-        path: '/test.txt',
         posInSet: 1,
         selected: false,
         setSize: 1,
+        uri: '/test.txt',
       },
     ],
   }
@@ -299,6 +295,7 @@ test('renderCss - with zero scrollBarHeight', () => {
 }
 .Explorer .ScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
+  top: 0;
   translate: 0px var(--ScrollBarThumbTop);
 }
 .Indent-5 {

@@ -16,7 +16,7 @@ export const handleCut = async (state: ExplorerState): Promise<ExplorerState> =>
   if (dirents.length === 0) {
     return state
   }
-  const files = dirents.map((dirent) => dirent.path)
+  const files = dirents.map((dirent) => dirent.uri)
   await ClipBoard.writeNativeFiles('cut', files)
   await RendererWorker.invoke('Focus.setFocus', WhenExpression.FocusExplorer)
   return {

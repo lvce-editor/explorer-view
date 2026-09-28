@@ -8,8 +8,8 @@ test.skip('handleClickAt - left click without shift', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
-      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+      { depth: 1, name: 'a', selected: false, type: 0, uri: '/a' },
+      { depth: 1, name: 'b', selected: false, type: 0, uri: '/b' },
     ],
   }
   const result = await handleClickAt(state, false, LeftClick, false, false, 0, 0)
@@ -20,8 +20,8 @@ test('handleClickAt - shift click with no selection uses focused item as anchor'
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
-      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
+      { depth: 1, name: 'a', selected: false, type: 0, uri: '/a' },
+      { depth: 1, name: 'b', selected: false, type: 0, uri: '/b' },
     ],
   }
   const result = await handleClickAt({ ...state, focusedIndex: 1, itemHeight: 20, maxLineY: 2 }, false, LeftClick, false, true, 0, 0)
@@ -33,9 +33,9 @@ test('handleClickAt - shift click with existing selection selects the complete r
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'a', path: '/a', selected: true, type: 0 },
-      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
-      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
+      { depth: 1, name: 'a', selected: true, type: 0, uri: '/a' },
+      { depth: 1, name: 'b', selected: false, type: 0, uri: '/b' },
+      { depth: 1, name: 'c', selected: false, type: 0, uri: '/c' },
     ],
   }
   const result = await handleClickAt({ ...state, itemHeight: 20, maxLineY: 3 }, false, LeftClick, false, true, 0, 40)

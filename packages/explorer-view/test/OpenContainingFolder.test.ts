@@ -11,7 +11,7 @@ test('openContainingFolder', async () => {
   const mockState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: 1 }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: 1, uri: '/test.txt' }],
   }
   const result = await openContainingFolder(mockState)
   expect(mockRpc.invocations).toEqual(expect.arrayContaining([['OpenNativeFolder.openNativeFolder', '']]))

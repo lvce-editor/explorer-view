@@ -15,8 +15,8 @@ test('compareWithSelected - opens diff for selected and focused file', async () 
     compareSourceUri: '/a.txt',
     focusedIndex: 1,
     items: [
-      { depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File },
-      { depth: 0, name: 'b.txt', path: '/b.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'a.txt', selected: false, type: DirentType.File, uri: '/a.txt' },
+      { depth: 0, name: 'b.txt', selected: false, type: DirentType.File, uri: '/b.txt' },
     ],
   }
 
@@ -36,7 +36,7 @@ test('compareWithSelected - ignores same focused file', async () => {
     ...createDefaultState(),
     compareSourceUri: '/a.txt',
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'a.txt', path: '/a.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'a.txt', selected: false, type: DirentType.File, uri: '/a.txt' }],
   }
 
   const result = await compareWithSelected(state)

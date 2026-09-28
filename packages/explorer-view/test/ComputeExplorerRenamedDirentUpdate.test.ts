@@ -12,23 +12,21 @@ test('computeExplorerRenamedDirentUpdate - basic rename', () => {
   const children: ExplorerItem[] = [
     {
       depth: 1,
-      icon: '',
       name: 'child1',
-      path: '/parent/child1',
       posInSet: 1,
       selected: false,
       setSize: 2,
       type: 1,
+      uri: '/parent/child1',
     },
     {
       depth: 1,
-      icon: '',
       name: 'child2',
-      path: '/parent/child2',
       posInSet: 2,
       selected: false,
       setSize: 2,
       type: 1,
+      uri: '/parent/child2',
     },
   ]
   const tree: Tree = {
@@ -72,13 +70,12 @@ test('computeExplorerRenamedDirentUpdate - deep nested rename', () => {
   const children: ExplorerItem[] = [
     {
       depth: 1,
-      icon: '',
       name: 'old',
-      path: '/old',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: 1,
+      uri: '/old',
     },
   ]
   const tree: Tree = {
@@ -127,13 +124,12 @@ test('computeExplorerRenamedDirentUpdate - preserves expanded renamed folder', (
   const children: ExplorerItem[] = [
     {
       depth: 2,
-      icon: '',
       name: 'new',
-      path: '/parent/new',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.Directory,
+      uri: '/parent/new',
     },
   ]
   const tree: Tree = {
@@ -166,53 +162,48 @@ test('computeExplorerRenamedDirentUpdate - sorts renamed parent children and upd
   const children: ExplorerItem[] = [
     {
       depth: 1,
-      icon: '',
       name: 'readme2.md',
-      path: '/readme2.md',
       posInSet: 1,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/readme2.md',
     },
     {
       depth: 1,
-      icon: '',
       name: '.nvmrc',
-      path: '/.nvmrc',
       posInSet: 2,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/.nvmrc',
     },
     {
       depth: 1,
-      icon: '',
       name: 'package.json',
-      path: '/package.json',
       posInSet: 3,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/package.json',
     },
     {
       depth: 1,
-      icon: '',
       name: 'LICENSE',
-      path: '/LICENSE',
       posInSet: 4,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/LICENSE',
     },
     {
       depth: 1,
-      icon: '',
       name: 'eslint.config.js',
-      path: '/eslint.config.js',
       posInSet: 5,
       selected: false,
       setSize: 1,
       type: DirentType.File,
+      uri: '/eslint.config.js',
     },
   ]
   const tree: Tree = {}
@@ -227,12 +218,12 @@ test('computeExplorerRenamedDirentUpdate - sorts renamed parent children and upd
         setSize: 5,
       },
       {
-        ...children[3],
+        ...children[4],
         posInSet: 2,
         setSize: 5,
       },
       {
-        ...children[4],
+        ...children[3],
         posInSet: 3,
         setSize: 5,
       },

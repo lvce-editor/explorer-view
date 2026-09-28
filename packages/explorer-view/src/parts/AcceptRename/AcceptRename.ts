@@ -15,6 +15,7 @@ import { updateTree2 } from '../UpdateTree2/UpdateTree2.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { editingIndex, editingValue, excluded, items, pathSeparator, root } = state
   const siblingFileNames = getRenameSiblingFileNames(items, editingIndex, pathSeparator)
   const editingErrorMessage = ValidateFileName2.validateFileName2(editingValue, siblingFileNames)
@@ -25,21 +26,21 @@ export const acceptRename = async (state: ExplorerState): Promise<ExplorerState>
     }
   }
   const renamedDirent = items[editingIndex]
-  const oldUri = renamedDirent.path
+  const oldUri = renamedDirent.uri
   const dirname = dirname2(oldUri)
   const newUri = join2(dirname, editingValue)
   if (oldUri === newUri) {
     return cancelEditRename(state, true)
   }
-  const operations = GetFileOperationsRename.getFileOperationsRename(renamedDirent.path, editingValue)
-  const renameErrorMessage = await ApplyFileOperations.applyFileOperations(operations)
+  const operations = GetFileOperationsRename.getFileOperationsRename(renamedDirent.uri, editingValue)
+  const renameErrorMessage = await ApplyFileOperations.applyFileOperations(operations, applicationId)
   if (renameErrorMessage) {
     return {
       ...state,
       editingErrorMessage: renameErrorMessage,
     }
   }
-  const children = await getChildDirents(pathSeparator, dirname, renamedDirent.depth - 1, excluded, root)
+  const children = await getChildDirents(pathSeparator, dirname, renamedDirent.depth - 1, excluded, root, applicationId)
   const tree = createTree(items, root)
   const update = computeExplorerRenamedDirentUpdate(root, dirname, oldUri, children, tree, newUri)
   const newTree = updateTree2(tree, update)

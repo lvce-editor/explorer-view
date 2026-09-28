@@ -39,10 +39,10 @@ const getTargetFolder = (state: ExplorerState, index: number): string => {
     throw new Error('Drop target does not exist')
   }
   if (isDirectory(item)) {
-    return item.path
+    return item.uri
   }
   if (item.type === DirentType.File) {
-    return Path.dirname(pathSeparator, item.path)
+    return Path.dirname(pathSeparator, item.uri)
   }
   throw new Error('Drop target is not a file or folder')
 }
@@ -54,7 +54,7 @@ const getTopLevelSourcePaths = (sourcePaths: readonly string[], pathSeparator: s
 
 const getMoveOperations = (state: ExplorerState, sourcePaths: readonly string[], targetFolder: string): readonly MoveOperation[] => {
   const { items, pathSeparator } = state
-  const itemByPath = new Map(items.map((item) => [item.path, item]))
+  const itemByPath = new Map(items.map((item) => [item.uri, item]))
   const existingPaths = new Set(itemByPath.keys())
   const destinationPaths = new Set<string>()
   const operations: MoveOperation[] = []
@@ -84,7 +84,7 @@ const getMoveOperations = (state: ExplorerState, sourcePaths: readonly string[],
 
 const expandTargetFolder = (items: readonly ExplorerItem[], targetFolder: string): readonly ExplorerItem[] => {
   return items.map((item) => {
-    if (item.path === targetFolder && item.type === DirentType.Directory) {
+    if (item.uri === targetFolder && item.type === DirentType.Directory) {
       return { ...item, type: DirentType.DirectoryExpanded }
     }
     return item
@@ -92,6 +92,7 @@ const expandTargetFolder = (items: readonly ExplorerItem[], targetFolder: string
 }
 
 export const handleInternalDrop = async (state: ExplorerState, sourcePaths: readonly string[], index: number): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { expandedPaths: oldExpandedPaths, isReadonly, items, preserveExpandState } = state
   if (isReadonly) {
     return state
@@ -105,7 +106,7 @@ export const handleInternalDrop = async (state: ExplorerState, sourcePaths: read
     }
   }
   for (const operation of operations) {
-    await FileSystem.rename(operation.from, operation.path)
+    await FileSystem.rename(operation.from, operation.path, applicationId)
   }
   const expandedItems = expandTargetFolder(items, targetFolder)
   const expandedPaths = preserveExpandState ? [...new Set([...oldExpandedPaths, targetFolder])] : oldExpandedPaths

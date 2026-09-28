@@ -1,9 +1,8 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ApplicationRpc from '../ApplicationRpc/ApplicationRpc.ts'
 
-export const refreshWorkspace = async (): Promise<void> => {
-  // TODO maybe pass an application id to this?
+export const refreshWorkspace = async (applicationId?: string): Promise<void> => {
   try {
-    await RendererWorker.invoke('Layout.handleWorkspaceRefresh')
+    await ApplicationRpc.invoke(applicationId, 'Layout.handleWorkspaceRefresh')
   } catch {
     // ignore
   }

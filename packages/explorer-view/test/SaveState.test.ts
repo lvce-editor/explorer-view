@@ -13,8 +13,8 @@ test('saveState - returns correct saved state', () => {
     deltaY: 0,
     expandedPaths: ['/test'],
     items: [
-      { depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Directory },
-      { depth: 1, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'test', selected: false, type: DirentType.Directory, uri: '/test' },
+      { depth: 1, name: 'file.txt', selected: false, type: DirentType.File, uri: '/test/file.txt' },
     ],
     maxLineY: 100,
     minLineY: 0,

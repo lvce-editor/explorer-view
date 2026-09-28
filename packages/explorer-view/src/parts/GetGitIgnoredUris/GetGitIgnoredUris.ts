@@ -8,18 +8,19 @@ export const getGitIgnoredUris = async (
   items: readonly ExplorerItem[],
   pathSeparator: string,
   enabled: boolean,
+  applicationId?: string,
 ): Promise<readonly string[]> => {
   if (!enabled || !root || items.length === 0) {
     return []
   }
-  const patterns = await GetGitIgnoreFiles.getGitIgnoreFiles(root, items, pathSeparator)
+  const patterns = await GetGitIgnoreFiles.getGitIgnoreFiles(root, items, pathSeparator, applicationId)
   if (patterns.length === 0) {
     return []
   }
   return items
     .filter((item) => {
-      const relativePath = GetGitIgnoreRelativePath.getGitIgnoreRelativePath(root, item.path, pathSeparator)
+      const relativePath = GetGitIgnoreRelativePath.getGitIgnoreRelativePath(root, item.uri, pathSeparator)
       return IsGitIgnored.isGitIgnored(relativePath, patterns)
     })
-    .map((item) => item.path)
+    .map((item) => item.uri)
 }

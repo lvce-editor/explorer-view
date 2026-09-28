@@ -18,9 +18,9 @@ test('handleArrowLeft - directory', () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: DirentType.Directory,
+        uri: '/test',
       },
     ],
   }
@@ -36,9 +36,9 @@ test('handleArrowLeft - file', () => {
       {
         depth: 0,
         name: 'test.txt',
-        path: '/test.txt',
         selected: false,
         type: DirentType.File,
+        uri: '/test.txt',
       },
     ],
   }
@@ -54,9 +54,9 @@ test('handleArrowLeft - symlink file', () => {
       {
         depth: 0,
         name: 'test.txt',
-        path: '/test.txt',
         selected: false,
         type: DirentType.SymLinkFile,
+        uri: '/test.txt',
       },
     ],
   }
@@ -75,9 +75,9 @@ test('handleArrowLeft - expanded directory', () => {
         expanded: true,
         level: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: DirentType.DirectoryExpanded,
+        uri: '/test',
       },
     ],
   }
@@ -93,9 +93,9 @@ test('handleArrowLeft - expanding directory', () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: DirentType.DirectoryExpanding,
+        uri: '/test',
       },
     ],
   }
@@ -111,9 +111,9 @@ test('handleArrowLeft - symlink folder', () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: DirentType.SymLinkFolder,
+        uri: '/test',
       },
     ],
   }

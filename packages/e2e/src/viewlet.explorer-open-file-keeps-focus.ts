@@ -14,7 +14,6 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
 
   // act
   await KeyBoard.press('Space')
-  await Command.execute('Timeout.sleep', 1000)
 
   // assert
   const editorTab = Locator('.MainTab[title$="file.txt"]')

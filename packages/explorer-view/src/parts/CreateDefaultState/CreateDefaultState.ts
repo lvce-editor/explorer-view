@@ -68,6 +68,7 @@ export const createDefaultState = (): ExplorerState => ({
   version: 1,
   visibleExplorerItems: [],
   width: 100,
+  workspaceProgressMessage: '',
   x: 0,
   y: 0,
 })

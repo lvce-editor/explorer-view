@@ -10,7 +10,6 @@ const createDirents = (
   excluded: readonly string[],
   pathSeparator: string,
 ): readonly any[] => {
-  const dirents = []
   const map = Object.create(null)
   for (let i = 0; i < expandedDirentPaths.length; i++) {
     const path = expandedDirentPaths[i]
@@ -19,8 +18,7 @@ const createDirents = (
       map[path] = children.value
     }
   }
-  dirents.push(...getSavedChildDirents(map, root, 1, excluded, pathSeparator, root))
-  return dirents
+  return getSavedChildDirents(map, root, 1, excluded, pathSeparator, root)
 }
 
 export const getSavedExpandedPaths = (savedState: any, root: string): readonly string[] => {
@@ -38,6 +36,7 @@ export const restoreExpandedState = async (
   root: string,
   pathSeparator: string,
   excluded: readonly string[],
+  applicationId?: string,
 ): Promise<readonly any[]> => {
   // TODO read all opened folders in parallel
   // ignore ENOENT errors
@@ -48,7 +47,7 @@ export const restoreExpandedState = async (
     return []
   }
   const expandedDirentPaths = [root, ...expandedPaths]
-  const expandedDirentChildren = await Promise.allSettled(expandedDirentPaths.map(getChildDirentsRaw))
+  const expandedDirentChildren = await Promise.allSettled(expandedDirentPaths.map((path) => getChildDirentsRaw(path, applicationId)))
   if (expandedDirentChildren[0].status === PromiseStatus.Rejected) {
     throw expandedDirentChildren[0].reason
   }

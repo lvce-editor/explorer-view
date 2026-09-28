@@ -4,8 +4,9 @@ export const name = 'viewlet.explorer-race-delete-file-new-file'
 
 export const skip = ['webkit']
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
+  await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.setFiles([
     { content: 'content 1', uri: `${tmpDir}/file1.txt` },
@@ -19,6 +20,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Promise.all([Explorer.removeDirent(), Explorer.newFile()])
 
   // assert: explorer should be stable — no crash, no stale rows
+  const file1 = Locator('.TreeItem[aria-label="file1.txt"]')
+  await expect(file1).toBeHidden()
   // file2.txt and file3.txt should always be visible
   const file2 = Locator('.TreeItem[aria-label="file2.txt"]')
   const file3 = Locator('.TreeItem[aria-label="file3.txt"]')

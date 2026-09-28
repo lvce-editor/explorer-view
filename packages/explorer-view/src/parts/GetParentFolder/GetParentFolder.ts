@@ -15,8 +15,8 @@ export const getParentFolder = (dirents: readonly ExplorerItem[], index: number,
     return root
   }
   if (isFileLike(item.type)) {
-    const parentFolder = dirname(pathSeparator, item.path)
+    const parentFolder = dirname(pathSeparator, item.uri)
     return parentFolder || root
   }
-  return item.path
+  return item.uri
 }

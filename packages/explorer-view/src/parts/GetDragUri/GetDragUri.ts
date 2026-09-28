@@ -11,8 +11,8 @@ const directoryTypes = new Set([
   DirentType.SymLinkFolder,
 ])
 
-export const getDragUri = (item: Pick<ExplorerItem, 'path' | 'type'>): string => {
-  const uri = ensureUri(item.path)
+export const getDragUri = (item: Pick<ExplorerItem, 'uri' | 'type'>): string => {
+  const uri = ensureUri(item.uri)
   if (directoryTypes.has(item.type) && !uri.endsWith('/')) {
     return `${uri}/`
   }

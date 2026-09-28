@@ -2,13 +2,10 @@ import { test, expect } from '@jest/globals'
 import { createUploadTree } from '../src/parts/CreateUploadTree/CreateUploadTree.ts'
 
 test('createUploadTree with files', async (): Promise<void> => {
+  const blob = new Blob(['file content'])
   const fileHandle = {
-    async getFile(): Promise<{ text(): Promise<string> }> {
-      return {
-        async text(): Promise<string> {
-          return 'file content'
-        },
-      }
+    async getFile(): Promise<Blob> {
+      return blob
     },
     isSameEntry: async (): Promise<boolean> => false,
     kind: 'file',
@@ -17,18 +14,15 @@ test('createUploadTree with files', async (): Promise<void> => {
 
   const result = await createUploadTree('root', [fileHandle])
   expect(result).toEqual({
-    'test.txt': 'file content',
+    'test.txt': { blob },
   })
 })
 
 test('createUploadTree with directories', async (): Promise<void> => {
+  const blob = new Blob(['file content'])
   const fileHandle = {
-    async getFile(): Promise<{ text(): Promise<string> }> {
-      return {
-        async text(): Promise<string> {
-          return 'file content'
-        },
-      }
+    async getFile(): Promise<Blob> {
+      return blob
     },
     isSameEntry: async (): Promise<boolean> => false,
     kind: 'file',
@@ -51,19 +45,17 @@ test('createUploadTree with directories', async (): Promise<void> => {
   const result = await createUploadTree('root', [directoryHandle])
   expect(result).toEqual({
     dir: {
-      'test.txt': 'file content',
+      'test.txt': { blob },
     },
   })
 })
 
 test('createUploadTree with mixed content', async (): Promise<void> => {
+  const blob1 = new Blob(['file content 1'])
+  const blob2 = new Blob(['file content 2'])
   const fileHandle1 = {
-    async getFile(): Promise<{ text(): Promise<string> }> {
-      return {
-        async text(): Promise<string> {
-          return 'file content 1'
-        },
-      }
+    async getFile(): Promise<Blob> {
+      return blob1
     },
     isSameEntry: async (): Promise<boolean> => false,
     kind: 'file',
@@ -71,12 +63,8 @@ test('createUploadTree with mixed content', async (): Promise<void> => {
   } as FileSystemHandle
 
   const fileHandle2 = {
-    async getFile(): Promise<{ text(): Promise<string> }> {
-      return {
-        async text(): Promise<string> {
-          return 'file content 2'
-        },
-      }
+    async getFile(): Promise<Blob> {
+      return blob2
     },
     isSameEntry: async (): Promise<boolean> => false,
     kind: 'file',
@@ -99,8 +87,8 @@ test('createUploadTree with mixed content', async (): Promise<void> => {
   const result = await createUploadTree('root', [fileHandle1, directoryHandle])
   expect(result).toEqual({
     dir: {
-      'test2.txt': 'file content 2',
+      'test2.txt': { blob: blob2 },
     },
-    'test1.txt': 'file content 1',
+    'test1.txt': { blob: blob1 },
   })
 })

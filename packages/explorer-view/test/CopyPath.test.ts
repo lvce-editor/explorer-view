@@ -15,7 +15,7 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/test/file.txt' }],
   }
 
   const result = await copyPath(state)
@@ -35,9 +35,9 @@ test('copyPath - writes absolute path of focused dirent when scrolled', async ()
     ...createDefaultState(),
     focusedIndex: 1,
     items: [
-      { depth: 0, name: 'first.txt', path: '/test/first.txt', selected: false, type: DirentType.File },
-      { depth: 0, name: 'focused.txt', path: '/test/focused.txt', selected: false, type: DirentType.File },
-      { depth: 0, name: 'last.txt', path: '/test/last.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'first.txt', selected: false, type: DirentType.File, uri: '/test/first.txt' },
+      { depth: 0, name: 'focused.txt', selected: false, type: DirentType.File, uri: '/test/focused.txt' },
+      { depth: 0, name: 'last.txt', selected: false, type: DirentType.File, uri: '/test/last.txt' },
     ],
     minLineY: 1,
   }
@@ -78,7 +78,7 @@ test('copyPath - writes workspace path when focused index is out of bounds', asy
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 2,
-    items: [{ depth: 0, name: 'file.txt', path: 'memfs:///workspace/file.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: 'memfs:///workspace/file.txt' }],
     root: 'memfs:///workspace',
   }
 

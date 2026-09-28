@@ -20,9 +20,9 @@ test('handleKeyDown - with items', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'apple', path: '/apple', selected: false, type: 0 },
-      { depth: 0, name: 'banana', path: '/banana', selected: false, type: 0 },
-      { depth: 0, name: 'cherry', path: '/cherry', selected: false, type: 0 },
+      { depth: 0, name: 'apple', selected: false, type: 0, uri: '/apple' },
+      { depth: 0, name: 'banana', selected: false, type: 0, uri: '/banana' },
+      { depth: 0, name: 'cherry', selected: false, type: 0, uri: '/cherry' },
     ],
   }
   const newState = handleKeyDown(state, false, 'b')
@@ -34,9 +34,9 @@ test('handleKeyDown - no match', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'apple', path: '/apple', selected: false, type: 0 },
-      { depth: 0, name: 'banana', path: '/banana', selected: false, type: 0 },
-      { depth: 0, name: 'cherry', path: '/cherry', selected: false, type: 0 },
+      { depth: 0, name: 'apple', selected: false, type: 0, uri: '/apple' },
+      { depth: 0, name: 'banana', selected: false, type: 0, uri: '/banana' },
+      { depth: 0, name: 'cherry', selected: false, type: 0, uri: '/cherry' },
     ],
   }
   const newState = handleKeyDown(state, false, 'x')
@@ -48,9 +48,9 @@ test('handleKeyDown - multiple characters', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'apple', path: '/apple', selected: false, type: 0 },
-      { depth: 0, name: 'banana', path: '/banana', selected: false, type: 0 },
-      { depth: 0, name: 'cherry', path: '/cherry', selected: false, type: 0 },
+      { depth: 0, name: 'apple', selected: false, type: 0, uri: '/apple' },
+      { depth: 0, name: 'banana', selected: false, type: 0, uri: '/banana' },
+      { depth: 0, name: 'cherry', selected: false, type: 0, uri: '/cherry' },
     ],
   }
   let newState = handleKeyDown(state, false, 'b')
@@ -69,9 +69,9 @@ test('handleKeyDown - supports uppercase keys', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'apple', path: '/apple', selected: false, type: 0 },
-      { depth: 0, name: 'banana', path: '/banana', selected: false, type: 0 },
-      { depth: 0, name: 'cherry', path: '/cherry', selected: false, type: 0 },
+      { depth: 0, name: 'apple', selected: false, type: 0, uri: '/apple' },
+      { depth: 0, name: 'banana', selected: false, type: 0, uri: '/banana' },
+      { depth: 0, name: 'cherry', selected: false, type: 0, uri: '/cherry' },
     ],
   }
   const newState = handleKeyDown(state, false, 'B')

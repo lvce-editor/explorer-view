@@ -5,9 +5,9 @@ import { sortExplorerItems } from '../src/parts/SortExplorerItems/SortExplorerIt
 const createItem = (name: string, type: number): any => ({
   depth: 1,
   name,
-  path: `/test/${name}`,
   selected: false,
   type,
+  uri: `/test/${name}`,
 })
 
 test('sorts folders before files', () => {
@@ -44,6 +44,38 @@ test('sorts numeric names correctly', () => {
   expect(sorted[0].name).toBe('1')
   expect(sorted[1].name).toBe('2')
   expect(sorted[2].name).toBe('10')
+})
+
+test('sorts files alphabetically ignoring case', () => {
+  const names = ['README.md', 'package.json', 'LICENSE', 'eslint.config.js', 'package-lock.json', '.gitignore']
+  const items = names.map((name) => createItem(name, DirentType.File))
+  const sorted = sortExplorerItems(items)
+  expect(sorted.map((item) => item.name)).toEqual(['.gitignore', 'eslint.config.js', 'LICENSE', 'package-lock.json', 'package.json', 'README.md'])
+})
+
+test('sorts folders ignoring case and keeps them before files', () => {
+  const items = [
+    createItem('a.txt', DirentType.File),
+    createItem('Zebra', DirentType.Directory),
+    createItem('packages', DirentType.Directory),
+    createItem('Build', DirentType.Directory),
+    createItem('extensions', DirentType.SymLinkFolder),
+  ]
+  const sorted = sortExplorerItems(items)
+  expect(sorted.map((item) => item.name)).toEqual(['Build', 'extensions', 'packages', 'Zebra', 'a.txt'])
+})
+
+test('sorts numeric and special-character names ignoring case', () => {
+  const names = ['File10.txt', 'file2.txt', 'File1.txt', 'b_config.txt', 'A_config.txt']
+  const sorted = sortExplorerItems(names.map((name) => createItem(name, DirentType.File)))
+  expect(sorted.map((item) => item.name)).toEqual(['A_config.txt', 'b_config.txt', 'File1.txt', 'file2.txt', 'File10.txt'])
+})
+
+test('keeps case-only ties deterministic', () => {
+  const names = ['a.txt', 'A.txt']
+  const items = names.map((name) => createItem(name, DirentType.File))
+  expect(sortExplorerItems(items).map((item) => item.name)).toEqual(['A.txt', 'a.txt'])
+  expect(sortExplorerItems(items.toReversed()).map((item) => item.name)).toEqual(['A.txt', 'a.txt'])
 })
 
 test('sorts names with leading numbers and text consistently', () => {

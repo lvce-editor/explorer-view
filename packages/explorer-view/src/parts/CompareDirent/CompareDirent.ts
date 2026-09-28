@@ -16,7 +16,9 @@ const compareDirentType = (direntA: RawDirent, direntB: RawDirent): number => {
 }
 
 const compareDirentName = (direntA: RawDirent, direntB: RawDirent): number => {
-  return Compare.compareStringNumeric(direntA.name, direntB.name)
+  return (
+    Compare.compareStringNumeric(direntA.name.toLowerCase(), direntB.name.toLowerCase()) || Compare.compareStringNumeric(direntA.name, direntB.name)
+  )
 }
 
 export const compareDirent = (direntA: RawDirent, direntB: RawDirent): number => {

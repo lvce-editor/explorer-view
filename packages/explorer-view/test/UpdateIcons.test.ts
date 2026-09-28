@@ -20,9 +20,9 @@ test('updateIcons - should update icons for visible items', async () => {
   const state: ExplorerState = {
     ...defaultState,
     items: [
-      { depth: 1, name: 'file1.ts', path: '/test/file1.ts', selected: false, type: 1 },
-      { depth: 1, name: 'file2.ts', path: '/test/file2.ts', selected: false, type: 1 },
-      { depth: 1, name: 'file3.ts', path: '/test/file3.ts', selected: false, type: 1 },
+      { depth: 1, name: 'file1.ts', selected: false, type: 1, uri: '/test/file1.ts' },
+      { depth: 1, name: 'file2.ts', selected: false, type: 1, uri: '/test/file2.ts' },
+      { depth: 1, name: 'file3.ts', selected: false, type: 1, uri: '/test/file3.ts' },
     ],
     maxLineY: 2,
     minLineY: 0,

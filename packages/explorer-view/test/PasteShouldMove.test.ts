@@ -16,7 +16,7 @@ test('pasteShouldMove should be true after cut operation', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: DirentType.File, uri: '/test.txt' }],
   }
 
   const result = await handleCut(state)
@@ -36,7 +36,7 @@ test('pasteShouldMove should be false after copy operation', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: DirentType.File, uri: '/test.txt' }],
   }
 
   const result = await handleCopy(state)

@@ -9,7 +9,7 @@ test('copyRelativePath - copies relative path of focused dirent', async (): Prom
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/test/file.txt' }],
   }
   using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
@@ -33,7 +33,7 @@ test('copyRelativePath - slices first character from path', async (): Promise<vo
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file.txt', path: '/single', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/single' }],
   }
   using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
@@ -46,7 +46,7 @@ test('copyRelativePath - handles nested paths correctly', async (): Promise<void
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file.txt', path: '/a/b/c/file.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/a/b/c/file.txt' }],
   }
   using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},
@@ -59,7 +59,7 @@ test('copyRelativePath - strips workspace root prefix from runtime paths', async
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file.txt', path: 'memfs:///workspace/a/b.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: 'memfs:///workspace/a/b.txt' }],
     pathSeparator: '/',
     root: 'memfs:///workspace',
   }
@@ -74,7 +74,7 @@ test('copyRelativePath - returns state after writing to clipboard', async (): Pr
   const state: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file.txt', path: '/test/file.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/test/file.txt' }],
   }
   using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.writeText'() {},

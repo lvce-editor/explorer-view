@@ -1,6 +1,6 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
+import * as ApplicationRpc from '../ApplicationRpc/ApplicationRpc.ts'
 import { copyFilesElectron } from '../CopyFilesElectron/CopyFilesElectron.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 import { isDirectoryHandle } from '../IsDirectoryHandle/IsDirectoryHandle.ts'
@@ -10,14 +10,15 @@ const mergeDirents = (oldDirents: readonly ExplorerItem[], newDirents: readonly 
   return newDirents
 }
 
-const getMergedDirents = async (root: any, pathSeparator: any, dirents: any, excluded: readonly string[]): Promise<any> => {
-  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, root, 0, excluded, root)
+const getMergedDirents = async (root: any, pathSeparator: any, dirents: any, excluded: readonly string[], applicationId?: string): Promise<any> => {
+  const childDirents = await GetChildDirents.getChildDirents(pathSeparator, root, 0, excluded, root, applicationId)
   const mergedDirents = mergeDirents(dirents, childDirents)
   return mergedDirents
 }
 
 const openDroppedDirectoryAsWorkspace = async (state: ExplorerState, path: string): Promise<ExplorerState> => {
-  await RendererWorker.invoke('Workspace.setPath', path)
+  const { applicationId } = state
+  await ApplicationRpc.invoke(applicationId, 'Workspace.setPath', path)
   const updated = await LoadContent.loadContent(state, undefined)
   return {
     ...updated,
@@ -48,6 +49,7 @@ export const handleDrop = async (
   fileHandles: readonly FileSystemHandle[],
   paths: readonly string[],
 ): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { excluded, items, pathSeparator, root } = state
   const droppedDirectoryPath = getFirstDroppedDirectoryPath(state, fileHandles, paths)
   if (droppedDirectoryPath) {
@@ -59,8 +61,8 @@ export const handleDrop = async (
       dropTargets: [],
     }
   }
-  await copyFilesElectron(root, fileHandles, paths)
-  const mergedDirents = await getMergedDirents(root, pathSeparator, items, excluded)
+  await copyFilesElectron(root, fileHandles, paths, applicationId)
+  const mergedDirents = await getMergedDirents(root, pathSeparator, items, excluded, applicationId)
   return {
     ...state,
     dropTargets: [],

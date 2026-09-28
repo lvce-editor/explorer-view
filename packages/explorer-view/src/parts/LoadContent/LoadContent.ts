@@ -9,7 +9,7 @@ import * as GetRestoredDeltaY from '../GetRestoredDeltaY/GetRestoredDeltaY.ts'
 import * as GetSavedRoot from '../GetSavedRoot/GetSavedRoot.ts'
 import { getScheme } from '../GetScheme/GetScheme.ts'
 import * as GetSettings from '../GetSettings/GetSettings.ts'
-import * as GetWorkspacePath from '../GetWorkspacePath/GetWorkspacePath.ts'
+import * as GetWorkspaceUri from '../GetWorkspaceUri/GetWorkspaceUri.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import * as RestoreExpandedState from '../RestoreExpandedState/RestoreExpandedState.ts'
 
@@ -33,16 +33,17 @@ const getExpandedPaths = (
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
+  const { applicationId } = state
   const { assetDir, expandedPaths: currentExpandedPaths, height, itemHeight, platform, root: currentRoot } = state
   const { confirmDelete, excluded, gitIgnoreDecorations, preserveExpandState, sourceControlDecorations, useChevrons } =
     await GetSettings.getSettings()
-  const workspacePath = await GetWorkspacePath.getWorkspacePath()
-  const root = GetSavedRoot.getSavedRoot(savedState, workspacePath)
+  const workspaceUri = await GetWorkspaceUri.getWorkspaceUri(applicationId)
+  const root = GetSavedRoot.getSavedRoot(savedState, workspaceUri)
   const expandedPaths = getExpandedPaths(savedState, root, currentRoot, currentExpandedPaths, preserveExpandState)
   try {
     const pathSeparator = PathSeparatorType.Slash
-    const isReadonly = root === '' ? false : await FileSystem.isReadonly(root)
-    const restoredDirents = await RestoreExpandedState.restoreExpandedState(expandedPaths, root, pathSeparator, excluded)
+    const isReadonly = root === '' ? false : await FileSystem.isReadonly(root, applicationId)
+    const restoredDirents = await RestoreExpandedState.restoreExpandedState(expandedPaths, root, pathSeparator, excluded, applicationId)
     const rawDeltaY = GetRestoredDeltaY.getRestoredDeltaY(savedState)
     const maxDeltaY = Math.max(restoredDirents.length * itemHeight - height, 0)
     const deltaY = Math.min(Math.max(rawDeltaY, 0), maxDeltaY)
@@ -52,12 +53,19 @@ export const loadContent = async (state: ExplorerState, savedState: any): Promis
     const decorations = await GetFileDecorations.getFileDecorations(
       scheme,
       root,
-      restoredDirents.filter((item: any) => item.depth === 1).map((item: any) => item.path),
+      restoredDirents.filter((item: any) => item.depth === 1).map((item: any) => item.uri),
       sourceControlDecorations,
       assetDir,
       platform,
+      applicationId,
     )
-    const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, restoredDirents, pathSeparator, gitIgnoreDecorations)
+    const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(
+      root,
+      restoredDirents,
+      pathSeparator,
+      gitIgnoreDecorations,
+      applicationId,
+    )
     return {
       ...state,
       confirmDelete,

@@ -23,7 +23,7 @@ test('pointer down renders drag data for the pointed explorer item', async () =>
   const oldState: ExplorerState = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file.txt', path: '/workspace/file.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/workspace/file.txt' }],
     uid,
   }
   ExplorerStates.set(uid, oldState, oldState)
@@ -54,8 +54,8 @@ test('pointer up rearms drag data rendering for repeated drags', async () => {
     ...createDefaultState(),
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'first.txt', path: '/workspace/first.txt', selected: false, type: DirentType.File },
-      { depth: 0, name: 'second.txt', path: '/workspace/second.txt', selected: false, type: DirentType.File },
+      { depth: 0, name: 'first.txt', selected: false, type: DirentType.File, uri: '/workspace/first.txt' },
+      { depth: 0, name: 'second.txt', selected: false, type: DirentType.File, uri: '/workspace/second.txt' },
     ],
     uid,
   }
@@ -95,8 +95,8 @@ test('pointer down on a selected item renders drag data for the full effective s
     ...createDefaultState(),
     focusedIndex: 0,
     items: [
-      { depth: 0, name: 'focused.txt', path: '/workspace/focused.txt', selected: false, type: DirentType.File },
-      { depth: 0, name: 'selected.txt', path: '/workspace/selected.txt', selected: true, type: DirentType.File },
+      { depth: 0, name: 'focused.txt', selected: false, type: DirentType.File, uri: '/workspace/focused.txt' },
+      { depth: 0, name: 'selected.txt', selected: true, type: DirentType.File, uri: '/workspace/selected.txt' },
     ],
     uid,
   }

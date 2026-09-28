@@ -6,9 +6,9 @@ import { selectAll } from '../src/parts/SelectAll/SelectAll.ts'
 const createItem = (name: string, selected: boolean): ExplorerItem => ({
   depth: 0,
   name,
-  path: `/${name}`,
   selected,
   type: 0,
+  uri: `/${name}`,
 })
 
 test('selectAll', () => {

@@ -22,11 +22,11 @@ test('diff2 - different states', () => {
   const uid = 2
   const oldState: ExplorerState = {
     ...createDefaultState(),
-    items: [{ depth: 0, name: 'file1.txt', path: '/file1.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file1.txt', selected: false, type: DirentType.File, uri: '/file1.txt' }],
   }
   const newState: ExplorerState = {
     ...oldState,
-    items: [{ depth: 0, name: 'file2.txt', path: '/file2.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file2.txt', selected: false, type: DirentType.File, uri: '/file2.txt' }],
   }
   ExplorerStates.set(uid, oldState, newState)
   const result = diff2(uid)

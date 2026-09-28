@@ -28,7 +28,7 @@ test('copies a native Electron file into the focused workspace folder', async ()
   const state = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'src', path: '/workspace/src', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'src', selected: false, type: DirentType.Directory, uri: '/workspace/src' }],
     platform: PlatformType.Electron,
     root: '/workspace',
   }

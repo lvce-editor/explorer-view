@@ -86,9 +86,9 @@ test('should use the current item count when the previous maximum is stale', () 
     height: 100,
     itemHeight: 20,
     items: [
-      { depth: 0, name: 'a', path: '/a', selected: false, type: DirentType.Directory },
-      { depth: 0, name: 'b', path: '/b', selected: false, type: DirentType.Directory },
-      { depth: 1, name: 'a', path: '/b/a', selected: false, type: DirentType.Directory },
+      { depth: 0, name: 'a', selected: false, type: DirentType.Directory, uri: '/a' },
+      { depth: 0, name: 'b', selected: false, type: DirentType.Directory, uri: '/b' },
+      { depth: 1, name: 'a', selected: false, type: DirentType.Directory, uri: '/b/a' },
     ],
     maxLineY: 2,
     minLineY: 0,

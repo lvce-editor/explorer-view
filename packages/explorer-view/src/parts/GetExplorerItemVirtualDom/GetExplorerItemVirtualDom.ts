@@ -4,6 +4,7 @@ import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetChevronVirtualDom from '../GetChevronVirtualDom/GetChevronVirtualDom.ts'
 import * as GetFileIconVirtualDom from '../GetFileIconVirtualDom/GetFileIconVirtualDom.ts'
+import { getIndentFromClassName } from '../GetIndentFromClassName/GetIndentFromClassName.ts'
 import * as GetInputDom from '../GetInputDom/GetInputDom.ts'
 import * as GetLabelDom from '../GetLabelDom/GetLabelDom.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
@@ -24,19 +25,19 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem, editingSess
     hasEditingError,
     icon,
     id,
-    indent,
     index,
     isCut,
     isEditing,
     isIgnored,
     name,
-    path,
     posInSet,
     selected,
     setSize,
+    uri,
   } = item
   const chevronDom = GetChevronVirtualDom.getChevronVirtualDom(chevron)
   const fileIconDom = icon ? [GetFileIconVirtualDom.getFileIconVirtualDom(icon)] : []
+  const indent = getIndentFromClassName(className)
   return [
     {
       ariaExpanded,
@@ -53,7 +54,7 @@ export const getExplorerItemVirtualDom = (item: VisibleExplorerItem, editingSess
       // Keep the item aligned even when the generated indent stylesheet is applied late.
       paddingLeft: indent,
       role: AriaRoles.TreeItem,
-      title: getTitle(path),
+      title: getTitle(uri),
       type: VirtualDomElements.Div,
     },
     ...chevronDom,

@@ -11,9 +11,9 @@ const createScrollState = (): ExplorerState => ({
   items: Array.from({ length: 50 }, (_, index) => ({
     depth: 0,
     name: `file-${index}.txt`,
-    path: `/file-${index}.txt`,
     selected: false,
     type: 1,
+    uri: `/file-${index}.txt`,
   })),
   scrollBarActive: true,
   y: 10,

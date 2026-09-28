@@ -10,6 +10,7 @@ import * as Path from '../Path/Path.ts'
 import { refresh } from '../Refresh/Refresh.ts'
 
 export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeFilesResult): Promise<ExplorerState> => {
+  const { applicationId } = state
   // TODO handle pasting files into nested folder
   // TODO handle pasting files into symlink
   // TODO handle pasting files into broken symlink
@@ -19,11 +20,11 @@ export const handlePasteCopy = async (state: ExplorerState, nativeFiles: NativeF
   // TODO use file operations and bulk edit
   const { focusedIndex, items, pathSeparator, root } = state
   const targetUri = getParentFolder(items, focusedIndex, root, pathSeparator)
-  const targetDirents = await FileSystem.readDirWithFileTypes(targetUri)
+  const targetDirents = await FileSystem.readDirWithFileTypes(targetUri, applicationId)
   const existingUris = targetDirents.map((dirent) => Path.join2(targetUri, dirent.name))
   const operations = getFileOperationsCopy(targetUri, existingUris, nativeFiles.files)
   // TODO handle error?
-  await ApplyFileOperations.applyFileOperations(operations)
+  await ApplyFileOperations.applyFileOperations(operations, applicationId)
 
   // TODO use refreshExplorer with the paths that have been affected by file operations
   // TODO only update folder at which level it changed

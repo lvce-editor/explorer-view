@@ -11,7 +11,7 @@ test('opens a terminal in the focused directory', async () => {
   const state = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'folder', path: 'file:///workspace/folder', selected: true, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'folder', selected: true, type: DirentType.Directory, uri: 'file:///workspace/folder' }],
   }
 
   await expect(openInIntegratedTerminal(state)).resolves.toBe(state)
@@ -25,7 +25,7 @@ test('opens a terminal in the parent of the focused file', async () => {
   const state = {
     ...createDefaultState(),
     focusedIndex: 0,
-    items: [{ depth: 0, name: 'file.txt', path: 'file:///workspace/folder/file.txt', selected: true, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: true, type: DirentType.File, uri: 'file:///workspace/folder/file.txt' }],
   }
 
   await openInIntegratedTerminal(state)

@@ -26,12 +26,12 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Workspace.setPath(tmpDir)
   await Explorer.refresh()
 
-  const initialOrder = ['.nvmrc', 'LICENSE', 'README.md', 'eslint.config.js', 'package.json']
-  const renamedOrder = ['.nvmrc', 'LICENSE', 'eslint.config.js', 'package.json', 'readme2.md']
+  const initialOrder = ['.nvmrc', 'eslint.config.js', 'LICENSE', 'package.json', 'README.md']
+  const renamedOrder = ['.nvmrc', 'eslint.config.js', 'LICENSE', 'package.json', 'readme2.md']
   await assertOrder(initialOrder)
 
   // act
-  await Explorer.focusIndex(2)
+  await Explorer.focusIndex(4)
   await Explorer.renameDirent()
   await Explorer.updateEditingValue('readme2.md')
   await Explorer.acceptEdit()

@@ -7,21 +7,20 @@ test('basic item', () => {
   const item: VisibleExplorerItem = {
     ariaExpanded: undefined,
     chevron: 0,
-    className: '',
+    className: 'TreeItem Indent-34',
     depth: 1,
     hasEditingError: false,
     icon: 'file',
     id: '1',
-    indent: 34,
     index: 0,
     isCut: false,
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: '/test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(5)
@@ -42,16 +41,15 @@ test('item without an icon does not render a file icon placeholder', () => {
     hasEditingError: false,
     icon: '',
     id: '1',
-    indent: 34,
     index: 0,
     isCut: false,
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 1,
+    uri: '/test.txt',
   }
 
   const dom = getExplorerItemVirtualDom(item)
@@ -71,16 +69,15 @@ test('selected item', () => {
     hasEditingError: false,
     icon: 'file',
     id: '1',
-    indent: 0,
     index: 0,
     isCut: false,
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: true,
     setSize: 2,
+    uri: '/test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom[0].ariaSelected).toBe('true')
@@ -95,16 +92,15 @@ test('file uri item removes file scheme from title', () => {
     hasEditingError: false,
     icon: 'file',
     id: '1',
-    indent: 0,
     index: 0,
     isCut: false,
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: 'file:///test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: 'file:///test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom[0].title).toBe('/test.txt')
@@ -119,16 +115,15 @@ test('non-file uri item keeps scheme in title', () => {
     hasEditingError: false,
     icon: 'file',
     id: '1',
-    indent: 0,
     index: 0,
     isCut: false,
     isEditing: false,
     isIgnored: false,
     name: 'test.txt',
-    path: 'memfs:///test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: 'memfs:///test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom[0].title).toBe('memfs:///test.txt')
@@ -143,16 +138,15 @@ test('item with chevron', () => {
     hasEditingError: false,
     icon: 'folder',
     id: '1',
-    indent: 0,
     index: 0,
     isCut: false,
     isEditing: false,
     isIgnored: false,
     name: 'test',
-    path: '/test',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: '/test',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(6)
@@ -170,16 +164,15 @@ test('item in editing state', () => {
     hasEditingError: false,
     icon: 'file',
     id: '1',
-    indent: 0,
     index: 0,
     isCut: false,
     isEditing: true,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: '/test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(4)
@@ -196,16 +189,15 @@ test('item with error', () => {
     hasEditingError: true,
     icon: 'file',
     id: '1',
-    indent: 0,
     index: 0,
     isCut: false,
     isEditing: true,
     isIgnored: false,
     name: 'test.txt',
-    path: '/test.txt',
     posInSet: 1,
     selected: false,
     setSize: 2,
+    uri: '/test.txt',
   }
   const dom = getExplorerItemVirtualDom(item)
   expect(dom).toHaveLength(4)

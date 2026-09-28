@@ -17,16 +17,16 @@ test('wrapListItemCommand recomputes visible items when focus changes', async ()
     {
       depth: 1,
       name: 'a.txt',
-      path: '/a.txt',
       selected: false,
       type: DirentType.File,
+      uri: '/a.txt',
     },
     {
       depth: 1,
       name: 'b.txt',
-      path: '/b.txt',
       selected: false,
       type: DirentType.File,
+      uri: '/b.txt',
     },
   ]
   const fileIconCache = {
@@ -93,7 +93,6 @@ test('wrapListItemCommand remains responsive while a file is opening', async () 
   const editorOpeningStarted = Promise.withResolvers<void>()
   const editorOpened = Promise.withResolvers<void>()
   using _mockRpc = RendererWorker.registerMockRpc({
-    'Main.focus'() {},
     async 'Main.openInput'() {
       editorOpeningStarted.resolve()
       await editorOpened.promise
@@ -101,7 +100,7 @@ test('wrapListItemCommand remains responsive while a file is opening', async () 
   })
   const state = {
     ...createDefaultState(),
-    items: [{ depth: 0, name: 'test.ts', path: '/test.ts', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'test.ts', selected: false, type: DirentType.File, uri: '/test.ts' }],
   }
   const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, action: string) => {
     if (action === 'open') {
@@ -140,7 +139,6 @@ test('wrapListItemCommand remains responsive while a file is opening', async () 
   expect(nextCommandResult).toBe('completed')
   expect(openCommandCompleted).toBe(true)
   expect(ExplorerStates.get(uid).newState.editingValue).toBe('expanded')
-  await new Promise((resolve) => setTimeout(resolve, 0))
 })
 
 test('wrapListItemCommand continues after a command fails', async () => {
@@ -295,10 +293,10 @@ test('wrapListItemCommand renders items before gitignore decoration reads finish
       await updateDecorations(uid, generation, ignoredUris)
     },
   })
-  const item = { depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File }
+  const item = { depth: 1, name: 'debug.log', selected: false, type: DirentType.File, uri: '/workspace/debug.log' }
   const state = {
     ...createDefaultState(),
-    fileIconCache: { [item.path]: '' },
+    fileIconCache: { [item.uri]: '' },
     gitIgnoreDecorations: true,
     root: '/workspace',
     uid,
@@ -329,10 +327,10 @@ test('wrapListItemCommand waits for interaction idle before applying gitignore d
       await updateDecorations(uid, generation, ignoredUris)
     },
   })
-  const item = { depth: 1, name: 'debug.log', path: '/workspace/debug.log', selected: false, type: DirentType.File }
+  const item = { depth: 1, name: 'debug.log', selected: false, type: DirentType.File, uri: '/workspace/debug.log' }
   const state = {
     ...createDefaultState(),
-    fileIconCache: { [item.path]: '' },
+    fileIconCache: { [item.uri]: '' },
     gitIgnoreDecorations: true,
     root: '/workspace',
     uid,
@@ -371,7 +369,7 @@ test('wrapListItemCommand does not schedule decoration rendering when gitignore 
   }
   const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
     ...currentState,
-    items: [{ depth: 0, name: 'file.txt', path: '/file.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/file.txt' }],
   }))
 
   ExplorerStates.set(uid, state, state)
@@ -399,11 +397,11 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
       await updateDecorations(uid, generation, ignoredUris)
     },
   })
-  const firstItem = { depth: 1, name: 'first.log', path: '/workspace/first.log', selected: false, type: DirentType.File }
-  const secondItem = { depth: 1, name: 'second.tmp', path: '/workspace/second.tmp', selected: false, type: DirentType.File }
+  const firstItem = { depth: 1, name: 'first.log', selected: false, type: DirentType.File, uri: '/workspace/first.log' }
+  const secondItem = { depth: 1, name: 'second.tmp', selected: false, type: DirentType.File, uri: '/workspace/second.tmp' }
   const state = {
     ...createDefaultState(),
-    fileIconCache: { [firstItem.path]: '', [secondItem.path]: '' },
+    fileIconCache: { [firstItem.uri]: '', [secondItem.uri]: '' },
     gitIgnoreDecorations: true,
     root: '/workspace',
     uid,
@@ -424,4 +422,37 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
 
   expect(ExplorerStates.get(uid).newState.items).toEqual([secondItem])
   expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/second.tmp'])
+})
+
+test('clear cancels pending gitignore decoration updates', async () => {
+  const uid = 9014
+  let renderCount = 0
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return '*.log'
+    },
+    'Viewlet.executeViewletCommand'() {
+      renderCount++
+    },
+  })
+  const item = { depth: 1, name: 'debug.log', selected: false, type: DirentType.File, uri: '/workspace/debug.log' }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.uri]: '' },
+    gitIgnoreDecorations: true,
+    root: '/workspace',
+    uid,
+  }
+  const readItems = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+    ...currentState,
+    items: [item],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await readItems(uid)
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  ExplorerStates.clear()
+  await new Promise((resolve) => setTimeout(resolve, 150))
+
+  expect(renderCount).toBe(0)
 })

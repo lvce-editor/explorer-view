@@ -7,9 +7,9 @@ test('toggleIndividualSelection - toggles selection of item at valid index', asy
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'file1', path: '/file1', selected: false, type: 0 },
-      { depth: 0, name: 'file2', path: '/file2', selected: false, type: 0 },
-      { depth: 0, name: 'file3', path: '/file3', selected: false, type: 0 },
+      { depth: 0, name: 'file1', selected: false, type: 0, uri: '/file1' },
+      { depth: 0, name: 'file2', selected: false, type: 0, uri: '/file2' },
+      { depth: 0, name: 'file3', selected: false, type: 0, uri: '/file3' },
     ],
   }
 
@@ -23,9 +23,9 @@ test('toggleIndividualSelection - toggles selection from true to false', async (
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'file1', path: '/file1', selected: false, type: 0 },
-      { depth: 0, name: 'file2', path: '/file2', selected: true, type: 0 },
-      { depth: 0, name: 'file3', path: '/file3', selected: false, type: 0 },
+      { depth: 0, name: 'file1', selected: false, type: 0, uri: '/file1' },
+      { depth: 0, name: 'file2', selected: true, type: 0, uri: '/file2' },
+      { depth: 0, name: 'file3', selected: false, type: 0, uri: '/file3' },
     ],
   }
 
@@ -39,8 +39,8 @@ test('toggleIndividualSelection - does nothing when index is negative', async ()
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'file1', path: '/file1', selected: false, type: 0 },
-      { depth: 0, name: 'file2', path: '/file2', selected: false, type: 0 },
+      { depth: 0, name: 'file1', selected: false, type: 0, uri: '/file1' },
+      { depth: 0, name: 'file2', selected: false, type: 0, uri: '/file2' },
     ],
   }
 
@@ -53,8 +53,8 @@ test('toggleIndividualSelection - does nothing when index is out of range', asyn
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'file1', path: '/file1', selected: false, type: 0 },
-      { depth: 0, name: 'file2', path: '/file2', selected: false, type: 0 },
+      { depth: 0, name: 'file1', selected: false, type: 0, uri: '/file1' },
+      { depth: 0, name: 'file2', selected: false, type: 0, uri: '/file2' },
     ],
   }
 
@@ -67,9 +67,9 @@ test('toggleIndividualSelection - preserves other selections', async () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 0, name: 'file1', path: '/file1', selected: true, type: 0 },
-      { depth: 0, name: 'file2', path: '/file2', selected: false, type: 0 },
-      { depth: 0, name: 'file3', path: '/file3', selected: true, type: 0 },
+      { depth: 0, name: 'file1', selected: true, type: 0, uri: '/file1' },
+      { depth: 0, name: 'file2', selected: false, type: 0, uri: '/file2' },
+      { depth: 0, name: 'file3', selected: true, type: 0, uri: '/file3' },
     ],
   }
 

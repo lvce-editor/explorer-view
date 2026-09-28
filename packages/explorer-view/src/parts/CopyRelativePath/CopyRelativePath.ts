@@ -22,7 +22,7 @@ export const copyRelativePath = async (state: ExplorerState): Promise<ExplorerSt
   if (!dirent) {
     return state
   }
-  const relativePath = getRelativePath(root, pathSeparator, dirent.path)
+  const relativePath = getRelativePath(root, pathSeparator, dirent.uri)
   // TODO handle error
   await ClipBoard.writeText(relativePath)
   return state

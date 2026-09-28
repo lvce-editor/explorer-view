@@ -7,18 +7,18 @@ import { handleRangeSelection } from '../src/parts/HandleRangeSelection/HandleRa
 const createItem = (name: string, selected: boolean): ExplorerItem => ({
   depth: 0,
   name,
-  path: `/${name}`,
   selected,
   type: 0,
+  uri: `/${name}`,
 })
 
 test('handleRangeSelection - forward range', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
-      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
-      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
+      { depth: 1, name: 'a', selected: false, type: 0, uri: '/a' },
+      { depth: 1, name: 'b', selected: false, type: 0, uri: '/b' },
+      { depth: 1, name: 'c', selected: false, type: 0, uri: '/c' },
     ],
   }
   const newState = handleRangeSelection(state, 0, 2)
@@ -31,9 +31,9 @@ test('handleRangeSelection - backward range', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'a', path: '/a', selected: false, type: 0 },
-      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
-      { depth: 1, name: 'c', path: '/c', selected: false, type: 0 },
+      { depth: 1, name: 'a', selected: false, type: 0, uri: '/a' },
+      { depth: 1, name: 'b', selected: false, type: 0, uri: '/b' },
+      { depth: 1, name: 'c', selected: false, type: 0, uri: '/c' },
     ],
   }
   expect(() => handleRangeSelection(state, 2, 0)).toThrow(new Error('startIndex must be less than or equal to endIndex'))
@@ -43,9 +43,9 @@ test('handleRangeSelection - preserve existing selections', () => {
   const state: ExplorerState = {
     ...createDefaultState(),
     items: [
-      { depth: 1, name: 'a', path: '/a', selected: true, type: 0 },
-      { depth: 1, name: 'b', path: '/b', selected: false, type: 0 },
-      { depth: 1, name: 'c', path: '/c', selected: true, type: 0 },
+      { depth: 1, name: 'a', selected: true, type: 0, uri: '/a' },
+      { depth: 1, name: 'b', selected: false, type: 0, uri: '/b' },
+      { depth: 1, name: 'c', selected: true, type: 0, uri: '/c' },
     ],
   }
   const newState = handleRangeSelection(state, 0, 2)

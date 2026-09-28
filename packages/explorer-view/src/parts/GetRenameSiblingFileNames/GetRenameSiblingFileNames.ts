@@ -6,6 +6,6 @@ export const getRenameSiblingFileNames = (items: readonly ExplorerItem[], editin
   if (!editingItem) {
     return []
   }
-  const parentPath = dirname(pathSeparator, editingItem.path)
-  return items.filter((item, index) => index !== editingIndex && dirname(pathSeparator, item.path) === parentPath).map((item) => item.name)
+  const parentPath = dirname(pathSeparator, editingItem.uri)
+  return items.filter((item, index) => index !== editingIndex && dirname(pathSeparator, item.uri) === parentPath).map((item) => item.name)
 }

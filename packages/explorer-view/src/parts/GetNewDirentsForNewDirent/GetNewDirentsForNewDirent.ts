@@ -19,17 +19,17 @@ export const getNewDirentsForNewDirent = async (
   root: string,
   excluded: readonly string[] = [],
   insertAtFolderBoundary = false,
+  applicationId?: string,
 ): Promise<readonly ExplorerItem[]> => {
   if (items.length === 0 || focusedIndex === -1) {
     const newDirent: ExplorerItem = {
       depth: 0,
-      icon: '',
       name: '',
-      path: root,
       posInSet: 1,
       selected: false,
       setSize: 1,
       type,
+      uri: root,
     }
     if (type === DirentType.EditingFolder) {
       return [newDirent, ...items]
@@ -48,10 +48,10 @@ export const getNewDirentsForNewDirent = async (
   if (!focusedItem) {
     return items
   }
-  const parentPath = focusedItem.path
+  const parentPath = focusedItem.uri
   const depth = focusedItem.depth + 1
 
-  const updatedChildren = await getNewChildDirentsForNewDirent(items, depth, parentPath, type, excluded, root)
+  const updatedChildren = await getNewChildDirentsForNewDirent(items, depth, parentPath, type, excluded, root, applicationId)
 
   // Create new array with updated items
   const parentIndex = focusedIndex

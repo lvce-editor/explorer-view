@@ -13,13 +13,13 @@ export const createTree = (items: readonly ExplorerItem[], root: string): Tree =
   const tree: Record<string, TreeItem[]> = Object.create(null)
   const rootLength = root.length
   const paths = items.map((item) => {
-    const relativePath = item.path.slice(rootLength)
+    const relativePath = item.uri.slice(rootLength)
     const dirname = Path.dirname2(relativePath)
     return dirname
   })
   for (const item of items) {
-    const { name, path, type } = item
-    const relativePath = path.slice(rootLength)
+    const { name, type, uri } = item
+    const relativePath = uri.slice(rootLength)
     const dirname = Path.dirname2(relativePath)
     const isExpanded = paths.includes(relativePath)
     const actualType = getActualType(type, isExpanded)

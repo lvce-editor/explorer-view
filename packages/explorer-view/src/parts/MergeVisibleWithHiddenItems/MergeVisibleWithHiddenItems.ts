@@ -5,10 +5,10 @@ export const mergeVisibleWithHiddenItems = (visibleItems: readonly ExplorerItem[
   const seen = Object.create(null)
   const unique = []
   for (const item of merged) {
-    if (seen[item.path]) {
+    if (seen[item.uri]) {
       continue
     }
-    seen[item.path] = true
+    seen[item.uri] = true
     unique.push(item)
   }
   return unique

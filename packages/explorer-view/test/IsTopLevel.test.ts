@@ -6,9 +6,9 @@ test('isTopLevel - depth 1', () => {
   const dirent: ExplorerItem = {
     depth: 1,
     name: '',
-    path: '',
     selected: false,
     type: 0,
+    uri: '',
   }
   expect(IsTopLevel.isTopLevel(dirent)).toBe(true)
 })
@@ -17,9 +17,9 @@ test('isTopLevel - depth 2', () => {
   const dirent = {
     depth: 2,
     name: '',
-    path: '',
     selected: false,
     type: 0,
+    uri: '',
   }
   expect(IsTopLevel.isTopLevel(dirent)).toBe(false)
 })

@@ -89,12 +89,11 @@ test.skip('acceptEdit - rename', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a.txt',
-        path: '/test/a.txt',
         posInSet: 1,
         setSize: 1,
         type: DirentType.File,
+        uri: '/test/a.txt',
       },
     ],
     maxLineY: 2,
@@ -107,12 +106,11 @@ test.skip('acceptEdit - rename', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'b.txt',
-        path: '/test/b.txt',
         posInSet: 1,
         setSize: 1,
         type: DirentType.File,
+        uri: '/test/b.txt',
       },
     ],
   })
@@ -134,21 +132,19 @@ test.skip('acceptEdit - rename - nested file', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a',
-        path: '/test/a',
         posInSet: 1,
         setSize: 1,
         type: DirentType.Directory,
+        uri: '/test/a',
       },
       {
         depth: 2,
-        icon: '',
         name: 'b.txt',
-        path: '/test/a/b.txt',
         posInSet: 1,
         setSize: 1,
         type: DirentType.File,
+        uri: '/test/a/b.txt',
       },
     ],
     maxLineY: 2,
@@ -162,21 +158,19 @@ test.skip('acceptEdit - rename - nested file', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a',
-        path: '/test/a',
         posInSet: 1,
         setSize: 1,
         type: DirentType.Directory,
+        uri: '/test/a',
       },
       {
         depth: 2,
-        icon: '',
         name: 'c.txt',
-        path: '/test/a/c.txt',
         posInSet: 1,
         setSize: 1,
         type: DirentType.File,
+        uri: '/test/a/c.txt',
       },
     ],
   })
@@ -196,30 +190,27 @@ test.skip('acceptEdit - create - insert folder', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a',
-        path: '/test/a',
         posInSet: 1,
         setSize: 3,
         type: DirentType.Directory,
+        uri: '/test/a',
       },
       {
         depth: 1,
-        icon: '',
         name: 'b',
-        path: '/test/b',
         posInSet: 2,
         setSize: 3,
         type: DirentType.Directory,
+        uri: '/test/b',
       },
       {
         depth: 1,
-        icon: '',
         name: 'd',
-        path: '/test/d',
         posInSet: 3,
         setSize: 3,
         type: DirentType.Directory,
+        uri: '/test/d',
       },
     ],
     maxLineY: 2,
@@ -233,39 +224,35 @@ test.skip('acceptEdit - create - insert folder', async () => {
     items: [
       {
         depth: 1,
-        icon: '',
         name: 'a',
-        path: '/test/a',
         posInSet: 1,
         setSize: 4,
         type: DirentType.Directory,
+        uri: '/test/a',
       },
       {
         depth: 1,
-        icon: '',
         name: 'b',
-        path: '/test/b',
         posInSet: 2,
         setSize: 4,
         type: DirentType.Directory,
+        uri: '/test/b',
       },
       {
         depth: 1,
-        icon: '',
         name: 'c',
-        path: '/test/c',
         posInSet: 3,
         setSize: 4,
         type: DirentType.Directory,
+        uri: '/test/c',
       },
       {
         depth: 1,
-        icon: '',
         name: 'd',
-        path: '/test/d',
         posInSet: 3, // TODO should be 4
         setSize: 3, // TODO should be 4
         type: DirentType.Directory,
+        uri: '/test/d',
       },
     ],
   })

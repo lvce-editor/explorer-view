@@ -95,7 +95,7 @@ test('updateEditingValue - updates file icon when renaming file', async () => {
     ...createDefaultState(),
     editingIndex: 0,
     editingType: ExplorerEditingType.Rename,
-    items: [{ depth: 0, name: 'test.txt', path: '/test.txt', selected: false, type: DirentType.File }],
+    items: [{ depth: 0, name: 'test.txt', selected: false, type: DirentType.File, uri: '/test.txt' }],
   }
   const newValue = 'new.txt'
   const result = await updateEditingValue(state, newValue)
@@ -117,7 +117,7 @@ test('updateEditingValue - updates folder icon when renaming folder', async () =
     ...createDefaultState(),
     editingIndex: 0,
     editingType: ExplorerEditingType.Rename,
-    items: [{ depth: 0, name: 'test', path: '/test', selected: false, type: DirentType.Directory }],
+    items: [{ depth: 0, name: 'test', selected: false, type: DirentType.Directory, uri: '/test' }],
   }
   const newValue = 'new'
   const result = await updateEditingValue(state, newValue)
@@ -161,13 +161,12 @@ test('updateEditingValue - real-time validation during file creation', async () 
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'existing-file.txt',
-        path: '/root/existing-file.txt',
         posInSet: 0,
         selected: false,
         setSize: 1,
         type: DirentType.File,
+        uri: '/root/existing-file.txt',
       },
     ],
   }
@@ -198,13 +197,12 @@ test('updateEditingValue - real-time validation during folder creation', async (
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'existing-folder',
-        path: '/root/existing-folder',
         posInSet: 0,
         selected: false,
         setSize: 1,
         type: DirentType.Directory,
+        uri: '/root/existing-folder',
       },
     ],
   }
@@ -235,13 +233,12 @@ test('updateEditingValue - allows current name during rename', async () => {
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'existing-file.txt',
-        path: '/root/existing-file.txt',
         posInSet: 0,
         selected: false,
         setSize: 1,
         type: DirentType.File,
+        uri: '/root/existing-file.txt',
       },
     ],
   }
@@ -268,23 +265,21 @@ test('updateEditingValue - validates sibling collision during rename', async () 
     items: [
       {
         depth: 0,
-        icon: '',
         name: 'source',
-        path: '/root/source',
         posInSet: 0,
         selected: false,
         setSize: 2,
         type: DirentType.Directory,
+        uri: '/root/source',
       },
       {
         depth: 0,
-        icon: '',
         name: 'destination',
-        path: '/root/destination',
         posInSet: 1,
         selected: false,
         setSize: 2,
         type: DirentType.Directory,
+        uri: '/root/destination',
       },
     ],
   }

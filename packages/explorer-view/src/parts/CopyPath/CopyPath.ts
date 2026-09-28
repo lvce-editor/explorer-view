@@ -7,7 +7,7 @@ export const copyPath = async (state: ExplorerState): Promise<ExplorerState> => 
   const dirent = GetFocusedDirent.getFocusedDirent(state)
   // TODO windows paths
   // TODO handle error
-  const path = dirent ? dirent.path : root
+  const path = dirent ? dirent.uri : root
   await RendererWorker.writeClipBoardText(path)
   return state
 }

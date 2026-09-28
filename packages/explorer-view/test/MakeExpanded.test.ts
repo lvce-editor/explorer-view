@@ -7,17 +7,17 @@ test('makeExpanded - directory', () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.Directory,
+    uri: '/test',
   }
   const result = makeExpanded(dirent)
   expect(result).toEqual({
     depth: 0,
     name: 'test',
-    path: '/test',
     selected: false,
     type: DirentType.DirectoryExpanded,
+    uri: '/test',
   })
 })
 
@@ -25,9 +25,9 @@ test('makeExpanded - file', () => {
   const dirent: ExplorerItem = {
     depth: 0,
     name: 'test.txt',
-    path: '/test.txt',
     selected: false,
     type: DirentType.File,
+    uri: '/test.txt',
   }
   const result = makeExpanded(dirent)
   expect(result).toEqual(dirent)

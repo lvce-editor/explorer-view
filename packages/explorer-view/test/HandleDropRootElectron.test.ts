@@ -15,8 +15,8 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
     'Preferences.get'() {
       return false
     },
-    'Workspace.getPath'() {
-      return '/home/simon/dotfiles'
+    'Workspace.getUri'() {
+      return 'file:///home/simon/dotfiles'
     },
     'Workspace.setPath'() {
       return undefined
@@ -39,7 +39,7 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
 
   const result = await handleDrop(state, fileHandles, ['/home/simon/dotfiles'])
 
-  expect(result.root).toBe('/home/simon/dotfiles')
+  expect(result.root).toBe('file:///home/simon/dotfiles')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toHaveLength(1)
   expect(mockRpc.invocations).toEqual([
@@ -51,9 +51,9 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
-    ['Workspace.getPath'],
-    ['FileSystem.isReadonly', '/home/simon/dotfiles'],
-    ['FileSystem.readDirWithFileTypes', '/home/simon/dotfiles'],
+    ['Workspace.getUri'],
+    ['FileSystem.isReadonly', 'file:///home/simon/dotfiles'],
+    ['FileSystem.readDirWithFileTypes', 'file:///home/simon/dotfiles'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])
 })

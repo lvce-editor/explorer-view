@@ -12,9 +12,9 @@ test('renderItems - basic', () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: 1,
+        uri: '/test',
       },
     ],
     width: 500,
@@ -33,9 +33,9 @@ test('renderItems - narrow width', () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: 1,
+        uri: '/test',
       },
     ],
     width: 400,
@@ -57,9 +57,9 @@ test('renderItems - load error message', () => {
       {
         depth: 0,
         name: 'test',
-        path: '/test',
         selected: false,
         type: 1,
+        uri: '/test',
       },
     ],
     root: '/workspace',
@@ -145,7 +145,7 @@ test('renderItems - missing folder load error shows friendly message and button'
   expect(dom).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        text: 'Could not open "/workspace/missing-folder" because the folder does not exist. It may have been moved or deleted.',
+        text: 'Could not open "/workspace/missing-folder" because the folder does not exist. It may have been moved or deleted. Error code: ENOENT.',
       }),
       expect.objectContaining({
         className: 'Button ButtonPrimary ButtonWide',
@@ -154,6 +154,34 @@ test('renderItems - missing folder load error shows friendly message and button'
       }),
       expect.objectContaining({
         text: 'Open another folder',
+      }),
+    ]),
+  )
+})
+
+test('renderItems - displays a fallback code for load errors without a code', () => {
+  const oldState = createDefaultState()
+  const newState = { ...oldState, errorMessage: 'connection failed', hasError: true }
+  expect(renderItems(oldState, newState)[2]).toEqual(
+    expect.arrayContaining([expect.objectContaining({ text: 'Could not open folder. Connection failed. Error code: E_EXPLORER_LOAD_FAILED.' })]),
+  )
+})
+
+test('renderItems - displays workspace progress instead of stale explorer content', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    root: 'remote-ssh://example.com/workspace',
+    workspaceProgressMessage: 'Opening Remote Workspace…',
+  }
+
+  expect(renderItems(oldState, newState)[2]).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        role: 'status',
+      }),
+      expect.objectContaining({
+        text: 'Opening Remote Workspace…',
       }),
     ]),
   )

@@ -10,7 +10,7 @@ export const handleCopy = async (state: ExplorerState): Promise<ExplorerState> =
     console.error('[ViewletExplorer/handleCopy] no dirent selected')
     return state
   }
-  const absolutePath = dirent.path
+  const absolutePath = dirent.uri
   // TODO handle copy error gracefully
   const files = [absolutePath]
   await ClipBoard.writeNativeFiles('copy', files)
