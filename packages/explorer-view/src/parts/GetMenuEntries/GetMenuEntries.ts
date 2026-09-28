@@ -112,6 +112,15 @@ const getWritableEntry = (state: ExplorerState, entry: MenuEntry): MenuEntry => 
   return entry
 }
 
+const getOpenContainingFolderEntry = (state: ExplorerState): MenuEntry => {
+  const focusedDirent = getFocusedDirent(state)
+  const uri = focusedDirent?.uri ?? state.root
+  if (!uri.startsWith('file:///')) {
+    return disable(menuEntryOpenContainingFolder)
+  }
+  return menuEntryOpenContainingFolder
+}
+
 const menuEntryRemoveFolderFromWorkspace: MenuEntry = {
   command: 'Workspace.close',
   flags: MenuItemFlags.None,
@@ -133,7 +142,7 @@ const getMenuEntriesDirectory = (state: ExplorerState): readonly MenuEntry[] => 
   return [
     getWritableEntry(state, menuEntryNewFile),
     getWritableEntry(state, menuEntryNewFolder),
-    menuEntryOpenContainingFolder,
+    getOpenContainingFolderEntry(state),
     menuEntryOpenInIntegratedTerminal,
     MenuEntrySeparator.menuEntrySeparator,
     getWritableEntry(state, menuEntryCut),
@@ -150,7 +159,7 @@ const getMenuEntriesDirectory = (state: ExplorerState): readonly MenuEntry[] => 
 
 const getMenuEntriesFile = (state: ExplorerState): readonly MenuEntry[] => {
   return [
-    menuEntryOpenContainingFolder,
+    getOpenContainingFolderEntry(state),
     menuEntryOpenInIntegratedTerminal,
     MenuEntrySeparator.menuEntrySeparator,
     getWritableEntry(state, menuEntryCut),
@@ -169,7 +178,7 @@ const getMenuEntriesFile = (state: ExplorerState): readonly MenuEntry[] => {
 
 const getMenuEntriesFileCompareWithSelected = (state: ExplorerState): readonly MenuEntry[] => {
   return [
-    menuEntryOpenContainingFolder,
+    getOpenContainingFolderEntry(state),
     menuEntryOpenInIntegratedTerminal,
     MenuEntrySeparator.menuEntrySeparator,
     getWritableEntry(state, menuEntryCut),
@@ -195,7 +204,7 @@ const getMenuEntriesRoot = (state: ExplorerState): readonly MenuEntry[] => {
   const entries: MenuEntry[] = [
     getWritableEntry(state, menuEntryNewFile),
     getWritableEntry(state, menuEntryNewFolder),
-    menuEntryOpenContainingFolder,
+    getOpenContainingFolderEntry(state),
     menuEntryOpenInIntegratedTerminal,
     MenuEntrySeparator.menuEntrySeparator,
     getWritableEntry(state, menuEntryPaste),
