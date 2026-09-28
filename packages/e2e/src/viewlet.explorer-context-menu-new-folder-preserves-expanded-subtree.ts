@@ -33,6 +33,7 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   const ogv = treeItems.nth(4)
   const packageJson = treeItems.nth(5)
   const inputRow = treeItems.nth(6)
+  const input = inputRow.locator('input')
   const scripts = treeItems.nth(7)
   await expect(treeItems).toHaveCount(8)
   await expect(sampleFiles).toHaveText('sample-files')
@@ -41,7 +42,7 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   await expect(webm).toHaveText('big_buck_bunny.webm')
   await expect(ogv).toHaveText('echo-hereweare.ogv')
   await expect(packageJson).toHaveText('package.json')
-  await expect(inputRow.locator('input')).toBeFocused()
+  await expect(input).toBeFocused()
   await expect(inputRow).toHaveAttribute('aria-level', '2')
   await expect(scripts).toHaveText('scripts')
 }
