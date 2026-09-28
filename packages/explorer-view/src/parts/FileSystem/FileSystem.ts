@@ -28,6 +28,10 @@ export const writeFile = async (uri: string, content: string, applicationId?: st
   return ApplicationRpc.invoke(applicationId, 'FileSystem.writeFile', uri, content)
 }
 
+export const writeBlob = async (uri: string, blob: Blob, applicationId?: string): Promise<void> => {
+  return ApplicationRpc.invoke(applicationId, 'FileSystem.writeBlob', uri, blob)
+}
+
 export const mkdir = async (uri: string, applicationId?: string): Promise<void> => {
   return ApplicationRpc.invoke(applicationId, 'FileSystem.mkdir', uri)
 }

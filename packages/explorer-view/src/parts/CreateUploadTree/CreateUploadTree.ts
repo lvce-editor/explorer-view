@@ -1,5 +1,4 @@
 import { getChildHandles } from '../GetChildHandles/GetChildHandles.ts'
-import { getFileHandleText } from '../GetFileHandleText/GetFileHandleText.ts'
 import { isDirectoryHandle } from '../IsDirectoryHandle/IsDirectoryHandle.ts'
 import { isFileHandle } from '../IsFileHandle/IsFileHandle.ts'
 
@@ -13,9 +12,8 @@ export const createUploadTree = async (root: string, fileHandles: readonly FileS
       const childTree = await createUploadTree(name, children)
       uploadTree[name] = childTree
     } else if (isFileHandle(fileHandle)) {
-      // TODO maybe save blob and use filesystem.writeblob
-      const text = await getFileHandleText(fileHandle)
-      uploadTree[name] = text
+      const blob = await fileHandle.getFile()
+      uploadTree[name] = { blob }
     }
   }
   return uploadTree
