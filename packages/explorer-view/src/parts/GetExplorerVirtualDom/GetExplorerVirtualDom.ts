@@ -12,10 +12,12 @@ import * as GetWorkspaceProgressVirtualDom from '../GetWorkspaceProgressVirtualD
 import * as MergeClassNames from '../MergeClassNames/MergeClassNames.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts'
 
+const explorerClassName = MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer)
+
 const getParentNode = (childCount: number): VirtualDomNode => {
   return {
     childCount,
-    className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
+    className: explorerClassName,
     role: AriaRoles.None,
     type: VirtualDomElements.Div,
   }

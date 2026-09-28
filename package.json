@@ -30,15 +30,15 @@
     "printWidth": 150
   },
   "devDependencies": {
-    "@lvce-editor/eslint-config": "^18.10.0",
+    "@lvce-editor/eslint-config": "^18.14.2",
     "@types/node": "^24.8.0",
     "eslint": "^10.8.1",
-    "knip": "^6.34.0",
-    "prettier": "^3.9.6",
+    "knip": "^6.38.0",
+    "prettier": "^3.9.9",
     "typescript": "^6.0.3"
   },
   "overrides": {
-    "@lvce-editor/test-worker": "17.22.0",
+    "@lvce-editor/test-worker": "17.26.6",
     "@playwright/test": "1.62.1",
     "playwright": "1.62.1",
     "playwright-core": "1.62.1"

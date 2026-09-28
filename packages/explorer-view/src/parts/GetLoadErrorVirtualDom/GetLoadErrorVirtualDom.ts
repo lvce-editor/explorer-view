@@ -14,10 +14,12 @@ const welcomeMessageNode: VirtualDomNode = {
   type: VirtualDomElements.P,
 }
 
+const explorerClassName = MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer)
+
 const getParentNode = (childCount: number): VirtualDomNode => {
   return {
     childCount,
-    className: MergeClassNames.mergeClassNames(ClassNames.Viewlet, ClassNames.Explorer),
+    className: explorerClassName,
     role: AriaRoles.None,
     type: VirtualDomElements.Div,
   }
