@@ -113,8 +113,9 @@ const getWritableEntry = (state: ExplorerState, entry: MenuEntry): MenuEntry => 
 }
 
 const getOpenContainingFolderEntry = (state: ExplorerState): MenuEntry => {
+  const { root } = state
   const focusedDirent = getFocusedDirent(state)
-  const uri = focusedDirent?.uri ?? state.root
+  const uri = focusedDirent?.uri ?? root
   if (!uri.startsWith('file:///')) {
     return disable(menuEntryOpenContainingFolder)
   }
