@@ -96,7 +96,7 @@ test('fileOrFolderAlreadyExists', () => {
 })
 
 test('theNameIsNotValid', () => {
-  expect(ExplorerStrings.theNameIsNotValid()).toBe('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
+  expect(ExplorerStrings.theNameIsNotValid('.')).toBe('The name . is not valid as a file or folder name. Please choose a different name.')
 })
 
 test('leadingOrTrailingWhitespaceDetected', () => {

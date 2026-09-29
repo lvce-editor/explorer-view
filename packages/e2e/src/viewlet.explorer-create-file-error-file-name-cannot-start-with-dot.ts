@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-create-file-error-file-name-cannot-start-with-slash'
+export const name = 'viewlet.explorer-create-file-error-file-name-cannot-start-with-dot'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
@@ -27,5 +27,5 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox).toHaveClass('InputValidationError')
   const errorMessage = Locator('.ExplorerErrorMessage')
   await expect(errorMessage).toBeVisible()
-  await expect(errorMessage).toHaveText('The name **{0}** is not valid as a file or folder name. Please choose a different name.')
+  await expect(errorMessage).toHaveText('The name . is not valid as a file or folder name. Please choose a different name.')
 }
