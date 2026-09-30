@@ -18,7 +18,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const savedState = await Explorer.saveState()
 
   // act
-  await Workspace.setUri('')
+  await Workspace.setPath('')
   await Workspace.setUri(tmpDir)
   await Explorer.restoreState(savedState)
 

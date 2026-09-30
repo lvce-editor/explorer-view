@@ -16,7 +16,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // act
   await FileSystem.remove(`${tmpDir}/b.txt`)
-  await Workspace.setUri('')
+  await Workspace.setPath('')
   await Workspace.setUri(tmpDir)
   await Explorer.restoreState(savedState)
 

@@ -6,7 +6,7 @@ export const skip = ['webkit']
 
 export const test: Test = async ({ DragAndDrop, expect, Explorer, Locator, Workspace }) => {
   // arrange
-  await Workspace.setUri('')
+  await Workspace.setPath('')
   const opfsRoot = await navigator.storage.getDirectory()
   const fileHandle = await opfsRoot.getFileHandle('dropped-file.txt', {
     create: true,

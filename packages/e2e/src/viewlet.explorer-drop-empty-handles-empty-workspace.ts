@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-drop-empty-handles-empty-workspace'
 
 export const test: Test = async ({ DragAndDrop, expect, Explorer, Locator, Workspace }) => {
   // arrange
-  await Workspace.setUri('')
+  await Workspace.setPath('')
   const welcomeMessage = Locator('.Explorer .WelcomeMessage')
   const treeItems = Locator('.TreeItem')
 

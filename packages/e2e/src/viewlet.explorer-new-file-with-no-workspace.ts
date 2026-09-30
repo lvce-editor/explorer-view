@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${secondWorkspace}/second.txt` },
   ])
   await Workspace.setUri(firstWorkspace)
-  await Workspace.setUri('')
+  await Workspace.setPath('')
 
   // act
   await Explorer.newFile()

@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.selectIndices([0, 1])
 
   // act
-  await Workspace.setUri('')
+  await Workspace.setPath('')
   await Workspace.setUri(tmpDir)
 
   // assert

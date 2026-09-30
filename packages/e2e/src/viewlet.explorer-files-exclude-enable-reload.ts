@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
   await expect(gitFolder).toBeVisible()
 
   await Settings.update({ 'files.exclude': { '**/.git': true } })
-  await Workspace.setUri('')
+  await Workspace.setPath('')
   await Workspace.setUri(tmpDir)
   await expect(gitFolder).toBeHidden()
 }
