@@ -15,12 +15,12 @@ export const validateFileName2 = (name: string, siblingFileNames: readonly strin
 
   // Disallow reserved directory names
   if (['.', '..', '...'].includes(name)) {
-    return ExplorerStrings.theNameIsNotValid()
+    return ExplorerStrings.theNameIsNotValid(name)
   }
 
   // Disallow any filename starting with ../
   if (name.startsWith('../')) {
-    return ExplorerStrings.theNameIsNotValid()
+    return ExplorerStrings.theNameIsNotValid(name)
   }
 
   // Check if file already exists

@@ -17,7 +17,7 @@ test('render2 - returns renderer commands when no direct renderer is connected',
   }
   ExplorerStates.set(uid, oldState, newState)
 
-  await expect(Render2.render2(uid, [])).resolves.toEqual([['Viewlet.setPatches', uid, []]])
+  await expect(Render2.render2(uid, [])).resolves.toEqual([['Viewlet.setTreePatches', uid, []]])
 })
 
 test('render2 - preserves state changes that were not scheduled for rendering', async () => {
@@ -54,7 +54,7 @@ test('render2 - queues renderer commands and returns a lightweight commit marker
   ExplorerStates.set(uid, oldState, newState)
   const result = await Render2.render2(uid, staleDiffResult)
 
-  expect(queueCommands).toHaveBeenCalledWith(uid, [['Viewlet.setPatches', 1, []]])
+  expect(queueCommands).toHaveBeenCalledWith(uid, [['Viewlet.setTreePatches', 1, []]])
   expect(result).toEqual([['Viewlet.commitPending', uid, 17]])
 })
 

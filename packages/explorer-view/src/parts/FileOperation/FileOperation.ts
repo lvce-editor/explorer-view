@@ -4,7 +4,13 @@ interface FileOperationBase {
   readonly type: number
 }
 
-interface FileOperationCreateFile extends FileOperationBase {
+interface FileOperationCreateFileBlob extends FileOperationBase {
+  readonly blob: Blob
+  readonly path: string
+  readonly type: typeof CreateFile
+}
+
+interface FileOperationCreateFileText extends FileOperationBase {
   readonly path: string
   readonly text: string
   readonly type: typeof CreateFile
@@ -32,4 +38,10 @@ interface FileOperationRemove extends FileOperationBase {
   readonly type: typeof Remove
 }
 
-export type FileOperation = FileOperationCopy | FileOperationCreateFile | FileOperationCreateFolder | FileOperationRename | FileOperationRemove
+export type FileOperation =
+  | FileOperationCopy
+  | FileOperationCreateFileBlob
+  | FileOperationCreateFileText
+  | FileOperationCreateFolder
+  | FileOperationRename
+  | FileOperationRemove

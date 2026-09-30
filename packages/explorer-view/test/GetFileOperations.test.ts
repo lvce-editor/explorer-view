@@ -11,9 +11,11 @@ test('getFileOperations - empty tree', () => {
 test('getFileOperations - single file', () => {
   const root = '/test'
   const uploadTree = {
-    'file.txt': 'content',
+    'file.txt': { blob: new Blob(['content']) },
   }
-  expect(getFileOperations(root, uploadTree)).toEqual([{ path: '/test/file.txt', text: 'content', type: FileOperationType.CreateFile }])
+  expect(getFileOperations(root, uploadTree)).toEqual([
+    { blob: uploadTree['file.txt'].blob, path: '/test/file.txt', type: FileOperationType.CreateFile },
+  ])
 })
 
 test('getFileOperations - single folder', () => {
@@ -24,22 +26,38 @@ test('getFileOperations - single folder', () => {
   expect(getFileOperations(root, uploadTree)).toEqual([{ path: '/test/folder', type: FileOperationType.CreateFolder }])
 })
 
-test.skip('getFileOperations - nested structure', () => {
+test('getFileOperations - nested structure', () => {
   const root = '/test'
+  const blob1 = new Blob(['content1'])
+  const blob2 = new Blob(['content2'])
+  const blob3 = new Blob(['content3'])
   const uploadTree = {
-    'file3.txt': 'content3',
+    'file3.txt': { blob: blob3 },
     folder1: {
-      'file1.txt': 'content1',
+      'file1.txt': { blob: blob1 },
       subfolder: {
-        'file2.txt': 'content2',
+        'file2.txt': { blob: blob2 },
       },
     },
   }
   expect(getFileOperations(root, uploadTree)).toEqual([
+    { blob: blob3, path: '/test/file3.txt', type: FileOperationType.CreateFile },
     { path: '/test/folder1', type: FileOperationType.CreateFolder },
-    { path: '/test/folder1/file1.txt', text: 'content1', type: FileOperationType.CreateFile },
+    { blob: blob1, path: '/test/folder1/file1.txt', type: FileOperationType.CreateFile },
     { path: '/test/folder1/subfolder', type: FileOperationType.CreateFolder },
-    { path: '/test/folder1/subfolder/file2.txt', text: 'content2', type: FileOperationType.CreateFile },
-    { path: '/test/file3.txt', text: 'content3', type: FileOperationType.CreateFile },
+    { blob: blob2, path: '/test/folder1/subfolder/file2.txt', type: FileOperationType.CreateFile },
+  ])
+})
+
+test('getFileOperations - folder containing a file named blob', () => {
+  const blob = new Blob(['content'])
+  const uploadTree = {
+    folder: {
+      blob: { blob },
+    },
+  }
+  expect(getFileOperations('/test', uploadTree)).toEqual([
+    { path: '/test/folder', type: FileOperationType.CreateFolder },
+    { blob, path: '/test/folder/blob', type: FileOperationType.CreateFile },
   ])
 })
