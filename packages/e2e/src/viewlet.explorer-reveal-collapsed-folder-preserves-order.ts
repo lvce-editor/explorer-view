@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'content', uri: nestedFilePath },
     { content: 'content', uri: `${tmpDir}/z.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const folderA = Locator('.TreeItem[aria-label="a"]')
   const folderB = Locator('.TreeItem[aria-label="b"]')
   const nestedFile = Locator('.TreeItem[aria-label="c.txt"]')

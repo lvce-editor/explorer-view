@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-create-file-with-at-sign'
 
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   await Explorer.newFile()
   await Explorer.updateEditingValue('contact@example.txt')

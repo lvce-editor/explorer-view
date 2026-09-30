@@ -16,7 +16,7 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
     { content: '', uri: `${tmpDir}/tracked.txt` },
     { content: 'ignored.txt', uri: `${tmpDir}/.gitignore` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.newFile()

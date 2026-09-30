@@ -14,7 +14,7 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
     { content: '', uri: `${tmpDir}/source/file.txt` },
     { content: '', uri: `${tmpDir}/source/folder/nested.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   // act

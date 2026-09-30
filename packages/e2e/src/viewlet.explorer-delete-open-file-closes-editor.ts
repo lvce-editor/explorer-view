@@ -10,7 +10,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
     { content: 'content', uri: `${tmpDir}/open.txt` },
     { content: 'other', uri: `${tmpDir}/other.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.clickCurrent()
   const tab = Locator('[title*="open.txt"]').first()

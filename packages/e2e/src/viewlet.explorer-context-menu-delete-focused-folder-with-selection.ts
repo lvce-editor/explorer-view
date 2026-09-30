@@ -15,7 +15,7 @@ export const test: Test = async ({ ContextMenu, Dialog, expect, Explorer, FileSy
   await FileSystem.mkdir(`${tmpDir}/folder-1`)
   await FileSystem.mkdir(`${tmpDir}/folder-2`)
   await FileSystem.mkdir(`${tmpDir}/folder-3`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.toggleIndividualSelection(1)
   const folder1 = Locator('.TreeItem[aria-label="folder-1"]')

@@ -11,7 +11,7 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
     { content: 'left', uri: `${tmpDir}/file1.txt` },
     { content: 'right', uri: `${tmpDir}/file2.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.openContextMenu(0)
   await ContextMenu.selectItem('Select for Compare')
 

@@ -7,7 +7,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
   await Dialog.mockConfirm(() => true)
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusFirst()
 
   // act

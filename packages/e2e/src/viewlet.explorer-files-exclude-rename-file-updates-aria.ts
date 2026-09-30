@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
     { content: '', uri: `${tmpDir}/c.txt` },
   ])
   await Settings.update({ 'files.exclude': { '**/*.tmp': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(1)
   await Explorer.renameDirent()
   await Explorer.updateEditingValue('b.tmp')

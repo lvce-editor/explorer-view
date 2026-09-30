@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   await FileSystem.writeFile(`${tmpDir}/${fileName}`, '')
 
   // act
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // assert
   const newFile = Locator(`text=${fileName}`)

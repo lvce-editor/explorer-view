@@ -12,7 +12,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       uri: `${tmpDir}/stress-folder/item-${index.toString().padStart(5, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.focusFirst()

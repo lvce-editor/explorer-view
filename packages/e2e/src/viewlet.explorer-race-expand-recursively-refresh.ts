@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/folder-1`)
   await FileSystem.mkdir(`${tmpDir}/folder-2`)
   await FileSystem.writeFile(`${tmpDir}/root.txt`, 'root')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
 
   // act: expandRecursively reads children recursively, refresh rebuilds tree — both fire concurrently

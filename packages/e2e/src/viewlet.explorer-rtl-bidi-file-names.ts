@@ -13,7 +13,7 @@ export const test: Test = async ({ ClipBoard, expect, Explorer, FileSystem, Loca
     { content: '', uri: `${tmpDir}/${rtlName}` },
     { content: '', uri: `${tmpDir}/${bidiName}` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.focusIndex(1)

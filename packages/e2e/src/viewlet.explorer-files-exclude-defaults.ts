@@ -13,7 +13,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Settings, Worksp
     { content: '', uri: `${tmpDir}/visible.txt` },
   ])
   await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   const treeItems = Locator('.TreeItem')
   const visibleFile = Locator('.TreeItem[aria-label="visible.txt"]')

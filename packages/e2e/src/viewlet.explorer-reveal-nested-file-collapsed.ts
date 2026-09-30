@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const nestedFilePath = `${tmpDir}/a/b/c.txt`
   await FileSystem.mkdir(`${tmpDir}/a/b`)
   await FileSystem.writeFile(nestedFilePath, 'content')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const folderA = Locator('.TreeItem[aria-label="a"]')
   const folderB = Locator('.TreeItem[aria-label="b"]')
   const nestedFile = Locator('.TreeItem[aria-label="c.txt"]')

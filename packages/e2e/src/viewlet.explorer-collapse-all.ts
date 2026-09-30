@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/a/b`)
   await FileSystem.mkdir(`${tmpDir}/a/b/c`)
   await FileSystem.mkdir(`${tmpDir}/a/b/c/d`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
   await Explorer.focusLast()
 

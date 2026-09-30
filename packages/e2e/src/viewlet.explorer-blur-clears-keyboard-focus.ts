@@ -5,7 +5,7 @@ export const name = 'viewlet.explorer-blur-clears-keyboard-focus'
 export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoard, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file.txt`, 'content')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Command.execute('Explorer.focus')
   await Explorer.focusIndex(0)
 

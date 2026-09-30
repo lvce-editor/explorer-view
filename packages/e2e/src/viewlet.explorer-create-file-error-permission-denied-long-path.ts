@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
     { content: 'content 2', uri: `${prefix}/usr/lib/lvce/resources/app/playground/file2.txt` },
     { content: 'content 3', uri: `${prefix}/usr/lib/lvce/resources/app/playground/file3.txt` },
   ])
-  await Workspace.setPath(`${prefix}/`)
+  await Workspace.setUri(`${prefix}/`)
 
   // act
   await Explorer.newFile()

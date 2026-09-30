@@ -16,7 +16,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
     { content: '', uri: `${tmpDir}/packages/other/file.tmp` },
     { content: '*.tmp', uri: `${tmpDir}/packages/app/.gitignore` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.expandRecursively()
   await Command.execute('Timeout.sleep', 1000)

@@ -12,7 +12,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'c', uri: `${tmpDir}/folder/c.txt` },
     { content: 'root', uri: `${tmpDir}/root.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act: click folder to expand (async reads children), refresh rebuilds tree — both fire concurrently
   await Promise.all([Explorer.handleClick(0), Explorer.refresh()])

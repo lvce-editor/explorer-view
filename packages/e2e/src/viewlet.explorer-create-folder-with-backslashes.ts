@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   await FileSystem.mkdir(`${tmpDir}/\\eee\\`)
 
   // act
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // assert
   const newFolder = Locator('.Explorer').locator('text=\\eee\\')

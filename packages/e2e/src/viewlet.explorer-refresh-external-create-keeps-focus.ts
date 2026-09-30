@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${tmpDir}/a.txt` },
     { content: '', uri: `${tmpDir}/b.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(1)
   const focusedFile = Locator('.TreeItem[aria-label="b.txt"]')
   await expect(focusedFile).toHaveId('TreeItemActive')

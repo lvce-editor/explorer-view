@@ -8,7 +8,7 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.openContextMenu(-1)

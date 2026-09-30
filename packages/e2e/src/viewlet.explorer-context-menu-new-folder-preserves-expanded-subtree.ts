@@ -14,7 +14,7 @@ export const test: Test = async ({ ContextMenu, expect, Explorer, FileSystem, Lo
     { content: '{}', uri: `${tmpDir}/sample-files/package.json` },
     { content: '', uri: `${tmpDir}/scripts/test.js` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.clickCurrent()
   await Explorer.focusIndex(1)

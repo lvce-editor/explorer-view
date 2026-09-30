@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'a', uri: `${tmpDir}/a.txt` },
     { content: 'b', uri: `${tmpDir}/b.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
 
   // act: renameDirent starts inline rename on a.txt, removeDirent deletes a.txt — both fire concurrently

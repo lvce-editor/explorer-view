@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/folder2`)
   await FileSystem.mkdir(`${tmpDir}/folder2/nested`)
   await FileSystem.writeFile(`${tmpDir}/folder2/nested/file.txt`, 'content')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(1)
 
   // act

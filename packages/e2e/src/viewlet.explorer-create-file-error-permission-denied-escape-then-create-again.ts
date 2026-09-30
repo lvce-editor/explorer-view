@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
     { content: 'content 2', uri: `${prefix}/file2.txt` },
     { content: 'content 3', uri: `${prefix}/file3.txt` },
   ])
-  await Workspace.setPath(`${prefix}/`)
+  await Workspace.setUri(`${prefix}/`)
 
   const inputBox = Locator('input')
   const errorMessage = Locator('.ExplorerErrorMessage')

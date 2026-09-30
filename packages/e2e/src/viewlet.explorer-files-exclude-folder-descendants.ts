@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
     { content: '', uri: `${tmpDir}/visible.txt` },
   ])
   await Settings.update({ 'files.exclude': { '**/secret': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   const secretFolder = Locator('.TreeItem[aria-label="secret"]')

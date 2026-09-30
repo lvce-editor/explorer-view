@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'f1', uri: `${tmpDir}/folder/f1.txt` },
     { content: 'root', uri: `${tmpDir}/root.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
 
   // act: handleArrowRight expands the focused folder, refresh rebuilds the tree — both fire concurrently

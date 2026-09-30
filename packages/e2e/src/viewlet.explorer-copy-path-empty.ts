@@ -6,7 +6,7 @@ export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace })
   // arrange
   await ClipBoard.enableMemoryClipBoard()
   const tmpDir = await FileSystem.getTmpDir()
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   // act

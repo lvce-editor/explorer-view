@@ -13,7 +13,7 @@ export const test: Test = async ({ ContextMenu, Dialog, expect, Explorer, FileSy
     { content: '', uri: `${tmpDir}/b.txt` },
     { content: '', uri: `${tmpDir}/c.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
   await Explorer.selectIndices([0, 1])
 

@@ -6,7 +6,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/outer/inner`)
   await FileSystem.writeFile(`${tmpDir}/outer/inner/existing.txt`, '')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   await FileSystem.writeFile(`${tmpDir}/outer/inner/externally-created.txt`, '')

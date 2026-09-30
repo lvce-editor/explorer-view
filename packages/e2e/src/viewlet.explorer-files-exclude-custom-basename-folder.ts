@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
     { content: '', uri: `${tmpDir}/app/index.js` },
   ])
   await Settings.update({ 'files.exclude': { node_modules: true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   const nodeModules = Locator('.TreeItem[aria-label="node_modules"]')

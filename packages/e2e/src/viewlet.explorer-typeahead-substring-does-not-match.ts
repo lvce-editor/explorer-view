@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${tmpDir}/alpha.txt` },
     { content: '', uri: `${tmpDir}/snap.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(1)
 
   await Explorer.handleKeyDown(false, 'a')

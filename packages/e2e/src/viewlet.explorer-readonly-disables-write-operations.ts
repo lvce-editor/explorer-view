@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
   await Extension.addWebExtension(uri)
   const prefix = 'extension-host://readonly://'
   await FileSystem.writeFile(`${prefix}/file.txt`, 'content')
-  await Workspace.setPath(`${prefix}/`)
+  await Workspace.setUri(`${prefix}/`)
 
   // assert
   const newFileButton = Locator('button[name="NewFile"]')

@@ -8,7 +8,7 @@ export const test: Test = async ({ DragAndDrop, expect, Explorer, FileSystem, Lo
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.writeFile(`${tmpDir}/a/f1.txt`, 'f1')
   await FileSystem.mkdir(`${tmpDir}/b`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
   // drag f1.txt over folder b
   await Explorer.focusIndex(1)

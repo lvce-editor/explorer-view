@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/real-folder`)
   await FileSystem.writeFile(`${tmpDir}/real-folder/file.txt`, '')
   await FileSystem.symlink(`${tmpDir}/real-folder`, `${tmpDir}/linked-folder`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.focusIndex(0)

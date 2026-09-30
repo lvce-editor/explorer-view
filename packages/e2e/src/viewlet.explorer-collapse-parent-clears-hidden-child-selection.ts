@@ -11,7 +11,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
     { content: '', uri: `${tmpDir}/folder/child.txt` },
     { content: '', uri: `${tmpDir}/root.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
   await Explorer.selectIndices([1])
   const folder = Locator('.TreeItem[aria-label="folder"]')

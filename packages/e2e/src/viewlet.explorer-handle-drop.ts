@@ -12,7 +12,7 @@ export const test: Test = async ({ DragAndDrop, expect, Explorer, FileSystem, Lo
     { content: 'content 2', uri: `${tmpDir}/file2.txt` },
     { content: 'content 3', uri: `${tmpDir}/file3.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const directory = await navigator.storage.getDirectory()
   const fileHandle = await directory.getFileHandle('dropped-file.txt', {
     create: true,

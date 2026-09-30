@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: '', uri: `${tmpDir}/a.txt` },
     { content: '', uri: `${tmpDir}/c.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await FileSystem.writeFile(`${tmpDir}/b.txt`, '')

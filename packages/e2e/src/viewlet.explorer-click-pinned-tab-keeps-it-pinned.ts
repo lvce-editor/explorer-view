@@ -6,7 +6,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Main, 
   const tmpDir = await FileSystem.getTmpDir()
   const pinnedFile = `${tmpDir}/pinned.txt`
   await FileSystem.writeFile(pinnedFile, 'pinned')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   await Main.openUri(pinnedFile)
   await Explorer.handleClick(0)

@@ -14,7 +14,7 @@ export const test: Test = async ({ expect, Extension, FileSystem, IconTheme, Loc
   await FileSystem.mkdir(`${tmpDir}/folder`)
 
   // act
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // assert
   const file = Locator('.TreeItem[aria-label="unknown.ext"]')

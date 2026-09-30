@@ -16,7 +16,7 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
     { content: '', uri: `${tmpDir}/a` },
     { content: '', uri: `${tmpDir}/b` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const decorated = Locator('.TreeItem[aria-label="a"]')
   const plain = Locator('.TreeItem[aria-label="b"]')
   await expect(decorated).toHaveClass('decoration-ignored')

@@ -12,7 +12,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
     { content: 'content 3', uri: `${tmpDir}/file3.txt` },
   ])
 
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   const explorer = Locator('.Explorer')
   const file1 = explorer.locator('text=file1.txt')

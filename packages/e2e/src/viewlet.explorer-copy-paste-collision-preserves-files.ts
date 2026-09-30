@@ -11,7 +11,7 @@ export const test: Test = async ({ ClipBoard, Explorer, FileSystem, Workspace })
   await FileSystem.writeFile(sourcePath, 'source two')
   await FileSystem.mkdir(`${tmpDir}/target`)
   await FileSystem.writeFile(existingTargetPath, 'destination two')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   await Explorer.focusIndex(1)
   await Explorer.handleCopy()

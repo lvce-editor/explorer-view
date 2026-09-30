@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'child', uri: `${tmpDir}/folder/child.txt` },
     { content: 'root', uri: `${tmpDir}/root.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   // act: collapseAll removes expanded children while refresh concurrently rebuilds the tree

@@ -5,7 +5,7 @@ export const name = 'viewlet.explorer-focus-first-empty-workspace-no-op'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.focusFirst()

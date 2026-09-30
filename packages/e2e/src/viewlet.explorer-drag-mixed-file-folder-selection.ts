@@ -10,7 +10,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'nested', uri: `${tmpDir}/source-folder/nested.txt` },
     { content: 'source', uri: `${tmpDir}/source.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(1)
   await Explorer.toggleIndividualSelection(2)
 

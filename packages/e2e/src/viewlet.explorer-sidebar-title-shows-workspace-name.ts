@@ -7,7 +7,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, SideBar, Workspa
   const tmpDir = await FileSystem.getTmpDir()
   const workspacePath = `${tmpDir}/workspace-name`
   await FileSystem.mkdir(workspacePath)
-  await Workspace.setPath(workspacePath)
+  await Workspace.setUri(workspacePath)
 
   // act
   await SideBar.open('Explorer')

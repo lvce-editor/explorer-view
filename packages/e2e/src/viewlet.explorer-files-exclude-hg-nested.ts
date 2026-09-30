@@ -7,7 +7,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Settin
   await FileSystem.mkdir(`${tmpDir}/project/.hg`)
   await FileSystem.writeFile(`${tmpDir}/project/.hg/requires`, '')
   await Settings.update({ 'files.exclude': { '**/.DS_Store': true, '**/.git': true, '**/.hg': true, '**/.svn': true, '**/Thumbs.db': true } })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.expandRecursively()
 
   const hgFolder = Locator('.TreeItem[aria-label=".hg"]')

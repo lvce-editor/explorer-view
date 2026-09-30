@@ -10,7 +10,8 @@
     },
     "packages/e2e": {
       "entry": ["src/**/*.ts", "scripts/*.js", "fixtures/**/main.js"],
-      "project": ["src/**/*.ts", "scripts/*.js", "fixtures/**/*.js"]
+      "project": ["src/**/*.ts", "scripts/*.js", "fixtures/**/*.js"],
+      "ignoreDependencies": ["@lvce-editor/test-worker"]
     },
     "packages/explorer-view": {
       "entry": ["test/**/*.test.ts"],

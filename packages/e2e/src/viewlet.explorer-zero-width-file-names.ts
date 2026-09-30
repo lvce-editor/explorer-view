@@ -12,7 +12,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   }
 
   // act
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // assert
   const treeItems = Locator('.TreeItem')

@@ -6,7 +6,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, SideBar, Workspa
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await Workspace.close()
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await SideBar.open('Search')
   await SideBar.open('Explorer')
   const title = Locator('.SideBarTitleAreaTitle')

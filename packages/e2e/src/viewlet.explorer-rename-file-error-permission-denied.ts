@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
 
   const prefix = 'extension-host://xyz://'
   await FileSystem.writeFile(`${prefix}/file1.txt`, 'content 1')
-  await Workspace.setPath(`${prefix}/`)
+  await Workspace.setUri(`${prefix}/`)
   await Explorer.focusIndex(0)
 
   // act

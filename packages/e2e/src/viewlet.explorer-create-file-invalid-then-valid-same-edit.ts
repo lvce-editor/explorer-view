@@ -5,7 +5,7 @@ export const name = 'viewlet.explorer-create-file-invalid-then-valid-same-edit'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.newFile()
 
   // act

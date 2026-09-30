@@ -9,7 +9,7 @@ export const test: Test = async ({ Editor, expect, Explorer, FileSystem, Locator
   const originalUri = `${tmpDir}/original.txt`
   const renamedUri = `${tmpDir}/renamed.txt`
   await FileSystem.writeFile(originalUri, 'content')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.handleClick(0)
 
   const originalTab = Locator('.MainTab[title$="original.txt"]')

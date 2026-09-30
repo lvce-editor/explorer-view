@@ -9,7 +9,7 @@ export const test: Test = async ({ BaseUrl, expect, Extension, FileSystem, IconT
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/test.xyz`, 'test')
   await FileSystem.mkdir(`${tmpDir}/test-folder`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   const extensionUri = import.meta.resolve('../fixtures/sample.icon-theme')
   await Extension.addWebExtension(extensionUri)
 

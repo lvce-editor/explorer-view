@@ -11,7 +11,7 @@ export const test: Test = async ({ Dialog, expect, Explorer, FileSystem, Locator
     { content: 'content 2', uri: `${tmpDir}/file2.txt` },
     { content: 'content 3', uri: `${tmpDir}/file3.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusIndex(0)
 
   // act: focusIndex changes focus to index 1, removeDirent deletes currently focused item (0) — both fire concurrently

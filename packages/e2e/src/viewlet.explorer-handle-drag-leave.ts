@@ -10,7 +10,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
     { content: 'content 2', uri: `${tmpDir}/file2.txt` },
     { content: 'content 3', uri: `${tmpDir}/file3.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act
   await Explorer.handleDragOver(5000, 5000)
@@ -21,7 +21,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   await expect(dropTarget).toBeVisible()
 
   // act
-  await explorer.dispatchEvent('dragleave', { bubbles: true } as any)
+  await Command.execute('TestFrameWork.performAction', explorer, 'dispatchEvent', { init: { bubbles: true }, type: 'dragleave' })
   await Command.execute('Timeout.sleep', 100)
 
   // assert

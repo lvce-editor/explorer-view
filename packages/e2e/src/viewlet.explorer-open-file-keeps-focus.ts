@@ -6,7 +6,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/file.txt`, 'content')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Command.execute('Explorer.focus')
   await Explorer.focusIndex(0)
   const explorerItems = Locator('.Explorer .ListItems')

@@ -7,7 +7,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.mkdir(`${tmpDir}/b`)
   await FileSystem.mkdir(`${tmpDir}/c`)
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   await Explorer.focusIndex(0)
   await Explorer.handleClickAt(false, 0, false, true, 300, 105)

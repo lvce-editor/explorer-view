@@ -14,7 +14,7 @@ export const test: Test = async ({ Dialog, Explorer, FileSystem, Workspace }) =>
     confirmMessage = String(args[0])
     return false
   })
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.focusFirst()
 
   // act

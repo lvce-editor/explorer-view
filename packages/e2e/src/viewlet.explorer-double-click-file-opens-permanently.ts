@@ -5,7 +5,7 @@ export const name = 'viewlet.explorer-double-click-file-opens-permanently'
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/test.txt`, 'content')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   await Explorer.handleDoubleClick(20, 10)
 

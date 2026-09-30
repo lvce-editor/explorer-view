@@ -13,7 +13,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     { content: 'b1', uri: `${tmpDir}/folder-b/b1.txt` },
     { content: 'b2', uri: `${tmpDir}/folder-b/b2.txt` },
   ])
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act: click both folders concurrently to expand them — async expansions race
   await Promise.all([Explorer.handleClick(0), Explorer.handleClick(1)])

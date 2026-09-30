@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/a`)
   await FileSystem.mkdir(`${tmpDir}/b`)
   await FileSystem.writeFile(`${tmpDir}/file1.txt`, 'content 1')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // act - start creating file in folder a
   await Explorer.focusIndex(0) // focus on folder a
@@ -20,7 +20,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBox).toBeFocused()
 
   // act - type some content for the file in folder a
-  await inputBox.type('file-in-a.txt')
+  await Explorer.updateEditingValue('file-in-a.txt')
 
   // act - switch to folder b and start creating file there
   await Explorer.focusIndex(1) // focus on folder b
@@ -33,7 +33,6 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await expect(inputBoxes).toBeFocused()
 
   // act - type content for the file in folder b
-  await inputBoxes.type('file-in-b.txt')
   await Explorer.updateEditingValue('file-in-b.txt')
   await Explorer.acceptEdit()
 

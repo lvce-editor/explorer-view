@@ -11,7 +11,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
       uri: `${tmpDir}/file-${index.toString().padStart(3, '0')}.txt`,
     })),
   )
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Explorer.selectIndices([10, 11, 12, 13, 14, 15])
   await Explorer.focusIndex(90)
 

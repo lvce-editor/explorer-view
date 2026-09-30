@@ -16,7 +16,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   await FileSystem.mkdir(`${tmpDir}/packages`)
 
   // act
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
 
   // assert
   const treeItems = Locator('.TreeItem')

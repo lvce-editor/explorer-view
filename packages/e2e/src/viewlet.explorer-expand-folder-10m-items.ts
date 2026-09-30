@@ -8,7 +8,7 @@ export const test: Test = async ({ expect, Explorer, Extension, Locator, Workspa
   const extensionUri = import.meta.resolve('../fixtures/sample.file-system-provider-expand-folder-10m-items')
   await Extension.addWebExtension(extensionUri)
   const workspacePath = 'extension-host://xyz://'
-  await Workspace.setPath(workspacePath)
+  await Workspace.setUri(workspacePath)
 
   // act
   await Explorer.focusFirst()
