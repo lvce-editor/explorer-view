@@ -1,4 +1,4 @@
-import type { Test } from '@lvce-editor/test-with-playwright'
+import type { Test } from '@lvce-editor/test-worker'
 
 export const name = 'viewlet.explorer-scrollbar-preserves-tree'
 
