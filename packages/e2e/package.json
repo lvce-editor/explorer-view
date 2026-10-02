@@ -9,6 +9,7 @@
     "e2e:firefox": "test-with-playwright --server-path=../server/src/server.js --only-extension=. --test-path=. --browser=firefox",
     "e2e:firefox:headless": "test-with-playwright --server-path=../server/src/server.js --only-extension=. --test-path=. --browser=firefox --headless",
     "e2e:headless": "test-with-playwright --server-path=../server/src/server.js --only-extension=. --test-path=. --headless",
+    "e2e:coverage": "test-with-playwright --server-path=../server/src/server.js --only-extension=. --test-path=. --headless --reuse-page --filter=viewlet.explorer.open",
     "e2e:webkit": "node scripts/runWebkitTests.ts",
     "e2e:webkit:headless": "node scripts/runWebkitTests.ts --headless",
     "type-check": "tsc"

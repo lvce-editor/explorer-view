@@ -15,6 +15,7 @@ const options: RollupOptions = {
     file: join(root, '.tmp/dist/dist/explorerViewWorkerMain.js'),
     format: 'es',
     freeze: false,
+    sourcemap: true,
     generatedCode: {
       constBindings: true,
       objectShorthand: true,
