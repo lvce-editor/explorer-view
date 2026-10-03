@@ -59,7 +59,6 @@ test('revealItem - item found', async () => {
 
   const state: ExplorerState = {
     ...createDefaultState(),
-    pathSeparator: '/',
     items: [
       {
         depth: 0,
@@ -69,6 +68,7 @@ test('revealItem - item found', async () => {
         uri: '/root/test',
       },
     ],
+    pathSeparator: '/',
     root: '/root',
   }
   const newState = await revealItem(state, '/root/test')

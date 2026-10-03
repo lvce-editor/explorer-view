@@ -5,14 +5,14 @@ import * as GetIndex from '../GetIndex/GetIndex.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import { isExcluded } from '../IsExcluded/IsExcluded.ts'
 import * as IsUriWithinRoot from '../IsUriWithinRoot/IsUriWithinRoot.ts'
+import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 import * as RevealItemHidden from '../RevealItemHidden/RevealItemHidden.ts'
 import * as RevealItemVisible from '../RevealItemVisible/RevealItemVisible.ts'
-import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
 export const revealItem = async (state: ExplorerState, uri: string): Promise<ExplorerState> => {
   Assert.object(state)
   Assert.string(uri)
-  const { excluded, items, pathSeparator, root } = state
+  const { excluded, items, pathSeparator, root, uid } = state
   if (!IsUriWithinRoot.isUriWithinRoot(root, uri, pathSeparator)) {
     return state
   }
@@ -25,7 +25,7 @@ export const revealItem = async (state: ExplorerState, uri: string): Promise<Exp
     return state
   }
   if (RendererProcess.isConnected()) {
-    RendererProcess.requestPostRenderFocusSelector(state.uid, '.ListItems')
+    RendererProcess.requestPostRenderFocusSelector(uid, '.ListItems')
   }
   return Focus.focus({
     ...revealedState,
