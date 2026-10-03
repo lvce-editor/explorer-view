@@ -7,8 +7,10 @@ export const skip = 1
 export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoard, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  await FileSystem.writeFile(`${tmpDir}/a.txt`, 'content')
-  await FileSystem.writeFile(`${tmpDir}/b.txt`, 'content')
+  await FileSystem.setFiles([
+    { content: 'content', uri: `${tmpDir}/a.txt` },
+    { content: 'content', uri: `${tmpDir}/b.txt` },
+  ])
   await Workspace.setUri(tmpDir)
   await Command.execute('Explorer.focus')
   await Explorer.focusIndex(0)
@@ -19,9 +21,10 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   // assert: Enter on the same file transfers focus to the editor.
   const explorerItems = Locator('.Explorer .ListItems')
   const editorInput = Locator('.EditorInput textarea')
+  const secondFile = Locator('.TreeItem[title$="/b.txt"]')
   await expect(explorerItems).toBeFocused()
   await KeyBoard.press('ArrowDown')
-  await expect(Locator('.TreeItem[title$="/b.txt"]')).toHaveId('TreeItemActive')
+  await expect(secondFile).toHaveId('TreeItemActive')
   await Explorer.focusIndex(0)
   await Command.execute('Explorer.handleClickCurrent')
   await expect(editorInput).toBeFocused()
