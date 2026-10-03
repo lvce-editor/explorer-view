@@ -19,20 +19,22 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   // assert: Enter on the same file transfers focus to the editor.
   const explorerItems = Locator('.Explorer .ListItems')
   const editorInput = Locator('.EditorInput textarea')
+  const firstFile = Locator('.TreeItem[title$="/a.txt"]')
   const secondFile = Locator('.TreeItem[title$="/b.txt"]')
   await expect(explorerItems).toBeFocused()
   await KeyBoard.press('ArrowDown')
   await expect(secondFile).toHaveId('TreeItemActive')
-  await Explorer.focusIndex(0)
+  await KeyBoard.press('ArrowUp')
+  await expect(firstFile).toHaveId('TreeItemActive')
   await KeyBoard.press('Enter')
   await expect(editorInput).toBeFocused()
 
   // act: open another file without focus, then return to the original inactive tab with Enter.
   await Command.execute('Explorer.focus')
-  await Explorer.focusIndex(1)
+  await KeyBoard.press('ArrowDown')
   await KeyBoard.press('Space')
   await Command.execute('Explorer.focus')
-  await Explorer.focusIndex(0)
+  await KeyBoard.press('ArrowUp')
   await KeyBoard.press('Enter')
 
   // assert
