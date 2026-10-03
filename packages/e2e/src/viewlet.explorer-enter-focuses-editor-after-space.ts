@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-enter-focuses-editor-after-space'
 
-export const skip = 1
-
 export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoard, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
@@ -16,26 +14,28 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   await Explorer.focusIndex(0)
 
   // act: Space opens the file while keeping focus in Explorer.
-  await Command.execute('Explorer.handleClickCurrentButKeepFocus')
+  await KeyBoard.press('Space')
 
   // assert: Enter on the same file transfers focus to the editor.
   const explorerItems = Locator('.Explorer .ListItems')
   const editorInput = Locator('.EditorInput textarea')
+  const firstFile = Locator('.TreeItem[title$="/a.txt"]')
   const secondFile = Locator('.TreeItem[title$="/b.txt"]')
   await expect(explorerItems).toBeFocused()
   await KeyBoard.press('ArrowDown')
   await expect(secondFile).toHaveId('TreeItemActive')
-  await Explorer.focusIndex(0)
-  await Command.execute('Explorer.handleClickCurrent')
+  await KeyBoard.press('ArrowUp')
+  await expect(firstFile).toHaveId('TreeItemActive')
+  await KeyBoard.press('Enter')
   await expect(editorInput).toBeFocused()
 
   // act: open another file without focus, then return to the original inactive tab with Enter.
   await Command.execute('Explorer.focus')
-  await Explorer.focusIndex(1)
-  await Command.execute('Explorer.handleClickCurrentButKeepFocus')
+  await KeyBoard.press('ArrowDown')
+  await KeyBoard.press('Space')
   await Command.execute('Explorer.focus')
-  await Explorer.focusIndex(0)
-  await Command.execute('Explorer.handleClickCurrent')
+  await KeyBoard.press('ArrowUp')
+  await KeyBoard.press('Enter')
 
   // assert
   await expect(editorInput).toBeFocused()
