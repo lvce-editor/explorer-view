@@ -15,6 +15,28 @@ test('empty array when input source is user', () => {
   expect(result).toEqual([])
 })
 
+test('empty array when explorer is not focused', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...createDefaultState(),
+    focus: FocusId.List,
+    focused: false,
+  }
+  const result = renderFocus(oldState, newState)
+  expect(result).toEqual([])
+})
+
+test('focus input when explorer is not focused', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...createDefaultState(),
+    focus: FocusId.Input,
+    focused: false,
+  }
+  const result = renderFocus(oldState, newState)
+  expect(result).toEqual(['Viewlet.focusElementByName', newState.uid, InputName.ExplorerInput])
+})
+
 test('focus input when focus is input', () => {
   const oldState = createDefaultState()
   const newState = {
