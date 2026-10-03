@@ -35,6 +35,17 @@ test('focus list when focus is list', () => {
   expect(result).toEqual(['Viewlet.focusSelector', newState.uid, '.ListItems'])
 })
 
+test('do not focus list when explorer is not focused', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...createDefaultState(),
+    focus: FocusId.List,
+    focused: false,
+  }
+  const result = renderFocus(oldState, newState)
+  expect(result).toEqual([])
+})
+
 test('empty array when no focus state', () => {
   const oldState = createDefaultState()
   const newState = createDefaultState()
