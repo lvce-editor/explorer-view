@@ -3,6 +3,8 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import * as FocusId from '../src/parts/FocusId/FocusId.ts'
+import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import { revealItem } from '../src/parts/RevealItem/RevealItem.ts'
 
 test('revealItem - excluded uri leaves state unchanged', async () => {
@@ -63,12 +65,16 @@ test('revealItem - item found', async () => {
         name: 'test',
         selected: false,
         type: 1,
-        uri: 'test',
+        uri: '/root/test',
       },
     ],
+    pathSeparator: '/',
+    root: '/root',
   }
-  const newState = await revealItem(state, 'test')
-  expect(newState.items[0].uri).toBe('test')
+  const newState = await revealItem(state, '/root/test')
+  expect(newState.items[0].uri).toBe('/root/test')
+  expect(newState.focus).toBe(FocusId.List)
+  expect(newState.inputSource).toBe(InputSource.Script)
   expect(mockRpc.invocations).toEqual([])
 })
 
