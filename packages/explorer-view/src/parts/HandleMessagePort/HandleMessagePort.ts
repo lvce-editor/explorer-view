@@ -17,6 +17,12 @@ export const handleMessagePort = async (
     const applicationId = ExplorerStates.get(uid)?.newState.applicationId
     await fn(uid, ...args)
     await RendererWorker.invoke('Viewlet.requestRender', uid)
+    const focusSelector = RendererProcess.takePostRenderFocusSelector(uid)
+    if (focusSelector) {
+      setTimeout(() => {
+        void RendererProcess.invoke('Viewlet.focusSelector', uid, focusSelector).catch(() => {})
+      }, 0)
+    }
     if (RendererProcess.takePostRenderFocus(uid)) {
       setTimeout(() => {
         void ApplicationRpc.invokeForView(applicationId, uid, 'Main.focus').catch(() => {})
