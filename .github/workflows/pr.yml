@@ -51,6 +51,19 @@ jobs:
         if: runner.os != 'Windows'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: trace whitespace validation
+        if: matrix.os == 'ubuntu-24.04'
+        working-directory: ./packages/e2e
+        run: npm run e2e:headless -- --filter=viewlet.explorer-create-file-whitespace-only-name --trace-renderer-worker
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: upload whitespace validation trace
+        if: always() && matrix.os == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v4
+        with:
+          name: whitespace-validation-trace
+          path: packages/e2e/renderer-worker-traces/
+          if-no-files-found: error
       - name: e2e
         working-directory: ./packages/e2e
         run: npm run e2e:headless
