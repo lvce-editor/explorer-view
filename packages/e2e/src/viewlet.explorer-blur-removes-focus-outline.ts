@@ -6,6 +6,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.setFiles([{ content: 'content', uri: `${tmpDir}/file.txt` }])
   await Workspace.setUri(tmpDir)
+  await Command.execute('Explorer.focus')
   await Explorer.focusIndex(0)
   await KeyBoard.press('Enter')
 
@@ -26,6 +27,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   await Explorer.focusIndex(-1)
   await expect(explorerItems).toHaveClass('ListItems FocusOutline')
   await expect(explorerItems).toHaveCSS('outline-style', 'solid')
+  await expect(explorerItems).toBeFocused()
 
   // Moving focus back to the editor must remove the outline.
   await focusEditorInput()
@@ -37,10 +39,14 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   await Command.execute('Explorer.focus')
   await expect(explorerItems).toHaveClass('ListItems FocusOutline')
   await expect(explorerItems).toHaveCSS('outline-style', 'solid')
+  await expect(explorerItems).toBeFocused()
 
   // Item-level focus must also lose its outline when focus leaves Explorer.
   await Explorer.focusIndex(0)
+  const focusedItem = Locator('#TreeItemActive')
+  await expect(focusedItem).toBeVisible()
   await expect(explorerItems).toHaveClass('ListItems')
+  await expect(explorerItems).toBeFocused()
   await focusEditorInput()
   await expect(editorInput).toBeFocused()
   await expect(explorerItems).toHaveClass('ListItems')
