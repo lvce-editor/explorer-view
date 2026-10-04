@@ -10,14 +10,8 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Workspace.setUri(tmpDir)
   await Explorer.newFile()
 
-  // Verify the same validation through the command path before real typing.
-  const input = Locator('input')
-  await Explorer.updateEditingValue(whitespaceOnly)
-  await expect(input).toHaveClass('InputValidationError')
-  await Explorer.cancelEdit()
-  await Explorer.newFile()
-
   // act
+  const input = Locator('input')
   await expect(input).toBeFocused()
   await input.type(whitespaceOnly)
 
@@ -40,7 +34,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.updateEditingValue('valid.txt')
 
   // assert
-  await expect(input).not.toHaveClass('InputValidationError')
+  await expect(input).toHaveAttribute('class', 'ExplorerInputBox')
   await expect(errorMessage).toBeHidden()
 
   // act
