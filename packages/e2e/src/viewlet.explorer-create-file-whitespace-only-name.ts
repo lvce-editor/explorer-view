@@ -17,10 +17,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // assert
   await expect(input).toHaveValue(whitespaceOnly)
-  await expect(input).toHaveClass('InputValidationError')
   const errorMessage = Locator('.ExplorerErrorMessage')
   await expect(errorMessage).toBeVisible()
   await expect(errorMessage).toHaveText('A file or folder name must be provided.')
+  await expect(input).toHaveClass('InputValidationError')
 
   // act
   await Explorer.acceptEdit()
