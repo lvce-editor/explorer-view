@@ -12,7 +12,7 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // act
   const input = Locator('input')
-  await Explorer.updateEditingValue(whitespaceOnly)
+  await input.type(whitespaceOnly)
 
   // assert
   await expect(input).toHaveClass('InputValidationError')
