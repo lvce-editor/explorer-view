@@ -6,6 +6,11 @@ test('validateFileName2 - empty name', () => {
   expect(result).toBe('A file or folder name must be provided.')
 })
 
+test.each([' ', ' '.repeat(2), '\t', '\n', '\u{A0}'])('validateFileName2 - whitespace-only name %j', (name) => {
+  const result = ValidateFileName2.validateFileName2(name)
+  expect(result).toBe('A file or folder name must be provided.')
+})
+
 test('validateFileName2 - name starting with dot (allowed)', () => {
   const result = ValidateFileName2.validateFileName2('.hidden')
   expect(result).toBe('')
@@ -63,6 +68,11 @@ test('validateFileName2 - name starting with backslash', () => {
 
 test('validateFileName2 - valid name', () => {
   const result = ValidateFileName2.validateFileName2('valid-file.txt')
+  expect(result).toBe('')
+})
+
+test('validateFileName2 - preserves surrounding whitespace in a non-whitespace name', () => {
+  const result = ValidateFileName2.validateFileName2(' valid-file.txt ')
   expect(result).toBe('')
 })
 

@@ -180,6 +180,27 @@ test('updateEditingValue - real-time validation during file creation', async () 
   expect(result2.editingErrorMessage).toBe('')
 })
 
+test('updateEditingValue - reports whitespace-only name during file creation and clears after valid name', async () => {
+  RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+  })
+
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    editingType: ExplorerEditingType.CreateFile,
+  }
+
+  const whitespaceOnly = ' '.repeat(3)
+  const result = await updateEditingValue(state, whitespaceOnly)
+  expect(result.editingValue).toBe(whitespaceOnly)
+  expect(result.editingErrorMessage).toBe('A file or folder name must be provided.')
+
+  const result2 = await updateEditingValue(result, 'valid.txt')
+  expect(result2.editingErrorMessage).toBe('')
+})
+
 test('updateEditingValue - real-time validation during folder creation', async () => {
   RendererWorker.registerMockRpc({
     'IconTheme.getFileIcon'(params: any) {

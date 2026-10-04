@@ -2,7 +2,7 @@ import * as Character from '../Character/Character.ts'
 import * as ExplorerStrings from '../ExplorerStrings/ExplorerStrings.ts'
 
 export const validateFileName2 = (name: string, siblingFileNames: readonly string[] = []): string => {
-  if (!name) {
+  if (!name.trim()) {
     const editingErrorMessage = ExplorerStrings.fileOrFolderNameMustBeProvided()
     return editingErrorMessage
   }

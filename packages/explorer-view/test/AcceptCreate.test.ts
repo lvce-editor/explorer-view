@@ -8,17 +8,16 @@ import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerE
 import * as ExplorerStrings from '../src/parts/ExplorerStrings/ExplorerStrings.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
 
-test.skip('acceptCreate - empty file name', async () => {
+test.each(['', ' '.repeat(3), '\t'])('acceptCreate - rejects whitespace-only file name %j without filesystem operations', async (editingValue) => {
+  using mockRpc = RendererWorker.registerMockRpc({})
   const state: ExplorerState = {
     ...createDefaultState(),
-    editingValue: '',
+    editingValue,
   }
 
   const result = await acceptCreate(state, DirentType.File)
-  expect(result).toEqual({
-    ...state,
-    editingErrorMessage: ExplorerStrings.fileOrFolderNameMustBeProvided(),
-  })
+  expect(result.editingErrorMessage).toBe(ExplorerStrings.fileOrFolderNameMustBeProvided())
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('acceptCreate - successful file creation', async () => {
