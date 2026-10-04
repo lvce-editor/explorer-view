@@ -7,11 +7,8 @@ const depth = 1200
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
-  let currentPath = tmpDir
-  for (let i = 0; i < depth; i++) {
-    currentPath += '/a'
-    await FileSystem.mkdir(currentPath)
-  }
+  const currentPath = `${tmpDir}/${Array.from({ length: depth }, () => 'a').join('/')}`
+  await FileSystem.mkdir(currentPath)
   await FileSystem.writeFile(`${currentPath}/deep-file.txt`, 'deep')
 
   await Workspace.setUri(tmpDir)
