@@ -11,6 +11,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   await KeyBoard.press('Enter')
 
   const explorerItems = Locator('.Explorer .ListItems')
+  const focusedListItems = Locator('.Explorer .ListItems.FocusOutline')
   const editorInput = Locator('.EditorInput textarea')
   await expect(editorInput).toBeFocused()
   const components = (await Command.execute('ComponentState.getComponents')) as readonly { moduleId: string; uid: number }[]
@@ -25,20 +26,21 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   // With no focused item, the list itself receives the focus outline.
   await Command.execute('Explorer.focus')
   await Explorer.focusIndex(-1)
-  await expect(explorerItems).toHaveClass('ListItems FocusOutline')
-  await expect(explorerItems).toHaveCSS('outline-style', 'solid')
+  await expect(focusedListItems).toBeVisible()
+  await expect(focusedListItems).toHaveCSS('outline-style', 'solid')
   await expect(explorerItems).toBeFocused()
 
   // Moving focus back to the editor must remove the outline.
   await focusEditorInput()
   await expect(editorInput).toBeFocused()
   await expect(explorerItems).toHaveClass('ListItems')
+  await expect(focusedListItems).toBeHidden()
   await expect(explorerItems).toHaveCSS('outline-style', 'none')
 
   // Refocusing Explorer restores the list-level indicator.
   await Command.execute('Explorer.focus')
-  await expect(explorerItems).toHaveClass('ListItems FocusOutline')
-  await expect(explorerItems).toHaveCSS('outline-style', 'solid')
+  await expect(focusedListItems).toBeVisible()
+  await expect(focusedListItems).toHaveCSS('outline-style', 'solid')
   await expect(explorerItems).toBeFocused()
 
   // Item-level focus must also lose its outline when focus leaves Explorer.
@@ -46,9 +48,11 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   const focusedItem = Locator('#TreeItemActive')
   await expect(focusedItem).toBeVisible()
   await expect(explorerItems).toHaveClass('ListItems')
+  await expect(focusedListItems).toBeHidden()
   await expect(explorerItems).toBeFocused()
   await focusEditorInput()
   await expect(editorInput).toBeFocused()
   await expect(explorerItems).toHaveClass('ListItems')
+  await expect(focusedListItems).toBeHidden()
   await expect(explorerItems).toHaveCSS('outline-style', 'none')
 }
