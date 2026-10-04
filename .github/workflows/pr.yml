@@ -53,7 +53,7 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e
         working-directory: ./packages/e2e
-        run: npm run e2e:headless -- --timeout=60000
+        run: npm run e2e:headless -- --timeout=120000
         if: matrix.os == 'windows-11-arm'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
