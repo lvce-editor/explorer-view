@@ -12,9 +12,11 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
 
   // act
   const input = Locator('input')
+  await expect(input).toBeFocused()
   await input.type(whitespaceOnly)
 
   // assert
+  await expect(input).toHaveValue(whitespaceOnly)
   await expect(input).toHaveClass('InputValidationError')
   const errorMessage = Locator('.ExplorerErrorMessage')
   await expect(errorMessage).toBeVisible()
