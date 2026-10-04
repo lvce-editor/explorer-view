@@ -12,6 +12,14 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   const explorerItems = Locator('.Explorer .ListItems')
   const editorInput = Locator('.EditorInput textarea')
   await expect(editorInput).toBeFocused()
+  const components = (await Command.execute('ComponentState.getComponents')) as readonly { moduleId: string; uid: number }[]
+  const editor = components.find((component) => component.moduleId === 'Editor')
+  if (!editor) {
+    throw new Error('Editor component not found')
+  }
+  const focusEditorInput = async (): Promise<void> => {
+    await Command.execute('Viewlet.focusSelector', editor.uid, '.EditorInput textarea')
+  }
 
   // With no focused item, the list itself receives the focus outline.
   await Command.execute('Explorer.focus')
@@ -20,7 +28,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   await expect(explorerItems).toHaveCSS('outline-style', 'solid')
 
   // Moving focus back to the editor must remove the outline.
-  await editorInput.click()
+  await focusEditorInput()
   await expect(editorInput).toBeFocused()
   await expect(explorerItems).toHaveClass('ListItems')
   await expect(explorerItems).toHaveCSS('outline-style', 'none')
@@ -33,7 +41,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   // Item-level focus must also lose its outline when focus leaves Explorer.
   await Explorer.focusIndex(0)
   await expect(explorerItems).toHaveClass('ListItems')
-  await editorInput.click()
+  await focusEditorInput()
   await expect(editorInput).toBeFocused()
   await expect(explorerItems).toHaveClass('ListItems')
   await expect(explorerItems).toHaveCSS('outline-style', 'none')
