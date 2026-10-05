@@ -26,6 +26,25 @@ test('handleCopy - with focused dirent', async () => {
   })
 })
 
+test('handleCopy - with multiple selected dirents', async () => {
+  using mockRpc = RpcRendererWorker.registerMockRpc({
+    'ClipBoard.writeNativeFiles'() {},
+  })
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    focusedIndex: 0,
+    items: [
+      { depth: 0, name: 'first file ü.txt', selected: true, type: DirentType.File, uri: '/first file ü.txt' },
+      { depth: 0, name: 'second.txt', selected: true, type: DirentType.File, uri: '/second.txt' },
+      { depth: 0, name: 'third.txt', selected: false, type: DirentType.File, uri: '/third.txt' },
+    ],
+  }
+
+  await handleCopy(state)
+
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', 'copy', ['/first file ü.txt', '/second.txt']]])
+})
+
 test('handleCopy - without focused dirent', async () => {
   using mockRpc = RpcRendererWorker.registerMockRpc({
     'ClipBoard.writeNativeFiles'() {},
