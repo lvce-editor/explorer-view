@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15, windows-2025]
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15, windows-2025, windows-11-arm]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 180
     steps:
@@ -63,7 +63,14 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e
         working-directory: ./packages/e2e
+        run: npm run e2e:headless -- --timeout=120000
+        if: matrix.os == 'windows-11-arm'
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: e2e
+        working-directory: ./packages/e2e
         run: npm run e2e:headless
+        if: matrix.os != 'windows-11-arm'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e firefox

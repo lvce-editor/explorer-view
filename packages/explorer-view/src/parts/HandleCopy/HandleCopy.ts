@@ -1,18 +1,16 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as ClipBoard from '../ClipBoard/ClipBoard.ts'
-import * as GetFocusedDirent from '../GetFocusedDirent/GetFocusedDirent.ts'
+import { getSelectedItems } from '../GetSelectedItems/GetSelectedItems.ts'
 
 export const handleCopy = async (state: ExplorerState): Promise<ExplorerState> => {
-  // TODO handle multiple files
-  // TODO if not file is selected, what happens?
-  const dirent = GetFocusedDirent.getFocusedDirent(state)
-  if (!dirent) {
+  const { focusedIndex, items } = state
+  const dirents = getSelectedItems(items, focusedIndex)
+  if (dirents.length === 0) {
     console.error('[ViewletExplorer/handleCopy] no dirent selected')
     return state
   }
-  const absolutePath = dirent.uri
   // TODO handle copy error gracefully
-  const files = [absolutePath]
+  const files = dirents.map((dirent) => dirent.uri)
   await ClipBoard.writeNativeFiles('copy', files)
   return {
     ...state,
