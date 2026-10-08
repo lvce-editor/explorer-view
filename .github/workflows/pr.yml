@@ -53,7 +53,7 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e
         working-directory: ./packages/e2e
-        run: npm run e2e:headless -- --timeout=120000
+        run: npm run e2e:headless -- --timeout=120000 --trace-renderer-worker
         if: matrix.os == 'windows-11-arm'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
@@ -68,6 +68,13 @@ jobs:
         run: npm run e2e:coverage
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Upload renderer worker traces after Windows ARM failure
+        uses: actions/upload-artifact@v7
+        if: failure() && matrix.os == 'windows-11-arm'
+        with:
+          name: renderer-worker-traces-windows-11-arm
+          path: packages/e2e/renderer-worker-traces/
+          if-no-files-found: ignore
       - name: e2e firefox
         working-directory: ./packages/e2e
         run: npm run e2e:firefox:headless -- --timeout=2100000
