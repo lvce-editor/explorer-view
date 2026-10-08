@@ -16,6 +16,6 @@
   },
   "devDependencies": {
     "@lvce-editor/test-with-playwright": "22.40.6",
-    "@lvce-editor/test-worker": "17.27.10"
+    "@lvce-editor/test-worker": "17.27.11"
   }
 }
