@@ -21,6 +21,9 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, KeyBoa
   }
   const focusEditorInput = async (): Promise<void> => {
     await Command.execute('Viewlet.focusSelector', editor.uid, '.EditorInput textarea')
+    // DOM focus dispatches the editor's asynchronous focus handler. Wait for
+    // its render before moving focus away, so that render cannot reclaim focus.
+    await expect(Locator('.Editor .EditorCursor')).toBeVisible()
   }
 
   // With no focused item, the list itself receives the focus outline.
