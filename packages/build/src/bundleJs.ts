@@ -5,7 +5,7 @@ import { join } from 'path'
 import { rollup, type RollupOptions } from 'rollup'
 import { root } from './root.ts'
 
-const options: RollupOptions = {
+const getOptions = (sourcemap: boolean): RollupOptions => ({
   input: join(root, 'packages/explorer-view/src/explorerViewWorkerMain.ts'),
   preserveEntrySignatures: 'strict',
   treeshake: {
@@ -15,7 +15,7 @@ const options: RollupOptions = {
     file: join(root, '.tmp/dist/dist/explorerViewWorkerMain.js'),
     format: 'es',
     freeze: false,
-    sourcemap: true,
+    sourcemap,
     generatedCode: {
       constBindings: true,
       objectShorthand: true,
@@ -30,9 +30,10 @@ const options: RollupOptions = {
     }),
     nodeResolve(),
   ],
-}
+})
 
-export const bundleJs = async (): Promise<void> => {
+export const bundleJs = async (sourcemap = false): Promise<void> => {
+  const options = getOptions(sourcemap)
   const input = await rollup(options)
   await input.write(options.output as any)
 }

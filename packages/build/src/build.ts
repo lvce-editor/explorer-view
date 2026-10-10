@@ -52,7 +52,7 @@ const getVersion = async (): Promise<string> => {
 await rm(dist, { recursive: true, force: true })
 await mkdir(dist, { recursive: true })
 
-await bundleJs()
+await bundleJs(process.argv.includes('--development'))
 
 const version = await getVersion()
 
