@@ -19,10 +19,14 @@ test('handleDrop - successful drop', async () => {
     },
   })
 
-  const state = createDefaultState()
+  const state = {
+    ...createDefaultState(),
+    dropTargets: [-1],
+  }
 
   const result = await handleDrop(state, 0, 0, 1)
   expect(result).toBeDefined()
+  expect(result.dropTargets).toEqual([])
   expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 1, false]])
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
