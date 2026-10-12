@@ -19,7 +19,7 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
       return false
     },
     'Workspace.getUri'() {
-      return 'html://dropped-folder'
+      return 'html:///dropped-folder'
     },
     'Workspace.setPath'() {
       return undefined
@@ -42,12 +42,12 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
 
   const result = await handleDrop(state, fileHandles, [])
 
-  expect(result.root).toBe('html://dropped-folder')
+  expect(result.root).toBe('html:///dropped-folder')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toHaveLength(1)
   expect(mockRpc.invocations).toEqual([
-    ['PersistentFileHandle.addHandle', 'dropped-folder', fileHandle],
-    ['Workspace.setPath', 'html://dropped-folder'],
+    ['PersistentFileHandle.addHandle', 'html:///dropped-folder', fileHandle],
+    ['Workspace.setPath', 'html:///dropped-folder'],
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
@@ -56,8 +56,8 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getUri'],
-    ['FileSystem.isReadonly', 'html://dropped-folder'],
-    ['FileSystem.readDirWithFileTypes', 'html://dropped-folder'],
+    ['FileSystem.isReadonly', 'html:///dropped-folder'],
+    ['FileSystem.readDirWithFileTypes', 'html:///dropped-folder'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])
 })
@@ -77,7 +77,7 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
       return false
     },
     'Workspace.getUri'() {
-      return 'html://first-folder'
+      return 'html:///first-folder'
     },
     'Workspace.setPath'() {
       return undefined
@@ -104,12 +104,12 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
 
   const result = await handleDrop(state, fileHandles, [])
 
-  expect(result.root).toBe('html://first-folder')
+  expect(result.root).toBe('html:///first-folder')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toHaveLength(1)
   expect(mockRpc.invocations).toEqual([
-    ['PersistentFileHandle.addHandle', 'first-folder', firstFolderHandle],
-    ['Workspace.setPath', 'html://first-folder'],
+    ['PersistentFileHandle.addHandle', 'html:///first-folder', firstFolderHandle],
+    ['Workspace.setPath', 'html:///first-folder'],
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
@@ -118,8 +118,8 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getUri'],
-    ['FileSystem.isReadonly', 'html://first-folder'],
-    ['FileSystem.readDirWithFileTypes', 'html://first-folder'],
+    ['FileSystem.isReadonly', 'html:///first-folder'],
+    ['FileSystem.readDirWithFileTypes', 'html:///first-folder'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])
 })
@@ -159,7 +159,7 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
       return false
     },
     'Workspace.getUri'() {
-      return 'html://dropped-folder'
+      return 'html:///dropped-folder'
     },
     'Workspace.setPath'() {
       return undefined
@@ -186,12 +186,12 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
 
   const result = await handleDrop(state, fileHandles, [])
 
-  expect(result.root).toBe('html://dropped-folder')
+  expect(result.root).toBe('html:///dropped-folder')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toHaveLength(1)
   expect(mockRpc.invocations).toEqual([
-    ['PersistentFileHandle.addHandle', 'dropped-folder', directoryHandle],
-    ['Workspace.setPath', 'html://dropped-folder'],
+    ['PersistentFileHandle.addHandle', 'html:///dropped-folder', directoryHandle],
+    ['Workspace.setPath', 'html:///dropped-folder'],
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmdelete'],
     ['Preferences.get', 'explorer.confirmpaste'],
@@ -200,8 +200,8 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
     ['Preferences.get', 'explorer.preserveExpandState'],
     ['Preferences.get', 'explorer.sourceControlDecorations'],
     ['Workspace.getUri'],
-    ['FileSystem.isReadonly', 'html://dropped-folder'],
-    ['FileSystem.readDirWithFileTypes', 'html://dropped-folder'],
+    ['FileSystem.isReadonly', 'html:///dropped-folder'],
+    ['FileSystem.readDirWithFileTypes', 'html:///dropped-folder'],
   ])
   expect(mockSourceControlRpc.invocations).toEqual([])
 })

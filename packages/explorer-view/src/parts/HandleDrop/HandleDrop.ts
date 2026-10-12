@@ -9,11 +9,14 @@ import { VError } from '../VError/VError.ts'
 
 export const handleDrop = async (state: ExplorerState, x: number, y: number, dropId: number): Promise<ExplorerState> => {
   const { isReadonly, items, platform, root } = state
-  if (isReadonly && root !== '') {
-    await DragAndDropWorker.discardDrop(dropId)
-    return state
-  }
   try {
+    if (isReadonly && root !== '') {
+      await DragAndDropWorker.discardDrop(dropId)
+      return {
+        ...state,
+        dropTargets: [],
+      }
+    }
     const isElectron = platform === PlatformType.Electron
     const { fileHandles, paths, uris } = await getDroppedItemsByDropId(dropId, isElectron)
     const internalPaths = getInternalDragPaths(items, uris)
@@ -23,6 +26,10 @@ export const handleDrop = async (state: ExplorerState, x: number, y: number, dro
     const result = await fn(state, fileHandles, droppedPaths, index)
     return result
   } catch (error) {
-    throw new VError(error, 'Failed to drop files')
+    console.error(new VError(error, 'Failed to drop files'))
+    return {
+      ...state,
+      dropTargets: [],
+    }
   }
 }
