@@ -23,13 +23,13 @@ const getMergedDirents = async (
 }
 
 const getDroppedDirectoryWorkspacePath = (fileHandle: FileSystemDirectoryHandle): string => {
-  return `html://${fileHandle.name}`
+  return `html:///${fileHandle.name}`
 }
 
 const openDroppedDirectoryAsWorkspace = async (state: ExplorerState, fileHandle: FileSystemDirectoryHandle): Promise<ExplorerState> => {
   const { applicationId } = state
   const path = getDroppedDirectoryWorkspacePath(fileHandle)
-  await ApplicationRpc.invoke(applicationId, 'PersistentFileHandle.addHandle', fileHandle.name, fileHandle)
+  await ApplicationRpc.invoke(applicationId, 'PersistentFileHandle.addHandle', path, fileHandle)
   await ApplicationRpc.invoke(applicationId, 'Workspace.setPath', path)
   const updated = await LoadContent.loadContent(state, undefined)
   return {

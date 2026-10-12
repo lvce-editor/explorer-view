@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
 import { DragAndDropWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
@@ -33,24 +33,31 @@ test('handleDrop - discards an opt-in drop for a readonly workspace', async () =
   })
   const state = {
     ...createDefaultState(),
+    dropTargets: [0],
     isReadonly: true,
     root: '/workspace',
   }
 
-  await expect(handleDrop(state, 0, 0, 21)).resolves.toBe(state)
+  await expect(handleDrop(state, 0, 0, 21)).resolves.toEqual({ ...state, dropTargets: [] })
   expect(dragRpc.invocations).toEqual([['DragAndDrop.discardDrop', 21]])
 })
 
 test('handleDrop - error case', async () => {
+  const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
   using dragRpc = DragAndDropWorker.registerMockRpc({
     'DragAndDrop.getDroppedItemsByDropId'() {
       throw new Error('test error')
     },
   })
 
-  const state = createDefaultState()
+  const state = {
+    ...createDefaultState(),
+    dropTargets: [0],
+  }
 
-  await expect(handleDrop(state, 0, 0, 1)).rejects.toThrow(new Error('Failed to drop files: test error'))
+  await expect(handleDrop(state, 0, 0, 1)).resolves.toEqual({ ...state, dropTargets: [] })
+  expect(errorSpy).toHaveBeenCalledWith(new Error('Failed to drop files: test error'))
+  errorSpy.mockRestore()
   expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 1, false]])
 })
 
@@ -74,6 +81,7 @@ test('handleDrop - moves an internal Explorer file into the drop target folder',
   })
   const state = {
     ...createDefaultState(),
+    dropTargets: [0],
     items: [
       { depth: 1, name: 'src', selected: false, type: DirentType.Directory, uri: '/workspace/src' },
       { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/Main.elm' },
@@ -89,6 +97,7 @@ test('handleDrop - moves an internal Explorer file into the drop target folder',
 })
 
 test('handleDrop - wraps internal move failures', async () => {
+  const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
   using _dragRpc = DragAndDropWorker.registerMockRpc({
     'DragAndDrop.getDroppedItemsByDropId'() {
       return { files: [], strings: [], uris: ['file:///workspace/Main.elm'] }
@@ -101,6 +110,7 @@ test('handleDrop - wraps internal move failures', async () => {
   })
   const state = {
     ...createDefaultState(),
+    dropTargets: [0],
     items: [
       { depth: 1, name: 'src', selected: false, type: DirentType.Directory, uri: '/workspace/src' },
       { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/Main.elm' },
@@ -108,5 +118,7 @@ test('handleDrop - wraps internal move failures', async () => {
     root: '/workspace',
   }
 
-  await expect(handleDrop(state, 0, 0, 1)).rejects.toThrow('Failed to drop files: permission denied')
+  await expect(handleDrop(state, 0, 0, 1)).resolves.toEqual({ ...state, dropTargets: [] })
+  expect(errorSpy).toHaveBeenCalledWith(new Error('Failed to drop files: permission denied'))
+  errorSpy.mockRestore()
 })
