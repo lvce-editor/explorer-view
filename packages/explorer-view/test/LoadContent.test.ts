@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { Directory, DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import { loadContent } from '../src/parts/LoadContent/LoadContent.ts'
 
-test('loadContent keeps empty workspaces writable', async () => {
+test.each(['', undefined])('loadContent keeps empty workspace %p writable', async (workspaceUri) => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.isReadonly'() {
       return true
@@ -17,13 +17,15 @@ test('loadContent keeps empty workspaces writable', async () => {
       return false
     },
     'Workspace.getUri'() {
-      return ''
+      return workspaceUri
     },
   })
 
   const result = await loadContent(createDefaultState(), undefined)
 
   expect(result.isReadonly).toBe(false)
+  expect(result.root).toBe('')
+  expect(result.hasError).toBe(false)
   expect(mockRpc.invocations).not.toContainEqual(['FileSystem.isReadonly', ''])
 })
 
