@@ -7,15 +7,23 @@ import { getInternalDragPaths } from '../GetInternalDragPaths/GetInternalDragPat
 import * as PlatformType from '../PlatformType/PlatformType.ts'
 import { VError } from '../VError/VError.ts'
 
+const clearDropTargets = (state: ExplorerState): ExplorerState => {
+  const { dropTargets } = state
+  if (dropTargets.length === 0) {
+    return state
+  }
+  return {
+    ...state,
+    dropTargets: [],
+  }
+}
+
 export const handleDrop = async (state: ExplorerState, x: number, y: number, dropId: number): Promise<ExplorerState> => {
   const { isReadonly, items, platform, root } = state
   try {
     if (isReadonly && root !== '') {
       await DragAndDropWorker.discardDrop(dropId)
-      return {
-        ...state,
-        dropTargets: [],
-      }
+      return clearDropTargets(state)
     }
     const isElectron = platform === PlatformType.Electron
     const { fileHandles, paths, uris } = await getDroppedItemsByDropId(dropId, isElectron)
@@ -27,9 +35,6 @@ export const handleDrop = async (state: ExplorerState, x: number, y: number, dro
     return result
   } catch (error) {
     console.error(new VError(error, 'Failed to drop files'))
-    return {
-      ...state,
-      dropTargets: [],
-    }
+    return clearDropTargets(state)
   }
 }

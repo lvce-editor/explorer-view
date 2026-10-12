@@ -81,11 +81,11 @@ test('handleDrop - moves an internal Explorer file into the drop target folder',
   })
   const state = {
     ...createDefaultState(),
+    dropTargets: [0],
     items: [
       { depth: 1, name: 'src', selected: false, type: DirentType.Directory, uri: '/workspace/src' },
       { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/Main.elm' },
     ],
-    dropTargets: [0],
     root: '/workspace',
   }
 
@@ -110,11 +110,11 @@ test('handleDrop - wraps internal move failures', async () => {
   })
   const state = {
     ...createDefaultState(),
+    dropTargets: [0],
     items: [
       { depth: 1, name: 'src', selected: false, type: DirentType.Directory, uri: '/workspace/src' },
       { depth: 1, name: 'Main.elm', selected: false, type: DirentType.File, uri: '/workspace/Main.elm' },
     ],
-    dropTargets: [0],
     root: '/workspace',
   }
 
