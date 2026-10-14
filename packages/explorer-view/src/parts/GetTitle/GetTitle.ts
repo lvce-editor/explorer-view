@@ -8,12 +8,18 @@ export const getTitle = (state: ExplorerState): string => {
   }
   const isUri = URL.canParse(root)
   const url = isUri ? new URL(root) : undefined
-  const titlePath = url?.pathname ?? root
+  const isDevContainer = url?.protocol === 'devcontainers:' || root.endsWith('!')
+  const workspacePath = url?.pathname ?? root
+  const titlePath = isDevContainer && workspacePath.endsWith('!') ? workspacePath.slice(0, -1) : workspacePath
   const titlePathSeparator = isUri ? '/' : pathSeparator
   const normalizedTitlePath =
     titlePath.endsWith(titlePathSeparator) && titlePath !== titlePathSeparator ? titlePath.slice(0, -titlePathSeparator.length) : titlePath
   const title = Path.getBaseName(titlePathSeparator, normalizedTitlePath) || normalizedTitlePath
   const decodedTitle = decodeURIComponent(title)
+  if (isDevContainer) {
+    const devContainerSuffix = '[devcontainer]'
+    return decodedTitle ? `${decodedTitle} ${devContainerSuffix}` : devContainerSuffix
+  }
   if (url?.protocol !== 'remote-ssh:' || !url.hostname) {
     return decodedTitle
   }
