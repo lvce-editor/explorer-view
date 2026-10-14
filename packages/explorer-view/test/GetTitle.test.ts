@@ -101,3 +101,39 @@ test('getTitle - does not add remote ssh suffix when host is missing', () => {
 
   expect(GetTitle.getTitle(state)).toBe('project')
 })
+
+test('getTitle - adds devcontainer suffix and removes marker from workspace path', () => {
+  const state = {
+    ...createDefaultState(),
+    root: '/workspaces/about-view!',
+  }
+
+  expect(GetTitle.getTitle(state)).toBe('about-view [devcontainer]')
+})
+
+test('getTitle - adds devcontainer suffix to URI workspace', () => {
+  const state = {
+    ...createDefaultState(),
+    root: 'devcontainers:///workspaces/about-view!',
+  }
+
+  expect(GetTitle.getTitle(state)).toBe('about-view [devcontainer]')
+})
+
+test('getTitle - decodes devcontainer folder name', () => {
+  const state = {
+    ...createDefaultState(),
+    root: 'devcontainers:///workspaces/about%20view!',
+  }
+
+  expect(GetTitle.getTitle(state)).toBe('about view [devcontainer]')
+})
+
+test('getTitle - keeps a literal encoded exclamation mark in devcontainer folder name', () => {
+  const state = {
+    ...createDefaultState(),
+    root: 'devcontainers:///workspaces/about-view%21!',
+  }
+
+  expect(GetTitle.getTitle(state)).toBe('about-view! [devcontainer]')
+})
