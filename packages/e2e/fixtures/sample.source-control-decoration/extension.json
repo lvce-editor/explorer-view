@@ -1,10 +1,16 @@
 {
-  "browser": "main.js",
-  "main": "main.js",
+  "browser": "main.ts",
+  "main": "main.ts",
   "activation": ["onFileSystem:xyz", "onSourceControl:xyz"],
-  "fileSystems": [
+  "isolated": true,
+  "fileSystemProviders": [
     {
-      "scheme": "xyz"
+      "id": "xyz"
+    }
+  ],
+  "sourceControlProviders": [
+    {
+      "id": "xyz"
     }
   ]
 }

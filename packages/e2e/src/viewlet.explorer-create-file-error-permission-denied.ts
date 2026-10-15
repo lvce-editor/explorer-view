@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-create-file-error-permission-denied'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Locator, Workspace }) => {
   // arrange
   const uri = import.meta.resolve('../fixtures/sample.file-system-provider-create-file-error-permission-denied')
@@ -32,5 +30,5 @@ export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Loca
   await expect(inputBox).toHaveClass('InputValidationError')
   const errorMessage = Locator('.ExplorerErrorMessage')
   await expect(errorMessage).toBeVisible()
-  await expect(errorMessage).toHaveText('Error: Failed to execute file system provider: Permission Denied')
+  await expect(errorMessage).toHaveText('Error: Permission Denied Error code: E_EXPLORER_FILE_OPERATION_FAILED.')
 }
