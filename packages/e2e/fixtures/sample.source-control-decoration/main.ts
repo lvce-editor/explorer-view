@@ -1,10 +1,7 @@
-import {
-  activate as activateExtensionApi,
-  registerFileSystemProvider,
-  registerSourceControlProvider,
-  type FileSystemProvider,
-  type SourceControlProvider,
-} from '@lvce-editor/api'
+import type { FileSystemProvider, SourceControlProvider } from '@lvce-editor/api'
+
+// Import at runtime so Firefox can load the API in the isolated extension worker.
+const { activate: activateExtensionApi, registerFileSystemProvider, registerSourceControlProvider } = await import('@lvce-editor/api')
 
 const contents = Object.create(null) as Record<string, string>
 contents['/a'] = ''

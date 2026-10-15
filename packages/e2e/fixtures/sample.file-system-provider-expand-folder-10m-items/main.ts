@@ -1,4 +1,7 @@
-import { activate as activateExtensionApi, registerFileSystemProvider, type FileSystemProvider } from '@lvce-editor/api'
+import type { FileSystemProvider } from '@lvce-editor/api'
+
+// Import at runtime so Firefox can load the API in the isolated extension worker.
+const { activate: activateExtensionApi, registerFileSystemProvider } = await import('@lvce-editor/api')
 
 const rootUri = 'extension-host://xyz://'
 const folderUri = `${rootUri}stress-folder`
