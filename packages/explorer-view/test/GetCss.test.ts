@@ -13,7 +13,7 @@ test('getCss - basic scrollBarHeight and empty indents', () => {
   --ErrorMessageLeft: 0px;
   --ErrorMessageWidth: 0px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
@@ -32,7 +32,7 @@ test('getCss - with single indent', () => {
   --ErrorMessageLeft: 0px;
   --ErrorMessageWidth: 0px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
@@ -54,7 +54,7 @@ test('getCss - with multiple indents', () => {
   --ErrorMessageLeft: 0px;
   --ErrorMessageWidth: 0px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
@@ -82,7 +82,7 @@ test('getCss - with zero scrollBarHeight', () => {
   --ErrorMessageLeft: 0px;
   --ErrorMessageWidth: 0px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
@@ -107,7 +107,7 @@ test('getCss - with large indents', () => {
   --ErrorMessageLeft: 0px;
   --ErrorMessageWidth: 0px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
@@ -126,5 +126,5 @@ test('getCss - with large indents', () => {
 test('getCss - fractional row offset', () => {
   const result = getCss(20, 10, [], 0, 0, 0, -5)
   expect(result).toContain('--ListItemsOffset: -5px;')
-  expect(result).toContain('.Explorer .ListItems > .TreeItem:first-child {\n  margin-top: var(--ListItemsOffset);\n}')
+  expect(result).toContain('.ExplorerFirstTreeItem {\n  margin-top: var(--ListItemsOffset);\n}')
 })

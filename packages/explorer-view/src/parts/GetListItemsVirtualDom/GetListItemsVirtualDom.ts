@@ -56,7 +56,11 @@ export const getListItemsVirtualDom = (
       type: VirtualDomElements.Div,
       // onKeyDown: DomEventListenerFunctions.HandleListKeyDown,
     },
-    ...visibleItems.flatMap((item) => GetExplorerItemVirtualDom.getExplorerItemVirtualDom(item, editingSessionId)),
+    ...visibleItems.flatMap((item, index) => {
+      const visibleItem =
+        index === 0 ? { ...item, className: MergeClassNames.mergeClassNames(item.className, ClassNames.ExplorerFirstTreeItem) } : item
+      return GetExplorerItemVirtualDom.getExplorerItemVirtualDom(visibleItem, editingSessionId)
+    }),
   ]
   return dom
 }

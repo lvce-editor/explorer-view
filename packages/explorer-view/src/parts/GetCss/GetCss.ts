@@ -14,7 +14,7 @@ export const getCss = (
     relative === 0
       ? ''
       : `
-.Explorer .ListItems > .TreeItem:first-child {
+.ExplorerFirstTreeItem {
   margin-top: var(--ListItemsOffset);
 }`
   const rules = [
@@ -25,7 +25,7 @@ ${listItemsOffset}  --ErrorMessageTop: ${errorMessageTop}px;
   --ErrorMessageLeft: ${errorMessageLeft}px;
   --ErrorMessageWidth: ${errorMessageWidth}px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);

@@ -6,7 +6,7 @@ import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.ts
 
 const scrollBarThumbNode: VirtualDomNode = {
   childCount: 0,
-  className: ClassNames.ScrollBarThumb,
+  className: MergeClassNames.mergeClassNames(ClassNames.ScrollBarThumb, ClassNames.ExplorerScrollBarThumb),
   type: VirtualDomElements.Div,
 }
 
