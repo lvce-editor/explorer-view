@@ -1,6 +1,8 @@
-const contents = Object.create(null)
+import { activate as activateExtensionApi, registerFileSystemProvider, type FileSystemProvider } from '@lvce-editor/api'
 
-const fileSystemProvider = {
+const contents = Object.create(null) as Record<string, string>
+
+const fileSystemProvider: FileSystemProvider = {
   id: 'xyz',
   writeFile(uri, content) {
     contents[uri] = content
@@ -9,14 +11,15 @@ const fileSystemProvider = {
       throw new Error(`Error: Failed to write to file "${uri}": EACCES: permission denied, open '${uri}'`)
     }
   },
-  rename(oldUri, newUri) {
+  rename(_oldUri, _newUri) {
     throw new Error(`Permission Denied`)
   },
-  readFile(uri) {},
-  pathSeparator: '/',
+  readFile(uri) {
+    return contents[uri] ?? ''
+  },
   readDirWithFileTypes(uri) {
     const results = []
-    for (const [key, value] of Object.entries(contents)) {
+    for (const key of Object.keys(contents)) {
       if (key.startsWith(uri)) {
         results.push({
           type: 7,
@@ -27,7 +30,5 @@ const fileSystemProvider = {
     return results
   },
 }
-
-export const activate = () => {
-  vscode.registerFileSystemProvider(fileSystemProvider)
-}
+await activateExtensionApi()
+registerFileSystemProvider(fileSystemProvider)
