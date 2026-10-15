@@ -19,7 +19,7 @@ test('getScrollBarVirtualDom - renders scrollbar', () => {
     },
     {
       childCount: 0,
-      className: 'ScrollBarThumb',
+      className: 'ScrollBarThumb ExplorerScrollBarThumb',
       type: VirtualDomElements.Div,
     },
   ])

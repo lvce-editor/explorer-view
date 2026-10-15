@@ -22,7 +22,7 @@ test('renderCss - basic with empty visibleExplorerItems', () => {
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
@@ -68,7 +68,7 @@ test('renderCss - with single visibleExplorerItem', () => {
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
@@ -153,7 +153,7 @@ test('renderCss - with multiple visibleExplorerItems with different indents', ()
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
@@ -241,7 +241,7 @@ test('renderCss - with duplicate indents should only generate unique indent clas
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
@@ -293,7 +293,7 @@ test('renderCss - with zero scrollBarHeight', () => {
   --ErrorMessageLeft: 48px;
   --ErrorMessageWidth: 52px;
 }
-.Explorer .ScrollBarThumb {
+.ExplorerScrollBarThumb {
   height: var(--ScrollBarThumbHeight);
   top: 0;
   translate: 0px var(--ScrollBarThumbTop);
