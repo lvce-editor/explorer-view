@@ -9,8 +9,8 @@
       "ignoreDependencies": ["esbuild", "playwright"]
     },
     "packages/e2e": {
-      "entry": ["src/**/*.ts", "scripts/*.js", "fixtures/**/main.js"],
-      "project": ["src/**/*.ts", "scripts/*.js", "fixtures/**/*.js"],
+      "entry": ["src/**/*.ts", "scripts/*.js", "fixtures/**/main.ts"],
+      "project": ["src/**/*.ts", "scripts/*.js", "fixtures/**/*.ts"],
       "ignoreDependencies": ["@lvce-editor/test-worker"]
     },
     "packages/explorer-view": {
