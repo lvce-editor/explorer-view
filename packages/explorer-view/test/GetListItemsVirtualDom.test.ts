@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import type { VirtualDomNode } from '../src/parts/VirtualDomNode/VirtualDomNode.ts'
 import type { VisibleExplorerItem } from '../src/parts/VisibleExplorerItem/VisibleExplorerItem.ts'
 import { getListItemsVirtualDom } from '../src/parts/GetListItemsVirtualDom/GetListItemsVirtualDom.ts'
 
@@ -32,7 +33,8 @@ test('marks only the first visible row after scrolling without changing item sta
     uri: '/file.txt',
   }
   const nextItem = { ...item, index: 51 }
-  const getRows = (items: readonly VisibleExplorerItem[]) => getListItemsVirtualDom(items, -1, false, []).filter((node) => node.role === 'treeitem')
+  const getRows = (items: readonly VisibleExplorerItem[]): readonly VirtualDomNode[] =>
+    getListItemsVirtualDom(items, -1, false, []).filter((node) => node.role === 'treeitem')
 
   const rows = getRows([item, nextItem])
   expect(rows.map((row) => row.className)).toEqual(['TreeItem Indent-34 TreeItemActive ExplorerFirstTreeItem', 'TreeItem Indent-34 TreeItemActive'])
