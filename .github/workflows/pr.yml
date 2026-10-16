@@ -57,17 +57,18 @@ jobs:
         working-directory: ./packages/e2e
         shell: bash
         run: |
-          mkdir -p ../../.e2e-artifacts
-          npm run e2e:headless 2>&1 | tee ../../.e2e-artifacts/chromium-${{ matrix.attempt }}.log
+          mkdir -p ../../e2e-artifacts
+          npm run e2e:headless 2>&1 | tee ../../e2e-artifacts/chromium-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+          DEBUG: pw:browser
       - name: Upload e2e artifacts for attempt ${{ matrix.attempt }}
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: explorer-chromium-windows-attempt-${{ matrix.attempt }}
           path: |
-            .e2e-artifacts/
+            e2e-artifacts/
             packages/e2e/renderer-worker-traces/
             packages/e2e/test-results/
           if-no-files-found: warn
