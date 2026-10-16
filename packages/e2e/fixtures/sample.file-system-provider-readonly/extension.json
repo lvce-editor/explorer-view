@@ -1,10 +1,11 @@
 {
-  "browser": "main.js",
-  "main": "main.js",
+  "browser": "main.ts",
+  "main": "main.ts",
   "activation": ["onFileSystem:readonly"],
-  "fileSystems": [
+  "isolated": true,
+  "fileSystemProviders": [
     {
-      "scheme": "readonly"
+      "id": "readonly"
     }
   ]
 }

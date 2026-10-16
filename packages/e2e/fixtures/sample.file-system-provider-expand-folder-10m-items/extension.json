@@ -1,3 +1,8 @@
 {
-  "name": "test"
+  "name": "test",
+  "browser": "main.ts",
+  "main": "main.ts",
+  "isolated": true,
+  "activation": ["onFileSystem:xyz"],
+  "fileSystemProviders": [{ "id": "xyz" }]
 }

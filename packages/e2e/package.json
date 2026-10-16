@@ -16,5 +16,8 @@
   },
   "devDependencies": {
     "@lvce-editor/test-with-playwright": "22.40.6"
+  },
+  "dependencies": {
+    "@lvce-editor/api": "^9.47.1"
   }
 }

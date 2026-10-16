@@ -1,4 +1,8 @@
-// @ts-nocheck
+import type { FileSystemProvider } from '@lvce-editor/api'
+
+// Import at runtime so Firefox can load the API in the isolated extension worker.
+const { activate: activateExtensionApi, registerFileSystemProvider } = await import('@lvce-editor/api')
+
 const rootUri = 'extension-host://xyz://'
 const folderUri = `${rootUri}stress-folder`
 const folderEntry = {
@@ -7,9 +11,8 @@ const folderEntry = {
 }
 const totalItems = 10_000_000
 
-const fileSystemProvider = {
+const fileSystemProvider: FileSystemProvider = {
   id: 'xyz',
-  pathSeparator: '/',
   rename() {},
   readFile() {
     return ''
@@ -31,6 +34,5 @@ const fileSystemProvider = {
   },
 }
 
-export const activate = () => {
-  vscode.registerFileSystemProvider(fileSystemProvider)
-}
+await activateExtensionApi()
+registerFileSystemProvider(fileSystemProvider)
