@@ -7,10 +7,12 @@ on:
 
 jobs:
   pr:
+    name: Chromium Windows attempt ${{ matrix.attempt }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15, windows-2025, windows-11-arm]
+        os: [windows-2025]
+        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 180
     steps:
@@ -51,35 +53,21 @@ jobs:
         if: runner.os != 'Windows'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e
+      - name: e2e attempt ${{ matrix.attempt }}
         working-directory: ./packages/e2e
-        run: npm run e2e:headless -- --timeout=120000
-        if: matrix.os == 'windows-11-arm'
+        shell: bash
+        run: |
+          mkdir -p ../../.e2e-artifacts
+          npm run e2e:headless 2>&1 | tee ../../.e2e-artifacts/chromium-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e
-        working-directory: ./packages/e2e
-        run: npm run e2e:headless
-        if: matrix.os != 'windows-11-arm'
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e coverage
-        working-directory: ./packages/e2e
-        run: npm run e2e:coverage
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e firefox
-        working-directory: ./packages/e2e
-        run: npm run e2e:firefox:headless -- --timeout=2100000
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e webkit
-        working-directory: ./packages/e2e
-        run: npm run e2e:webkit:headless -- --timeout=2100000
-        if: runner.os != 'Windows'
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: measure
-        run: npm run measure
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Upload e2e artifacts for attempt ${{ matrix.attempt }}
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: explorer-chromium-windows-attempt-${{ matrix.attempt }}
+          path: |
+            .e2e-artifacts/
+            packages/e2e/renderer-worker-traces/
+            packages/e2e/test-results/
+          if-no-files-found: warn
