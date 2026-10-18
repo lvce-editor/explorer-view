@@ -39,6 +39,34 @@ test('requestFileIcons - folder icons', async () => {
   expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ name: 'folder', type: 2 }]]])
 })
 
+test('requestFileIcons - folder symlink icon', async () => {
+  const requests = [{ name: 'bin', path: '/bin', type: DirentType.SymLinkFolder }]
+
+  using mockRpc = IconThemeWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return ['folder-icon']
+    },
+  })
+
+  const result = await RequestFileIcons.requestFileIcons(requests)
+  expect(result).toEqual(['folder-icon'])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ name: 'bin', type: 2 }]]])
+})
+
+test('requestFileIcons - file symlink icon', async () => {
+  const requests = [{ name: 'file-link', path: '/test/file-link', type: DirentType.SymLinkFile }]
+
+  using mockRpc = IconThemeWorker.registerMockRpc({
+    'IconTheme.getIcons'() {
+      return ['file-icon']
+    },
+  })
+
+  const result = await RequestFileIcons.requestFileIcons(requests)
+  expect(result).toEqual(['file-icon'])
+  expect(mockRpc.invocations).toEqual([['IconTheme.getIcons', [{ name: 'file-link', type: 1 }]]])
+})
+
 test('requestFileIcons - expanded folder icons', async () => {
   const requests = [{ expanded: true, name: 'folder', path: '/test/folder', type: DirentType.DirectoryExpanded }]
 
