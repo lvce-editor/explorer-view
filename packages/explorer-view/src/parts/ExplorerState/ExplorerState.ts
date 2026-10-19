@@ -38,6 +38,7 @@ export interface ExplorerState {
   readonly focusedIndex: number
   readonly focusWord: string
   readonly focusWordTimeout: number
+  readonly gitIgnoreCache: Readonly<Record<string, boolean>>
   readonly gitIgnoreDecorations: boolean
   readonly gitIgnoreGeneration: number
   readonly handleOffset: number

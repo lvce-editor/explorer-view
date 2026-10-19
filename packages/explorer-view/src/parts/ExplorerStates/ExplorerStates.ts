@@ -20,6 +20,19 @@ interface Fn<T extends any[]> {
 const commandQueues = new Map<number, Promise<void>>()
 const gitIgnoreApplyDelay = 100
 
+const updateGitIgnoreCache = (
+  items: ExplorerState['items'],
+  gitIgnoreCache: ExplorerState['gitIgnoreCache'],
+  sourceControlIgnoredUris: readonly string[],
+): ExplorerState['gitIgnoreCache'] => {
+  const ignoredUriSet = new Set(sourceControlIgnoredUris)
+  const updatedCache = { ...gitIgnoreCache }
+  for (const item of items) {
+    updatedCache[item.uri] = ignoredUriSet.has(item.uri)
+  }
+  return updatedCache
+}
+
 interface PendingGitIgnoreUpdate {
   readonly run: () => void
   readonly timer: NodeJS.Timeout
@@ -96,14 +109,37 @@ const hasSameDragDataInputs = (oldState: ExplorerState, newState: ExplorerState)
 }
 
 export const updateGitIgnoredUris = (state: ExplorerState, generation: number, sourceControlIgnoredUris: readonly string[]): ExplorerState => {
-  const { gitIgnoreGeneration } = state
+  const { gitIgnoreCache, gitIgnoreGeneration, items } = state
   if (gitIgnoreGeneration !== generation) {
     return state
   }
   return {
     ...state,
+    gitIgnoreCache: updateGitIgnoreCache(items, gitIgnoreCache, sourceControlIgnoredUris),
     sourceControlIgnoredUris,
   }
+}
+
+const getCachedGitIgnoredUris = (
+  items: ExplorerState['items'],
+  sourceControlIgnoredUris: readonly string[],
+  gitIgnoreCache: ExplorerState['gitIgnoreCache'] = {},
+): readonly string[] => {
+  const ignoredUris = new Set(sourceControlIgnoredUris)
+  let changed = false
+  for (const item of items) {
+    if (Object.hasOwn(gitIgnoreCache, item.uri)) {
+      if (gitIgnoreCache[item.uri]) {
+        if (!ignoredUris.has(item.uri)) {
+          ignoredUris.add(item.uri)
+          changed = true
+        }
+      } else {
+        changed = ignoredUris.delete(item.uri) || changed
+      }
+    }
+  }
+  return changed ? [...ignoredUris] : sourceControlIgnoredUris
 }
 
 const scheduleGitIgnoredUrisUpdate = (uid: number, generation: number, sourceControlIgnoredUris: readonly string[]): void => {
@@ -160,6 +196,37 @@ const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: Ex
   }, 0)
 }
 
+const updateGitIgnoreState = (previousState: ExplorerState, state: ExplorerState): ExplorerState => {
+  const { gitIgnoreCache, gitIgnoreDecorations, items, root, sourceControlIgnoredUris } = state
+  if (gitIgnoreDecorations) {
+    if (root !== previousState.root) {
+      const hasFreshGitIgnoreResults = sourceControlIgnoredUris !== previousState.sourceControlIgnoredUris
+      const nextGitIgnoreCache = hasFreshGitIgnoreResults
+        ? updateGitIgnoreCache(items, Object.create(null), sourceControlIgnoredUris)
+        : Object.create(null)
+      return {
+        ...state,
+        gitIgnoreCache: nextGitIgnoreCache,
+        sourceControlIgnoredUris: hasFreshGitIgnoreResults ? sourceControlIgnoredUris : [],
+      }
+    }
+    const nextGitIgnoreCache =
+      sourceControlIgnoredUris === previousState.sourceControlIgnoredUris
+        ? gitIgnoreCache
+        : updateGitIgnoreCache(items, gitIgnoreCache, sourceControlIgnoredUris)
+    return {
+      ...state,
+      gitIgnoreCache: nextGitIgnoreCache,
+      sourceControlIgnoredUris: getCachedGitIgnoredUris(items, sourceControlIgnoredUris, nextGitIgnoreCache),
+    }
+  }
+  return {
+    ...state,
+    gitIgnoreCache: Object.create(null),
+    sourceControlIgnoredUris: sourceControlIgnoredUris.length === 0 ? sourceControlIgnoredUris : [],
+  }
+}
+
 const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
   const runCommand = async (id: number, ...args: T): Promise<CommandRunResult> => {
     const { newState } = get(id)
@@ -176,12 +243,15 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
       newState.root !== rawUpdatedState.root ||
       newState.pathSeparator !== rawUpdatedState.pathSeparator ||
       newState.gitIgnoreDecorations !== rawUpdatedState.gitIgnoreDecorations
-    const updatedState = gitIgnoreInputsChanged
-      ? {
-          ...rawUpdatedState,
-          gitIgnoreGeneration: newState.gitIgnoreGeneration + 1,
-        }
-      : rawUpdatedState
+    const updatedState = updateGitIgnoreState(
+      newState,
+      gitIgnoreInputsChanged
+        ? {
+            ...rawUpdatedState,
+            gitIgnoreGeneration: newState.gitIgnoreGeneration + 1,
+          }
+        : rawUpdatedState,
+    )
     const {
       cutItems,
       decorations,
