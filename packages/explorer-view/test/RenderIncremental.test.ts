@@ -44,3 +44,46 @@ test('renderIncremental - initializes an empty workspace with a full root render
   expect(result[0]).toBe(ViewletCommand.SetDom2)
   expect(result[2][0]).toEqual(expect.objectContaining({ className: 'Viewlet Explorer' }))
 })
+
+test.each([false, true])('renderIncremental - preserves the root during an active drag (previous capture: %s)', (previousCapture) => {
+  const oldState = {
+    ...createDefaultState(),
+    height: 499,
+    items: Array.from({ length: 100 }, (_, index) => ({
+      depth: 1,
+      name: `file-${index}`,
+      selected: false,
+      type: DirentType.File,
+      uri: `/workspace/file-${index}`,
+    })),
+    root: '/workspace',
+    scrollBarActive: previousCapture,
+    uid: 123,
+  }
+  const result = renderIncremental(oldState, {
+    ...oldState,
+    scrollBarActive: true,
+    visibleExplorerItems: [
+      {
+        ariaExpanded: undefined,
+        chevron: 0,
+        className: 'TreeItem',
+        depth: 1,
+        hasEditingError: false,
+        icon: '',
+        id: undefined,
+        index: 99,
+        isCut: false,
+        isEditing: false,
+        isIgnored: false,
+        name: 'file-99',
+        posInSet: 100,
+        selected: false,
+        setSize: 100,
+        uri: '/workspace/file-99',
+      },
+    ],
+  })
+  expect(result[0]).toBe('Viewlet.setTreePatches')
+  expect(result[1]).toBe(123)
+})
