@@ -127,6 +127,8 @@ jobs:
           npm run e2e:webkit:headless 2>&1 | tee ../../.e2e-artifacts/webkit-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+          DEBUG: pw:api,pw:browser
+          LVCE_E2E_HTTP_TRACE: '1'
       - name: Upload e2e artifacts
         if: always()
         uses: actions/upload-artifact@v7
