@@ -83,3 +83,57 @@ jobs:
         run: npm run measure
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+
+  webkit-reproduction:
+    name: ARM64 WebKit attempt ${{ matrix.attempt }}
+    strategy:
+      fail-fast: false
+      matrix:
+        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+      - name: Compute node modules cache key
+        id: nodeModulesCacheKey
+        run: echo "value=$(node packages/build/src/computeNodeModulesCacheKey.ts)" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/cache@v6
+        id: npm-cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ runner.arch }}-cacheNodeModules-${{ steps.nodeModulesCacheKey.outputs.value }}
+      - name: npm ci
+        run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+      - run: npm run build
+      - run: npm run build:static
+      - name: install playwright system dependencies
+        working-directory: ./packages/e2e
+        run: sudo npx playwright install-deps webkit
+      - name: install playwright webkit dependency
+        working-directory: ./packages/e2e
+        run: npx playwright install webkit
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: e2e webkit
+        working-directory: ./packages/e2e
+        shell: bash
+        run: |
+          mkdir -p ../../.e2e-artifacts
+          npm run e2e:webkit:headless 2>&1 | tee ../../.e2e-artifacts/webkit-${{ matrix.attempt }}.log
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Upload e2e artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: arm64-webkit-${{ matrix.attempt }}
+          path: |
+            .e2e-artifacts/
+            packages/e2e/renderer-worker-traces/
+            packages/e2e/test-results/
+          if-no-files-found: warn
