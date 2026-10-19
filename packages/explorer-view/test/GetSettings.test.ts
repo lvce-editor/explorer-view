@@ -20,8 +20,8 @@ test('getSettings - useChevrons true', async () => {
   })
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'explorer.confirmDelete'],
+    ['Preferences.get', 'explorer.confirmPaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
@@ -35,7 +35,7 @@ test('getSettings - useChevrons false', async () => {
       if (settingName === 'explorer.useChevrons') {
         return false
       }
-      if (settingName === 'explorer.confirmdelete') {
+      if (settingName === 'explorer.confirmDelete') {
         return true
       }
       if (settingName === 'explorer.sourceControlDecorations') {
@@ -65,8 +65,8 @@ test('getSettings - useChevrons false', async () => {
   })
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'explorer.confirmDelete'],
+    ['Preferences.get', 'explorer.confirmPaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
@@ -92,8 +92,8 @@ test('getSettings - useChevrons undefined', async () => {
   })
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'explorer.confirmDelete'],
+    ['Preferences.get', 'explorer.confirmPaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
@@ -104,7 +104,7 @@ test('getSettings - useChevrons undefined', async () => {
 test('getSettings - confirmDelete false', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'(settingName: string): unknown {
-      if (settingName === 'explorer.confirmdelete') {
+      if (settingName === 'explorer.confirmDelete') {
         return false
       }
       return undefined
@@ -114,8 +114,8 @@ test('getSettings - confirmDelete false', async () => {
   expect(settings.confirmDelete).toBe(false)
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'explorer.confirmDelete'],
+    ['Preferences.get', 'explorer.confirmPaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],

@@ -116,8 +116,8 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
   })
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'explorer.confirmDelete'],
+    ['Preferences.get', 'explorer.confirmPaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
@@ -183,8 +183,8 @@ test('loadContent clamps restored deltaY to maxDeltaY when content is still scro
   })
   expect(mockRpc.invocations).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'explorer.confirmDelete'],
+    ['Preferences.get', 'explorer.confirmPaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],

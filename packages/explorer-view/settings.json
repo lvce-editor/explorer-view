@@ -11,7 +11,7 @@
     "category": "explorer",
     "description": "Controls whether the Explorer asks for confirmation before deleting files and folders.",
     "heading": "Confirm Delete",
-    "id": "explorer.confirmdelete",
+    "id": "explorer.confirmDelete",
     "type": "boolean",
     "value": "true"
   },
@@ -19,7 +19,7 @@
     "category": "explorer",
     "description": "Controls whether the Explorer asks for confirmation before pasting files and folders.",
     "heading": "Confirm Paste",
-    "id": "explorer.confirmpaste",
+    "id": "explorer.confirmPaste",
     "type": "boolean",
     "value": "false"
   },
