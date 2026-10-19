@@ -316,6 +316,65 @@ test('wrapListItemCommand renders items before gitignore decoration reads finish
   expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/debug.log'])
 })
 
+test('wrapListItemCommand restores cached ignored styling immediately after reopening a folder', async () => {
+  const uid = 9015
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return 'node_modules'
+    },
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number, ignoredUris: readonly string[]) {
+      await updateDecorations(uid, generation, ignoredUris)
+    },
+  })
+  const item = { depth: 2, name: 'node_modules', selected: false, type: DirentType.Directory, uri: '/workspace/packages/node_modules' }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.uri]: '' },
+    gitIgnoreDecorations: true,
+    items: [item],
+    root: '/workspace',
+    uid,
+  }
+  const updateItems = ExplorerStates.wrapListItemCommand((currentState, items: typeof state.items) => ({
+    ...currentState,
+    items,
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await new Promise((resolve) => setTimeout(resolve, 150))
+  await updateItems(uid, [])
+  await updateItems(uid, [item])
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.gitIgnoreCache[item.uri]).toBe(true)
+  expect(newState.visibleExplorerItems[0].isIgnored).toBe(true)
+})
+
+test('updateGitIgnoredUris refreshes cached styling when a decoration is removed', async () => {
+  const uid = 9016
+  const item = { depth: 1, name: 'node_modules', selected: false, type: DirentType.Directory, uri: '/workspace/node_modules' }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.uri]: '' },
+    gitIgnoreCache: { [item.uri]: true },
+    gitIgnoreDecorations: true,
+    items: [item],
+    root: '/workspace',
+    sourceControlIgnoredUris: [item.uri],
+    uid,
+  }
+  const { gitIgnoreGeneration } = state
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+
+  ExplorerStates.set(uid, state, state)
+  await updateDecorations(uid, gitIgnoreGeneration, [])
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.gitIgnoreCache[item.uri]).toBe(false)
+  expect(newState.visibleExplorerItems[0].isIgnored).toBe(false)
+})
+
 test('wrapListItemCommand waits for interaction idle before applying gitignore decorations', async () => {
   const uid = 9010
   const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)

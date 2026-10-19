@@ -20,6 +20,19 @@ interface Fn<T extends any[]> {
 const commandQueues = new Map<number, Promise<void>>()
 const gitIgnoreApplyDelay = 100
 
+const updateGitIgnoreCache = (
+  items: ExplorerState['items'],
+  gitIgnoreCache: ExplorerState['gitIgnoreCache'],
+  sourceControlIgnoredUris: readonly string[],
+): ExplorerState['gitIgnoreCache'] => {
+  const ignoredUriSet = new Set(sourceControlIgnoredUris)
+  const updatedCache = { ...gitIgnoreCache }
+  for (const item of items) {
+    updatedCache[item.uri] = ignoredUriSet.has(item.uri)
+  }
+  return updatedCache
+}
+
 interface PendingGitIgnoreUpdate {
   readonly run: () => void
   readonly timer: NodeJS.Timeout
@@ -96,14 +109,37 @@ const hasSameDragDataInputs = (oldState: ExplorerState, newState: ExplorerState)
 }
 
 export const updateGitIgnoredUris = (state: ExplorerState, generation: number, sourceControlIgnoredUris: readonly string[]): ExplorerState => {
-  const { gitIgnoreGeneration } = state
+  const { gitIgnoreCache, gitIgnoreGeneration, items } = state
   if (gitIgnoreGeneration !== generation) {
     return state
   }
   return {
     ...state,
+    gitIgnoreCache: updateGitIgnoreCache(items, gitIgnoreCache, sourceControlIgnoredUris),
     sourceControlIgnoredUris,
   }
+}
+
+const getCachedGitIgnoredUris = (
+  items: ExplorerState['items'],
+  sourceControlIgnoredUris: readonly string[],
+  gitIgnoreCache: ExplorerState['gitIgnoreCache'] = {},
+): readonly string[] => {
+  const ignoredUris = new Set(sourceControlIgnoredUris)
+  let changed = false
+  for (const item of items) {
+    if (Object.hasOwn(gitIgnoreCache, item.uri)) {
+      if (gitIgnoreCache[item.uri]) {
+        if (!ignoredUris.has(item.uri)) {
+          ignoredUris.add(item.uri)
+          changed = true
+        }
+      } else {
+        changed = ignoredUris.delete(item.uri) || changed
+      }
+    }
+  }
+  return changed ? [...ignoredUris] : sourceControlIgnoredUris
 }
 
 const scheduleGitIgnoredUrisUpdate = (uid: number, generation: number, sourceControlIgnoredUris: readonly string[]): void => {
@@ -176,12 +212,29 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
       newState.root !== rawUpdatedState.root ||
       newState.pathSeparator !== rawUpdatedState.pathSeparator ||
       newState.gitIgnoreDecorations !== rawUpdatedState.gitIgnoreDecorations
-    const updatedState = gitIgnoreInputsChanged
+    let updatedState = gitIgnoreInputsChanged
       ? {
           ...rawUpdatedState,
           gitIgnoreGeneration: newState.gitIgnoreGeneration + 1,
         }
       : rawUpdatedState
+    if (updatedState.root !== newState.root || !updatedState.gitIgnoreDecorations) {
+      updatedState = {
+        ...updatedState,
+        gitIgnoreCache: Object.create(null),
+        sourceControlIgnoredUris: [],
+      }
+    } else {
+      const gitIgnoreCache =
+        updatedState.sourceControlIgnoredUris === newState.sourceControlIgnoredUris
+          ? updatedState.gitIgnoreCache
+          : updateGitIgnoreCache(updatedState.items, updatedState.gitIgnoreCache, updatedState.sourceControlIgnoredUris)
+      updatedState = {
+        ...updatedState,
+        gitIgnoreCache,
+        sourceControlIgnoredUris: getCachedGitIgnoredUris(updatedState.items, updatedState.sourceControlIgnoredUris, gitIgnoreCache),
+      }
+    }
     const {
       cutItems,
       decorations,
