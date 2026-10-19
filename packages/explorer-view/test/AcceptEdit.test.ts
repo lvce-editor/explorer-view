@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import * as ViewletExplorerAcceptEdit from '../src/parts/AcceptEdit/AcceptEdit.ts'
 import * as ViewletExplorer from '../src/parts/Create/Create.ts'
@@ -76,8 +76,7 @@ test('acceptEdit - restores script input source for commands', async () => {
 })
 
 test.skip('acceptEdit - rename', async () => {
-  // @ts-expect-error Skipped test expects the former filesystem module mocks.
-  FileSystem.rename.mockImplementation(() => {})
+  jest.mocked(FileSystem.rename).mockResolvedValue(undefined)
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
     deltaY: 0,
@@ -119,8 +118,7 @@ test.skip('acceptEdit - rename', async () => {
 })
 
 test.skip('acceptEdit - rename - nested file', async () => {
-  // @ts-expect-error Skipped test expects the former filesystem module mocks.
-  FileSystem.rename.mockImplementation(() => {})
+  jest.mocked(FileSystem.rename).mockResolvedValue(undefined)
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
     deltaY: 0,
@@ -177,8 +175,7 @@ test.skip('acceptEdit - rename - nested file', async () => {
 })
 
 test.skip('acceptEdit - create - insert folder', async () => {
-  // @ts-expect-error Skipped test expects the former filesystem module mocks.
-  FileSystem.mkdir.mockImplementation(() => {})
+  jest.mocked(FileSystem.mkdir).mockResolvedValue(undefined)
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
     deltaY: 0,

@@ -1,12 +1,17 @@
 import { expect, test } from '@jest/globals'
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
+import type { VisibleExplorerItem } from '../src/parts/VisibleExplorerItem/VisibleExplorerItem.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerStates from '../src/parts/ExplorerStates/ExplorerStates.ts'
 import { getVisibleExplorerItems } from '../src/parts/GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
 import { render2 } from '../src/parts/Render2/Render2.ts'
 import { setComponentState } from '../src/parts/SetComponentState/SetComponentState.ts'
+
+type Mutable<T> = { -readonly [Key in keyof T]: T[Key] }
+
+type EditableState = Mutable<Omit<ExplorerState, 'visibleExplorerItems'>> & { visibleExplorerItems: Mutable<VisibleExplorerItem>[] }
 
 const createState = (): ExplorerState => {
   const items = ['a.txt', 'b.txt', 'c.txt'].map((name) => ({ depth: 0, name, selected: false, type: DirentType.File, uri: `/${name}` }))
@@ -28,7 +33,7 @@ test.each([
   const { uid } = state
   ExplorerStates.set(uid, state, state)
   const stateJson = JSON.stringify(state)
-  const editedState = JSON.parse(stateJson)
+  const editedState: EditableState = JSON.parse(stateJson)
   const [removed] = editedState.visibleExplorerItems.splice(index, 1)
   await setComponentState(uid, editedState)
   expect(ExplorerStates.get(uid).scheduledState.visibleExplorerItems).toEqual(editedState.visibleExplorerItems)
@@ -46,7 +51,7 @@ test('setComponentState preserves clearing and restoring visible items from JSON
   const { uid } = state
   ExplorerStates.set(uid, state, state)
   const stateJson = JSON.stringify(state)
-  const editedState = JSON.parse(stateJson)
+  const editedState: EditableState = JSON.parse(stateJson)
   editedState.visibleExplorerItems = []
   await setComponentState(uid, editedState)
   expect(ExplorerStates.get(uid).scheduledState.visibleExplorerItems).toEqual([])
@@ -63,7 +68,7 @@ test('setComponentState keeps incremental rendering for a visible label edit', a
   const { uid } = state
   ExplorerStates.set(uid, state, state)
   const stateJson = JSON.stringify(state)
-  const editedState = JSON.parse(stateJson)
+  const editedState: EditableState = JSON.parse(stateJson)
   editedState.visibleExplorerItems[0].name = 'renamed.txt'
   await setComponentState(uid, editedState)
   expect(ExplorerStates.get(uid).scheduledState.visibleExplorerItems[0].name).toBe('renamed.txt')
@@ -77,7 +82,7 @@ test('setComponentState still derives visible items when only focusedIndex chang
   const { uid } = state
   ExplorerStates.set(uid, state, state)
   const stateJson = JSON.stringify(state)
-  const editedState = JSON.parse(stateJson)
+  const editedState: EditableState = JSON.parse(stateJson)
   editedState.focusedIndex = 1
   await setComponentState(uid, editedState)
   const { scheduledState } = ExplorerStates.get(uid)

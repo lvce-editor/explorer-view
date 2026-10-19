@@ -24,8 +24,9 @@ export const getSavedExpandedPaths = (savedState: any, root: string): readonly s
   if (savedState && savedState.root !== root) {
     return []
   }
-  if (savedState && savedState.expandedPaths && Array.isArray(savedState.expandedPaths)) {
-    return savedState.expandedPaths.filter((path: unknown): path is string => typeof path === 'string')
+  const expandedPaths: unknown = savedState?.expandedPaths
+  if (Array.isArray(expandedPaths)) {
+    return expandedPaths.filter((path: unknown): path is string => typeof path === 'string')
   }
   return []
 }
