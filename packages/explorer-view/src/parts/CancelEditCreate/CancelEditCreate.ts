@@ -4,11 +4,11 @@ import * as FocusId from '../FocusId/FocusId.ts'
 import { getFocusedIndexCancel } from '../GetFocusedIndexCancel/GetFocusedIndexCancel.ts'
 import { isNormalItem } from '../IsNormalItem/IsNormalItem.ts'
 
-export const cancelEditCreate = async (state: ExplorerState, keepFocus: boolean): Promise<ExplorerState> => {
+export const cancelEditCreate = (state: ExplorerState, keepFocus: boolean): Promise<ExplorerState> => {
   const { editingIndex, items } = state
   const filteredItems = items.filter(isNormalItem)
   const newFocusedIndex = getFocusedIndexCancel(filteredItems, editingIndex)
-  return {
+  return Promise.resolve({
     ...state,
     editingErrorMessage: '',
     editingIndex: -1,
@@ -18,5 +18,5 @@ export const cancelEditCreate = async (state: ExplorerState, keepFocus: boolean)
     focused: keepFocus,
     focusedIndex: newFocusedIndex,
     items: filteredItems,
-  }
+  })
 }

@@ -47,17 +47,17 @@ export const getNewDirentsAccept = (
       insertIndex = i - 1
       break
     }
-    // @ts-ignore
+    // @ts-expect-error Legacy sibling metadata can be absent.
     posInSet = dirent.posInSet + 1
-    // @ts-ignore
+    // @ts-expect-error Legacy sibling metadata can be absent.
     setSize = dirent.setSize + 1
     insertIndex = i
-    // @ts-ignore
+    // @ts-expect-error Legacy insertion mutates readonly sibling metadata.
     dirent.setSize++
   }
-  // @ts-ignore
+  // @ts-expect-error Legacy insertion mutates readonly sibling metadata.
   newDirent.setSize = setSize
-  // @ts-ignore
+  // @ts-expect-error Legacy insertion mutates readonly sibling metadata.
   newDirent.posInSet = posInSet
   const newItems = [...items]
   newItems.splice(insertIndex + 1, 0, newDirent)

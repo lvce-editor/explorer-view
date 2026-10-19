@@ -54,7 +54,7 @@ const getFirstDroppedDirectory = (state: ExplorerState, fileHandles: readonly Fi
 export const handleDrop = async (
   state: ExplorerState,
   fileHandles: readonly FileSystemHandle[],
-  paths: readonly string[],
+  _paths: readonly string[],
 ): Promise<ExplorerState> => {
   const { applicationId } = state
   const { excluded, items, pathSeparator, root } = state

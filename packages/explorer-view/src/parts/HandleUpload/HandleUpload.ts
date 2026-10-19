@@ -1,7 +1,10 @@
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as FileSystem from '../FileSystem/FileSystem.ts'
 
-export const handleUpload = async (state: ExplorerState, dirents: readonly any[]): Promise<any> => {
+export const handleUpload = async (
+  state: ExplorerState,
+  dirents: readonly { readonly file: Pick<File, 'name' | 'text'>; readonly type: number }[],
+): Promise<any> => {
   const { applicationId } = state
   const { isReadonly, pathSeparator, root } = state
   if (isReadonly) {

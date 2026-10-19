@@ -24,7 +24,7 @@ export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspa
   }
   const state = await Command.execute('ComponentState.getState', explorer.uid)
   const stateJson = JSON.stringify(state)
-  const editedState = JSON.parse(stateJson)
+  const editedState: { visibleExplorerItems: unknown[] } = JSON.parse(stateJson)
   editedState.visibleExplorerItems.splice(1, 1)
   await Command.execute('ComponentState.setState', explorer.uid, editedState)
   await expect(rows).toHaveCount(2)

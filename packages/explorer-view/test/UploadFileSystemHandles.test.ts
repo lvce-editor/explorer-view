@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, test, jest } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { uploadFileSystemHandles } from '../src/parts/UploadFileSystemHandles/UploadFileSystemHandles.ts'
 
@@ -8,34 +8,29 @@ class MockFileHandle implements FileSystemHandle {
   getFile?: () => Promise<Blob>
   values?: () => { [Symbol.asyncIterator]: () => AsyncGenerator<MockFileHandle> }
 
+  isSameEntry = jest.fn<FileSystemHandle['isSameEntry']>().mockResolvedValue(false)
+
   constructor(kind: 'file' | 'directory', name: string, content?: string | Uint8Array, children?: MockFileHandle[]) {
     this.kind = kind
     this.name = name
 
     if (kind === 'file' && content) {
-      this.getFile = async (): Promise<Blob> => {
-        if (typeof content === 'string') {
-          return new Blob([content])
-        }
+      if (typeof content === 'string') {
+        this.getFile = jest.fn<() => Promise<Blob>>().mockResolvedValue(new Blob([content]))
+      } else {
         const buffer = new ArrayBuffer(content.byteLength)
         new Uint8Array(buffer).set(content)
-        return new Blob([buffer])
+        this.getFile = jest.fn<() => Promise<Blob>>().mockResolvedValue(new Blob([buffer]))
       }
     }
 
     if (kind === 'directory' && children) {
       this.values = (): { [Symbol.asyncIterator]: () => AsyncGenerator<MockFileHandle> } => ({
         [Symbol.asyncIterator]: async function* (): AsyncGenerator<MockFileHandle> {
-          for (const child of children) {
-            yield child
-          }
+          yield* await Array.fromAsync(children)
         },
       })
     }
-  }
-
-  async isSameEntry(other: FileSystemHandle): Promise<boolean> {
-    return this === other
   }
 }
 

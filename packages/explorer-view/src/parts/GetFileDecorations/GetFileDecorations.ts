@@ -17,7 +17,7 @@ export const getFileDecorations = async (
     if (!decorationsEnabled) {
       return []
     }
-    const providerIds =
+    const providerIds: readonly unknown[] =
       applicationId === undefined
         ? await SourceControlWorker.invoke('SourceControl.getEnabledProviderIds', scheme, root, assetDir, platform)
         : await ApplicationRpc.invoke(applicationId, 'ExtensionHostSourceControl.getEnabledProviderIds', scheme, root)

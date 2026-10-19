@@ -3,14 +3,14 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetParentEndIndex from '../GetParentEndIndex/GetParentEndIndex.ts'
 
-export const handleClickDirectoryExpanded = async (
+export const handleClickDirectoryExpanded = (
   state: ExplorerState,
   dirent: ExplorerItem,
   index: number,
   keepFocus: boolean,
 ): Promise<ExplorerState> => {
   const { itemHeight, items, maxLineY, minLineY } = state
-  // @ts-ignore
+  // @ts-expect-error Legacy directory expansion mutates readonly items.
   dirent.type = DirentType.Directory
   const endIndex = GetParentEndIndex.getParentEndIndex(items, index)
   const removeCount = endIndex - index - 1
@@ -23,7 +23,7 @@ export const handleClickDirectoryExpanded = async (
     const newMaxLineY = Math.min(maxLineY, newTotal)
     const newMinLineY = newMaxLineY - visibleItems
     const deltaY = newMinLineY * itemHeight
-    return {
+    return Promise.resolve({
       ...state,
       deltaY,
       focused: keepFocus,
@@ -31,12 +31,12 @@ export const handleClickDirectoryExpanded = async (
       items: newDirents,
       maxLineY: newMaxLineY,
       minLineY: newMinLineY,
-    }
+    })
   }
-  return {
+  return Promise.resolve({
     ...state,
     focused: keepFocus,
     focusedIndex: index,
     items: newDirents,
-  }
+  })
 }
