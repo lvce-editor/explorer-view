@@ -136,4 +136,5 @@ jobs:
             .e2e-artifacts/
             packages/e2e/renderer-worker-traces/
             packages/e2e/test-results/
-          if-no-files-found: warn
+          include-hidden-files: true
+          if-no-files-found: error
