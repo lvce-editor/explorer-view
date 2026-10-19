@@ -196,6 +196,37 @@ const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: Ex
   }, 0)
 }
 
+const updateGitIgnoreState = (previousState: ExplorerState, state: ExplorerState): ExplorerState => {
+  const { gitIgnoreCache, gitIgnoreDecorations, items, root, sourceControlIgnoredUris } = state
+  if (gitIgnoreDecorations) {
+    if (root !== previousState.root) {
+      const hasFreshGitIgnoreResults = sourceControlIgnoredUris !== previousState.sourceControlIgnoredUris
+      const nextGitIgnoreCache = hasFreshGitIgnoreResults
+        ? updateGitIgnoreCache(items, Object.create(null), sourceControlIgnoredUris)
+        : Object.create(null)
+      return {
+        ...state,
+        gitIgnoreCache: nextGitIgnoreCache,
+        sourceControlIgnoredUris: hasFreshGitIgnoreResults ? sourceControlIgnoredUris : [],
+      }
+    }
+    const nextGitIgnoreCache =
+      sourceControlIgnoredUris === previousState.sourceControlIgnoredUris
+        ? gitIgnoreCache
+        : updateGitIgnoreCache(items, gitIgnoreCache, sourceControlIgnoredUris)
+    return {
+      ...state,
+      gitIgnoreCache: nextGitIgnoreCache,
+      sourceControlIgnoredUris: getCachedGitIgnoredUris(items, sourceControlIgnoredUris, nextGitIgnoreCache),
+    }
+  }
+  return {
+    ...state,
+    gitIgnoreCache: Object.create(null),
+    sourceControlIgnoredUris: sourceControlIgnoredUris.length === 0 ? sourceControlIgnoredUris : [],
+  }
+}
+
 const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
   const runCommand = async (id: number, ...args: T): Promise<CommandRunResult> => {
     const { newState } = get(id)
@@ -212,29 +243,15 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
       newState.root !== rawUpdatedState.root ||
       newState.pathSeparator !== rawUpdatedState.pathSeparator ||
       newState.gitIgnoreDecorations !== rawUpdatedState.gitIgnoreDecorations
-    let updatedState = gitIgnoreInputsChanged
-      ? {
-          ...rawUpdatedState,
-          gitIgnoreGeneration: newState.gitIgnoreGeneration + 1,
-        }
-      : rawUpdatedState
-    if (updatedState.root !== newState.root || !updatedState.gitIgnoreDecorations) {
-      updatedState = {
-        ...updatedState,
-        gitIgnoreCache: Object.create(null),
-        sourceControlIgnoredUris: updatedState.sourceControlIgnoredUris.length === 0 ? updatedState.sourceControlIgnoredUris : [],
-      }
-    } else {
-      const gitIgnoreCache =
-        updatedState.sourceControlIgnoredUris === newState.sourceControlIgnoredUris
-          ? updatedState.gitIgnoreCache
-          : updateGitIgnoreCache(updatedState.items, updatedState.gitIgnoreCache, updatedState.sourceControlIgnoredUris)
-      updatedState = {
-        ...updatedState,
-        gitIgnoreCache,
-        sourceControlIgnoredUris: getCachedGitIgnoredUris(updatedState.items, updatedState.sourceControlIgnoredUris, gitIgnoreCache),
-      }
-    }
+    const updatedState = updateGitIgnoreState(
+      newState,
+      gitIgnoreInputsChanged
+        ? {
+            ...rawUpdatedState,
+            gitIgnoreGeneration: newState.gitIgnoreGeneration + 1,
+          }
+        : rawUpdatedState,
+    )
     const {
       cutItems,
       decorations,

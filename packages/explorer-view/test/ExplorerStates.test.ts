@@ -378,6 +378,34 @@ test('updateGitIgnoredUris refreshes cached styling when a decoration is removed
   expect(newState.visibleExplorerItems[0].isIgnored).toBe(false)
 })
 
+test('wrapListItemCommand keeps fresh ignored results when the workspace root changes', async () => {
+  const uid = 9017
+  const item = { depth: 1, name: 'node_modules', selected: false, type: DirentType.Directory, uri: '/new-workspace/node_modules' }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.uri]: '' },
+    gitIgnoreCache: { '/old-workspace/node_modules': true },
+    gitIgnoreDecorations: true,
+    root: '/old-workspace',
+    sourceControlIgnoredUris: ['/old-workspace/node_modules'],
+    uid,
+  }
+  const loadWorkspace = ExplorerStates.wrapListItemCommand((currentState) => ({
+    ...currentState,
+    items: [item],
+    root: '/new-workspace',
+    sourceControlIgnoredUris: [item.uri],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await loadWorkspace(uid)
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.gitIgnoreCache).toEqual({ [item.uri]: true })
+  expect(newState.sourceControlIgnoredUris).toEqual([item.uri])
+  expect(newState.visibleExplorerItems[0].isIgnored).toBe(true)
+})
+
 test('wrapListItemCommand waits for interaction idle before applying gitignore decorations', async () => {
   const uid = 9010
   const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
