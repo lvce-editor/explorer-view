@@ -8,8 +8,7 @@ import { getProtoMapInternal } from '../GetProtoMapInternal/GetProtoMapInternal.
 import { sortPathDirentsMap } from '../SortPathDirentsMap/SortPathDirentsMap.ts'
 
 const getRestoredChildDirents = async (state: ExplorerState, dirent: ExplorerItem): Promise<readonly ExplorerItem[]> => {
-  const { applicationId } = state
-  const { excluded, expandedPaths, pathSeparator, preserveExpandState, root } = state
+  const { applicationId, excluded, expandedPaths, pathSeparator, preserveExpandState, root } = state
   const descendantPrefix = dirent.uri.endsWith(pathSeparator) ? dirent.uri : `${dirent.uri}${pathSeparator}`
   const descendantExpandedPaths = preserveExpandState ? expandedPaths.filter((path) => path.startsWith(descendantPrefix)) : []
   if (descendantExpandedPaths.length === 0) {

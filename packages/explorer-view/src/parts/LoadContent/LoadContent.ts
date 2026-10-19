@@ -33,8 +33,7 @@ const getExpandedPaths = (
 }
 
 export const loadContent = async (state: ExplorerState, savedState: any): Promise<ExplorerState> => {
-  const { applicationId } = state
-  const { assetDir, expandedPaths: currentExpandedPaths, height, itemHeight, platform, root: currentRoot } = state
+  const { applicationId, assetDir, expandedPaths: currentExpandedPaths, height, itemHeight, platform, root: currentRoot } = state
   const { confirmDelete, excluded, gitIgnoreDecorations, preserveExpandState, sourceControlDecorations, useChevrons } =
     await GetSettings.getSettings()
   const workspaceUri = await GetWorkspaceUri.getWorkspaceUri(applicationId)

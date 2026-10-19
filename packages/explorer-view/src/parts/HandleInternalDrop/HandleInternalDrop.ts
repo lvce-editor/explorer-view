@@ -92,8 +92,7 @@ const expandTargetFolder = (items: readonly ExplorerItem[], targetFolder: string
 }
 
 export const handleInternalDrop = async (state: ExplorerState, sourcePaths: readonly string[], index: number): Promise<ExplorerState> => {
-  const { applicationId } = state
-  const { expandedPaths: oldExpandedPaths, isReadonly, items, preserveExpandState } = state
+  const { applicationId, expandedPaths: oldExpandedPaths, isReadonly, items, preserveExpandState } = state
   if (isReadonly) {
     return state
   }
