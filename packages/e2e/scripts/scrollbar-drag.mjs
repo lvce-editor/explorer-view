@@ -12,6 +12,7 @@ const server = spawn(process.execPath, ['packages/server/src/server.js', '--test
   env: { ...process.env, HOST: '127.0.0.1', PORT: '0' },
   stdio: ['ignore', 'pipe', 'inherit'],
 })
+/** @type {import('@playwright/test').Browser | undefined} */
 let browser
 try {
   const url = await new Promise((resolve, reject) => {
@@ -39,12 +40,16 @@ try {
   await expect(thumb).toBeVisible()
   await expect(page.locator('#TestOverlay')).toHaveAttribute('data-state', 'pass')
   const original = await track.elementHandle()
+  assert.ok(original)
   await original.evaluate((element) => {
     element.addEventListener('pointerdown', (event) => {
-      element.dataset.pointerId = String(event.pointerId)
-      element.captureTarget = event.target
+      if (event instanceof PointerEvent && event.target instanceof Element) {
+        event.target.setAttribute('data-drag-pointer-id', String(event.pointerId))
+      }
     })
   })
+  const captured = page.locator('[data-drag-pointer-id]')
+  const hasCapture = () => captured.evaluate((element) => element.hasPointerCapture(Number(element.getAttribute('data-drag-pointer-id'))))
   const bounds = await track.boundingBox()
   assert.ok(bounds)
   for (let cycle = 0; cycle < 3; cycle++) {
@@ -57,7 +62,7 @@ try {
       await page.mouse.move(x, bounds.y + bounds.height + 20)
       await expect(last).toBeVisible()
       assert.equal(await original.evaluate((element) => element.isConnected), true, 'drag must preserve the scrollbar DOM element')
-      assert.equal(await original.evaluate((element) => element.captureTarget.hasPointerCapture(Number(element.dataset.pointerId))), true)
+      assert.equal(await hasCapture(), true)
       const end = await thumb.boundingBox()
       assert.ok(
         end && end.y >= bounds.y && end.y + end.height <= bounds.y + bounds.height + 1,
@@ -65,10 +70,10 @@ try {
       )
       await page.mouse.move(x, bounds.y)
       await expect(first).toBeVisible()
-      assert.equal(await original.evaluate((element) => element.captureTarget.hasPointerCapture(Number(element.dataset.pointerId))), true)
+      assert.equal(await hasCapture(), true)
     }
     await page.mouse.up()
-    await expect.poll(() => original.evaluate((element) => element.captureTarget.hasPointerCapture(Number(element.dataset.pointerId)))).toBe(false)
+    await expect.poll(hasCapture).toBe(false)
   }
   console.log('PASS scrollbar held-pointer reversal, repeated boundary crossings, release and re-grab')
 } finally {
