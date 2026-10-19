@@ -319,12 +319,14 @@ test('wrapListItemCommand renders items before gitignore decoration reads finish
 test('wrapListItemCommand restores cached ignored styling immediately after reopening a folder', async () => {
   const uid = 9015
   const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+  const decorationsUpdated = Promise.withResolvers<void>()
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readFile'() {
       return 'node_modules'
     },
     async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number, ignoredUris: readonly string[]) {
       await updateDecorations(uid, generation, ignoredUris)
+      decorationsUpdated.resolve()
     },
   })
   const item = { depth: 2, name: 'node_modules', selected: false, type: DirentType.Directory, uri: '/workspace/packages/node_modules' }
@@ -332,7 +334,6 @@ test('wrapListItemCommand restores cached ignored styling immediately after reop
     ...createDefaultState(),
     fileIconCache: { [item.uri]: '' },
     gitIgnoreDecorations: true,
-    items: [item],
     root: '/workspace',
     uid,
   }
@@ -342,13 +343,15 @@ test('wrapListItemCommand restores cached ignored styling immediately after reop
   }))
 
   ExplorerStates.set(uid, state, state)
-  await new Promise((resolve) => setTimeout(resolve, 150))
+  await updateItems(uid, [item])
+  await decorationsUpdated.promise
   await updateItems(uid, [])
   await updateItems(uid, [item])
 
   const { newState } = ExplorerStates.get(uid)
   expect(newState.gitIgnoreCache[item.uri]).toBe(true)
   expect(newState.visibleExplorerItems[0].isIgnored).toBe(true)
+  ExplorerStates.clear()
 })
 
 test('updateGitIgnoredUris refreshes cached styling when a decoration is removed', async () => {

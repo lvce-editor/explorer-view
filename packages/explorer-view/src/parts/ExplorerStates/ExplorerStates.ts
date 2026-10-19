@@ -222,7 +222,7 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
       updatedState = {
         ...updatedState,
         gitIgnoreCache: Object.create(null),
-        sourceControlIgnoredUris: [],
+        sourceControlIgnoredUris: updatedState.sourceControlIgnoredUris.length === 0 ? updatedState.sourceControlIgnoredUris : [],
       }
     } else {
       const gitIgnoreCache =
