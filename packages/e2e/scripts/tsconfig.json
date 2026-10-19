@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["esnext", "DOM"],
+    "rootDir": ".",
+    "allowImportingTsExtensions": true,
+    "assumeChangesOnlyAffectDirectDependencies": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "noUncheckedSideEffectImports": true,
+    "strict": true
+  },
+  "include": ["*.mjs"],
+  "exclude": []
+}

@@ -63,6 +63,11 @@ jobs:
         if: matrix.os != 'windows-11-arm'
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: scrollbar pointer regression
+        working-directory: ./packages/e2e
+        run: npm run e2e:scrollbar
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e coverage
         working-directory: ./packages/e2e
         run: npm run e2e:coverage
