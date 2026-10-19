@@ -7,8 +7,7 @@ export const updateIconCache = (iconCache: FileIconCache, missingRequests: reado
     return iconCache
   }
   const newFileIconCache = { ...iconCache }
-  for (let i = 0; i < missingRequests.length; i++) {
-    const request = missingRequests[i]
+  for (const [i, request] of missingRequests.entries()) {
     const icon = newIcons[i]
     const cacheKey = GetIconCacheKey.getIconCacheKey(request.path, request.type)
     newFileIconCache[cacheKey] = icon

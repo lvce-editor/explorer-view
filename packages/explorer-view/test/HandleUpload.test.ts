@@ -5,7 +5,7 @@ import { handleUpload } from '../src/parts/HandleUpload/HandleUpload.ts'
 
 test('should upload a file', async () => {
   using mockRpc = RpcRendererWorker.registerMockRpc({
-    'FileSystem.writeFile'(...args: any[]) {
+    'FileSystem.writeFile'(..._args: any[]) {
       // Mock implementation
     },
   })

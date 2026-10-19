@@ -4,11 +4,9 @@ export const name = 'viewlet.explorer-delete-file-error'
 
 export const skip = 1
 
-export const test: Test = async ({ Dialog, expect: _expect, Explorer, Extension, FileSystem, Locator: _Locator, Workspace }) => {
+export const test: Test = async ({ Dialog, Explorer, Extension, FileSystem, Workspace }) => {
   // arrange
-  // @ts-ignore
   let _message: string = ''
-  // @ts-ignore
   await Dialog.mockConfirm((message: string) => {
     _message = message
     return true

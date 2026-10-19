@@ -76,7 +76,7 @@ test('acceptEdit - restores script input source for commands', async () => {
 })
 
 test.skip('acceptEdit - rename', async () => {
-  // @ts-ignore
+  // @ts-expect-error Skipped test expects the former filesystem module mocks.
   FileSystem.rename.mockImplementation(() => {})
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
@@ -119,7 +119,7 @@ test.skip('acceptEdit - rename', async () => {
 })
 
 test.skip('acceptEdit - rename - nested file', async () => {
-  // @ts-ignore
+  // @ts-expect-error Skipped test expects the former filesystem module mocks.
   FileSystem.rename.mockImplementation(() => {})
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),
@@ -177,7 +177,7 @@ test.skip('acceptEdit - rename - nested file', async () => {
 })
 
 test.skip('acceptEdit - create - insert folder', async () => {
-  // @ts-ignore
+  // @ts-expect-error Skipped test expects the former filesystem module mocks.
   FileSystem.mkdir.mockImplementation(() => {})
   const state: ExplorerState = {
     ...ViewletExplorer.create(1, '', 0, 0, 0, 0, [], 0),

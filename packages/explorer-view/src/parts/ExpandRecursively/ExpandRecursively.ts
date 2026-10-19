@@ -20,7 +20,7 @@ export const expandRecursively = async (state: ExplorerState): Promise<ExplorerS
   // TODO race condition: what if folder is being collapse while it is recursively expanding?
   // TODO race condition: what if folder is being deleted while it is recursively expanding?
   // TODO race condition: what if a new file/folder is created while the folder is recursively expanding?
-  // @ts-ignore
+  // @ts-expect-error Root traversal uses a partial explorer item.
   const childDirents = await GetChildDirentsRecursively.getChildDirentsRecursively(dirent, pathSeparator, excluded, root, applicationId)
   const startIndex = focusedIndex
   if (focusedIndex >= 0) {

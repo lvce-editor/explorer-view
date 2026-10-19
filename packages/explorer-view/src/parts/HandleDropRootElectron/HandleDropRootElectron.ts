@@ -35,8 +35,7 @@ const getFirstDroppedDirectoryPath = (
   if (root !== '') {
     return undefined
   }
-  for (let i = 0; i < fileHandles.length; i++) {
-    const fileHandle = fileHandles[i]
+  for (const [i, fileHandle] of fileHandles.entries()) {
     if (isDirectoryHandle(fileHandle)) {
       return paths[i]
     }

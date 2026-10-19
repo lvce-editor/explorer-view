@@ -11,8 +11,7 @@ const createDirents = (
   pathSeparator: string,
 ): readonly any[] => {
   const map = Object.create(null)
-  for (let i = 0; i < expandedDirentPaths.length; i++) {
-    const path = expandedDirentPaths[i]
+  for (const [i, path] of expandedDirentPaths.entries()) {
     const children = expandedDirentChildren[i]
     if (children.status === PromiseStatus.Fulfilled) {
       map[path] = children.value

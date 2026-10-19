@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { VError } from '@lvce-editor/verror'
 
 const send = (port: MessagePort): Promise<void> => {
-  // @ts-ignore
+  // @ts-expect-error Legacy call uses an older RPC signature.
   return RendererWorker.sendMessagePortToSourceControlWorker(port, 0)
 }
 

@@ -39,7 +39,7 @@ test('focusLast', () => {
 
 test('focusLast - no dirents', () => {
   const state: ExplorerState = {
-    // @ts-ignore
+    // @ts-expect-error Legacy fixture omits unused create arguments.
     ...ViewletExplorer.create(1),
     focusedIndex: -1,
     items: [],

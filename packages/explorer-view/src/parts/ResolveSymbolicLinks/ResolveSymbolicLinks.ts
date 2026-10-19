@@ -17,14 +17,13 @@ const resolveSymbolicLink = async (uri: string, rawDirent: any, applicationId?: 
       type: symLinkType,
     }
   } catch (error) {
-    // @ts-ignore
-    if (error && error.code === ErrorCodes.ENOENT) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === ErrorCodes.ENOENT) {
       return {
         name: rawDirent.name,
         type: DirentType.SymLinkFile,
       }
     }
-    console.error(`Failed to resolve symbolic link for ${rawDirent.name}: ${error}`)
+    console.error(`Failed to resolve symbolic link for ${rawDirent.name}: ${String(error)}`)
     return rawDirent
   }
 }

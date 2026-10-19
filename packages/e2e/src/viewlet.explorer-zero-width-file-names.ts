@@ -17,10 +17,10 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   // assert
   const treeItems = Locator('.TreeItem')
   await expect(treeItems).toHaveCount(fileNames.length)
-  for (let i = 0; i < fileNames.length; i++) {
+  for (const [i, fileName] of fileNames.entries()) {
     const treeItem = treeItems.nth(i)
     await Explorer.focusIndex(i)
-    await expect(treeItem).toHaveAttribute('aria-label', fileNames[i])
+    await expect(treeItem).toHaveAttribute('aria-label', fileName)
     await expect(treeItem).toHaveId('TreeItemActive')
   }
 }

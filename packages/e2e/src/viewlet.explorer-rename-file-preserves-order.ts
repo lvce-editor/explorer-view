@@ -7,9 +7,9 @@ export const skip = ['webkit']
 export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
   const assertOrder = async (expected: readonly string[]): Promise<void> => {
     const treeItems = Locator('.TreeItem')
-    for (let i = 0; i < expected.length; i++) {
+    for (const [i, element] of expected.entries()) {
       const treeItem = treeItems.nth(i)
-      await expect(treeItem).toHaveText(expected[i])
+      await expect(treeItem).toHaveText(element)
     }
     await expect(treeItems).toHaveCount(expected.length)
   }

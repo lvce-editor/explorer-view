@@ -11,15 +11,14 @@ export const toDisplayDirents = (
   parentDirentPath: string,
   parentDirentDepth: number,
   excluded: readonly string[],
-  expanded: boolean = false,
+  _expanded: boolean = false,
   root: string = parentDirentPath,
 ): readonly ExplorerItem[] => {
   rawDirents = SortExplorerItems.sortExplorerItems(rawDirents)
   const result: ExplorerItem[] = []
   const visibleItems = rawDirents.filter((item) => !isExcluded(root, join2(parentDirentPath, item.name), excluded))
   const count = visibleItems.length
-  for (let i = 0; i < visibleItems.length; i++) {
-    const rawDirent = visibleItems[i]
+  for (const [i, rawDirent] of visibleItems.entries()) {
     result.push(toDisplayDirent(parentDirentPath, parentDirentDepth, rawDirent.type, rawDirent.name, i, count))
   }
   return result

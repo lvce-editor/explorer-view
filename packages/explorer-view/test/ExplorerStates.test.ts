@@ -45,7 +45,7 @@ test('wrapListItemCommand recomputes visible items when focus changes', async ()
     minLineY: 0,
     visibleExplorerItems: GetVisibleExplorerItems.getVisibleExplorerItems(items, 0, 2, 0, -1, '', ['', ''], false, [], '', [], [], []),
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async () => {
+  const wrapped = ExplorerStates.wrapListItemCommand(() => {
     return {
       ...state,
       focusedIndex: 1,
@@ -144,7 +144,7 @@ test('wrapListItemCommand remains responsive while a file is opening', async () 
 test('wrapListItemCommand continues after a command fails', async () => {
   const uid = 9003
   const state = createDefaultState()
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, value: string) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState, value: string) => {
     if (value === 'fail') {
       throw new Error('Failed command')
     }
@@ -180,7 +180,7 @@ test('wrapListItemCommand preserves user input when a pending render commits', a
     focus: FocusId.Input,
     inputSource: InputSource.Script,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => {
     return {
       ...currentState,
       editingValue: 'new.txt',
@@ -199,7 +199,7 @@ test('wrapListItemCommand preserves user input when a pending render commits', a
 test('wrapListItemCommand schedules drag state changes for rendering', async () => {
   const uid = 9011
   const state = createDefaultState()
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => {
     return {
       ...currentState,
       isPointerDown: true,
@@ -222,7 +222,7 @@ test('wrapListItemCommand schedules repeated focus requests for rendering', asyn
     focus: FocusId.List,
     focused: true,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => {
     return {
       ...currentState,
       version: currentState.version + 1,
@@ -243,7 +243,7 @@ test('wrapListItemCommand schedules explorer blur for rendering', async () => {
     focus: FocusId.List,
     focused: true,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => {
     return {
       ...currentState,
       focused: false,
@@ -260,7 +260,7 @@ test('wrapListItemCommand schedules explorer blur for rendering', async () => {
 test('wrapListItemCommandImmediate allows a callback while a queued command is running', async () => {
   const uid = 9004
   const state = createDefaultState()
-  const immediate = ExplorerStates.wrapListItemCommandImmediate(async (currentState) => {
+  const immediate = ExplorerStates.wrapListItemCommandImmediate((currentState) => {
     return {
       ...currentState,
       editingValue: 'callback',
@@ -301,7 +301,7 @@ test('wrapListItemCommand renders items before gitignore decoration reads finish
     root: '/workspace',
     uid,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     items: [item],
   }))
@@ -335,11 +335,11 @@ test('wrapListItemCommand waits for interaction idle before applying gitignore d
     root: '/workspace',
     uid,
   }
-  const readItems = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const readItems = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     items: [item],
   }))
-  const interact = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const interact = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     focusedIndex: 0,
   }))
@@ -367,7 +367,7 @@ test('wrapListItemCommand does not schedule decoration rendering when gitignore 
     ...createDefaultState(),
     fileIconCache: { '/file.txt': '' },
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/file.txt' }],
   }))
@@ -406,7 +406,7 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
     root: '/workspace',
     uid,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, item: typeof firstItem) => ({
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState, item: typeof firstItem) => ({
     ...currentState,
     items: [item],
   }))
@@ -443,7 +443,7 @@ test('clear cancels pending gitignore decoration updates', async () => {
     root: '/workspace',
     uid,
   }
-  const readItems = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const readItems = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     items: [item],
   }))

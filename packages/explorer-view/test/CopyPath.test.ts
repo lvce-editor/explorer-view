@@ -7,7 +7,7 @@ import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('copyPath - writes absolute path of focused dirent to clipboard', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'ClipBoard.writeText'(text: string) {
+    'ClipBoard.writeText'(_text: string) {
       return
     },
   })
@@ -26,7 +26,7 @@ test('copyPath - writes absolute path of focused dirent to clipboard', async () 
 
 test('copyPath - writes absolute path of focused dirent when scrolled', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'ClipBoard.writeText'(text: string) {
+    'ClipBoard.writeText'(_text: string) {
       return
     },
   })
@@ -50,7 +50,7 @@ test('copyPath - writes absolute path of focused dirent when scrolled', async ()
 
 test('copyPath - writes workspace path when no focused dirent', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'ClipBoard.writeText'(text: string) {
+    'ClipBoard.writeText'(_text: string) {
       return
     },
   })
@@ -70,7 +70,7 @@ test('copyPath - writes workspace path when no focused dirent', async () => {
 
 test('copyPath - writes workspace path when focused index is out of bounds', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'ClipBoard.writeText'(text: string) {
+    'ClipBoard.writeText'(_text: string) {
       return
     },
   })

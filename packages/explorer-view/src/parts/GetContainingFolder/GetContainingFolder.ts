@@ -1,4 +1,4 @@
-export const getContainingFolder = (root: string, dirents: readonly any[], focusedIndex: number, pathSeparator: string): string => {
+export const getContainingFolder = (root: string, dirents: readonly any[], focusedIndex: number, _pathSeparator: string): string => {
   if (focusedIndex < 0) {
     return root
   }
