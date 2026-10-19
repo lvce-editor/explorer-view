@@ -38,8 +38,7 @@ const finishCreate = async (absolutePath: string, newDirentType: number, applica
 }
 
 export const acceptCreate = async (state: ExplorerState, newDirentType: number): Promise<ExplorerState> => {
-  const { applicationId } = state
-  const { editingValue, excluded, focusedIndex, items, pathSeparator, root, uid } = state
+  const { applicationId, editingValue, excluded, focusedIndex, items, pathSeparator, root, uid } = state
   const newFileName = editingValue
   const siblingFileNames = getSiblingFileNames(items, focusedIndex, root, pathSeparator)
   const editingErrorMessage = ValidateFileName2.validateFileName2(newFileName, siblingFileNames)
