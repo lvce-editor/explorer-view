@@ -16,10 +16,10 @@
     "e2e:scrollbar": "node scripts/scrollbar-drag.mjs"
   },
   "devDependencies": {
-    "@lvce-editor/test-with-playwright": "22.40.6",
-    "@playwright/test": "1.63.0"
+    "@lvce-editor/test-with-playwright": "22.42.0",
+    "@playwright/test": "1.64.1"
   },
   "dependencies": {
-    "@lvce-editor/api": "^9.47.1"
+    "@lvce-editor/api": "^9.48.2"
   }
 }
