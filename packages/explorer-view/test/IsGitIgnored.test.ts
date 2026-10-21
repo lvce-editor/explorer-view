@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import type { GitIgnorePattern } from '../src/parts/GitIgnorePattern/GitIgnorePattern.ts'
-import { isGitIgnored } from '../src/parts/IsGitIgnored/IsGitIgnored.ts'
+import { createGitIgnoreMatcher, isGitIgnored } from '../src/parts/IsGitIgnored/IsGitIgnored.ts'
 import { parseGitIgnore } from '../src/parts/ParseGitIgnore/ParseGitIgnore.ts'
 
 const patterns = (content: string, basePath = ''): readonly GitIgnorePattern[] => {
@@ -44,4 +44,20 @@ test('isGitIgnored applies nested gitignore files only within their base path', 
   const parsed = patterns('*.tmp', 'packages/app')
   expect(isGitIgnored('packages/app/file.tmp', parsed)).toBe(true)
   expect(isGitIgnored('packages/other/file.tmp', parsed)).toBe(false)
+})
+
+test('createGitIgnoreMatcher reuses compiled patterns in order', () => {
+  const matches = createGitIgnoreMatcher(patterns('*.log\n!important.log'))
+  expect(matches('debug.log')).toBe(true)
+  expect(matches('important.log')).toBe(false)
+  expect(matches('debug.txt')).toBe(false)
+})
+
+test('createGitIgnoreMatcher uses the supplied patterns for each invocation', () => {
+  const firstMatches = createGitIgnoreMatcher(patterns('*.log'))
+  const updatedMatches = createGitIgnoreMatcher(patterns('*.tmp'))
+  expect(firstMatches('file.log')).toBe(true)
+  expect(firstMatches('file.tmp')).toBe(false)
+  expect(updatedMatches('file.log')).toBe(false)
+  expect(updatedMatches('file.tmp')).toBe(true)
 })

@@ -17,10 +17,13 @@ export const getGitIgnoredUris = async (
   if (patterns.length === 0) {
     return []
   }
-  return items
-    .filter((item) => {
-      const relativePath = GetGitIgnoreRelativePath.getGitIgnoreRelativePath(root, item.uri, pathSeparator)
-      return IsGitIgnored.isGitIgnored(relativePath, patterns)
-    })
-    .map((item) => item.uri)
+  const matchesGitIgnore = IsGitIgnored.createGitIgnoreMatcher(patterns)
+  const ignoredUris: string[] = []
+  for (const item of items) {
+    const relativePath = GetGitIgnoreRelativePath.getGitIgnoreRelativePath(root, item.uri, pathSeparator)
+    if (matchesGitIgnore(relativePath)) {
+      ignoredUris.push(item.uri)
+    }
+  }
+  return ignoredUris
 }
