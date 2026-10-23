@@ -7,9 +7,9 @@ export const getSettings = async (): Promise<Settings> => {
   // TODO get all settings at once
   const useChevronsRaw = await RendererWorker.invoke('Preferences.get', 'explorer.useChevrons')
   const useChevrons = useChevronsRaw === false ? false : true
-  const confirmDeleteRaw = await RendererWorker.invoke('Preferences.get', 'explorer.confirmdelete')
+  const confirmDeleteRaw = await RendererWorker.invoke('Preferences.get', 'explorer.confirmDelete')
   const confirmDelete = confirmDeleteRaw === false ? false : true
-  const confirmPasteRaw = await RendererWorker.invoke('Preferences.get', 'explorer.confirmpaste')
+  const confirmPasteRaw = await RendererWorker.invoke('Preferences.get', 'explorer.confirmPaste')
   const confirmPaste = confirmPasteRaw === false ? false : false
   const excludedRaw = await RendererWorker.invoke('Preferences.get', 'files.exclude')
   const excluded = getExcluded(excludedRaw)

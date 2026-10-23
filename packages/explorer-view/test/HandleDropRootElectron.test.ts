@@ -45,8 +45,8 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
   expect(mockRpc.invocations).toEqual([
     ['Workspace.setPath', '/home/simon/dotfiles'],
     ['Preferences.get', 'explorer.useChevrons'],
-    ['Preferences.get', 'explorer.confirmdelete'],
-    ['Preferences.get', 'explorer.confirmpaste'],
+    ['Preferences.get', 'explorer.confirmDelete'],
+    ['Preferences.get', 'explorer.confirmPaste'],
     ['Preferences.get', 'files.exclude'],
     ['Preferences.get', 'explorer.gitIgnoreDecorations'],
     ['Preferences.get', 'explorer.preserveExpandState'],
