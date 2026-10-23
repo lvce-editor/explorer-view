@@ -45,7 +45,7 @@ test('wrapListItemCommand recomputes visible items when focus changes', async ()
     minLineY: 0,
     visibleExplorerItems: GetVisibleExplorerItems.getVisibleExplorerItems(items, 0, 2, 0, -1, '', ['', ''], false, [], '', [], [], []),
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async () => {
+  const wrapped = ExplorerStates.wrapListItemCommand(() => {
     return {
       ...state,
       focusedIndex: 1,
@@ -144,7 +144,7 @@ test('wrapListItemCommand remains responsive while a file is opening', async () 
 test('wrapListItemCommand continues after a command fails', async () => {
   const uid = 9003
   const state = createDefaultState()
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, value: string) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState, value: string) => {
     if (value === 'fail') {
       throw new Error('Failed command')
     }
@@ -180,7 +180,7 @@ test('wrapListItemCommand preserves user input when a pending render commits', a
     focus: FocusId.Input,
     inputSource: InputSource.Script,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => {
     return {
       ...currentState,
       editingValue: 'new.txt',
@@ -199,7 +199,7 @@ test('wrapListItemCommand preserves user input when a pending render commits', a
 test('wrapListItemCommand schedules drag state changes for rendering', async () => {
   const uid = 9011
   const state = createDefaultState()
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => {
     return {
       ...currentState,
       isPointerDown: true,
@@ -222,7 +222,7 @@ test('wrapListItemCommand schedules repeated focus requests for rendering', asyn
     focus: FocusId.List,
     focused: true,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => {
     return {
       ...currentState,
       version: currentState.version + 1,
@@ -243,7 +243,7 @@ test('wrapListItemCommand schedules explorer blur for rendering', async () => {
     focus: FocusId.List,
     focused: true,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => {
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => {
     return {
       ...currentState,
       focused: false,
@@ -260,7 +260,7 @@ test('wrapListItemCommand schedules explorer blur for rendering', async () => {
 test('wrapListItemCommandImmediate allows a callback while a queued command is running', async () => {
   const uid = 9004
   const state = createDefaultState()
-  const immediate = ExplorerStates.wrapListItemCommandImmediate(async (currentState) => {
+  const immediate = ExplorerStates.wrapListItemCommandImmediate((currentState) => {
     return {
       ...currentState,
       editingValue: 'callback',
@@ -301,7 +301,7 @@ test('wrapListItemCommand renders items before gitignore decoration reads finish
     root: '/workspace',
     uid,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     items: [item],
   }))
@@ -314,6 +314,96 @@ test('wrapListItemCommand renders items before gitignore decoration reads finish
   gitIgnoreRead.resolve('*.log')
   await new Promise((resolve) => setTimeout(resolve, 150))
   expect(ExplorerStates.get(uid).newState.sourceControlIgnoredUris).toEqual(['/workspace/debug.log'])
+})
+
+test('wrapListItemCommand restores cached ignored styling immediately after reopening a folder', async () => {
+  const uid = 9015
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+  const decorationsUpdated = Promise.withResolvers<void>()
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return 'node_modules'
+    },
+    async 'Viewlet.executeViewletCommand'(_viewletId: number, _command: string, generation: number, ignoredUris: readonly string[]) {
+      await updateDecorations(uid, generation, ignoredUris)
+      decorationsUpdated.resolve()
+    },
+  })
+  const item = { depth: 2, name: 'node_modules', selected: false, type: DirentType.Directory, uri: '/workspace/packages/node_modules' }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.uri]: '' },
+    gitIgnoreDecorations: true,
+    root: '/workspace',
+    uid,
+  }
+  const updateItems = ExplorerStates.wrapListItemCommand((currentState, items: typeof state.items) => ({
+    ...currentState,
+    items,
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await updateItems(uid, [item])
+  await decorationsUpdated.promise
+  await updateItems(uid, [])
+  await updateItems(uid, [item])
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.gitIgnoreCache[item.uri]).toBe(true)
+  expect(newState.visibleExplorerItems[0].isIgnored).toBe(true)
+  ExplorerStates.clear()
+})
+
+test('updateGitIgnoredUris refreshes cached styling when a decoration is removed', async () => {
+  const uid = 9016
+  const item = { depth: 1, name: 'node_modules', selected: false, type: DirentType.Directory, uri: '/workspace/node_modules' }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.uri]: '' },
+    gitIgnoreCache: { [item.uri]: true },
+    gitIgnoreDecorations: true,
+    items: [item],
+    root: '/workspace',
+    sourceControlIgnoredUris: [item.uri],
+    uid,
+  }
+  const { gitIgnoreGeneration } = state
+  const updateDecorations = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+
+  ExplorerStates.set(uid, state, state)
+  await updateDecorations(uid, gitIgnoreGeneration, [])
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.gitIgnoreCache[item.uri]).toBe(false)
+  expect(newState.visibleExplorerItems[0].isIgnored).toBe(false)
+})
+
+test('wrapListItemCommand keeps fresh ignored results when the workspace root changes', async () => {
+  const uid = 9017
+  const item = { depth: 1, name: 'node_modules', selected: false, type: DirentType.Directory, uri: '/new-workspace/node_modules' }
+  const state = {
+    ...createDefaultState(),
+    fileIconCache: { [item.uri]: '' },
+    gitIgnoreCache: { '/old-workspace/node_modules': true },
+    gitIgnoreDecorations: true,
+    root: '/old-workspace',
+    sourceControlIgnoredUris: ['/old-workspace/node_modules'],
+    uid,
+  }
+  const loadWorkspace = ExplorerStates.wrapListItemCommand((currentState) => ({
+    ...currentState,
+    items: [item],
+    root: '/new-workspace',
+    sourceControlIgnoredUris: [item.uri],
+  }))
+
+  ExplorerStates.set(uid, state, state)
+  await loadWorkspace(uid)
+
+  const { newState } = ExplorerStates.get(uid)
+  expect(newState.gitIgnoreCache).toEqual({ [item.uri]: true })
+  expect(newState.sourceControlIgnoredUris).toEqual([item.uri])
+  expect(newState.visibleExplorerItems[0].isIgnored).toBe(true)
 })
 
 test('wrapListItemCommand waits for interaction idle before applying gitignore decorations', async () => {
@@ -335,11 +425,11 @@ test('wrapListItemCommand waits for interaction idle before applying gitignore d
     root: '/workspace',
     uid,
   }
-  const readItems = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const readItems = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     items: [item],
   }))
-  const interact = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const interact = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     focusedIndex: 0,
   }))
@@ -367,7 +457,7 @@ test('wrapListItemCommand does not schedule decoration rendering when gitignore 
     ...createDefaultState(),
     fileIconCache: { '/file.txt': '' },
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     items: [{ depth: 0, name: 'file.txt', selected: false, type: DirentType.File, uri: '/file.txt' }],
   }))
@@ -406,7 +496,7 @@ test('wrapListItemCommand discards stale gitignore decoration results', async ()
     root: '/workspace',
     uid,
   }
-  const wrapped = ExplorerStates.wrapListItemCommand(async (currentState, item: typeof firstItem) => ({
+  const wrapped = ExplorerStates.wrapListItemCommand((currentState, item: typeof firstItem) => ({
     ...currentState,
     items: [item],
   }))
@@ -443,7 +533,7 @@ test('clear cancels pending gitignore decoration updates', async () => {
     root: '/workspace',
     uid,
   }
-  const readItems = ExplorerStates.wrapListItemCommand(async (currentState) => ({
+  const readItems = ExplorerStates.wrapListItemCommand((currentState) => ({
     ...currentState,
     items: [item],
   }))

@@ -71,7 +71,7 @@ test('handleArrowLeft - expanded directory', () => {
     items: [
       {
         depth: 0,
-        // @ts-ignore
+        // @ts-expect-error Test fixture intentionally uses the legacy item shape.
         expanded: true,
         level: 0,
         name: 'test',

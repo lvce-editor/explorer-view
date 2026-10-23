@@ -6,7 +6,7 @@ import { updateRoot } from '../src/parts/UpdateRoot/UpdateRoot.ts'
 test('updateRoot should return same disposed state', async () => {
   const state = createDefaultState()
   // @ disposed is used in source but not typed
-  // @ts-ignore
+  // @ts-expect-error Legacy state includes a disposed flag.
   state.disposed = true
   const result = await updateRoot(state)
   expect(result).toBe(state)

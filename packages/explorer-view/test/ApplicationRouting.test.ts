@@ -84,7 +84,7 @@ test('file operations preserve the application through every mutation in a batch
       'source',
     ),
   ).toBe('')
-  expect(rpc.invocations.map((call) => call.slice(0, 3))).toEqual([
+  expect(rpc.invocations.map((call: readonly unknown[]) => call.slice(0, 3))).toEqual([
     ['Application.execute', 'source', 'FileSystem.mkdir'],
     ['Application.execute', 'source', 'FileSystem.writeFile'],
     ['Application.execute', 'source', 'FileSystem.copy'],

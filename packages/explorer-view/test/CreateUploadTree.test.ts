@@ -1,13 +1,11 @@
-import { test, expect } from '@jest/globals'
+import { test, expect, jest } from '@jest/globals'
 import { createUploadTree } from '../src/parts/CreateUploadTree/CreateUploadTree.ts'
 
 test('createUploadTree with files', async (): Promise<void> => {
   const blob = new Blob(['file content'])
   const fileHandle = {
-    async getFile(): Promise<Blob> {
-      return blob
-    },
-    isSameEntry: async (): Promise<boolean> => false,
+    getFile: jest.fn<() => Promise<Blob>>().mockResolvedValue(blob),
+    isSameEntry: jest.fn<FileSystemHandle['isSameEntry']>().mockResolvedValue(false),
     kind: 'file',
     name: 'test.txt',
   } as FileSystemHandle
@@ -21,22 +19,20 @@ test('createUploadTree with files', async (): Promise<void> => {
 test('createUploadTree with directories', async (): Promise<void> => {
   const blob = new Blob(['file content'])
   const fileHandle = {
-    async getFile(): Promise<Blob> {
-      return blob
-    },
-    isSameEntry: async (): Promise<boolean> => false,
+    getFile: jest.fn<() => Promise<Blob>>().mockResolvedValue(blob),
+    isSameEntry: jest.fn<FileSystemHandle['isSameEntry']>().mockResolvedValue(false),
     kind: 'file',
     name: 'test.txt',
   } as FileSystemHandle
 
   const directoryHandle = {
-    isSameEntry: async (): Promise<boolean> => false,
+    isSameEntry: jest.fn<FileSystemHandle['isSameEntry']>().mockResolvedValue(false),
     kind: 'directory',
     name: 'dir',
     values(): { [Symbol.asyncIterator](): AsyncGenerator<FileSystemHandle> } {
       return {
         [Symbol.asyncIterator]: async function* (): AsyncGenerator<FileSystemHandle> {
-          yield fileHandle
+          yield* await Array.fromAsync([fileHandle])
         },
       }
     },
@@ -54,31 +50,27 @@ test('createUploadTree with mixed content', async (): Promise<void> => {
   const blob1 = new Blob(['file content 1'])
   const blob2 = new Blob(['file content 2'])
   const fileHandle1 = {
-    async getFile(): Promise<Blob> {
-      return blob1
-    },
-    isSameEntry: async (): Promise<boolean> => false,
+    getFile: jest.fn<() => Promise<Blob>>().mockResolvedValue(blob1),
+    isSameEntry: jest.fn<FileSystemHandle['isSameEntry']>().mockResolvedValue(false),
     kind: 'file',
     name: 'test1.txt',
   } as FileSystemHandle
 
   const fileHandle2 = {
-    async getFile(): Promise<Blob> {
-      return blob2
-    },
-    isSameEntry: async (): Promise<boolean> => false,
+    getFile: jest.fn<() => Promise<Blob>>().mockResolvedValue(blob2),
+    isSameEntry: jest.fn<FileSystemHandle['isSameEntry']>().mockResolvedValue(false),
     kind: 'file',
     name: 'test2.txt',
   } as FileSystemHandle
 
   const directoryHandle = {
-    isSameEntry: async (): Promise<boolean> => false,
+    isSameEntry: jest.fn<FileSystemHandle['isSameEntry']>().mockResolvedValue(false),
     kind: 'directory',
     name: 'dir',
     values(): { [Symbol.asyncIterator](): AsyncGenerator<FileSystemHandle> } {
       return {
         [Symbol.asyncIterator]: async function* (): AsyncGenerator<FileSystemHandle> {
-          yield fileHandle2
+          yield* await Array.fromAsync([fileHandle2])
         },
       }
     },

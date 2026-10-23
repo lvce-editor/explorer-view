@@ -3,8 +3,7 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import * as GetChildDirents from '../GetChildDirents/GetChildDirents.ts'
 
 export const expandAll = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { applicationId } = state
-  const { excluded, focusedIndex, items, pathSeparator, root } = state
+  const { applicationId, excluded, focusedIndex, items, pathSeparator, root } = state
   if (focusedIndex === -1) {
     return state
   }
@@ -18,7 +17,7 @@ export const expandAll = async (state: ExplorerState): Promise<ExplorerState> =>
     }
     // TODO expand
     // TODO avoid mutating state here
-    // @ts-ignore
+    // @ts-expect-error Legacy directory expansion mutates readonly items.
     dirent.type = DirentType.DirectoryExpanding
     // TODO handle error
     // TODO race condition
@@ -29,7 +28,7 @@ export const expandAll = async (state: ExplorerState): Promise<ExplorerState> =>
     }
     newDirents.splice(newIndex + 1, 0, ...childDirents)
     // TODO avoid mutating state here
-    // @ts-ignore
+    // @ts-expect-error Legacy directory expansion mutates readonly items.
     dirent.type = DirentType.DirectoryExpanded
     // await expand(state, dirent.index)
   }
