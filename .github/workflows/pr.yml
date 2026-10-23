@@ -130,7 +130,7 @@ jobs:
         run: |
           mkdir -p ../../.e2e-artifacts
           npm run e2e:webkit:headless 2>&1 | awk '
-            /pw:protocol/ && !/Page.navigate|Page.frameNavigated|Page.frameDetached|Page.provisionalLoadFailed|Network.loadingFailed|Target.targetDestroyed/ && !(/Network.responseReceived|Network.requestWillBeSent/ && /"type":"Document"/) { next }
+            /pw:protocol/ && !/Page.navigate|Page.frameNavigated|Page.frameDetached|Page.provisionalLoadFailed|Network.loadingFailed|Target.targetCreated|Target.didCommitProvisionalTarget|Target.targetDestroyed/ && !(/Network.responseReceived|Network.requestWillBeSent/ && /Document/) { next }
             { print; fflush() }
           ' | tee ../../.e2e-artifacts/webkit-${{ matrix.attempt }}.log
         env:
