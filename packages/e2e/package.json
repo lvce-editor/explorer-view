@@ -12,10 +12,12 @@
     "e2e:coverage": "node ../../packages/build/src/build.ts --development && test-with-playwright --server-path=../server/src/server.js --only-extension=. --test-path=. --headless --reuse-page --filter=viewlet.explorer.open",
     "e2e:webkit": "test-with-playwright --server-path=../server/src/server.js --only-extension=. --test-path=. --browser=webkit",
     "e2e:webkit:headless": "test-with-playwright --server-path=../server/src/server.js --only-extension=. --test-path=. --browser=webkit --headless",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "e2e:scrollbar": "node scripts/scrollbar-drag.mjs"
   },
   "devDependencies": {
-    "@lvce-editor/test-with-playwright": "22.40.6"
+    "@lvce-editor/test-with-playwright": "22.40.6",
+    "@playwright/test": "1.63.0"
   },
   "dependencies": {
     "@lvce-editor/api": "^9.47.1"

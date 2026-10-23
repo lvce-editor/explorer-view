@@ -14,7 +14,7 @@ export const getChildDirentsRecursively = async (
   switch (dirent.type) {
     case DirentType.Directory:
     case DirentType.DirectoryExpanded:
-    case DirentType.DirectoryExpanding:
+    case DirentType.DirectoryExpanding: {
       const childDirents = await GetChildDirents.getChildDirents(pathSeparator, dirent.uri, dirent.depth, excluded, root, applicationId)
       const all = [MakeExpanded.makeExpanded(dirent)]
       for (const childDirent of childDirents) {
@@ -22,6 +22,7 @@ export const getChildDirentsRecursively = async (
         all.push(...childAll)
       }
       return all
+    }
     case DirentType.File:
       return [dirent]
     default:

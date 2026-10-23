@@ -3,7 +3,7 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
 import * as OpenUri from '../OpenUri/OpenUri.ts'
 
-export const handleClickFile = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus = false): Promise<ExplorerState> => {
+export const handleClickFile = (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus = false): Promise<ExplorerState> => {
   const { applicationId } = state
   const completion = OpenUri.openUri(
     dirent.uri,
@@ -18,5 +18,5 @@ export const handleClickFile = async (state: ExplorerState, dirent: ExplorerItem
     focused: keepFocus,
     focusedIndex: index,
   }
-  return CommandCompletion.set(newState, completion)
+  return Promise.resolve(CommandCompletion.set(newState, completion))
 }

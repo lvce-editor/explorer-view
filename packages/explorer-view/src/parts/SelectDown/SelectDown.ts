@@ -3,8 +3,8 @@ import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 
 const getLastSelectedIndex = (items: readonly ExplorerItem[]): number => {
   let lastSelectedIndex = -1
-  for (let index = 0; index < items.length; index++) {
-    if (items[index].selected) {
+  for (const [index, item] of items.entries()) {
+    if (item.selected) {
       lastSelectedIndex = index
     }
   }

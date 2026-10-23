@@ -116,7 +116,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleDragEnd'],
     },
     {
-      // @ts-ignore
+      // @ts-expect-error Legacy drag listener includes a drag effect.
       dragEffect: 'copyMove',
       name: DomEventListenersFunctions.HandleDragStart,
       params: ['handleDragStart'],

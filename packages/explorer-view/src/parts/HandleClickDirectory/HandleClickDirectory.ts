@@ -8,8 +8,7 @@ import { getProtoMapInternal } from '../GetProtoMapInternal/GetProtoMapInternal.
 import { sortPathDirentsMap } from '../SortPathDirentsMap/SortPathDirentsMap.ts'
 
 const getRestoredChildDirents = async (state: ExplorerState, dirent: ExplorerItem): Promise<readonly ExplorerItem[]> => {
-  const { applicationId } = state
-  const { excluded, expandedPaths, pathSeparator, preserveExpandState, root } = state
+  const { applicationId, excluded, expandedPaths, pathSeparator, preserveExpandState, root } = state
   const descendantPrefix = dirent.uri.endsWith(pathSeparator) ? dirent.uri : `${dirent.uri}${pathSeparator}`
   const descendantExpandedPaths = preserveExpandState ? expandedPaths.filter((path) => path.startsWith(descendantPrefix)) : []
   if (descendantExpandedPaths.length === 0) {
@@ -21,7 +20,7 @@ const getRestoredChildDirents = async (state: ExplorerState, dirent: ExplorerIte
 }
 
 export const handleClickDirectory = async (state: ExplorerState, dirent: ExplorerItem, index: number, keepFocus: boolean): Promise<ExplorerState> => {
-  // @ts-ignore
+  // @ts-expect-error Legacy directory expansion mutates readonly items.
   dirent.type = DirentType.DirectoryExpanding
   // TODO handle error
   const dirents = await getRestoredChildDirents(state, dirent)
@@ -37,7 +36,7 @@ export const handleClickDirectory = async (state: ExplorerState, dirent: Explore
   }
   const newDirents = [...state2.items]
   newDirents.splice(newIndex + 1, 0, ...dirents)
-  // @ts-ignore
+  // @ts-expect-error Legacy directory expansion mutates readonly items.
   dirent.type = DirentType.DirectoryExpanded
   // TODO when focused index has changed while expanding, don't update it
 

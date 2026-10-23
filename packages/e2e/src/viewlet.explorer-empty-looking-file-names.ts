@@ -25,8 +25,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Workspace }) => 
   const treeItems = Locator('.TreeItem')
   await expect(treeItems).toHaveCount(fileNames.length)
 
-  for (let i = 0; i < fileNames.length; i++) {
-    const fileName = fileNames[i]
+  for (const [i, fileName] of fileNames.entries()) {
     const treeItem = treeItems.nth(i)
     const label = treeItem.locator('.Label')
     await expect(treeItem).toHaveAttribute('aria-label', fileName)

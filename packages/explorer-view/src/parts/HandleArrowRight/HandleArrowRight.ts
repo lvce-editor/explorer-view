@@ -13,7 +13,7 @@ export const handleArrowRight = async (state: ExplorerState): Promise<ExplorerSt
   switch (dirent.type) {
     case DirentType.Directory:
     case DirentType.SymLinkFolder:
-      // @ts-ignore
+      // @ts-expect-error Legacy call uses an older RPC signature.
       return HandleClickDirectory.handleClickDirectory(state, dirent, focusedIndex)
     case DirentType.DirectoryExpanded:
       return HandleArrowRightDirectoryExpanded.handleArrowRightDirectoryExpanded(state, dirent)

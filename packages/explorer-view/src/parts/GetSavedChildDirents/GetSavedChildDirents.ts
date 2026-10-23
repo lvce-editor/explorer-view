@@ -2,7 +2,14 @@ import * as DirentType from '../DirentType/DirentType.ts'
 import { isExcluded } from '../IsExcluded/IsExcluded.ts'
 import * as SortExplorerItems from '../SortExplorerItems/SortExplorerItems.ts'
 
-export const getSavedChildDirents = (map: any, path: any, depth: any, excluded: any, pathSeparator: any, root: string = path): readonly any[] => {
+export const getSavedChildDirents = (
+  map: any,
+  path: string,
+  depth: number,
+  excluded: readonly string[],
+  pathSeparator: string,
+  root: string = path,
+): readonly any[] => {
   let children = map[path]
   if (!children) {
     return []

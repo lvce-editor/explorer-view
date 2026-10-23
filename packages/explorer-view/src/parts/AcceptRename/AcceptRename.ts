@@ -15,8 +15,7 @@ import { updateTree2 } from '../UpdateTree2/UpdateTree2.ts'
 import * as ValidateFileName2 from '../ValidateFileName2/ValidateFileName2.ts'
 
 export const acceptRename = async (state: ExplorerState): Promise<ExplorerState> => {
-  const { applicationId } = state
-  const { editingIndex, editingValue, excluded, items, pathSeparator, root } = state
+  const { applicationId, editingIndex, editingValue, excluded, items, pathSeparator, root } = state
   const siblingFileNames = getRenameSiblingFileNames(items, editingIndex, pathSeparator)
   const editingErrorMessage = ValidateFileName2.validateFileName2(editingValue, siblingFileNames)
   if (editingErrorMessage) {

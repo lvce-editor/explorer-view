@@ -52,7 +52,7 @@
     "description": "Configures glob patterns for excluding files and folders from the Explorer.",
     "heading": "Exclude",
     "id": "files.exclude",
-    "type": "array",
+    "type": "object",
     "value": {
       "**/.DS_Store": true,
       "**/.git": true,

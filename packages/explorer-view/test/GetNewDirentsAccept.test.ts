@@ -4,7 +4,7 @@ import type { ExplorerItem } from '../src/parts/ExplorerItem/ExplorerItem.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import { getNewDirentsAccept } from '../src/parts/GetNewDirentsAccept/GetNewDirentsAccept.ts'
 
-test('getNewDirentsAccept - create file in root', async () => {
+test('getNewDirentsAccept - create file in root', () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       return
@@ -32,7 +32,7 @@ test('getNewDirentsAccept - create file in root', async () => {
   expect(mockRpc.invocations).toEqual([])
 })
 
-test('getNewDirentsAccept - create file in subfolder', async () => {
+test('getNewDirentsAccept - create file in subfolder', () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       return
@@ -73,7 +73,7 @@ test('getNewDirentsAccept - create file in subfolder', async () => {
   expect(mockRpc.invocations).toEqual([])
 })
 
-test('getNewDirentsAccept - create nested file', async () => {
+test('getNewDirentsAccept - create nested file', () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return
@@ -104,7 +104,7 @@ test('getNewDirentsAccept - create nested file', async () => {
   expect(mockRpc.invocations).toEqual([])
 })
 
-test.skip('getNewDirentsAccept - handle error', async () => {
+test.skip('getNewDirentsAccept - handle error', () => {
   RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       return Promise.reject(new Error('Failed to create file'))

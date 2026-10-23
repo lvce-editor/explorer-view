@@ -54,10 +54,9 @@ const getFirstDroppedDirectory = (state: ExplorerState, fileHandles: readonly Fi
 export const handleDrop = async (
   state: ExplorerState,
   fileHandles: readonly FileSystemHandle[],
-  paths: readonly string[],
+  _paths: readonly string[],
 ): Promise<ExplorerState> => {
-  const { applicationId } = state
-  const { excluded, items, pathSeparator, root } = state
+  const { applicationId, excluded, items, pathSeparator, root } = state
   const droppedDirectory = getFirstDroppedDirectory(state, fileHandles)
   if (droppedDirectory) {
     return openDroppedDirectoryAsWorkspace(state, droppedDirectory)
