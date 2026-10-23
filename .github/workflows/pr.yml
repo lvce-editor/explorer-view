@@ -129,10 +129,13 @@ jobs:
         shell: bash
         run: |
           mkdir -p ../../.e2e-artifacts
-          npm run e2e:webkit:headless 2>&1 | tee ../../.e2e-artifacts/webkit-${{ matrix.attempt }}.log
+          npm run e2e:webkit:headless 2>&1 | awk '
+            /pw:protocol/ && !/Page.navigate|Page.frameNavigated|Page.frameDetached|Page.provisionalLoadFailed|Network.loadingFailed|Target.targetDestroyed/ && !(/Network.responseReceived|Network.requestWillBeSent/ && /"type":"Document"/) { next }
+            { print; fflush() }
+          ' | tee ../../.e2e-artifacts/webkit-${{ matrix.attempt }}.log
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-          DEBUG: pw:api,pw:browser
+          DEBUG: pw:api,pw:browser,pw:protocol
           LVCE_E2E_HTTP_TRACE: '1'
       - name: Upload e2e artifacts
         if: always()

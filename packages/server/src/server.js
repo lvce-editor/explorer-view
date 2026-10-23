@@ -10,8 +10,16 @@ if (process.env.LVCE_E2E_HTTP_TRACE === '1') {
     }
     console.info('[e2e-http]', JSON.stringify({ sequence: ++sequence, time: new Date().toISOString(), type, path, status: response?.statusCode }))
   }
-  subscribe('http.server.request.start', ({ request }) => record('request', request))
-  subscribe('http.server.response.finish', ({ request, response }) => record('response', request, response))
+  subscribe('http.server.request.start', (message) => {
+    const { request } = /** @type {{ request: import('node:http').IncomingMessage }} */ (message)
+    record('request', request)
+  })
+  subscribe('http.server.response.finish', (message) => {
+    const { request, response } = /** @type {{ request: import('node:http').IncomingMessage, response: import('node:http').ServerResponse }} */ (
+      message
+    )
+    record('response', request, response)
+  })
 }
 
 const workerPath = fileURLToPath(new URL('../../../.tmp/dist', import.meta.url))
