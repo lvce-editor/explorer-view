@@ -22,6 +22,6 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true
   },
-  "include": ["scripts", "src", "test", "fixtures"],
+  "include": ["src", "test", "fixtures"],
   "exclude": ["scripts"]
 }
