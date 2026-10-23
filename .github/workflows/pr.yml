@@ -44,6 +44,11 @@ jobs:
         run: node ../../node_modules/@lvce-editor/test-with-playwright-worker/node_modules/playwright/cli.js install chromium firefox
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: install playwright chromium for scrollbar regression
+        working-directory: ./packages/e2e
+        run: npx playwright install chromium
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
       - name: install playwright webkit dependency
         working-directory: ./packages/e2e
         run: node ../../node_modules/@lvce-editor/test-with-playwright-worker/node_modules/playwright/cli.js install webkit
