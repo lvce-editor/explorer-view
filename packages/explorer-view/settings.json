@@ -5,7 +5,7 @@
     "heading": "Use Chevrons",
     "id": "explorer.useChevrons",
     "type": "boolean",
-    "value": "true"
+    "value": true
   },
   {
     "category": "explorer",
@@ -13,7 +13,7 @@
     "heading": "Confirm Delete",
     "id": "explorer.confirmdelete",
     "type": "boolean",
-    "value": "true"
+    "value": true
   },
   {
     "category": "explorer",
@@ -21,7 +21,7 @@
     "heading": "Confirm Paste",
     "id": "explorer.confirmpaste",
     "type": "boolean",
-    "value": "false"
+    "value": false
   },
   {
     "category": "explorer",
@@ -29,7 +29,7 @@
     "heading": "Git Ignore Decorations",
     "id": "explorer.gitIgnoreDecorations",
     "type": "boolean",
-    "value": "true"
+    "value": true
   },
   {
     "category": "explorer",
@@ -37,7 +37,7 @@
     "heading": "Preserve Expand State",
     "id": "explorer.preserveExpandState",
     "type": "boolean",
-    "value": "true"
+    "value": true
   },
   {
     "category": "explorer",
@@ -45,7 +45,7 @@
     "heading": "Source Control Decorations",
     "id": "explorer.sourceControlDecorations",
     "type": "boolean",
-    "value": "true"
+    "value": true
   },
   {
     "category": "explorer",
