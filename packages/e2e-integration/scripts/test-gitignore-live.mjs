@@ -14,7 +14,7 @@ const eventually = async (read, expected) => {
     if (actual === expected) return
     await new Promise((resolve) => setTimeout(resolve, 30))
   } while (Date.now() < deadline)
-  assert.equal(actual, expected)
+  assert.equal(actual, expected, `Gitignore styling assertion: ${read.toString()}`)
 }
 
 export const test = async ({ page }) => {
