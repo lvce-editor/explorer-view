@@ -20,6 +20,7 @@ const eventually = async (read, expected) => {
 export const test = async ({ page }) => {
   const root = await mkdtemp(join(tmpdir(), 'lvce-gitignore-live-'))
   const uri = pathToFileURL(root).href
+  const titleRoot = uri.slice('file://'.length)
   const worker = page.workers().find((entry) => rendererWorkerPattern.test(entry.url()))
   assert.ok(worker, 'Renderer worker must be running')
   await worker.evaluate(async () => {
@@ -27,7 +28,7 @@ export const test = async ({ page }) => {
     globalThis.gitIgnoreCommand = execute
   })
   const command = (id, ...args) => worker.evaluate(([id, args]) => globalThis.gitIgnoreCommand(id, ...args), [id, args])
-  const ignored = (path) => page.locator(`.TreeItem[title="${uri}/${path}"] .Label`).evaluate((node) => node.classList.contains('LabelCut'))
+  const ignored = (path) => page.locator(`.TreeItem[title="${titleRoot}/${path}"] .Label`).evaluate((node) => node.classList.contains('LabelCut'))
   try {
     await mkdir(join(root, 'sub'))
     await writeFile(join(root, 'debug.log'), '')
@@ -36,7 +37,7 @@ export const test = async ({ page }) => {
     await command('Workspace.setUri', uri)
     await command('SideBar.openViewlet', 'Explorer')
     await command('Explorer.expandRecursively')
-    await page.locator(`.TreeItem[title="${uri}/sub/child.tmp"]`).waitFor()
+    await page.locator(`.TreeItem[title="${titleRoot}/sub/child.tmp"]`).waitFor()
     await eventually(() => ignored('debug.log'), false)
 
     // Real disk writes bypass the editor's workspace-refresh notification.
