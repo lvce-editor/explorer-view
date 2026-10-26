@@ -74,6 +74,9 @@ export const test = async ({ page }) => {
     await command('Main.save')
     await eventually(() => ignored('debug.log'), false)
 
+    console.log(
+      'PASS live gitignore DOM assertions: external creation, edits, nested rules, rapid writes, atomic replacement, deletion, editor saves',
+    )
     await command('Workspace.setUri', 'memfs:///')
   } finally {
     await command('Workspace.setUri', 'memfs:///').catch(() => {})

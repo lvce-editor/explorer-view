@@ -232,7 +232,7 @@ const syncGitIgnoreWatcher = async (uid: number, state: ExplorerState): Promise<
   const { gitIgnoreDecorations, items, pathSeparator, root } = state
   const directories = gitIgnoreDecorations ? GetGitIgnoreCandidateDirs.getGitIgnoreCandidateDirs(root, items, pathSeparator) : []
   try {
-    await RendererWorker.invoke('GitIgnoreWatcher.watch', uid, root, directories)
+    await RendererWorker.invoke('FileWatcher.watchGitIgnore', uid, root, directories)
   } catch {
     // Older runtimes and virtual filesystems may not support disk watching.
   }
