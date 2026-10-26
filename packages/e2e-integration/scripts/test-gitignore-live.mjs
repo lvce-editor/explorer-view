@@ -50,6 +50,12 @@ export const test = async ({ page }) => {
     await eventually(() => ignored('sub/child.tmp'), true)
     assert.equal(await ignored('debug.log'), false)
 
+    for (const patterns of ['*.log', '*.txt', '*.log', '*.txt']) {
+      await writeFile(join(root, '.gitignore'), patterns)
+    }
+    await eventually(() => ignored('debug.log'), false)
+    await eventually(() => ignored('plain.txt'), true)
+
     // Atomic saves replace the watched file; the parent subscription must survive.
     await writeFile(join(root, 'sub', '.gitignore.new'), '!*.tmp')
     await rename(join(root, 'sub', '.gitignore.new'), join(root, 'sub', '.gitignore'))

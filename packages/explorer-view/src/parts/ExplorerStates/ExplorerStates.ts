@@ -228,6 +228,16 @@ const updateGitIgnoreState = (previousState: ExplorerState, state: ExplorerState
   }
 }
 
+const syncGitIgnoreWatcher = async (uid: number, state: ExplorerState): Promise<void> => {
+  const { gitIgnoreDecorations, items, pathSeparator, root } = state
+  const directories = gitIgnoreDecorations ? GetGitIgnoreCandidateDirs.getGitIgnoreCandidateDirs(root, items, pathSeparator) : []
+  try {
+    await RendererWorker.invoke('GitIgnoreWatcher.watch', uid, root, directories)
+  } catch {
+    // Older runtimes and virtual filesystems may not support disk watching.
+  }
+}
+
 const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean): ((id: number, ...args: T) => Promise<void>) => {
   const runCommand = async (id: number, ...args: T): Promise<CommandRunResult> => {
     const { newState } = get(id)
@@ -272,12 +282,7 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState, intermediate.scheduledState)
     if (gitIgnoreInputsChanged) {
-      const directories = updatedState.gitIgnoreDecorations
-        ? GetGitIgnoreCandidateDirs.getGitIgnoreCandidateDirs(updatedState.root, updatedState.items, updatedState.pathSeparator)
-        : []
-      void RendererWorker.invoke('GitIgnoreWatcher.watch', id, updatedState.root, directories).catch(() => {
-        // Older runtimes and virtual filesystems may not support disk watching.
-      })
+      void syncGitIgnoreWatcher(id, updatedState)
     }
     maybeScheduleGitIgnoredUrisUpdate(newState, updatedState)
     if (hasSameVisibleExplorerItemInputs(intermediate.newState, updatedState)) {

@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           repository: lvce-editor/lvce-editor
-          ref: ef0239423c264bc6b2367d9038a4634bc5a78ab0
+          ref: 6aa72546e5b6cb71eeb6191e8b80b0d00c913e82
           path: .tmp/lvce-integration
       - uses: actions/setup-node@v6
         with:
@@ -39,12 +39,12 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Prepare owned integration tests
         run: node packages/e2e-integration/prepare.mjs .tmp/lvce-integration
+      - name: Prepare disk-backed gitignore regression
+        run: node packages/e2e-integration/prepare-gitignore-live.mjs .tmp/lvce-integration
       - name: Run owned integration tests
         working-directory: .tmp/lvce-integration/packages/extension-host-worker-tests
         shell: bash
         run: npm run e2e:headless --
-      - name: Prepare disk-backed gitignore regression
-        run: node packages/e2e-integration/prepare-gitignore-live.mjs .tmp/lvce-integration
       - name: Test live gitignore changes with the source runtime
         working-directory: .tmp/lvce-integration/packages/extension-host-worker-tests
         run: npm run e2e:headless -- --test-name-prefix=viewlet.explorer-gitignore-live --browser-test=../../../../packages/e2e-integration/scripts/test-gitignore-live.mjs
