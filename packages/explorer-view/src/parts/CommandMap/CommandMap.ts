@@ -49,6 +49,7 @@ import * as HandleDragStart from '../HandleDragStart/HandleDragStart.ts'
 import * as HandleDrop from '../HandleDrop/HandleDrop.ts'
 import { handleDropIndex } from '../HandleDropIndex/HandleDropIndex.ts'
 import { handleEscape } from '../HandleEscape/HandleEscape.ts'
+import { handleGitIgnoreChange } from '../HandleGitIgnoreChange/HandleGitIgnoreChange.ts'
 import * as HandleFocus from '../HandleFocus/HandleFocus.ts'
 import * as HandleIconThemeChange from '../HandleIconThemeChange/HandleIconThemeChange.ts'
 import * as HandleInputBlur from '../HandleInputBlur/HandleInputBlur.ts'
@@ -152,6 +153,7 @@ export const commandMap = {
   'Explorer.handleDrop': WrapCommand.wrapListItemCommand(HandleDrop.handleDrop),
   'Explorer.handleDropIndex': WrapCommand.wrapListItemCommand(handleDropIndex),
   'Explorer.handleEscape': WrapCommand.wrapListItemCommand(handleEscape),
+  'Explorer.handleGitIgnoreChange': WrapCommand.wrapListItemCommand(handleGitIgnoreChange),
   'Explorer.handleFocus': WrapCommand.wrapListItemCommand(HandleFocus.handleFocus),
   'Explorer.handleIconThemeChange': WrapCommand.wrapListItemCommand(HandleIconThemeChange.handleIconThemeChange),
   'Explorer.handleInputBlur': WrapCommand.wrapListItemCommand(HandleInputBlur.handleInputBlur),

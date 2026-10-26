@@ -3,6 +3,7 @@ import * as ViewletRegistry from '@lvce-editor/viewlet-registry'
 import type { ExplorerState } from '../ExplorerState/ExplorerState.ts'
 import * as CommandCompletion from '../CommandCompletion/CommandCompletion.ts'
 import * as GetFileIcons from '../GetFileIcons/GetFileIcons.ts'
+import * as GetGitIgnoreCandidateDirs from '../GetGitIgnoreCandidateDirs/GetGitIgnoreCandidateDirs.ts'
 import * as GetGitIgnoredUris from '../GetGitIgnoredUris/GetGitIgnoredUris.ts'
 import * as GetExplorerMaxLineY from '../GetMaxLineY/GetMaxLineY.ts'
 import * as GetVisibleExplorerItems from '../GetVisibleExplorerItems/GetVisibleExplorerItems.ts'
@@ -173,7 +174,7 @@ const postponeGitIgnoredUrisUpdate = (uid: number): void => {
 const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: ExplorerState): void => {
   if (
     !newState.gitIgnoreDecorations ||
-    oldState.items === newState.items ||
+    (oldState.items === newState.items && oldState.gitIgnoreGeneration === newState.gitIgnoreGeneration) ||
     oldState.sourceControlIgnoredUris !== newState.sourceControlIgnoredUris
   ) {
     return
@@ -185,7 +186,7 @@ const maybeScheduleGitIgnoredUrisUpdate = (oldState: ExplorerState, newState: Ex
     }
     void GetGitIgnoredUris.getGitIgnoredUris(root, items, pathSeparator, gitIgnoreDecorations, newState.applicationId)
       .then((sourceControlIgnoredUris) => {
-        if (!hasExplorerState(uid)) {
+        if (!hasExplorerState(uid) || get(uid).newState.gitIgnoreGeneration !== gitIgnoreGeneration) {
           return
         }
         scheduleGitIgnoredUrisUpdate(uid, gitIgnoreGeneration, sourceControlIgnoredUris)
@@ -270,6 +271,15 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     } = updatedState
     const intermediate = get(id)
     set(id, intermediate.oldState, updatedState, intermediate.scheduledState)
+    if (gitIgnoreInputsChanged) {
+      const directories = updatedState.gitIgnoreDecorations
+        ? GetGitIgnoreCandidateDirs.getGitIgnoreCandidateDirs(updatedState.root, updatedState.items, updatedState.pathSeparator)
+        : []
+      void RendererWorker.invoke('GitIgnoreWatcher.watch', id, updatedState.root, directories).catch(() => {
+        // Older runtimes and virtual filesystems may not support disk watching.
+      })
+    }
+    maybeScheduleGitIgnoredUrisUpdate(newState, updatedState)
     if (hasSameVisibleExplorerItemInputs(intermediate.newState, updatedState)) {
       if (
         updatedState.inputSource === InputSource.User ||
@@ -311,7 +321,6 @@ const wrapListItemCommandInternal = <T extends any[]>(fn: Fn<T>, queued: boolean
     }
     const intermediate2 = get(id)
     set(id, intermediate2.oldState, finalState)
-    maybeScheduleGitIgnoredUrisUpdate(newState, finalState)
     return {
       completion,
     }
