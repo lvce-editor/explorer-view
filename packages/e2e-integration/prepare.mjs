@@ -1,4 +1,4 @@
-import { cp, mkdir, readdir, readFile, realpath, rm } from 'node:fs/promises'
+import { cp, mkdir, readdir, readFile, realpath, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -15,6 +15,13 @@ for (const name of await readdir(join(tests, 'src'))) {
   if (name !== '_all.js') await rm(join(tests, 'src', name), { recursive: true })
 }
 await cp(join(here, 'src'), join(tests, 'src'), { recursive: true })
+// The collector counts Linux /proc inotify watches; other hosts expose an unsupported message.
+const watcherScenario = join(tests, 'src/viewlet.file-watcher-explorer.ts')
+const watcherSource = await readFile(watcherScenario, 'utf8')
+await writeFile(
+  watcherScenario,
+  watcherSource.replace("const hostPlatform: string = '__HOST_PLATFORM__'", `const hostPlatform: string = ${JSON.stringify(process.platform)}`),
+)
 await rm(join(tests, 'fixtures'), { recursive: true, force: true })
 await mkdir(join(tests, 'fixtures'), { recursive: true })
 try {

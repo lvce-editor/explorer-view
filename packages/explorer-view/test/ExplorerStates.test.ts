@@ -546,3 +546,50 @@ test('clear cancels pending gitignore decoration updates', async () => {
 
   expect(renderCount).toBe(0)
 })
+
+test('gitignore changes recompute unchanged items and reject a late read from older rules', async () => {
+  const { handleGitIgnoreChange } = await import('../src/parts/HandleGitIgnoreChange/HandleGitIgnoreChange.ts')
+  const uid = 9020
+  const reads = [Promise.withResolvers<string>(), Promise.withResolvers<string>()]
+  let count = 0
+  const update = ExplorerStates.wrapListItemCommand(ExplorerStates.updateGitIgnoredUris)
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
+      return reads[count++].promise
+    },
+    async 'Viewlet.executeViewletCommand'(_uid: number, _command: string, generation: number, uris: readonly string[]) {
+      await update(uid, generation, uris)
+    },
+  })
+  const item = { depth: 1, name: 'debug.log', selected: false, type: DirentType.File, uri: '/workspace/debug.log' }
+  const state = {
+    ...createDefaultState(),
+    editingIndex: 0,
+    editingValue: 'draft.log',
+    fileIconCache: { [item.uri]: '' },
+    gitIgnoreDecorations: true,
+    items: [item],
+    root: '/workspace',
+    uid,
+  }
+  const { items, root } = state
+  ExplorerStates.set(uid, state, state)
+  const changed = ExplorerStates.wrapListItemCommand(handleGitIgnoreChange)
+  await changed(uid, root)
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  await changed(uid, root)
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  reads[1].resolve('*.log')
+  // Let the newer result schedule its application, then finish the stale read before that timer runs.
+  await new Promise((resolve) => setTimeout(resolve, 10))
+  reads[0].resolve('')
+  await new Promise((resolve) => setTimeout(resolve, 150))
+  const next = ExplorerStates.get(uid).newState
+  expect(next.sourceControlIgnoredUris).toEqual([item.uri])
+  expect(next.items).toBe(items)
+  expect(next.editingIndex).toBe(0)
+  expect(next.editingValue).toBe('draft.log')
+  expect(handleGitIgnoreChange(next, '/old-workspace')).toBe(next)
+  const disabled = { ...next, gitIgnoreDecorations: false }
+  expect(handleGitIgnoreChange(disabled, root)).toBe(disabled)
+})
