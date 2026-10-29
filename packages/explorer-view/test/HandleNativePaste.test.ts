@@ -35,7 +35,7 @@ test('copies a native Electron file into the focused workspace folder', async ()
 
   await handleNativePaste(state, [41])
 
-  expect(rendererRpc.invocations).toEqual([
+  expect(rendererRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileHandles.get', [41]],
     ['FileSystem.readDirWithFileTypes', '/workspace/src'],
     ['FileSystem.copy', '/home/test/Main.elm', '/workspace/src/Main.elm'],
@@ -54,7 +54,7 @@ test('falls back to the internal clipboard when the paste event has no files', a
   const result = await handleNativePaste(state, [])
 
   expect(result).toBe(state)
-  expect(rendererRpc.invocations).toEqual([['ClipBoard.readNativeFiles']])
+  expect(rendererRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([['ClipBoard.readNativeFiles']])
 })
 
 test('does not paste native files into a readonly workspace', async () => {

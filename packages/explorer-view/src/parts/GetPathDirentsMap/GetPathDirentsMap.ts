@@ -6,7 +6,7 @@ export const getPathDirentsMap = async (allPaths: readonly string[], application
   await Promise.all(
     allPaths.map(async (path) => {
       try {
-        const dirents = await FileSystem.readDirWithFileTypes(path, applicationId)
+        const dirents = await FileSystem.readDirectoryCached(path, applicationId)
         pathToDirents[path] = dirents
       } catch {
         // ignore

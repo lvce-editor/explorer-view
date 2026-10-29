@@ -48,7 +48,7 @@ test('should focus on first newly created file after paste copy', async () => {
   const focusedItem = result.items[result.focusedIndex]
   expect(focusedItem.uri).toBe('/test/index copy.js')
   expect(result.focused).toBe(true)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test'],
     ['FileSystem.copy', '/source/index.js', '/test/index copy.js'],
     ['FileSystem.readDirWithFileTypes', '/test'],
@@ -106,7 +106,7 @@ test('should handle paste copy with multiple files and focus on first', async ()
   const focusedItem = result.items[result.focusedIndex]
   expect(focusedItem.uri).toBe('/test/file1 copy.txt')
   expect(result.focused).toBe(true)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test'],
     ['FileSystem.copy', '/source/file1.txt', '/test/file1 copy.txt'],
     ['FileSystem.copy', '/source/file2.txt', '/test/file2 copy.txt'],
@@ -145,7 +145,7 @@ test('should handle paste copy with empty files array', async () => {
   expect(result).toBeDefined()
   expect(result.items).toHaveLength(0)
   expect(result.focusedIndex).toBe(0)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test'],
     ['FileSystem.readDirWithFileTypes', '/test'],
   ])
@@ -187,7 +187,7 @@ test('should preserve existing file when pasting into collapsed folder', async (
 
   await handlePasteCopy(initialState, nativeFiles)
 
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test/target'],
     ['FileSystem.copy', '/test/file.txt', '/test/target/file copy.txt'],
     ['FileSystem.readDirWithFileTypes', '/test'],

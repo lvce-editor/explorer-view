@@ -28,7 +28,7 @@ test('revealItemHidden - reveals hidden item', async () => {
   expect(newState.items.length).toBeGreaterThan(0)
   expect(newState.focused).toBe(true)
   expect(newState.focusedIndex).toBeGreaterThanOrEqual(0)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/root'],
     ['FileSystem.readDirWithFileTypes', '/root/folder1'],
   ])
@@ -60,7 +60,9 @@ test('revealItemHidden - expands visible ancestor folder', async () => {
   expect(newState.items[0].type).toBe(DirentType.DirectoryExpanded)
   expect(newState.items[1].uri).toBe('/root/folder1/file1.txt')
   expect(newState.focusedIndex).toBe(1)
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/folder1']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/root/folder1'],
+  ])
 })
 
 test('revealItemHidden - clamps the scroll position after expanding the last folder', async () => {
@@ -94,7 +96,9 @@ test('revealItemHidden - clamps the scroll position after expanding the last fol
   expect(newState.minLineY).toBe(6)
   expect(newState.items[9].type).toBe(DirentType.DirectoryExpanded)
   expect(newState.items[10].uri).toBe('/root/z/file.txt')
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/z']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/root/z'],
+  ])
 })
 
 test('revealItemHidden - inserts revealed descendants before the next visible sibling', async () => {
@@ -137,7 +141,7 @@ test('revealItemHidden - inserts revealed descendants before the next visible si
     '/root/sibling.txt',
   ])
   expect(newState.focusedIndex).toBe(2)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/root/folder1'],
     ['FileSystem.readDirWithFileTypes', '/root/folder1/nested'],
   ])
@@ -148,7 +152,7 @@ test('revealItemHidden - returns same state for empty path parts', async () => {
   const state = createDefaultState()
   const newState = await revealItemHidden(state, '')
   expect(newState).toEqual(state)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('revealItemHidden - throws error for non-existent file', async () => {
@@ -159,7 +163,7 @@ test('revealItemHidden - throws error for non-existent file', async () => {
   })
   const state = createDefaultState()
   await expect(revealItemHidden(state, '/non/existent/file.txt')).rejects.toThrow('File not found in explorer')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/non'],
     ['FileSystem.readDirWithFileTypes', '/non/existent'],
   ])

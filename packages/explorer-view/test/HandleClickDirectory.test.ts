@@ -201,7 +201,7 @@ test('handleClickDirectory - restores remembered expanded descendants', async ()
     expect.objectContaining({ type: DirentType.DirectoryExpanded, uri: '/test/nested' }),
     expect.objectContaining({ type: DirentType.File, uri: '/test/nested/file.txt' }),
   ])
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test'],
     ['FileSystem.readDirWithFileTypes', '/test/nested'],
   ])

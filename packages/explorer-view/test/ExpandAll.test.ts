@@ -29,7 +29,7 @@ test('expandAll - no focused item', async () => {
   }
   const result = await expandAll(state)
   expect(result).toBe(state)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('expandAll - expand directories at same depth', async () => {
@@ -67,7 +67,7 @@ test('expandAll - expand directories at same depth', async () => {
   expect(result.items[2].name).toBe('file2')
   expect(result.items[3].name).toBe('dir2')
   expect(result.fileIconCache).toBeDefined()
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/dir1'],
     ['FileSystem.readDirWithFileTypes', '/dir2'],
   ])

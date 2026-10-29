@@ -1,7 +1,9 @@
 import * as ApplicationRpc from '../ApplicationRpc/ApplicationRpc.ts'
+import * as DirectoryCache from '../DirectoryCache/DirectoryCache.ts'
 
 export const remove = async (dirent: string, applicationId?: string): Promise<void> => {
-  return ApplicationRpc.invoke(applicationId, 'FileSystem.remove', dirent)
+  await ApplicationRpc.invoke(applicationId, 'FileSystem.remove', dirent)
+  await DirectoryCache.invalidateParent(dirent, applicationId)
 }
 
 export const readDirWithFileTypes = async (uri: string, applicationId?: string): Promise<readonly any[]> => {
@@ -25,21 +27,29 @@ export const stat = async (dirent: string, applicationId?: string): Promise<any>
 }
 
 export const writeFile = async (uri: string, content: string, applicationId?: string): Promise<void> => {
-  return ApplicationRpc.invoke(applicationId, 'FileSystem.writeFile', uri, content)
+  await ApplicationRpc.invoke(applicationId, 'FileSystem.writeFile', uri, content)
+  await DirectoryCache.invalidateParent(uri, applicationId)
 }
 
 export const writeBlob = async (uri: string, blob: Blob, applicationId?: string): Promise<void> => {
-  return ApplicationRpc.invoke(applicationId, 'FileSystem.writeBlob', uri, blob)
+  await ApplicationRpc.invoke(applicationId, 'FileSystem.writeBlob', uri, blob)
+  await DirectoryCache.invalidateParent(uri, applicationId)
 }
 
 export const mkdir = async (uri: string, applicationId?: string): Promise<void> => {
-  return ApplicationRpc.invoke(applicationId, 'FileSystem.mkdir', uri)
+  await ApplicationRpc.invoke(applicationId, 'FileSystem.mkdir', uri)
+  await DirectoryCache.invalidateParent(uri, applicationId)
 }
 
 export const rename = async (oldUri: string, newUri: string, applicationId?: string): Promise<void> => {
-  return ApplicationRpc.invoke(applicationId, 'FileSystem.rename', oldUri, newUri)
+  await ApplicationRpc.invoke(applicationId, 'FileSystem.rename', oldUri, newUri)
+  await DirectoryCache.invalidateParent(oldUri, applicationId)
+  await DirectoryCache.invalidateParent(newUri, applicationId)
 }
 
 export const copy = async (oldUri: string, newUri: string, applicationId?: string): Promise<void> => {
-  return ApplicationRpc.invoke(applicationId, 'FileSystem.copy', oldUri, newUri)
+  await ApplicationRpc.invoke(applicationId, 'FileSystem.copy', oldUri, newUri)
+  await DirectoryCache.invalidateParent(newUri, applicationId)
 }
+
+export const readDirectoryCached = DirectoryCache.readDirectory

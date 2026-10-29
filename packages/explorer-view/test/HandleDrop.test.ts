@@ -27,8 +27,10 @@ test('handleDrop - successful drop', async () => {
   const result = await handleDrop(state, 0, 0, 1)
   expect(result).toBeDefined()
   expect(result.dropTargets).toEqual([])
-  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 1, false]])
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
+  expect(dragRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['DragAndDrop.getDroppedItemsByDropId', 1, false],
+  ])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
 
 test('handleDrop - discards an opt-in drop for a readonly workspace', async () => {
@@ -43,7 +45,7 @@ test('handleDrop - discards an opt-in drop for a readonly workspace', async () =
   }
 
   await expect(handleDrop(state, 0, 0, 21)).resolves.toEqual({ ...state, dropTargets: [] })
-  expect(dragRpc.invocations).toEqual([['DragAndDrop.discardDrop', 21]])
+  expect(dragRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([['DragAndDrop.discardDrop', 21]])
 })
 
 test('handleDrop - error case', async () => {
@@ -62,7 +64,9 @@ test('handleDrop - error case', async () => {
   await expect(handleDrop(state, 0, 0, 1)).resolves.toEqual({ ...state, dropTargets: [] })
   expect(errorSpy).toHaveBeenCalledWith(new Error('Failed to drop files: test error'))
   errorSpy.mockRestore()
-  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 1, false]])
+  expect(dragRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['DragAndDrop.getDroppedItemsByDropId', 1, false],
+  ])
 })
 
 test('handleDrop - moves an internal Explorer file into the drop target folder', async () => {
@@ -96,7 +100,9 @@ test('handleDrop - moves an internal Explorer file into the drop target folder',
   const result = await handleDrop(state, 0, 0, 1)
 
   expect(result.items.map((item) => item.uri)).toEqual(['/workspace/src', '/workspace/src/Main.elm'])
-  expect(dragRpc.invocations).toEqual([['DragAndDrop.getDroppedItemsByDropId', 1, false]])
+  expect(dragRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['DragAndDrop.getDroppedItemsByDropId', 1, false],
+  ])
   expect(mockRpc.invocations).toContainEqual(['FileSystem.rename', '/workspace/Main.elm', '/workspace/src/Main.elm'])
 })
 

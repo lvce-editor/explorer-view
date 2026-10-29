@@ -31,7 +31,7 @@ test('revealItem - item not found', async () => {
   const state = createDefaultState()
   const newState = await revealItem(state, 'test')
   expect(newState.items).toEqual([])
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('revealItem - uri outside root', async () => {
@@ -47,7 +47,7 @@ test('revealItem - uri outside root', async () => {
   }
   const newState = await revealItem(state, 'non-existent:///some-file.txt')
   expect(newState).toEqual(state)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('revealItem - item found', async () => {
@@ -75,7 +75,7 @@ test('revealItem - item found', async () => {
   expect(newState.items[0].uri).toBe('/root/test')
   expect(newState.focus).toBe(FocusId.List)
   expect(newState.inputSource).toBe(InputSource.Script)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('revealItem - reveals hidden item inside root', async () => {
@@ -102,7 +102,7 @@ test('revealItem - reveals hidden item inside root', async () => {
     { depth: 1, name: 'src', posInSet: 1, selected: false, setSize: 1, type: DirentType.DirectoryExpanded, uri: '/workspace/src' },
     { depth: 2, name: 'index.ts', posInSet: 1, selected: false, setSize: 1, type: DirentType.File, uri: '/workspace/src/index.ts' },
   ])
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/workspace'],
     ['FileSystem.readDirWithFileTypes', '/workspace/src'],
   ])

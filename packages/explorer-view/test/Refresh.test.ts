@@ -28,7 +28,7 @@ test('refresh - empty state', async () => {
   const result = await refresh(state)
   expect(result.items).toHaveLength(0)
   expect(result.icons).toHaveLength(0)
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
 
 test('refresh - with top level items', async () => {
@@ -55,7 +55,7 @@ test('refresh - with top level items', async () => {
   expect(result.items).toHaveLength(2)
   expect(result.items[0].name).toBe('file1')
   expect(result.items[1].name).toBe('file2')
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
 
 test('refreshExplorer - cancels active file creation', async () => {
@@ -87,7 +87,7 @@ test('refreshExplorer - cancels active file creation', async () => {
     expect.objectContaining({ name: 'a.txt', type: DirentType.File, uri: '/a.txt' }),
     expect.objectContaining({ name: 'b.txt', type: DirentType.File, uri: '/b.txt' }),
   ])
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([['FileSystem.readDirWithFileTypes', '/']])
 })
 
 test('refresh - preserve expanded folder', async () => {
@@ -131,7 +131,7 @@ test('refresh - preserve expanded folder', async () => {
   expect(result.items[0].type).toBe(DirectoryExpanded)
   expect(result.items[1].name).toBe('file1.txt')
   expect(result.items[2].name).toBe('file2.txt')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.readDirWithFileTypes', '/folder1'],
   ])
@@ -165,7 +165,7 @@ test('refresh - remove expanded folder that no longer exists', async () => {
   const result = await refresh(state)
   expect(result.items).toHaveLength(1)
   expect(result.items[0].name).toBe('file1.txt')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.readDirWithFileTypes', '/folder1'],
   ])
@@ -213,7 +213,7 @@ test('refresh - nested expanded folders', async () => {
   expect(result.items[1].name).toBe('folder2')
   expect(result.items[1].type).toBe(DirectoryExpanded)
   expect(result.items[2].name).toBe('file1.txt')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.readDirWithFileTypes', '/folder1'],
     ['FileSystem.readDirWithFileTypes', '/folder1/folder2'],
@@ -275,7 +275,7 @@ test('refresh - preserve directory types', async () => {
   expect(result.items[3].type).toBe(File)
   expect(result.items[4].name).toBe('file1.txt')
   expect(result.items[4].type).toBe(File)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.readDirWithFileTypes', '/folder1'],
     ['FileSystem.readDirWithFileTypes', '/folder1/subfolder'],
@@ -322,7 +322,7 @@ test('refresh - check filesystem response', async () => {
   expect(methodCalls).toContain('FileSystem.readDirWithFileTypes')
   expect(result.items[0].type).toBe(DirectoryExpanded)
   expect(result.items[1].type).toBe(File)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.readDirWithFileTypes', '/folder1'],
   ])
@@ -357,7 +357,7 @@ test('refresh - restores nested expanded folders from the stable state after an 
     expect.objectContaining({ type: DirentType.DirectoryExpanded, uri: '/workspace/outer/inner' }),
     expect.objectContaining({ type: DirentType.File, uri: '/workspace/outer/inner/externally-created.txt' }),
   ])
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/workspace'],
     ['FileSystem.readDirWithFileTypes', '/workspace/outer'],
     ['FileSystem.readDirWithFileTypes', '/workspace/outer/inner'],
@@ -387,5 +387,7 @@ test('refresh - uses legacy visible-item expansion state when preservation is di
   const result = await refresh(state)
 
   expect(result.items).toEqual([expect.objectContaining({ type: DirentType.Directory, uri: '/workspace/folder' })])
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/workspace']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/workspace'],
+  ])
 })

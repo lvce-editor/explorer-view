@@ -39,7 +39,7 @@ test('should update state with new workspace path and load content', async () =>
   expect(result).toHaveProperty('pathSeparator')
   expect(result).toHaveProperty('excluded')
   expect(result).toHaveProperty('useChevrons')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['Workspace.getUri'],
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmDelete'],
@@ -52,7 +52,7 @@ test('should update state with new workspace path and load content', async () =>
     ['FileSystem.isReadonly', 'file:///new/workspace/path'],
     ['FileSystem.readDirWithFileTypes', 'file:///new/workspace/path'],
   ])
-  expect(mockSourceControlRpc.invocations).toEqual([])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('should restore saved state for the new workspace', async () => {
@@ -145,7 +145,7 @@ test('should preserve state properties when updating workspace', async () => {
   expect(result.scrollBarHeight).toBe(initialState.scrollBarHeight)
   expect(result.handleOffset).toBe(initialState.handleOffset)
   expect(result.scrollBarActive).toBe(initialState.scrollBarActive)
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
@@ -160,7 +160,9 @@ test('should preserve state properties when updating workspace', async () => {
       ['FileSystem.readDirWithFileTypes', 'file:///another/workspace'],
     ]),
   )
-  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', 'file:///another/workspace', '', 0]])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['SourceControl.getEnabledProviderIds', '', 'file:///another/workspace', '', 0],
+  ])
 })
 
 test('should handle workspace path change with existing content', async () => {
@@ -195,7 +197,7 @@ test('should handle workspace path change with existing content', async () => {
   expect(result.items).toHaveLength(2)
   expect(result.pathSeparator).toBe('/')
   expect(result.useChevrons).toBe(false)
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
@@ -210,7 +212,7 @@ test('should handle workspace path change with existing content', async () => {
       ['FileSystem.readDirWithFileTypes', 'file:///changed/workspace/path'],
     ]),
   )
-  expect(mockSourceControlRpc.invocations).toEqual([])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('should handle workspace path change with chevrons enabled', async () => {
@@ -240,7 +242,7 @@ test('should handle workspace path change with chevrons enabled', async () => {
 
   expect(result.root).toBe('file:///chevron/workspace')
   expect(result.useChevrons).toBe(true)
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
@@ -255,7 +257,9 @@ test('should handle workspace path change with chevrons enabled', async () => {
       ['FileSystem.readDirWithFileTypes', 'file:///chevron/workspace'],
     ]),
   )
-  expect(mockSourceControlRpc.invocations).toEqual([['SourceControl.getEnabledProviderIds', '', 'file:///chevron/workspace', '', 0]])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['SourceControl.getEnabledProviderIds', '', 'file:///chevron/workspace', '', 0],
+  ])
 })
 
 test('should always use slash for URI paths', async () => {
@@ -285,7 +289,7 @@ test('should always use slash for URI paths', async () => {
 
   expect(result.root).toBe('file:///C:/windows/workspace')
   expect(result.pathSeparator).toBe('/')
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
@@ -300,7 +304,7 @@ test('should always use slash for URI paths', async () => {
       ['FileSystem.readDirWithFileTypes', 'file:///C:/windows/workspace'],
     ]),
   )
-  expect(mockSourceControlRpc.invocations).toEqual([])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('should set load error state when reading folder fails', async () => {
@@ -336,7 +340,7 @@ test('should set load error state when reading folder fails', async () => {
   expect(result.errorCode).toBe('EACCES')
   expect(result.errorMessage).toBe('permission was denied')
   expect(result.items).toEqual([])
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['Workspace.getUri'],
       ['Preferences.get', 'explorer.useChevrons'],
@@ -351,5 +355,5 @@ test('should set load error state when reading folder fails', async () => {
       ['FileSystem.readDirWithFileTypes', 'file:///restricted/workspace'],
     ]),
   )
-  expect(mockSourceControlRpc.invocations).toEqual([])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
