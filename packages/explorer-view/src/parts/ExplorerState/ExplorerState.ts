@@ -1,6 +1,7 @@
 import type { ExplorerItem } from '../ExplorerItem/ExplorerItem.ts'
 import type { FileDecoration } from '../FileDecoration/FileDecoration.ts'
 import type { FileIconCache } from '../FileIconCache/FileIconCache.ts'
+import type { RawDirent } from '../RawDirent/RawDirent.ts'
 import type { VisibleExplorerItem } from '../VisibleExplorerItem/VisibleExplorerItem.ts'
 
 export interface ExplorerState {
@@ -14,6 +15,15 @@ export interface ExplorerState {
   readonly decorations: readonly FileDecoration[]
   readonly defaultPaddingLeft: number
   readonly deltaY: number
+  readonly directoryPreload?:
+    | {
+        readonly applicationId?: string | undefined
+        dirents: readonly RawDirent[] | undefined
+        promise: Promise<void>
+        readonly root: string
+        readonly uri: string
+      }
+    | undefined
   readonly dropTargets: readonly number[]
   readonly editingErrorMessage: string
   readonly editingIcon: string
