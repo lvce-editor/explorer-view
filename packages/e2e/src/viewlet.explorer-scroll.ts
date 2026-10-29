@@ -51,6 +51,10 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
     },
     type: 'wheel',
   })
+  // Wheel dispatch sends a notification to the worker. Wait for its rendered
+  // result before refresh reads and replaces the explorer state.
+  await expect(file00).toBeHidden()
+  await expect(file23).toBeVisible()
   await Explorer.refresh()
 
   // assert
@@ -66,6 +70,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
     },
     type: 'wheel',
   })
+  await expect(file00).toBeVisible()
   await Explorer.refresh()
 
   // assert
