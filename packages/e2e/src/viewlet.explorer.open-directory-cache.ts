@@ -2,18 +2,22 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer.open-directory-cache'
 
-export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, Extension, FileSystem, Locator, Workspace }) => {
   await Extension.addWebExtension(import.meta.resolve('../fixtures/sample.directory-cache'))
   const root = 'extension-host://directory-cache://host/workspace'
-  const statsUri = 'extension-host://directory-cache://host/stats'
   await Workspace.setUri(root)
+  const version = await Command.execute('FileSystem.getDirectoryVersion', root)
+  if (typeof version !== 'string') {
+    throw new TypeError(`Directory cache provider returned an unsupported version: ${JSON.stringify(version)}`)
+  }
+  const statsUri = 'extension-host://directory-cache://host/stats'
   await Explorer.focusIndex(0)
   await Explorer.handleArrowRight()
   const first = Locator('.TreeItem[aria-label="first.txt"]')
   await expect(first).toBeVisible()
   const before = JSON.parse(await FileSystem.readFile(statsUri)) as { listings: number; validations: number }
   if (before.listings < 1 || before.validations < 1) {
-    throw new Error('Directory cache regression did not exercise provider validation and listing')
+    throw new Error(`Directory cache regression did not exercise provider validation and listing: ${JSON.stringify(before)}`)
   }
 
   await Explorer.handleArrowLeft()

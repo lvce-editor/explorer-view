@@ -1,7 +1,11 @@
 {
-  "browser": "main.ts",
-  "main": "main.ts",
+  "browser": "dist/main.js",
+  "main": "dist/main.js",
   "activation": ["onFileSystem:directory-cache"],
   "isolated": true,
-  "fileSystemProviders": [{ "id": "directory-cache" }]
+  "fileSystemProviders": [
+    {
+      "id": "directory-cache"
+    }
+  ]
 }
