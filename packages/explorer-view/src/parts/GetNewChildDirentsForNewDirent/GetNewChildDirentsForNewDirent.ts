@@ -15,7 +15,7 @@ export const getNewChildDirentsForNewDirent = async (
   // Get existing children or query them if they don't exist
   let existingChildren = items.filter((item) => item.depth === depth && item.uri.startsWith(parentPath))
   if (existingChildren.length === 0) {
-    const childDirents = await FileSystem.readDirWithFileTypes(parentPath, applicationId)
+    const childDirents = await FileSystem.readDirectoryCached(parentPath, applicationId)
     const visibleChildDirents = childDirents.filter((dirent: { name: string }) => !isExcluded(root, join2(parentPath, dirent.name), excluded))
     existingChildren = visibleChildDirents.map((dirent: { name: string; type: number }, index: number) => ({
       depth,

@@ -77,7 +77,9 @@ test('handleDoubleClick - double click on empty area creates new file', async ()
     ],
     visibleExplorerItems: expect.anything(),
   })
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/testfolder']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/testfolder'],
+  ])
 })
 
 test('handleDoubleClick - double click on item returns same state', async () => {
@@ -117,7 +119,9 @@ test.each([
   const result = await handleDoubleClick(state, 0, 10)
 
   expect(result).toBe(state)
-  expect(mockRpc.invocations).toEqual([['Main.openUri', { focus: true, uri: '/test.txt' }]])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['Main.openUri', { focus: true, uri: '/test.txt' }],
+  ])
 })
 
 test('handleDoubleClick - double click on item with multiple items returns same state', async () => {
@@ -214,5 +218,7 @@ test('handleDoubleClick - double click on empty area with scrolled state creates
     ],
     visibleExplorerItems: expect.anything(),
   })
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/testfolder']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/testfolder'],
+  ])
 })

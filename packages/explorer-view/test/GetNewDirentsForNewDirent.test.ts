@@ -89,7 +89,7 @@ test('getNewDirentsForNewDirent - folder with existing children', async () => {
       uri: '/root/folder',
     },
   ])
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('getNewDirentsForNewDirent - folder with an expanded child', async () => {
@@ -159,7 +159,7 @@ test('getNewDirentsForNewDirent - folder with an expanded child', async () => {
     { depth: 3, name: '' },
     { depth: 1, name: 'scripts' },
   ])
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('getNewDirentsForNewDirent - folder without children', async () => {
@@ -211,7 +211,9 @@ test('getNewDirentsForNewDirent - folder without children', async () => {
       uri: '/root/folder',
     },
   ])
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/root/folder']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/root/folder'],
+  ])
 })
 
 test('getNewDirentsForNewDirent - no items', async () => {
@@ -243,7 +245,7 @@ test('getNewDirentsForNewDirent - no items', async () => {
       uri: '/root',
     },
   ])
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file before existing files', async () => {
@@ -294,7 +296,7 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file before exis
       uri: '/root/file1.txt',
     },
   ])
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between folders and files', async () => {
@@ -342,7 +344,7 @@ test('getNewDirentsForNewDirent - focusedIndex -1 inserts a new file between fol
     { depth: 0, name: '', type: DirentType.EditingFile },
     { depth: 1, name: 'file.txt', type: DirentType.File },
   ])
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('getNewDirentsForNewDirent - top-level new folder is inserted first', async () => {
@@ -393,5 +395,5 @@ test('getNewDirentsForNewDirent - top-level new folder is inserted first', async
       uri: '/root/file1.txt',
     },
   ])
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })

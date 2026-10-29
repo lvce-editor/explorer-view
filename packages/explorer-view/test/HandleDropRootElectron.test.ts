@@ -42,7 +42,7 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
   expect(result.root).toBe('file:///home/simon/dotfiles')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toHaveLength(1)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['Workspace.setPath', '/home/simon/dotfiles'],
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmDelete'],
@@ -55,7 +55,7 @@ test('handleDropRootElectron opens dropped folder as workspace when workspace is
     ['FileSystem.isReadonly', 'file:///home/simon/dotfiles'],
     ['FileSystem.readDirWithFileTypes', 'file:///home/simon/dotfiles'],
   ])
-  expect(mockSourceControlRpc.invocations).toEqual([])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('handleDropRootElectron ignores dropped file when workspace is empty', async () => {
@@ -72,5 +72,5 @@ test('handleDropRootElectron ignores dropped file when workspace is empty', asyn
   expect(result.root).toBe('')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toEqual([])
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })

@@ -42,7 +42,7 @@ test('newDirent sets focus and updates state when no item is focused', async () 
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
   expect(result).toEqual({
     ...mockState,
     editingIndex: 0,
@@ -92,7 +92,9 @@ test('newDirent handles directory click when focused item is a directory', async
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/test'],
+  ])
   expect(result).toEqual({
     ...mockState,
     editingIndex: 1,
@@ -148,7 +150,7 @@ test('newDirent updates state when focused item is not a directory', async () =>
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
   expect(result).toEqual({
     ...mockState,
     editingIndex: 1,
@@ -206,7 +208,9 @@ test('newDirent expands a closed folder when creating a file inside it', async (
   const mockEditingType = 1
 
   const result = await newDirent(mockState, mockEditingType)
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/folder']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/folder'],
+  ])
   // The folder should be expanded (type changed to DirectoryExpanded)
   expect(result.items[0].type).toBe(DirentType.DirectoryExpanded)
   expect(result.editingIndex).toBe(1)

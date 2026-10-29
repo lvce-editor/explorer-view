@@ -22,7 +22,9 @@ test('refreshChildDirents - basic', async () => {
   expect(result[1].name).toBe('folder1')
   expect(result[1].uri).toBe('/test/folder1')
   expect(result[1].depth).toBe(1)
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/test']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/test'],
+  ])
 })
 
 test('refreshChildDirents - with expanded folder', async () => {
@@ -48,7 +50,7 @@ test('refreshChildDirents - with expanded folder', async () => {
   expect(result[1].name).toBe('file1.txt')
   expect(result[1].uri).toBe('/test/folder1/file1.txt')
   expect(result[1].depth).toBe(2)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/test'],
     ['FileSystem.readDirWithFileTypes', '/test/folder1'],
   ])

@@ -55,7 +55,7 @@ test('acceptRename - renames file and refreshes parent children', async () => {
     { depth: 1, name: 'b.txt', posInSet: 1, selected: false, setSize: 2, type: DirentType.File, uri: '/test/b.txt' },
     { depth: 1, name: 'c.txt', posInSet: 2, selected: false, setSize: 2, type: DirentType.File, uri: '/test/c.txt' },
   ])
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],
     ['FileSystem.readDirWithFileTypes', '/test'],
   ])
@@ -77,7 +77,7 @@ test('acceptRename - unchanged name does not invoke the file system', async () =
   expect(result.editingType).toBe(ExplorerEditingType.None)
   expect(result.focused).toBe(true)
   expect(result.items[0].type).toBe(DirentType.File)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('acceptRename - rejects existing empty folder destination', async () => {
@@ -105,7 +105,7 @@ test('acceptRename - rejects existing empty folder destination', async () => {
   expect(result.editingErrorMessage).toBe('A file or folder **destination** already exists at this location. Please choose a different name.')
   expect(result.editingIndex).toBe(0)
   expect(result.editingType).toBe(ExplorerEditingType.Rename)
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test.skip('acceptRename - basic file rename', async () => {
@@ -141,7 +141,7 @@ test.skip('acceptRename - basic file rename', async () => {
   expect(result.focusedIndex).toBe(0)
   expect(result.editingIndex).toBe(-1)
   expect(result.editingType).toBe(ExplorerEditingType.None)
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],
       ['FileSystem.readDirWithFileTypes', '/test'],
@@ -180,7 +180,7 @@ test.skip('acceptRename - folder rename', async () => {
   expect(result.items[0].uri).toBe('/test/folder2')
   expect(result.items[1].name).toBe('file.txt')
   expect(result.focusedIndex).toBe(0)
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['FileSystem.rename', '/test/folder1', '/test/folder2'],
       ['FileSystem.readDirWithFileTypes', '/test'],
@@ -221,7 +221,7 @@ test.skip('acceptRename - nested file rename', async () => {
   expect(result.items[1].uri).toBe('/test/folder/b.txt')
   expect(result.items[2].name).toBe('c.txt')
   expect(result.focusedIndex).toBe(1)
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['FileSystem.rename', '/test/folder/a.txt', '/test/folder/b.txt'],
       ['FileSystem.readDirWithFileTypes', '/test/folder'],
@@ -258,7 +258,7 @@ test.skip('acceptRename - preserves nested items', async () => {
   expect(result.items[1].name).toBe('nested.txt')
   expect(result.items[1].uri).toBe('/test/folder2/nested.txt')
   expect(result.focusedIndex).toBe(0)
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['FileSystem.rename', '/test/folder1', '/test/folder2'],
       ['FileSystem.readDirWithFileTypes', '/test'],
@@ -284,7 +284,9 @@ test.skip('acceptRename - handles rename error', async () => {
 
   const result = await acceptRename(state)
   expect(result).toBe(state)
-  expect(mockRpc.invocations).toEqual([['FileSystem.rename', '/test/a.txt', '/test/b.txt']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],
+  ])
 })
 
 test.skip('acceptRename - maintains sorting order', async () => {
@@ -320,7 +322,7 @@ test.skip('acceptRename - maintains sorting order', async () => {
   expect(result.items[1].name).toBe('folder')
   expect(result.items[2].name).toBe('z.txt')
   expect(result.focusedIndex).toBe(0)
-  expect(mockRpc.invocations).toEqual(
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual(
     expect.arrayContaining([
       ['FileSystem.rename', '/test/a.txt', '/test/b.txt'],
       ['FileSystem.readDirWithFileTypes', '/test'],

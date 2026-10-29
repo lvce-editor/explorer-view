@@ -2,8 +2,11 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.explorer-scroll'
 
-export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locator, Settings, Workspace }) => {
   // arrange
+  // Fixed pixel assertions require the same wheel multiplier in every browser.
+  // cspell:ignore scrollspeed
+  await Settings.update({ 'application.scrollspeed': 1, 'application.scrollspeed.firefox': 1 })
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFiles(
     Array.from({ length: 100 }, (_, index) => ({
@@ -35,10 +38,6 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
     type: 'wheel',
   })
 
-  // Use the direct pixel value to make the fractional visual assertion deterministic
-  // when the browser test bridge coalesces a small synthetic wheel event.
-  await Explorer.setDeltaY(5)
-
   // assert
   await expect(file00).toHaveCSS('margin-top', '-5px')
 
@@ -51,6 +50,10 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
     },
     type: 'wheel',
   })
+  // Wheel dispatch sends a notification to the worker. Wait for its rendered
+  // result before refresh reads and replaces the explorer state.
+  await expect(file00).toBeHidden()
+  await expect(file23).toBeVisible()
   await Explorer.refresh()
 
   // assert
@@ -66,6 +69,7 @@ export const test: Test = async ({ Command, expect, Explorer, FileSystem, Locato
     },
     type: 'wheel',
   })
+  await expect(file00).toBeVisible()
   await Explorer.refresh()
 
   // assert

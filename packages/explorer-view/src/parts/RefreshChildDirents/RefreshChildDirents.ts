@@ -43,7 +43,7 @@ export const refreshChildDirents = async (
   root: string = folder.uri,
   applicationId?: string,
 ): Promise<readonly ExplorerItem[]> => {
-  const rawChildDirents = await FileSystem.readDirWithFileTypes(folder.uri, applicationId)
+  const rawChildDirents = await FileSystem.readDirectoryCached(folder.uri, applicationId, true)
   const childDirents = rawChildDirents.filter((dirent) => {
     const path = folder.uri.endsWith(pathSeparator) ? `${folder.uri}${dirent.name}` : `${folder.uri}${pathSeparator}${dirent.name}`
     return !isExcluded(root, path, excluded)
