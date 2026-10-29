@@ -51,10 +51,12 @@ test('preloads a collapsed folder on pointer down and reuses the pending listing
       uri: string
     }[]
   >()
+  const { promise: readStarted, resolve: resolveReadStarted } = Promise.withResolvers<void>()
   let readCount = 0
   using _mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
       readCount++
+      resolveReadStarted()
       return listing
     },
   })
@@ -66,6 +68,7 @@ test('preloads a collapsed folder on pointer down and reuses the pending listing
   }
 
   const pointerDownState = handlePointerDown(state, MouseEventType.LeftClick, 0, 0)
+  await readStarted
   expect(readCount).toBe(1)
 
   const pointerUpState = handlePointerUp(pointerDownState)
@@ -129,7 +132,9 @@ test('reuses a preloaded parent while restoring expanded descendants', async () 
 
   expect(expandedState.items.map((item) => item.uri)).toEqual(['/test', '/test/nested', '/test/nested/child.txt'])
   expect(mockRpc.invocations).toEqual([
+    ['FileSystem.getDirectoryVersion', '/test'],
     ['FileSystem.readDirWithFileTypes', '/test'],
+    ['FileSystem.getDirectoryVersion', '/test/nested'],
     ['FileSystem.readDirWithFileTypes', '/test/nested'],
   ])
 })
