@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'viewlet.explorer-directory-cache'
+export const name = 'viewlet.explorer.open-directory-cache'
 
 export const test: Test = async ({ expect, Explorer, Extension, FileSystem, Locator, Workspace }) => {
   await Extension.addWebExtension(import.meta.resolve('../fixtures/sample.directory-cache'))

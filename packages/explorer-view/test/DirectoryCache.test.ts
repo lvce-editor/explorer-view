@@ -37,7 +37,7 @@ const createFixture = (): Fixture => {
     return entries
   }
   const renderer = RendererWorker.registerMockRpc({
-    'Application.execute': async (_id: string, method: string, _uri: string) => execute(method, uri),
+    'Application.execute': async (_id: string, method: string, uri: string) => execute(method, uri),
     'FileSystem.getDirectoryVersion': async (uri: string) => execute('FileSystem.getDirectoryVersion', uri),
     'FileSystem.readDirWithFileTypes': async (uri: string) => execute('FileSystem.readDirWithFileTypes', uri),
   })

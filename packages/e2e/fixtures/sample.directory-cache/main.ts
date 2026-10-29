@@ -8,9 +8,7 @@ let listings = 0
 let validations = 0
 const normalize = (uri: string): string => uri.replace('extension-host://', '').replace(/\/$/, '')
 
-// This optional capability requires the directory-version API release before
-// the browser regression is run against the installed server runtime.
-const provider: FileSystemProvider & { readonly getDirectoryVersion: (uri: string) => string } = {
+const provider: FileSystemProvider = {
   getDirectoryVersion(uri) {
     validations++
     return `${namespace}:${normalize(uri)}:${version}`
