@@ -1,11 +1,12 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { CacheWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ExplorerState } from '../src/parts/ExplorerState/ExplorerState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { DirectoryExpanded, File } from '../src/parts/DirentType/DirentType.ts'
 import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 import * as ExplorerEditingType from '../src/parts/ExplorerEditingType/ExplorerEditingType.ts'
 import * as FocusId from '../src/parts/FocusId/FocusId.ts'
+import { getPathDirentsMap } from '../src/parts/GetPathDirentsMap/GetPathDirentsMap.ts'
 import { refresh, refreshExplorer } from '../src/parts/Refresh/Refresh.ts'
 
 test('refresh - empty state', async () => {
@@ -390,4 +391,34 @@ test('refresh - uses legacy visible-item expansion state when preservation is di
   expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/workspace'],
   ])
+})
+
+test('explicit refresh bypasses a persisted listing even when its validator matches', async () => {
+  let cached: unknown
+  let name = 'before.txt'
+  using cache = CacheWorker.registerMockRpc({
+    'Cache.getCacheStorageJsonItem': () => (cached ? { value: cached } : null),
+    'Cache.removeCacheStorageItem': () => {
+      cached = undefined
+    },
+    'Cache.setCacheStorageJsonItem': (_key: string, value: unknown) => {
+      cached = structuredClone(value)
+    },
+  })
+  using renderer = RendererWorker.registerMockRpc({
+    'FileSystem.getDirectoryVersion': () => 'same-connection:stable-version',
+    'FileSystem.readDirWithFileTypes': () => {
+      return [{ name, type: File }]
+    },
+  })
+  const root = 'file:///explicit-refresh-cache-test'
+  await getPathDirentsMap([root])
+  expect(cached).toBeDefined()
+  expect(renderer.invocations.filter(([method]) => method === 'FileSystem.readDirWithFileTypes')).toHaveLength(1)
+  name = 'after.txt'
+  const state = await refresh({ ...createDefaultState(), root })
+  const { items } = state
+  expect(items.map((item) => item.name)).toEqual(['after.txt'])
+  expect(renderer.invocations.filter(([method]) => method === 'FileSystem.readDirWithFileTypes')).toHaveLength(2)
+  expect(cache.invocations.some(([method]) => method === 'Cache.removeCacheStorageItem')).toBe(true)
 })
