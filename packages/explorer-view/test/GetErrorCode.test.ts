@@ -15,6 +15,11 @@ test('getErrorCode - returns numeric codes', () => {
   expect(GetErrorCode.getErrorCode(error)).toBe('404')
 })
 
+test('getErrorCode - ignores the generic JSON-RPC custom error code', () => {
+  expect(GetErrorCode.getErrorCode({ code: -32001 })).toBe('')
+  expect(GetErrorCode.getErrorCode({ code: -32001, cause: { code: 'EACCES' } })).toBe('EACCES')
+})
+
 test('getErrorCode - returns empty string for null', () => {
   expect(GetErrorCode.getErrorCode(null)).toBe('')
 })
