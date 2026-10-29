@@ -42,6 +42,66 @@ test('removeDirent - removes focused item', async () => {
   ])
 })
 
+test('removeDirent - confirmation displays remote path and removes original uri', async () => {
+  using dialogRpc = DialogWorker.registerMockRpc({
+    'ConfirmPrompt.prompt'(message: string) {
+      expect(message).toBe('Are you sure you want to delete "/home/test/file1.txt"?')
+      return true
+    },
+  })
+  using rendererRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+    'FileSystem.remove'() {
+      return
+    },
+    'IconTheme.getFileIcon'() {
+      return ''
+    },
+    'IconTheme.getFolderIcon'() {
+      return ''
+    },
+    'IconTheme.getIcons'() {
+      return []
+    },
+  })
+  const uri = 'remote-server://server-hash/home/test/file1.txt'
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    confirmDelete: true,
+    focusedIndex: 0,
+    items: [{ depth: 0, name: 'file1.txt', selected: false, type: File, uri }],
+  }
+
+  await removeDirent(state)
+  expect(dialogRpc.invocations).toEqual([['ConfirmPrompt.prompt', 'Are you sure you want to delete "/home/test/file1.txt"?', undefined]])
+  expect(rendererRpc.invocations).toEqual([
+    ['FileSystem.remove', uri],
+    ['FileSystem.readDirWithFileTypes', '/'],
+  ])
+})
+
+test('removeDirent - cancelling confirmation does not remove the original uri', async () => {
+  using dialogRpc = DialogWorker.registerMockRpc({
+    'ConfirmPrompt.prompt'() {
+      return false
+    },
+  })
+  using rendererRpc = RendererWorker.registerMockRpc({})
+  const state: ExplorerState = {
+    ...createDefaultState(),
+    confirmDelete: true,
+    focusedIndex: 0,
+    items: [{ depth: 0, name: 'file1.txt', selected: false, type: File, uri: 'remote-server://server-hash/home/test/file1.txt' }],
+  }
+
+  const result = await removeDirent(state)
+  expect(result).toBe(state)
+  expect(dialogRpc.invocations).toHaveLength(1)
+  expect(rendererRpc.invocations).toEqual([])
+})
+
 test('removeDirent - removes multiple selected items', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readDirWithFileTypes'() {
