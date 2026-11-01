@@ -117,3 +117,55 @@ jobs:
         run: npm run measure
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+
+  repeat-webkit:
+    name: WebKit permission denied (attempt ${{ matrix.attempt }})
+    strategy:
+      fail-fast: false
+      matrix:
+        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 180
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: 0
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Reproduce the exact dependency versions and source from PR #1962.
+          ref: 4cca8d7bfd16cd6b8cf0d0bc364d5aec8521d5f4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+      - name: Compute node modules cache key
+        id: nodeModulesCacheKey
+        run: echo "value=$(node packages/build/src/computeNodeModulesCacheKey.ts)" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/cache@v6
+        id: npm-cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ runner.arch }}-cacheNodeModules-${{ steps.nodeModulesCacheKey.outputs.value }}
+      - name: npm ci
+        run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+      - run: npm run build
+      - run: npm run build:static
+      - name: install playwright system dependencies
+        working-directory: ./packages/e2e
+        run: sudo npx playwright install-deps chromium firefox webkit
+      - name: install playwright webkit dependency
+        working-directory: ./packages/e2e
+        run: node ../../node_modules/@lvce-editor/test-with-playwright-worker/node_modules/playwright/cli.js install webkit
+      - name: e2e webkit
+        working-directory: ./packages/e2e
+        run: npm run e2e:webkit:headless -- --timeout=2100000 --filter=viewlet.explorer-create-file-error-permission-denied.ts --trace-renderer-worker
+      - name: Upload attempt diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: webkit-permission-denied-attempt-${{ matrix.attempt }}
+          path: |
+            packages/e2e/renderer-worker-traces/
+            packages/e2e/screenshots/
+            packages/e2e/test-results/
+          if-no-files-found: warn
