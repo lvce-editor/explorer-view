@@ -12,17 +12,21 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await Explorer.focusIndex(0)
   await Explorer.handleDragOverIndex(0)
   const opfsRoot = await navigator.storage.getDirectory()
-  const fileHandle = await opfsRoot.getFileHandle('my first file', {
-    create: true,
-  })
-  const fileHandles = [fileHandle]
-  const paths: string[] = []
-  const index = 0
+  try {
+    const fileHandle = await opfsRoot.getFileHandle('my first file', {
+      create: true,
+    })
+    const fileHandles = [fileHandle]
+    const paths: string[] = []
+    const index = 0
 
-  // act
-  await Explorer.handleDropIndex(fileHandles, paths, index)
+    // act
+    await Explorer.handleDropIndex(fileHandles, paths, index)
 
-  // assert
-  const newFile = Locator('.TreeItem[aria-label="my first file"]')
-  await expect(newFile).toBeVisible()
+    // assert
+    const newFile = Locator('.TreeItem[aria-label="my first file"]')
+    await expect(newFile).toBeVisible()
+  } finally {
+    await opfsRoot.removeEntry('my first file')
+  }
 }

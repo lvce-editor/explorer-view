@@ -8,37 +8,51 @@ export const test: Test = async ({ DragAndDrop, expect, Explorer, Locator, Works
   // arrange
   await Workspace.setPath('')
   const opfsRoot = await navigator.storage.getDirectory()
-  const firstDirectoryHandle = await opfsRoot.getDirectoryHandle('first-dropped-workspace-folder', {
-    create: true,
-  })
-  const firstNestedFileHandle = await firstDirectoryHandle.getFileHandle('first-inside.txt', {
-    create: true,
-  })
-  const firstWritable = await firstNestedFileHandle.createWritable({ keepExistingData: false })
-  await firstWritable.write('first')
-  await firstWritable.close()
-  const secondDirectoryHandle = await opfsRoot.getDirectoryHandle('second-dropped-workspace-folder', {
-    create: true,
-  })
-  const secondNestedFileHandle = await secondDirectoryHandle.getFileHandle('second-inside.txt', {
-    create: true,
-  })
-  const secondWritable = await secondNestedFileHandle.createWritable({ keepExistingData: false })
-  await secondWritable.write('second')
-  await secondWritable.close()
-  const dropId = await DragAndDrop.createDropSession([
-    { fileSystemHandle: firstDirectoryHandle, kind: 'file', type: '' },
-    { fileSystemHandle: secondDirectoryHandle, kind: 'file', type: '' },
-  ])
-  const welcomeMessage = Locator('.Explorer .WelcomeMessage')
-  const firstNestedFile = Locator('.TreeItem[aria-label="first-inside.txt"]')
-  const secondNestedFile = Locator('.TreeItem[aria-label="second-inside.txt"]')
+  try {
+    const firstDirectoryHandle = await opfsRoot.getDirectoryHandle('first-dropped-workspace-folder', {
+      create: true,
+    })
+    const firstNestedFileHandle = await firstDirectoryHandle.getFileHandle('first-inside.txt', {
+      create: true,
+    })
+    const firstWritable = await firstNestedFileHandle.createWritable({ keepExistingData: false })
+    try {
+      await firstWritable.write('first')
+    } finally {
+      await firstWritable.close()
+    }
+    const secondDirectoryHandle = await opfsRoot.getDirectoryHandle('second-dropped-workspace-folder', {
+      create: true,
+    })
+    const secondNestedFileHandle = await secondDirectoryHandle.getFileHandle('second-inside.txt', {
+      create: true,
+    })
+    const secondWritable = await secondNestedFileHandle.createWritable({ keepExistingData: false })
+    try {
+      await secondWritable.write('second')
+    } finally {
+      await secondWritable.close()
+    }
+    const dropId = await DragAndDrop.createDropSession([
+      { fileSystemHandle: firstDirectoryHandle, kind: 'file', type: '' },
+      { fileSystemHandle: secondDirectoryHandle, kind: 'file', type: '' },
+    ])
+    const welcomeMessage = Locator('.Explorer .WelcomeMessage')
+    const firstNestedFile = Locator('.TreeItem[aria-label="first-inside.txt"]')
+    const secondNestedFile = Locator('.TreeItem[aria-label="second-inside.txt"]')
 
-  // act
-  await Explorer.handleDrop(5000, 5000, dropId)
+    // act
+    await Explorer.handleDrop(5000, 5000, dropId)
 
-  // assert
-  await expect(welcomeMessage).toBeHidden()
-  await expect(firstNestedFile).toBeVisible()
-  await expect(secondNestedFile).toHaveCount(0)
+    // assert
+    await expect(welcomeMessage).toBeHidden()
+    await expect(firstNestedFile).toBeVisible()
+    await expect(secondNestedFile).toHaveCount(0)
+  } finally {
+    try {
+      await opfsRoot.removeEntry('first-dropped-workspace-folder', { recursive: true })
+    } finally {
+      await opfsRoot.removeEntry('second-dropped-workspace-folder', { recursive: true })
+    }
+  }
 }

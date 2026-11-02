@@ -8,32 +8,43 @@ export const test: Test = async ({ DragAndDrop, expect, Explorer, Locator, Works
   // arrange
   await Workspace.setPath('')
   const opfsRoot = await navigator.storage.getDirectory()
-  const fileHandle = await opfsRoot.getFileHandle('dropped-file.txt', {
-    create: true,
-  })
-  const directoryHandle = await opfsRoot.getDirectoryHandle('mixed-dropped-workspace-folder', {
-    create: true,
-  })
-  const nestedFileHandle = await directoryHandle.getFileHandle('folder-inside.txt', {
-    create: true,
-  })
-  const writable = await nestedFileHandle.createWritable({ keepExistingData: false })
-  await writable.write('folder')
-  await writable.close()
-  const file = await fileHandle.getFile()
-  const dropId = await DragAndDrop.createDropSession([
-    { file, fileSystemHandle: fileHandle, kind: 'file', type: file.type },
-    { fileSystemHandle: directoryHandle, kind: 'file', type: '' },
-  ])
-  const welcomeMessage = Locator('.Explorer .WelcomeMessage')
-  const nestedFile = Locator('.TreeItem[aria-label="folder-inside.txt"]')
-  const droppedFile = Locator('.TreeItem[aria-label="dropped-file.txt"]')
+  try {
+    const fileHandle = await opfsRoot.getFileHandle('dropped-file.txt', {
+      create: true,
+    })
+    const directoryHandle = await opfsRoot.getDirectoryHandle('mixed-dropped-workspace-folder', {
+      create: true,
+    })
+    const nestedFileHandle = await directoryHandle.getFileHandle('folder-inside.txt', {
+      create: true,
+    })
+    const writable = await nestedFileHandle.createWritable({ keepExistingData: false })
+    try {
+      await writable.write('folder')
+    } finally {
+      await writable.close()
+    }
+    const file = await fileHandle.getFile()
+    const dropId = await DragAndDrop.createDropSession([
+      { file, fileSystemHandle: fileHandle, kind: 'file', type: file.type },
+      { fileSystemHandle: directoryHandle, kind: 'file', type: '' },
+    ])
+    const welcomeMessage = Locator('.Explorer .WelcomeMessage')
+    const nestedFile = Locator('.TreeItem[aria-label="folder-inside.txt"]')
+    const droppedFile = Locator('.TreeItem[aria-label="dropped-file.txt"]')
 
-  // act
-  await Explorer.handleDrop(5000, 5000, dropId)
+    // act
+    await Explorer.handleDrop(5000, 5000, dropId)
 
-  // assert
-  await expect(welcomeMessage).toBeHidden()
-  await expect(nestedFile).toBeVisible()
-  await expect(droppedFile).toHaveCount(0)
+    // assert
+    await expect(welcomeMessage).toBeHidden()
+    await expect(nestedFile).toBeVisible()
+    await expect(droppedFile).toHaveCount(0)
+  } finally {
+    try {
+      await opfsRoot.removeEntry('dropped-file.txt')
+    } finally {
+      await opfsRoot.removeEntry('mixed-dropped-workspace-folder', { recursive: true })
+    }
+  }
 }

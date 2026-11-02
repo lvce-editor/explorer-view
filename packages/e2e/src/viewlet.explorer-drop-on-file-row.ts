@@ -10,14 +10,18 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.writeFile(`${tmpDir}/target.txt`, '')
   await Workspace.setUri(tmpDir)
   const opfsRoot = await navigator.storage.getDirectory()
-  const fileHandle = await opfsRoot.getFileHandle('dropped.txt', { create: true })
+  try {
+    const fileHandle = await opfsRoot.getFileHandle('dropped.txt', { create: true })
 
-  // act
-  await Explorer.handleDropIndex([fileHandle], [], 0)
+    // act
+    await Explorer.handleDropIndex([fileHandle], [], 0)
 
-  // assert
-  const droppedAtRoot = Locator(`.TreeItem[title="${tmpDir}/dropped.txt"]`)
-  const droppedInsideFile = Locator(`.TreeItem[title="${tmpDir}/target.txt/dropped.txt"]`)
-  await expect(droppedAtRoot).toBeVisible()
-  await expect(droppedInsideFile).toBeHidden()
+    // assert
+    const droppedAtRoot = Locator(`.TreeItem[title="${tmpDir}/dropped.txt"]`)
+    const droppedInsideFile = Locator(`.TreeItem[title="${tmpDir}/target.txt/dropped.txt"]`)
+    await expect(droppedAtRoot).toBeVisible()
+    await expect(droppedInsideFile).toBeHidden()
+  } finally {
+    await opfsRoot.removeEntry('dropped.txt')
+  }
 }
