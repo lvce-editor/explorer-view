@@ -114,7 +114,7 @@ test('loadContent clamps restored deltaY to 0 when content is shorter after relo
     ],
     minLineY: 0,
   })
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmDelete'],
     ['Preferences.get', 'explorer.confirmPaste'],
@@ -181,7 +181,7 @@ test('loadContent clamps restored deltaY to maxDeltaY when content is still scro
     ],
     minLineY: 3,
   })
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['Preferences.get', 'explorer.useChevrons'],
     ['Preferences.get', 'explorer.confirmDelete'],
     ['Preferences.get', 'explorer.confirmPaste'],

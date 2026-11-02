@@ -31,7 +31,7 @@ test('expandRecursively - expands root when no item is focused', async () => {
     { depth: 2, name: 'index.ts', posInSet: 1, selected: false, setSize: 1, type: File, uri: '/workspace/src/index.ts' },
     { depth: 1, name: 'README.md', posInSet: 2, selected: false, setSize: 2, type: File, uri: '/workspace/README.md' },
   ])
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', '/workspace'],
     ['FileSystem.readDirWithFileTypes', '/workspace/src'],
   ])
@@ -92,7 +92,7 @@ test.skip('expand root directory', async () => {
   expect(newState.items).toHaveLength(2)
   expect(newState.items[0].name).toBe('file1.txt')
   expect(newState.items[1].name).toBe('dir1')
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test.skip('expand focused directory', async () => {
@@ -122,7 +122,7 @@ test.skip('expand focused directory', async () => {
   expect(newState.items).toHaveLength(2)
   expect(newState.items[0].name).toBe('file1.txt')
   expect(newState.items[1].name).toBe('file2.txt')
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('do not expand file', async () => {

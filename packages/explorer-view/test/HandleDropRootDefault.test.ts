@@ -45,7 +45,7 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
   expect(result.root).toBe('html:///dropped-folder')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toHaveLength(1)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['PersistentFileHandle.addHandle', 'html:///dropped-folder', fileHandle],
     ['Workspace.setPath', 'html:///dropped-folder'],
     ['Preferences.get', 'explorer.useChevrons'],
@@ -59,7 +59,7 @@ test('handleDropRootDefault opens dropped folder as workspace when workspace is 
     ['FileSystem.isReadonly', 'html:///dropped-folder'],
     ['FileSystem.readDirWithFileTypes', 'html:///dropped-folder'],
   ])
-  expect(mockSourceControlRpc.invocations).toEqual([])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('handleDropRootDefault opens first dropped folder as workspace when two folders are dropped into empty workspace', async () => {
@@ -107,7 +107,7 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
   expect(result.root).toBe('html:///first-folder')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toHaveLength(1)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['PersistentFileHandle.addHandle', 'html:///first-folder', firstFolderHandle],
     ['Workspace.setPath', 'html:///first-folder'],
     ['Preferences.get', 'explorer.useChevrons'],
@@ -121,7 +121,7 @@ test('handleDropRootDefault opens first dropped folder as workspace when two fol
     ['FileSystem.isReadonly', 'html:///first-folder'],
     ['FileSystem.readDirWithFileTypes', 'html:///first-folder'],
   ])
-  expect(mockSourceControlRpc.invocations).toEqual([])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('handleDropRootDefault ignores dropped file when workspace is empty', async () => {
@@ -141,7 +141,7 @@ test('handleDropRootDefault ignores dropped file when workspace is empty', async
   expect(result.root).toBe('')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toEqual([])
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('handleDropRootDefault opens dropped folder as workspace when file and folder are dropped into empty workspace', async () => {
@@ -189,7 +189,7 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
   expect(result.root).toBe('html:///dropped-folder')
   expect(result.dropTargets).toEqual([])
   expect(result.items).toHaveLength(1)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['PersistentFileHandle.addHandle', 'html:///dropped-folder', directoryHandle],
     ['Workspace.setPath', 'html:///dropped-folder'],
     ['Preferences.get', 'explorer.useChevrons'],
@@ -203,5 +203,5 @@ test('handleDropRootDefault opens dropped folder as workspace when file and fold
     ['FileSystem.isReadonly', 'html:///dropped-folder'],
     ['FileSystem.readDirWithFileTypes', 'html:///dropped-folder'],
   ])
-  expect(mockSourceControlRpc.invocations).toEqual([])
+  expect(mockSourceControlRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })

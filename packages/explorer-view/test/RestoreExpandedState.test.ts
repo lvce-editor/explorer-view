@@ -57,7 +57,7 @@ test.each([false, true])('restoreExpandedState loads a large directory (nested: 
         ]
       : [],
   )
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.readDirWithFileTypes', root],
     ...(nested ? [['FileSystem.readDirWithFileTypes', directory]] : []),
   ])

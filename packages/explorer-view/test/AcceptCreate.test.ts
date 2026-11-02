@@ -17,7 +17,7 @@ test.each(['', ' '.repeat(3), '\t'])('acceptCreate - rejects whitespace-only fil
 
   const result = await acceptCreate(state, DirentType.File)
   expect(result.editingErrorMessage).toBe(ExplorerStrings.fileOrFolderNameMustBeProvided())
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([])
 })
 
 test('acceptCreate - successful file creation', async () => {
@@ -105,7 +105,7 @@ test('acceptCreate - successful file creation', async () => {
       },
     ],
   })
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.mkdir', 'memfs:///workspace/test'],
     ['FileSystem.writeFile', 'memfs:///workspace/test/test.txt', ''],
     ['FileSystem.readDirWithFileTypes', 'memfs:///workspace'],
@@ -177,7 +177,7 @@ test('acceptCreate - successful folder creation does not open uri', async () => 
   expect(result.editingIndex).toBe(-1)
   expect(result.editingType).toBe(ExplorerEditingType.None)
   expect(result.focus).toBe(FocusId.List)
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.mkdir', 'memfs:///workspace/test'],
     ['FileSystem.mkdir', 'memfs:///workspace/test/newfolder'],
     ['FileSystem.readDirWithFileTypes', 'memfs:///workspace'],
@@ -250,7 +250,7 @@ test('acceptCreate - nested folder creation uses the file parent when a file is 
 
   await acceptCreate(state, DirentType.Directory)
 
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['FileSystem.mkdir', 'memfs:///workspace/a'],
     ['FileSystem.mkdir', 'memfs:///workspace/a/b'],
     ['FileSystem.mkdir', 'memfs:///workspace/a/b/c'],

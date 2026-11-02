@@ -19,7 +19,7 @@ test('should handle paste with no files (none type)', async () => {
   const result = await handlePaste(initialState)
 
   expect(result).toBe(initialState)
-  expect(mockRpc.invocations).toEqual([['ClipBoard.readNativeFiles']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([['ClipBoard.readNativeFiles']])
 })
 
 test('should handle paste with copy type', async () => {
@@ -48,7 +48,7 @@ test('should handle paste with copy type', async () => {
   expect(result).toBeDefined()
   expect(result).toHaveProperty('items')
   expect(result).toHaveProperty('icons')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['ClipBoard.readNativeFiles'],
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.copy', '/source/file1.txt', '/file1.txt'],
@@ -84,7 +84,7 @@ test('should handle paste with cut type', async () => {
   expect(result).toBeDefined()
   expect(result).toHaveProperty('items')
   expect(result).toHaveProperty('icons')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['ClipBoard.readNativeFiles'],
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.copy', '/source/file1.txt', '/file1.txt'],
@@ -119,7 +119,7 @@ test('should handle paste with multiple files', async () => {
   expect(result).toBeDefined()
   expect(result).toHaveProperty('items')
   expect(result).toHaveProperty('icons')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['ClipBoard.readNativeFiles'],
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.copy', '/source/file1.txt', '/file1.txt'],
@@ -155,7 +155,7 @@ test('should handle paste with empty files array', async () => {
   expect(result).toBeDefined()
   expect(result).toHaveProperty('items')
   expect(result).toHaveProperty('icons')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['ClipBoard.readNativeFiles'],
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.readDirWithFileTypes', '/'],
@@ -188,7 +188,7 @@ test('should preserve state properties when handling paste', async () => {
   expect(result).toBeDefined()
   expect(result).toHaveProperty('items')
   expect(result).toHaveProperty('icons')
-  expect(mockRpc.invocations).toEqual([
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
     ['ClipBoard.readNativeFiles'],
     ['FileSystem.readDirWithFileTypes', '/'],
     ['FileSystem.copy', '/source/file.txt', '/file.txt'],

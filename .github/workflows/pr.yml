@@ -77,11 +77,36 @@ jobs:
         run: npm run e2e:coverage
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: e2e firefox
+      - name: Repeat Windows ARM Firefox scroll regression
+        if: matrix.os == 'windows-11-arm'
         working-directory: ./packages/e2e
-        run: npm run e2e:firefox:headless -- --timeout=2100000
+        shell: bash
+        run: |
+          mkdir -p ../../.tmp/scroll-diagnostics
+          for iteration in {1..20}; do
+            status=0
+            npm run e2e:firefox:headless -- --filter=viewlet.explorer-scroll --trace-renderer-worker --timeout=120000 || status=$?
+            cp renderer-worker-traces/viewlet.explorer-scroll.json ../../.tmp/scroll-diagnostics/scroll-$iteration.json
+            if [ "$status" -ne 0 ]; then
+              exit "$status"
+            fi
+          done
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: e2e firefox
+        working-directory: ./packages/e2e
+        run: npm run e2e:firefox:headless -- --timeout=2100000 ${{ matrix.os == 'windows-11-arm' && '--trace-renderer-worker' || '' }}
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
+      - name: Capture Windows ARM scroll diagnostic
+        if: always() && matrix.os == 'windows-11-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: explorer-scroll-arm-trace
+          path: |
+            packages/e2e/renderer-worker-traces/viewlet.explorer-scroll.json
+            .tmp/scroll-diagnostics
+          if-no-files-found: warn
       - name: e2e webkit
         working-directory: ./packages/e2e
         run: npm run e2e:webkit:headless -- --timeout=2100000

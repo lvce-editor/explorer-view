@@ -1,3 +1,4 @@
+import { build } from 'esbuild'
 import { execa } from 'execa'
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
@@ -53,6 +54,18 @@ await rm(dist, { recursive: true, force: true })
 await mkdir(dist, { recursive: true })
 
 await bundleJs(process.argv.includes('--development'))
+
+// Test providers use this repository's declared API version, rather than the
+// TypeScript compiler process's bundled fallback API.
+await build({
+  bundle: true,
+  entryPoints: [join(root, 'packages/e2e/fixtures/sample.directory-cache/main.ts')],
+  external: ['node:*', 'electron', 'ws'],
+  format: 'esm',
+  outfile: join(root, 'packages/e2e/fixtures/sample.directory-cache/dist/main.js'),
+  platform: 'browser',
+  target: 'esnext',
+})
 
 const version = await getVersion()
 

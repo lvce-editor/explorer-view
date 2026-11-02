@@ -73,7 +73,9 @@ test('newFile', async () => {
     ],
     visibleExplorerItems: expect.anything(),
   })
-  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', '/testfolder']])
+  expect(mockRpc.invocations.filter(([method]) => method !== 'FileSystem.getDirectoryVersion')).toEqual([
+    ['FileSystem.readDirWithFileTypes', '/testfolder'],
+  ])
 })
 
 test('newFile - no workspace', async () => {

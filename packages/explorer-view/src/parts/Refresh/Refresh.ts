@@ -22,7 +22,7 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
   const legacyExpandedPaths = getPaths(getExpandedDirents(items))
   const expandedPaths = preserveExpandState ? preservedExpandedPaths : legacyExpandedPaths
   const allPaths = [root, ...expandedPaths]
-  const pathToDirents = await getPathDirentsMap(allPaths, applicationId)
+  const pathToDirents = await getPathDirentsMap(allPaths, applicationId, true)
   const sortedPathDirents = sortPathDirentsMap(pathToDirents)
   const newItems = getProtoMap(root, sortedPathDirents, expandedPaths, excluded)
   let newFocusedIndex = focusedIndex
@@ -32,6 +32,7 @@ export const refresh = async (state: ExplorerState): Promise<ExplorerState> => {
   const sourceControlIgnoredUris = await GetGitIgnoredUris.getGitIgnoredUris(root, newItems, pathSeparator, gitIgnoreDecorations, applicationId)
   return {
     ...state,
+    directoryPreload: undefined,
     focusedIndex: newFocusedIndex,
     items: newItems,
     sourceControlIgnoredUris,

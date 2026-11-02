@@ -18,6 +18,7 @@ export const updateRoot = async (state1: ExplorerState): Promise<ExplorerState> 
   const newDirents = mergeDirents(state1.items, topLevelDirents)
   const state3 = {
     ...state1,
+    directoryPreload: undefined,
     items: newDirents,
   }
   return state3

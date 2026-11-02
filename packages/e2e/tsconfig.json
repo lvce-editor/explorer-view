@@ -23,5 +23,5 @@
     "noUnusedLocals": true
   },
   "include": ["src", "test", "fixtures"],
-  "exclude": ["scripts"]
+  "exclude": ["scripts", "fixtures/sample.directory-cache/dist"]
 }
