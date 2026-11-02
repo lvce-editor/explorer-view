@@ -10,15 +10,19 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
   await FileSystem.mkdir(`${tmpDir}/target`)
   await Workspace.setUri(tmpDir)
   const opfsRoot = await navigator.storage.getDirectory()
-  const fileHandle = await opfsRoot.getFileHandle('dropped.txt', { create: true })
+  try {
+    const fileHandle = await opfsRoot.getFileHandle('dropped.txt', { create: true })
 
-  // act
-  await Explorer.handleDragOverIndex(0)
-  await Explorer.handleDropIndex([fileHandle], [], 0)
+    // act
+    await Explorer.handleDragOverIndex(0)
+    await Explorer.handleDropIndex([fileHandle], [], 0)
 
-  // assert
-  const target = Locator('.TreeItem[aria-label="target"]')
-  const dropped = Locator(`.TreeItem[title="${tmpDir}/target/dropped.txt"]`)
-  await expect(target).toHaveAttribute('aria-expanded', 'true')
-  await expect(dropped).toBeVisible()
+    // assert
+    const target = Locator('.TreeItem[aria-label="target"]')
+    const dropped = Locator(`.TreeItem[title="${tmpDir}/target/dropped.txt"]`)
+    await expect(target).toHaveAttribute('aria-expanded', 'true')
+    await expect(dropped).toBeVisible()
+  } finally {
+    await opfsRoot.removeEntry('dropped.txt')
+  }
 }
