@@ -169,3 +169,61 @@ jobs:
             packages/e2e/screenshots/
             packages/e2e/test-results/
           if-no-files-found: warn
+
+  repeat-chromium:
+    name: Chromium ${{ matrix.scenario }} (attempt ${{ matrix.attempt }})
+    strategy:
+      fail-fast: false
+      matrix:
+        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        scenario: [isolated, sequence]
+        include:
+          - scenario: isolated
+            filter: viewlet.explorer-drop-file.ts
+          - scenario: sequence
+            filter: viewlet.explorer-drop-
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: 0
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Preserve the source and runtime from the original Chromium crash.
+          ref: 16187e4e95e4cd1376f5973fa621af7d27239b59
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+      - name: Compute node modules cache key
+        id: nodeModulesCacheKey
+        run: echo "value=$(node packages/build/src/computeNodeModulesCacheKey.ts)" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/cache@v6
+        id: npm-cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ runner.arch }}-cacheNodeModules-${{ steps.nodeModulesCacheKey.outputs.value }}
+      - name: npm ci
+        run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+      - run: npm run build
+      - run: npm run build:static
+      - name: install playwright system dependencies
+        working-directory: ./packages/e2e
+        run: sudo npx playwright install-deps chromium
+      - name: install playwright chromium dependency
+        working-directory: ./packages/e2e
+        run: node ../../node_modules/@lvce-editor/test-with-playwright-worker/node_modules/playwright/cli.js install chromium
+      - name: e2e chromium
+        working-directory: ./packages/e2e
+        shell: bash
+        run: npm run e2e:headless -- --filter=${{ matrix.filter }} --trace-renderer-worker 2>&1 | tee chromium.log
+      - name: Upload Chromium diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: chromium-${{ matrix.scenario }}-attempt-${{ matrix.attempt }}
+          path: |
+            packages/e2e/chromium.log
+            packages/e2e/renderer-worker-traces/
+          if-no-files-found: warn
