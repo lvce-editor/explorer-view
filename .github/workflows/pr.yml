@@ -176,10 +176,10 @@ jobs:
       fail-fast: false
       matrix:
         attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-        scenario: [isolated, sequence, prefix]
+        scenario: [fresh-sequence, sequence, prefix]
         include:
-          - scenario: isolated
-            filter: viewlet.explorer-drop-file.ts
+          - scenario: fresh-sequence
+            filter: viewlet.explorer-drop-
           - scenario: sequence
             filter: viewlet.explorer-drop-
           - scenario: prefix
@@ -225,6 +225,21 @@ jobs:
             await unlink(join(directory, test))
           }
           console.log(`Retained ${index + 1} tests through ${target}; no test assertions changed`)
+          NODE
+      - name: Test fresh Chromium browser isolation
+        if: matrix.scenario == 'fresh-sequence'
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict'
+          import { readFile, writeFile } from 'node:fs/promises'
+          const bundle = 'node_modules/@lvce-editor/test-with-playwright-worker/dist/workerMain.js'
+          const original = "const createPage = browser === 'webkit' ? async () => {"
+          const replacement = "const createPage = browser === 'webkit' || browser === 'chromium' ? async () => {"
+          const source = await readFile(bundle, 'utf8')
+          assert.equal(source.split(original).length, 2, 'Expected exactly one browser factory')
+          await writeFile(bundle, source.replace(original, replacement))
+          console.log(`Diagnostic only: enabled fresh Chromium browsers in ${bundle}`)
           NODE
       - run: npm run build
       - run: npm run build:static
