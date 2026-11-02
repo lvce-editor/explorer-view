@@ -78,6 +78,7 @@ test('removeDirent - confirmation displays remote path and removes original uri'
   expect(dialogRpc.invocations).toEqual([['ConfirmPrompt.prompt', 'Are you sure you want to delete "/home/test/file1.txt"?', undefined]])
   expect(rendererRpc.invocations).toEqual([
     ['FileSystem.remove', uri],
+    ['FileSystem.getDirectoryVersion', '/'],
     ['FileSystem.readDirWithFileTypes', '/'],
   ])
 })
