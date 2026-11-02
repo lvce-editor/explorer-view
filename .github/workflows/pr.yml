@@ -118,72 +118,12 @@ jobs:
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
 
-  repeat-webkit:
-    name: WebKit permission denied (attempt ${{ matrix.attempt }})
+  repeat-chromium-published:
+    name: Published Chromium sequence (attempt ${{ matrix.attempt }})
     strategy:
       fail-fast: false
       matrix:
         attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 180
-    env:
-      PLAYWRIGHT_BROWSERS_PATH: 0
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          # Reproduce the exact dependency versions and source from PR #1962.
-          ref: 4cca8d7bfd16cd6b8cf0d0bc364d5aec8521d5f4
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: '.nvmrc'
-      - name: Compute node modules cache key
-        id: nodeModulesCacheKey
-        run: echo "value=$(node packages/build/src/computeNodeModulesCacheKey.ts)" >> $GITHUB_OUTPUT
-        shell: bash
-      - uses: actions/cache@v6
-        id: npm-cache
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-${{ runner.arch }}-cacheNodeModules-${{ steps.nodeModulesCacheKey.outputs.value }}
-      - name: npm ci
-        run: npm ci
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-      - run: npm run build
-      - run: npm run build:static
-      - name: install playwright system dependencies
-        working-directory: ./packages/e2e
-        run: sudo npx playwright install-deps chromium firefox webkit
-      - name: install playwright webkit dependency
-        working-directory: ./packages/e2e
-        run: node ../../node_modules/@lvce-editor/test-with-playwright-worker/node_modules/playwright/cli.js install webkit
-      - name: e2e webkit
-        working-directory: ./packages/e2e
-        run: npm run e2e:webkit:headless -- --timeout=2100000 --filter=viewlet.explorer-create-file-error-permission-denied.ts --trace-renderer-worker
-      - name: Upload attempt diagnostics
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: webkit-permission-denied-attempt-${{ matrix.attempt }}
-          path: |
-            packages/e2e/renderer-worker-traces/
-            packages/e2e/screenshots/
-            packages/e2e/test-results/
-          if-no-files-found: warn
-
-  repeat-chromium:
-    name: Chromium ${{ matrix.scenario }} (attempt ${{ matrix.attempt }})
-    strategy:
-      fail-fast: false
-      matrix:
-        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-        scenario: [fresh-sequence, sequence, prefix]
-        include:
-          - scenario: fresh-sequence
-            filter: viewlet.explorer-drop-
-          - scenario: sequence
-            filter: viewlet.explorer-drop-
-          - scenario: prefix
-            filter: viewlet.explorer-
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
@@ -191,8 +131,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          # Preserve the source and runtime from the original Chromium crash.
-          ref: 16187e4e95e4cd1376f5973fa621af7d27239b59
+          # Validate the installed release from PR #1962 without runtime patching.
+          ref: 041a1c20306f756f006a2c4cc407f8b3b9680683
       - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
@@ -208,39 +148,6 @@ jobs:
       - name: npm ci
         run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
-      - name: Keep the original test sequence through the crash
-        if: matrix.scenario == 'prefix'
-        shell: bash
-        run: |
-          node --input-type=module <<'NODE'
-          import assert from 'node:assert/strict'
-          import { readdir, unlink } from 'node:fs/promises'
-          import { join } from 'node:path'
-          const directory = 'packages/e2e/src'
-          const target = 'viewlet.explorer-drop-file.ts'
-          const tests = (await readdir(directory)).filter(name => name.endsWith('.ts')).sort()
-          const index = tests.indexOf(target)
-          assert.ok(index >= 0, `Missing target test: ${target}`)
-          for (const test of tests.slice(index + 1)) {
-            await unlink(join(directory, test))
-          }
-          console.log(`Retained ${index + 1} tests through ${target}; no test assertions changed`)
-          NODE
-      - name: Test fresh Chromium browser isolation
-        if: matrix.scenario == 'fresh-sequence'
-        shell: bash
-        run: |
-          node --input-type=module <<'NODE'
-          import assert from 'node:assert/strict'
-          import { readFile, writeFile } from 'node:fs/promises'
-          const bundle = 'node_modules/@lvce-editor/test-with-playwright-worker/dist/workerMain.js'
-          const original = "const createPage = browser === 'webkit' ? async () => {"
-          const replacement = "const createPage = browser === 'webkit' || browser === 'chromium' ? async () => {"
-          const source = await readFile(bundle, 'utf8')
-          assert.equal(source.split(original).length, 2, 'Expected exactly one browser factory')
-          await writeFile(bundle, source.replace(original, replacement))
-          console.log(`Diagnostic only: enabled fresh Chromium browsers in ${bundle}`)
-          NODE
       - run: npm run build
       - run: npm run build:static
       - name: install playwright system dependencies
@@ -248,16 +155,16 @@ jobs:
         run: sudo npx playwright install-deps chromium
       - name: install playwright chromium dependency
         working-directory: ./packages/e2e
-        run: node ../../node_modules/@lvce-editor/test-with-playwright-worker/node_modules/playwright/cli.js install chromium
+        run: npx playwright install chromium
       - name: e2e chromium
         working-directory: ./packages/e2e
         shell: bash
-        run: npm run e2e:headless -- --filter=${{ matrix.filter }} ${{ matrix.scenario != 'prefix' && '--trace-renderer-worker' || '' }} 2>&1 | tee chromium.log
-      - name: Upload Chromium diagnostics
+        run: npm run e2e:headless -- --filter=viewlet.explorer-drop- --trace-renderer-worker 2>&1 | tee chromium.log
+      - name: Upload published-package diagnostics
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: chromium-${{ matrix.scenario }}-attempt-${{ matrix.attempt }}
+          name: chromium-published-attempt-${{ matrix.attempt }}
           path: |
             packages/e2e/chromium.log
             packages/e2e/renderer-worker-traces/
