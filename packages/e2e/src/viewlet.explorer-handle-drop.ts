@@ -14,16 +14,20 @@ export const test: Test = async ({ DragAndDrop, expect, Explorer, FileSystem, Lo
   ])
   await Workspace.setUri(tmpDir)
   const directory = await navigator.storage.getDirectory()
-  const fileHandle = await directory.getFileHandle('dropped-file.txt', {
-    create: true,
-  })
-  const file = await fileHandle.getFile()
-  const dropId = await DragAndDrop.createDropSession([{ file, fileSystemHandle: fileHandle, kind: 'file', type: file.type }])
+  try {
+    const fileHandle = await directory.getFileHandle('dropped-file.txt', {
+      create: true,
+    })
+    const file = await fileHandle.getFile()
+    const dropId = await DragAndDrop.createDropSession([{ file, fileSystemHandle: fileHandle, kind: 'file', type: file.type }])
 
-  // act
-  await Explorer.handleDrop(0, 0, dropId)
+    // act
+    await Explorer.handleDrop(0, 0, dropId)
 
-  // assert
-  const droppedFile = Locator('.TreeItem', { hasText: 'dropped-file.txt' })
-  await expect(droppedFile).toBeVisible()
+    // assert
+    const droppedFile = Locator('.TreeItem', { hasText: 'dropped-file.txt' })
+    await expect(droppedFile).toBeVisible()
+  } finally {
+    await directory.removeEntry('dropped-file.txt')
+  }
 }
