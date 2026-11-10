@@ -4,7 +4,7 @@ export const name = 'viewlet.explorer-drag-autoscroll-long-list'
 
 export const skip = ['webkit']
 
-export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Workspace }) => {
+export const test: Test = async ({ expect, Explorer, FileSystem, Locator, OriginPrivateFileSystem, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.mkdir(`${tmpDir}/target`)
@@ -15,22 +15,19 @@ export const test: Test = async ({ expect, Explorer, FileSystem, Locator, Worksp
     })),
   )
   await Workspace.setUri(tmpDir)
-  const opfsRoot = await navigator.storage.getDirectory()
-  try {
-    const fileHandle = await opfsRoot.getFileHandle('file-79.txt', { create: true })
+  await using opfs = await OriginPrivateFileSystem.create()
+  // eslint-disable-next-line e2e/require-awaited-opfs-cleanup -- async disposal removes this test's created entry.
+  const fileHandle = await opfs.getFileHandle('file-79.txt', { create: true })
 
-    // act
-    await Explorer.focusIndex(80)
-    await Explorer.handleDragOverIndex(0)
-    await Explorer.handleDropIndex([fileHandle], [], 0)
-    await Explorer.focusIndex(0)
+  // act
+  await Explorer.focusIndex(80)
+  await Explorer.handleDragOverIndex(0)
+  await Explorer.handleDropIndex([fileHandle], [], 0)
+  await Explorer.focusIndex(0)
 
-    // assert
-    const target = Locator('.TreeItem[aria-label="target"]')
-    const moved = Locator(`.TreeItem[title="${tmpDir}/target/file-79.txt"]`)
-    await expect(target).toHaveAttribute('aria-expanded', 'true')
-    await expect(moved).toBeVisible()
-  } finally {
-    await opfsRoot.removeEntry('file-79.txt')
-  }
+  // assert
+  const target = Locator('.TreeItem[aria-label="target"]')
+  const moved = Locator(`.TreeItem[title="${tmpDir}/target/file-79.txt"]`)
+  await expect(target).toHaveAttribute('aria-expanded', 'true')
+  await expect(moved).toBeVisible()
 }
