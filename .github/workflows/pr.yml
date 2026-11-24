@@ -117,3 +117,58 @@ jobs:
         run: npm run measure
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
+
+  repeat-chromium-cleanup:
+    name: Shared Chromium cleanup (attempt ${{ matrix.attempt }})
+    strategy:
+      fail-fast: false
+      matrix:
+        attempt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: 0
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Validate lint-enforced OPFS teardown with published packages and shared Chromium.
+          ref: 97246029c00ac2847b98663f701ac47544f8a5db
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+      - name: Compute node modules cache key
+        id: nodeModulesCacheKey
+        run: echo "value=$(node packages/build/src/computeNodeModulesCacheKey.ts)" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: actions/cache@v6
+        id: npm-cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ runner.arch }}-cacheNodeModules-${{ steps.nodeModulesCacheKey.outputs.value }}
+      - name: npm ci
+        run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+      - name: Record installed runner versions
+        run: |
+          node -p "JSON.stringify({runner: require('./node_modules/@lvce-editor/test-with-playwright/package.json').version, worker: require('./node_modules/@lvce-editor/test-with-playwright-worker/package.json').version})"
+      - run: npm run build
+      - run: npm run build:static
+      - name: install playwright system dependencies
+        working-directory: ./packages/e2e
+        run: sudo npx playwright install-deps chromium
+      - name: install playwright chromium dependency
+        working-directory: ./packages/e2e
+        run: npx playwright install chromium
+      - name: e2e chromium
+        working-directory: ./packages/e2e
+        shell: bash
+        run: npm run e2e:headless -- --filter=viewlet.explorer-drop- --trace-renderer-worker 2>&1 | tee chromium.log
+      - name: Upload shared Chromium cleanup diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: chromium-cleanup-attempt-${{ matrix.attempt }}
+          path: |
+            packages/e2e/chromium.log
+            packages/e2e/renderer-worker-traces/
+          if-no-files-found: error
